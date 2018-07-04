@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Example customization of dimensions originally defined in res/values/dimens.xml
+         (such as screen margins) for screens with more than 820dp of available width. This
+         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
+    <dimen name="activity_horizontal_margin">64dp</dimen>
+
+    <!-- Example customization of dimensions originally defined in res/values/dimens.xml
+         (such as screen margins) for screens with more than 820dp of available width. This
+         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
+    <!-- result page ad -->
+    <dimen name="result_ad_img_height">216dp</dimen>
+    <dimen name="result_ad_icon_size">64dp</dimen>
+    <dimen name="result_ad_icon_margin_top">16dp</dimen>
+    <dimen name="result_ad_icon_margin_bot">4dp</dimen>
+    <integer name="result_ad_title_max_lines">1</integer>
+    <integer name="result_ad_body_max_lines">2</integer>
+    <dimen name="result_img_size">88dp</dimen>
+    <dimen name="result_img_margin">24dp</dimen>
+
+    <!-- ligehui lazyswipe -->
+    <dimen name="anglelogo_size">53dp</dimen>
+    <dimen name="corner_icon_size">20dp</dimen>
+    <dimen name="corner_icon_offset">10dp</dimen>
+    <dimen name="angleview_size">335dp</dimen>
+    <dimen name="angleview_inner_radius">205dp</dimen>
+    <dimen name="angleview_outer_radius">295dp</dimen>
+    <dimen name="angleindicator_size">144dp</dimen>
+    <dimen name="angleindicator_text_paddingleft">73dp</dimen>
+    <dimen name="angleindicator_text_paddingright">71dp</dimen>
+    <dimen name="angleindicator_arc_rect">105dp</dimen>
+    <dimen name="angleindicator_arc_width">75dp</dimen>
+    <dimen name="angleindicator_arc_textsize">15sp</dimen>
+    <dimen name="angleindicator_arc_textsize_offset_y">7dp</dimen>
+    <dimen name="angleitem_half_size">32dp</dimen>
+    <dimen name="angleitem_size">65dp</dimen>
+    <dimen name="angle_item_icon_size">45dp</dimen>
+    <dimen name="app_icon_size">48dp</dimen>
+    <dimen name="test">100dp</dimen>
+</resources>

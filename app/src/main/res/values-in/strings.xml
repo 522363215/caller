@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <string name="push_tools_block_call">Panggilan terblokir</string>
+    <string name="push_tools_ring_one">Tak terjawab dgn 1 panggilan</string>
+    <string name="push_tools_missed">Panggilan tak terjawab</string>
+    <string name="push_tools_missed_count">%1$d panggilan tak terjawab</string>
+    <string name="push_tools_not_in_contact">Panggilan dari org tak dikenal!</string>
+    <string name="push_tools_reject">Panggilan ditolak!</string>
+    <string name="push_tools_content">Ketuk utk melihat detail</string>
+    <string name="push_tools_call_flash_toast">Ada tema flash baru yang keren,cobalah.</string>
+    <string name="push_tools_message">%1$s pesan belum dibaca!</string>
+    <string name="text_call_flash_exit_dialog_title">Buka Panggilan Flash</string>
+    <string name="call_flash_intro_title">Fitur ini disukai banyak pengguna, cobalah!</string>
+    <string name="call_flash_intro_set">Tampilkan</string>
+    <string name="call_flash_intro_reject">Tidak, terima kasih!</string>
+    <string name="no_results">Tak ada hasil</string>
+    <string name="ok_string">OKE</string>
+    <string name="no_string">Batal</string>
+    <string name="dialog_ok_delete_block_log">Hapus semua riwayat blokir?</string>
+    <string name="dialog_ok_delete_block_log_title">Hapus riwayat blokir?</string>
+    <string name="quithint">Tekan kembali untuk berhenti</string>
+    <string name="grant_permission">Beri izin</string>
+    <string name="popup_tips1">Tampilkan jendela pop-up</string>
+    <string name="popup_tips3">Aktifkan jendela Pop-up</string>
+    <!--<string name="main_menu_about">Tentang</string>-->
+    <string name="setting_title">Pengaturan</string>
+    <string name="setting_language">Bahasa</string>
+    <string name="setting_lauage_dialog_title">Pilih Bahasa</string>
+    <string name="block_log_query_log_failed">Permintaan Gagal</string>
+    <string name="block_list_title">Lihat daftar Spam &amp; Blokir</string>
+    <string name="block_list_mine">Daftar panggilan blokir</string>
+    <string name="block_list_common">Spammer Umum</string>
+    <string name="block_list_empty">Daftar hitam tidak ditambah</string>
+    <string name="block_setting_title">Pengaturan Blokir</string>
+    <string name="block_setting_name">Blokir</string>
+    <string name="block_setting_common_block_desc">Laporkan nomor telepon pemasar dan pengganggu sebagai spam</string>
+    <string name="block_setting_hide_block">Blokir Nomor Tersembunyi</string>
+    <string name="block_setting_hide_block_desc">Penelepon yg nomornya tak diketahui</string>
+    <string name="block_setting_stranger_block">No. Tak Terdaftar di Kontak</string>
+    <string name="block_setting_stranger_block_desc">Blokir no. tak terdaftar di kontak</string>
+    <string name="block_setting_block_method">Metode Blokir</string>
+    <string name="block_setting_block_method_auto">Tolak Secara Otomatis</string>
+    <string name="block_setting_block_method_silence">Matikan Suara</string>
+    <string name="block_setting_do_not_diturb">Jangan Ganggu</string>
+    <string name="block_setting_do_not_diturb_time">30 menit</string>
+    <string name="block_setting_pop_dialog">Dialog popup</string>
+    <string name="block_setting_remind_missed_calls">Ingatkan pggln tak terjawab</string>
+    <string name="block_setting_remind_missed_calls_desc">Dapatkan pengingat utk pggln tak terjawab</string>
+    <string name="block_setting_floating_in_contacts">Daftar kontak telepon</string>
+    <string name="block_setting_floating_in_stranger">Panggilan Tak Diketahui</string>
+    <string name="block_setting_floating_out_call">Panggilan Keluar Utk No. Tak Diketahui</string>
+    <string name="block_setting_call_flash">Flash Layar utk Pggln</string>
+    <string name="block_setting_call_id">ID Penelepon</string>
+    <string name="block_setting_call_id_desc">Lihat ID Penelepon utk panggilan tak terjawab atau berakhir(ada iklan).</string>
+    <string name="block_setting_sms_id_desc">Lihat konten utk pesan tak terjawab(ada iklan).</string>
+    <!--<string name="frag_block_logs">Blokir catatan</string>
+    <string name="frag_block_updating_common_db">Memperbarui</string>
+    <string name="frag_block_block_switch_on">CEK PEMBARUAN</string>
+    <string name="frag_block_block_switch_off">AKTIFKAN PEMBLOKIRAN</string>
+    <string name="frag_block_current_desc">Penelepon saat ini diblokir </string>
+    <string name="frag_block_protect_desc">Caller Melindungi Anda</string>
+    <string name="frag_block_protect_count_desc">pggln</string>
+    <string name="frag_block_block_switch_toast_off">Blokir panggilan spam yg dilaporkan</string>
+    <string name="frag_block_block_switch_toast_on">Pembaruan Terakhir: %1$s</string>-->
+    <string name="external_input_title">Tambahkan</string>
+    <string name="external_input_number_hint">No. Telepon(wajib isi)</string>
+    <string name="external_input_name_hint">Nama</string>
+    <string name="external_input_added_completed">Nomor telah dimasukkan ke daftar hitam</string>
+    <string name="external_input_enter_number_long">Terlalu banyak karakter</string>
+    <string name="external_input_enter_number_short">Terlalu sedikit karakter</string>
+    <string name="add_number_exist">Nomor ini ada di Daftar Blokir</string>
+    <string name="add_number_as_spam">Laporkan sebagai spam</string>
+    <string name="from_contacts_title">Dari buku telepon</string>
+    <string name="from_contacts_quick_filtering">Filter cepat</string>
+    <string name="from_contacts_read_failed">Gagal membaca kontak telepon!!!</string>
+    <string name="from_call_log_title">Dari riwayat panggilan</string>
+    <string name="from_call_log_read_failed">Gagal membaca riwayat panggilan!!!</string>
+    <string name="country_list_title">Harap pilih negara Anda</string>
+    <string name="country_list_name_hint">Nama atau kode negara...</string>
+    <string name="call_coming_back">Panggilan</string>
+    <string name="call_coming_detail">Detail</string>
+    <string name="about_title">Tentang kami</string>
+    <string name="about_product_intro">Tool panggilan yg keren.</string>
+    <string name="about_product_version">Versi %s</string>
+    <string name="about_rote_gp">Seperti kita</string>
+    <string name="about_like_facebook">Sukai kami di Facebook</string>
+    <string name="about_send_apk">Kirim file APK ke teman</string>
+    <string name="no_app_to_share">Maaf, tidak ada file utk berbagi.</string>
+    <string name="failed_backup">Cadangan gagal</string>
+    <string name="share_to_facebook">Bagikan di Facebook</string>
+    <string name="about_privacy">Kebijakan Privasi</string>
+    <string name="about_term">Syarat Penggunaan</string>
+    <string name="share_text">%1$s bisa memblokir panggilan yg tak diinginkan dan mengetahui peneleponnya. Cobalah! Dapatkan di: %2$s</string>
+    <string name="rate_dialog_title">Berikan 5 bintang jika Anda suka. </string>
+    <string name="rate_dialog_message">Dukung kami dengan 5 bintang di Google Play.</string>
+    <string name="rate_dialog_ok">Berikan 5 Bintang</string>
+    <string name="rate_dialog_cancel">Nanti</string>
+    <string name="device_time_just">Baru saja</string>
+    <string name="device_time_minutes">%1$d mnt yg lalu</string>
+    <string name="device_time_hour">%1$d jam yg lalu</string>
+    <string name="device_time_one_hour">1 jam yg lalu</string>
+    <string name="device_time_day">%1$d hari yg lalu</string>
+    <string name="device_time_one_day">kemarin</string>
+    <string name="lanuage_item_auto">Otomatis</string>
+    <string name="time_s">%1$ds</string>
+    <string name="time_m">%1$dm:%2$ds</string>
+    <string name="time_h">%1$dh:%2$dm:%3$ds</string>
+    <string name="skip_splash">Lewati</string>
+    <string name="splash_more">LAGI</string>
+    <string name="call_log_menu_all_call">Semua</string>
+    <string name="call_log_menu_discerned">Dikenal</string>
+    <string name="call_log_menu_incoming">Masuk</string>
+    <string name="call_log_menu_refused">Ditolak</string>
+    <string name="call_log_menu_outgoing">Keluar</string>
+    <string name="call_log_menu_missed">Tak Terjawab</string>
+    <string name="call_log_menu_blocked">Diblokir</string>
+    <string name="call_log_menu_scan_shrink">Susut</string>
+    <string name="call_log_menu_delete_all_shield_calls">hapus panggilan terblokir</string>
+    <string name="call_log_menu_delete_all_calls">hapus semua panggilan</string>
+    <string name="call_log_contact">Kontak</string>
+    <string name="call_log_hide_number">Nomor tersembunyi</string>
+    <string name="call_log_date_sunday">Minggu</string>
+    <string name="call_log_date_saturday">Sabtu</string>
+    <string name="call_log_date_friday">Jumat</string>
+    <string name="call_log_date_thursday">Kamis</string>
+    <string name="call_log_date_wednesday">Rabu</string>
+    <string name="call_log_date_tuesday">Selasa</string>
+    <string name="call_log_date_monday">Senin</string>
+    <string name="call_log_date_today">Hari ini</string>
+    <string name="call_log_no_block_call">Tak ada panggilan terblokir</string>
+    <string name="call_log_no_missed_call">Tak ada panggilan tak terjawab</string>
+    <string name="call_log_crank_call_count_text">Blokir pintar panggilan spam</string>
+    <string name="call_log_open_block_text">aktifkan blokir pintar</string>
+    <string name="call_log_enable">Aktifkan</string>
+    <string name="call_log_no_calllog">Tak ada catatan panggilan</string>
+    <string name="phone_detail_unblock">BUKA BLOKIR</string>
+    <string name="phone_detail_block">BLOKIR</string>
+    <string name="phone_detail_call_log">Lihat riwayat panggilan</string>
+    <string name="phone_detail_phone_save">SIMPAN</string>
+    <string name="phone_detail_phone_edit">EDIT</string>
+    <string name="phone_detail_phone_Tag">TAG</string>
+    <string name="phone_detail_call_log_access_failure">Dibatalkan</string>
+    <string name="phone_detail_number_type_mobile">Seluler</string>
+    <string name="phone_detail_number_type_home">Rumah</string>
+    <string name="phone_detail_number_type_company">Kantor</string>
+    <string name="phone_detail_lastest_call_log">Panggilan terakhir: </string>
+    <string name="phone_detail_no_call_log">Tak ada riwayat panggilan</string>
+    <string name="phone_detail_block_dialog_content">Tak akan lagi menerima panggilan dari nomor ini</string>
+    <string name="phone_detail_block_dialog_content_unblock">Blokir nomor ini akan dibuka dan dibebaskan dari spam. Panggilan berikutnya tak akan ditandai sebagai spam</string>
+    <string name="phone_detail_block_dialog_title">Yakin ingin blokir nomor ini?</string>
+    <string name="phone_detail_block_dialog_title2">Yakin ingin membuka blokir nomor ini?</string>
+    <string name="phone_detail_have_no_tag">Semua tag telah ditambahkan ke nomor ini</string>
+    <string name="phone_detail_add_tag">Tag yg ditambahkan</string>
+    <string name="phone_detail_add_name">Tambahkan nama</string>
+    <string name="phone_detail_no_name">Tak ada nama</string>
+    <string name="phone_detail_add_lion_name_tip">Masukkan nama yg bagus</string>
+    <string name="phone_detail_add_lion_name_dialog_person">Pribadi</string>
+    <string name="phone_detail_add_lion_name_dialog_company">Bisnis</string>
+    <string name="phone_detail_add_lion_name_update_tip1">Bukan %1$s?</string>
+    <string name="phone_detail_add_lion_name_update_tip2">Ketuk utk memasukkan nama yg bagus</string>
+    <string name="phone_detail_cancel_block">Nomor dihapus dari daftar hitam</string>
+    <string name="phone_detail_add_name_not_null_tip">Nama wajib diisi</string>
+    <string name="phone_detail_delete_contact">Hapus kontak</string>
+    <string name="phone_detail_delete_spam_count_text">%1$d orang melaporkan ini sebagai spam</string>
+    <string name="phone_detail_delete_spam_count_text3">dilaporkan Anda sebagai spam</string>
+    <string name="phone_detail_delete_spam_count_text2">dilaporkan pengguna sebagai spam</string>
+    <string name="phone_detail_no_number">Tak ada nomor dalam kontak ini</string>
+    <string name="phone_detail_unknown">Tak diketahui</string>
+    <string name="phone_detail_null_number">Nomor kosong</string>
+    <string name="tag_popupwindow_tip">Bantu orang lain mengenali nomor ini</string>
+    <string name="contact_search_hint">Cari no. telepon</string>
+    <string name="contact_add_contact">Buat kontak baru</string>
+    <string name="contact_no_contacts">Tak Ada Kontak</string>
+    <string name="call_after_message">Pesan</string>
+    <string name="call_after_click_toast">"Nomor ini disembunyikan!"</string>
+    <string name="search_input_hint">Masukkan nomor</string>
+    <string name="search_number_hint">Cari lebih dari 100.000.000 nomor telepon</string>
+    <string name="search_recently_record">Hasil pencarian terbaru</string>
+    <string name="search_no_result">Hasil pencarian tak ada</string>
+    <string name="search_no_result2">Hasil pencarian tak ada. Coba lagi. Pilih kode negara lain</string>
+    <string name="search_no_result_hint">Hasil pencarian terbaru akan muncul di sini</string>
+    <string name="search_content_hint">Cari di Caller ID</string>
+    <string name="search_delete_all_content">Yakin ingin hapus semua riwayat pencarian?</string>
+    <string name="search_clear_all_record">Hapus riwayat pencarian terbaru</string>
+    <string name="search_invalid_number">Masukkan nomor yg benar</string>
+    <string name="search_number_tip">Masukkan nomor telepon yg benar</string>
+    <string name="dialing_title">Panggil</string>
+    <string name="unknown_number">Nomor Tak Diketahui</string>
+    <string name="permission_tip">Untuk mengenal dan memblokir panggilan pengganggu, riwayat Panggilan dan izin Kontak harus aktif.</string>
+    <string name="permission_sysytem_permission">Pengelola Izin</string>
+    <string name="permission_to_get_permsiion">Aktifkan</string>
+    <string name="permission_no_permission">Tak ada izin</string>
+    <string name="permission_phone">Telepon</string>
+    <string name="permission_SMS">SMS</string>
+    <string name="dialog_update_btn_update">Perbarui</string>
+    <string name="dialog_update_download_title">Memperbarui</string>
+    <string name="num_tag_101">Spam</string>
+    <string name="num_tag_103">Telemarketing</string>
+    <string name="num_tag_104">Keuangan&amp;Asuransi</string>
+    <string name="num_tag_105">Belanja</string>
+    <string name="num_tag_106">Hotel</string>
+    <string name="num_tag_107">Pendidikan</string>
+    <string name="num_tag_108">Kesehatan</string>
+    <string name="num_tag_109">Perjalanan</string>
+    <string name="num_tag_110">Ekspres</string>
+    <string name="num_tag_111">Transportasi</string>
+    <string name="num_tag_112">Minuman&amp;KehidupanMalam</string>
+    <string name="num_tag_113">Restoran&amp;Kafe</string>
+    <string name="num_tag_114">Layanan Publik</string>
+    <string name="FIXED_LINE">TELEPON_RUMAH</string>
+    <string name="MOBILE">SELULER</string>
+    <string name="FIXED_LINE_OR_MOBILE">TELEPON_RUMAH_ATAU_SELULER</string>
+    <string name="TOLL_FREE">BEBAS_PULSA</string>
+    <string name="PREMIUM_RATE">PULSA_PREMIUM</string>
+    <string name="SHARED_COST">BIAYA_BERSAMA</string>
+    <string name="PERSONAL_NUMBER">NOMOR_PRIBADI</string>
+    <string name="call_flash_led_festival">Festival</string>
+    <string name="call_flash_led_love">Cinta</string>
+    <string name="call_falsh_led_streamer">Aliran</string>
+    <!--<string name="call_falsh_led_bloom">Kembang</string>-->
+    <!--<string name="call_falsh_led_gradient">Gradien</string>-->
+    <!--<string name="call_falsh_led_neon">Neon</string>-->
+    <string name="call_flash_guide_open_upper">OPEN</string>
+    <string name="call_flash_exit_dialog_title">Buka Panggilan Flash</string>
+    <string name="whtas_new_title">Aktivitas Baru</string>
+    <string name="whtas_new_title_name">ID Penelepon</string>
+    <string name="whtas_new_des_one">Lihat konten utk pesan tak terjawab.</string>
+    <string name="whtas_new_des_two">Kenali panggilan masuk dan keluar.</string>
+    <string name="whtas_new_des_three">Lihat ID Penelepon utk panggilan tak terjawab atau berakhir.</string>
+    <string name="smart_lock_toast">Berhasil Diaktifkan.</string>
+    <string name="message_options">Pilihan Pesan</string>
+    <string name="copy_message_text">Salin teks</string>
+    <string name="menu_add_address_to_contacts">Tambahkan %s ke Kontak</string>
+    <string name="delete_message">Hapus Pesan</string>
+    <string name="confirm_delete_message">Pesan akan dihapus</string>
+    <string name="delete">Hapus</string>
+    <string name="dail">Tekan</string>
+    <string name="reply">Balas</string>
+    <string name="tyep_message">Ketik Pesan</string>
+    <string name="change_sms_app">Ubah aplikasi SMS?</string>
+    <string name="upgrade_now">Atur sekarang</string>
+    <string name="not_default_send">Pakai aplikasi SMS untuk mengirim pesan</string>
+    <string name="sms_sent_fail">Gagal mengirim</string>
+    <string name="sms_send_wait">Tunggu kirim</string>
+    <string name="sms_sending">mengirim...</string>
+    <string name="sms_not_default_mark_read">Pakai aplikasi SMS untuk menandai pesan</string>
+    <string name="push_tools_message_mult_contacts">"%1$s dan &lt;font color="#FF0084"&gt;%2$s&lt;/font&gt; kontak lain"</string>
+    <string name="sms_set_default_sms">"BUAT APLIKASI SMS DEFAULT"</string>
+    <string name="sms_save_to_contact">Tambahkan ke kontak</string>
+    <string name="sms_see_contact">"Lihat kontak"</string>
+    <string name="sms_delete_conversation">"Hapus pesan"</string>
+    <string name="sms_delete_conversation_text">"Anda yakin akan menghapus pesan ini?"</string>
+    <string name="sms_deleteing">"Menghapus..."</string>
+    <string name="sms_not_default_to_delete_conversation">"Ini perlu diset sebagai aplikasi SMS default Anda."</string>
+    <string name="sms_delete_message">"Hapus pesan ini"</string>
+    <string name="sms_no_conversation">"Tidak ada pesan"</string>
+
+    <string name="splash_content">Identifikasi pemanggil dan intersepsi</string>
+
+    <!-- fake call start-->
+    <string name="fake_call_title">Panggilan palsu</string>
+    <string name="fake_call_add_photo">Foto</string>
+    <string name="fake_call_add_name_hint">nama</string>
+    <string name="fake_call_add_number_hint">jumlah</string>
+    <string name="fake_call_make_call">Panggilan palsu</string>
+    <string name="fake_call_schedule">Jadwal saya</string>
+    <string name="fake_call_error_numer_empty">Nomornya tidak boleh kosong!</string>
+    <string name="fake_call_intro_title">Klik dan setel panggilan palsu Anda</string>
+    <!--<string name="fake_call_time_choice_tip">Click to select a call time</string>-->
+    <string name="fake_call_cancel_make_call_tip">Tekan lama untuk menghapus panggilan terjadwal</string>
+    <string name="fake_call_cancel_dialog_content">Apakah Anda ingin menghapus panggilan ini?</string>
+
+    <string name="fake_call_add_photo_title">Pilih panggilan disarankan</string>
+    <string name="fake_call_add_photo_name_private">Nomor Pribadi</string>
+    <string name="fake_call_add_photo_name_spiderman">Manusia Laba-laba</string>
+    <string name="fake_call_add_photo_name_wonder_woman">Wanita Perkasa</string>
+
+    <string name="fake_call_make_call_now">kini</string>
+    <string name="fake_call_time_choice_title">Buat panggilan setelah</string>
+    <string name="fake_call_quick_set_time">Waktu Setting Cepat</string>
+    <string name="fake_call_custom_time">Waktu Pengaturan Kustom</string>
+    <string name="fake_call_custom_time_toast">Silakan pilih waktu panggilan yang masuk akal!</string>
+    <string name="fake_call_countdown_desc1">Akan meneleponmu</string>
+
+    <string name="fake_call_incoming_title">Panggilan Masuk</string>
+    <string name="fake_call_incoming_style_choice_title">Panggilan masuk palsu</string>
+    <string name="fake_in_call_default_style">"Default"</string>
+    <!-- fake call end-->
+
+    <string name="sms_draft">[konsep]</string>
+    <string name="toast_draft">Draf tersimpan</string>
+    <string name="toast_save_draft_tip">Harus aplikasi SMS Anda ke Disimpan draf</string>
+    <string name="sms_resend_fail_sms">Gagal mengirim pesan.Unsend it?</string>
+    <string name="sms_resend_message">Kirim ulang pesan</string>
+    <string name="sms_emoji_tip">segera...</string>
+    <string name="call_after_close">Dekat</string>
+    <string name="call_after_disable">Cacat</string>
+    <string name="fake_call_tip">Buat panggilan palsu untuk menyelamatkan Anda dari situasi yang canggung.</string>
+    <string name="calllog_delete_tip">Apakah Anda yakin untuk menghapus &lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt; panggilan masuk yang dipilih ini?</string>
+    <string name="calllog_delete_no_selected">Silahkan pilih calllog yang ingin anda hapus</string>
+    <string name="calllog_delete_fail">Hapus gagal</string>
+    <string name="guide_desc_identify">Identifikasi panggilan yang tidak diketahui dan blok spam</string>
+    <string name="guide_desc_call_falsh">Cool Screen Flash untuk Panggilan</string>
+    <string name="guide_desc_block">Blokir spam dan panggilan yang tidak diinginkan</string>
+    <string name="guide_desc_fake_call">Memanggil untuk menyenangkan</string>
+    <string name="what_new_start">Mulai</string>
+    <string name="fake_call_tip2">Coba panggilan palsu sekarang?</string>
+    <string name="fake_call_tip3">Sebuah panggilan untuk membantu Anda menyingkirkan keadaan aneh, obrolan teman yang rumit.</string>
+    <string name="quit">Keluar</string>
+    <string name="fake_call_try">COBA</string>
+    <string name="contact_delete_tip">Anda yakin untuk menghapus &lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt;?</string>
+    <string name="phone_details_delete_contact">Apakah Anda yakin untuk menghapus kontak ini?</string>
+    <string name="phone_details_location">Lokasi</string>
+    <string name="phone_details_change_name">Ganti Nama</string>
+    <string name="setting_intelligent_identification">Identifikasi Pintar</string>
+    <string name="setting_intelligent_identification_numbers">Tampilkan penelepon yang tidak dikenal</string>
+    <string name="phone_details_open_identify_tip">Aktifkan identifikasi cerdas (sesuai dengan kebijakan privasi)</string>
+
+    <!-- spam update start 14-->
+    <string name="frag_block_offline_size_title">Spam Database</string>
+    <string name="frag_block_offline_size_title_new_number">Nomor baru diperbarui</string>
+    <string name="frag_block_offline_size_title_new_number_notify">%1$d nomor baru ditambahkan, ketuk untuk memperbarui.</string>
+    <string name="frag_block_offline_size_desc">memperbarui sekarang</string>
+    <string name="frag_block_offline_size_desc2">Data Anda up to date</string>
+    <string name="frag_block_update_scan_phone_number">Pindai</string>
+    <string name="frag_block_update_scan_phone_number_title">Aman</string>
+    <string name="frag_block_update_scan_phone_number_title_new_calls">%1$d panggilan</string>
+    <string name="frag_block_update_scan_phone_number_desc_tap">Pindai panggilan baru Anda.</string>
+    <string name="frag_block_update_scan_phone_number_desc">Ponsel Anda dilindungi.</string>
+    <string name="spam_update_result_suc">"Perbarui Kesuksesan"</string>
+    <string name="spam_update_result_fail">"Pembaharuan gagal"</string>
+    <string name="spam_update_tip">"Memperbarui, tolong jangan pergi."</string>
+    <string name="spam_update_exit_tip">Update sedang berlangsung, apakah Anda yakin untuk keluar?</string>
+    <string name="spam_update_result_update_number">%1$d nomor baru diperbarui</string>
+    <string name="spam_update_app_exit_prompt_title">Update Bilangan Database Sekarang?</string>
+    <string name="spam_update_app_exit_prompt_content">Database Bilangan akan membantu Anda mengenali panggilan tak dikenal dan memblokir spam, ketuk untuk memperbarui.</string>
+    <!-- spam update end-->
+
+    <!-- scan new calls 15 -->
+    <string name="number_scaning">SCANNING</string>
+    <string name="number_scan_recent">AKTIF</string>
+    <string name="number_scan_identified">IDENTIFIKASI</string>
+    <string name="number_scan_dialog_tip">Memindai, apakah Anda yakin untuk keluar?</string>
+    <string name="number_scan_result">Hasil Pindai</string>
+    <string name="number_scan_result_risks">Resiko</string>
+    <string name="number_scan_checking">Memeriksa ...</string>
+    <string name="number_scan_result_tip">Mengidentifikasi %1$d nomor spam di log panggilan Anda</string>
+    <string name="number_scan_realtime_protect">Lindungi RealTime</string>
+    <string name="number_scan_reported_you_call">Melaporkan Anda menelepon</string>
+    <string name="number_scan_result_spam_number">SPAM NOMOR</string>
+    <string name="number_scan_result_open_realtime_protect">ENABLE REALTIME MELINDUNGI</string>
+    <string name="number_scan_result_congratulations">Lengkap.</string>
+    <string name="number_scan_result_Successfully_tip1">Berhasil Ditambahkan ke Blocklist</string>
+    <string name="number_scan_result_Successfully_tip2">Berhasil Aktifkan Lindungi Waktu Nyata</string>
+    <string name="number_scan_exit_intro_title">Nomor baru pindai</string>
+    <string name="number_scan_exit_intro_content">Ponsel ini memiliki nomor baru yang tidak diketahui. Harap verifikasi keamanan nomor tersebut</string>
+
+    <string name="scan_anim_title">Memindai panggilan spam ...</string>
+
+    <string name="call_flash_led_panda">"Panda"</string>
+    <string name="call_flash_led_custom">"Sesuaikan"</string>
+    <string name="call_flash_show_add_custom_bg">Sesuaikan Panggilan Panggilan Anda</string>
+    <string name="call_flash_show_custom_bg_desc">Klik \"+\" untuk memilih Foto atau GIF</string>
+
+    <string name="exit_guide_content_number_scan">Pindai panggilan baru untuk memeriksa apakah mereka melecehkan/nomor telemarketing.</string>
+    <!--短信清理 2017-09-01 end-->
+    <string name="call_flash_exit_open_title">Gunakan ini saat Anda menelepon layar?</string>
+    <string name="call_flash_exit_open_ok">Gunakan</string>
+
+    <string name="number_scan_initiating">Memulai</string>
+
+    <!--Call flash album start-->
+    <string name="call_flash_album_title">Pilih Foto atau GIF</string>
+    <string name="call_flash_album_online">On line</string>
+    <string name="call_flash_album_local">Lokal</string>
+    <string name="call_flash_album_gallery">Galeri</string>
+    <string name="call_flash_album_gallery_desc_1">pilih gambar</string>
+    <string name="call_flash_album_gallery_desc_2">%1$d picture(s)</string>
+    <!--Call flash album end-->
+
+    <!--call flash gif show start-->
+    <string name="call_flash_result_title">Setup selesai</string>
+    <string name="call_flash_gif_show_save">Atur sebagai Call Screen</string>
+    <string name="call_flash_gif_show_load">Download %1$d%%</string>
+    <string name="call_flash_gif_show_connecte">Menghubungkan</string>
+    <string name="call_flash_gif_show_load_suc">Download selesai.</string>
+    <string name="call_flash_gif_show_load_failed">Download gagal.</string>
+    <string name="call_flash_gif_show_setting_suc">Layar panggilan baru Anda telah ditetapkan.</string>
+    <string name="call_flash_gif_show_setting_suc_reset">Layar panggilan Anda telah diatur ulang.</string>
+    <string name="call_flash_reset">Anda akan mereset untuk menggunakan layar panggil default sistem.</string>
+    <string name="call_flash_change_to_new">Gunakan layar flash panggilan baru?</string>
+    <string name="call_falsh_gif_thum_load_desc">Beban</string>
+    <!--call flash gif show end-->
+
+    <string name="contact_search_tip">masukkan nomor atau nama</string>
+
+    <string name="not_upload_name0">mama</string>
+    <string name="not_upload_name1">ibu</string>
+    <string name="not_upload_name2">ibu</string>
+    <string name="not_upload_name3">ayah</string>
+    <string name="not_upload_name4">ayah</string>
+    <string name="not_upload_name5">ayah</string>
+    <string name="not_upload_name6">nenek</string>
+    <string name="not_upload_name7">kakek</string>
+    <string name="not_upload_name8">kakek</string>
+    <string name="not_upload_name9">nenek</string>
+    <string name="not_upload_name10">cinta</string>
+    <string name="not_upload_name11">sayang</string>
+    <string name="not_upload_name12">sayang</string>
+    <string name="not_upload_name13">madu</string>
+    <string name="not_upload_name14">bayi</string>
+    <string name="not_upload_name15">bayi</string>
+    <string name="not_upload_name16">anak anjing</string>
+    <string name="not_upload_name17">Suami</string>
+    <string name="not_upload_name18">istri</string>
+    <string name="not_upload_name19">kekasih</string>
+    <string name="not_upload_name20">kekasih</string>
+    <string name="not_upload_name21">putra</string>
+    <string name="not_upload_name22">putri</string>
+    <string name="not_upload_name23">saudara</string>
+    <string name="not_upload_name24">saudara</string>
+    <string name="not_upload_name25">bibi</string>
+    <string name="not_upload_name26">paman</string>
+    <string name="not_upload_name27">keponakan</string>
+    <string name="not_upload_name28">keponakan</string>
+    <string name="not_upload_name29">sepupu</string>
+    <string name="not_upload_name30">guru</string>
+    <string name="not_upload_name31">bos</string>
+
+
+    <string name="page_title_calllog">Laporan panggilan</string>
+    <string name="page_title_contact">@string/call_log_contact</string>
+    <string name="page_title_conversation">Pesan</string>
+    <string name="page_title_block">@string/block_setting_name</string>
+    <string name="page_title_search">Pencarian</string>
+
+    <string name="call_flash_Halloween">Halloween</string>
+
+    <string name="phone_detail_user_add_name_tip">Nama khusus adalah nomor non-murni</string>
+
+    <string name="phone_detail_set_call_flash_title">Setel Layar Panggilan</string>
+    <string name="phone_detail_set_call_flash_des">Pilih Layar Panggilan Keren untuk nomor ini</string>
+    <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
+
+    <string name="call_flash_led_love1">Kekasih1</string>
+    <string name="call_flash_led_love2">Kekasih2</string>
+    <string name="call_flash_led_downloda_again">@string/lion_family_active_download</string>
+    <string name="call_flash_led_downloading_back_des">Download sedang berlangsung, batalkan dan berhenti?</string>
+    <string name="call_flash_led_downloading_back_wait">Tunggu</string>
+    <string name="call_flash_led_not_download_back_des">Belum download, download sekarang?</string>
+
+    <string name="real_time_protect_guide_desc3">Lindungi perangkat anda dari bahaya dalam real time.</string>
+    <string name="call_flash_led_kiss">Ciuman</string>
+    <string name="call_flash_led_rose">Mawar</string>
+    <string name="exit_guide_act_call_flash">Pameran</string>
+    <string name="exit_guide_close_desc">Konfirmasi keluar?</string>
+    <string name="exit_guide_content_call_flash">Apakah Anda menyukai sebuah acara menarik yang menarik dan baru? Cepatlah aku melihatnya.</string>
+    <string name="exit_guide_content_update_spam">Dari update terakhir, jumlah ponsel pelecehan baru %1$d+ Update sekarang untuk memastikan ID pemanggil terbaik.</string>
+    <string name="fake_call_countdown_desc2">Kemudian</string>
+    <string name="lion_family_active_download">Download</string>
+    <string name="lion_family_active_use">Gunakan</string>
+    <string name="lion_family_desc">Memenuhi semua yang Anda butuhkan</string>
+    <string name="lion_family_price">Gratis</string>
+    <string name="rate_dialog_msg_illegal">String yang Anda masukkan berisi karakter ilegal!</string>
+    <string name="rate_dialog_nagative_desc">Ketik masalah / bug / saran anda di sini, maksimal 200 kata.</string>
+    <string name="rate_dialog_nagative_send">Kirim</string>
+    <string name="rate_dialog_nagative_toast">Silahkan masukkan saran anda!</string>
+    <string name="rate_dialog_negative_title">Umpan balik</string>
+    <string name="rate_dialog_send_success_toast">Umpan balik sudah dikirim, terima kasih!</string>
+    <string name="sms_message_size_label">Ukuran pesan\u000A</string>
+    <string name="sms_no_subject_view">(Tidak ada subjek)</string>
+    <string name="sms_not_empty">Silahkan masukan pesan anda</string>
+    <string name="txt_announcement">Pengumuman</string>
+    <string name="exit_string">KELUAR</string>
+
+    <string name="about_email_us">Kirimkan email pada kami</string>
+    <string name="email_choose_one">Pilih aplikasi pengirim surel</string>
+    <string name="frag_block_block_history_title">Lihat riwayat blokir</string>
+
+    <string name="message_flash_title">Layar kilat SMS / Messages</string>
+    <string name="message_flash_next_sms">Berikutnya</string>
+    <string name="message_flash_smile">Tersenyum</string>
+    <string name="message_flash_love">@string/call_flash_led_love</string>
+    <string name="message_flash_balloon">Balon</string>
+    <string name="message_flash_paper">Kertas</string>
+    <string name="message_flash_sysytem">Sistem</string>
+    <string name="message_flash_Close">Anda akan menonaktifkan pesan flash layar.</string>
+    <string name="message_flash_change_to_new">Gunakan flash layar pesan baru?</string>
+    <string name="message_flash_exit_open_title">Gunakan ini sebagai layar pesan Anda?</string>
+    <string name="message_flash_exit_new_flash_des">Layar SMS / Pesan berwarna-warni dicintai oleh sebagian besar pengguna. Cobalah!</string>
+    <string name="message_flash_set_success_des">Layar flash pesan baru Anda telah ditetapkan.</string>
+    <string name="message_flash_set_success_des2">Layar flash pesan Anda telah dinonaktifkan.</string>
+
+    <string name="push_tools_call_flash_toast_weekend">Selamat berakhir pekan! Layar flash panggilan keren baru tersedia sekarang</string>
+
+    <string name="call_flash_led_visual_1">"kisi"</string>
+    <string name="call_flash_led_visual_2">"Neon"</string>
+    <string name="call_flash_led_visual_3">"Gelombang"</string>
+    <string name="connection_failure">"Koneksi gagal"</string>
+    <string name="call_flash_led_color_flash">Warna Flash</string>
+
+    <string name="call_falsh_led_monkey">"Monyet"</string>
+
+    <string name="call_flash_gif_show_setting_fail">Set gagal! Perlu izin untuk mengatur nada dering.</string>
+    <string name="call_flash_gif_show_set_ring_title_des1">Set gagal! Perlu izin untuk mengatur nada dering.</string>
+    <string name="call_flash_led_santa_claus">Sinterklas</string>
+    <string name="call_flash_led_charistmas_snowman">hari Natal</string>
+    <string name="call_falsh_download_waiting">Menunggu ...</string>
+    <string name="call_flash_gif_show_setting_fail2">Set gagal! Ini membutuhkan izin untuk mengatur layar panggilan.</string>
+    <string name="call_flash_gif_show_setting_des">Ini perlu mengaktifkan izin jendela alert sistem.</string>
+    <string name="call_flash_gif_show_setting_des2">Set gagal!</string>
+    <string name="call_falsh_led_pig">Babi</string>
+
+    <string name="call_answer_string">"Jawab"</string>
+    <string name="notification_listener_setting_tip">Aktifkan akses Notifikasi ke Jawab panggilan, tidak akan digunakan untuk tujuan lain.</string>
+    <string name="call_flash_permission_tip">Izin hibah hanya digunakan untuk mengatur layar flash panggilan, tidak akan digunakan untuk tujuan lain.</string>
+    <string name="sms_flash_permission_tip">Pemberian izin hanya digunakan untuk mengatur Layar kilat SMS / Messages, tidak akan digunakan untuk tujuan lain.</string>
+    <string name="call_falsh_led_bear">Beruang</string>
+
+    <string name="call_flash_more_title_1">Klasik</string>
+    <string name="call_flash_more_title_2">Unggulan</string>
+    <string name="call_flash_more_title_3">Populer</string>
+    <string name="txt_call_flash_theme_title">Tema panggilan</string>
+    <string name="call_flash_detail_setting_action_to_cancel">"Batalkan Tema Panggilan Masuk ini"</string>
+    <string name="notification_manager_permission_tip">Aktifkan akses Notifikasi ke Jawab panggilan</string>
+    <string name="call_flash_guide_des">"atur layar panggilan khusus untuknya"</string>
+
+    <string name="message_block_not_default_sms">Harus menjadi aplikasi SMS default Anda untuk memblokir SMS.</string>
+    <string name="message_option_mark_as_read">tandai semua telah dibaca</string>
+    <string name="message_remove_to_notification_dialog_tip">Apakah Anda yakin untuk memindahkan pesan ke orang lain?</string>
+    <string name="message_blocked_dialog_tip">Blokir pesan dari nomor ini?</string>
+    <string name="conversation_notification">Lainnya</string>
+    <string name="message_remove_to_notification">Pindah ke Orang Lain</string>
+    <string name="message_remove_to_phone_number">Pindah ke Inbox</string>
+    <string name="message_blocked">Nomor ditambahkan ke daftar SMS Block</string>
+    <string name="message_option_block_sms_list">Daftar blokir SMS</string>
+    <string name="message_remove_to_phone_number_dialog_tip">Anda yakin akan memindahkan pesan ke inbox?</string>
+    <string name="conversation_phonenumber">Kotak masuk</string>
+    <string name="message_option_mark_as_read_2">tandai sebagai membaca</string>
+
+    <string name="audio_record_request_option_1">Saya mengkonfirmasi bahwa rekaman panggilan itu legal di negara saya</string>
+    <string name="audio_record_request_option_2">Saya setuju dengan</string>
+    <string name="audio_record_request_option_3">Rekaman Panggilan Otomatis</string>
+    <string name="audio_record_delete_result_suc">Hapus Berhasil.</string>
+    <string name="setting_call_audio_record">Perekam panggilan</string>
+    <string name="audio_record_file_play">Bermain</string>
+    <string name="audio_record_improve_tip_opened">Perangkat Anda merekam panggilan dengan mikrofon, Harap ingat untuk menyalakan speaker saat sedang merekam.</string>
+    <string name="audio_record_no_record">Tanpa Catatan.</string>
+    <string name="audio_record_option_disable_tip">Apakah Anda yakin untuk menonaktifkan rekaman panggilan?</string>
+    <string name="audio_record_request_desc">Anda dapat merekam panggilan setiap saat, Caller ID tidak akan menggunakan atau mengunggah file rekaman panggilan Anda.</string>
+    <string name="audio_record_miss_call_file_delete">Ponsel gagal tersambung dan file rekaman telah dihapus.</string>
+    <string name="audio_record_option_enable">Aktifkan Rekaman</string>
+    <string name="audio_record_option_delete">Hapus semua</string>
+    <string name="audio_record_improve_tip_closed">Fungsi Perekaman tidak aktif, aktifkan sekarang.</string>
+    <string name="audio_record_request_title">Aktifkan Rekaman Panggilan?</string>
+    <string name="audio_record_request_action_1">Menolak</string>
+    <string name="audio_record_delete_all_tip">Apakah Anda yakin untuk menghapus semua rekaman panggilan?</string>
+    <string name="audio_record_option_disable">Nonaktifkan Perekaman</string>
+    <string name="audio_record_request_option_2_privacy">Kebijakan pribadi</string>
+
+    <string name="audio_record_option_disable_auto_record_suc_tip">Nonaktifkan Rekaman Otomatis Berhasil.</string>
+    <string name="audio_record_set_failed">Setel gagal, Diperlukan izin untuk mengaktifkan rekaman audio.</string>
+    <string name="audio_record_option_enable_auto_record_suc_tip">Aktifkan Rekaman Otomatis Berhasil.</string>
+    <string name="audio_record_option_enable_auto_record">Aktifkan Rekaman Otomatis</string>
+    <string name="audio_record_option_disable_auto_record">Nonaktifkan Rekaman Otomatis</string>
+    <string name="audio_record_set_success">Set Berhasil, Fungsi Perekaman aktif.</string>
+    <string name="record_call_permission_tip">Izin pemberian hanya digunakan untuk merekam panggilan, tidak akan digunakan untuk tujuan lain apa pun.</string>
+
+    <string name="audio_record_delete_single_tip">Apakah Anda yakin untuk menghapus rekaman panggilan ini?</string>
+    <string name="audio_record_push_tool_new_record">Anda memiliki rekaman panggilan baru.</string>
+
+    <string name="block_message_tip">SMS yang dari nomor ini telah diblokir.</string>
+    <string name="audio_record_phone_detail_title">Rekaman</string>
+    <string name="unblock_message_tip">SMS yang dari nomor ini telah dicabut.</string>
+
+    <string name="do_not_disturb_permission_tip">Perlu izin untuk mengaktifkan jangan diganggu.</string>
+    <string name="call_flash_saving">Penghematan</string>
+    <string name="discovery_call_record_des">Dukung rekaman panggilan dan bagikan file rekaman dengan teman-teman Anda.</string>
+    <string name="do_not_disturb_timer">Timer</string>
+    <string name="do_not_disturb_allow_no">Tidak ada</string>
+    <string name="do_not_disturb_tip_content_disenable">Aktifkan jangan ganggu, nikmati waktu hidup yang menyenangkan dan tenang, coba sekarang.</string>
+    <string name="do_not_disturb_allow_incoming_list">Izinkan Daftar Panggilan</string>
+    <string name="do_not_disturb_schedule_set">Pengaturan</string>
+    <string name="call_flash_preview_recommend_call_flash">Rekomendasikan Flash Panggilan</string>
+    <string name="do_not_disturb_schedule">Susunan acara</string>
+    <string name="do_not_disturb_allow_incoming">Izinkan Panggilan Dari</string>
+    <string name="do_not_disturb_set_success_for_schedule">Ponsel akan dibungkam selama waktu yang dijadwalkan</string>
+    <string name="call_flash_preview_now">Pratinjau sekarang</string>
+    <string name="do_not_disturb_timer_tip">Silakan tentukan waktunya</string>
+    <string name="do_not_disturb_timer_set_time_title">Setel Timer</string>
+    <string name="side_slip_menu_discovery">Penemuan</string>
+    <string name="do_not_disturb_timer_title">Sampai&lt;font color=&quot;#FF0084FF&quot;&gt;%1$s&lt;/font&gt;</string>
+    <string name="do_not_disturb_notification_title">Dalam Mode Tenang</string>
+    <string name="do_not_disturb_end">Akhir</string>
+    <string name="do_not_disturb_allow_in_coming_view_custom">Pilih nomor yang memungkinkan panggilan</string>
+    <string name="do_not_disturb_set_success">Ponsel akan dibungkam hingga hitungan mundur berakhir</string>
+    <string name="do_not_disturb_permission_set_fail">Set gagal, Ini perlu izin untuk mengatur jangan diganggu.</string>
+    <string name="do_not_disturb_allow_in_coming_custom">Memilih</string>
+    <string name="audio_record_file_share">Bagikan</string>
+    <string name="do_not_disturb_allow_incoming_tip">Nomor ini sudah ditambahkan.</string>
+    <string name="call_flash_grant_permission_tip">Izin pemberian hanya digunakan untuk mengatur %1$s, itu tidak akan digunakan untuk tujuan lain.</string>
+    <string name="do_not_disturb_enabled">Diaktifkan</string>
+
+    <string name="external_volume_new_call_flash_title">Acara flash panggilan baru</string>
+    <string name="external_volume_new_call_flash_view">Lihat</string>
+
+    <string name="call_flash_upload_action_upload">Unggah</string>
+    <string name="call_flash_upload_tip_privacy_policy">Harus menyetujui kebijakan privasi untuk mengunggah file</string>
+    <string name="call_flash_upload_tip_no_file">Silakan pilih file yang akan diunggah</string>
+    <string name="call_flash_upload_uploading">Diunggah</string>
+    <string name="call_flash_upload_author">Penulis</string>
+
+    <string name="privacy_number_title_pattern_lock">Kunci pola</string>
+    <string name="privacy_number_add_number">Tambahkan Nomor Ke Kontak Pribadi</string>
+    <string name="privacy_number_set_pattern">Silakan menggambar pola</string>
+    <string name="privavy_number_set_pattern_guide_tip">Silakan atur kunci pola untuk kontak pribadi Anda.</string>
+    <string name="privacy_number_set_pattern_error_to_init">Harap gambar pola yang sama seperti saat pertama!</string>
+    <string name="privacy_number_set_pattern_reset_init_password">Setel ulang</string>
+    <string name="privacy_number_input_password_error_tip">Kata sandi salah, Anda juga dapat mencoba kali %1$d</string>
+
+    <string name="privacy_number_forget_pwd">Lupa Password</string>
+    <string name="privacy_number_enabled_private_protects">Perlindungan Kontak Pribadi diaktifkan.</string>
+    <string name="add_private_number_title">Tambahkan nomor ke kontak pribadi</string>
+    <string name="add_private_number_add_sure">Memastikan</string>
+
+    <string name="add_number_exist_by_hide_type">"Nomor ini sudah ada di Daftar Pribadi"</string>
+    <string name="add_private_number_add_number_empty">Kesalahan tidak dikenal menyebabkan penambahan gagal. </string>
+    <string name="privacy_number_security_question_title">Pilih sebuah pertanyaan keamanan</string>
+    <string name="privacy_number_security_question_1">Di jalan mana sekolah dasar Anda?</string>
+    <string name="privacy_number_security_question_2">Berapa nomor telepon pertama Anda?</string>
+    <string name="privacy_number_security_question_3">Di mana tempat kelahiranmu?</string>
+    <string name="privacy_number_security_question_4">"Kapan ulang tahun ayahmu?"</string>
+    <string name="privacy_number_security_question_5">Apa makanan favoritmu?</string>
+    <string name="privacy_number_security_question_custom">Sesuaikan</string>
+    <string name="privacy_number_set_pwd_security_question_title">Masukkan pertanyaan keamanan Anda</string>
+    <string name="privacy_number_security_question_answer_title">Masukkan jawaban keamanan Anda</string>
+    <string name="privacy_number_security_answer_empty">tolong masukan jawaban anda!</string>
+    <string name="privacy_number_security_answer_length_limit">Harap pertahankan panjang karakter dalam kisaran %1$d hingga %2$d.</string>
+    <string name="privacy_number_security_question_empty">Pertanyaan rahasia tidak boleh kosong!</string>
+    <string name="privacy_number_set_pattern_length_tip">Pastikan kunci pola Anda terhubung ke setidaknya 4 poin!</string>
+    <string name="privacy_number_pattern_error_over_count_tip">Kata sandi telah habis. </string>
+    <string name="privacy_number_forget_pwd_error_tip">Kata kunci Salah. </string>
+    <string name="privacy_number_pattern_reset_suc_tip">Kunci pola reset berhasil</string>
+    <string name="privacy_number_security_question_confirm_tip">Untuk melindungi privasi Anda, pertanyaan keamanan dan jawaban yang Anda tetapkan adalah satu-satunya cara untuk memulihkan pola Anda. Harap pastikan Anda mengingatnya.</string>
+
+    <string name="privacy_number_add_number_tip_title">Tambahkan Nomor ke Kontak Pribadi</string>
+    <string name="privacy_number_add_number_tip_content">Riwayat panggilan dari kontak pribadi hanya akan muncul dalam kontak pribadi. Log panggilan tidak muncul dalam sistem atau perangkat lunak lainnya.</string>
+    <string name="privacy_number_add_number_tip_check_content">"Jangan tunjukkan lagi"</string>
+    <string name="privacy_number_add_number_tip_ok">SAYA MENDAPATKANNYA</string>
+
+    <string name="privacy_number_delete_number_tip_title">Hapus Kontak Pribadi</string>
+    <string name="privacy_number_delete_number_tip_content">Setelah menghapus kontak pribadi ini, log panggilannya akan dihapus, tetapi rekaman akan disimpan. Konfirmasi penghapusan kontak pribadi ini?</string>
+    <string name="privacy_number_private_contact_call_log_is_empty">Kontak pribadi ini belum memanggil log.</string>
+    <string name="privacy_number_private_contacts_empty">Melindungi privasi panggilan dan secara otomatis menyembunyikan panggilan pribadi</string>
+    <string name="privacy_number_set_pattern_draw_again">Konfirmasikan polanya</string>
+    <string name="add_private_number_no_select">Harap pilih setidaknya satu nomor!</string>
+    <string name="privacy_number_title_number">Kontak Pribadi</string>
+    <string name="add_private_number_add_sure_more">Konfirmasi (%1$d)</string>
+    <string name="discovery_privacy_call_des">Sembunyikan panggilan rahasia Anda untuk melindungi privasi Anda.</string>
+
+    <string name="night_mode_guide_dialog_des">Nikmati ketenangan saat Anda tidur (%1$s - %2$s)</string>
+    <string name="night_mode_new_missed_calls_count">Panggilan %1$d tidak terjawab</string>
+    <string name="night_mode_guide_dialog_title">Aktifkan Jangan Ganggu untuk Tidur.</string>
+
+    <string name="privacy_number_set_pattern_error_tip_over_count">Kata sandi telah mencapai jumlah maksimum, Silakan coba lagi setelah %1$d menit!</string>
+    <string name="privacy_number_set_pattern_error_during_lock">Papan tombol draw terkunci, Silakan coba lagi setelah %1$d menit.</string>
+
+    <string name="missed_call_title">@string/push_tools_missed</string>
+    <string name="missed_call_number_scan">@string/number_scaning</string>
+
+    <string name="missed_call_number_scan_not_close">Tolong jangan keluar</string>
+    <string name="night_mode_disable_dialog_title">Nonaktifkan Jangan Ganggu Tidur</string>
+    <string name="night_mode_disable_dialog_des">Apakah Anda yakin untuk menonaktifkannya?</string>
+
+    <string name="splash_init">Inisialisasi</string>
+    <string name="download_failed_for_no_sd_permission">Berikan izin untuk mengunduh dan menyimpan tema</string>
+
+    <string name="add_shortcut_success">Berhasil dibuat</string>
+    <string name="setting_shortcut">Pintasan</string>
+    <string name="setting_add_contact_shortcut">Tambahkan pintasan kontak</string>
+    <string name="setting_add_sms_shortcut">Tambahkan pintasan SMS</string>
+
+    <string name="swipe_flash_title">Senter</string>
+    <string name="swipe_wifi_title">Wifi</string>
+    <string name="swipe_speeder_title">Pendorong</string>
+
+    <string name="swipe_camere_title">Kamera</string>
+    <string name="swipe_calendar_title">Kalender</string>
+    <string name="swipe_data_title">Data</string>
+
+    <string name="swipe_calculator_title">Kalkulator</string>
+    <string name="swipe_flightmode_title">Mode pesawat</string>
+    <string name="swipe_swipesetting_title">Pengaturan Swipe Mudah</string>
+    <string name="swipe_bluetooth_title">Bluetooth</string>
+
+    <string name="swipe_mute_title">Suara</string>
+    <string name="swipe_setting_title">Pengaturan</string>
+    <string name="swipe_alarm_title">Alarm</string>
+
+
+    <string name="swipe_edit_header_title">dipilih (%1$s / %2$s)</string>
+    <string name="favorite_up_to_9">hingga 9</string>
+    <string name="scene_mode_0">Vibrator</string>
+    <string name="scene_mode_1">Meredam</string>
+    <string name="scene_mode_2">Dering</string>
+
+
+    <string name="swipe_for">Aktifkan Swipe Baik untuk</string>
+    <string name="swipe_for_type0">Hanya homescreen</string>
+    <string name="swipe_for_type1">Homescreen dan semua aplikasi</string>
+    <string name="swipe_active_area">Posisi area aktif</string>
+    <string name="swipe_area_type0">Bawah kiri dan kanan Bawah</string>
+    <string name="swipe_area_type1">Kiri bawah</string>
+    <string name="swipe_area_type2">Kanan bawah</string>
+    <string name="swipe_whitelist">Jangan ganggu pengaturan (%1$d)</string>
+    <string name="swipe_whitelist_des">Pilih aplikasi yang menonaktifkan Swipe Baik</string>
+    <string name="swipe_whitelist_title">Tambahkan aplikasi</string>
+
+    <string name="swipe_about_rate5start">Cintai kami? Beri 5 bintang</string>
+    <string name="googleplay_not_found">Tidak dapat menemukan Google Play</string>
+
+    <string name="swipe_toggle">Beralih</string>
+    <string name="swipe_about">Tentang</string>
+    <string name="swipe_about_version">Versi Aplikasi</string>
+    <string name="swipe_open_type">Metode Triggering</string>
+    <string name="swipe_open_type0">Default (Geser dari sudut bawah)</string>
+    <string name="swipe_open_type1">Bantuan Swipe</string>
+    <string name="swipe_advanced_setting">Pengaturan lanjutan</string>
+
+    <string name="feedback_title">isi judulnya</string>
+    <string name="feedback_content">isi isinya</string>
+    <string name="clearmemary_title">ingatan yang jelas</string>
+    <string name="clearmemary_wait">Coba lagi setelah beberapa saat</string>
+    <string name="flash_on">Senter dinyalakan</string>
+    <string name="flash_off">Senter dimatikan</string>
+    <string name="wifi_on">WiFi terhubung</string>
+    <string name="wifi_off">WiFi terputus</string>
+    <string name="bluetooth_on">bluetooth dihidupkan</string>
+    <string name="bluetooth_off">bluetooth dimatikan</string>
+    <string name="data_on">Data seluler telah terhubung</string>
+    <string name="data_off">Data seluler telah diputuskan</string>
+
+    <string name="request_windows_title">SYSTEM_ALERT_WINDOW</string>
+    <string name="request_windows_content">Yah Swipe butuh izin</string>
+
+
+    <string name="swipe_nitification_title">Easy Swipe sedang berjalan</string>
+    <string name="swipe_nitification_content">sentuh untuk melihat pengaturan Easy Swipe</string>
+    <string name="swipe_whitelist_item_unlauncher">Aplikasi daftar putih tidak diizinkan untuk memulai</string>
+    <string name="swipe_open_switch">Silakan nyalakan saklar terlebih dahulu!</string>
+
+    <string name="easy_swipe">Easy Swipe</string>
+    <string name="easy_swipe_guide_desc_1">Geser ke panel pintasan popup</string>
+    <string name="easy_swipe_guide_desc_2">Akses mudah ke pengaturan sistem</string>
+    <string name="easy_swipe_guide_desc_3">Luncurkan aplikasi umum yang digunakan dengan cepat</string>
+    <string name="tip_easy_swipe">Easy Swipe telah diaktifkan</string>
+    <string name="easy_swipe_guide_text">Gesek dari sudut di desktop sebagai berikut</string>
+    <string name="not_found_app">Tidak dapat membuka aplikasi</string>
+    <string name="permission_denied_txt">Izin ditolak, silakan coba lagi</string>
+    <string name="txt_camera_permission_msg">"Klik 'Izinkan' untuk memastikan kamera berfungsi dengan baik."</string>
+
+    <string name="toolbox">Toolbox</string>
+    <string name="frequent">Sering</string>
+    <string name="recent">Baru</string>
+    <string name="ok_title">@string/ok_string</string>
+    <string name="cancel_title">@string/no_string</string>
+</resources>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="icon_down_arrow" translatable="false">\uE900</string>
+    <string name="icon_his" translatable="false">\uE901</string>
+    <string name="icon_like" translatable="false">\uE902</string>
+    <string name="icon_hide" translatable="false">\uE903</string>
+    <string name="icon_help" translatable="false">\uE904</string>
+    <string name="icon_fix" translatable="false">\uE905</string>
+    <string name="icon_share" translatable="false">\uE906</string>
+    <string name="icon_video" translatable="false">\uE907</string>
+    <string name="icon_user" translatable="false">\uE908</string>
+    <string name="icon_add" translatable="false">\uE909</string>
+    <string name="icon_search" translatable="false">\uE90a</string>
+    <string name="icon_setting" translatable="false">\uE90b</string>
+    <string name="icon_delete" translatable="false">\uE90c</string>
+    <string name="icon_order" translatable="false">\uE90d</string>
+    <string name="icon_care" translatable="false">\uE90e</string>
+    <string name="icon_outmiss" translatable="false">\uE90f</string>
+    <string name="icon_out" translatable="false">\uE910</string>
+    <string name="icon_remove" translatable="false">\uE911</string>
+    <string name="icon_sms" translatable="false">\uE912</string>
+    <string name="icon_group" translatable="false">\uE913</string>
+    <string name="icon_clock" translatable="false">\uE914</string>
+    <string name="icon_block" translatable="false">\uE915</string>
+    <string name="icon_in_miss" translatable="false">\uE916</string>
+    <string name="icon_incoming" translatable="false">\uE917</string>
+    <string name="icon_express" translatable="false">\uE918</string>
+    <string name="icon_hotel" translatable="false">\uE919</string>
+    <string name="icon_insurance" translatable="false">\uE91a</string>
+    <string name="icon_education" translatable="false">\uE91b</string>
+    <string name="icon_locked" translatable="false">\uE91c</string>
+    <string name="icon_attention" translatable="false">\uE91d</string>
+    <string name="icon_house" translatable="false">\uE91e</string>
+    <string name="icon_check" translatable="false">\uE91f</string>
+    <string name="icon_option" translatable="false">\uE920</string>
+    <string name="icon_arrow" translatable="false">\uE921</string>
+    <string name="icon_email" translatable="false">\uE922</string>
+    <string name="icon_location" translatable="false">\uE923</string>
+    <string name="icon_phone" translatable="false">\uE924</string>
+    <string name="icon_lunch" translatable="false">\uE925</string>
+    <string name="icon_add_circle" translatable="false">\uE926</string>
+    <string name="icon_save" translatable="false">\uE927</string>
+    <string name="icon_ok" translatable="false">\uE928</string>
+    <string name="icon_left_menu" translatable="false">\uE929</string>
+    <string name="icon_blocklist" translatable="false">\uE92a</string>
+
+    <string name="icon_dial" translatable="false">\uE92b</string>
+    <string name="icon_close" translatable="false">\uE92c</string>
+    <string name="icon_details" translatable="false">\uE92d</string>
+    <string name="icon_telemarkting" translatable="false">\uE92e</string>
+    <string name="icon_travel" translatable="false">\uE92f</string>
+    <string name="icon_publicservice" translatable="false">\uE930</string>
+    <string name="icon_transportation" translatable="false">\uE931</string>
+
+    <string name="icon_title_block" translatable="false">\uE932</string>
+    <string name="icon_title_search" translatable="false">\uE933</string>
+    <string name="icon_title_calllogs" translatable="false">\uE934</string>
+
+    <string name="icon_title_load" translatable="false">\uE935</string>
+    <string name="icon_title_umbrella" translatable="false">\uE936</string>
+    <string name="icon_title_fixline" translatable="false">\uE937</string>
+    <string name="icon_title_pen" translatable="false">\uE938</string>
+    <string name="icon_title_sales" translatable="false">\uE939</string>
+    <string name="icon_back_remove" translatable="false">\uE93a</string>
+
+    <string name="icon_flash_call" translatable="false">\uE93b</string>
+    <string name="icon_reply" translatable="false">\uE93c</string>
+
+    <string name="icon_send_sms" translatable="false">\uE93d</string>
+    <string name="icon_fake_call" translatable="false">\uE93e</string>
+    <string name="icon_fake_call_title" translatable="false">\uE93f</string>
+
+    <string name="icon_scan_number" translatable="false">\uE940</string>
+
+    <string name="icon_trash_open" translatable="false">\uE941</string>
+    <string name="icon_trash_close" translatable="false">\uE942</string>
+    <string name="icon_sms_bag" translatable="false">\uE943</string>
+
+    <string name="icon_trash_throw" translatable="false">\uE944</string>
+    <string name="icon_checkbox_notall" translatable="false">\uE945</string>
+
+    <string name="icon_folder" translatable="false">\uE946</string>
+
+    <string name="icon_scan" translatable="false">\uE947</string>
+    <string name="icon_swiperight" translatable="false">\uE948</string>
+    <string name="icon_flash_intro" translatable="false">\uE949</string>
+
+
+    <string name="icon_block_tab" translatable="false">\uE94c</string>
+    <string name="icon_contact_tab" translatable="false">\uE94d</string>
+    <string name="icon_right_go" translatable="false">\uE94e</string>
+
+    <string name="icon_sms_new" translatable="false">\uE94f</string>
+    <string name="icon_callflash_personal" translatable="false">\uE950</string>
+
+    <string name="icon_record_play" translatable="false">\uE951</string>
+    <string name="icon_record_pause" translatable="false">\uE952</string>
+    <string name="icon_record_start" translatable="false">\uE953</string>
+
+    <string name="icon_not_disturb_on" translatable="false">\uE954</string>
+    <string name="icon_not_disturb_off" translatable="false">\uE955</string>
+    <string name="icon_video_call" translatable="false">\uE956</string>
+
+    <string name="icon_is_like" translatable="false">\uE957</string>
+
+</resources>

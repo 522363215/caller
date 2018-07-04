@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <string name="push_tools_block_call">Chamada bloqueada.</string>
+    <string name="push_tools_ring_one">Perdida com um toque.</string>
+    <string name="push_tools_missed">Chamada perdida.</string>
+    <string name="push_tools_missed_count">Você perdeu %1$d chamadas</string>
+    <string name="push_tools_not_in_contact">Você recebeu uma ligação de um estranho!</string>
+    <string name="push_tools_reject">Você rejeitou uma chamada!</string>
+    <string name="push_tools_content">Toque para ver detalhes.</string>
+    <string name="push_tools_call_flash_toast">Novos temas adicionados, experimente agora.</string>
+    <string name="push_tools_message">Você tem %1$s mensagens não lidas!</string>
+    <string name="text_call_flash_exit_dialog_title">Abrir para chamadas</string>
+    <string name="call_flash_intro_title">Os seguintes recursos são amados pela maioria dos usuários, tente por si mesmo!</string>
+    <string name="call_flash_intro_set">Call Flash</string>
+    <string name="call_flash_intro_reject">Não, obrigado.</string>
+    <string name="no_results">Nenhum resultado</string>
+    <string name="ok_string">OK</string>
+    <string name="no_string">Cancelar</string>
+    <string name="dialog_ok_delete_block_log">Limpar todo o histórico de bloqueio?</string>
+    <string name="dialog_ok_delete_block_log_title">Limpar histórico de bloqueio?</string>
+    <string name="quithint">Pressione voltar outra vez para sair</string>
+    <string name="grant_permission">Conceder permissão</string>
+    <string name="popup_tips1">Exibir janela de pop-up</string>
+    <string name="popup_tips3">Ative para habilitar a janela pop-up</string>
+    <!--<string name="main_menu_about">Sobre</string>-->
+    <string name="setting_title">Configurações</string>
+    <string name="setting_language">Idioma</string>
+    <string name="setting_lauage_dialog_title">Escolher idioma</string>
+    <string name="block_log_query_log_failed">Falha na consulta</string>
+    <string name="block_list_title">Ver lista de Spam &amp; bloqueio</string>
+    <string name="block_list_mine">Lista de bloqueio de chamadas</string>
+    <string name="block_list_common">Spammers comuns</string>
+    <string name="block_list_empty">Você não criou uma lista negra</string>
+    <string name="block_setting_title">Definições de bloqueio</string>
+    <string name="block_setting_name">Configurações de bloqueio</string>
+    <string name="block_setting_common_block_desc">Chamadas de operador de telemarketing e incômodos reportados como spam pelos usuários</string>
+    <string name="block_setting_hide_block">Bloquear números ocultos</string>
+    <string name="block_setting_hide_block_desc">Qualquer ligação que mostra seu número como desconhecido</string>
+    <string name="block_setting_stranger_block">O número não está nos contatos</string>
+    <string name="block_setting_stranger_block_desc">Bloquear números que não estão nos contatos</string>
+    <string name="block_setting_block_method">Método de bloqueio</string>
+    <string name="block_setting_block_method_auto">Rejeitar automaticamente</string>
+    <string name="block_setting_block_method_silence">Manter silêncio</string>
+    <string name="block_setting_do_not_diturb">Não incomodar</string>
+    <string name="block_setting_do_not_diturb_time">30 minutos</string>
+    <string name="block_setting_pop_dialog">Caixa de diálogo pop-up</string>
+    <string name="block_setting_remind_missed_calls">Lembrar-me de chamadas perdidas</string>
+    <string name="block_setting_remind_missed_calls_desc">Obter um lembrete quando perder uma chamada</string>
+    <string name="block_setting_floating_in_contacts">Contatos no meu celular</string>
+    <string name="block_setting_floating_in_stranger">Chamadas de desconhecido</string>
+    <string name="block_setting_floating_out_call">Chamadas feitas para desconhecidos</string>
+    <string name="block_setting_call_flash">Screen Flash para chamadas</string>
+    <string name="block_setting_call_id">Identificação do Chamador</string>
+    <string name="block_setting_call_id_desc">Exibe informações do chamador após perder ou terminar uma chamada (contém anúncios).</string>
+    <string name="block_setting_sms_id_desc">Mostre o conteúdo quando você perdeu uma mensagem (contém anúncios).</string>
+    <!--<string name="frag_block_logs">Logs de bloqueio</string>
+    <string name="frag_block_updating_common_db">Atualizando</string>
+    <string name="frag_block_block_switch_on">VERIFICAR ATUALIZAÇÃO</string>
+    <string name="frag_block_block_switch_off">HABILITAR BLOQUEIO</string>
+    <string name="frag_block_current_desc">Chamador está bloqueado</string>
+    <string name="frag_block_protect_desc">Caller  está te protegendo.</string>
+    <string name="frag_block_protect_count_desc">chamadas</string>
+    <string name="frag_block_block_switch_toast_off">Bloquear chamadas de spam reportadas por usuários</string>
+    <string name="frag_block_block_switch_toast_on">Última atualização: %1$s</string>-->
+    <string name="external_input_title">Adicione</string>
+    <string name="external_input_number_hint">Telefone (obrigatório)</string>
+    <string name="external_input_name_hint">Nome</string>
+    <string name="external_input_added_completed">O número foi adicionado à sua lista negra</string>
+    <string name="external_input_enter_number_long">Você inseriu caracteres demais</string>
+    <string name="external_input_enter_number_short">Você inseriu caracteres de menos</string>
+    <string name="add_number_exist">Este número já consta na lista de bloqueios</string>
+    <string name="add_number_as_spam">Reportar número como spam</string>
+    <string name="from_contacts_title">Da lista de contatos</string>
+    <string name="from_contacts_quick_filtering">Filtragem rápida</string>
+    <string name="from_contacts_read_failed">Houve uma falha ao ler os contatos do telefone !!!</string>
+    <string name="from_call_log_title">Do histórico de ligações</string>
+    <string name="from_call_log_read_failed">Houve uma falha ao ler o histórico de ligações!!!</string>
+    <string name="country_list_title">Por favor, selecione o seu país</string>
+    <string name="country_list_name_hint">Nome do país ou código do país...</string>
+    <string name="call_coming_back">Resposta</string>
+    <string name="call_coming_detail">Detalhes</string>
+    <string name="about_title">Sobre nós</string>
+    <string name="about_product_intro">Uma ferramenta muito legal para as suas chamadas.</string>
+    <string name="about_product_version">Versão %s:</string>
+    <string name="about_rote_gp">Como nós</string>
+    <string name="about_like_facebook">Curta-nos no Facebook</string>
+    <string name="about_send_apk">Envie o arquivo APK para amigos</string>
+    <string name="no_app_to_share">Desculpe, você não tem nenhum app para compartilhar.</string>
+    <string name="failed_backup">Backup falhou</string>
+    <string name="share_to_facebook">Compartilhar no Facebook</string>
+    <string name="about_privacy">Política de privacidade</string>
+    <string name="about_term">Termos de utilização</string>
+    <string name="share_text">%1$s pode bloquear chamadas indesejadas e saber quem está ligando. Experimente! Obtenha-o: %2$s</string>
+    <string name="rate_dialog_title">Avalie-nos com cinco estrelas se você gostou.</string>
+    <string name="rate_dialog_message">Mostre o seu apoio nos avaliando com 5 estrelas na Google Play.</string>
+    <string name="rate_dialog_ok">Dê-nos 5 estrelas</string>
+    <string name="rate_dialog_cancel">Mais tarde</string>
+    <string name="device_time_just">Agora mesmo</string>
+    <string name="device_time_minutes">%1$d min atrás</string>
+    <string name="device_time_hour">%1$d horas atrás</string>
+    <string name="device_time_one_hour">1 hora atrás</string>
+    <string name="device_time_day">%1$d dias atrás</string>
+    <string name="device_time_one_day">ontem</string>
+    <string name="lanuage_item_auto">Auto</string>
+    <string name="time_s">%1$ds</string>
+    <string name="time_m">%1$dm:%2$ds</string>
+    <string name="time_h">%1$dh:%2$dm:%3$ds</string>
+    <string name="skip_splash">Pular</string>
+    <string name="splash_more">MAIS</string>
+    <string name="call_log_menu_all_call">Tudo</string>
+    <string name="call_log_menu_discerned">Identificado</string>
+    <string name="call_log_menu_incoming">Recebida</string>
+    <string name="call_log_menu_refused">Rejeitada</string>
+    <string name="call_log_menu_outgoing">Realizada</string>
+    <string name="call_log_menu_missed">Perdida</string>
+    <string name="call_log_menu_blocked">Bloqueada</string>
+    <string name="call_log_menu_scan_shrink">Encolher</string>
+    <string name="call_log_menu_delete_all_shield_calls">remover todas ligações bloqueadas</string>
+    <string name="call_log_menu_delete_all_calls">remover todas ligações</string>
+    <string name="call_log_contact">Contatos</string>
+    <string name="call_log_hide_number">Número oculto</string>
+    <string name="call_log_date_sunday">Domingo</string>
+    <string name="call_log_date_saturday">Sábado</string>
+    <string name="call_log_date_friday">Sexta-Feira</string>
+    <string name="call_log_date_thursday">Quinta-feira</string>
+    <string name="call_log_date_wednesday">Quarta-Feira</string>
+    <string name="call_log_date_tuesday">Terça-Feira</string>
+    <string name="call_log_date_monday">Segunda-Feira</string>
+    <string name="call_log_date_today">Hoje</string>
+    <string name="call_log_no_block_call">Nenhuma chamada bloqueada</string>
+    <string name="call_log_no_missed_call">nenhuma chamada perdida</string>
+    <string name="call_log_crank_call_count_text">Bloquear chamadas de spam</string>
+    <string name="call_log_open_block_text">habilitar bloqueio inteligente</string>
+    <string name="call_log_enable">Ativar</string>
+    <string name="call_log_no_calllog">Sem registro de chamadas</string>
+    <string name="phone_detail_unblock">DESBLOQUEAR</string>
+    <string name="phone_detail_block">BLOQUEAR</string>
+    <string name="phone_detail_call_log">Ver histórico de ligações</string>
+    <string name="phone_detail_phone_save">ECONOMIZE</string>
+    <string name="phone_detail_phone_edit">EDITAR</string>
+    <string name="phone_detail_phone_Tag">MARCAR</string>
+    <string name="phone_detail_call_log_access_failure">Cancelada</string>
+    <string name="phone_detail_number_type_mobile">Celular</string>
+    <string name="phone_detail_number_type_home">Casa</string>
+    <string name="phone_detail_number_type_company">Trabalho</string>
+    <string name="phone_detail_lastest_call_log">Última chamada:</string>
+    <string name="phone_detail_no_call_log">Não há histórico de ligações</string>
+    <string name="phone_detail_block_dialog_content">Você não receberá mais ligações deste número</string>
+    <string name="phone_detail_block_dialog_content_unblock">Este número será desbloqueado e reportado como não-spam. Chamadas futuras não serão identificadas como spam</string>
+    <string name="phone_detail_block_dialog_title">Tem certeza que deseja bloquear este número?</string>
+    <string name="phone_detail_block_dialog_title2">Tem certeza que deseja desbloquear este número?</string>
+    <string name="phone_detail_have_no_tag">Este número já adicionou todas as tags</string>
+    <string name="phone_detail_add_tag">Tag adicionada</string>
+    <string name="phone_detail_add_name">Adicionar nome</string>
+    <string name="phone_detail_no_name">Sem nome</string>
+    <string name="phone_detail_add_lion_name_tip">Sugerir um nome melhor</string>
+    <string name="phone_detail_add_lion_name_dialog_person">Pessoal</string>
+    <string name="phone_detail_add_lion_name_dialog_company">Negócios</string>
+    <string name="phone_detail_add_lion_name_update_tip1">Não é %1$s?</string>
+    <string name="phone_detail_add_lion_name_update_tip2">Toque para sugerir um nome melhor</string>
+    <string name="phone_detail_cancel_block">Número removido da sua lista negra</string>
+    <string name="phone_detail_add_name_not_null_tip">O Nome é obrigatório</string>
+    <string name="phone_detail_delete_contact">Apagar contato</string>
+    <string name="phone_detail_delete_spam_count_text">%1$d pessoas reportaram este como spam</string>
+    <string name="phone_detail_delete_spam_count_text3">reportado como spam por você</string>
+    <string name="phone_detail_delete_spam_count_text2">reportado como spam por usuários</string>
+    <string name="phone_detail_no_number">Nenhum número este contato</string>
+    <string name="phone_detail_unknown">Desconhecido</string>
+    <string name="phone_detail_null_number">Número está vazio</string>
+    <string name="tag_popupwindow_tip">Ajudar os outros a identificar este número</string>
+    <string name="contact_search_hint">Pesquisar telefone</string>
+    <string name="contact_add_contact">Criar novo contato</string>
+    <string name="contact_no_contacts">Nenhum contato</string>
+    <string name="call_after_message">Mensagem</string>
+    <string name="call_after_click_toast">"O número está oculto!"</string>
+    <string name="search_input_hint">Digite um número</string>
+    <string name="search_number_hint">Pesquisar entre mais de 100.000.000 números de telefone</string>
+    <string name="search_recently_record">Resultados recente de busca</string>
+    <string name="search_no_result">Ainda não há resultados</string>
+    <string name="search_no_result2">Não há resultados de pesquisa. Você pode tentar novamente selecione outros códigos de país</string>
+    <string name="search_no_result_hint">Os resultados da pesquisa recentes vão aparecer aqui</string>
+    <string name="search_content_hint">Buscar no Caller ID</string>
+    <string name="search_delete_all_content">Confirme para excluir todo o histórico de busca?</string>
+    <string name="search_clear_all_record">Limpar histórico de pesquisas recentes</string>
+    <string name="search_invalid_number">Por favor, insira o número correto</string>
+    <string name="search_number_tip">Por favor, insira o número de telefone correto</string>
+    <string name="dialing_title">Chamada</string>
+    <string name="unknown_number">Número desconhecido</string>
+    <string name="permission_tip">A fim de identificar e bloquear chamadas de assédio, você precisa habilitar permissões de contatos e histórico de chamadas.</string>
+    <string name="permission_sysytem_permission">Gerenciador de permissões</string>
+    <string name="permission_to_get_permsiion">Ativar</string>
+    <string name="permission_no_permission">Sem permissões</string>
+    <string name="permission_phone">Telefone</string>
+    <string name="permission_SMS">SMS</string>
+    <string name="dialog_update_btn_update">Atualizar</string>
+    <string name="dialog_update_download_title">Atualizando</string>
+    <string name="num_tag_101">Spam</string>
+    <string name="num_tag_103">Telemarketing</string>
+    <string name="num_tag_104">Finanças e Seguros</string>
+    <string name="num_tag_105">Compras</string>
+    <string name="num_tag_106">Hotel</string>
+    <string name="num_tag_107">Educação</string>
+    <string name="num_tag_108">Saúde</string>
+    <string name="num_tag_109">Viagens</string>
+    <string name="num_tag_110">Expresso</string>
+    <string name="num_tag_111">Transporte</string>
+    <string name="num_tag_112">Vida noturna &amp; bebidas</string>
+    <string name="num_tag_113">Restaurantes e café</string>
+    <string name="num_tag_114">Serviços públicos</string>
+    <string name="FIXED_LINE">LINHA_FIXA</string>
+    <string name="MOBILE">CELULAR</string>
+    <string name="FIXED_LINE_OR_MOBILE">LINHA_FIXA_OU_MÓVEL</string>
+    <string name="TOLL_FREE">SEM_CUSTOS</string>
+    <string name="PREMIUM_RATE">TAXA_PREMIUM</string>
+    <string name="SHARED_COST">CUSTO_COMPARTILHADO</string>
+    <string name="PERSONAL_NUMBER">NÚMERO_PESSOAL</string>
+    <string name="call_flash_led_festival">Festival</string>
+    <string name="call_flash_led_love">Amor</string>
+    <string name="call_falsh_led_streamer">Streamer</string>
+    <!--<string name="call_falsh_led_bloom">Bloom</string>-->
+    <!--<string name="call_falsh_led_gradient">Gradiente</string>-->
+    <!--<string name="call_falsh_led_neon">Neon</string>-->
+    <string name="call_flash_guide_open_upper">ABRIR</string>
+    <string name="call_flash_exit_dialog_title">Abrir para chamadas</string>
+    <string name="whtas_new_title">Novidades</string>
+    <string name="whtas_new_title_name">Identificação do Chamador</string>
+    <string name="whtas_new_des_one">Mostre o conteúdo quando você perdeu uma mensagem</string>
+    <string name="whtas_new_des_two">Identifica chamadas realizadas e recebidas.</string>
+    <string name="whtas_new_des_three">Exibe informações do chamador após perder ou terminar uma chamada</string>
+    <string name="smart_lock_toast">Ativado com sucesso.</string>
+    <string name="message_options">Opções de mensagem</string>
+    <string name="copy_message_text">Copiar texto</string>
+    <string name="menu_add_address_to_contacts">Adicionar %s para contato</string>
+    <string name="delete_message">Apagar mensagem</string>
+    <string name="confirm_delete_message">A mensagem será excluída.</string>
+    <string name="delete">Excluir</string>
+    <string name="dail">Marcar</string>
+    <string name="reply">Responder</string>
+    <string name="tyep_message">Digitar Mensagem</string>
+    <string name="change_sms_app">Alterar aplicação SMS?</string>
+    <string name="upgrade_now">Definir agora</string>
+    <string name="not_default_send">Deve ser o seu app de SMS para enviar mensagens</string>
+    <string name="sms_sent_fail">Falha ao enviar</string>
+    <string name="sms_send_wait">Espera ao enviar</string>
+    <string name="sms_sending">enviando...</string>
+    <string name="sms_not_default_mark_read">Deve ser o seu app SMS p. marcar msgs lidas</string>
+    <string name="push_tools_message_mult_contacts">"%1$s e outro &lt;font color="#FF0084"&gt;%2$s&lt;/font&gt; contatos"</string>
+    <string name="sms_set_default_sms">"TORNAR SMS APP PADRÃO"</string>
+    <string name="sms_save_to_contact">Adicionar aos contatos</string>
+    <string name="sms_see_contact">"Visualizar contatos"</string>
+    <string name="sms_delete_conversation">"Apagar mensagem"</string>
+    <string name="sms_delete_conversation_text">"Tem certeza de excluir esta mensagem?"</string>
+    <string name="sms_deleteing">"Excluindo..."</string>
+    <string name="sms_not_default_to_delete_conversation">"Ele precisa ser configurado como seu aplicativo SMS padrão."</string>
+    <string name="sms_delete_message">"Excluir essa mensagem"</string>
+    <string name="sms_no_conversation">Sem mensagens</string>
+
+    <string name="splash_content">Identificação de chamadas e intercepção</string>
+
+    <!-- fake call start-->
+    <string name="fake_call_title">Chamada falsa</string>
+    <string name="fake_call_add_photo">foto</string>
+    <string name="fake_call_add_name_hint">nome</string>
+    <string name="fake_call_add_number_hint">número</string>
+    <string name="fake_call_make_call">Falhar uma chamada</string>
+    <string name="fake_call_schedule">Meu horário</string>
+    <string name="fake_call_error_numer_empty">O número não pode estar vazio!</string>
+    <string name="fake_call_intro_title">Clique e defina suas chamadas falsas</string>
+    <!--<string name="fake_call_time_choice_tip">Click to select a call time</string>-->
+    <string name="fake_call_cancel_make_call_tip">Pressão longa para apagar chamada programada</string>
+    <string name="fake_call_cancel_dialog_content">Deseja excluir esta chamada?</string>
+
+    <string name="fake_call_add_photo_title">Selecione chamada sugerida</string>
+    <string name="fake_call_add_photo_name_private">Número Privado</string>
+    <string name="fake_call_add_photo_name_spiderman">Homem Aranha</string>
+    <string name="fake_call_add_photo_name_wonder_woman">Wonder Woman</string>
+
+    <string name="fake_call_make_call_now">agora</string>
+    <string name="fake_call_time_choice_title">Faça uma chamada depois</string>
+    <string name="fake_call_quick_set_time">Tempo de ajuste rápido</string>
+    <string name="fake_call_custom_time">O ajuste personalizado Tempo</string>
+    <!--<string name="fake_call_custom_time_next">PRÓXIMO</string>-->
+    <string name="fake_call_custom_time_toast">Escolha um horário de chamada razoável!</string>
+    <string name="fake_call_countdown_desc1">Vou chamá-lo</string>
+
+    <string name="fake_call_incoming_title">Chamada Recebida</string>
+    <string name="fake_call_incoming_style_choice_title">Chamada de entrada falsa</string>
+    <string name="fake_in_call_default_style">"Padrão"</string>
+    <!-- fake call end-->
+
+    <string name="sms_draft">[rascunho]</string>
+    <string name="toast_draft">Rascunho salvo</string>
+    <string name="toast_save_draft_tip">Deve ser seu aplicativo de SMS no Rascunho salvo</string>
+    <string name="sms_resend_fail_sms">Falha ao enviar mensagem.Desenvolvê-lo?</string>
+    <string name="sms_resend_message">Reenviar mensagem</string>
+    <string name="sms_emoji_tip">em breve...</string>
+    <string name="call_after_close">Fechar</string>
+    <string name="call_after_disable">Desativar</string>
+    <string name="fake_call_tip">Crie uma chamada falsa para resgatá-lo de uma situação estranha.</string>
+    <string name="calllog_delete_tip">Você tem certeza de excluir esses &lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt; chamadas chamadas selecionadas?</string>
+    <string name="calllog_delete_no_selected">Selecione o registro de chamadas que deseja excluir</string>
+    <string name="calllog_delete_fail">Eliminar falhou</string>
+    <string name="guide_desc_identify">Identificar chamadas desconhecidas e bloquear spams</string>
+    <string name="guide_desc_call_falsh">Cool Screen Flash para chamadas</string>
+    <string name="guide_desc_block">Bloquear spam e chamadas indesejadas</string>
+    <string name="guide_desc_fake_call">Falar uma ligação para se divertir</string>
+    <string name="what_new_start">Começar</string>
+    <string name="fake_call_tip2">Tente chamada falsa agora?</string>
+    <string name="fake_call_tip3">Uma chamada para ajudá-lo a se livrar da dificuldade incomum, bate-papo complicado.</string>
+    <string name="quit">SAIR</string>
+    <string name="fake_call_try">TENTA</string>
+    <string name="contact_delete_tip">Você tem certeza de remover &lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt;?</string>
+    <string name="phone_details_delete_contact">Tem certeza de remover esse contato?</string>
+    <string name="phone_details_location">Localização</string>
+    <string name="phone_details_change_name">Mude o nome</string>
+    <string name="setting_intelligent_identification">Identificação inteligente</string>
+    <string name="setting_intelligent_identification_numbers">Mostrar chamadores desconhecidos.</string>
+    <string name="phone_details_open_identify_tip">Permitir identificação inteligente (concordar com a política de privacidade)</string>
+
+    <!-- spam update start 14-->
+    <string name="frag_block_offline_size_title">Spam Database</string>
+    <string name="frag_block_offline_size_title_new_number">Novos números atualizados</string>
+    <string name="frag_block_offline_size_title_new_number_notify">%1$d novos números adicionados, toque para atualizar.</string>
+    <string name="frag_block_offline_size_desc">atualize agora</string>
+    <string name="frag_block_offline_size_desc2">Os dados estão atualizados</string>
+    <string name="frag_block_update_scan_phone_number">Digitalizar</string>
+    <string name="frag_block_update_scan_phone_number_title">Seguro</string>
+    <string name="frag_block_update_scan_phone_number_title_new_calls">%1$d chamadas</string>
+    <string name="frag_block_update_scan_phone_number_desc_tap">Analise suas novas chamadas.</string>
+    <string name="frag_block_update_scan_phone_number_desc">Seu telefone está sendo protegido.</string>
+    <string name="spam_update_result_suc">"Atualização feita com sucesso"</string>
+    <string name="spam_update_result_fail">"Atualização falhou"</string>
+    <string name="spam_update_tip">"Atualizando, não deixe."</string>
+    <string name="spam_update_exit_tip">A atualização está em andamento, você tem certeza de sair?</string>
+    <string name="spam_update_result_update_number">%1$d novos números atualizados</string>
+    <string name="spam_update_app_exit_prompt_title">Atualize o banco de dados de números agora?</string>
+    <string name="spam_update_app_exit_prompt_content">Numbers Database irá ajudá-lo a reconhecer chamadas desconhecidas e bloquear spams, toque para atualizar.</string>
+    <!-- spam update end-->
+
+    <!-- scan new calls 15 -->
+    <string name="number_scaning">ESCANSE</string>
+    <string name="number_scan_recent">RECENTES</string>
+    <string name="number_scan_identified">IDENTIFICADO</string>
+    <string name="number_scan_dialog_tip">Digitalização, você tem certeza de sair?</string>
+    <string name="number_scan_result">Resultados</string>
+    <string name="number_scan_result_risks">Riscos</string>
+    <string name="number_scan_checking">Verificando ...</string>
+    <string name="number_scan_result_tip">Identificou %1$d número(s) de spam em seus registros de chamadas</string>
+    <string name="number_scan_realtime_protect">RealTime Protect</string>
+    <string name="number_scan_reported_you_call">Informou que você ligou</string>
+    <string name="number_scan_result_spam_number">NÚMERO DE SPAM</string>
+    <string name="number_scan_result_open_realtime_protect">ENABLE REALTIME PROTECT</string>
+    <string name="number_scan_result_congratulations">Concluído.</string>
+    <string name="number_scan_result_Successfully_tip1">Adicionado com sucesso na lista de bloqueio</string>
+    <string name="number_scan_result_Successfully_tip2">Permitir com sucesso Proteção em tempo real</string>
+    <string name="number_scan_exit_intro_title">Nova verificação numérica</string>
+    <string name="number_scan_exit_intro_content">O telefone tem um novo número desconhecido. Verifique a segurança do número</string>
+
+    <string name="scan_anim_title">Verificação de spam chama ...</string>
+
+    <string name="call_flash_led_panda">"Panda"</string>
+    <string name="call_flash_led_custom">"Customizar"</string>
+    <string name="call_flash_show_add_custom_bg">Personalize sua exibição de chamadas</string>
+    <string name="call_flash_show_custom_bg_desc">Clique em \"+\" para escolher um Pics ou GIFs</string>
+
+    <string name="exit_guide_content_number_scan">Digitalize novas chamadas para verificar se eles são números de assédio/telemarketing.</string>
+    <!--短信清理 2017-09-01 end-->
+    <string name="call_flash_exit_open_title">Use isso como tela de chamada?</string>
+    <string name="call_flash_exit_open_ok">Use-o</string>
+
+    <string name="number_scan_initiating">Iniciando</string>
+
+    <!--Call flash album start-->
+    <string name="call_flash_album_title">Escolha uma Pics ou GIFs</string>
+    <string name="call_flash_album_online">Conectados</string>
+    <string name="call_flash_album_local">Local</string>
+    <string name="call_flash_album_gallery">Galeria</string>
+    <string name="call_flash_album_gallery_desc_1">escolha uma figura</string>
+    <string name="call_flash_album_gallery_desc_2">%1$d imagem (s)</string>
+    <!--Call flash album end-->
+
+    <!--call flash gif show start-->
+    <string name="call_flash_result_title">A instalação está completa</string>
+    <string name="call_flash_gif_show_save">Definir como tela de chamada</string>
+    <string name="call_flash_gif_show_load">Fazendo o download %1$d%%</string>
+    <string name="call_flash_gif_show_connecte">Conectando</string>
+    <string name="call_flash_gif_show_load_suc">Download concluído.</string>
+    <string name="call_flash_gif_show_load_failed">O download falhou.</string>
+    <string name="call_flash_gif_show_setting_suc">Sua nova tela de chamada foi configurada.</string>
+    <string name="call_flash_gif_show_setting_suc_reset">A tela de chamada foi redefinida.</string>
+    <string name="call_flash_reset">Você irá redefinir para usar a tela de chamada padrão do sistema.</string>
+    <string name="call_flash_change_to_new">Use uma nova tela de flash de chamadas?</string>
+    <string name="call_falsh_gif_thum_load_desc">Carregando</string>
+    <!--call flash gif show end-->
+
+    <string name="contact_search_tip">insira um número ou nome</string>
+
+    <string name="not_upload_name0">mamãe</string>
+    <string name="not_upload_name1">mamãe</string>
+    <string name="not_upload_name2">mãe</string>
+    <string name="not_upload_name3">Papai</string>
+    <string name="not_upload_name4">Papai</string>
+    <string name="not_upload_name5">pai</string>
+    <string name="not_upload_name6">Avó</string>
+    <string name="not_upload_name7">Vovô</string>
+    <string name="not_upload_name8">avô</string>
+    <string name="not_upload_name9">avó</string>
+    <string name="not_upload_name10">amor</string>
+    <string name="not_upload_name11">caro</string>
+    <string name="not_upload_name12">querida</string>
+    <string name="not_upload_name13">mel</string>
+    <string name="not_upload_name14">babe</string>
+    <string name="not_upload_name15">bebê</string>
+    <string name="not_upload_name16">cachorro</string>
+    <string name="not_upload_name17">marido</string>
+    <string name="not_upload_name18">esposa</string>
+    <string name="not_upload_name19">querida</string>
+    <string name="not_upload_name20">amada</string>
+    <string name="not_upload_name21">filho</string>
+    <string name="not_upload_name22">filha</string>
+    <string name="not_upload_name23">irmão</string>
+    <string name="not_upload_name24">irmã</string>
+    <string name="not_upload_name25">tia</string>
+    <string name="not_upload_name26">tio</string>
+    <string name="not_upload_name27">sobrinha</string>
+    <string name="not_upload_name28">sobrinho</string>
+    <string name="not_upload_name29">primo</string>
+    <string name="not_upload_name30">professor</string>
+    <string name="not_upload_name31">patrão</string>
+
+    <string name="page_title_calllog">Registro de chamadas</string>
+    <string name="page_title_contact">@string/call_log_contact</string>
+    <string name="page_title_conversation">Mensagens</string>
+    <string name="page_title_block">@string/block_setting_name</string>
+    <string name="page_title_search">Pesquisa</string>
+
+    <string name="call_flash_Halloween">dia das Bruxas</string>
+
+    <string name="phone_detail_user_add_name_tip">O nome personalizado é um número não puro</string>
+
+    <string name="phone_detail_set_call_flash_title">Definir uma tela de chamada</string>
+    <string name="phone_detail_set_call_flash_des">Escolha uma tela de chamada legal para este número</string>
+    <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
+
+    <string name="call_flash_led_love1">Amante1</string>
+    <string name="call_flash_led_love2">Amante2</string>
+    <string name="call_flash_led_downloda_again">@string/lion_family_active_download</string>
+    <string name="call_flash_led_downloading_back_des">O download está em andamento, cancelar e encerrar?</string>
+    <string name="call_flash_led_downloading_back_wait">esperar</string>
+    <string name="call_flash_led_not_download_back_des">Ainda não baixado, baixe agora?</string>
+
+    <string name="real_time_protect_guide_desc3">Proteja o seu dispositivo de potenciais riscos em tempo real.</string>
+    <string name="call_flash_led_kiss">Beijo</string>
+    <string name="call_flash_led_rose">Rosa</string>
+    <string name="exit_guide_act_call_flash">exposição</string>
+    <string name="exit_guide_close_desc">Confirmar saída?</string>
+    <string name="exit_guide_content_call_flash">Você gosta de um romance e show de chamadas interessante? Apresse-se comigo para vê-lo.</string>
+    <string name="exit_guide_content_update_spam">A partir da última atualização, o número de novo telefone de assédio %1$d+ Atualiza agora para garantir a melhor identificação do chamador.</string>
+    <string name="fake_call_countdown_desc2">Mais tarde</string>
+    <string name="lion_family_active_download">Download</string>
+    <string name="lion_family_active_use">Usar</string>
+    <string name="lion_family_desc">Conheça tudo que você precisa</string>
+    <string name="lion_family_price">Livre</string>
+    <string name="rate_dialog_msg_illegal">A string que você inseriu contém caracteres ilegais!</string>
+    <string name="rate_dialog_nagative_desc">Digite seu problema / bugs / sugestões aqui, máximo de 200 palavras.</string>
+    <string name="rate_dialog_nagative_send">Enviar</string>
+    <string name="rate_dialog_nagative_toast">Digite suas sugestões!</string>
+    <string name="rate_dialog_negative_title">Comentários</string>
+    <string name="rate_dialog_send_success_toast">O feedback já foi enviado, obrigado!</string>
+    <string name="sms_message_size_label">Tamanho da mensagem\u000A</string>
+    <string name="sms_no_subject_view">(Sem assunto)</string>
+    <string name="sms_not_empty">Digite sua mensagem</string>
+    <string name="txt_announcement">Anúncio</string>
+    <string name="exit_string">SAÍDA</string>
+
+    <string name="about_email_us">Nos envie um e-mail</string>
+    <string name="email_choose_one">Escolha o app para enviar e-mail</string>
+    <string name="frag_block_block_history_title">Ver histórico de bloqueio</string>
+
+    <string name="message_flash_title">SMS / mensagens tela flash</string>
+    <string name="message_flash_next_sms">Próximo</string>
+    <string name="message_flash_smile">Sorrir</string>
+    <string name="message_flash_love">@string/call_flash_led_love</string>
+    <string name="message_flash_balloon">Balão</string>
+    <string name="message_flash_paper">Papel</string>
+    <string name="message_flash_sysytem">Sistema</string>
+    <string name="message_flash_Close">Você desativará o flash da tela de mensagens.</string>
+    <string name="message_flash_change_to_new">Use novas mensagens de flash da tela?</string>
+    <string name="message_flash_exit_open_title">Use isso como tela de mensagens?</string>
+    <string name="message_flash_exit_new_flash_des">A tela colorido SMS / Mensagens é amada pela maioria dos usuários. Tente!</string>
+    <string name="message_flash_set_success_des">Sua nova tela de mensagens foi configurada.</string>
+    <string name="message_flash_set_success_des2">Sua tela de flash de mensagens foi desativada.</string>
+
+    <string name="push_tools_call_flash_toast_weekend">Bom fim de semana! novas telas de flash de chamada legal estão disponíveis agora.</string>
+
+    <string name="call_flash_led_visual_1">"Grating"</string>
+    <string name="call_flash_led_visual_2">"Néon"</string>
+    <string name="call_flash_led_visual_3">"Onda"</string>
+    <string name="connection_failure">Conexão falhou</string>
+    <string name="call_flash_led_color_flash">cor do flash</string>
+
+    <string name="call_falsh_led_monkey">"Macaco"</string>
+
+    <string name="call_flash_gif_show_setting_fail">Conjunto falhou! Precisa de permissão para configurar o toque.</string>
+    <string name="call_flash_gif_show_set_ring_title_des1">Use isso como tela de chamada e conceda permissão para configurar o toque de chamada?</string>
+    <string name="call_flash_led_santa_claus">Papai Noel</string>
+    <string name="call_flash_led_charistmas_snowman">Natal</string>
+    <string name="call_falsh_download_waiting">Esperando...</string>
+    <string name="call_flash_gif_show_setting_fail2">Conjunto falhou! Precisa de permissão para configurar a tela de chamadas.</string>
+    <string name="call_flash_gif_show_setting_des">É necessário ativar a permissão da janela de alerta do sistema.</string>
+    <string name="call_flash_gif_show_setting_des2">Conjunto falhou!</string>
+    <string name="call_falsh_led_pig">Porco</string>
+
+    <string name="call_answer_string">"Responder"</string>
+    <string name="call_answer_string_HW">"ATENDER"</string>
+    <string name="notification_listener_setting_tip">Habilite o acesso de Notificações para Atender chamadas, não será usado para nenhum outro propósito.</string>
+    <string name="call_flash_permission_tip">A permissão Grant só é usada para configurar a tela do flash de chamadas, não será usada para nenhum outro propósito.</string>
+    <string name="sms_flash_permission_tip">A concessão de permissão é usada apenas para definir o SMS / mensagens tela flash, não será usado para qualquer outro propósito.</string>
+    <string name="call_falsh_led_bear">Urso</string>
+
+    <string name="call_flash_more_title_1">Clássico</string>
+    <string name="call_flash_more_title_2">Destaque</string>
+    <string name="call_flash_more_title_3">Popular</string>
+    <string name="txt_call_flash_theme_title">Tema de chamada</string>
+    <string name="call_flash_detail_setting_action_to_cancel">"Cancelar este tema de chamada de entrada"</string>
+    <string name="notification_manager_permission_tip">Ativar notificações de acesso para atender chamadas</string>
+    <string name="call_flash_guide_des">"defina uma tela de chamada especial para ela / ele"</string>
+
+    <string name="message_block_not_default_sms">Deve ser seu aplicativo SMS padrão para bloquear SMS.</string>
+    <string name="message_option_mark_as_read">marcar tudo como lido</string>
+    <string name="message_remove_to_notification_dialog_tip">Tem certeza de mover as mensagens para outras pessoas?</string>
+    <string name="message_blocked_dialog_tip">Bloquear mensagens desse número?</string>
+    <string name="conversation_notification">Outras</string>
+    <string name="message_remove_to_notification">Mover para outros</string>
+    <string name="message_remove_to_phone_number">Mova para a caixa de entrada</string>
+    <string name="message_blocked">Número adicionado à lista de bloqueio de SMS</string>
+    <string name="message_option_block_sms_list">Lista de bloqueio SMS</string>
+    <string name="message_remove_to_phone_number_dialog_tip">Tem certeza de mover as mensagens para a caixa de entrada?</string>
+    <string name="conversation_phonenumber">Caixa de entrada</string>
+    <string name="message_option_mark_as_read_2">marcar como Lido</string>
+
+    <string name="audio_record_request_option_1">Eu confirmo que a gravação de chamadas é legal no meu país</string>
+    <string name="audio_record_request_option_2">Concordo com o</string>
+    <string name="audio_record_request_option_3">Gravação Automática de Chamadas</string>
+    <string name="audio_record_delete_result_suc">Excluir com sucesso.</string>
+    <string name="setting_call_audio_record">Gravador de chamadas</string>
+    <string name="audio_record_file_play">Toque</string>
+    <string name="audio_record_improve_tip_opened">Seu dispositivo grava chamadas com o microfone. Lembre-se de ligar o alto-falante durante a gravação.</string>
+    <string name="audio_record_no_record">Não há registros.</string>
+    <string name="audio_record_option_disable_tip">Tem certeza de desativar a gravação de chamadas?</string>
+    <string name="audio_record_request_desc">Você pode gravar chamadas a qualquer momento, o Caller ID não usará nem fará upload de nenhum dos seus arquivos de gravação de chamadas.</string>
+    <string name="audio_record_miss_call_file_delete">O telefone não conseguiu se conectar e o arquivo de gravação foi excluído.</string>
+    <string name="audio_record_option_enable">Ativar gravação</string>
+    <string name="audio_record_option_delete">Excluir tudo</string>
+    <string name="audio_record_improve_tip_closed">A função de gravação está desativada, ative agora.</string>
+    <string name="audio_record_request_title">Ativar gravação de chamadas?</string>
+    <string name="audio_record_request_action_1">Rejeitar</string>
+    <string name="audio_record_delete_all_tip">Tem certeza de excluir todas as gravações de chamadas?</string>
+    <string name="audio_record_option_disable">Desativar Gravação</string>
+    <string name="audio_record_request_option_2_privacy">Política de Privacidade</string>
+
+    <string name="audio_record_option_disable_auto_record_suc_tip">Desabilite a gravação automática com sucesso.</string>
+    <string name="audio_record_set_failed">Set failed, ele precisa de permissão para ativar o registro de áudio.</string>
+    <string name="audio_record_option_enable_auto_record_suc_tip">Ative a gravação automática com sucesso.</string>
+    <string name="audio_record_option_enable_auto_record">Ativar gravação automática</string>
+    <string name="audio_record_option_disable_auto_record">Desativar gravação automática</string>
+    <string name="audio_record_set_success">Definir com sucesso, a função de gravação está ativada.</string>
+    <string name="record_call_permission_tip">Conceder permissão só é usada para chamar a gravação, ela não será usada para qualquer outra finalidade.</string>
+
+    <string name="audio_record_delete_single_tip">Tem certeza de excluir esta gravação de chamadas?</string>
+    <string name="audio_record_push_tool_new_record">Você tem uma nova gravação de chamada.</string>
+
+    <string name="block_message_tip">SMS que deste número foram bloqueados.</string>
+    <string name="audio_record_phone_detail_title">Gravação</string>
+    <string name="unblock_message_tip">SMS que deste número foram desbloqueados.</string>
+
+    <string name="do_not_disturb_permission_tip">Precisa de permissão para ativar não perturbe.</string>
+    <string name="call_flash_saving">Salvando</string>
+    <string name="discovery_call_record_des">Suporte a gravação de chamadas e compartilhe arquivos de gravação com seus amigos.</string>
+    <string name="do_not_disturb_timer">Cronômetro</string>
+    <string name="do_not_disturb_allow_no">Ninguém</string>
+    <string name="do_not_disturb_tip_content_disenable">Ativar não perturbe, aproveite o tempo de vida agradável e tranquila, tente agora.</string>
+    <string name="do_not_disturb_allow_incoming_list">Permitir lista de chamadas</string>
+    <string name="do_not_disturb_schedule_set">Configuração</string>
+    <string name="call_flash_preview_recommend_call_flash">Recomendar o Flash de Chamada</string>
+    <string name="do_not_disturb_schedule">Cronograma</string>
+    <string name="do_not_disturb_allow_incoming">Permitir chamadas de</string>
+    <string name="do_not_disturb_set_success_for_schedule">O telefone será silenciado durante o horário agendado</string>
+    <string name="call_flash_preview_now">Visualizar agora</string>
+    <string name="do_not_disturb_timer_tip">Por favor, defina o tempo</string>
+    <string name="do_not_disturb_timer_set_time_title">Definir o temporizador</string>
+    <string name="side_slip_menu_discovery">Descoberta</string>
+    <string name="do_not_disturb_timer_title">Até&lt;font color=&quot;#FF0084FF&quot;&gt;%1$s&lt;/font&gt;</string>
+    <string name="do_not_disturb_notification_title">No modo silencioso</string>
+    <string name="do_not_disturb_end">Fim</string>
+    <string name="do_not_disturb_allow_in_coming_view_custom">Escolha números que permitam chamadas</string>
+    <string name="do_not_disturb_set_success">O telefone será desativado até a contagem regressiva terminar</string>
+    <string name="do_not_disturb_permission_set_fail">Set falhou, precisa de permissão para definir não perturbe.</string>
+    <string name="do_not_disturb_allow_in_coming_custom">Escolher</string>
+    <string name="audio_record_file_share">Compartilhar</string>
+    <string name="do_not_disturb_allow_incoming_tip">Este número já foi adicionado.</string>
+    <string name="call_flash_grant_permission_tip">Conceder permissão é usada apenas para definir %1$s, ela não será usada para nenhum outro propósito.</string>
+    <string name="do_not_disturb_enabled">ativado</string>
+
+    <string name="external_volume_new_call_flash_title">Nova chamada flash show</string>
+    <string name="external_volume_new_call_flash_view">Visualizar</string>
+
+    <string name="call_flash_upload_action_upload">Envio</string>
+    <string name="call_flash_upload_tip_privacy_policy">Deve concordar com a política de privacidade para fazer o upload do arquivo</string>
+    <string name="call_flash_upload_tip_no_file">Por favor, escolha o arquivo para fazer o upload</string>
+    <string name="call_flash_upload_uploading">Uploaded</string>
+    <string name="call_flash_upload_author">Autor</string>
+
+    <string name="privacy_number_title_pattern_lock">Padrão de Bloqueio</string>
+    <string name="privacy_number_add_number">Adicionar números aos contatos privados</string>
+    <string name="privacy_number_set_pattern">Por favor, desenhe o padrão</string>
+    <string name="privavy_number_set_pattern_guide_tip">Por favor, defina o bloqueio padrão para seus contatos privados.</string>
+    <string name="privacy_number_set_pattern_error_to_init">Por favor, desenhe o mesmo padrão da primeira vez!</string>
+    <string name="privacy_number_set_pattern_reset_init_password">Restabelecer</string>
+    <string name="privacy_number_input_password_error_tip">Senha incorreta, você também pode tentar vezes %1$d</string>
+
+    <string name="privacy_number_forget_pwd">Esqueceu a senha</string>
+    <string name="privacy_number_enabled_private_protects">A proteção de contatos privados está ativada.</string>
+    <string name="add_private_number_title">Adicionar números a contatos privados</string>
+    <string name="add_private_number_add_sure">confirme</string>
+
+    <string name="add_number_exist_by_hide_type">Este número já está na lista particular</string>
+    <string name="add_private_number_add_number_empty">Erro desconhecido causou a adição falhar. </string>
+    <string name="privacy_number_security_question_title">Selecione uma pergunta de segurança</string>
+    <string name="privacy_number_security_question_1">Qual rua é a sua escola primária?</string>
+    <string name="privacy_number_security_question_2">Qual é o seu primeiro número de telefone?</string>
+    <string name="privacy_number_security_question_3">Onde é o seu local de nascimento?</string>
+    <string name="privacy_number_security_question_4">Quando é o aniversário do seu pai?</string>
+    <string name="privacy_number_security_question_5">Qual sua comida favorita?</string>
+    <string name="privacy_number_security_question_custom">Customizar</string>
+    <string name="privacy_number_set_pwd_security_question_title">Digite sua pergunta de segurança</string>
+    <string name="privacy_number_security_question_answer_title">Digite sua resposta de segurança</string>
+    <string name="privacy_number_security_answer_empty">por favor, coloque sua resposta!</string>
+    <string name="privacy_number_security_answer_length_limit">Por favor, mantenha o tamanho do caractere na faixa de %1$d a %2$d.</string>
+    <string name="privacy_number_security_question_empty">A questão secreta não pode estar vazia!</string>
+    <string name="privacy_number_set_pattern_length_tip">Por favor, certifique-se de que o bloqueio padrão está conectado a pelo menos 4 pontos!</string>
+    <string name="privacy_number_pattern_error_over_count_tip">A senha foi esgotada. </string>
+    <string name="privacy_number_forget_pwd_error_tip">Senha incorreta. </string>
+    <string name="privacy_number_pattern_reset_suc_tip">Bloqueio de padrão redefinido com sucesso</string>
+    <string name="privacy_number_security_question_confirm_tip">Para proteger sua privacidade, a pergunta e a resposta de segurança definidas são a única maneira de recuperar seu padrão. Certifique-se de lembrar-se delas.</string>
+
+    <string name="privacy_number_add_number_tip_title">Adicionar números a contatos particulares</string>
+    <string name="privacy_number_add_number_tip_content">O histórico de chamadas de contatos privados aparecerá somente em contatos particulares. Os registros de chamadas não aparecem no sistema nem em nenhum outro software.</string>
+    <string name="privacy_number_add_number_tip_check_content">Não mostre novamente</string>
+    <string name="privacy_number_add_number_tip_ok">ENTENDI</string>
+
+    <string name="privacy_number_delete_number_tip_title">Remover contatos particulares</string>
+    <string name="privacy_number_delete_number_tip_content">Depois de remover esse contato particular, seus registros de chamadas serão excluídos, mas as gravações serão mantidas. Confirme a exclusão desse contato particular?</string>
+    <string name="privacy_number_private_contact_call_log_is_empty">Este contato particular não tem registros de chamadas.</string>
+    <string name="privacy_number_private_contacts_empty">Protege a privacidade de chamadas e oculta automaticamente as chamadas privadas</string>
+    <string name="privacy_number_set_pattern_draw_again">Confirme o padrão</string>
+    <string name="add_private_number_no_select">Por favor, selecione pelo menos um número!</string>
+    <string name="privacy_number_title_number">Contatos particulares</string>
+    <string name="add_private_number_add_sure_more">Confirme (%1$d)</string>
+    <string name="discovery_privacy_call_des">Esconda suas chamadas secretas para proteger sua privacidade.</string>
+
+    <string name="night_mode_guide_dialog_des">Desfrute de tranquilidade quando dorme (%1$s - %2$s)</string>
+    <string name="night_mode_new_missed_calls_count">%1$d chamadas perdidas</string>
+    <string name="night_mode_guide_dialog_title">Ative Não perturbe para dormir.</string>
+
+    <string name="privacy_number_set_pattern_error_tip_over_count">A senha atingiu o número máximo de vezes. Tente novamente após os minutos da %1$d!</string>
+    <string name="privacy_number_set_pattern_error_during_lock">O teclado de desenho está bloqueado. Tente novamente após os minutos de %1$d.</string>
+
+    <string name="missed_call_title">@string/push_tools_missed</string>
+    <string name="missed_call_number_scan">@string/number_scaning</string>
+
+    <string name="missed_call_number_scan_not_close">Por favor, não saia</string>
+    <string name="night_mode_disable_dialog_title">Desativar Não perturbe o sono</string>
+    <string name="night_mode_disable_dialog_des">Tem certeza de desativá-lo?</string>
+
+    <string name="splash_init">Inicializando</string>
+    <string name="download_failed_for_no_sd_permission">Conceder a permissão para baixar e salvar temas</string>
+
+    <string name="add_shortcut_success">Criado com sucesso</string>
+    <string name="setting_shortcut">Atalhos</string>
+    <string name="setting_add_contact_shortcut">Adicionar atalhos de contato</string>
+    <string name="setting_add_sms_shortcut">Adicionar atalhos de SMS</string>
+
+    <string name="swipe_flash_title">Lanterna</string>
+    <string name="swipe_wifi_title">Wi-fi</string>
+    <string name="swipe_speeder_title">Impulsionador</string>
+
+    <string name="swipe_camere_title">Câmera</string>
+    <string name="swipe_calendar_title">Calendário</string>
+    <string name="swipe_data_title">Dados</string>
+
+    <string name="swipe_calculator_title">Calculadora</string>
+    <string name="swipe_flightmode_title">Modo avião</string>
+    <string name="swipe_swipesetting_title">Configuração fácil de furto</string>
+    <string name="swipe_bluetooth_title">Bluetooth</string>
+
+    <string name="swipe_mute_title">Som</string>
+    <string name="swipe_setting_title">Configurações</string>
+    <string name="swipe_alarm_title">Alarme</string>
+
+
+    <string name="swipe_edit_header_title">selecionado (%1$s / %2$s)</string>
+    <string name="favorite_up_to_9">até 9</string>
+    <string name="scene_mode_0">Vibrador</string>
+    <string name="scene_mode_1">Mudo</string>
+    <string name="scene_mode_2">Toque</string>
+
+
+    <string name="swipe_for">Ativar bem deslizar para</string>
+    <string name="swipe_for_type0">Apenas Homescreen</string>
+    <string name="swipe_for_type1">Tela inicial e todos os aplicativos</string>
+    <string name="swipe_active_area">Posição da área ativa</string>
+    <string name="swipe_area_type0">Inferior esquerda e inferior direita</string>
+    <string name="swipe_area_type1">Inferior esquerdo</string>
+    <string name="swipe_area_type2">Canto inferior direito</string>
+    <string name="swipe_whitelist">Não perturbe as configurações (%1$d)</string>
+    <string name="swipe_whitelist_des">Escolher apps que desativam o recurso \"Well Swipe\"</string>
+    <string name="swipe_whitelist_title">Adicionar aplicativo</string>
+
+    <string name="swipe_about_rate5start">Love us? Avaliar 5 estrelas</string>
+    <string name="googleplay_not_found">Não é possível encontrar o Play Google</string>
+
+    <string name="swipe_toggle">Alternancia</string>
+    <string name="swipe_about">Sobre</string>
+    <string name="swipe_about_version">Versão do aplicativo</string>
+    <string name="swipe_open_type">Método de Disparo</string>
+    <string name="swipe_open_type0">Padrão (deslizar do canto inferior)</string>
+    <string name="swipe_open_type1">Swipe Assist</string>
+    <string name="swipe_advanced_setting">Configurações avançadas</string>
+
+    <string name="feedback_title">preencha o título</string>
+    <string name="feedback_content">preencha o conteúdo</string>
+    <string name="clearmemary_title">memória clara</string>
+    <string name="clearmemary_wait">Tente novamente depois de um tempo</string>
+    <string name="flash_on">A lanterna está ligada</string>
+    <string name="flash_off">Lanterna está desligada</string>
+    <string name="wifi_on">WiFi está conectado</string>
+    <string name="wifi_off">WiFi está desconectado</string>
+    <string name="bluetooth_on">o bluetooth está ligado</string>
+    <string name="bluetooth_off">o bluetooth está desligado</string>
+    <string name="data_on">Dados móveis foram conectados</string>
+    <string name="data_off">Dados móveis foram desconectados</string>
+
+    <string name="request_windows_title">SYSTEM_ALERT_WINDOW</string>
+    <string name="request_windows_content">O Swipe precisa de permissão</string>
+
+
+    <string name="swipe_nitification_title">Easy Swipe está em execução</string>
+    <string name="swipe_nitification_content">toque para ver as configurações do Easy Swipe</string>
+    <string name="swipe_whitelist_item_unlauncher">Aplicativo de lista branca não tem permissão para iniciar</string>
+    <string name="swipe_open_switch">Por favor, ligue o interruptor primeiro!</string>
+
+    <string name="easy_swipe">Furto Fácil</string>
+    <string name="easy_swipe_guide_desc_1">Deslize para o painel de atalho pop-up</string>
+    <string name="easy_swipe_guide_desc_2">Fácil acesso às configurações do sistema</string>
+    <string name="easy_swipe_guide_desc_3">Lançamento rápido de aplicativos usados ​​comuns</string>
+    <string name="tip_easy_swipe">O Swipe Fácil foi ativado</string>
+    <string name="easy_swipe_guide_text">Deslize de canto na área de trabalho da seguinte forma</string>
+    <string name="not_found_app">Não é possível abrir o aplicativo</string>
+    <string name="permission_denied_txt">permissão negada, por favor tente novamente</string>
+    <string name="txt_camera_permission_msg">"Clique em 'Permitir' para garantir que a câmera está funcionando corretamente"</string>
+
+    <string name="toolbox">Caixa de ferramentas</string>
+    <string name="frequent">Freqüente</string>
+    <string name="recent">Recente</string>
+    <string name="ok_title">@string/ok_string</string>
+    <string name="cancel_title">@string/no_string</string>
+</resources>

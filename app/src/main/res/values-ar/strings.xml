@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <string name="push_tools_block_call">مكالمة محظورة.</string>
+    <string name="push_tools_ring_one">فائتة مع رنة واحدة.</string>
+    <string name="push_tools_missed">مكالمة فائتة.</string>
+    <string name="push_tools_missed_count">لديك %1$d مكالمة فائتة</string>
+    <string name="push_tools_not_in_contact">حصلت على اتصال من شخص غريب!</string>
+    <string name="push_tools_reject">رفضت اتصال!</string>
+    <string name="push_tools_content">اضغط لفحص التفاصيل.</string>
+    <string name="push_tools_call_flash_toast">تم إضافة سمات وميض هادئ جديد، جربه الآن.</string>
+    <string name="push_tools_message">لديك %1$s رسائل غير مقروءة!</string>
+    <string name="text_call_flash_exit_dialog_title">افتح وميض المكالمة الخاص بالمكالمات</string>
+    <string name="call_flash_intro_title">المزايا التالية يفضلها معظم المستخدمين، جربها!</string>
+    <string name="call_flash_intro_set">وميض المكالمة</string>
+    <string name="call_flash_intro_reject">لا، شكرًا!</string>
+    <string name="no_results">بدون نتائج</string>
+    <string name="ok_string">موافق</string>
+    <string name="no_string">إلغاء</string>
+    <string name="dialog_ok_delete_block_log">مسح جميع تاريخ الحظر؟</string>
+    <string name="dialog_ok_delete_block_log_title">مسح تاريخ الحظر؟</string>
+    <string name="quithint">اضغط مرة أخرى للخروج</string>
+    <string name="grant_permission">منح أذونات</string>
+    <string name="popup_tips1">عرض نافذة منبثقة</string>
+    <string name="popup_tips3">التبديل لتمكين النافذة المنبثقة</string>
+    <!--<string name="main_menu_about">حول</string>-->
+    <string name="setting_title">إعدادات</string>
+    <string name="setting_language">اللغة</string>
+    <string name="setting_lauage_dialog_title">اختر لغة</string>
+    <string name="block_log_query_log_failed">فشل الاستعلام</string>
+    <string name="block_list_title">عرض البريد العشوائي قائمة الحظر</string>
+    <string name="block_list_mine">اشر عليها بانها قرات</string>
+    <string name="block_list_common">مرسلي البريد العشوائي الشائعين</string>
+    <string name="block_list_empty">لم تضف قائمة سوداء</string>
+    <string name="block_setting_title">إعدادات الحظر</string>
+    <string name="block_setting_name">حظر</string>
+    <string name="block_setting_common_block_desc">تقارير المسوّق عبر الهاتف والمتصلين المزعجين في صورة بريد عشوائي وبواسطة</string>
+    <string name="block_setting_hide_block">حظر الأرقام المخفية</string>
+    <string name="block_setting_hide_block_desc">أي متصل يظهر رقمه في صورة غير معروف</string>
+    <string name="block_setting_stranger_block">الأرقام ليست في جهات الاتصال</string>
+    <string name="block_setting_stranger_block_desc">حظر الأرقام في جهات الاتصال</string>
+    <string name="block_setting_block_method">طريقة الحظر</string>
+    <string name="block_setting_block_method_auto">الرفض تلقائيًا</string>
+    <string name="block_setting_block_method_silence">الإبقاء صامتًا</string>
+    <string name="block_setting_do_not_diturb">بدون إزعاج</string>
+    <string name="block_setting_do_not_diturb_time">30 دقيقة</string>
+    <string name="block_setting_pop_dialog">حوار منبثق</string>
+    <string name="block_setting_remind_missed_calls">ذكرني بالمكالمات الفائتة</string>
+    <string name="block_setting_remind_missed_calls_desc">الحصول على تذكرة عند فقدان مكالمة</string>
+    <string name="block_setting_floating_in_contacts">جهات الاتصال في الهاتف</string>
+    <string name="block_setting_floating_in_stranger">مكالمات غير معروفة</string>
+    <string name="block_setting_floating_out_call">المكالمات الصادرة الغير معروفة</string>
+    <string name="block_setting_call_flash">وميض الشاشة الخاص بالمكالمات</string>
+    <string name="block_setting_call_id">معرف المتصل</string>
+    <string name="block_setting_call_id_desc">يعرض معلومات معرف المتصل بعد فقدان أو انتهاء مكالمة( تحتوي على إعلانات).</string>
+    <string name="block_setting_sms_id_desc">إظهار المحتوى عند فقدان رسالة (تحتوي على إعلانات).</string>
+    <!--<string name="frag_block_logs">سجلات الحظر</string>
+    <string name="frag_block_updating_common_db">تحديث</string>
+    <string name="frag_block_block_switch_on">فحص التحديثات</string>
+    <string name="frag_block_block_switch_off">تمكين الحظر</string>
+    <string name="frag_block_current_desc">يتم حظر المتصل حاليًا</string>
+    <string name="frag_block_protect_desc">Caller يحميك</string>
+    <string name="frag_block_protect_count_desc">مكالمات</string>
+    <string name="frag_block_block_switch_toast_off">حظر المكالمات العشوائية التي يبلغ عنها المستخدمين</string>
+    <string name="frag_block_block_switch_toast_on">أخر تحديث: %1$s</string>-->
+    <string name="external_input_title">إضافة</string>
+    <string name="external_input_number_hint">رقم الهاتف (مطلوب)</string>
+    <string name="external_input_name_hint">الاسم</string>
+    <string name="external_input_added_completed">لقد تم إضافة الرقم إلى القائمة السوداء</string>
+    <string name="external_input_enter_number_long">أدخلت العديد من الحروف</string>
+    <string name="external_input_enter_number_short">أدخل حروف قليلة جدًا</string>
+    <string name="add_number_exist">هذا الرقم موجود بالفعل في القائمة السوداء</string>
+    <string name="add_number_as_spam">الإبلاغ عن رقم كعشوائي</string>
+    <string name="from_contacts_title">من دفتر الهاتف</string>
+    <string name="from_contacts_quick_filtering">تصفية سريعة</string>
+    <string name="from_contacts_read_failed">فشل ذلك عند قراءة جهات اتصال الهاتف!!!</string>
+    <string name="from_call_log_title">من تاريخ المكالمة</string>
+    <string name="from_call_log_read_failed">فشل ذلك عند قراءة تاريخ المكالمة!!!</string>
+    <string name="country_list_title">الرجاء تحديد دولتك</string>
+    <string name="country_list_name_hint">اسم الدولة أو كود الدولة....</string>
+    <string name="call_coming_back">رد الاتصال</string>
+    <string name="call_coming_detail">التفاصيل</string>
+    <string name="about_title">نبذة عنا</string>
+    <string name="about_product_intro">أداة رائعة جدًا للمكالمات.</string>
+    <string name="about_product_version">الإصدار %s :</string>
+    <string name="about_rote_gp">مثلنا</string>
+    <string name="about_like_facebook">امنحنا إعجاب على Facebook</string>
+    <string name="about_send_apk">إرسل ملف APK إلى الأصدقاء</string>
+    <string name="no_app_to_share">عذرًا، ليس لديك تطبيق لمشاركته.</string>
+    <string name="failed_backup">فشل النسخ الاحتياطي</string>
+    <string name="share_to_facebook">المشاركة على Facebook</string>
+    <string name="about_privacy">سياسة الخصوصية</string>
+    <string name="about_term">شروط الاستخدام</string>
+    <string name="share_text">%1$s يمكنه حظر المكالمات غير المطلوبة ومعرفة من يتصل. جربه! يمكنك الحصول عليه على:%2$s</string>
+    <string name="rate_dialog_title">امنحنا 5 نجوم إذا كنت تستمتع بالتطبيق.</string>
+    <string name="rate_dialog_message">إظهر دعمك لنا بتقييمنا 5 نجوم على Google Play.</string>
+    <string name="rate_dialog_ok">امنحنا 5 نجوم</string>
+    <string name="rate_dialog_cancel">لاحقًا</string>
+    <string name="device_time_just">فقط الآن</string>
+    <string name="device_time_minutes">منذ %1$d دقيقة</string>
+    <string name="device_time_hour">منذ %1$d ساعة</string>
+    <string name="device_time_one_hour">منذ 1 ساعة</string>
+    <string name="device_time_day">منذ %1$d يوم</string>
+    <string name="device_time_one_day">أمس</string>
+    <string name="lanuage_item_auto">تلقائي</string>
+    <string name="time_s">%1$ds</string>
+    <string name="time_m">%1$dm:%2$ds</string>
+    <string name="time_h">%1$dh:%2$dm:%3$ds</string>
+    <string name="skip_splash">تخطي</string>
+    <string name="splash_more">المزيد</string>
+    <string name="call_log_menu_all_call">كل</string>
+    <string name="call_log_menu_discerned">محدد</string>
+    <string name="call_log_menu_incoming">وارد</string>
+    <string name="call_log_menu_refused">تم الرفض</string>
+    <string name="call_log_menu_outgoing">صادر</string>
+    <string name="call_log_menu_missed">فائت</string>
+    <string name="call_log_menu_blocked">محظور</string>
+    <string name="call_log_menu_scan_shrink">تقليص</string>
+    <string name="call_log_menu_delete_all_shield_calls">إزالة جميع المكالمات المحظورة</string>
+    <string name="call_log_menu_delete_all_calls">إزالة جميع المكالمات</string>
+    <string name="call_log_contact">جهات الاتصال</string>
+    <string name="call_log_hide_number">رقم مخفي</string>
+    <string name="call_log_date_sunday">الأحد</string>
+    <string name="call_log_date_saturday">السبت</string>
+    <string name="call_log_date_friday">الجمعة</string>
+    <string name="call_log_date_thursday">الخميس</string>
+    <string name="call_log_date_wednesday">الأربعاء</string>
+    <string name="call_log_date_tuesday">الثلاثاء</string>
+    <string name="call_log_date_monday">الاثنين</string>
+    <string name="call_log_date_today">اليوم</string>
+    <string name="call_log_no_block_call">لا توجد مكالمة محظورة</string>
+    <string name="call_log_no_missed_call">لا توجد مكالمة فائتة</string>
+    <string name="call_log_crank_call_count_text">حظر ذكي للمكالمات العشوائية</string>
+    <string name="call_log_open_block_text">تمكين الحظر الذكي</string>
+    <string name="call_log_enable">تمكين</string>
+    <string name="call_log_no_calllog">لا يوجد سجل مكالمة</string>
+    <string name="phone_detail_unblock">إلغاء الحظر</string>
+    <string name="phone_detail_block">حظر &amp; إبلاغ</string>
+    <string name="phone_detail_call_log">عرض تاريخ المكالمة</string>
+    <string name="phone_detail_phone_save">حفظ</string>
+    <string name="phone_detail_phone_edit">تحرير</string>
+    <string name="phone_detail_phone_Tag">علامة</string>
+    <string name="phone_detail_call_log_access_failure">تم الإلغاء</string>
+    <string name="phone_detail_number_type_mobile">جوال</string>
+    <string name="phone_detail_number_type_home">المنزل</string>
+    <string name="phone_detail_number_type_company">العمل</string>
+    <string name="phone_detail_lastest_call_log">أخر مكالمة:</string>
+    <string name="phone_detail_no_call_log">لا يوجد تاريخ للمكالمات</string>
+    <string name="phone_detail_block_dialog_content">لن تعد تستلم مكالمات من هذا الرقم</string>
+    <string name="phone_detail_block_dialog_content_unblock">سيتم إلغاء حظر هذا الرقم والإبلاغ عنه كعشوائي. لن يتم تعريف المكالمات المستقبلية في صورة مكالمات عشوائية</string>
+    <string name="phone_detail_block_dialog_title">هل أنت متأكد أنك تريد حظر هذا الرقم؟</string>
+    <string name="phone_detail_block_dialog_title2">هل أنت متأكد أنك تريد إلغاء حظر هذا الرقم؟</string>
+    <string name="phone_detail_have_no_tag">لقد أضاف هذا الرقم بالفعل جميع العلامات</string>
+    <string name="phone_detail_add_tag">إضافة علامة</string>
+    <string name="phone_detail_add_name">إضافة اسم</string>
+    <string name="phone_detail_no_name">بدون اسم</string>
+    <string name="phone_detail_add_lion_name_tip">اقترح اسم أفضل</string>
+    <string name="phone_detail_add_lion_name_dialog_person">شخص</string>
+    <string name="phone_detail_add_lion_name_dialog_company">عمل</string>
+    <string name="phone_detail_add_lion_name_update_tip1">ليس  %1$s؟</string>
+    <string name="phone_detail_add_lion_name_update_tip2">اضغط لاقتراح اسم أفضل</string>
+    <string name="phone_detail_cancel_block">تم إزالة الرقم من القائمة السوداء</string>
+    <string name="phone_detail_add_name_not_null_tip">الاسم مطلوب</string>
+    <string name="phone_detail_delete_contact">حذف جهة الاتصال</string>
+    <string name="phone_detail_delete_spam_count_text">قام %1$d شخص بالإبلاغ عن هذا كعشوائي</string>
+    <string name="phone_detail_delete_spam_count_text3">تم الإبلاغ كعشوائي بواسطتك</string>
+    <string name="phone_detail_delete_spam_count_text2">تم الإبلاغ كعشوائي بواسطة المستخدمين</string>
+    <string name="phone_detail_no_number">لا يوجد رقم في جهة الاتصال الحالية</string>
+    <string name="phone_detail_unknown">غير معروف</string>
+    <string name="phone_detail_null_number">الرقم فارغ</string>
+    <string name="tag_popupwindow_tip">مساعدة الأخرين في تعريف هذا الرقم</string>
+    <string name="contact_search_hint">البحث عن هاتف</string>
+    <string name="contact_add_contact">إنشاء جهة اتصال جديدة</string>
+    <string name="contact_no_contacts">بدون جهة اتصال</string>
+    <string name="call_after_message">رسالة</string>
+    <string name="call_after_click_toast">"الرقم مخفي!"</string>
+    <string name="search_input_hint">أدخل رقم</string>
+    <string name="search_number_hint">ابحث عن ما يزيد عن 100,000,000 رقم هاتفي</string>
+    <string name="search_recently_record">نتائج البحث الحديثة</string>
+    <string name="search_no_result">لا توجد نتائج بحث حتى الآن</string>
+    <string name="search_no_result2">لا توجد نتائج بحث. يمكنك المحاولة مرة أخرى لتحديد بلد أخرى</string>
+    <string name="search_no_result_hint">سوف تظهر نتائج البحث الحديثة هنا</string>
+    <string name="search_content_hint">ابحث في Caller ID</string>
+    <string name="search_delete_all_content">تأكيد لحذف جميع تاريخ البحث؟</string>
+    <string name="search_clear_all_record">مسح تاريخ البحث الحديث</string>
+    <string name="search_invalid_number">الرجاء إدخال رقم صحيح</string>
+    <string name="search_number_tip">الرجاء إدخال رقم هاتف صحيح</string>
+    <string name="dialing_title">مكالمة فائتة.</string>
+    <string name="unknown_number">رقم غير معروف</string>
+    <string name="permission_tip">من أجل تحديد وحظر مكالمات المعكسات، يجب عليك تمكين تاريخ المكالمة وأذونات جهات الاتصال.</string>
+    <string name="permission_sysytem_permission">مدير الإذن</string>
+    <string name="permission_to_get_permsiion">تمكين</string>
+    <string name="permission_no_permission">بدون إذن</string>
+    <string name="permission_phone">هاتف</string>
+    <string name="permission_SMS">رسالة SMS</string>
+    <string name="dialog_update_btn_update">تحديث</string>
+    <string name="dialog_update_download_title">جارِ تحديث</string>
+    <string name="num_tag_101">عشوائي</string>
+    <string name="num_tag_103">التسويق عبر الهاتف </string>
+    <string name="num_tag_104">التمويل والتأمين</string>
+    <string name="num_tag_105">التسوق</string>
+    <string name="num_tag_106">فندق</string>
+    <string name="num_tag_107">التعليم</string>
+    <string name="num_tag_108">الصحة</string>
+    <string name="num_tag_109">السفر</string>
+    <string name="num_tag_110">قطار إكسبريس</string>
+    <string name="num_tag_111">النقل</string>
+    <string name="num_tag_112">الحياة الليلية والمشروبات</string>
+    <string name="num_tag_113">المطاعم والكافيهات</string>
+    <string name="num_tag_114">خدمات عامة</string>
+    <string name="FIXED_LINE">FIXED_LINE</string>
+    <string name="MOBILE">جوال</string>
+    <string name="FIXED_LINE_OR_MOBILE">FIXED_LINE_OR_MOBILE</string>
+    <string name="TOLL_FREE">TOLL_FREE</string>
+    <string name="PREMIUM_RATE">PREMIUM_RATE</string>
+    <string name="SHARED_COST">SHARED_COST</string>
+    <string name="PERSONAL_NUMBER">PERSONAL_NUMBER</string>
+    <string name="call_flash_led_festival">مهرجان</string>
+    <string name="call_flash_led_love">الحب</string>
+    <string name="call_falsh_led_streamer">لافتة</string>
+    <string name="call_flash_led_kiss">قبلة</string>
+    <string name="call_flash_led_rose">ارتفع</string>
+    <!--<string name="call_falsh_led_bloom">البلوم</string>-->
+    <!--<string name="call_falsh_led_gradient">متدرج</string>-->
+    <!--<string name="call_falsh_led_neon">نيون</string>-->
+    <string name="call_flash_guide_open_upper">فتح</string>
+    <string name="call_flash_exit_dialog_title">فتح وميض المكالمة الخاص بالمكالمات</string>
+    <string name="whtas_new_title">ما الجديد</string>
+    <string name="whtas_new_title_name">معرف المتصل</string>
+    <string name="whtas_new_des_one">إظهار المحتوى عند فقدان رسالة.</string>
+    <string name="whtas_new_des_two">تحديد المكالمات الواردة والصادرة.</string>
+    <string name="whtas_new_des_three">عرض معرف المصتل بعد فقدان أو إنهاء مكالمة.</string>
+    <string name="smart_lock_toast">تم التمكين بنجاح.</string>
+
+    <string name="message_options">خيارات الرسالة</string>
+    <string name="copy_message_text">نسخ نص</string>
+    <string name="menu_add_address_to_contacts">إضافة  %s إلى جهات الاتصال</string>
+    <string name="delete_message">حذف رسالة</string>
+    <string name="confirm_delete_message">سيتم حذف الرسالة</string>
+    <string name="delete">حذف رسالة</string>
+    <string name="dail">اتصال</string>
+    <string name="reply">رد</string>
+    <string name="tyep_message">اكتب رسالة</string>
+    <string name="change_sms_app">تغيير تطبيق SMS؟</string>
+    <string name="upgrade_now">تعيين الأن</string>
+    <string name="not_default_send">يجب أن يكون تطبيق SMS لإرسال الرسائل</string>
+    <string name="sms_sent_fail">فشل الإرسال</string>
+    <string name="sms_send_wait">انتظر الإرسال</string>
+    <string name="sms_sending">جارِ الإرسال</string>
+    <string name="sms_not_default_mark_read">يجب أن يكون تطبيقSMS لتمييز الرسائل المقروءة</string>
+    <string name="push_tools_message_mult_contacts">%1$s وجهات اتصال &lt;font color="#FF0084"&gt;%2$s&lt;/font&gt; الأخرى</string>
+    <string name="sms_set_default_sms">"جعل تطبيق SMS افتراضي"</string>
+    <string name="sms_save_to_contact">"حفظ على دفتر الهاتف"</string>
+    <string name="sms_see_contact">"عرض جهات الاتصال"</string>
+    <string name="sms_delete_conversation">"حذف رسالة"</string>
+    <string name="sms_delete_conversation_text">"هل تريد بالتأكيد حذف هذه الرسالة؟"</string>
+    <string name="sms_deleteing">"جارِ الحذف..."</string>
+    <string name="sms_not_default_to_delete_conversation">"يجب أن يكون تطبيق SMS لحذف هذه المحادثة"</string>
+    <string name="sms_delete_message">"حذف هذه الرسالة"</string>
+    <string name="sms_no_conversation">لا توجد رسائل</string>
+
+    <string name="sms_not_empty">يرجى إدخال رسالتك</string>
+    <string name="splash_content">تحديد هوية المتصل واعتراض</string>
+
+    <!-- spam update start 14-->
+    <string name="frag_block_offline_size_title">قاعدة بيانات الرسائل غير المرغوب فيها</string>
+    <string name="frag_block_offline_size_title_new_number">تمت إضافة أرقام جديدة</string>
+    <string name="frag_block_offline_size_title_new_number_notify">%1$d أرقام جديدة تضاف، انقر لتحديث.</string>
+    <string name="frag_block_offline_size_desc">انقر لتحديث الآن</string>
+    <string name="frag_block_offline_size_desc2">بياناتك محدثة</string>
+    <string name="frag_block_update_scan_phone_number">تفحص</string>
+    <string name="frag_block_update_scan_phone_number_title">آمنة</string>
+    <string name="frag_block_update_scan_phone_number_title_new_calls">%1$d مكالمات جديدة</string>
+    <string name="frag_block_update_scan_phone_number_desc_tap">انقر لمسح المكالمات الجديدة.</string>
+    <string name="frag_block_update_scan_phone_number_desc">هاتفك محمي.</string>
+    <string name="spam_update_result_suc">"نجاح التحديث"</string>
+    <string name="spam_update_result_fail">"فشل التحديث"</string>
+    <string name="spam_update_tip">"تحديث، من فضلك لا تترك."</string>
+    <string name="spam_update_exit_tip">التحديث قيد التقدم، هل أنت متأكد من الخروج؟</string>
+    <string name="spam_update_result_update_number">%1$d أرقام جديدة المحدثة</string>
+    <string name="spam_update_app_exit_prompt_title">تحديث قاعدة البيانات أرقام الآن؟</string>
+    <string name="spam_update_app_exit_prompt_content">سوف أرقام قاعدة البيانات تساعدك على التعرف على المكالمات غير معروف ومنع سبامز، اضغط لتحديث.</string>
+    <string name="frag_block_block_history_title">عرض تاريخ الحظر</string>
+    <string name="frag_block_block_history_empty">@string/no_results</string>
+    <string name="frag_block_update_spam_failed">@string/spam_update_result_fail</string>
+    <!-- spam update end-->
+
+    <!-- scan new calls 15 -->
+    <string name="number_scaning">مسح</string>
+    <string name="number_scan_recent">حديثي</string>
+    <string name="number_scan_identified">تبينها</string>
+    <string name="number_scan_dialog_tip">المسح الضوئي، هل أنت متأكد من الخروج؟</string>
+    <string name="number_scan_result">نتائج مسح</string>
+    <string name="number_scan_result_risks">المخاطر</string>
+    <string name="number_scan_checking">تدقيق...</string>
+    <string name="number_scan_result_tip">%1$d رقم (أرقام) البريد المزعج المحددة في سجلات المكالمات الخاصة بك</string>
+    <string name="number_scan_realtime_protect">ريالتيمي بروتيكت</string>
+    <string name="number_scan_reported_you_call">أبلغت استدعاء</string>
+    <string name="number_scan_result_spam_number">عدد الرسائل غير المرغوب فيها</string>
+    <string name="number_scan_result_open_realtime_protect">تمكين ريالتيمي بروتيكت</string>
+    <string name="number_scan_result_congratulations">منجز.</string>
+    <string name="number_scan_result_Successfully_tip1">تمت إضافته بنجاح إلى قائمة الحظر</string>
+    <string name="number_scan_result_Successfully_tip2">بنجاح تمكين حماية الوقت الحقيقي</string>
+    <string name="number_scan_result_block_spam_number">@string/block_setting_name</string>
+    <string name="number_scan_result_unblock_spam_number">@string/phone_detail_unblock</string>
+    <string name="number_scan_unknown_number_count">@string/frag_block_update_scan_phone_number_title_new_calls</string>
+    <string name="number_scan_calllog_have_danger">@string/frag_block_update_scan_phone_number_desc_tap</string>
+    <string name="number_scan_calllog_scan_immdiately">@string/frag_block_update_scan_phone_number</string>
+    <string name="number_scan_unspam">@string/phone_detail_unblock</string>
+    <string name="number_scan_spam">@string/num_tag_101</string>
+    <string name="number_scan_title">@string/frag_block_update_scan_phone_number</string>
+    <string name="number_scan_exit_intro_title">رقم جديد المسح الضوئي</string>
+    <string name="number_scan_exit_intro_content">الهاتف يحتوي على عدد غير معروف جديد. الرجاء التحقق من أمان الرقم</string>
+
+    <string name="guide_desc_identify">تحديد المكالمات غير معروف ومنع سبامز</string>
+    <string name="guide_desc_call_falsh">بارد شاشة فلاش للمكالمات</string>
+    <string name="scan_anim_title">جار فحص مكالمات الرسائل غير المرغوب فيها ...</string>
+
+    <!-- fake call start-->
+    <string name="fake_call_title">دعوة وهمية</string>
+    <string name="fake_call_add_photo">صور</string>
+    <string name="fake_call_add_name_title">@string/external_input_name_hint</string>
+    <string name="fake_call_add_name_hint">اسم</string>
+    <string name="fake_call_add_number_hint">رقم</string>
+    <string name="fake_call_make_call">همية مكالمة</string>
+    <string name="fake_call_schedule">جدولي</string>
+    <string name="fake_call_error_numer_empty">لا يمكن أن يكون الرقم فارغا!</string>
+    <string name="fake_call_intro_title">انقر وتعيين المكالمات وهمية</string>
+    <!--<string name="fake_call_time_choice_tip">Click to select a call time</string>-->
+    <string name="fake_call_cancel_make_call_tip">الضغط لفترة طويلة لحذف دعوة مقررة</string>
+    <string name="fake_call_cancel_dialog_content">هل تريد حذف هذه المكالمة؟</string>
+    <string name="fake_call_tip">إنشاء دعوة وهمية لانقاذ لكم من الوضع المحرج.</string>
+
+    <string name="fake_call_add_photo_title">حدد مكالمة مقترحة</string>
+    <string name="fake_call_add_photo_name_default">John</string>
+    <string name="fake_call_add_photo_name_private">الرقم الشخصي</string>
+    <string name="fake_call_add_photo_name_spiderman">الرجل العنكبوت</string>
+    <string name="fake_call_add_photo_name_wonder_woman">المرأة المعجزة</string>
+
+    <string name="fake_call_make_call_now">الآن</string>
+    <string name="fake_call_time_choice_title">إجراء مكالمة بعد</string>
+    <string name="fake_call_quick_set_time">وقت الإعداد السريع</string>
+    <string name="fake_call_custom_time">وقت إعداد مخصص</string>
+    <string name="fake_call_custom_time_toast">الرجاء اختيار وقت مكالمة معقولة!</string>
+    <string name="fake_call_countdown_desc1">سوف ندعو لك</string>
+    <string name="fake_call_countdown_desc2">فيما بعد</string>
+
+    <string name="fake_call_incoming_title">مكالمة واردة</string>
+    <string name="fake_call_incoming_style_choice_title">مكالمة واردة وهمية</string>
+    <string name="fake_in_call_default_style">"افتراضي"</string>
+
+    <string name="fake_call_incoming_private_number">@string/example_number</string>
+    <string name="fake_call_show_call_type_incoming">@string/fake_call_incoming_title</string>
+    <!-- fake call end-->
+
+    <string name="sms_draft">[مشروع]</string>
+    <string name="toast_draft">مسودة محفوظة</string>
+    <string name="toast_save_draft_tip">يجب أن يكون التطبيق سمز الخاص بك إلى مسودة المحفوظة</string>
+    <string name="sms_resend_fail_sms">أخفق إرسال الرسالة. هل تريد إرساله؟</string>
+    <string name="sms_resend_message">إعادة إرسال الرسالة</string>
+    <string name="sms_emoji_tip">قريبا...</string>
+    <string name="call_after_close">قريب</string>
+    <string name="call_after_disable">تعطيل</string>
+    <string name="calllog_delete_tip">هل أنت متأكد من حذف هذا المحدد &lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt; كالوغس؟</string>
+    <string name="calllog_delete_no_selected">يرجى تحديد كاللوغ الذي تريد حذفه</string>
+    <string name="calllog_delete_fail">أخفق الحذف</string>
+    <string name="guide_desc_block">حظر الرسائل غير المرغوب فيها والمكالمات غير المرغوب فيها</string>
+    <string name="guide_desc_fake_call">دعوة وهمية للحصول على المتعة</string>
+    <string name="what_new_start">بداية</string>
+    <string name="fake_call_tip2">محاولة مكالمة وهمية الآن؟</string>
+    <string name="fake_call_tip3">دعوة لمساعدتك على التخلص من مأزق محرج، صديق دردشة صعبة.</string>
+    <string name="quit">استقال</string>
+    <string name="fake_call_try">محاولة</string>
+    <string name="contact_delete_tip">هل تريد بالتأكيد إزالة &lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt;؟</string>
+    <!--<string name="contact_delete_tip">Are you sure to remove &lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt;?</string>-->
+    <string name="phone_details_delete_contact">هل تريد بالتأكيد إزالة جهة الاتصال هذه؟</string>
+    <string name="phone_details_location">موقعك</string>
+    <string name="phone_details_change_name">تغيير الإسم</string>
+    <string name="setting_intelligent_identification">التحديد الذكي</string>
+    <string name="setting_intelligent_identification_numbers">إظهار المتصلين غير المعروفين.</string>
+    <string name="phone_details_open_identify_tip">تمكين التحديد الذكي (توافق على سياسة الخصوصية)</string>
+
+    <!--评分对话框 开始-->
+    <string name="rate_dialog_negative_title">"تغذية راجعة"</string>
+    <string name="rate_dialog_nagative_desc">"اكتب مشكلتك / البق / اقتراح هنا، الحد الأقصى 200 كلمة."</string>
+    <string name="rate_dialog_nagative_send">إرسال</string>
+    <string name="rate_dialog_nagative_toast">يرجى إدخال اقتراحاتكم!</string>
+    <string name="rate_dialog_send_success_toast">يتم إرسال ردود الفعل بالفعل، وذلك بفضل!</string>
+    <string name="rate_dialog_msg_illegal">تحتوي السلسلة التي أدخلتها على أحرف غير قانونية!</string>
+    <string name="call_flash_led_custom">عرف</string>
+    <string name="call_flash_show_custom_bg_desc">انقر على \"+\" لبدء إجراء عرض المكالمات الحصري</string>
+    <string name="call_flash_led_panda">الباندا</string>
+    <string name="call_flash_show_add_custom_bg">تخصيص مكالماتك مشاهدة</string>
+    <string name="exit_guide_content_number_scan">مسح المكالمات الجديدة للتحقق مما إذا كانت مضايقات / أرقام التسويق عن بعد.</string>
+    <string name="lion_family_price">حر</string>
+    <string name="lion_family_desc">تلبية تحتاج</string>
+    <string name="lion_family_active_download">تحميل</string>
+    <string name="call_flash_exit_open_title">استخدام هذا كما تسمونه الشاشة؟</string>
+    <string name="call_flash_exit_open_ok">استخدامه</string>
+    <string name="lion_family_active_use">استعمال</string>
+
+    <string name="number_scan_initiating">اعداد</string>
+
+    <!--Call flash album start-->
+    <string name="call_flash_album_title">اختيار صور أو صور جيف</string>
+    <string name="call_flash_album_online">عبر الانترنت</string>
+    <string name="call_flash_album_local">محلي</string>
+    <string name="call_flash_album_gallery">صالة عرض</string>
+    <string name="call_flash_album_gallery_desc_1">اختيار صورة</string>
+    <string name="call_flash_album_gallery_desc_2">%1$d picture(s)</string>
+    <!--Call flash album end-->
+
+    <!--call flash gif show start-->
+    <string name="call_flash_result_title">اكتمل الإعداد</string>
+    <string name="call_flash_gif_show_save">تعيين ك شاشة الاتصال</string>
+    <string name="call_flash_gif_show_load">Downloading %1$d%%</string>
+    <string name="call_flash_gif_show_connecte">توصيل</string>
+    <string name="call_flash_gif_show_load_suc">انتها التحميل.</string>
+    <string name="call_flash_gif_show_load_failed">التحميل فشل.</string>
+    <string name="call_flash_gif_show_setting_suc">تم تعيين شاشة المكالمة الجديدة.</string>
+    <string name="call_flash_gif_show_setting_suc_reset">تمت إعادة تعيين شاشة المكالمة.</string>
+    <string name="call_flash_reset">سيتم إعادة تعيين لاستخدام شاشة استدعاء النظام الافتراضي.</string>
+    <string name="call_flash_change_to_new">استخدام شاشة فلاش الدعوة الجديدة؟</string>
+    <string name="call_falsh_gif_thum_load_desc">جار التحميل</string>
+    <!--call flash gif show end-->
+
+    <string name="contact_search_tip">أدخل رقما أو اسما</string>
+
+
+    <string name="page_title_calllog">سجل المكالمات</string>
+    <string name="page_title_contact">@string/call_log_contact</string>
+    <string name="page_title_conversation">رسائل</string>
+    <string name="page_title_block">@string/block_setting_name</string>
+    <string name="page_title_search">بحث</string>
+
+    <string name="call_flash_Halloween">عيد الرعب</string>
+
+    <string name="phone_detail_user_add_name_tip">الاسم المخصص هو رقم غير نقي</string>
+
+    <string name="phone_detail_set_call_flash_title">تعيين شاشة مكالمة</string>
+    <string name="phone_detail_set_call_flash_des">اختر شاشة مكالمة باردة لهذا الرقم</string>
+    <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
+
+
+    <string name="call_flash_led_love1">عاشق 1</string>
+    <string name="call_flash_led_love2">عاشق 2</string>
+    <string name="call_flash_led_downloda_again">@string/lion_family_active_download</string>
+    <string name="call_flash_led_downloading_back_des">التحميل قيد التقدم، إلغاء والإقلاع عن التدخين؟</string>
+    <string name="call_flash_led_downloading_back_wait">انتظر</string>
+    <string name="call_flash_led_not_download_back_des">لم يتم تنزيلها بعد، حمل الآن؟</string>
+
+    <string name="real_time_protect_guide_desc3">احمي جهازك بعيدًا عن المخاطر المحتملة في الوقت الحقيقي.</string>
+    <string name="exit_guide_act_call_flash">تبين</string>
+    <string name="exit_guide_close_desc">هل تريد تأكيد الخروج؟</string>
+    <string name="exit_guide_content_call_flash">هل تحب رواية ومثيرة للاهتمام تظهر المكالمة؟ عجلوا معي لرؤيتها.</string>
+    <string name="sms_no_subject_view">(لا يوجد عنوان)</string>
+    <string name="txt_announcement">إعلان</string>
+    <string name="exit_string">ىخرج</string>
+
+    <string name="about_email_us">راسلنا بالبريد الإلكتروني</string>
+    <string name="email_choose_one">يرجى اختيار تطبيق لإرسال بريد إلكتروني</string>
+
+    <string name="message_flash_title">سمز / الرسائل فلاش الشاشة</string>
+    <string name="message_flash_next_sms">التالى</string>
+    <string name="message_flash_smile">ابتسامة</string>
+    <string name="message_flash_love">@string/call_flash_led_love</string>
+    <string name="message_flash_balloon">بالون</string>
+    <string name="message_flash_paper">ورقة</string>
+    <string name="message_flash_sysytem">النظام</string>
+    <string name="message_flash_Close">سوف تعطيل رسالة فلاش الشاشة.</string>
+    <string name="message_flash_change_to_new">استخدام فلاش شاشة الرسائل الجديدة؟</string>
+    <string name="message_flash_exit_open_title">هل تستخدم هذه الشاشة كرسائل؟</string>
+    <string name="message_flash_exit_new_flash_des">محبوبة سمز ملونة / رسائل الشاشة من قبل معظم المستخدمين. جرب حظك!</string>
+    <string name="message_flash_set_success_des">تم تعيين فلاش الرسائل الجديدة الشاشة.</string>
+    <string name="message_flash_set_success_des2">تم تعطيل شاشة فلاش الرسائل.</string>
+
+    <string name="push_tools_call_flash_toast_weekend">عطلة نهاية اسبوع سعيدة! جديد بارد شاشات فلاش الدعوة متاحة الآن</string>
+
+    <string name="call_flash_led_visual_1">"حاجز مشبك"</string>
+    <string name="call_flash_led_visual_2">"نيون"</string>
+    <string name="call_flash_led_visual_3">"موجة"</string>
+
+    <string name="connection_failure">فشل الاتصال.</string>
+    <string name="call_flash_led_color_flash">لون فلاش</string>
+
+    <string name="call_falsh_led_monkey">"قرد"</string>
+
+    <string name="call_flash_gif_show_setting_fail">أخفقت المجموعة! انها بحاجة الى الاذن لضبط نغمة الرنين.</string>
+    <string name="call_flash_gif_show_set_ring_title_des1">استخدام هذا ك شاشة المكالمة ومنح الإذن لضبط نغمة رنين للاتصال؟</string>
+    <string name="call_flash_led_santa_claus">بابا نويل</string>
+    <string name="call_flash_led_charistmas_snowman">عيد الميلاد</string>
+    <string name="call_falsh_download_waiting">انتظار...</string>
+    <string name="call_flash_gif_show_setting_fail2">أخفقت المجموعة! انها بحاجة الى إذن لتعيين شاشة المكالمة.</string>
+    <string name="call_flash_gif_show_setting_des">أنها تحتاج إلى تمكين نظام إنذار نافذة الإطار.</string>
+    <string name="call_flash_gif_show_setting_des2">أخفقت المجموعة!</string>
+    <string name="call_falsh_led_pig">خنزير</string>
+    <string name="call_falsh_led_rap">نقر</string>
+
+    <string name="call_answer_string">"الرد"</string>
+
+    <string name="notification_listener_setting_tip">تمكين الإخطارات الوصول إلى المكالمات الجواب، فإنه لن يتم استخدامها لأي غرض آخر.</string>
+    <string name="call_flash_permission_tip">يستخدم إذن إذن فقط لتعيين شاشة فلاش الدعوة، فإنه لن يتم استخدامها لأي غرض آخر.</string>
+    <string name="sms_flash_permission_tip">يستخدم إذن إذن فقط لتعيين سمز / رسالة فلاش، فإنه لن يتم استخدامها لأي غرض آخر.</string>
+    <string name="call_falsh_led_bear">الدب</string>
+
+    <string name="txt_call_flash_theme_title">استدعاء الموضوع</string>
+    <string name="call_flash_more_title_1">كلاسيكي</string>
+    <string name="call_flash_more_title_2">متميز</string>
+    <string name="call_flash_more_title_3">جمع</string>
+    <string name="call_flash_detail_setting_action_to_cancel">إلغاء هذا موضوع مكالمة واردة</string>
+    <string name="notification_manager_permission_tip">تمكين الإخطارات الوصول إلى المكالمات الجواب</string>
+    <string name="call_flash_guide_des">"تعيين شاشة مكالمة خاصة لها / له"</string>
+
+    <string name="message_block_not_default_sms">يجب أن يكون تطبيق الرسائل القصيرة SMS الافتراضي لمنع الرسائل القصيرة.</string>
+    <string name="message_option_mark_as_read">اشر عليها بانها قرات</string>
+    <string name="message_remove_to_notification_dialog_tip">هل أنت متأكد من نقل الرسائل إلى الآخرين؟</string>
+    <string name="message_blocked_dialog_tip">حظر الرسائل من هذا الرقم؟</string>
+    <string name="conversation_notification">الآخرين</string>
+    <string name="message_remove_to_notification">الانتقال إلى الآخرين</string>
+    <string name="message_remove_to_phone_number">الانتقال إلى البريد الوارد</string>
+    <string name="message_blocked">تمت إضافة الرقم إلى قائمة حظر SMS</string>
+    <string name="message_option_block_sms_list">قائمة SMS كتلة</string>
+    <string name="message_remove_to_phone_number_dialog_tip">هل أنت متأكد من نقل الرسائل إلى البريد الوارد؟</string>
+    <string name="conversation_phonenumber">صندوق الوارد</string>
+    <string name="message_option_mark_as_read_2">ضع إشارة مقروء</string>
+
+    <string name="audio_record_request_option_1">أؤكد أن تسجيل المكالمات قانوني في بلدي</string>
+    <string name="audio_record_request_option_2">أتفق مع</string>
+    <string name="audio_record_request_option_3">تسجيل المكالمات التلقائي</string>
+    <string name="audio_record_delete_result_suc">حذف بنجاح.</string>
+    <string name="setting_call_audio_record">مسجل مكالمات</string>
+    <string name="audio_record_file_play">لعب</string>
+    <string name="audio_record_improve_tip_opened">يسجل جهازك المكالمات باستخدام الميكروفون ، يُرجى تذكر تشغيل مكبر الصوت أثناء التسجيل.</string>
+    <string name="audio_record_no_record">لا تسجيلات.</string>
+    <string name="audio_record_option_disable_tip">هل أنت متأكد من تعطيل تسجيل المكالمات؟</string>
+    <string name="audio_record_request_desc">يمكنك تسجيل المكالمات في أي وقت ، ولن تستخدم Caller ID أي من ملفات تسجيل المكالمات أو تحمّلها.</string>
+    <string name="audio_record_miss_call_file_delete">فشل الهاتف في الاتصال وتم حذف ملف التسجيل.</string>
+    <string name="audio_record_option_enable">تمكين التسجيل</string>
+    <string name="audio_record_option_delete">حذف الكل</string>
+    <string name="audio_record_improve_tip_closed">وظيفة التسجيل متوقفة ، مكنها الآن.</string>
+    <string name="audio_record_request_title">تمكين تسجيل المكالمات؟</string>
+    <string name="audio_record_request_action_1">رفض</string>
+    <string name="audio_record_delete_all_tip">هل أنت متأكد من حذف جميع تسجيلات المكالمات؟</string>
+    <string name="audio_record_option_disable">تعطيل التسجيل</string>
+    <string name="audio_record_request_option_2_privacy">سياسة الخصوصية</string>
+
+    <string name="audio_record_option_disable_auto_record_suc_tip">تعطيل التسجيل التلقائي بنجاح.</string>
+    <string name="audio_record_set_failed">تعذّر تعيينها ، تحتاج إلى إذن لتمكين التسجيل الصوتي.</string>
+    <string name="audio_record_option_enable_auto_record_suc_tip">تمكين التسجيل التلقائي بنجاح.</string>
+    <string name="audio_record_option_enable_auto_record">تمكين التسجيل التلقائي</string>
+    <string name="audio_record_option_disable_auto_record">تعطيل التسجيل التلقائي</string>
+    <string name="audio_record_set_success">تعيين بنجاح ، يتم تشغيل وظيفة التسجيل.</string>
+    <string name="record_call_permission_tip">يستخدم إذن المنحة فقط لتسجيل المكالمات ، ولن يتم استخدامه لأي غرض آخر.</string>
+
+    <string name="audio_record_delete_single_tip">هل أنت متأكد من حذف تسجيل المكالمات هذا؟</string>
+    <string name="audio_record_push_tool_new_record">لديك تسجيل مكالمات جديد.</string>
+
+    <string name="block_message_tip">الرسائل النصية التي تم حظرها من هذا الرقم.</string>
+    <string name="audio_record_phone_detail_title">تسجيل</string>
+    <string name="unblock_message_tip">الرسائل النصية التي تم إلغاء حظرها من هذا الرقم.</string>
+
+    <string name="do_not_disturb_permission_tip">انها بحاجة الى إذن لتمكين عدم الإزعاج.</string>
+    <string name="call_flash_saving">إنقاذ</string>
+    <string name="discovery_call_record_des">دعم تسجيل المكالمات ومشاركة ملفات التسجيل مع أصدقائك.</string>
+    <string name="do_not_disturb_timer">مؤقت</string>
+    <string name="do_not_disturb_allow_no">لا أحد</string>
+    <string name="do_not_disturb_tip_content_disenable">تمكين عدم الإزعاج ، والتمتع بوقت حياة لطيفة وهادئة ، جربها الآن.</string>
+    <string name="do_not_disturb_allow_incoming_list">السماح بقائمة المكالمات</string>
+    <string name="do_not_disturb_schedule_set">ضبط</string>
+    <string name="call_flash_preview_recommend_call_flash">يوصي نداء فلاش</string>
+    <string name="do_not_disturb_schedule">جدول</string>
+    <string name="do_not_disturb_allow_incoming">السماح المكالمات من</string>
+    <string name="do_not_disturb_set_success_for_schedule">سيتم كتم الهاتف خلال الوقت المحدد</string>
+    <string name="call_flash_preview_now">معاينة الآن</string>
+    <string name="do_not_disturb_timer_tip">يرجى ضبط الوقت</string>
+    <string name="do_not_disturb_timer_set_time_title">ضبط المؤقت</string>
+    <string name="side_slip_menu_discovery">اكتشاف</string>
+    <string name="do_not_disturb_timer_title">حتى</string>
+    <string name="do_not_disturb_notification_title">في الوضع الهادئ</string>
+    <string name="do_not_disturb_end">النهاية</string>
+    <string name="do_not_disturb_allow_in_coming_view_custom">اختر الأرقام التي تسمح بالمكالمات</string>
+    <string name="do_not_disturb_set_success">سيتم كتم الهاتف حتى ينتهي العد التنازلي</string>
+    <string name="do_not_disturb_permission_set_fail">فشل المجموعة ، إنه بحاجة إلى إذن لتعيين عدم الإزعاج.</string>
+    <string name="do_not_disturb_allow_in_coming_custom">أختر&lt;font color=&quot;#FF0084FF&quot;&gt;%1$s&lt;/font&gt;</string>
+    <string name="audio_record_file_share">شارك</string>
+    <string name="do_not_disturb_allow_incoming_tip">تمت إضافة هذا الرقم بالفعل.</string>
+    <string name="call_flash_grant_permission_tip">%1$sيستخدم إذن المنحة فقط لتعيين وظيفة ، لن يتم استخدامه لأي غرض آخر.</string>
+    <string name="do_not_disturb_enabled">تمكين</string>
+
+    <string name="external_volume_new_call_flash_title">عرض فلاش جديد</string>
+    <string name="external_volume_new_call_flash_view">رأي</string>
+
+    <string name="call_flash_upload_action_upload">تحميل</string>
+    <string name="call_flash_upload_tip_privacy_policy">يجب أن توافق على سياسة الخصوصية لتحميل الملف</string>
+    <string name="call_flash_upload_tip_no_file">يرجى اختيار الملف للتحميل</string>
+    <string name="call_flash_upload_uploading">تم تحميلها</string>
+    <string name="call_flash_upload_author">مؤلف</string>
+
+    <string name="privacy_number_title_pattern_lock">قفل نمطي</string>
+    <string name="privacy_number_add_number">أضف الأرقام إلى جهات الاتصال الخاصة</string>
+    <string name="privacy_number_set_pattern">يرجى رسم النمط</string>
+    <string name="privavy_number_set_pattern_guide_tip">يرجى ضبط قفل النمط لجهات الاتصال الخاصة بك.</string>
+    <string name="privacy_number_set_pattern_error_to_init">يرجى رسم نفس النمط لأول مرة!</string>
+    <string name="privacy_number_set_pattern_reset_init_password">إعادة تعيين</string>
+    <string name="privacy_number_input_password_error_tip">كلمة مرور غير صحيحة ، يمكنك أيضًا تجربة أوقات %1$d</string>
+
+    <string name="privacy_number_forget_pwd">نسيت كلمة المرور</string>
+    <string name="privacy_number_enabled_private_protects">يتم تمكين حماية جهات الاتصال الخاصة.</string>
+    <string name="add_private_number_title">أضف الأرقام إلى جهات الاتصال الخاصة</string>
+    <string name="add_private_number_add_sure">تؤكد</string>
+
+    <string name="add_number_exist_by_hide_type">"هذا الرقم موجود بالفعل في قائمة خاصة"</string>
+    <string name="add_private_number_add_number_empty">تسبب خطأ غير معروف في فشل الإضافة. </string>
+    <string name="privacy_number_security_question_title">اختر سؤال امان</string>
+    <string name="privacy_number_security_question_1">ما هو شارع مدرستك الابتدائية؟</string>
+    <string name="privacy_number_security_question_2">ماهو رقم هاتفك الاول؟</string>
+    <string name="privacy_number_security_question_3">أين مسقط رأسك؟</string>
+    <string name="privacy_number_security_question_4">"متي يكون عيد ميلاد أبوك؟"</string>
+    <string name="privacy_number_security_question_5">ما هو طعامك المفضل؟</string>
+    <string name="privacy_number_security_question_custom">يعدل أو يكيف</string>
+    <string name="privacy_number_set_pwd_security_question_title">أدخل سؤال الأمان الخاص بك</string>
+    <string name="privacy_number_security_question_answer_title">أدخل إجابتك الأمنية</string>
+    <string name="privacy_number_security_answer_empty">من فضلك أدخل إجابتك!</string>
+    <string name="privacy_number_security_answer_length_limit">يرجى الاحتفاظ بطول الحرف في نطاق %1$d إلى %2$d.</string>
+    <string name="privacy_number_security_question_empty">لا يمكن أن يكون السؤال السري فارغًا!</string>
+    <string name="privacy_number_set_pattern_length_tip">يرجى التأكد من أن قفل النمط الخاص بك متصل بما لا يقل عن 4 نقاط!</string>
+    <string name="privacy_number_pattern_error_over_count_tip">لقد استنفدت كلمة المرور. </string>
+    <string name="privacy_number_forget_pwd_error_tip">كلمة سر خاطئة. </string>
+    <string name="privacy_number_pattern_reset_suc_tip">إعادة تعيين قفل النمط بنجاح</string>
+    <string name="privacy_number_security_question_confirm_tip">لحماية خصوصيتك ، فإن سؤال الأمان والإجابة التي قمت بتعيينها هي الطريقة الوحيدة لاستعادة نمطك. الرجاء التأكد من تذكرها.</string>
+
+    <string name="privacy_number_add_number_tip_title">أضف الأرقام إلى جهات الاتصال الخاصة</string>
+    <string name="privacy_number_add_number_tip_content">سيظهر سجل المكالمات من جهات الاتصال الخاصة في جهات الاتصال الخاصة فقط. لا تظهر سجلات المكالمات في النظام أو في أي برنامج آخر.</string>
+    <string name="privacy_number_add_number_tip_check_content">"لا تظهر مرة أخرى"</string>
+    <string name="privacy_number_add_number_tip_ok">فهمت</string>
+
+    <string name="privacy_number_delete_number_tip_title">إزالة جهات الاتصال الخاصة</string>
+    <string name="privacy_number_delete_number_tip_content">بعد إزالة جهة الاتصال الخاصة هذه ، سيتم حذف سجلات المكالمات الخاصة بها ، ولكن سيتم الاحتفاظ بالتسجيلات. هل ترغب في حذف جهة الاتصال الخاصة هذه؟</string>
+    <string name="privacy_number_private_contact_call_log_is_empty">لم تتصل جهة الاتصال الخاصة هذه بسجلات.</string>
+    <string name="privacy_number_private_contacts_empty">يحمي خصوصية المكالمات ويخفي المكالمات الخاصة تلقائيًا</string>
+    <string name="privacy_number_set_pattern_draw_again">تأكيد النمط</string>
+    <string name="add_private_number_no_select">يرجى اختيار رقم واحد على الأقل!</string>
+    <string name="privacy_number_title_number">جهات الاتصال الخاصة</string>
+    <string name="add_private_number_add_sure_more">%1$d تأكيد </string>
+    <string name="discovery_privacy_call_des">إخفاء دعواتك السرية لحماية خصوصيتك.</string>
+
+    <string name="missed_call_title">@string/push_tools_missed</string>
+    <string name="missed_call_number_scan">@string/number_scaning</string>
+    <string name="missed_call_number_scan_not_close">من فضلك لا الخروج</string>
+    <string name="night_mode_disable_dialog_title">تعطيل عدم الإزعاج من النوم</string>
+    <string name="night_mode_disable_dialog_des">هل أنت متأكد من تعطيلها؟</string>
+
+    <string name="splash_init">جار تهيئة</string>
+    <string name="download_failed_for_no_sd_permission">منح الإذن بتنزيل المظاهر وحفظها</string>
+
+    <string name="add_shortcut_success">تم الإنشاء بنجاح</string>
+    <string name="setting_shortcut">اختصارات</string>
+    <string name="setting_add_contact_shortcut">إضافة اختصارات الاتصال</string>
+    <string name="setting_add_sms_shortcut">إضافة اختصارات SMS</string>
+
+    <string name="swipe_flash_title">مصباح يدوي</string>
+    <string name="swipe_wifi_title">واي فاي</string>
+    <string name="swipe_speeder_title">معزز</string>
+
+    <string name="swipe_camere_title">الة تصوير</string>
+    <string name="swipe_calendar_title">التقويم</string>
+    <string name="swipe_data_title">البيانات</string>
+
+    <string name="swipe_calculator_title">آلة حاسبة</string>
+    <string name="swipe_flightmode_title">وضع الطيران</string>
+    <string name="swipe_swipesetting_title">سهل انتقاد الإعداد</string>
+    <string name="swipe_bluetooth_title">بلوتوث</string>
+
+    <string name="swipe_mute_title">صوت</string>
+    <string name="swipe_setting_title">إعدادات</string>
+    <string name="swipe_alarm_title">إنذار</string>
+
+
+    <string name="swipe_edit_header_title">اختيار (%1$s / %2$s)</string>
+    <string name="favorite_up_to_9">ما يصل إلى 9</string>
+    <string name="scene_mode_0">هزاز</string>
+    <string name="scene_mode_1">صامتة</string>
+    <string name="scene_mode_2">رنين</string>
+
+
+    <string name="swipe_for">تمكين حسنا انتقد ل</string>
+    <string name="swipe_for_type0">الشاشة الرئيسية فقط</string>
+    <string name="swipe_for_type1">الشاشة الرئيسية وجميع التطبيقات</string>
+    <string name="swipe_active_area">موقف منطقة نشطة</string>
+    <string name="swipe_area_type0">أسفل يسار وأسفل يمينًا</string>
+    <string name="swipe_area_type1">أسفل اليسار</string>
+    <string name="swipe_area_type2">أسفل اليمين</string>
+    <string name="swipe_whitelist">لا تزعج الإعدادات (%1$d)</string>
+    <string name="swipe_whitelist_des">اختر التطبيقات التي تعطل Well Swipe</string>
+    <string name="swipe_whitelist_title">إضافة التطبيق</string>
+
+    <string name="swipe_about_rate5start">الحب لنا؟ معدل 5 نجوم</string>
+    <string name="googleplay_not_found">لا يمكن العثور على Play Google</string>
+
+    <string name="swipe_toggle">تبديل</string>
+    <string name="swipe_about">حول</string>
+    <string name="swipe_about_version">نسخة التطبيق</string>
+    <string name="swipe_open_type">طريقة التشغيل</string>
+    <string name="swipe_open_type0">افتراضي (اسحب من الزاوية السفلية)</string>
+    <string name="swipe_open_type1">انتقاد مساعدة</string>
+    <string name="swipe_advanced_setting">إعدادات متقدمة</string>
+
+    <string name="feedback_title">املأ العنوان</string>
+    <string name="feedback_content">ملء المحتوى</string>
+    <string name="clearmemary_title">مسح الذاكرة</string>
+    <string name="clearmemary_wait">حاول مرة أخرى بعد فترة</string>
+    <string name="flash_on">مصباح يدوي قيد التشغيل</string>
+    <string name="flash_off">يتم تشغيل ضوء الفلاش</string>
+    <string name="wifi_on">واي فاي متصل</string>
+    <string name="wifi_off">يتم قطع اتصال واي فاي</string>
+    <string name="bluetooth_on">يتم تشغيل البلوتوث</string>
+    <string name="bluetooth_off">يتم تشغيل البلوتوث</string>
+    <string name="data_on">تم ربط بيانات الجوال</string>
+    <string name="data_off">تم قطع اتصال بيانات الهاتف المحمول</string>
+
+    <string name="request_windows_title">SYSTEM_ALERT_WINDOW</string>
+    <string name="request_windows_content">حسنا انتقاد يحتاج الإذن</string>
+
+
+    <string name="swipe_nitification_title">سهل انتقاد قيد التشغيل</string>
+    <string name="swipe_nitification_content">المس لعرض إعدادات التمرير السريع</string>
+    <string name="swipe_whitelist_item_unlauncher">تطبيق القائمة البيضاء غير مسموح له بالبدء</string>
+    <string name="swipe_open_switch">يرجى تشغيل التبديل أولا!</string>
+
+    <string name="easy_swipe">سهل انتقاد</string>
+    <string name="easy_swipe_guide_desc_1">انتقد لوحة الاختصار المنبثقة</string>
+    <string name="easy_swipe_guide_desc_2">سهولة الوصول إلى إعدادات النظام</string>
+    <string name="easy_swipe_guide_desc_3">إطلاق سريع التطبيقات المستخدمة المشتركة</string>
+    <string name="tip_easy_swipe">تم تمكين الاستيلاء السهل</string>
+    <string name="easy_swipe_guide_text">انتقاد من الزاوية على سطح المكتب على النحو التالي</string>
+    <string name="not_found_app">لا يمكن فتح التطبيق</string>
+    <string name="permission_denied_txt">تم رفض الإذن، يرجى المحاولة مرة أخرى</string>
+    <string name="txt_camera_permission_msg">\"انقر فوق\" السماح \"للتأكد من أن الكاميرا تعمل بشكل صحيح\"</string>
+
+    <string name="toolbox">الأدوات</string>
+    <string name="frequent">متكرر</string>
+    <string name="recent">الأخيرة</string>
+    <string name="ok_title">@string/ok_string</string>
+    <string name="cancel_title">@string/no_string</string>
+
+</resources>

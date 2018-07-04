@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="language_style_summaries">
+        <item>Deutsch</item><!-- GERMAN -->
+        <item>English</item>
+        <item>Español</item><!-- ESPANISH -->
+        <item>Français</item><!-- FRENCH -->
+        <item>Indonesia</item><!-- INDONESI -->
+        <item>Italiano</item><!-- Italy -->
+        <item>Português</item><!-- PORTUGUE -->
+        <item>Pусский</item><!-- Russia -->
+        <item>Türkçe</item><!-- Turkey -->
+        <item>Tiếng Việt</item><!-- VIETNAME -->
+        <item>ไทย</item><!-- Thailan -->
+        <item>हिन्दी</item><!-- HINDI -->
+        <item>العربية</item><!-- ARABIC -->
+        <item>日本語</item>
+        <item>한국어</item>
+        <item>简体中文</item>
+        <item>繁體中文</item>
+    </string-array>
+    <string-array name="empty_subject_strings">
+        <item>no subject</item>
+    </string-array>
+
+    <string-array name="more_theme_titles">
+        <item>@string/call_flash_more_title_1</item>
+        <item>@string/call_flash_more_title_2</item>
+        <item>@string/call_flash_more_title_3</item>
+    </string-array>
+
+    <string-array name="switch_tabs">
+        <item>@string/conversation_phonenumber</item>
+        <item>@string/conversation_notification</item>
+    </string-array>
+
+    <!--<string-array name="online_themes_id">-->
+    <!--<item >286</item>-->
+    <!--<item >285</item>-->
+    <!--<item >284</item>-->
+    <!--<item >283</item>-->
+    <!--<item >282</item>-->
+    <!--<item >274</item>-->
+    <!--<item >273</item>-->
+    <!--<item >272</item>-->
+    <!--<item >271</item>-->
+    <!--<item >39</item>-->
+    <!--<item >38</item>-->
+    <!--<item >37</item>-->
+    <!--<item >36</item>-->
+    <!--<item >35</item>-->
+    <!--<item >34</item>-->
+    <!--</string-array>-->
+
+    <!-- ligehui lazyswipe -->
+    <array name="swipe_tools_action_array">
+        <item>@string/swipe_flash</item>
+        <item>@string/swipe_wifi</item>
+        <item>@string/swipe_camere</item>
+        <item>@string/swipe_data</item>
+        <item>@string/swipe_swipesetting</item>
+        <item>@string/swipe_flightmode</item>
+        <item>@string/swipe_bluetooth</item>
+        <item>@string/swipe_mute</item>
+        <item>@string/swipe_setting</item>
+    </array>
+
+    <array name="swipe_tools_title_array">
+        <item>@string/swipe_flash_title</item>
+        <item>@string/swipe_wifi_title</item>
+        <item>@string/swipe_camere_title</item>
+        <item>@string/swipe_data_title</item>
+        <item>@string/swipe_swipesetting_title</item>
+        <item>@string/swipe_flightmode_title</item>
+        <item>@string/swipe_bluetooth_title</item>
+        <item>@string/swipe_mute_title</item>
+        <item>@string/swipe_setting_title</item>
+    </array>
+
+    <array name="swipe_for_type">
+        <item>@string/swipe_for_type0</item>
+        <item>@string/swipe_for_type1</item>
+    </array>
+
+    <array name="swipe_area_type">
+        <item>@string/swipe_area_type0</item>
+        <item>@string/swipe_area_type1</item>
+        <item>@string/swipe_area_type2</item>
+    </array>
+
+    <array name="swipe_open_type">
+        <item>@string/swipe_open_type0</item>
+        <item>@string/swipe_open_type1</item>
+    </array>
+</resources>

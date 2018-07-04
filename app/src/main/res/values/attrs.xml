@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
+
+    You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
+    copy, modify, and distribute this software in source code or binary form for use
+    in connection with the web services and APIs provided by Facebook.
+
+    As with any software that integrates with the Facebook platform, your use of
+    this software is subject to the Facebook Developer Principles and Policies
+    [http://developers.facebook.com/policy/]. This copyright notice shall be
+    included in all copies or substantial portions of the software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+    FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+    COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+
+<resources>
+
+    <declare-styleable name="FontIconView">
+        <attr name="fontcid" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="ToastNewsView">
+        <attr name="inflateStyle" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="CircleProgressBar">
+        <attr name="maxProgress" format="integer"></attr>
+        <attr name="progress" format="integer"></attr>
+        <attr name="progressStrokeWidth" format="dimension"></attr>
+        <attr name="progressBGStrokeWidth" format="dimension"></attr>
+        <attr name="CircleBgColor" format="color"></attr>
+        <attr name="CirclePaintColor" format="color"></attr>
+        <attr name="CircleProgressBgColor" format="color"></attr>
+        <attr name="CircleInsideBgColor" format="color"></attr>
+        <attr name="drawCircleInsideBG" format="boolean"></attr>
+        <attr name="startAngle" format="integer"></attr>
+        <attr name="sweepAngle" format="integer"></attr>
+        <attr name="circleMargin" format="dimension"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="BatteryProgressBar">
+        <attr name="progressBgColor" format="color" />
+        <attr name="progressColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SmartProgressBar">
+        <attr name="progressBackgroundColor" format="color" />
+        <attr name="progressCurrentColor" format="color" />
+        <attr name="progressWarningColor" format="color" />
+        <attr name="progressBgWidth" format="dimension" />
+        <attr name="progressWidth" format="dimension" />
+        <attr name="progressRound" format="boolean" />
+        <attr name="progressChangeColor" format="boolean" />
+        <attr name="DoubleLoopInnerCircleColor" format="color" />
+        <attr name="DoubleLoopInnerCircleWarningColor" format="color" />
+        <attr name="DoubleLoopInnerLoopColor" format="color" />
+        <attr name="progressStyle">
+            <enum name="RectF" value="0" />
+            <enum name="Circle" value="1" />
+            <enum name="DoubleLoop" value="2" />
+        </attr>
+
+    </declare-styleable>
+
+    <declare-styleable name="CircleProgress">
+        <attr name="circleProgressWidth" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundRectView">
+        <attr name="text" format="string" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="background2" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="HookView">
+        <attr name="goneBack" format="boolean" />
+        <attr name="innerCircleRatio" format="float" />
+        <attr name="innerCircleColor" format="color" />
+        <attr name="hookColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SignalVerticalStickView">
+        <attr name="stickBackground" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="ToastNewsOnlyItem">
+        <attr name="paddingLeft" format="dimension" />
+        <attr name="paddingRight" format="dimension" />
+        <attr name="paddingTop" format="dimension" />
+        <attr name="paddingBottom" format="dimension" />
+        <attr name="maxLine" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="ActionBar">
+        <attr name="title" format="string" />
+        <attr name="txtColor" format="color" />
+        <attr name="backColor" format="color" />
+        <attr name="fontIcon" format="string" />
+        <attr name="fontIconLdrtl" format="string" />
+        <attr name="layoutFullLine" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CallFlashAvatarInfoView">
+        <attr name="layoutSmall" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="DialpadView"></declare-styleable>
+
+    <declare-styleable name="WaveView">
+        <attr name="above_wave_color" format="color" />
+        <attr name="blow_wave_color" format="color" />
+        <attr name="wave_progress" format="integer" />
+        <attr name="below_wave_height_factor" format="float" />
+        <attr name="wave_length" format="enum">
+            <enum name="large" value="1" />
+            <enum name="middle" value="2" />
+            <enum name="little" value="3" />
+        </attr>
+        <attr name="wave_height" format="enum">
+            <enum name="large" value="1" />
+            <enum name="middle" value="2" />
+            <enum name="little" value="3" />
+        </attr>
+        <attr name="wave_hz" format="enum">
+            <enum name="fast" value="1" />
+            <enum name="normal" value="2" />
+            <enum name="slow" value="3" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageView">
+        <!-- the radius size of the round rect -->
+        <attr name="cornerRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="TagLayout">
+        <attr name="line_spacing" format="dimension" />
+        <attr name="tag_spacing" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SideBar">
+        <attr name="letterColor" format="color" />
+        <attr name="letterSize" format="dimension" />
+        <attr name="noLetterColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="DiffuseView">
+        <attr name="minCircleRadius" format="dimension" />
+        <attr name="diffuseWidth" format="integer" />
+        <attr name="centerCircleColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="AvatarView">
+        <attr name="photoId" format="string" />
+        <attr name="fontSize" format="float" />
+        <attr name="defaultText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundAdRelativeLayout">
+        <attr name="rect_adius" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="RippleFrameLayout">
+        <attr name="mrl_rippleColor" format="color" localization="suggested" />
+        <attr name="mrl_rippleDimension" format="dimension" localization="suggested" />
+        <attr name="mrl_rippleOverlay" format="boolean" localization="suggested" />
+        <attr name="mrl_rippleAlpha" format="float" localization="suggested" />
+        <attr name="mrl_rippleDuration" format="integer" localization="suggested" />
+        <attr name="mrl_rippleFadeDuration" format="integer" localization="suggested" />
+        <attr name="mrl_rippleHover" format="boolean" localization="suggested" />
+        <attr name="mrl_rippleBackground" format="color" localization="suggested" />
+        <attr name="mrl_rippleDelayClick" format="boolean" localization="suggested" />
+        <attr name="mrl_ripplePersistent" format="boolean" localization="suggested" />
+        <attr name="mrl_rippleInAdapter" format="boolean" localization="suggested" />
+        <attr name="mrl_rippleRoundedCorners" format="dimension" localization="suggested" />
+        <attr name="mrl_rippleHoverDuration" format="integer" localization="suggested" />
+    </declare-styleable>
+
+    <declare-styleable name="ShimmerFrameLayout">
+        <attr name="auto_start" format="boolean" />
+        <attr name="base_alpha" format="float" />
+        <attr name="duration" format="integer" />
+        <attr name="repeat_count" format="integer" />
+        <attr name="repeat_delay" format="integer" />
+        <attr name="repeat_mode" format="enum">
+            <enum name="restart" value="1" />
+            <enum name="reverse" value="2" />
+        </attr>
+        <attr name="angle" format="enum">
+            <enum name="cw_0" value="0" />
+            <enum name="cw_90" value="90" />
+            <enum name="cw_180" value="180" />
+            <enum name="cw_270" value="270" />
+        </attr>
+        <attr name="dropoff" format="float" />
+        <attr name="fixed_width" format="dimension" />
+        <attr name="fixed_height" format="dimension" />
+        <attr name="intensity" format="float" />
+        <attr name="relative_width" format="float" />
+        <attr name="relative_height" format="float" />
+        <attr name="shape" format="enum">
+            <enum name="linear" value="0" />
+            <enum name="radial" value="1" />
+        </attr>
+        <attr name="tilt" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="RippleLayout">
+        <attr name="imageViewWidth" format="dimension" />
+        <attr name="imageViewHeight" format="dimension" />
+        <attr name="showSpacingTime" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="RaderView">
+        <attr name="innerRadius" format="dimension" />
+        <attr name="circleCount" format="integer" />
+        <attr name="centerDrawableResId" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorGradientProgressBar">
+        <attr name="startColor" format="color" />
+        <attr name="endColor" format="color" />
+        <attr name="backgroundColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="LinearGradientTextView">
+        <attr name="lineNumber" format="integer" />
+        <attr name="showTime" format="integer" />
+        <attr name="LinearGradientTextColor" format="color" />
+        <attr name="showStyle">
+            <enum name="UNIDIRECTION" value="0" />
+            <enum name="TWOWAY" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RoundProgressBar">
+        <attr name="roundColor" format="color" />
+        <attr name="roundProgressColor" format="color" />
+        <attr name="roundWidth" format="dimension"></attr>
+        <attr name="innerTextColor" format="color" />
+        <attr name="innerTextSize" format="dimension" />
+        <attr name="max" format="integer"></attr>
+        <attr name="textIsDisplayable" format="boolean"></attr>
+        <attr name="style">
+            <enum name="STROKE" value="0"></enum>
+            <enum name="FILL" value="1"></enum>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="SnowingSurfaceView">
+        <attr name="src2" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="SnowingView">
+        <attr name="src" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="SwitchButton">
+        <attr name="kswThumbDrawable" format="reference" />
+        <attr name="kswThumbColor" format="color|reference" />
+        <attr name="kswThumbMargin" format="dimension|reference" />
+        <attr name="kswThumbMarginTop" format="dimension|reference" />
+        <attr name="kswThumbMarginBottom" format="dimension|reference" />
+        <attr name="kswThumbMarginLeft" format="dimension|reference" />
+        <attr name="kswThumbMarginRight" format="dimension|reference" />
+        <attr name="kswThumbWidth" format="dimension|reference" />
+        <attr name="kswThumbHeight" format="dimension|reference" />
+        <attr name="kswThumbRadius" format="dimension|reference" />
+        <attr name="kswBackRadius" format="dimension|reference" />
+        <attr name="kswBackDrawable" format="reference" />
+        <attr name="kswBackColor" format="color|reference" />
+        <attr name="kswFadeBack" format="boolean" />
+        <attr name="kswBackMeasureRatio" format="float" />
+        <attr name="kswAnimationDuration" format="integer" />
+        <attr name="kswTintColor" format="color|reference" />
+        <attr name="kswTextOn" format="string" />
+        <attr name="kswTextOff" format="string" />
+        <attr name="kswTextMarginH" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="Favorite">
+        <attr name="className" format="string" />
+        <attr name="packageName" format="string" />
+        <attr name="container" format="string" />
+        <attr name="item_index" format="integer" />
+        <attr name="item_icon" format="reference" />
+        <attr name="item_title" format="reference" />
+        <attr name="uri" format="string" />
+        <attr name="item_action" format="reference" />
+    </declare-styleable>
+
+    <!--LoadingView-->
+    <declare-styleable name="Loading">
+        <attr name="outer_width" format="dimension" />
+        <attr name="outer_color" format="color" />
+        <attr name="inner_width" format="dimension" />
+        <attr name="inner_color" format="color" />
+        <attr name="inner_rotating_speed" format="integer"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="SeekBarCompat">
+        <attr name="thumbColor" format="color" />
+        <attr name="seekBarProgressColor" format="color" />
+        <attr name="seekBarProgressBackgroundColor" format="color" />
+        <attr name="thumbAlpha" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="Extra">
+        <attr name="key" format="string" />
+        <attr name="value" format="string" />
+    </declare-styleable>
+</resources>

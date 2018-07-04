@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="devices_scan_max_width">240dp</dimen>
+    <dimen name="toolbar_button_font">12sp</dimen>
+</resources>

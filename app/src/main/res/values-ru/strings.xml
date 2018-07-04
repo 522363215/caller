@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="push_tools_block_call">Заблокированный вызов</string>
+    <string name="push_tools_ring_one">Один пропущенный вызов</string>
+    <string name="push_tools_missed">Пропущенный вызов</string>
+    <string name="push_tools_missed_count">Вы пропустили %1$d вызовов</string>
+    <string name="push_tools_not_in_contact">Звонок с неизвестного номера!</string>
+    <string name="push_tools_reject">Вы отклонили вызов!</string>
+    <string name="push_tools_content">Нажмите, чтобы узнать детали.</string>
+    <string name="push_tools_call_flash_toast">Добавлены новые классные флэш-темы, попробуйте их.</string>
+    <string name="push_tools_message">У вас %1$s непрочитанных сообщений!</string>
+    <string name="text_call_flash_exit_dialog_title">Открыть флеш-звонок для вызовов</string>
+    <string name="call_flash_intro_title">Эти функции нравятся большинству пользователей, попробуйте!</string>
+    <string name="call_flash_intro_set">Флэш-звонок</string>
+    <string name="call_flash_intro_reject">Нет, спасибо!</string>
+    <string name="no_results">Нет результатов</string>
+    <string name="ok_string">Ок</string>
+    <string name="no_string">Отменить</string>
+    <string name="dialog_ok_delete_block_log">Очистить всю историю черного списка?</string>
+    <string name="dialog_ok_delete_block_log_title">Очистить историю черного списка?</string>
+    <string name="quithint">Нажать "Назад", чтобы выйти </string>
+    <string name="grant_permission">Дать разрешение </string>
+    <string name="popup_tips1">Показывать всплывающее окно</string>
+    <string name="popup_tips3">Отметить, чтобы включить всплывающие окна</string>
+    <!--<string name="main_menu_about">О</string>-->
+    <string name="setting_title">Настройки</string>
+    <string name="setting_language">Язык</string>
+    <string name="setting_lauage_dialog_title">Выбрать язык</string>
+    <string name="block_log_query_log_failed">Не удалось обработать запрос </string>
+    <string name="block_list_title">Просмотреть Спам и Список блокировки</string>
+    <string name="block_list_mine">Список блокировки вызовов</string>
+    <string name="block_list_common">Известные спамеры </string>
+    <string name="block_list_empty">Вы не добавили черный список</string>
+    <string name="block_setting_title">Настройки блокировок</string>
+    <string name="block_setting_name">Блокировка</string>
+    <string name="block_setting_common_block_desc">Телемаркетеры и неудобные абоненты отмечаются пользователями как спам</string>
+    <string name="block_setting_hide_block">Блокировать скрытые номера </string>
+    <string name="block_setting_hide_block_desc">Любые абоненты, скрывающие свои номера</string>
+    <string name="block_setting_stranger_block">Номер не в списке контактов </string>
+    <string name="block_setting_stranger_block_desc">Блокировать вызовы с номеров не из списка контактов</string>
+    <string name="block_setting_block_method">Метод блокировки</string>
+    <string name="block_setting_block_method_auto">Отклонять автоматически</string>
+    <string name="block_setting_block_method_silence">Бесшумный</string>
+    <string name="block_setting_do_not_diturb">Не беспокоить </string>
+    <string name="block_setting_do_not_diturb_time">30 минут</string>
+    <string name="block_setting_pop_dialog">Всплывающий диалог</string>
+    <string name="block_setting_remind_missed_calls">Напоминать о пропущенных вызовах </string>
+    <string name="block_setting_remind_missed_calls_desc">Получать напоминание о пропущенном вызове</string>
+    <string name="block_setting_floating_in_contacts">Контакты в моем телефоне</string>
+    <string name="block_setting_floating_in_stranger">Неизвестные вызовы</string>
+    <string name="block_setting_floating_out_call">Исходящие вызовы для неизвестных </string>
+    <string name="block_setting_call_flash">Флэш-фильтр для звонков</string>
+    <string name="block_setting_call_id">ID абонента</string>
+    <string name="block_setting_call_id_desc">Показывать информацию о вызывающем абоненте после пропуска или завершения вызова (содержит рекламу).</string>
+    <string name="block_setting_sms_id_desc">Показывать контент при пропуске сообщения (содержит рекламу).</string>
+    <!--<string name="frag_block_logs">Журналы блокировки</string>
+    <string name="frag_block_updating_common_db">Обновление</string>
+    <string name="frag_block_block_switch_on">ПРОВЕРИТЬ ОБНОВЛЕНИЕ </string>
+    <string name="frag_block_block_switch_off">ВКЛЮЧИТЬ БЛОКИРОВКУ</string>
+    <string name="frag_block_current_desc">Абонент сейчас заблокирован</string>
+    <string name="frag_block_protect_desc">Caller защищает вас</string>
+    <string name="frag_block_protect_count_desc">звонки</string>
+    <string name="frag_block_block_switch_toast_off">Блокировать вызовы, отмеченные пользователями, как спам</string>
+    <string name="frag_block_block_switch_toast_on">Последнее обновление: %1$s</string>-->
+    <string name="external_input_title">Добавить</string>
+    <string name="external_input_number_hint">Номер телефона (обязательно)</string>
+    <string name="external_input_name_hint">Имя</string>
+    <string name="external_input_added_completed">Этот номер был добавлен в ваш черный список </string>
+    <string name="external_input_enter_number_long">Вы ввели слишком много символов</string>
+    <string name="external_input_enter_number_short">Вы ввели слишком мало вызовов</string>
+    <string name="add_number_exist">Этот номер уже добавлен в ваш черный список</string>
+    <string name="add_number_as_spam">Отметить номер как спам</string>
+    <string name="from_contacts_title">Из телефонной книги</string>
+    <string name="from_contacts_quick_filtering">Быстрый фильтр</string>
+    <string name="from_contacts_read_failed">Неудачная попытка прочесть список контактов!!!</string>
+    <string name="from_call_log_title">Из истории вызовов</string>
+    <string name="from_call_log_read_failed">Неудачная попытка прочесть историю вызовов!!!</string>
+    <string name="country_list_title">Пожалуйста, выберите страну</string>
+    <string name="country_list_name_hint">Название страны или код страны...</string>
+    <!--<string name="call_coming_back">Обратный звонок</string>--><!--原翻譯, call after 界面折行-->
+    <string name="call_coming_back">Перезвони</string>
+    <string name="call_coming_detail">Детали</string>
+    <string name="about_title">О нас</string>
+    <string name="about_product_intro">Отличный инструмент для звонков.</string>
+    <string name="about_product_version">%s версия:</string>
+    <string name="about_rote_gp">Как мы</string>
+    <string name="about_like_facebook">Поставить нам "Нравиться" на Facebook</string>
+    <string name="about_send_apk">Отправить APK файл друзьям</string>
+    <string name="no_app_to_share">Извините, у вас нет приложения, которым вы можете поделиться.</string>
+    <string name="failed_backup">Не удалось создать резервную копию</string>
+    <string name="share_to_facebook">Поделиться на Facebook</string>
+    <string name="about_privacy">Политика Конфиденциальности</string>
+    <string name="about_term">Правила Пользования</string>
+    <string name="share_text">%1$s может блокировать нежелательные вызовы и сообщать о том, кто звонил. Попробуйте! Получите на: %2$s</string>
+    <string name="rate_dialog_title">Оцените нас на 5, если вам понравилось. </string>
+    <string name="rate_dialog_message">Покажите нам свою поддержку, поставив нам 5 звезд на Google Play.</string>
+    <string name="rate_dialog_ok">Поставьте нам 5 звезд</string>
+    <string name="rate_dialog_cancel">Позже</string>
+    <string name="device_time_just">Прямо сейчас</string>
+    <string name="device_time_minutes">%1$d мин. Назад</string>
+    <string name="device_time_hour">%1$d часов назад</string>
+    <string name="device_time_one_hour">1 час назад</string>
+    <string name="device_time_day">%1$d дн.назад</string>
+    <string name="device_time_one_day">вчера</string>
+    <string name="lanuage_item_auto">Авто</string>
+    <string name="time_s">%1$d сек</string>
+    <string name="time_m">%1$d мин: %2$d сек</string>
+    <string name="time_h">%1$d ч:%2$d мин :%3$d сек</string>
+    <string name="skip_splash">Пропустить</string>
+    <string name="splash_more">более</string>
+    <string name="call_log_menu_all_call">Все</string>
+    <string name="call_log_menu_discerned">Определенные </string>
+    <string name="call_log_menu_incoming">Входящие </string>
+    <string name="call_log_menu_refused">Отклоненные </string>
+    <string name="call_log_menu_outgoing">Исходящие  </string>
+    <string name="call_log_menu_missed">Пропущенные </string>
+    <string name="call_log_menu_blocked">заблокированные </string>
+    <string name="call_log_menu_scan_shrink">Сжать</string>
+    <string name="call_log_menu_delete_all_shield_calls">удалить все заблокированные вызовы</string>
+    <string name="call_log_menu_delete_all_calls">удалить все вызовы</string>
+    <string name="call_log_contact">Контакты   </string>
+    <string name="call_log_hide_number">Скрытый номер</string>
+    <string name="call_log_date_sunday">Воскресенье</string>
+    <string name="call_log_date_saturday">Суббота</string>
+    <string name="call_log_date_friday">Пятница</string>
+    <string name="call_log_date_thursday">Четверг</string>
+    <string name="call_log_date_wednesday">Среда</string>
+    <string name="call_log_date_tuesday">Вторник</string>
+    <string name="call_log_date_monday">Понедельник</string>
+    <string name="call_log_date_today">Сегодня </string>
+    <string name="call_log_no_block_call">Нет заблокированных вызовов</string>
+    <string name="call_log_no_missed_call">Нет пропущенных вызовов</string>
+    <string name="call_log_crank_call_count_text">Смарт-блокировка спам-звонков</string>
+    <string name="call_log_open_block_text">включить смарт-блокировку</string>
+    <string name="call_log_enable">Включить </string>
+    <string name="call_log_no_calllog">Нет журнала звонков</string>
+    <string name="phone_detail_unblock">РАЗБЛОКИРОВАТЬ</string>
+    <string name="phone_detail_block">Предотвратить</string>
+    <string name="phone_detail_call_log">Посмотреть историю звонков</string>
+    <string name="phone_detail_phone_save">СОХРАНИТЬ</string>
+    <string name="phone_detail_phone_edit">РЕДАКТИРОВАТЬ</string>
+    <string name="phone_detail_phone_Tag">ОТМЕТИТЬ</string>
+    <string name="phone_detail_call_log_access_failure">Отменен</string>
+    <string name="phone_detail_number_type_mobile">Мобильный</string>
+    <string name="phone_detail_number_type_home">Домашний </string>
+    <string name="phone_detail_number_type_company">Рабочий</string>
+    <string name="phone_detail_lastest_call_log">Последний вызов:</string>
+    <string name="phone_detail_no_call_log">Нет истории вызовов</string>
+    <string name="phone_detail_block_dialog_content">Вы больше не будете получать вызовы с этого номера</string>
+    <string name="phone_detail_block_dialog_content_unblock">Этот номер будет разблокирован и отмечен, как не спам. Будущие звонки не будут отмечены как спам.</string>
+    <string name="phone_detail_block_dialog_title">Уверены, что хотите заблокировать этот номер?</string>
+    <string name="phone_detail_block_dialog_title2">Уверены, что хотите разблокировать этот номер?</string>
+    <string name="phone_detail_have_no_tag">К этому номеру добавили все метки</string>
+    <string name="phone_detail_add_tag">Добавить отметку</string>
+    <string name="phone_detail_add_name">Добавить имя</string>
+    <string name="phone_detail_no_name">Нет имени</string>
+    <string name="phone_detail_add_lion_name_tip">Предложить другое имя</string>
+    <string name="phone_detail_add_lion_name_dialog_person">Личный</string>
+    <string name="phone_detail_add_lion_name_dialog_company">Рабочий</string>
+    <string name="phone_detail_add_lion_name_update_tip1">Не %1$s?</string>
+    <string name="phone_detail_add_lion_name_update_tip2">Нажать, чтобы предложить другое имя</string>
+    <string name="phone_detail_cancel_block">Номер удален из вашего черного списка</string>
+    <string name="phone_detail_add_name_not_null_tip">Необходимо указать имя</string>
+    <string name="phone_detail_delete_contact">Удалить контакт</string>
+    <string name="phone_detail_delete_spam_count_text">%1$d человек отметили его как спам</string>
+    <string name="phone_detail_delete_spam_count_text3">вы отметили как спам</string>
+    <string name="phone_detail_delete_spam_count_text2">отмечено как спам другими пользователями</string>
+    <string name="phone_detail_no_number">Нет номера в этом контакте</string>
+    <string name="phone_detail_unknown">Неизвестный  </string>
+    <string name="phone_detail_null_number">Номер пуст</string>
+    <string name="tag_popupwindow_tip">Помогите другим идентифицировать этот номер</string>
+    <string name="contact_search_hint">Искать телефон</string>
+    <string name="contact_add_contact">Создать новый контакт</string>
+    <string name="contact_no_contacts">Нет контакта</string>
+    <string name="call_after_message">Сообщение   </string>
+    <string name="call_after_click_toast">"Номер скрыт!"</string>
+    <string name="search_input_hint">Ввести номер</string>
+    <string name="search_number_hint">Поиск в 100,000,000 телефонных номеров</string>
+    <string name="search_recently_record">Последние результаты поиска</string>
+    <string name="search_no_result">Пока нет результатов поиска</string>
+    <string name="search_no_result2">Нет результатов поиска. Попробуйте еще раз с другим кодом страны</string>
+    <string name="search_no_result_hint">Ваши последние результаты поиска будут показаны тут </string>
+    <string name="search_content_hint">Поиск в Caller ID</string>
+    <string name="search_delete_all_content">Уверены, что хотите очистить всю историю поиска?</string>
+    <string name="search_clear_all_record">Очистить историю недавнего поиска</string>
+    <string name="search_invalid_number">Пожалуйста, введите правильный номер</string>
+    <string name="search_number_tip">Пожалуйста, введите правильный номер телефона</string>
+    <string name="dialing_title">Вызов</string>
+    <string name="unknown_number">Неизвестный номер</string>
+    <string name="permission_tip">Для идентификации и блокировки надоедливых звонков вам нужно включить Историю вызовов и доступ к списку контактов.</string>
+    <string name="permission_sysytem_permission">Диспетчер разрешений</string>
+    <string name="permission_to_get_permsiion">Включить  </string>
+    <string name="permission_no_permission">Нет разрешения</string>
+    <string name="permission_phone">Телефон</string>
+    <string name="permission_SMS">СМС</string>
+    <string name="dialog_update_btn_update">Обновить</string>
+    <string name="dialog_update_download_title">Обновление</string>
+    <string name="num_tag_101">Спам</string>
+    <string name="num_tag_103">Телемаркетинг</string>
+    <string name="num_tag_104">Финансы и Страхование</string>
+    <string name="num_tag_105">Шопинг </string>
+    <string name="num_tag_106">Гостиница</string>
+    <string name="num_tag_107">Образование</string>
+    <string name="num_tag_108">Здоровье</string>
+    <string name="num_tag_109">Путешествия </string>
+    <string name="num_tag_110">Экспресс</string>
+    <string name="num_tag_111">Транспорт</string>
+    <string name="num_tag_112">Ночная жизнь и Бары</string>
+    <string name="num_tag_113">Рестораны и Кафе</string>
+    <string name="num_tag_114">Общественные службы</string>
+    <string name="FIXED_LINE">Домашний </string>
+    <string name="MOBILE">МОБИЛЬНЫЙ</string>
+    <string name="FIXED_LINE_OR_MOBILE">ДОМАШНИЙ ИЛИ МОБИЛЬНЫЙ</string>
+    <string name="TOLL_FREE">БЕСПЛАТНЫЙ</string>
+    <string name="PREMIUM_RATE">ПРЕМИУМ</string>
+    <string name="SHARED_COST">СОВМЕСТНЫЕ ЗАТРАТЫ</string>
+    <string name="PERSONAL_NUMBER">ЛИЧНЫЙ НОМЕР</string>
+    <string name="call_flash_led_festival">Фестиваль </string>
+    <string name="call_flash_led_love">Любовь</string>
+    <string name="call_falsh_led_streamer">Лента</string>
+    <!--<string name="call_falsh_led_bloom">Цветение</string>-->
+    <!--<string name="call_falsh_led_gradient">Градиент</string>-->
+    <!--<string name="call_falsh_led_neon">Неон</string>-->
+    <string name="call_flash_guide_open_upper">ОТКРЫТЬ  </string>
+    <string name="call_flash_exit_dialog_title">Открыть флеш-звонки для звонков </string>
+    <string name="whtas_new_title">Что нового</string>
+    <string name="whtas_new_title_name">ID абонента</string>
+    <string name="whtas_new_des_one">Показывать контент при пропущенном сообщении.</string>
+    <string name="whtas_new_des_two">Идентифицировать входящие и исходящие звонки</string>
+    <string name="whtas_new_des_three">Показывать информацию о вызывающем абоненте после пропуска или завершения вызова.</string>
+    <string name="smart_lock_toast">Успешно включено</string>
+    <string name="message_options">Опции сообщения </string>
+    <string name="copy_message_text">Копировать текст</string>
+    <string name="menu_add_address_to_contacts">Добавить %s в Контакты</string>
+    <string name="delete_message">Удалить сообщение</string>
+    <string name="confirm_delete_message">Сообщение будет удалено</string>
+    <string name="delete">Удалить</string>
+    <string name="dail">Набрать </string>
+    <string name="reply">Ответить</string>
+    <string name="tyep_message">Набрать сообщение </string>
+    <string name="change_sms_app">Ищменить СМС-приложение?</string>
+    <string name="upgrade_now">Установить</string>
+    <string name="not_default_send">Должно быть вашим СМС-приложением, чтобы отправлять сообщения</string>
+    <string name="sms_sent_fail">Не удалось отправить</string>
+    <string name="sms_send_wait">Ожидание отправки</string>
+    <string name="sms_sending">отправка…</string>
+    <string name="sms_not_default_mark_read">Должно быть вашим СМС-приложением, чтобы читать сообщения</string>
+    <string name="push_tools_message_mult_contacts">Контакты %1$s и еще&lt;font color="#FF0084"&gt;%2$s&lt;/font&gt;</string>
+    <string name="sms_set_default_sms">СДЕЛАТЬ СМС-ПРИЛОЖЕНИЕМ ПО УМОЛЧАНИЮ</string>
+    <string name="sms_save_to_contact">Добавить в контакты</string>
+    <string name="sms_see_contact">Просмотреть контакты</string>
+    <string name="sms_delete_conversation">Удалить сообщение</string>
+    <string name="sms_delete_conversation_text">Вы уверены, что хотите удалить эту беседу?</string>
+    <string name="sms_deleteing">Удаление</string>
+    <string name="sms_not_default_to_delete_conversation">Он должен быть установлен в качестве вашего SMS-приложения по умолчанию.</string>
+    <string name="sms_delete_message">Удалить это сообщение</string>
+    <string name="sms_no_conversation">Нет сообщений</string>
+
+    <string name="splash_content">Идентификация вызывающего абонента и перехват</string>
+
+
+    <!-- spam update start 14-->
+    <string name="frag_block_offline_size_title">База данных спама</string>
+    <string name="frag_block_offline_size_title_new_number">Новые номера обновлены</string>
+    <string name="frag_block_offline_size_title_new_number_notify">Добавлено %1$d номеров, нажмите, чтобы обновить их.</string>
+    <string name="frag_block_offline_size_desc">Нажмите, чтобы обновить сейчас</string>
+    <string name="frag_block_offline_size_desc2">Ваши данные актуальны</string>
+    <string name="frag_block_update_scan_phone_number">сканирование</string>
+    <string name="frag_block_update_scan_phone_number_title">Безопасно</string>
+    <string name="frag_block_update_scan_phone_number_title_new_calls">%1$d новых</string>
+    <string name="frag_block_update_scan_phone_number_desc_tap">Советы сканировать новые вызовы.</string>
+    <string name="frag_block_update_scan_phone_number_desc">Ваш телефон защищен.</string>
+    <string name="spam_update_result_suc">"Обновление успеха"</string>
+    <string name="spam_update_result_fail">"Не удалось обновить"</string>
+    <string name="spam_update_tip">"Обновление, пожалуйста, не уходите."</string>
+    <string name="spam_update_result_update_number">Обновлено %1$d новых номеров</string>
+    <string name="spam_update_exit_tip">Выполняется обновление, вы обязательно должны выйти?</string>
+    <string name="spam_update_app_exit_prompt_title">Обновить базу данных теперь?</string>
+    <string name="spam_update_app_exit_prompt_content">База данных Numbers поможет вам распознать неизвестные вызовы и заблокировать спам, нажмите, чтобы обновить.</string>
+    <string name="frag_block_block_history_title">Посмотреть историю блокировок</string>
+    <string name="frag_block_block_history_empty">@string/no_results</string>
+    <string name="frag_block_update_spam_failed">@string/spam_update_result_fail</string>
+    <!-- spam update end-->
+
+    <!-- scan new calls 15 -->
+    <string name="number_scaning">СКАНИРОВАНИЕ</string>
+    <string name="number_scan_recent">ПОСЛЕДНЕЕ</string>
+    <string name="number_scan_identified">идентифицированный</string>
+    <string name="number_scan_dialog_tip">Сканирование, вы обязательно выйдете?</string>
+    <string name="number_scan_result">Результаты</string>
+    <string name="number_scan_result_risks">риски</string>
+    <string name="number_scan_checking">Проверка ...</string>
+    <string name="number_scan_result_tip">Определено %1$d номера спама в ваших журналах вызовов</string>
+    <string name="number_scan_realtime_protect">Защита RealTime</string>
+    <string name="number_scan_reported_you_call">Сообщается, что вы звоните</string>
+    <string name="number_scan_result_spam_number">СПАМ НОМЕР</string>
+    <string name="number_scan_result_open_realtime_protect">Включить защиту в реальном времени</string>
+    <string name="number_scan_result_congratulations">Завершено.</string>
+    <string name="number_scan_result_Successfully_tip1">Успешно добавлено в список блокировок</string>
+    <string name="number_scan_result_Successfully_tip2">Успешно включить защиту в реальном времени</string>
+    <string name="number_scan_result_block_spam_number">@string/block_setting_name</string>
+    <string name="number_scan_result_unblock_spam_number">@string/phone_detail_unblock</string>
+    <string name="number_scan_unknown_number_count">@string/frag_block_update_scan_phone_number_title_new_calls</string>
+    <string name="number_scan_calllog_have_danger">@string/frag_block_update_scan_phone_number_desc_tap</string>
+    <string name="number_scan_calllog_scan_immdiately">@string/frag_block_update_scan_phone_number</string>
+    <string name="number_scan_unspam">@string/phone_detail_unblock</string>
+    <string name="number_scan_spam">@string/num_tag_101</string>
+    <string name="number_scan_title">@string/frag_block_update_scan_phone_number</string>
+    <string name="number_scan_exit_intro_title">Проверка нового номера</string>
+    <string name="number_scan_exit_intro_content">У телефона есть новый неизвестный номер. Пожалуйста, проверьте безопасность номера.</string>
+
+    <string name="setting_intelligent_identification">Интеллектуальная идентификация</string>
+    <string name="setting_intelligent_identification_numbers">Показывать неизвестных абонентов.</string>
+
+    <string name="sms_resend_fail_sms">Не удалось отправить сообщение. Перешли Это?</string>
+    <string name="sms_resend_message">Отправить ответ</string>
+    <string name="sms_emoji_tip">скоро...</string>
+    <string name="sms_draft">[проект]</string>
+    <string name="sms_not_empty">Введите ваше сообщение</string>
+    <string name="sms_no_subject_view">(Нет темы)</string>
+    <string name="sms_message_size_label">Размер сообщения\u000A</string>
+    <string name="inline_subject">"&lt;Предмет: <xliff:g id="subject">%s</xliff:g>&gt;"</string>
+    <string name="toast_draft">Сохраненный черновик</string>
+    <string name="toast_save_draft_tip">Должно быть ваше приложение для SMS в Сохраненный черновик</string>
+
+    <!-- fake call start-->
+    <string name="fake_call_title">Ложный вызов</string>
+    <string name="fake_call_add_photo">Фото</string>
+    <string name="fake_call_add_name_title">@string/external_input_name_hint</string>
+    <string name="fake_call_add_name_hint">имя</string>
+    <string name="fake_call_add_number_hint">номер</string>
+    <string name="fake_call_make_call">Подделка вызова</string>
+    <string name="fake_call_schedule">Мое Pасписание</string>
+    <string name="fake_call_error_numer_empty">Номер не может быть пустым!</string>
+    <string name="fake_call_intro_title">Нажмите и установите свои поддельные звонки</string>
+    <string name="fake_call_tip">Создайте поддельный звонок, чтобы спасти вас от неловкой ситуации.</string>
+    <!--<string name="fake_call_time_choice_tip">Click to select a call time</string>-->
+    <string name="fake_call_cancel_make_call_tip">Длительное нажатие для удаления запланированного вызова</string>
+    <string name="fake_call_cancel_dialog_content">Вы хотите удалить этот вызов?</string>
+
+    <string name="fake_call_add_photo_title">Выберите предложенный вызов</string>
+    <string name="fake_call_add_photo_name_default">John</string>
+    <string name="fake_call_add_photo_name_private">Личный номер</string>
+    <string name="fake_call_add_photo_name_spiderman">человек-паук</string>
+    <string name="fake_call_add_photo_name_wonder_woman">Удивительная женщина</string>
+
+    <string name="fake_call_make_call_now">ныне</string>
+    <string name="fake_call_time_choice_title">Выполнение вызова после</string>
+    <string name="fake_call_quick_set_time">Быстрое время настройки</string>
+    <string name="fake_call_custom_time">Пользовательские время</string>
+    <!--<string name="fake_call_custom_time_next">СЛЕДУЮЩИЙ</string>-->
+    <string name="fake_call_custom_time_toast">Пожалуйста, выберите разумное время звонка!</string>
+    <string name="fake_call_countdown_desc1">Позвонит вам</string>
+    <string name="fake_call_countdown_desc2">позже</string>
+
+    <string name="fake_call_incoming_title">Входящий звонок</string>
+    <string name="fake_call_incoming_style_choice_title">Поддельный входящий звонок</string>
+    <string name="fake_in_call_default_style">"Дефолт"</string>
+
+    <string name="fake_call_incoming_private_number">@string/example_number</string>
+    <string name="fake_call_show_call_type_incoming">@string/fake_call_incoming_title</string>
+    <!-- fake call end-->
+
+    <string name="guide_desc_identify">Идентифицировать неизвестные вызовы и блокировать вызовы</string>
+    <string name="guide_desc_call_falsh">Прохладный экран вызова вызова</string>
+
+    <string name="scan_anim_title">Сканирование спама...</string>
+    <string name="call_flash_led_custom">обычай</string>
+    <string name="call_flash_led_kiss">безе</string>
+    <string name="call_flash_led_rose">Роза</string>
+    <string name="call_flash_led_panda">панда</string>
+    <string name="call_flash_show_custom_bg_desc">Нажмите «+», чтобы выбрать «Фото» или «GIF».</string>
+    <string name="exit_guide_content_number_scan">Сканирование новых вызовов для проверки, если они притесняют / номер телемаркетинга.</string>
+    <string name="quit">сдаваться</string>
+    <string name="call_after_close">Закрыть</string>
+    <string name="call_after_disable">запрещать</string>
+    <string name="lion_family_price">Cвободный</string>
+    <string name="lion_family_desc">Познакомьтесь с вами</string>
+    <string name="lion_family_active_download">Скачать</string>
+    <string name="lion_family_active_use">использование</string>
+    <string name="call_flash_exit_open_title">Используйте это при вызове экрана?</string>
+    <string name="call_flash_exit_open_ok">Bключить</string>
+
+    <string name="number_scan_initiating">Инициирование</string>
+
+    <!--Call flash album start-->
+    <string name="call_flash_album_title">Выберите фото или GIF</string>
+    <string name="call_flash_album_online">В сети</string>
+    <string name="call_flash_album_local">Местный</string>
+    <string name="call_flash_album_gallery">Галерея</string>
+    <string name="call_flash_album_gallery_desc_1">выбрать картину</string>
+    <string name="call_flash_album_gallery_desc_2">%1$d фото (ы)</string>
+    <!--Call flash album end-->
+
+    <!--call flash gif show start-->
+    <string name="call_flash_result_title">Установка завершена</string>
+    <string name="call_flash_gif_show_save">Установить как экран вызова</string>
+    <string name="call_flash_gif_show_load">Скачивание %1$d%%</string>
+    <string name="call_flash_gif_show_connecte">соединительный</string>
+    <string name="call_flash_gif_show_load_suc">Загрузка завершена.</string>
+    <string name="call_flash_gif_show_load_failed">Ошибка загрузки.</string>
+    <string name="call_flash_gif_show_setting_suc">Установлен новый экран вызова.</string>
+    <string name="call_flash_gif_show_setting_suc_reset">Экран вашего вызова сброшен.</string>
+    <string name="call_flash_reset">Вы будете сброшены, чтобы использовать экран вызова по умолчанию системы.</string>
+    <string name="call_flash_change_to_new">Использовать новый экран вспышки вызова?</string>
+    <string name="call_falsh_gif_thum_load_desc">загрузка</string>
+    <string name="call_flash_show_add_custom_bg">Настройка экрана вызова</string>
+    <!--call flash gif show end-->
+
+    <string name="contact_search_tip">введите номер или имя</string>
+
+    <string name="not_upload_name0">мамочка</string>
+    <string name="not_upload_name1">Мама</string>
+    <string name="not_upload_name2">мама</string>
+    <string name="not_upload_name3">папа</string>
+    <string name="not_upload_name4">папа</string>
+    <string name="not_upload_name5">отец</string>
+    <string name="not_upload_name6">бабушка</string>
+    <string name="not_upload_name7">дедушка</string>
+    <string name="not_upload_name8">Дед</string>
+    <string name="not_upload_name9">бабушка</string>
+    <string name="not_upload_name10">люблю</string>
+    <string name="not_upload_name11">Уважаемые</string>
+    <string name="not_upload_name12">дорогой</string>
+    <string name="not_upload_name13">мед</string>
+    <string name="not_upload_name14">младенец</string>
+    <string name="not_upload_name15">детка</string>
+    <string name="not_upload_name16">щенок</string>
+    <string name="not_upload_name17">муж</string>
+    <string name="not_upload_name18">жена</string>
+    <string name="not_upload_name19">милая</string>
+    <string name="not_upload_name20">возлюбленная</string>
+    <string name="not_upload_name21">сын</string>
+    <string name="not_upload_name22">дочь</string>
+    <string name="not_upload_name23">брат</string>
+    <string name="not_upload_name24">сестра</string>
+    <string name="not_upload_name25">тетка</string>
+    <string name="not_upload_name26">дядя</string>
+    <string name="not_upload_name27">племянница</string>
+    <string name="not_upload_name28">племянник</string>
+    <string name="not_upload_name29">двоюродная сестра</string>
+    <string name="not_upload_name30">учитель</string>
+    <string name="not_upload_name31">босс</string>
+
+    <string name="page_title_calllog">Журнал вызовов</string>
+    <string name="page_title_contact">@string/call_log_contact</string>
+    <string name="page_title_conversation">Сообщения</string>
+    <string name="page_title_block">@string/block_setting_name</string>
+    <string name="page_title_search">Поиск</string>
+
+    <string name="call_flash_Halloween">Хэллоуин</string>
+
+    <string name="phone_detail_user_add_name_tip">Пользовательское имя является нечистым номером</string>
+
+    <string name="phone_detail_set_call_flash_title">Установка экрана вызова</string>
+    <string name="phone_detail_set_call_flash_des">Выберите экран «Горячий звонок» для этого номера</string>
+    <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
+
+    <string name="call_flash_led_love1">Любитель1</string>
+    <string name="call_flash_led_love2">Любитель2</string>
+    <string name="call_flash_led_downloda_again">@string/lion_family_active_download</string>
+    <string name="call_flash_led_downloading_back_des">Выполняется загрузка, отмена и выход?</string>
+    <string name="call_flash_led_downloading_back_wait">Подождите</string>
+    <string name="call_flash_led_not_download_back_des">Не загружайте, скачайте сейчас?</string>
+
+    <string name="real_time_protect_guide_desc3">Защитите ваше устройство от потенциального риска в реальном времени.</string>
+    <string name="calllog_delete_fail">Ошибка удаления</string>
+    <string name="calllog_delete_no_selected">Пожалуйста, выберите calllog вы хотите удалить</string>
+    <string name="calllog_delete_tip">Вы действительно хотите удалить выбранные &lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt; журналов?</string>
+    <string name="contact_delete_tip">Вы действительно хотите удалить &lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt;?</string>
+    <string name="exit_guide_act_call_flash">Показать</string>
+    <string name="exit_guide_close_desc">Подтвердить выход?</string>
+    <string name="exit_guide_content_call_flash">Вам нравится роман и интересное шоу-шоу? Поторопитесь со мной, чтобы увидеть это.</string>
+    <string name="exit_guide_content_update_spam">Начиная с последнего обновления, количество новых телефонных звонков %1$d+ обновляется сейчас, чтобы обеспечить лучший идентификатор звонящего.</string>
+    <string name="fake_call_tip2">Попробуйте Поддельный звонок сейчас?</string>
+    <string name="fake_call_tip3">Позвоните, чтобы помочь вам избавиться от неудобного затруднительного положения, сложного чата друзей.</string>
+    <string name="fake_call_try">Попробуйте</string>
+    <string name="phone_details_change_name">Сменить имя</string>
+    <string name="phone_details_delete_contact">Вы действительно хотите удалить этот контакт?</string>
+    <string name="phone_details_location">расположение</string>
+    <string name="rate_dialog_msg_illegal">Введенная строка содержит недопустимые символы!</string>
+    <string name="rate_dialog_nagative_desc">Введите свою проблему / ошибки / предложение здесь, максимум 200 слов.</string>
+    <string name="rate_dialog_nagative_send">послать</string>
+    <string name="rate_dialog_nagative_toast">Пожалуйста, введите свои предложения!</string>
+    <string name="rate_dialog_negative_title">Обратная связь</string>
+    <string name="rate_dialog_send_success_toast">Обратная связь уже отправлена, спасибо!</string>
+    <string name="txt_announcement">Объявление</string>
+    <string name="what_new_start">Начало</string>
+    <string name="exit_string">ВЫХОД</string>
+
+    <string name="about_email_us">Свяжитесь с нами по эл.почте</string>
+    <string name="email_choose_one">Пож-та, выб. прил. для отпр. эл. почты</string>
+
+    <string name="message_flash_title">Вспышка SMS / сообщений</string>
+    <string name="message_flash_next_sms">следующий</string>
+    <string name="message_flash_smile">Улыбка</string>
+    <string name="message_flash_love">@string/call_flash_led_love</string>
+    <string name="message_flash_balloon">воздушный шар</string>
+    <string name="message_flash_paper">Бумага</string>
+    <string name="message_flash_sysytem">система</string>
+    <string name="message_flash_Close">Вы отключите отображение экрана сообщений.</string>
+    <string name="message_flash_change_to_new">Использовать новую вспышку сообщений?</string>
+    <string name="message_flash_exit_open_title">Использовать это как экран сообщений?</string>
+    <string name="message_flash_exit_new_flash_des">Цветной экран SMS / сообщений нравится большинству пользователей. Попробуй!</string>
+    <string name="message_flash_set_success_des">Установлен новый флэш-экран сообщений.</string>
+    <string name="message_flash_set_success_des2">Экран сообщений отключен.</string>
+
+    <string name="push_tools_call_flash_toast_weekend">Счастливые выходные! теперь доступны новые прохладные экраны флэш-памяти.</string>
+
+    <string name="call_flash_led_visual_1">"скрипучий"</string>
+    <string name="call_flash_led_visual_2">"неон"</string>
+    <string name="call_flash_led_visual_3">"Волна"</string>
+    <string name="connection_failure">"Соединение прервано"</string>
+    <string name="call_flash_led_color_flash">вспышка</string>
+
+    <string name="call_falsh_led_monkey">"Обезьяна"</string>
+
+    <string name="call_flash_gif_show_setting_fail">Установить не удалось! Требуется разрешение на установку мелодии звонка.</string>
+    <string name="call_flash_gif_show_set_ring_title_des1">Использовать это как экран вызова и предоставить разрешение на установку рингтона для звонка?</string>
+    <string name="call_flash_led_santa_claus">Дед Мороз</string>
+    <string name="call_flash_led_charistmas_snowman">рождество</string>
+    <string name="call_falsh_download_waiting">Ожидание ...</string>
+    <string name="call_flash_gif_show_setting_fail2">Установить не удалось! Для установки экрана вызова требуется разрешение.</string>
+    <string name="call_flash_gif_show_setting_des">Необходимо включить разрешение окна системного предупреждения.</string>
+    <string name="call_flash_gif_show_setting_des2">Установить не удалось!</string>
+    <string name="call_falsh_led_pig">свинья</string>
+    <string name="call_falsh_led_rap">Рэп</string>
+
+    <string name="call_answer_string">"Ответить"</string>
+    <string name="notification_listener_setting_tip">Включить доступ к уведомлениям для вызовов «Ответ», он не будет использоваться для каких-либо других целей.</string>
+    <string name="call_flash_permission_tip">Разрешение на грант используется только для установки экрана флеш-звонка, он не будет использоваться для каких-либо других целей.</string>
+    <string name="sms_flash_permission_tip">Разрешение на грант используется только для установки Вспышка SMS / сообщений, оно не будет использоваться для каких-либо других целей.</string>
+    <string name="call_falsh_led_bear">Медведь</string>
+
+    <string name="call_flash_more_title_1">классический</string>
+    <string name="call_flash_more_title_3">Популярный</string>
+    <string name="call_flash_more_title_2">Рекомендуемые</string>
+    <string name="txt_call_flash_theme_title">Вызов темы</string>
+    <string name="call_flash_detail_setting_action_to_cancel">"Отменить эту тему входящего вызова"</string>
+    <string name="notification_manager_permission_tip">Включить доступ к уведомлениям для вызовов ответа</string>
+    <string name="call_flash_guide_des">"установить специальный экран вызова для него / него"</string>
+
+    <string name="message_block_not_default_sms">Должно быть ваше приложение SMS по умолчанию для блокировки SMS.</string>
+    <string name="message_option_mark_as_read">отметить все как прочитанное</string>
+    <string name="message_remove_to_notification_dialog_tip">Вы уверены, что перемещаете сообщения другим?</string>
+    <string name="message_blocked_dialog_tip">Блокировать сообщения с этого номера?</string>
+    <string name="conversation_notification">другие</string>
+    <string name="message_remove_to_notification">Перейти к другим</string>
+    <string name="message_remove_to_phone_number">Перейти к Входящие</string>
+    <string name="message_blocked">Номер добавлен в список блокировки SMS</string>
+    <string name="message_option_block_sms_list">Список заблокированных SMS</string>
+    <string name="message_remove_to_phone_number_dialog_tip">Вы уверены, что переместите сообщения в папку «Входящие»?</string>
+    <string name="conversation_phonenumber">входящие</string>
+    <string name="message_option_mark_as_read_2">пометить, как прочитанное</string>
+
+    <string name="audio_record_request_option_1">Я подтверждаю, что регистрация звонков законна в моей стране</string>
+    <string name="audio_record_request_option_2">Я согласен с</string>
+    <string name="audio_record_request_option_3">Автоматическая запись звонков</string>
+    <string name="audio_record_delete_result_suc">Удалите успешно.</string>
+    <string name="setting_call_audio_record">Автоответчик</string>
+    <string name="audio_record_file_play">Играть</string>
+    <string name="audio_record_improve_tip_opened">Устройство записывает вызовы с помощью микрофона. Не забудьте включить динамик во время записи.</string>
+    <string name="audio_record_no_record">Нет записей.</string>
+    <string name="audio_record_option_disable_tip">Вы действительно хотите отключить запись звонков?</string>
+    <string name="audio_record_request_desc">Вы можете записывать вызовы в любое время, Caller ID не будет использовать или загружать любые ваши файлы записи звонков.</string>
+    <string name="audio_record_miss_call_file_delete">Телефон не смог подключиться, и файл записи был удален.</string>
+    <string name="audio_record_option_enable">Включить запись</string>
+    <string name="audio_record_option_delete">Удалить все</string>
+    <string name="audio_record_improve_tip_closed">Функция записи отключена, включите ее сейчас.</string>
+    <string name="audio_record_request_title">Включить запись звонков?</string>
+    <string name="audio_record_request_action_1">отклонять</string>
+    <string name="audio_record_delete_all_tip">Вы действительно хотите удалить все записи звонков?</string>
+    <string name="audio_record_option_disable">Отключить запись</string>
+    <string name="audio_record_request_option_2_privacy">политика конфиденциальности</string>
+
+    <string name="audio_record_option_disable_auto_record_suc_tip">Отключить автоматическую запись.</string>
+    <string name="audio_record_set_failed">Set failed, требуется разрешение на включение аудиозаписей.</string>
+    <string name="audio_record_option_enable_auto_record_suc_tip">Включите автоматическую запись успешно.</string>
+    <string name="audio_record_option_enable_auto_record">Включить автоматическую запись</string>
+    <string name="audio_record_option_disable_auto_record">Отключить автоматическую запись</string>
+    <string name="audio_record_set_success">Установите успешно, функция записи включена.</string>
+    <string name="record_call_permission_tip">Разрешение на грант используется только для вызова записи, оно не будет использоваться для каких-либо других целей.</string>
+
+    <string name="audio_record_delete_single_tip">Вы действительно хотите удалить эту запись?</string>
+    <string name="audio_record_push_tool_new_record">У вас новая запись вызова.</string>
+
+    <string name="block_message_tip">SMS, которые с этого номера были заблокированы.</string>
+    <string name="audio_record_phone_detail_title">запись</string>
+    <string name="unblock_message_tip">SMS, которые с этого номера были разблокированы.</string>
+
+    <string name="do_not_disturb_permission_tip">Для этого нужно разрешение, чтобы не беспокоить.</string>
+    <string name="call_flash_saving">экономия</string>
+    <string name="discovery_call_record_des">Поддержка записи звонков и обмена файлами с друзьями.</string>
+    <string name="do_not_disturb_timer">таймер</string>
+    <string name="do_not_disturb_allow_no">Никто</string>
+    <string name="do_not_disturb_tip_content_disenable">Включите не беспокоить, наслаждайтесь приятным и тихим временем жизни, попробуйте сейчас.</string>
+    <string name="do_not_disturb_allow_incoming_list">Разрешить список вызовов</string>
+    <string name="do_not_disturb_schedule_set">настройка</string>
+    <string name="call_flash_preview_recommend_call_flash">Рекомендовать Flash</string>
+    <string name="do_not_disturb_schedule">График</string>
+    <string name="do_not_disturb_allow_incoming">Разрешить вызовы</string>
+    <string name="do_not_disturb_set_success_for_schedule">Телефон будет отключен в течение запланированного времени</string>
+    <string name="call_flash_preview_now">Предварительный просмотр</string>
+    <string name="do_not_disturb_timer_tip">Укажите время</string>
+    <string name="do_not_disturb_timer_set_time_title">Установите таймер</string>
+    <string name="side_slip_menu_discovery">открытие</string>
+    <string name="do_not_disturb_timer_title">До&lt;font color=&quot;#FF0084FF&quot;&gt;%1$s&lt;/font&gt;</string>
+    <string name="do_not_disturb_notification_title">В тихом режиме</string>
+    <string name="do_not_disturb_end">Конец</string>
+    <string name="do_not_disturb_allow_in_coming_view_custom">Выберите номера, которые позволяют звонить</string>
+    <string name="do_not_disturb_set_success">Телефон будет отключен до окончания обратного отсчета</string>
+    <string name="do_not_disturb_permission_set_fail">Set failed, Требуется разрешение установить не беспокоить.</string>
+    <string name="do_not_disturb_allow_in_coming_custom">выберите</string>
+    <string name="audio_record_file_share">Поделиться</string>
+    <string name="do_not_disturb_allow_incoming_tip">Это число уже было добавлено.</string>
+
+    <string name="call_flash_grant_permission_tip">Разрешение на грант используется только для установки %1$s, оно не будет использоваться для каких-либо других целей.</string>
+    <string name="do_not_disturb_enabled">Включено</string>
+
+    <string name="external_volume_new_call_flash_title">Новое флеш-шоу</string>
+    <string name="external_volume_new_call_flash_view">вид</string>
+
+    <string name="call_flash_upload_action_upload">Загрузить</string>
+    <string name="call_flash_upload_tip_privacy_policy">Должен согласиться с политикой конфиденциальности для загрузки файла</string>
+    <string name="call_flash_upload_tip_no_file">Выберите файл для загрузки</string>
+    <string name="call_flash_upload_uploading">Загружено</string>
+    <string name="call_flash_upload_author">автор</string>
+
+    <string name="privacy_number_title_pattern_lock">Замок рисунка</string>
+    <string name="privacy_number_add_number">Добавить номера в частные контакты</string>
+    <string name="privacy_number_set_pattern">Пожалуйста, нарисуйте рисунок</string>
+    <string name="privavy_number_set_pattern_guide_tip">Пожалуйста, установите блокировку рисунка для ваших личных контактов.</string>
+    <string name="privacy_number_set_pattern_error_to_init">Пожалуйста, рисуйте тот же шаблон, что и в первый раз!</string>
+    <string name="privacy_number_set_pattern_reset_init_password">Сброс</string>
+    <string name="privacy_number_input_password_error_tip">Неправильный пароль, вы также можете попробовать %1$d раз</string>
+
+    <string name="privacy_number_forget_pwd">Забыть пароль</string>
+    <string name="privacy_number_enabled_private_protects">Защита закрытых контактов включена.</string>
+    <string name="add_private_number_title">Добавление номеров в личные контакты</string>
+    <string name="add_private_number_add_sure">подтвердить</string>
+
+    <string name="add_number_exist_by_hide_type">«Этот номер уже находится в Частном списке»</string>
+    <string name="add_private_number_add_number_empty">Неизвестная ошибка вызвала сбой. </string>
+    <string name="privacy_number_security_question_title">Выберите секретный вопрос</string>
+    <string name="privacy_number_security_question_1">На какой улице находится ваша начальная школа?</string>
+    <string name="privacy_number_security_question_2">Какой у вас первый номер телефона?</string>
+    <string name="privacy_number_security_question_3">Где твоя родина?</string>
+    <string name="privacy_number_security_question_4">Когда день рождения твоего отца?</string>
+    <string name="privacy_number_security_question_5">Ваше любимое блюдо?</string>
+    <string name="privacy_number_security_question_custom">Настроить</string>
+    <string name="privacy_number_set_pwd_security_question_title">Введите свой секретный вопрос</string>
+    <string name="privacy_number_security_question_answer_title">Введите свой ответ безопасности</string>
+    <string name="privacy_number_security_answer_empty">Пожалуйста, введите Ваш ответ!</string>
+    <string name="privacy_number_security_answer_length_limit">Сохраните длину символа в диапазоне от %1$d до %2$d.</string>
+    <string name="privacy_number_security_question_empty">Тайный вопрос не может быть пустым!</string>
+    <string name="privacy_number_set_pattern_length_tip">Убедитесь, что ваша блокировка рисунка подключена как минимум к 4 точкам!</string>
+    <string name="privacy_number_pattern_error_over_count_tip">Пароль был исчерпан.</string>
+    <string name="privacy_number_forget_pwd_error_tip">Неверный пароль.</string>
+    <string name="privacy_number_pattern_reset_suc_tip">Успешное восстановление блокировки</string>
+    <string name="privacy_number_security_question_confirm_tip">Чтобы защитить вашу конфиденциальность, вопрос безопасности и ответ, который вы задали, являются единственным способом восстановить ваш шаблон. Пожалуйста, имейте в виду, что вы их помните.</string>
+
+    <string name="privacy_number_add_number_tip_title">Добавить номера в частные контакты</string>
+    <string name="privacy_number_add_number_tip_content">История вызовов из частных контактов будет отображаться только в частных контактах. Журналы вызовов не отображаются в системе или другом программном обеспечении.</string>
+    <string name="privacy_number_add_number_tip_check_content">«Не показывать снова»</string>
+    <string name="privacy_number_add_number_tip_ok">Я ПОНЯЛ</string>
+
+    <string name="privacy_number_delete_number_tip_title">Удалить личные контакты</string>
+    <string name="privacy_number_delete_number_tip_content">После удаления этого частного контакта его журналы вызовов будут удалены, но записи будут сохранены. Разрешить удаление этого частного контакта?</string>
+    <string name="privacy_number_private_contact_call_log_is_empty">Этот частный контакт не имеет журнала вызовов.</string>
+    <string name="privacy_number_private_contacts_empty">Защищает конфиденциальность вызовов и автоматически скрывает частные вызовы</string>
+    <string name="privacy_number_set_pattern_draw_again">Подтвердите шаблон</string>
+    <string name="add_private_number_no_select">Выберите хотя бы один номер!</string>
+    <string name="privacy_number_title_number">Частные контакты</string>
+    <string name="add_private_number_add_sure_more">Подтверждение (%1$d)</string>
+    <string name="discovery_privacy_call_des">Скрывайте свои секретные звонки, чтобы защитить вашу конфиденциальность.</string>
+
+    <string name="night_mode_guide_dialog_des">Наслаждайтесь спокойствием, когда вы спите (%1$s - %2$s)</string>
+    <string name="night_mode_new_missed_calls_count">Пропущенные вызовы %1$d</string>
+    <string name="night_mode_guide_dialog_title">Включить «Не беспокоить» для сна.</string>
+
+    <string name="privacy_number_set_pattern_error_tip_over_count">Пароль достиг максимального количества раз. Повторите попытку после минут %1$d!</string>
+    <string name="privacy_number_set_pattern_error_during_lock">Клавиша рисования заблокирована. Повторите попытку после минут %1$d.</string>
+
+    <string name="missed_call_title">@string/push_tools_missed</string>
+    <string name="missed_call_number_scan">@string/number_scaning</string>
+
+    <string name="missed_call_number_scan_not_close">Пожалуйста, не выходите</string>
+    <string name="night_mode_disable_dialog_title">Отключить не беспокоить сна</string>
+    <string name="night_mode_disable_dialog_des">Вы уверены, что отключите его?</string>
+
+    <string name="splash_init">Инициализация</string>
+    <string name="download_failed_for_no_sd_permission">Предоставьте разрешение на загрузку и сохранение тем</string>
+
+    <string name="add_shortcut_success">Создано успешно</string>
+    <string name="setting_shortcut">Ярлыки</string>
+    <string name="setting_add_contact_shortcut">Добавить ярлыки контактов</string>
+    <string name="setting_add_sms_shortcut">Добавить ярлыки SMS</string>
+
+    <string name="swipe_flash_title">Фонарик</string>
+    <string name="swipe_wifi_title">Вай-фай</string>
+    <string name="swipe_speeder_title">ракета-носитель</string>
+
+    <string name="swipe_camere_title">камера</string>
+    <string name="swipe_calendar_title">Календарь</string>
+    <string name="swipe_data_title">Данные</string>
+
+    <string name="swipe_calculator_title">Калькулятор</string>
+    <string name="swipe_flightmode_title">Авиа режим</string>
+    <string name="swipe_swipesetting_title">Легкая настройка прокрутки</string>
+    <string name="swipe_bluetooth_title">блютуз</string>
+
+    <string name="swipe_mute_title">звук</string>
+    <string name="swipe_setting_title">настройки</string>
+    <string name="swipe_alarm_title">Аварийная сигнализация</string>
+
+
+    <string name="swipe_edit_header_title">выбран (%1$s / %2$s)</string>
+    <string name="favorite_up_to_9">до 9</string>
+    <string name="scene_mode_0">Вибратор</string>
+    <string name="scene_mode_1">приглушенный</string>
+    <string name="scene_mode_2">звонкий</string>
+
+
+    <string name="swipe_for">Включить прокрутку</string>
+    <string name="swipe_for_type0">Только для дома</string>
+    <string name="swipe_for_type1">Homescreen и все приложения</string>
+    <string name="swipe_active_area">Позиция активной зоны</string>
+    <string name="swipe_area_type0">Нижнее левое и нижнее правое</string>
+    <string name="swipe_area_type1">Нижняя левая</string>
+    <string name="swipe_area_type2">Внизу справа</string>
+    <string name="swipe_whitelist">Не беспокоить настройки (%1$d)</string>
+    <string name="swipe_whitelist_des">Выберите приложения, которые запрещают использование Swipe</string>
+    <string name="swipe_whitelist_title">Добавить приложение</string>
+
+    <string name="swipe_about_rate5start">Оценить 5 звезд</string>
+    <string name="googleplay_not_found">Не удается найти Play Google</string>
+
+    <string name="swipe_toggle">тумблер</string>
+    <string name="swipe_about">Около</string>
+    <string name="swipe_about_version">Версия приложения</string>
+    <string name="swipe_open_type">Метод триггера</string>
+    <string name="swipe_open_type0">По умолчанию (Проведите по нижнему углу)</string>
+    <string name="swipe_open_type1">Проводник</string>
+    <string name="swipe_advanced_setting">Расширенные настройки</string>
+
+    <string name="feedback_title">заполнить заголовок</string>
+    <string name="feedback_content">заполнить содержание</string>
+    <string name="clearmemary_title">Очистка памяти</string>
+    <string name="clearmemary_wait">Повторите попытку через некоторое время</string>
+    <string name="flash_on">Фонарик включен</string>
+    <string name="flash_off">Фонарик выключен</string>
+    <string name="wifi_on">WiFi подключен</string>
+    <string name="wifi_off">Wi-Fi отключен</string>
+    <string name="bluetooth_on">bluetooth включен</string>
+    <string name="bluetooth_off">bluetooth выключен</string>
+    <string name="data_on">Мобильные данные были подключены</string>
+    <string name="data_off">Мобильные данные были отключены</string>
+
+    <string name="request_windows_title">SYSTEM_ALERT_WINDOW</string>
+    <string name="request_windows_content">Well Swipe требует разрешения</string>
+
+
+    <string name="swipe_nitification_title">Простой Swipe запущен</string>
+    <string name="swipe_nitification_content">нажмите, чтобы просмотреть настройки Easy Swipe</string>
+    <string name="swipe_whitelist_item_unlauncher">Приложение белого списка не разрешено запускать</string>
+    <string name="swipe_open_switch">Сначала включите переключатель!</string>
+
+    <string name="easy_swipe">Легкий размах</string>
+    <string name="easy_swipe_guide_desc_1">Проведите пальцем по панели быстрого доступа</string>
+    <string name="easy_swipe_guide_desc_2">Легкий доступ к системным настройкам</string>
+    <string name="easy_swipe_guide_desc_3">Быстрое запуск распространенных приложений</string>
+    <string name="tip_easy_swipe">Easy Swipe включил</string>
+    <string name="easy_swipe_guide_text">Проведите пальцем по углу на рабочем столе, как показано ниже.</string>
+    <string name="not_found_app">Не удается открыть приложение</string>
+    <string name="permission_denied_txt">Разрешение отклонено, повторите попытку</string>
+    <string name="txt_camera_permission_msg">«Нажмите« Разрешить », чтобы убедиться, что камера работает правильно»</string>
+
+    <string name="toolbox">Ящик для инструментов</string>
+    <string name="frequent">частый</string>
+    <string name="recent">последний</string>
+    <string name="ok_title">@string/ok_string</string>
+    <string name="cancel_title">@string/no_string</string>
+</resources>

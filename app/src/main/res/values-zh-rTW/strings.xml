@@ -1,0 +1,959 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- push toolsBar 开始-->
+    <string name="push_tools_block_call">"已封鎖的電話"</string>
+    <string name="push_tools_ring_one">"漏接了一通來電"</string>
+    <string name="push_tools_missed">"未接電話"</string>
+    <string name="push_tools_missed_count">"您漏接了 %1$d 通來電"</string>
+    <string name="push_tools_not_in_contact">"您有一個陌生號碼來電"</string>
+    <string name="push_tools_reject">"您拒接了一通來電"</string>
+    <string name="push_tools_content">檢視詳細資料</string>
+    <string name="push_tools_call_flash_toast">嘗試新的電話閃屏!</string>
+    <string name="push_tools_message">"您有&lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt;則未讀簡訊"</string>
+    <!-- push toolsBar 结束-->
+
+    <!--对话框  开始-->
+    <string name="no_results">無結果</string>
+    <string name="ok_string">"確定"</string>
+    <string name="no_string">"取消"</string>
+    <string name="dialog_ok_delete_block_log">"清除所有封鎖歷史？"</string>
+    <string name="dialog_ok_delete_block_log_title">"清除封鎖歷史？"</string>
+    <string name="quithint">"再次點選即可退出"</string>
+
+    <string name="grant_permission">"同意授權"</string>
+
+    <string name="popup_tips1">"展示浮動資訊框"</string>
+    <string name="popup_tips3">"切換到啟用浮動資訊框"</string>
+
+    <string name="call_flash_intro_title">"大部份使用者都很喜歡此項功能，不妨試一試！"</string>
+    <string name="call_flash_intro_set">"電話閃屏"</string>
+    <string name="call_flash_intro_reject">"不，謝謝！"</string>
+    <!--对话框 结束-->
+
+    <!-- 首页菜单 开始-->
+    <string name="main_menu_settings">@string/setting_title</string>
+    <string name="main_menu_about">@string/about_title</string>
+    <!-- 首页菜单 结束-->
+
+    <!-- 设置页面  开始-->
+    <string name="setting_title">"設定"</string>
+    <string name="setting_language">"語言"</string>
+
+    <string name="setting_lauage_dialog_title">"選擇語言"</string>
+    <!-- 设置页面 结束-->
+
+    <!--拦截记录页面 开始-->
+    <string name="block_log_query_log_failed">"查詢失敗"</string>
+    <!--拦截记录页面 结束-->
+
+    <!--黑名单管理页面 开始-->
+    <string name="block_list_title">"檢視垃圾電話&#160;&#038;&#160;呼叫封鎖列表"</string>
+    <string name="block_list_mine">"呼叫封鎖列表"</string>
+    <string name="block_list_common">"常見垃圾來電"</string>
+    <string name="block_list_empty">"您還未建立呼叫封鎖列表"</string>
+
+    <!--黑名单管理页面 结束-->
+
+    <!--拦截设置页面 开始-->
+    <string name="block_setting_title">"封鎖設定"</string>
+    <string name="block_setting_name">"封鎖"</string>
+    <string name="block_setting_common_block_desc">"封鎖其他使用者回報為推銷和詐騙的垃圾電話"</string>
+    <string name="block_setting_hide_block">"封鎖隱藏號碼"</string>
+    <string name="block_setting_hide_block_desc">"封鎖所有顯示為未知號碼的來電"</string>
+    <string name="block_setting_stranger_block">"號碼不在聯絡人中"</string>
+    <string name="block_setting_stranger_block_desc">"您要封鎖的號碼不在聯絡人中"</string>
+    <string name="block_setting_block_method">"封鎖方法"</string>
+    <string name="block_setting_block_method_auto">"自動掛斷"</string>
+    <string name="block_setting_block_method_silence">"靜音"</string>
+    <string name="block_setting_do_not_diturb">"免打擾"</string>
+    <string name="block_setting_do_not_diturb_time">"30分鐘"</string>
+    <string name="block_setting_pop_dialog">"來電觸發視窗"</string>
+    <string name="block_setting_remind_missed_calls">"有未接來電提醒我"</string>
+    <string name="block_setting_remind_missed_calls_desc">"當有未接來電時將收到提醒"</string>
+    <string name="block_setting_floating_in_contacts">"手機聯絡人"</string>
+    <string name="block_setting_floating_in_stranger">"陌生號碼"</string>
+    <string name="block_setting_floating_out_call">"撥出陌生號碼"</string>
+    <string name="block_setting_call_flash">"電話閃屏"</string>
+    <string name="block_setting_call_id">"電話名片"</string>
+    <string name="block_setting_call_id_desc">"在錯過或通話結束後展示通話資訊（含廣告）。"</string>
+    <string name="block_setting_sms_id_desc">"在錯過或接收到簡訊後展示簡訊資訊（含廣告）。"</string>
+    <!--拦截设置页面 结束-->
+
+    <!--屏蔽设置页面 开始-->
+    <!--<string name="frag_block_logs">"封鎖記錄"</string>-->
+    <!--<string name="frag_block_updating_common_db">@string/dialog_update_btn_update</string>-->
+    <!--<string name="frag_block_block_switch_on">"檢查更新"</string>-->
+    <!--<string name="frag_block_block_switch_off">"啟用封鎖功能"</string>-->
+    <!--<string name="frag_block_current_desc">"Caller 當前封鎖了 "</string>-->
+    <!--<string name="frag_block_protect_desc">"Caller ID 正為您提供保護: "</string>-->
+    <!--<string name="frag_block_protect_count_desc">"通來電"</string>-->
+    <!--<string name="frag_block_block_switch_toast_off">"封鎖其他用戶回報的垃圾號碼"</string>-->
+    <!--<string name="frag_block_block_switch_toast_on">"最後一次更新: %1s"</string>-->
+    <!--以下为版本新增 版本: 30-->
+    <string name="frag_block_offline_size_title">離線號碼庫</string>
+    <string name="frag_block_offline_size_desc">請立即更新，以使用電話識別</string>
+    <string name="frag_block_offline_size_desc2">資料已是最新</string>
+    <string name="frag_block_update_spam_failed">更新離線號碼庫失敗</string>
+    <string name="frag_block_update_scan_phone_number">掃描</string>
+    <string name="frag_block_update_scan_phone_number_title">安全</string>
+    <string name="frag_block_update_scan_phone_number_title_new_calls">%1$d個風險</string>
+    <string name="frag_block_update_scan_phone_number_desc">您的通話環境正在受到保護</string>
+    <string name="frag_block_block_history_title">封鎖歷史</string>
+    <string name="frag_block_block_history_empty">沒有封鎖記錄</string>
+    <string name="frag_block_offline_size_title_new_number">有新增電話</string>
+    <string name="frag_block_offline_size_title_new_number_notify">新增%1$d電話，點選更新號碼。</string>
+    <!--<string name="frag_block_block_switch_toast_on">"Caller 總共為您封鎖了 %1$d 通來電"</string>-->
+    <!--屏蔽设置页面 结束-->
+
+    <!--手动添加黑名单弹窗 开始-->
+    <string name="external_input_title">"新增"</string>
+    <string name="external_input_number_hint">"電話號碼（必需）"</string>
+    <string name="external_input_name_hint">"名稱"</string>
+    <string name="external_input_added_completed">"號碼已新增至呼叫封鎖列表"</string>
+    <string name="external_input_enter_number_long">"您輸入的號碼位數超出範圍"</string>
+    <string name="external_input_enter_number_short">"您輸入的號碼位數不足"</string>
+    <string name="add_number_exist">"該號碼已在您的呼叫封鎖列表中"</string>
+    <string name="add_number_as_spam">"回報為垃圾電話"</string>
+    <!--手动添加黑名单弹窗 结束-->
+
+    <!--从联系人添加黑名单 开始-->
+    <string name="from_contacts_title">"從聯絡人選擇"</string>
+    <string name="from_contacts_quick_filtering">"快速搜尋"</string>
+    <string name="from_contacts_read_failed">"讀取聯絡人失敗"</string>
+    <!--从联系人添加黑名单 结束-->
+
+    <!--从通话记录添加黑名单 开始-->
+    <string name="from_call_log_title">"從通話記錄選擇"</string>
+    <string name="from_call_log_read_failed">"讀取歷史通話失敗"</string>
+    <!--从通话记录添加黑名单 结束-->
+
+    <!--选择国家弹窗 开始-->
+    <string name="country_list_title">"請選擇您的國家/地區"</string>
+    <string name="country_list_name_hint">"國家/地區名或號碼..."</string>
+    <!--选择国家弹窗 结束-->
+
+    <!--未接、拒绝来电悬浮窗 开始-->
+    <string name="call_coming_back">"回撥"</string> <!--回拨-->
+    <string name="call_coming_detail">"詳細資料"</string>
+    <!--未接、拒绝来电悬浮窗 开始-->
+
+    <!--关于页面 开始-->
+    <string name="about_title">"關於"</string>
+    <string name="about_product_intro">"智慧封鎖垃圾來電"</string>
+    <string name="about_product_version">%s 版本:"</string>
+    <string name="about_rote_gp">"喜歡我們"</string>
+    <string name="about_like_facebook">"關注我們的Facebook主页"</string>
+    <string name="about_send_apk">"傳送APK檔案給朋友"</string>
+
+    <string name="no_app_to_share">"很抱歉，您沒有可用於分享的APP。"</string>
+    <string name="failed_backup">"備份失敗"</string>
+    <string name="share_to_facebook">"分享到Facebook"</string>
+    <string name="about_privacy">"隱私權政策"</string>
+    <string name="about_term">"使用條款"</string>
+    <string name="txt_announcement">"聲明"</string>
+
+    <string name="share_text">"%1$s 可以封鎖騷擾來電及辨識來電號碼，快來試試吧！ %2$s"</string>
+    <!--关于页面 结束-->
+
+    <!--评分对话框 开始-->
+    <string name="rate_dialog_title">@string/app_name</string>
+    <string name="rate_dialog_message">您喜歡Caller ID嗎？\n您能給我們留下您的評價嗎？</string>
+    <string name="rate_dialog_cancel">"稍後"</string>
+    <string name="rate_dialog_negative_title">"回報"</string>
+    <string name="rate_dialog_nagative_desc">"寫下對軟體的建議&#8230;"</string>
+    <string name="rate_dialog_nagative_send">傳送</string>
+    <string name="rate_dialog_nagative_toast">請輸入您對我們的建議！</string>
+    <string name="rate_dialog_send_success_toast">回報已傳送！</string>
+    <string name="rate_dialog_msg_illegal">您輸入的內容中包含了非法字符！</string>
+
+    <string name="device_time_just">"剛剛"</string>
+    <string name="device_time_minutes">"%1$d 分鐘前"</string>
+    <string name="device_time_hour">"%1$d 小時前"</string>
+    <string name="device_time_one_hour">"1小時前"</string>
+    <string name="device_time_day">"%1$d 天前"</string>
+    <string name="device_time_one_day">"昨天"</string>
+
+    <string name="lanuage_item_auto">跟隨系統</string>
+
+    <string name="time_s">"%1$ds"</string>
+    <string name="time_m">"%1$dm:%2$ds"</string>
+    <string name="time_h">"%1$dh:%2$dm:%3$ds"</string>
+
+    <!--color 不需要翻译-->
+
+
+    <string name="skip_splash">略過</string>
+    <string name="splash_more">更多</string>
+
+    <!--下面2句已从pc拷贝翻译-->
+    <!--设置快充描述-->
+
+
+    <!--通话记录 菜单 start-->
+    <string name="call_log_menu_all_call">"全部"</string>
+    <string name="call_log_menu_discerned">"識別記錄"</string>
+    <string name="call_log_menu_incoming">"已接來電"</string>
+    <string name="call_log_menu_refused">"拒接電話"</string>
+    <string name="call_log_menu_outgoing">"撥出電話"</string>
+    <string name="call_log_menu_missed">"未接來電"</string>
+    <string name="call_log_menu_blocked">"封鎖來電"</string>
+    <string name="call_log_menu_scan_shrink">"Shrink"</string>
+    <string name="call_log_menu_delete_all_shield_calls">"清除封鎖來電"</string>
+    <string name="call_log_menu_delete_all_calls">"清除所有通話"</string>
+    <string name="call_log_contact">"聯絡人"</string>
+    <string name="call_log_hide_number">"隱藏號碼"</string>
+    <string name="call_log_date_sunday">"星期日"</string>
+    <string name="call_log_date_saturday">"星期六"</string>
+    <string name="call_log_date_friday">"星期五"</string>
+    <string name="call_log_date_thursday">"星期四"</string>
+    <string name="call_log_date_wednesday">"星期三"</string>
+    <string name="call_log_date_tuesday">"星期二"</string>
+    <string name="call_log_date_monday">"星期一"</string>
+    <string name="call_log_date_today">"今天"</string>
+    <string name="call_log_no_block_call">"無封鎖電話"</string>
+    <string name="call_log_no_missed_call">"無未接電話"</string>
+    <string name="call_log_crank_call_count_text">"智慧封鎖垃圾來電"</string>
+    <string name="call_log_open_block_text">"啟用封鎖垃圾來電"</string>
+    <string name="call_log_enable">"啟用"</string>
+    <string name="call_log_no_calllog">"無通話記錄"</string>
+    <!--通话记录 菜单 end-->
+
+    <!--phone detail start-->
+    <string name="phone_detail_unblock">解除封鎖</string>
+    <string name="phone_detail_block">封鎖</string>
+    <string name="phone_detail_call_log">檢視通話歷史</string>
+    <string name="phone_detail_phone_save">儲存</string>
+    <string name="phone_detail_phone_edit">編輯</string>
+    <string name="phone_detail_phone_Tag">標記</string>
+    <string name="phone_detail_call_log_access_failure">未接通</string>
+    <string name="phone_detail_number_type_mobile">行動電話</string>
+    <string name="phone_detail_number_type_home">家庭</string>
+    <string name="phone_detail_number_type_company">工作</string>
+    <string name="phone_detail_lastest_call_log">最近通話：</string>
+    <string name="phone_detail_no_call_log">@string/call_log_no_calllog</string>
+    <string name="phone_detail_block_dialog_content">您將不再收到該號碼的來電</string>
+    <string name="phone_detail_block_dialog_content_unblock">將不再封鎖此號碼且不會識別為垃圾電話。</string>
+    <string name="phone_detail_block_dialog_title">確定封鎖此號碼？</string>
+    <string name="phone_detail_block_dialog_title2">解除封鎖此號碼？</string>
+    <string name="phone_detail_have_no_tag">號碼已新增至呼叫封鎖列表</string>
+    <string name="phone_detail_add_tag">添加標記</string>
+    <string name="phone_detail_add_name">添加名稱</string>
+    <string name="phone_detail_no_name">未命名</string>
+    <string name="phone_detail_add_lion_name_tip">編輯更合適的名稱</string>
+    <string name="phone_detail_add_lion_name_dialog_person">個人</string>
+    <string name="phone_detail_add_lion_name_dialog_company">公司</string>
+    <string name="phone_detail_add_lion_name_update_tip1">不是&lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt;？</string>
+    <string name="phone_detail_add_lion_name_update_tip2">點選編輯更合適的名稱</string>
+    <string name="phone_detail_cancel_block">號碼已從呼叫封鎖列表中移除</string>
+    <string name="phone_detail_add_name_not_null_tip">需要名稱</string>
+    <string name="phone_detail_delete_contact">刪除聯絡人</string>
+    <string name="phone_detail_delete_spam_count_text">%1$d人回報為垃圾電話</string>
+    <string name="phone_detail_delete_spam_count_text3">您回報的垃圾電話</string>
+    <string name="phone_detail_delete_spam_count_text2">其他人回報的垃圾電話</string>
+    <string name="phone_detail_no_number">聯絡人中沒有號碼</string>
+    <string name="phone_detail_unknown">未知</string>
+    <string name="phone_detail_null_number">號碼為空</string>
+    <!--phone detail end-->
+
+    <!-- tag popupwindow start-->
+    <string name="tag_popupwindow_tip">協助其他人辨識此號碼</string>
+    <!-- tag popupwindow end-->
+
+    <!-- contact start-->
+    <string name="contact_search_hint">搜尋號碼</string>
+    <string name="contact_add_contact">新建聯絡人</string>
+    <string name="contact_no_contacts">無聯絡人</string>
+    <!-- contact end-->
+
+    <!--call after start-->
+    <string name="call_after_phone">@string/call_coming_back</string>
+    <string name="call_after_block">@string/block_setting_name</string>
+    <string name="call_after_message">@string/permission_SMS</string>
+    <string name="call_after_click_toast">"這是一個被隱藏的號碼！"</string>
+    <!--call after end-->
+
+    <!-- Seach Fragment start-->
+    <string name="search_input_hint">輸入號碼</string>
+    <string name="search_number_hint">在100,000,000組號碼中搜尋</string>
+    <string name="search_recently_record">最近搜尋</string>
+    <string name="search_no_result">未找到相符的結果</string>
+    <string name="search_no_result2">沒有相符的結果，您可以選擇其他國家/地區再次嘗試。</string>
+    <string name="search_no_result_hint">您最近的搜尋將會展示在這裡</string>
+    <string name="search_content_hint">在Caller ID中搜尋</string>
+    <string name="search_delete_all_content">確認清除所有的搜尋記錄？</string>
+    <!-- Seach Fragment end-->
+
+    <!--Search Activity start-->
+    <string name="search_clear_all_record">"清除最近搜尋記錄"</string>
+    <string name="search_invalid_number">"請輸入正確的號碼"</string>
+    <string name="search_number_tip">"請輸入正確的號碼"</string>
+    <!--Search Activity end-->
+
+    <!-- dialing start-->
+    <string name="dialing_title">通話</string>
+    <!-- dialing end-->
+
+    <!--PhoneStateReceiver start-->
+    <string name="unknown_number">陌生號碼</string>
+    <!--PhoneStateReceiver end-->
+
+    <!--permission start-->
+    <string name="permission_tip">在您的裝置設定中，開啟以上授權才能體驗該APP。</string>
+    <string name="permission_sysytem_permission">授權管理</string>
+    <string name="permission_to_get_permsiion">前往授權</string>
+    <string name="permission_no_permission">"没有授權"</string>
+    <string name="permission_phone">"電話"</string>
+    <string name="permission_SMS">"簡訊"</string>
+    <!--permission end-->
+
+    <!--App更新 dialog 开始-->
+    <string name="dialog_update_btn_update">"更新"</string>
+    <string name="dialog_update_download_title">"正在下載更新"</string>
+    <!--App更新 dialog 结束-->
+
+    <!--tag 开始-->
+    <string name="num_tag_101">"騷擾"</string>
+    <string name="num_tag_103">"推銷"</string>
+    <string name="num_tag_104">"金融保險"</string>
+    <string name="num_tag_105">"購物"</string>
+    <string name="num_tag_106">"旅館"</string>
+    <string name="num_tag_107">"教育"</string>
+    <string name="num_tag_108">"健康"</string>
+    <string name="num_tag_109">"旅遊"</string>
+    <string name="num_tag_110">"快遞"</string>
+    <string name="num_tag_111">"運輸"</string>
+    <string name="num_tag_112">"夜生活&#038;夜店"</string>
+    <string name="num_tag_113">"餐館&#038;咖啡館"</string>
+    <string name="num_tag_114">"公共服務"</string>
+    <!--tag 结束-->
+
+
+    <!--numbertype start-->
+    <string name="FIXED_LINE">"固定電話"</string>
+    <string name="MOBILE">"手機"</string>
+    <string name="FIXED_LINE_OR_MOBILE">"固定電話或手機"</string>
+    <string name="TOLL_FREE">"免費電話"</string>
+    <string name="PREMIUM_RATE">"高價電話"</string>
+    <string name="SHARED_COST">"特別服務號碼"</string>
+    <string name="PERSONAL_NUMBER">"私人號碼"</string>
+    <!--numbertype end-->
+
+    <!--call flash show start-->
+    <string name="text_call_flash_exit_dialog_title">開啟來電秀</string>
+    <string name="call_flash_led_festival">"節日"</string>
+    <string name="call_flash_led_love">"愛心"</string>
+    <string name="call_flash_led_kiss">"親親"</string>
+    <string name="call_flash_led_rose">"玫瑰"</string>
+    <string name="call_falsh_led_streamer">"流水燈"</string>
+    <!--<string name="call_falsh_led_bloom">"綻放"</string>-->
+    <!--<string name="call_falsh_led_gradient">"漸變"</string>-->
+    <!--<string name="call_falsh_led_neon">"霓虹燈"</string>-->
+
+    <string name="call_flash_show_add_custom_bg">定製專屬來電秀</string>
+    <string name="call_flash_show_custom_bg_desc">點選「+」開始製作您的專屬來電秀</string>
+
+    <string name="call_flash_guide_open_upper">"開啟"</string>
+    <string name="call_flash_exit_dialog_title">開啟通話閃屏</string>
+    <!--call flash show end-->
+
+    <!-- =======================what is new========================= -->
+    <string name="whtas_new_title">"新功能"</string>
+    <string name="whtas_new_title_name">Caller ID</string>
+    <string name="whtas_new_des_one">"錯過簡訊時顯示內容"</string>
+    <string name="whtas_new_des_two">"識別來電和去電"</string>
+    <string name="whtas_new_des_three">"錯過或結束通話後顯示來電資訊"</string>
+    <string name="smart_lock_toast">啟用成功</string>
+
+
+    <!--//sms-->
+    <string name="message_options">選項</string>
+    <string name="copy_message_text">複製文本</string>
+    <string name="menu_add_address_to_contacts">新增 <xliff:g id="contactEmailOrNumber">%s</xliff:g> 至聯絡人</string>
+    <string name="delete_message">刪除簡訊</string>
+    <string name="confirm_delete_message">該簡訊將被刪除</string>
+    <string name="delete">刪除</string>
+    <string name="dail">撥號</string>
+    <string name="reply">回覆</string>
+    <string name="tyep_message">輸入簡訊內容</string>
+    <string name="change_sms_app">更改簡訊應用？</string>
+    <string name="upgrade_now">設定</string>
+    <string name="not_default_send">成為預設簡訊應用後才能傳送簡訊</string>
+    <string name="sms_sent_fail">傳送失敗</string>
+    <string name="sms_send_wait">傳送等待</string>
+    <string name="sms_sending">傳送中...</string>
+    <string name="sms_not_default_mark_read">成為預設簡訊應用後才能識別已讀簡訊</string>
+    <string name="push_tools_message_mult_contacts">"<xliff:g id="yyy">%1$s</xliff:g> 等 &lt;font color=&quot;#FF0084&quot;&gt;%2$s&lt;/font&gt; 個聯絡人"</string>
+    <string name="sms_set_default_sms">"設定為預設簡訊應用"</string>
+    <string name="sms_save_to_contact">"儲存至電話簿"</string>
+    <string name="sms_see_contact">"檢視聯絡人"</string>
+    <string name="sms_delete_conversation">"刪除簡訊"</string>
+    <string name="sms_delete_conversation_text">"您確定刪除此簡訊嗎？"</string>
+    <string name="sms_deleteing">"刪除..."</string>
+    <string name="sms_delete_message">"刪除此訊息"</string>
+    <string name="sms_no_conversation">沒有簡訊</string>
+
+    <!-- fake call start-->
+    <string name="fake_call_title">虛擬來電</string>
+    <string name="fake_call_add_photo">大頭貼</string>
+    <string name="fake_call_add_name_title">@string/external_input_name_hint</string>
+    <string name="fake_call_add_name_hint">姓名</string>
+    <string name="fake_call_add_number_hint">電話號碼</string>
+    <string name="fake_call_make_call">點選設定您的虛擬來電</string>
+    <string name="fake_call_schedule">計劃來電</string>
+    <string name="fake_call_error_numer_empty">虛擬來電號碼不能為空</string>
+    <string name="fake_call_intro_title">點擊設置你的虛擬來電</string>
+    <!--<string name="fake_call_time_choice_tip">點擊選擇一個來電時間</string>-->
+    <string name="fake_call_cancel_make_call_tip">長按刪除計劃來電</string>
+    <string name="fake_call_cancel_dialog_content">是否取消本次來電？</string>
+
+    <string name="fake_call_add_photo_title">選擇大頭貼</string>
+    <string name="fake_call_add_photo_name_default">老王</string> <!-- 不知道怎麼翻譯 -->
+    <string name="fake_call_add_photo_name_private">私人來電</string>
+    <string name="fake_call_add_photo_name_spiderman">蜘蛛俠</string>
+    <string name="fake_call_add_photo_name_wonder_woman">神奇女俠</string>
+
+    <string name="fake_call_make_call_now">現在</string>
+    <string name="fake_call_time_choice_title">多長時間後來電</string>
+    <string name="fake_call_quick_set_time">快速設定時間</string>
+    <string name="fake_call_custom_time">自訂時間</string>
+    <string name="fake_call_custom_time_next">下一步</string>
+    <string name="fake_call_custom_time_toast">請選擇有效的時間</string>
+    <string name="fake_call_countdown_desc1">來電發生在</string>
+    <string name="fake_call_countdown_desc2">之後</string>
+
+    <string name="fake_call_incoming_title">來電</string>
+    <string name="fake_call_incoming_style_choice_title">虛擬來電閃屏</string>
+    <string name="fake_in_call_default_style">預設</string>
+
+    <string name="fake_call_show_call_type_incoming">@string/fake_call_incoming_title</string>
+    <!-- fake call end-->
+
+    <!-- spam update start-->
+    <string name="spam_update_result_suc">"升級成功"</string>
+    <string name="spam_update_result_fail">"升級失敗"</string>
+    <string name="spam_update_tip">"正在更新，請勿退出"</string>
+    <string name="spam_update_exit_tip">正在更新離線號碼庫，是否退出更新？</string>
+    <!-- spam update end-->
+
+    <string name="sms_no_subject_view">(無主題)</string>
+    <string name="sms_message_size_label">Message size\u000A</string>
+    <string name="kilobyte">KB</string>
+    <string name="inline_subject">"&lt;主題： <xliff:g id="subject">%s</xliff:g>&gt;"</string>
+    <string name="splash_content">"來電識別和封鎖"</string>
+
+    <string name="sms_draft">[草稿]</string>
+    <string name="toast_draft">儲存為草稿</string>
+    <string name="toast_save_draft_tip">必須設定為預設簡訊應用才能儲存為草稿</string>
+    <string name="sms_resend_fail_sms">訊息傳送失敗，是否重新傳送？</string>
+    <string name="sms_resend_message">重新傳送訊息</string>
+    <string name="sms_emoji_tip">敬請期待</string>
+    <string name="call_after_close">關閉</string>
+    <string name="call_after_disable">禁用</string>
+    <string name="fake_call_tip">虛擬來電，幫您擺脫尷尬困境，整蠱朋友。</string>
+    <string name="calllog_delete_tip">您確定刪除所選&lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt; 則通話記錄？</string>
+    <string name="calllog_delete_no_selected">請選擇需要刪除的通話記錄</string>
+    <string name="calllog_delete_fail">刪除失敗</string>
+    <string name="fake_call_tip2">您想嘗試虛擬電話嗎？</string>
+    <string name="fake_call_tip3">一個電話幫助您擺脫尷尬的困境，棘手的朋友聊天。</string>
+    <string name="quit">退出</string>
+    <string name="fake_call_try">試一試</string>
+    <string name="contact_delete_tip">您確定刪除聯絡人 &lt;font color=&quot;#FF0084&quot;&gt;%1$s&lt;/font&gt; 嗎？</string>
+    <string name="phone_details_delete_contact">您確定刪除該聯絡人嗎?</string>
+    <string name="phone_details_location">歸屬地</string>
+    <string name="phone_details_change_name">修改備註</string>
+    <string name="setting_intelligent_identification">智慧識別</string>
+    <string name="setting_intelligent_identification_numbers">智慧識別非聯絡人號碼，並顯示識別的名稱。</string>
+    <string name="phone_details_open_identify_tip">啟用智慧識別（需同意隱私政策）</string>
+
+    <string name="number_scaning">掃描中</string>
+    <string name="number_scan_recent">通話歷史</string>
+    <string name="number_scan_identified">陌電識別</string>
+    <string name="number_scan_spam">騷擾電話</string>
+    <string name="number_scan_title">掃描</string>
+    <string name="number_scan_dialog_tip">正在掃描，確認要退出？</string>
+    <string name="number_scan_result">掃描結果</string>
+    <string name="number_scan_result_risks">風險</string>
+    <string name="number_scan_result_tip">在通話記錄中識別了%1$d個騷擾號碼</string>
+    <string name="number_scan_realtime_protect">實時保護</string>
+    <string name="number_scan_reported_you_call">回報您的號碼</string>
+    <string name="number_scan_result_spam_number">騷擾電話</string>
+    <string name="number_scan_result_block_spam_number">封鎖</string>
+    <string name="number_scan_result_unblock_spam_number">取消封鎖</string>
+    <string name="number_scan_result_open_realtime_protect">開啟實時保護</string>
+    <string name="number_scan_result_congratulations">已完成</string>
+    <string name="number_scan_result_Successfully_tip1">成功新增至呼叫封鎖列表中</string>
+    <string name="number_scan_result_Successfully_tip2">成功打開實時保護</string>
+    <string name="number_scan_unknown_number_count">@string/frag_block_update_scan_phone_number_title_new_calls</string>
+    <string name="number_scan_calllog_have_danger">你的通話環境存在風險</string>
+    <string name="number_scan_calllog_scan_immdiately">立即掃描</string>
+    <string name="number_scan_unspam">解除封鎖</string>
+    <string name="number_scan_checking">檢測中...</string>
+    <string name="number_scan_exit_intro_title">新增號碼掃描</string>
+    <string name="number_scan_exit_intro_content">您的手機新增了陌生號碼，請點選以驗證號碼安全性。</string>
+
+    <string name="guide_desc_identify">識別和封鎖垃圾來電</string>
+    <string name="guide_desc_call_falsh">酷炫的來電秀</string>
+
+    <string name="spam_update_result_update_number">更新%1$d新號碼</string>
+    <string name="spam_update_app_exit_prompt_title">立即更新離線號碼庫?</string>
+    <string name="spam_update_app_exit_prompt_content">離線號碼庫將幫助您識別陌生號碼和封鎖垃圾來電，點選更新。</string>
+
+    <string name="scan_anim_title">掃描陌生號碼......</string>
+    <string name="call_flash_led_custom">自設定</string>
+    <string name="call_flash_led_panda">貓熊</string>
+    <!--<string name="external_volume_quit_call_flash">馬上試試</string>-->
+    <!--<string name="external_volume_quit_number_scan">立即掃描</string>-->
+    <!--<string name="external_volume_quit_spam_update">馬上更新</string>-->
+    <!--<string name="external_volume_cancel_number_scan">我不管</string>-->
+    <!--<string name="external_volume_cancel_spam_update">殘忍拒絕</string>-->
+    <!--<string name="external_volume_content_call_flash">喜歡新奇有趣的來電秀嗎？趕緊，跟我一起去看看吧。</string>-->
+    <!--<string name="external_volume_content_number_scan">你的通話環境存在安全隱患，立即掃描號碼庫以保證通話環境安全。</string>-->
+    <!--<string name="external_volume_content_spam_update">距離上次更新，新增騷擾電話數量%1$d。立即更新，以保證最佳來電</string>-->
+    <!--<string name="external_volume_title_call_flash">新奇有趣的來電秀</string>-->
+    <!--<string name="external_volume_title_spam_update">號碼庫有%1$d條更新</string>-->
+    <string name="exit_guide_content_number_scan">掃描新來電，檢查是否為騷擾/電話營銷號碼。</string>
+
+    <string name="exit_string">@string/quit</string>
+    <string name="exit_guide_close_desc">確認退出？</string>
+    <string name="exit_guide_act_call_flash">展示</string>
+    <!--<string name="exit_guide_title_call_flash">新奇來電秀</string>-->
+    <string name="exit_guide_title_update_spam">離線資料庫更新</string>
+    <string name="exit_guide_content_call_flash">喜歡新奇有趣的來電秀嗎？趕緊跟我一起去看看吧。</string>
+    <string name="exit_guide_content_update_spam">距離上次更新，新增騷擾電話數量%1$d+\n馬上更新，以保證最佳來電識別。</string>
+
+    <!--Lion Family Start-->
+    <string name="lion_family_title">Lion 家族</string>
+    <string name="lion_family_desc">給您所有想要的</string>
+    <string name="lion_family_price">免費</string>
+    <string name="lion_family_active_use">開啟</string>
+    <string name="lion_family_active_download">下載</string>
+    <!--Lion Family End-->
+
+    <string name="call_flash_exit_open_title">使用目前主題設定作為您的來電螢幕？</string>
+    <string name="call_flash_exit_open_ok">馬上使用</string>
+
+    <string name="number_scan_initiating">啟動</string>
+
+    <!--Call flash album start-->
+    <string name="call_flash_album_title">選擇圖片或GIF</string>
+    <string name="call_flash_album_online">線上</string>
+    <string name="call_flash_album_local">本地</string>
+    <string name="call_flash_album_gallery">畫廊</string>
+    <string name="call_flash_album_gallery_desc_1">選擇圖片</string>
+    <string name="call_flash_album_gallery_desc_2">%1$d 張圖片</string>
+    <!--Call flash album end-->
+
+    <!--call flash gif show start-->
+    <string name="call_flash_result_title">設定成功</string>
+    <string name="call_falsh_gif_thum_load_desc">載入中</string>
+    <string name="call_flash_gif_show_save">設定為呼叫螢幕</string>
+    <string name="call_flash_gif_show_load">下載 %1$d%%</string>
+    <string name="call_flash_gif_show_connecte">連線中</string>
+    <string name="call_flash_gif_show_load_suc">下載完成。</string>
+    <string name="call_flash_gif_show_load_failed">下載失敗。</string>
+    <string name="call_flash_gif_show_setting_suc">您的新通話螢幕已設定。</string>
+    <string name="call_flash_gif_show_setting_suc_reset">您的通話螢幕已重置。</string>
+    <string name="call_flash_reset">將重設為系統預設呼叫螢幕。</string>
+    <string name="call_flash_change_to_new">使用新的通話閃屏？</string>
+
+    <!--<string name="call_flash_more_set_tip">"需要将当前来电秀设置为默认的来电秀吗？"</string>-->
+    <!--call flash gif show end-->
+
+    <string name="contact_search_tip">輸入號碼或名稱</string>
+
+    <string name="not_upload_name0">媽咪</string>
+    <string name="not_upload_name1">媽</string>
+    <string name="not_upload_name2">母親</string>
+    <string name="not_upload_name3">爹</string>
+    <string name="not_upload_name4">爸</string>
+    <string name="not_upload_name5">父親</string>
+    <string name="not_upload_name6">奶奶</string>
+    <string name="not_upload_name7">爺爺</string>
+    <string name="not_upload_name8">祖父</string>
+    <string name="not_upload_name9">祖母</string>
+    <string name="not_upload_name10">愛人</string>
+    <string name="not_upload_name11">親愛</string>
+    <string name="not_upload_name12">老婆</string>
+    <string name="not_upload_name13">蜜糖</string>
+    <string name="not_upload_name14">寶貝</string>
+    <string name="not_upload_name15">寶寶</string>
+    <string name="not_upload_name16">狗</string>
+    <string name="not_upload_name17">丈夫</string>
+    <string name="not_upload_name18">妻子</string>
+    <string name="not_upload_name19">甜心</string>
+    <string name="not_upload_name20">愛人</string>
+    <string name="not_upload_name21">兒子</string>
+    <string name="not_upload_name22">女兒</string>
+    <string name="not_upload_name23">哥</string>
+    <string name="not_upload_name24">妹</string>
+    <string name="not_upload_name25">姨</string>
+    <string name="not_upload_name26">叔</string>
+    <string name="not_upload_name27">侄</string>
+    <string name="not_upload_name28">外甥</string>
+    <string name="not_upload_name29">姐</string>
+    <string name="not_upload_name30">老師</string>
+    <string name="not_upload_name31">老闆</string>
+
+    <string name="page_title_calllog">通話記錄</string>
+    <string name="page_title_contact">@string/call_log_contact</string>
+    <string name="page_title_conversation">簡訊</string>
+    <string name="page_title_block">@string/block_setting_name</string>
+    <string name="page_title_search">搜尋</string>
+
+
+    <string name="call_flash_Halloween">萬聖節</string>
+
+    <string name="phone_detail_user_add_name_tip">自訂名稱需要為非純數字</string>
+
+    <string name="phone_detail_set_call_flash_title">設定來電螢幕</string>
+    <string name="phone_detail_set_call_flash_des">為此號碼設定酷炫的來電螢幕</string>
+    <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
+
+    <string name="call_flash_led_love1">戀人1</string>
+    <string name="call_flash_led_love2">戀人2</string>
+    <string name="call_flash_led_downloda_again">@string/lion_family_active_download</string>
+    <string name="call_flash_led_downloading_back_des">下載正在進行中，取消並退出？</string>
+    <string name="call_flash_led_downloading_back_wait">等待</string>
+    <string name="call_flash_led_not_download_back_des">還沒有下載，現在下載？</string>
+
+    <string name="real_time_protect_guide_desc3">實時保障裝置安全，遠離潛在安全風險。</string>
+    <string name="frag_block_update_scan_phone_number_desc_tap">點選驗證新的來電號碼</string>
+    <string name="sms_not_empty">請輸入您的訊息</string>
+    <string name="what_new_start">開始</string>
+
+    <string name="about_email_us">"意見反映"</string>
+    <string name="email_choose_one">請選擇程式傳送電郵！</string>
+
+    <string name="message_flash_title">簡訊/訊息閃屏</string>
+    <string name="message_flash_next_sms">下一則</string>
+    <string name="message_flash_smile">微笑</string>
+    <string name="message_flash_love">@string/call_flash_led_love</string>
+    <string name="message_flash_balloon">氣球</string>
+    <string name="message_flash_paper">紙片</string>
+    <string name="message_flash_sysytem">系統</string>
+    <string name="message_flash_Close">您將禁用簡訊閃屏。</string>
+    <string name="message_flash_change_to_new">使用新的簡訊閃屏？</string>
+    <string name="message_flash_exit_open_title">使用目前主題作為您的簡訊閃屏？</string>
+    <string name="message_flash_exit_new_flash_des">多彩的簡訊/訊息螢幕被眾多使用者所喜愛。現在就試用！</string>
+    <string name="message_flash_set_success_des">您的新簡訊閃屏已被設定。</string>
+    <string name="message_flash_set_success_des2">您的簡訊閃屏已被禁用。</string>
+
+    <string name="push_tools_call_flash_toast_weekend">週末愉快！新的酷炫電話閃屏現在可用。</string>
+
+    <string name="call_flash_led_visual_1">"光柵"</string>
+    <string name="call_flash_led_visual_2">"霓虹"</string>
+    <string name="call_flash_led_visual_3">"波紋"</string>
+
+    <string name="connection_failure">"連線失敗"</string>
+    <string name="call_flash_led_color_flash">彩色閃屏</string>
+
+    <string name="call_falsh_led_monkey">"猴子"</string>
+
+    <string name="call_flash_gif_show_setting_fail">設定失敗！設定鈴聲需要相關許可權。</string>
+    <string name="call_flash_gif_show_set_ring_title_des1">使用此閃屏作為您的通話螢幕，並授權設定來電鈴聲？</string>
+    <string name="call_flash_led_santa_claus">聖誕2</string>
+    <string name="call_flash_led_charistmas_snowman">聖誕1</string>
+    <string name="call_falsh_download_waiting">等待中...</string>
+    <string name="call_flash_gif_show_setting_fail2">設置失敗！ 它需要設置通話屏幕的權限。</string>
+    <string name="call_flash_gif_show_setting_des">它需要啟用系統警報窗口權限。</string>
+    <string name="call_flash_gif_show_setting_des2">設置失敗！</string>
+    <string name="call_falsh_led_pig">佩奇</string>
+    <string name="call_falsh_led_rap">饒舌</string>
+
+    <string name="call_answer_string">"接聽"</string>
+    <string name="notification_listener_setting_tip">接聽電話需要此權限，請找到Caller ID並啟用，不會用於任何其他目的。</string>
+    <string name="call_flash_permission_tip">授予權限僅用於設置通話閃屏，不會用於任何其他目的。</string>
+    <string name="call_falsh_led_bear">維尼熊</string>
+    <string name="sms_flash_permission_tip">授予權限僅用於設置簡訊/訊息閃屏, 不會用於任何其他目的。</string>
+    <string name="sms_not_default_to_delete_conversation">"必須是您的簡訊應用才能進行此操作"</string>
+
+    <string name="call_flash_more_title_1">經典</string>
+    <string name="call_flash_more_title_2">精選</string>
+    <string name="call_flash_more_title_3">流行</string>
+    <string name="txt_call_flash_theme_title">來電主題</string>
+    <string name="call_flash_detail_setting_action_to_cancel">"取消這個來電主題"</string>
+
+    <string name="notification_manager_permission_tip">"接聽電話需要啟用通知管理權限"</string>
+    <string name="call_flash_guide_des">"為她/他設置一个特别的通話屏幕"</string>
+
+    <string name="message_block_not_default_sms">必須是您的默認簡訊應用才能封鎖簡訊。</string>
+    <string name="message_option_mark_as_read">標記為已讀</string>
+    <string name="message_remove_to_notification_dialog_tip">你確定要將簡訊轉移到其他嗎？</string>
+    <string name="message_blocked_dialog_tip">封鎖來自這個號碼的簡訊？</string>
+    <string name="conversation_notification">其他</string>
+    <string name="message_remove_to_notification">轉移到其他</string>
+    <string name="message_remove_to_phone_number">移至收件箱</string>
+    <string name="message_blocked">添加到簡訊封鎖列表中的號碼</string>
+    <string name="message_option_block_sms_list">簡訊封鎖列表</string>
+    <string name="message_remove_to_phone_number_dialog_tip">您確定要將簡訊移至收件箱嗎？</string>
+    <string name="conversation_phonenumber">收件箱</string>
+    <string name="message_option_mark_as_read_2">標記為已讀</string>
+
+    <string name="audio_record_request_option_1">我確認通話錄音在我的國家是合法的</string>
+    <string name="audio_record_request_option_2">我同意</string>
+    <string name="audio_record_request_option_3">自動錄音</string>
+    <string name="audio_record_delete_result_suc">成功刪除。</string>
+    <string name="setting_call_audio_record">通話錄音器</string>
+    <string name="audio_record_file_play">播放</string>
+    <string name="audio_record_improve_tip_opened">您的設備使用麥克風錄製通話，請記住在錄音時打開揚聲器。</string>
+    <string name="audio_record_no_record">沒有記錄。</string>
+    <string name="audio_record_option_disable_tip">你確定要禁用通話錄音嗎？</string>
+    <string name="audio_record_request_desc">您可以隨時錄製通話，Caller ID 不會使用或上傳任何通話錄音文件。</string>
+    <string name="audio_record_miss_call_file_delete">電話無法連接，錄製文件被刪除。</string>
+    <string name="audio_record_option_enable">啟用錄製</string>
+    <string name="audio_record_option_delete">刪除所有</string>
+    <string name="audio_record_improve_tip_closed">錄音功能已關閉，現在啟用。</string>
+    <string name="audio_record_request_title">啟用通話記錄？</string>
+    <string name="audio_record_request_action_1">拒絕</string>
+    <string name="audio_record_delete_all_tip">你確定要刪除所有通話錄音嗎？</string>
+    <string name="audio_record_option_disable">禁用錄製</string>
+    <string name="audio_record_request_option_2_privacy">&lt;u &gt;隱私政策&lt;/u&gt;</string>
+
+    <string name="audio_record_option_disable_auto_record_suc_tip">成功禁用自動錄製。</string>
+    <string name="audio_record_set_failed">設置失敗，需要啟用錄音的權限。</string>
+    <string name="audio_record_option_enable_auto_record_suc_tip">成功啟用自動錄製。</string>
+    <string name="audio_record_option_enable_auto_record">啟用自動錄製</string>
+    <string name="audio_record_option_disable_auto_record">禁用自動錄製</string>
+    <string name="audio_record_set_success">設置成功，錄音功能開啟。</string>
+    <string name="record_call_permission_tip">授予權限僅用於通話錄音，不會用於任何其他目的。</string>
+
+    <string name="audio_record_delete_single_tip">您確定要刪除通話錄音嗎？</string>
+    <string name="audio_record_push_tool_new_record">你有一個新的通話錄音。</string>
+
+    <string name="block_message_tip">來自此號碼的簡訊已被封鎖。</string>
+    <string name="audio_record_phone_detail_title">錄音</string>
+    <string name="unblock_message_tip">來自此號碼的簡訊已被解除封鎖。</string>
+
+    <string name="do_not_disturb_schedule_1">一</string>
+    <string name="do_not_disturb_schedule_2">二</string>
+    <string name="do_not_disturb_schedule_3">三</string>
+    <string name="do_not_disturb_schedule_4">四</string>
+    <string name="do_not_disturb_schedule_5">五</string>
+    <string name="do_not_disturb_schedule_6">六</string>
+    <string name="do_not_disturb_schedule_7">日</string>
+    <!--<string name="do_not_disturb_schedule_next_day">次日</string>-->
+    <!--<string name="do_not_disturb_schedule_tip">至少選擇某一天</string>-->
+
+    <string name="do_not_disturb_timer_hour">h</string>
+    <string name="do_not_disturb_timer_minute">m</string>
+
+    <!--<string name="do_not_disturb_setting">勿擾模式設定</string>-->
+
+    <!--<string name="do_not_disturb_allow_incoming_list_content">"<xliff:g id="yyy">%1$s</xliff:g> and other &lt;font color=&quot;#FF0084FF&quot;&gt;%2$s&lt;/font&gt; numbers"</string>-->
+    <!--<string name="do_not_disturb_tip_content_enable_for_schedule">已开启免打扰，在&lt;font color=&quot;#FF0084FF&quot;&gt;%1$s&lt;/font&gt;这段时间内接到电话都是静音模式</string>-->
+    <!--<string name="do_not_disturb_tip_content_enable_for_timer">已开启免打扰，&lt;font color=&quot;#FF0084FF&quot;&gt;%1$s&lt;/font&gt;静音模式才会取消</string>-->
+
+
+    <string name="do_not_disturb_permission_tip">它需要許可才能啟用請勿打擾。</string>
+    <string name="call_flash_saving">保存</string>
+    <string name="discovery_call_record_des">支持通話錄音和與朋友分享錄音文件。</string>
+    <string name="do_not_disturb_timer">計時器</string>
+    <string name="do_not_disturb_allow_no">無</string>
+    <string name="do_not_disturb_tip_content_disenable">啟用請勿打擾，享受愉快安靜的生活時間，現在就試試。</string>
+    <string name="do_not_disturb_allow_incoming_list">允許呼叫列表</string>
+    <string name="do_not_disturb_schedule_set">設置</string>
+    <string name="call_flash_preview_recommend_call_flash">推薦</string>
+    <string name="do_not_disturb_schedule">時間表</string>
+    <string name="do_not_disturb_allow_incoming">允許來電</string>
+    <string name="do_not_disturb_set_success_for_schedule">電話將在預定時間內靜音</string>
+    <string name="call_flash_preview_now">立即預覽</string>
+    <string name="do_not_disturb_timer_tip">請設定時間</string>
+    <string name="do_not_disturb_timer_set_time_title">設置定時器</string>
+    <string name="side_slip_menu_discovery">發現</string>
+    <string name="do_not_disturb_timer_title">直到&lt;font color=&quot;#FF0084FF&quot;&gt;%1$s&lt;/font&gt;</string>
+    <string name="do_not_disturb_notification_title">勿打擾模式</string>
+    <string name="do_not_disturb_end">結束</string>
+    <string name="do_not_disturb_allow_in_coming_view_custom">選擇允許通話的號碼</string>
+    <string name="do_not_disturb_set_success">手機將靜音直到倒計時結束</string>
+    <string name="do_not_disturb_permission_set_fail">設置失敗，需要設置請勿打擾的權限。</string>
+    <string name="do_not_disturb_allow_in_coming_custom">選擇</string>
+
+    <string name="call_flash_grant_permission_tip">授予權限僅用於設置%1$s，不會用於任何其他目的。</string>
+    <string name="audio_record_file_share">分享</string>
+
+    <string name="do_not_disturb_allow_incoming_tip">此號碼已添加。</string>
+    <string name="do_not_disturb_enabled">已啟用</string>
+
+    <string name="external_volume_new_call_flash_title">新的酷炫來電秀</string>
+    <string name="external_volume_new_call_flash_view">查看</string>
+
+    <string name="call_flash_upload_action_upload">上傳</string>
+    <string name="call_flash_upload_tip_privacy_policy">必須同意隱私政策才能上傳文件</string>
+    <string name="call_flash_upload_tip_no_file">請選擇要上傳的文件</string>
+    <string name="call_flash_upload_uploading">已上傳</string>
+    <string name="call_flash_upload_author">作者</string>
+
+    <string name="privacy_number_title_number">隱私聯絡人</string>
+    <string name="privacy_number_title_pattern_lock">圖案鎖定</string>
+    <string name="privacy_number_add_number">將號碼添加到隱私聯絡人</string>
+    <string name="privacy_number_set_pattern">請畫出圖案</string>
+    <string name="privavy_number_set_pattern_guide_tip">請為您的隱私聯絡人設置圖案鎖定。</string>
+    <string name="privacy_number_set_pattern_error_to_init">圖案不相符。請重畫一次</string>
+    <string name="privacy_number_set_pattern_reset_init_password">重設</string>
+    <string name="privacy_number_input_password_error_tip">密碼錯誤。您還可以可以嘗試%1$d次</string>
+
+    <string name="privacy_number_forget_pwd">忘記密碼</string>
+    <string name="privacy_number_enabled_private_protects">隱私聯絡人保護已啟用。</string>
+    <string name="add_private_number_title">將號碼新增至隱私聯絡人</string>
+    <string name="add_private_number_add_sure">確認</string>
+
+    <string name="add_number_exist_by_hide_type">“這個號碼已經在隱私聯絡人列表中”</string>
+    <string name="add_private_number_add_number_empty">未知錯誤導致添加失敗。</string>
+    <string name="privacy_number_security_question_title">設定安全性問題</string>
+    <string name="privacy_number_security_question_1">你的小學位於那一條街道？</string>
+    <string name="privacy_number_security_question_2">你的第一個手機號碼是？</string>
+    <string name="privacy_number_security_question_3">你的出生地是？</string>
+    <string name="privacy_number_security_question_4">“你父親的生日是？”</string>
+    <string name="privacy_number_security_question_5">你最喜歡的食物是？</string>
+    <string name="privacy_number_security_question_custom">自訂</string>
+    <string name="privacy_number_set_pwd_security_question_title">輸入您的安全性問題</string>
+    <string name="privacy_number_security_question_answer_title">輸入您的安全性問題答案</string>
+    <string name="privacy_number_security_answer_empty">請輸入你的答案！</string>
+    <string name="privacy_number_security_answer_length_limit">請保持答案長度在%1$d到%2$d的範圍內。</string>
+    <string name="privacy_number_security_question_empty">安全性問題不能為空！</string>
+    <string name="privacy_number_set_pattern_length_tip">請確保您的圖案鎖定至少連接4個點！</string>
+    <string name="privacy_number_pattern_error_over_count_tip">密碼輸入次數已用盡。</string>
+    <string name="privacy_number_forget_pwd_error_tip">密碼錯誤。</string>
+    <string name="privacy_number_pattern_reset_suc_tip">密碼重置成功</string>
+    <string name="privacy_number_security_question_confirm_tip">為了保護您的隱私，您設置的安全性問題及答案是取回圖案的唯一方式。請務必牢記。</string>
+    <string name="discovery_privacy_call_des">隐藏您的私密通話，保護您的個人隱私</string>
+    <string name="privacy_number_add_number_tip_title">將號碼新增至隱私聯絡人</string>
+    <string name="privacy_number_add_number_tip_content">來自隱私聯絡人的通話記錄只會顯示在私人通訊錄中。通話記錄不會顯示在系統或任何其他軟體中。</string>
+    <string name="privacy_number_add_number_tip_check_content">“不再提示”</string>
+    <string name="privacy_number_add_number_tip_ok">知道了</string>
+
+    <string name="privacy_number_delete_number_tip_title">移除隱私聯絡人</string>
+    <string name="privacy_number_delete_number_tip_content">移除這位隱私聯絡人後，其通話記錄將會刪除，但錄音檔仍會保留。確定要刪除這位隱私聯絡人嗎？</string>
+    <string name="privacy_number_private_contact_call_log_is_empty">這個隱私聯絡人沒有通話記錄。</string>
+    <string name="privacy_number_private_contacts_empty">保護通話隱私，並自動隱藏通話</string>
+    <string name="privacy_number_set_pattern_draw_again">確認圖案</string>
+    <string name="add_private_number_no_select">請至少選擇一個號碼！</string>
+
+    <string name="night_mode_guide_dialog_des">享受安靜的睡覺時間（%1$s  -  %2$s）</string>
+    <string name="night_mode_new_missed_calls_count">%1$d個未接電話</string>
+    <string name="night_mode_guide_dialog_title">睡眠期間啟用免打擾</string>
+
+    <string name="privacy_number_set_pattern_error_tip_over_count">密碼輸入已達到最大次數，請在%1$d分鐘後重試！</string>
+    <string name="privacy_number_set_pattern_error_during_lock">密碼已鎖定，請在%1$d分鐘後再試。</string>
+
+    <string name="missed_call_title">@string/push_tools_missed</string>
+    <string name="missed_call_number_scan">@string/number_scaning</string>
+
+    <string name="missed_call_number_scan_not_close">請不要退出</string>
+    <string name="night_mode_disable_dialog_title">禁用請勿打擾</string>
+    <string name="night_mode_disable_dialog_des">你確定要禁用它嗎？</string>
+
+    <string name="splash_init">初始化</string>
+    <string name="download_failed_for_no_sd_permission">需要授予相關權限才能下載和保存主題</string>
+
+    <string name="add_shortcut_success">創建成功</string>
+    <string name="setting_shortcut">快捷訪問</string>
+    <string name="setting_add_contact_shortcut">添加聯繫人快捷方式</string>
+    <string name="setting_add_sms_shortcut">添加短信快捷方式</string>
+
+    <!-- ligehui lazyswipe start -->
+    <string name="recent">最近使用</string>
+    <string name="frequent">常用程式</string>
+    <string name="toolbox">快捷開關</string>
+    <string name="ok_title">確定</string>
+    <string name="cancel_title">取消</string>
+
+    <!--QuickSwitch_ACTION_TITLE-->
+    <string name="swipe_flash_title">手電筒</string>
+    <string name="swipe_wifi_title">Wi-Fi</string>
+    <string name="swipe_speeder_title">加速器</string>
+
+    <string name="swipe_camere_title">相機</string>
+    <string name="swipe_calendar_title">日歷</string>
+    <string name="swipe_data_title">移動數據</string>
+
+    <string name="swipe_calculator_title">計算器</string>
+    <string name="swipe_flightmode_title">飛行模式</string>
+    <string name="swipe_swipesetting_title">拇指快劃設置</string>
+    <string name="swipe_bluetooth_title">藍牙</string>
+
+    <string name="swipe_mute_title">靜音</string>
+    <string name="swipe_setting_title">設置</string>
+    <string name="swipe_alarm_title">鬧鐘</string>
+
+    <string name="swipe_edit_header_title">巳選(%1$s/%2$s)</string>
+    <string name="favorite_up_to_9">最多只能添加9個</string>
+    <string name="scene_mode_0">振動</string>
+    <string name="scene_mode_1">靜音</string>
+    <string name="scene_mode_2">響鈴</string>
+
+    <string name="time_15">15秒</string>
+    <string name="time_30">30秒</string>
+    <string name="time_60">1分</string>
+    <string name="time_120">2分</string>
+    <string name="time_300">5分</string>
+    <string name="time_600">10分</string>
+    <string name="time_1800">30分</string>
+
+    <string name="swipe_toggle">開啟</string>
+    <string name="swipe_for">劃出時機</string>
+    <string name="swipe_for_type0">僅桌面</string>
+    <string name="swipe_for_type1">桌面和所有應用</string>
+    <string name="swipe_active_area">滑出區域</string>
+    <string name="swipe_area_type0">左側底部和右側底部</string>
+    <string name="swipe_area_type1">左側底部</string>
+    <string name="swipe_area_type2">右側底部</string>
+    <string name="swipe_whitelist">免打擾設置(%1$d)</string>
+    <string name="swipe_whitelist_des">使用這些應用時Beauty Cam不會被劃出</string>
+    <string name="swipe_whitelist_title">添加應用</string>
+    <string name="swipe_about">關於</string>
+    <string name="swipe_about_rate5start">喜歡就請5星好評吧</string>
+    <string name="googleplay_not_found">找不到Google Play</string>
+    <string name="swipe_about_feedback">意見回報</string>
+    <string name="swipe_about_version">版本</string>
+    <string name="swipe_open_type">觸發方式</string>
+    <string name="swipe_open_type0">從角落觸發</string>
+    <string name="swipe_open_type1">“小白點”</string>
+    <string name="swipe_advanced_setting">高級設置</string>
+
+    <string name="feedback_title">填寫標題</string>
+    <string name="feedback_content">填寫內容</string>
+    <string name="clearmemary_title">釋放內存</string>
+    <string name="clearmemary_wait">等會再試試吧</string>
+    <string name="flash_on">手電筒已打開</string>
+    <string name="flash_off">手電筒關閉</string>
+    <string name="wifi_on">Wifi已連接</string>
+    <string name="wifi_off">Wifi斷開連接</string>
+    <string name="bluetooth_on">藍牙已打開</string>
+    <string name="bluetooth_off">藍牙已關閉</string>
+    <string name="data_on">移動網絡已連接</string>
+    <string name="data_off">移動網絡已斷開</string>
+
+    <string name="request_windows_title">懸浮窗授權</string>
+    <string name="request_windows_content">Beauty Cam需要要打開使用懸浮窗授權才能正常使用</string>
+    <string name="request_windows_pos">開始授權</string>
+    <string name="request_windows_nev">退出</string>
+
+    <string name="swipe_nitification_title">拇指快劃正在運行</string>
+    <string name="swipe_nitification_content">點擊進入拇指快劃設置</string>
+    <string name="swipe_whitelist_item_unlauncher">白名單應用不允許啟動</string>
+    <string name="swipe_open_switch">請先打開開關!</string>
+
+    <string name="easy_swipe">拇指快劃</string>
+    <string name="easy_swipe_guide_desc_1">劃動彈出快捷操作面板</string>
+    <string name="easy_swipe_guide_desc_2">便捷訪問系統設置</string>
+    <string name="easy_swipe_guide_desc_3">快速啟動常用程式</string>
+    <string name="tip_easy_swipe">拇指快劃已經開啟</string>
+    <string name="easy_swipe_guide_text">請在桌面上從底部角落劃出</string>
+    <string name="not_found_app">無法打開指定的應用程式</string>
+    <!-- ligehui lazyswipe end -->
+
+    <!-- reward ad -->
+    <string name="rewarded_fb_backpress_des">視頻播放結束后將獲得獎勵，請稍等片刻</string>
+    <string name="rewarded_fb_click_des">視頻播放結束后才可以獲取内容，請稍等片刻</string>
+    <string name="text_not_unlocked">抱歉，我們現在無法為您解鎖該圖片，請檢查您的行動電話網路並稍後嘗試</string>
+    <string name="dialog_ad_confirm_desc1">解鎖素材</string>
+    <string name="text_watch_video_desc">完整觀看一段視頻廣告</string>
+    <string name="dialog_ad_confirm_desc2">@string/text_watch_video_desc</string>
+    <string name="text_unlock">解鎖</string>
+    <string name="text_cancel">取消</string>
+    <string name="text_try_to_unlock">準備中...</string>
+    <string name="text_unlock_fail">解鎖失敗，您需要觀看完整的視頻廣告</string>
+    <string name="text_unlock_success">解鎖成功，您現在可以使用該素材</string>
+    <string name="permission_denied_txt">需要權限,請重試</string>
+    <string name="txt_camera_permission_msg">點擊 \'允許\' 按鈕，確保相機能正常使用</string>
+</resources>
