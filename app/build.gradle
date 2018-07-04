@@ -30,7 +30,6 @@ dependencies {
     compile project(':callflashsetsdk')
     compile project(':callringsdk')
     compile project(':serverflashsdk')
-
     compile 'com.flurry.android:analytics:8.2.0@aar'
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.squareup.okhttp3:okhttp:3.9.1'
@@ -42,4 +41,12 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:support-v4:26.0.2'
     compile 'com.android.support:cardview-v7:26.0.0-alpha1'
+    compile files('libs/accessoryfiletransfer-v1.0.19.jar')
+    compile files('libs/advertisement.jar')
+    compile files('libs/GoogleConversionTrackingSdk-2.2.4.jar')
+    compile files('libs/jsoup-1.10.2.jar')
+    compile files('libs/locSDK_6.23.jar')
+    compile files('libs/sdk-v1.0.0.jar')
+    compile files('libs/update.jar')
+    compile project(':facebook')
 }
