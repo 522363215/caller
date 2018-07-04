@@ -1,0 +1,26 @@
+apply plugin: 'com.android.application'
+
+android {
+    buildToolsVersion '26.0.2'
+    compileSdkVersion 26
+    useLibrary 'org.apache.http.legacy'
+    defaultConfig {
+        applicationId "blocker.call.wallpaper.screen.caller.ringtones.callercolor"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+dependencies {
+    compile project(':callblocksdk')
+    compile project(':callflashsetsdk')
+    compile project(':callringsdk')
+    compile project(':serverflashsdk')
+}
