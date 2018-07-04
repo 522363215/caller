@@ -21,4 +21,6 @@ android {
 }
 
 dependencies {
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
 }
