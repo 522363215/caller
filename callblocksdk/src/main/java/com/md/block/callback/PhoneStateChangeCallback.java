@@ -6,14 +6,14 @@ package com.md.block.callback;
 
 public interface PhoneStateChangeCallback {
 
-    void onPhoneIdle(String number);
-    void onPhoneRinging(String number);
-    void onPhoneOffHook(String number);
+    void onPhoneIdle (String number);
+    void onPhoneRinging (String number);
+    void onPhoneOffHook (String number);
 
-    void onPhoneOutCall(String number);
+    void onPhoneOutCall (String number);
 
-    void onPhoneReject(String number);
-    void onPhoneHangUp(String number);
-    void onPhoneAnswer(String number);
+    void onPhoneReject (String number);
+    void onPhoneHangUp (String number);
+    void onPhoneAnswer (String number);
 
 }

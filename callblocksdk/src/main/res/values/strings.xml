@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">callblocksdk</string>
+    <string name="app_name">BlockCore</string>
+
+    <string name="call_answer_string">Answer</string>
+    <string name="call_answer_string_HW">"Reply"</string>
 </resources>

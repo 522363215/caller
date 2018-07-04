@@ -1,10 +1,10 @@
 [
     {
-        "merged": "Y:\\Android\\callerColor\\2018.07.04\\callercolor\\facebook\\build\\intermediates\\res\\merged\\debug\\layout\\com_facebook_activity_layout.xml",
-        "source": "Y:\\Android\\callerColor\\2018.07.04\\callercolor\\facebook\\src\\main\\res\\layout\\com_facebook_activity_layout.xml"
+        "merged": "E:\\My Work\\Android Project\\CallerColor\\facebook\\build\\intermediates\\res\\merged\\debug\\layout\\com_facebook_login_fragment.xml",
+        "source": "E:\\My Work\\Android Project\\CallerColor\\facebook\\src\\main\\res\\layout\\com_facebook_login_fragment.xml"
     },
     {
-        "merged": "Y:\\Android\\callerColor\\2018.07.04\\callercolor\\facebook\\build\\intermediates\\res\\merged\\debug\\layout\\com_facebook_login_fragment.xml",
-        "source": "Y:\\Android\\callerColor\\2018.07.04\\callercolor\\facebook\\src\\main\\res\\layout\\com_facebook_login_fragment.xml"
+        "merged": "E:\\My Work\\Android Project\\CallerColor\\facebook\\build\\intermediates\\res\\merged\\debug\\layout\\com_facebook_activity_layout.xml",
+        "source": "E:\\My Work\\Android Project\\CallerColor\\facebook\\src\\main\\res\\layout\\com_facebook_activity_layout.xml"
     }
 ]
