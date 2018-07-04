@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="call_answer_string">전화 받기</string>
+    <string name="call_answer_string_HW">응답</string>
+
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="call_answer_string">Responder</string>
+    <string name="call_answer_string_HW">ATENDER</string>
+
+</resources>
