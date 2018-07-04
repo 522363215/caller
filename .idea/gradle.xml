@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/callblocksdk" />
             <option value="$PROJECT_DIR$/callflashsetsdk" />
             <option value="$PROJECT_DIR$/callringsdk" />
+            <option value="$PROJECT_DIR$/facebook" />
             <option value="$PROJECT_DIR$/serverflashsdk" />
           </set>
         </option>

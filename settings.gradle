@@ -1,1 +1,1 @@
-include ':app', ':callblocksdk', ':callflashsetsdk', ':serverflashsdk', ':callringsdk'
+include ':app', ':callblocksdk', ':callflashsetsdk', ':serverflashsdk', ':callringsdk',':facebook'
