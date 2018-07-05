@@ -15,5 +15,6 @@ public interface PhoneStateChangeCallback {
     void onPhoneReject (String number);
     void onPhoneHangUp (String number);
     void onPhoneAnswer (String number);
+    void onPhoneBlock (String number);
 
 }

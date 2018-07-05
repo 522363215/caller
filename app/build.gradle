@@ -30,6 +30,7 @@ dependencies {
     compile project(':callflashsetsdk')
     compile project(':callringsdk')
     compile project(':serverflashsdk')
+    compile project(':facebook')
     compile 'com.flurry.android:analytics:8.2.0@aar'
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.squareup.okhttp3:okhttp:3.9.1'
@@ -48,5 +49,4 @@ dependencies {
     compile files('libs/locSDK_6.23.jar')
     compile files('libs/sdk-v1.0.0.jar')
     compile files('libs/update.jar')
-    compile project(':facebook')
 }

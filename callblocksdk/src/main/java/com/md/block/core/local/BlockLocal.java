@@ -147,4 +147,41 @@ public class BlockLocal {
         return mPreferences;
     }
 
+    public static <T> void setPreferencesData(String key, T value) {
+        SharedPreferences pref = getSharedPreferences();
+
+        if (pref != null) {
+            if (value instanceof String) {
+                pref.edit().putString(key, String.valueOf(value)).commit();
+            } else if (value instanceof Boolean) {
+                pref.edit().putBoolean(key, (Boolean) value).commit();
+            } else if (value instanceof Integer) {
+                pref.edit().putInt(key, (Integer) value).commit();
+            } else if (value instanceof Float) {
+                pref.edit().putFloat(key, (Float) value).commit();
+            } else if (value instanceof Long) {
+                pref.edit().putLong(key, (Long) value).commit();
+            }
+        }
+    }
+
+    public static <T> T getPreferencesData (String key, T defaultValue) {
+        SharedPreferences pref = getSharedPreferences();
+
+        if (pref != null) {
+            if (defaultValue instanceof String) {
+                return (T) pref.getString(key, String.valueOf(defaultValue));
+            } else if (defaultValue instanceof Boolean) {
+                return (T) Boolean.valueOf(pref.getBoolean(key, (Boolean) defaultValue));
+            } else if (defaultValue instanceof Integer) {
+                return (T) Integer.valueOf(pref.getInt(key, (Integer) defaultValue));
+            } else if (defaultValue instanceof Float) {
+                return (T) Float.valueOf(pref.getFloat(key, (Long) defaultValue));
+            } else if (defaultValue instanceof Long) {
+                return (T) Long.valueOf(pref.getLong(key, (Long) defaultValue));
+            }
+        }
+        return null;
+    }
+
 }

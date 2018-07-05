@@ -14,6 +14,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.annotation.RequiresApi;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -160,6 +161,14 @@ public class BlockManager {
         return BlockLocal.getBlockHistory();
     }
 
+    public boolean setBlockSwitchState (boolean bool) {
+        return BlockLocal.setBlockSwitchState(bool);
+    }
+
+    public boolean getBlockSwitchState () {
+        return BlockLocal.getBlockSwitchState();
+    }
+
     public void answerCall () {
         try {
             if (mTele == null) {
@@ -256,7 +265,7 @@ public class BlockManager {
         }
 
         for (String blockNumber : blockContacts) {
-            if (blockContacts.contains(blockNumber)) {
+            if (PhoneNumberUtils.compare(blockNumber, phoneNumber)) {
                 suc = endCall();
                 break;
             }
