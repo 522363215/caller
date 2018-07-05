@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.gms.ads.formats.NativeContentAdView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_notification_settings"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/dp96"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="1dp">
+
+    <RelativeLayout
+        android:id="@+id/adUnit"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dp96"
+        android:background="@color/black">
+
+        <ImageView
+            android:id="@+id/iv_content"
+            android:layout_width="@dimen/dp120"
+            android:layout_height="88dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/dp96"
+            android:layout_toEndOf="@id/iv_content"
+            android:layout_toRightOf="@+id/iv_content"
+            android:orientation="vertical"
+            android:paddingEnd="4dp"
+            android:paddingRight="@dimen/dp4"
+            android:paddingTop="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp20"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dp14"
+                    android:layout_height="@dimen/dp14"
+                    android:layout_gravity="top|left"
+                    android:src="@drawable/ic_ad_banner" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
+                    android:ellipsize="end"
+                    android:gravity="start|center_vertical"
+                    android:lines="1"
+                    android:textColor="@color/white"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-light"
+                android:gravity="start|center_vertical"
+                android:maxLines="2"
+                android:textColor="@color/white"
+                android:textSize="12dp" />
+
+            <Button
+                android:id="@+id/btn_callToAction"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp32"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="0"
+                android:background="@drawable/shape_shadow_round4_ffff5800"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
+        </LinearLayout>
+    </RelativeLayout>
+</com.google.android.gms.ads.formats.NativeContentAdView>

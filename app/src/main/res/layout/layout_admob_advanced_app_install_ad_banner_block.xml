@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.gms.ads.formats.NativeAppInstallAdView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:wave="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp66"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.RoundImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="@dimen/dp50"
+                android:layout_height="@dimen/dp50"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/dp8"
+                android:layout_marginLeft="@dimen/dp8"
+                android:layout_marginRight="@dimen/dp8"
+                android:layout_marginStart="@dimen/dp8"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                app:cornerRadius="100dp"
+                tools:background="@color/background" />
+
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_ad_flag"-->
+                <!--android:layout_width="16dp"-->
+                <!--android:layout_height="16dp"-->
+                <!--android:layout_gravity="top|left|start"-->
+                <!--android:layout_marginLeft="0dp"-->
+                <!--android:layout_marginStart="0dp"-->
+                <!--android:layout_marginTop="0dp"-->
+                <!--android:src="@drawable/ic_ad_banner_left"-->
+                <!--android:visibility="gone" />-->
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_marginStart="@dimen/dp8"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp4"
+                    android:ellipsize="end"
+                    android:fontFamily="@string/Roboto_Regular"
+                    android:singleLine="true"
+                    android:textColor="@color/color_E01D1B51"
+                    android:textSize="16sp"
+                    tools:text="Title" />
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:fontFamily="@string/Roboto_Regular"
+                    android:gravity="left"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/color_7A07142C"
+                    android:textSize="12sp"
+                    tools:text="Contentssssssssssssssssssssssssssssssssssssssssssssssss" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <!-- Done Btn -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_callToAction"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:fontFamily="@string/Roboto_Regular"
+                android:gravity="center"
+                android:maxWidth="120dp"
+                android:minHeight="32dp"
+                android:padding="@dimen/dp4"
+                android:textColor="@color/background"
+                android:textSize="16dp"
+                android:visibility="visible"
+                tools:text="Install now" />
+            <TextView
+                android:layout_gravity="right|end|bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="2dp"
+                android:alpha="0.3"
+                android:background="@color/gray"
+                android:textColor="@color/white"
+                android:text="AD"
+                android:textSize="8dp"/>
+        </FrameLayout>
+
+
+    </LinearLayout>
+</com.google.android.gms.ads.formats.NativeAppInstallAdView>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_ad_view_root"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp64"
+    android:background="@android:color/transparent"
+    android:orientation="horizontal">
+
+
+    <FrameLayout
+        android:layout_gravity="center_vertical"
+        android:id="@+id/layout_fb_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_gravity="top|left"
+            android:src="@drawable/ic_ad_banner" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp">
+
+            <ImageView
+                android:id="@+id/nativeAdIcon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="@dimen/dp4"/>
+
+        </FrameLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/layout_ad_description"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nativeAdTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-light"
+                android:lines="1"
+                android:text="fdfdfsdfs"
+                android:textColor="#ceffffff"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/nativeAdBody"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-light"
+                android:lines="2"
+                android:text="Flashlight Brightness Optimization for Samsung, HTC, LG, and Motorola LED lights."
+                android:textColor="#ceffffff"
+                android:textSize="10dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/nativeAdCallToAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical|end"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_shadow_round30_ffff5800"
+        android:gravity="center"
+        android:minHeight="@dimen/dp30"
+        android:paddingEnd="@dimen/dp12"
+        android:paddingLeft="@dimen/dp12"
+        android:paddingRight="@dimen/dp12"
+        android:paddingStart="@dimen/dp12"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        tools:text="dadada" />
+
+</LinearLayout>

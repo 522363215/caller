@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="right|end">
 
-        <com.hiblock.caller.view.FontIconView
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
             android:id="@+id/fiv_permission_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
