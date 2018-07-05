@@ -31,6 +31,7 @@ public class SideslipContraller implements View.OnClickListener {
     public static final int REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS = 2713;
     private MainActivity mAct;
     private View root;
+    private View mMenuBlock;
     private View mMenuSettings;
     private View mMenuRate;
     private View mMenuAbout;
@@ -53,11 +54,13 @@ public class SideslipContraller implements View.OnClickListener {
             }
             root = stub.inflate();
 
+            mMenuBlock = root.findViewById(R.id.menu_block);
             mMenuSettings = root.findViewById(R.id.menu_settings);
             mMenuRate = root.findViewById(R.id.menu_rate);
             mMenuAbout = root.findViewById(R.id.menu_about);
             mMenuTest = root.findViewById(R.id.menu_test);
 
+            mMenuBlock.setOnClickListener(this);
             mMenuSettings.setOnClickListener(this);
             mMenuRate.setOnClickListener(this);
             mMenuAbout.setOnClickListener(this);
@@ -160,6 +163,9 @@ public class SideslipContraller implements View.OnClickListener {
             case R.id.menu_test:
                 onTest();
                 break;
+            case R.id.menu_block:
+                onBlock();
+                break;
             case R.id.menu_settings:
                 onSettings();
                 break;
@@ -204,6 +210,11 @@ public class SideslipContraller implements View.OnClickListener {
      */
     private void onTest() {
 //        mAct.startActivity(new Intent(mAct, DoNotDisturbActivity.class));
+    }
+
+    private void onBlock() {
+        FlurryAgent.logEvent("left_block_click");
+
     }
 
     public void onSettings() {
