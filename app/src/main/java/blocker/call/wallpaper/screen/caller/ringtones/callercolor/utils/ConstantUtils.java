@@ -996,30 +996,10 @@ public class ConstantUtils {
     public static final String MISSED_CALL_DATE = "missed_call_date";
 
     //broadcast
-    public final static String SMS_SENT = "com.hiblock.caller.sms.SMS_SENT";
-    public final static String SMS_DELIVERED = "com.hiblock.caller.sms.SMS_DELIVERED";
-    public final static String SMS_SENT_FAIL = "com.hiblock.caller.sms.SMS_SENT_FAIL";
+    public final static String SMS_SENT = "blocker.call.wallpaper.screen.caller.ringtones.callercolor.sms.SMS_SENT";
+    public final static String SMS_DELIVERED = "blocker.call.wallpaper.screen.caller.ringtones.callercolor.sms.SMS_DELIVERED";
+    public final static String SMS_SENT_FAIL = "blocker.call.wallpaper.screen.caller.ringtones.callercolor.sms.SMS_SENT_FAIL";
 
-    // fake call;
-    public final static String FAKE_CALL_FLASH_TYPE_CHOICE = "fake_call_flash_type_choice";
-    public final static String FAKE_CALL_FLASH_TYPE = "fake_call_flash_type";
-    public final static String ACTION_MAKE_FAKE_CALL = "com.hiblock.caller.intent.MAKE_FAKE_CALL";
-    public final static String INTENT_KEY_FAKE_CALL_DELAYED_TIME = "fake_call_delayed_time";
-    public final static String INTENT_KEY_FAKE_CALL_CONTACTS_CHOICE = "choice_from_contacts";
-    public final static String PREF_KEY_FAKE_CALL_NUMBER = "pref_fake_call_number";
-    public final static String PREF_KEY_FAKE_CALL_NAME = "pref_fake_call_name";
-    public final static String PREF_KEY_FAKE_CALL_PHOTO_ID = "pref_fake_call_photo_id";
-    public final static String PREF_KEY_FAKE_CALL_CONTACTS_PHOTO_ID = "pref_fake_call_contacts_photo_id";
-    public final static String PREF_KEY_IS_MAKE_FAKE_CALL = "pref_is_make_fake_call";
-    public final static String PREF_KEY_FAKE_CALL_IS_INTRO = "pref_fake_call_is_show_intro";
-    public final static String PREF_KEY_FAKE_CALL_SHOW_DIALOG_TIME = "pref_fake_call_show_dialog_time";
-    public final static String PREF_KEY_LAST_ENTER_FAKE_CALL_TIME = "pref_last_enter_fake_call_time";
-    public final static String PREF_KEY_FAKE_CALL_INCOMING_TIME = "pref_fake_call_incoming_time";
-    public final static String PREF_KEY_FAKE_CALL_LAST_SELECT_TIME = "pref_fake_call_last_select_time";
-    public final static String PREF_KEY_FAKE_CALL_TIME_DURATION = "pref_fake_call_time_duration";
-    public final static String PREF_KEY_FAKE_CALL_IS_SHOW_SCHEDULE_TIP = "pref_fake_call_is_show_schedule_tip";
-
-    public final static String FAKE_CALL_TYPE = "95279527";
 
     public final static String PREF_KEY_LAST_FEEDBACK_TIME = "pref_key_last_feedback_time";
 

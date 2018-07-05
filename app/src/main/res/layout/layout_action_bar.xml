@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp">
+
+    <com.hiblock.caller.view.FontIconView
+        android:id="@+id/imgReturn"
+        android:layout_width="@dimen/dp48"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/icon_arrow"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp24" />
+
+    <View
+        android:layout_width="@dimen/dp20"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.hiblock.caller.view.CustomTextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:maxWidth="@dimen/dp200"
+            android:textColor="@color/whitesmoke"
+            android:textSize="18sp"
+            tools:text="tasdadasdadaddadadadasdasdasdasdd" />
+
+        <com.hiblock.caller.view.CustomTextView
+            android:id="@+id/txtTitle_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:maxWidth="@dimen/dp200"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:text="adadadadadadadadadda"
+            tools:visibility="gone" />
+    </LinearLayout>
+
+    <com.hiblock.caller.view.FontIconView
+        android:id="@+id/fiv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp8"
+        android:layout_marginRight="@dimen/dp8"
+        android:text="@string/icon_add"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp24"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layout_contact_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/et_contact_search"
+            style="@null"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:gravity="center_vertical"
+            android:hint="@string/contact_search_hint"
+            android:imeOptions="actionSearch"
+            android:maxLength="30"
+            android:padding="@dimen/dp4"
+            android:singleLine="true"
+            android:textColor="@color/color_DE000000"
+            android:textColorHint="@color/color_FFB5C6D6"
+            android:textCursorDrawable="@null"
+            android:textSize="16sp" />
+
+        <com.hiblock.caller.view.FontIconView
+            android:id="@+id/fiv_clear_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp24"
+            android:layout_marginRight="@dimen/dp24"
+            android:text="@string/icon_close"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp24" />
+        <!--暂时先用乘号替代-->
+        <!--android:text="@string/icon_lunch"-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_search_and_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" />
+
+        <com.hiblock.caller.view.FontIconView
+            android:id="@+id/fiv_contact_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp24"
+            android:layout_marginRight="@dimen/dp24"
+            android:text="@string/icon_search"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp24" />
+
+        <com.hiblock.caller.view.FontIconView
+            android:id="@+id/fiv_contact_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp21"
+            android:layout_marginLeft="@dimen/dp24"
+            android:layout_marginRight="@dimen/dp21"
+            android:layout_marginStart="@dimen/dp24"
+            android:text="@string/icon_add"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp24"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <com.hiblock.caller.view.FontIconView
+            android:id="@+id/fiv_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp21"
+            android:layout_marginLeft="@dimen/dp24"
+            android:layout_marginRight="@dimen/dp21"
+            android:layout_marginStart="@dimen/dp24"
+            android:text="@string/icon_group"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp24" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <com.hiblock.caller.view.FontIconView
+            android:id="@+id/fiv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            android:text="@string/icon_close"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp24" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_message_actionbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <com.hiblock.caller.view.FontIconView
+            android:id="@+id/fiv_phone"
+            android:layout_width="@dimen/dp48"
+            android:layout_height="@dimen/dp48"
+            android:gravity="center"
+            android:text="@string/icon_phone"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp24" />
+
+        <com.hiblock.caller.view.FontIconView
+            android:id="@+id/fiv_menu"
+            android:layout_width="@dimen/dp48"
+            android:layout_height="@dimen/dp48"
+            android:gravity="center"
+            android:text="@string/icon_option"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp24" />
+    </LinearLayout>
+
+</LinearLayout>

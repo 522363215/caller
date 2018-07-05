@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.gms.ads.formats.NativeContentAdView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_adview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layout_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+
+            <FrameLayout
+                android:id="@+id/layout_fb_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/layout_btn_ripple">
+
+                <ImageView
+                    android:id="@+id/iv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY" />
+            </FrameLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/nativeAdCallToAction"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp120"
+                    android:layout_weight="1"
+                    android:contentDescription="@null"
+                    android:paddingTop="@dimen/dp50"
+                    android:visibility="visible"
+                    tools:src="@drawable/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:fontFamily="@string/Roboto_Regular"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:paddingLeft="@dimen/dp48"
+                        android:paddingRight="@dimen/dp48"
+                        android:text="xxxxxxxxxxxxxxxxxxxxxxx"
+                        android:textColor="@color/white"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:alpha="0.5"
+                        android:ellipsize="end"
+                        android:fontFamily="@string/Roboto_Regular"
+                        android:gravity="center_horizontal"
+                        android:maxLines="3"
+                        android:paddingBottom="@dimen/dp16"
+                        android:paddingEnd="@dimen/dp48"
+                        android:paddingLeft="@dimen/dp48"
+                        android:paddingRight="@dimen/dp48"
+                        android:paddingStart="@dimen/dp48"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        tools:text="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/nativeAdCallToAction"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp120"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:elevation="@dimen/dp8"
+                android:gravity="center">
+
+
+                <RelativeLayout
+                    android:layout_width="@dimen/dp72"
+                    android:layout_height="@dimen/dp72"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/shape_circle_white">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp36"
+                        android:layout_height="@dimen/dp36"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/icon_right_go" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btn_callToAction"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp120"
+                    android:background="@null"
+                    android:fontFamily="@string/Roboto_Light"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dp36"
+                    android:textColor="@color/color_transparent"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</com.google.android.gms.ads.formats.NativeContentAdView>

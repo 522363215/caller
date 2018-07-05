@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.gms.ads.formats.NativeContentAdView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:padding="@dimen/dp4"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/iv_ad_flag"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="top|left"
+                android:src="@drawable/ic_ad_banner_left"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginStart="@dimen/dp4"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:visibility="visible">
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.RoundImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@null"
+                    android:scaleType="fitXY"
+                    app:cornerRadius="4dp"
+                    tools:background="@drawable/ic_launcher" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_ad_banner_left"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="@dimen/dp8">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp4"
+                    android:ellipsize="end"
+                    android:fontFamily="@string/Roboto_Regular"
+                    android:singleLine="true"
+                    android:textColor="@color/color_FF00284D"
+                    android:textSize="16sp"
+                    tools:text="Title" />
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@string/Roboto_Regular"
+                    android:gravity="left"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:textColor="@color/color_FF00284D"
+                    android:textSize="12sp"
+                    tools:text="Contentssssssssssssssssssssssssssssssssssssssssssssssss" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Done Btn -->
+        <Button
+            android:id="@+id/btn_callToAction"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp4"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_marginStart="@dimen/dp4"
+            android:background="@color/color_FF00C858"
+            android:fontFamily="@string/Roboto_Light"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            tools:text="Install now" />
+
+    </LinearLayout>
+</com.google.android.gms.ads.formats.NativeContentAdView>

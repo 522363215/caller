@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_full_screen_ad"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_ad_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <include layout="@layout/layout_advertisement" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp36"
+        android:layout_height="@dimen/dp36"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp16"
+        android:background="@drawable/shape_shadow_circle_bg_white"
+        android:gravity="center">
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+            android:id="@+id/btn_close"
+            android:layout_width="@dimen/dp28"
+            android:layout_height="@dimen/dp28"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/icon_close"
+            android:textColor="#af000000"
+            android:textSize="@dimen/dp18"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/layout_countdown"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:visibility="visible">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.RoundProgressBar
+                android:id="@+id/pb_countdown"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:max="100"
+                app:roundColor="#dF0084FF"
+                app:roundProgressColor="@color/white"
+                app:roundWidth="0dp"
+                app:style="FILL"
+                app:textIsDisplayable="false" />
+
+            <TextView
+                android:id="@+id/tv_countdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="gone"
+                tools:text="4" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_ad_view_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dp32"
+    android:paddingStart="@dimen/dp32"
+    android:paddingRight="@dimen/dp32"
+    android:paddingEnd="@dimen/dp32"
+    android:background="@color/color_transparent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/layout_fb_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/native_ad_main_image"
+            android:layout_width="fill_parent"
+            android:layout_height="144dp"
+            android:background="@drawable/corner_white_input"
+            android:scaleType="fitXY"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="top|left"
+            android:src="@drawable/ic_ad_banner" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/color_7F090D12"
+            android:gravity="left|start"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:visibility="visible">
+
+            <FrameLayout
+                android:id="@+id/layout_ad_choise_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/native_ad_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="aaaaa"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/native_ad_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-light"
+                android:gravity="top"
+                android:maxLines="1"
+                android:text="aaaaa"
+                android:textColor="@color/white_80"
+                android:textSize="12sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!--<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/color_FF00C858"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/nativeAdCallToDetails"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginStart="2dp"
+                android:src="@drawable/fb_details" />
+        </LinearLayout>
+
+
+    </RelativeLayout>-->
+
+    <Button
+        android:id="@+id/native_ad_call_to_action"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/color_FF00C858"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="Learn more"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:visibility="visible" />
+</LinearLayout>

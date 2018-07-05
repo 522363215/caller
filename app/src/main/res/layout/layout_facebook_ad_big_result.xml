@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:wave="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_ad_view_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_adview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleImageView
+                    android:id="@+id/nativeAdIcon"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@null"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nativeAdTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginRight="32dp"
+                        android:layout_marginTop="22dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@string/Roboto_Regular"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:text="xxxxx"
+                        android:textColor="@color/color_FF505A6C"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/nativeAdBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="8dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@string/Roboto_Regular"
+                        android:gravity="left|start"
+                        android:maxLines="3"
+                        android:textColor="@color/color_8F4E586A"
+                        android:textSize="12sp"
+                        tools:text="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!-- Done Btn -->
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.RippleFrameLayout
+                    android:id="@+id/layout_btn_ripple"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="#00000000"
+                    wave:mrl_rippleAlpha="0.2"
+                    wave:mrl_rippleColor="#585858"
+                    wave:mrl_rippleDelayClick="false"
+                    wave:mrl_rippleHover="true"
+                    wave:mrl_rippleOverlay="true">
+
+                    <Button
+                        android:id="@+id/nativeAdCallToAction"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="@drawable/btn_green_ff00c858_selector"
+                        android:fontFamily="@string/Roboto_Light"
+                        android:gravity="center"
+                        android:text="Done"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+                </blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.RippleFrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/layout_fb_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/layout_btn_ripple"
+                    android:layout_marginTop="20dp">
+
+                    <com.facebook.ads.MediaView
+                        android:id="@+id/nativeAdMedia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="top|left"
+                        android:src="@drawable/ic_ad_banner_left" />
+                </FrameLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|end"
+            android:focusableInTouchMode="true"
+            android:visibility="gone">
+
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:fontFamily="@string/Roboto_Regular"
+                android:lines="1"
+                android:textSize="10sp"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+    </FrameLayout>
+</LinearLayout>

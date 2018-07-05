@@ -383,7 +383,7 @@ public class FileUtil {
         } else {
             //  使用 FileProvider 会在某些 app 下不支持（在使用FileProvider 方式情况下QQ不能支持图片、视频分享，微信不支持视频分享）
             uri = FileProvider.getUriForFile(context,
-                    "com.hiblock.caller.Share_Audio_Record_Files",
+                    "blocker.call.wallpaper.screen.caller.ringtones.callercolor.Share_Audio_Record_Files",
                     file);
 
             ContentResolver cR = context.getContentResolver();

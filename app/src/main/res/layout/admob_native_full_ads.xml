@@ -1,0 +1,117 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/adUnit"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--dp14-->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--big image-->
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/ad_big_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxHeight="@dimen/dp200"
+            android:paddingTop="@dimen/dp5"
+            app:riv_border_color="#00000000"
+            app:riv_border_width="0dp"
+            app:riv_corner_radius="0dp"
+            app:riv_mutate_background="false"
+            app:riv_oval="false"
+            app:riv_tile_mode="clamp" />
+
+        <!-- ad cover-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/ic_splash_header" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ad_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+        <!--icon-->
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_ads_banner_logo"
+            android:layout_width="@dimen/dp56"
+            android:layout_height="@dimen/dp56"
+            android:layout_below="@+id/ad_big_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp18"
+            android:layout_marginTop="@dimen/dp19"
+            android:src="@drawable/default_news_cover"
+            app:riv_border_color="#00000000"
+            app:riv_border_width="0dp"
+            app:riv_corner_radius="@dimen/ad_image_big_radius"
+            app:riv_mutate_background="false"
+            app:riv_oval="false"
+            app:riv_tile_mode="clamp" />
+
+        <TextView
+            android:id="@+id/txt_ads_banner_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_ads_banner_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:maxLines="2"
+            android:text="xxxxx"
+            android:textColor="@color/result_pc_download_title_color"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_ads_banner_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_ads_banner_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="@dimen/dp14"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_horizontal"
+            android:maxLines="3"
+            android:text="xxxxx"
+            android:textColor="@color/result_pc_download_text_color"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/nativeAdSocialLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_ads_banner_des"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-light"
+            android:paddingBottom="@dimen/dp4"
+            android:textColor="@color/result_pc_download_text_color"
+            android:textSize="10sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_ads_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:layout_below="@id/ad_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="@dimen/dp34"
+        android:background="@drawable/shape_blue_bg"
+        android:gravity="center"
+        android:padding="@dimen/dp5"
+        android:text="Done"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</RelativeLayout>
