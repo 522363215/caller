@@ -138,7 +138,6 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                 }
 
                 BlockLocal.setPreferencesData("lm_last_call_state", callState);
-
             }
         } catch (Exception e) {
             e.printStackTrace();

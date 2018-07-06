@@ -117,7 +117,8 @@ public class BlockManager {
         mTele = (TelephonyManager) applicationContext.getSystemService(Context.TELEPHONY_SERVICE);;
 
         Intent intent = new Intent();
-        intent.setAction("android.service.notification.NotificationListenerService");
+        intent.setClass(applicationContext, CallerNotificationListenerService.class);
+//        intent.setAction("android.service.notification.NotificationListenerService");
         applicationContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
