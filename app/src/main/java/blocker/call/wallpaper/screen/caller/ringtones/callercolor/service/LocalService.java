@@ -1,11 +1,15 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.md.block.core.BlockManager;
+
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventForeground;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PhoneStateListenImpl;
 import event.EventBus;
 
 public class LocalService extends Service {
@@ -26,6 +30,15 @@ public class LocalService extends Service {
         if (!EventBus.getDefault().isRegistered(LocalService.this)) {
             EventBus.getDefault().register(LocalService.this);
         }
+
+        initBlock();
+    }
+
+    private void initBlock() {
+        Context appContext = ApplicationEx.getInstance().getApplicationContext();
+        BlockManager.getInstance().initialize(appContext);
+        BlockManager.getInstance().registerPhoneReceiver(appContext);
+        BlockManager.addPhoneStateListener(new PhoneStateListenImpl(appContext));
     }
 
     @Override
@@ -35,7 +48,6 @@ public class LocalService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        LogUtil.d(TAG, "onStartCommand");
         return super.onStartCommand(intent, flags, startId);
     }
 
