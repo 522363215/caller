@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.duapps.ad.DuAdListener;
 import com.duapps.ad.DuNativeAd;
 import com.facebook.ads.Ad;
@@ -1662,13 +1663,11 @@ public class Advertisement {
                 nativeAdCallToAction.setVisibility(mAdapter.shouldShowActionButton() ? View.VISIBLE : View.GONE);
             }
             if (nativeAdIcon != null) {
-                // TODO: 2018/7/4 暂时屏蔽
-//                ImageLoaderHelper.getInstance().displayImage(nativeAd.getIconUrl(), nativeAdIcon);
+                Glide.with(mContextBaiDu).load(nativeAd.getIconUrl()).into(nativeAdIcon);
                 clickableViews.add(nativeAdIcon);
             }
             if (nativeAdImage != null) {
-                // TODO: 2018/7/4 暂时屏蔽
-//                ImageLoaderHelper.getInstance().displayImage(nativeAd.getImageUrl(), nativeAdImage);
+                Glide.with(mContextBaiDu).load(nativeAd.getImageUrl()).into(nativeAdImage);
                 clickableViews.add(nativeAdImage);
             }
 

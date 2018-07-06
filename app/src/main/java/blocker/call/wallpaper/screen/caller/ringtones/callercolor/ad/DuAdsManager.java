@@ -1,11 +1,13 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad;
 
+import android.app.Application;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.duapps.ad.AdError;
 import com.duapps.ad.DuAdListener;
 import com.duapps.ad.DuNativeAd;
@@ -103,8 +105,7 @@ public class DuAdsManager {
             nativeAdTitle.setText(nativeAd.getTitle());
             nativeAdBody.setText(nativeAd.getShortDesc());
             nativeAdCallToAction.setText(nativeAd.getCallToAction());
-            // TODO: 2018/7/4  ImageLoaderHelper
-//            ImageLoaderHelper.getInstance().displayImage(nativeAd.getIconUrl(), nativeAdIcon);
+            Glide.with(ApplicationEx.getInstance()).load(nativeAd.getIconUrl()).into(nativeAdIcon);
 
             // Register the Title and CTA button to listen for clicks.
             List<View> clickableViews = new ArrayList<>();
@@ -145,9 +146,8 @@ public class DuAdsManager {
             nativeAdTitle.setText(nativeAd.getTitle());
             nativeAdBody.setText(nativeAd.getShortDesc());
             nativeAdCallToAction.setText(nativeAd.getCallToAction());
-            // TODO: 2018/7/4  ImageLoaderHelper
-//            ImageLoaderHelper.getInstance().displayImage(nativeAd.getIconUrl(), nativeAdIcon);
-//            ImageLoaderHelper.getInstance().displayImage(nativeAd.getImageUrl(), nativeAdImage);
+            Glide.with(ApplicationEx.getInstance()).load(nativeAd.getIconUrl()).into(nativeAdIcon);
+            Glide.with(ApplicationEx.getInstance()).load(nativeAd.getImageUrl()).into(nativeAdImage);
 
             // Register the Title and CTA button to listen for clicks.
             List<View> clickableViews = new ArrayList<>();
