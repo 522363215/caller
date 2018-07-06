@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_FF191B1E"
+    android:orientation="vertical">
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp56"
+        android:background="@color/color_FF2E3239"
+        app:title="@string/call_flash_album_title" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp32"
+        android:alpha="0.4"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingStart="@dimen/dp16"
+        android:text="@string/call_flash_album_online"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp32"
+        android:alpha="0.4"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingStart="@dimen/dp16"
+        android:text="@string/call_flash_album_local"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_local_album"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp56"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/dp16"
+        android:paddingStart="@dimen/dp16"
+        android:background="@drawable/selector_click">
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.RoundImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="@dimen/dp40"
+                android:layout_height="@dimen/dp40"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/ic_completed"
+                android:visibility="gone"
+                android:layout_centerInParent="true"/>
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                android:id="@+id/fiv_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/icon_folder"
+                android:textColor="@color/background"
+                android:gravity="center"
+                android:textSize="36sp"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_marginStart="@dimen/dp8"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/call_flash_album_gallery"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.4"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:text="@string/call_flash_album_gallery_desc_1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_ad_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp64"
+        android:background="@color/color_FF191B1E">
+
+
+        <include layout="@layout/layout_advertisement" />
+    </LinearLayout>
+
+</LinearLayout>

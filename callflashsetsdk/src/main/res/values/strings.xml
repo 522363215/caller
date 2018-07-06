@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">callflashsetsdk</string>
+
+    <string name="call_flash_led_festival">"Festival"</string>
+    <string name="call_flash_led_love">"Love"</string>
+    <string name="call_flash_led_kiss">"Kiss"</string>
+    <string name="call_flash_led_rose">"Rose"</string>
+    <string name="call_falsh_led_streamer">"Streamer"</string>
 </resources>

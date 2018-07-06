@@ -152,7 +152,7 @@ public class FullScreenAdManager {
                         data = new HashMap<>();
                     }
                     data.put(String.valueOf(CallerAdManager.POSITION_FIRST_ADMOB_FULL_SCREEN_RESULT_BACK), System.currentTimeMillis());
-                    PreferenceHelper.setHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, data);
+                    PreferenceHelper.putHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, data);
                     break;
                 case CallerAdManager.IN_ADS_CALL_FLASH:
                 case CallerAdManager.IN_ADS_CALL_FLASH_RESULT:
@@ -160,7 +160,7 @@ public class FullScreenAdManager {
                         data = new HashMap<>();
                     }
                     data.put(String.valueOf(CallerAdManager.POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL), System.currentTimeMillis());
-                    PreferenceHelper.setHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, data);
+                    PreferenceHelper.putHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, data);
                     break;
             }
         }

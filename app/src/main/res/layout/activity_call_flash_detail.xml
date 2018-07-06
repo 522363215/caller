@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_call_flash_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
+
+    <ImageView
+        android:id="@+id/iv_shape"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:background="@drawable/background_gradient" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/layout_call_flash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="150dp"
+        android:background="@drawable/shape_shadow_floating_bg"
+        card_view:cardCornerRadius="2dp"
+        tools:cardBackgroundColor="@color/com_facebook_blue"
+        tools:visibility="visible">
+
+        <FrameLayout
+            android:id="@+id/layout_flash_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CallFlashAvatarInfoView
+            android:id="@+id/callFlashAvatarInfoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp80"
+            android:gravity="center_horizontal"
+            android:visibility="visible"
+            app:layoutSmall="true" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_call_hang"
+                android:layout_width="@dimen/dp40"
+                android:layout_height="@dimen/dp40"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="@dimen/dp96"
+                android:layout_marginLeft="@dimen/dp50"
+                android:layout_marginStart="@dimen/dp50"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_call_hang" />
+
+            <ImageView
+                android:id="@+id/iv_call_answer"
+                android:layout_width="@dimen/dp40"
+                android:layout_height="@dimen/dp40"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/dp96"
+                android:layout_marginEnd="@dimen/dp50"
+                android:layout_marginRight="@dimen/dp50"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_call_answer" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_like"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp48"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="@drawable/background_trans_black"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                android:id="@+id/fiv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp12"
+                android:text="@string/icon_is_like"
+                android:textColor="@color/whiteSmoke"
+                android:textSize="@dimen/dp30" />
+
+            <TextView
+                android:id="@+id/tv_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp8"
+                android:layout_marginRight="@dimen/dp16"
+                android:text="45545"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/layout_above_ad"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp48">
+
+            <FrameLayout
+                android:id="@+id/layout_progress_above_ad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar
+                    android:id="@+id/pb_downloading_above_ad"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:progressBgColor="@color/color_half_transparent"
+                    app:progressColor="@color/color_FF0084FF" />
+
+                <TextView
+                    android:id="@+id/tv_downloading_above_ad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="@dimen/dp10"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    tools:text="下载中 0%" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_setting_action_above_ad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/color_FF0084FF"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="@string/call_flash_detail_setting_action_to_set"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_download_action_above_ad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/color_FF0084FF"
+                android:gravity="center"
+                android:minWidth="@dimen/dp160"
+                android:padding="@dimen/dp10"
+                android:text="@string/lion_family_active_download"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:visibility="gone"
+                tools:visibility="gone" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_ad_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_FF191B1E">
+
+            <include layout="@layout/layout_advertisement" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/layout_below_ad"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp48"
+            tools:visibility="gone">
+
+            <FrameLayout
+                android:id="@+id/layout_progress_below_ad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar
+                    android:id="@+id/pb_downloading_below_ad"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:progressBgColor="@color/color_half_transparent"
+                    app:progressColor="@color/color_FF0084FF" />
+
+                <TextView
+                    android:id="@+id/tv_downloading_below_ad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="@dimen/dp10"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    tools:text="下载中 0%" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_setting_action_below_ad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/color_FF0084FF"
+                android:gravity="center"
+                android:padding="@dimen/dp10"
+                android:text="@string/call_flash_detail_setting_action_to_set"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_download_action_below_ad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/color_FF0084FF"
+                android:gravity="center"
+                android:minWidth="@dimen/dp160"
+                android:padding="@dimen/dp10"
+                android:text="@string/lion_family_active_download"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:visibility="gone"
+                tools:visibility="gone" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp56"
+        android:visibility="visible">
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+            android:id="@+id/fiv_back"
+            android:layout_width="@dimen/dp56"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/icon_arrow"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp28"
+            android:visibility="visible" />
+
+    </FrameLayout>
+</RelativeLayout>

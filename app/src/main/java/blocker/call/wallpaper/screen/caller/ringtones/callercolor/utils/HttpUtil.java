@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 
 public class HttpUtil {
     public static final int ACTION_TYPE_SHOW = 1;
@@ -95,17 +96,7 @@ public class HttpUtil {
     }
 
     public static String getChannel(Context context) {
-        SharedPreferences settings = null;
-
-        if (context instanceof Activity) {
-            // handle activity case
-            settings = ((ApplicationEx) ((Activity) context).getApplication()).getGlobalSettingPreference();
-        } else if (context instanceof Service) {
-            // handle service case,
-            settings = context.getSharedPreferences(ConstantUtils.PREF_FILE, Context.MODE_PRIVATE);
-        }
-
-        String channel = settings.getString("channel", "");
+        String channel = PreferenceHelper.getString("channel", "");
 
         if ("".equals(channel)) {
 

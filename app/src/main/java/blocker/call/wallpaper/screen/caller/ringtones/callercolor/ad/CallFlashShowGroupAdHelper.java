@@ -45,8 +45,8 @@ public class CallFlashShowGroupAdHelper {
 
     public void loadGroupAd(String key, boolean isBanner, int admobType, int admobAdxType) {
         try {
-            PreferenceHelper.setLong(PreferenceHelper.PREF_LAST_CALL_FLASH_SHOW_GROUP_BANNER_AD_TIME, 0);
-            PreferenceHelper.setLong(PreferenceHelper.PREF_LAST_CALL_FLASH_STOP_LOOPER_SHOW_AD_TIME, 0);
+            PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_CALL_FLASH_SHOW_GROUP_BANNER_AD_TIME, 0);
+            PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_CALL_FLASH_STOP_LOOPER_SHOW_AD_TIME, 0);
             mLoadedAdMep.clear();
             mIsShowGroupAd = false;
             setAdShowPriority(key);
@@ -86,7 +86,7 @@ public class CallFlashShowGroupAdHelper {
                 } else {
                     LogUtil.d(TAG, "---------------------------------------------show " + adIdInfo.adType + " " + adIdInfo.adShowPriority + "------------------------------------------");
                     mIsShowGroupAd = true;
-                    PreferenceHelper.setLong(PreferenceHelper.PREF_LAST_CALL_FLASH_SHOW_GROUP_BANNER_AD_TIME, System.currentTimeMillis());
+                    PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_CALL_FLASH_SHOW_GROUP_BANNER_AD_TIME, System.currentTimeMillis());
                     if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_ADS_CALLFLASH)) {
                         preloadAdvertisement.enableOnlyBtnAndTextClickable();
                     }
@@ -118,13 +118,13 @@ public class CallFlashShowGroupAdHelper {
         mIsShowGroupAd = false;
         mCurrentShowAdIndex = -1;
         mLoadedAdMep.clear();
-        PreferenceHelper.setLong(PreferenceHelper.PREF_LAST_CALL_FLASH_SHOW_GROUP_BANNER_AD_TIME, 0);
-        PreferenceHelper.setLong(PreferenceHelper.PREF_LAST_CALL_FLASH_STOP_LOOPER_SHOW_AD_TIME, 0);
+        PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_CALL_FLASH_SHOW_GROUP_BANNER_AD_TIME, 0);
+        PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_CALL_FLASH_STOP_LOOPER_SHOW_AD_TIME, 0);
         Async.removeScheduledTaskOnUiThread(mLooperShowAdRunnable);
     }
 
     public void stopLooperShowAd() {
-        PreferenceHelper.setLong(PreferenceHelper.PREF_LAST_CALL_FLASH_STOP_LOOPER_SHOW_AD_TIME, System.currentTimeMillis());
+        PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_CALL_FLASH_STOP_LOOPER_SHOW_AD_TIME, System.currentTimeMillis());
         Async.removeScheduledTaskOnUiThread(mLooperShowAdRunnable);
     }
 

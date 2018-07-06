@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+
+android {
+    buildToolsVersion '26.0.2'
+    compileSdkVersion 26
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 4
+        versionName "1.0.4"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // #IA
+    compile(name: 'ia-sdk-core-release-7.1.3', ext: 'aar') //(Required for all)
+    compile(name: 'ia-mraid-kit-release-7.1.3', ext: 'aar') //(HTML/MRAID content)
+    //compile(name: 'ia-video-kit-release-7.1.3', ext: 'aar') //(Video content, required in case of Native ads integration)
+    //compile(name: 'ia-native-kit-release-7.1.3', ext: 'aar') //(Native video and image content)
+
+    // #SMT
+    compile(name: 'SOMAAndroid-7.2.1-release', ext: 'aar')
+
+    // #PN
+    compile(name: 'lite.sdk-0.1.7-master.128', ext: 'aar')
+    //compile(name: 'lite.adapters.mopub-0.1.7-master.113', ext: 'aar')
+    //compile 'net.pubnative:lite.sdk:0.1.7-master.126'
+    //compile 'net.pubnative:lite.adapters.mopub:0.1.7-master.126'
+    // #AOL
+    compile(name: 'android-ad-sdk', ext: 'aar')
+
+    compile(name: 'MAT-moat-mobile-app-kit', ext: 'aar')
+}
