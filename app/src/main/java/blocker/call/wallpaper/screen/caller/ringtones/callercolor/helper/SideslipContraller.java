@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import java.util.Locale;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.BlockActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
@@ -214,7 +215,9 @@ public class SideslipContraller implements View.OnClickListener {
 
     private void onBlock() {
         FlurryAgent.logEvent("left_block_click");
-
+        Intent intent = new Intent();
+        intent.setClass(mAct, BlockActivity.class);
+        mAct.startActivity(intent);
     }
 
     public void onSettings() {

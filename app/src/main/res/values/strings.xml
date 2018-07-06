@@ -48,7 +48,7 @@
     <string name="popup_tips3">"Turn the toggle of floating window on"</string>    <!--对话框 结束-->
 
     <!-- 首页菜单 开始-->
-    <string name="main_menu_block">Block</string>
+    <string name="main_menu_block">@string/phone_detail_block</string>
     <string name="main_menu_settings">@string/setting_title</string>
     <string name="main_menu_about">@string/about_title</string>
     <!-- 首页菜单 结束-->

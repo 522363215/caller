@@ -23,6 +23,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.BlockActivity"
+            android:screenOrientation="portrait"/>
+
         <service
             android:name=".service.LocalService"
             android:exported="true"
