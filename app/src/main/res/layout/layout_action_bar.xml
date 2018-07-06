@@ -8,7 +8,7 @@
     android:paddingLeft="4dp"
     android:paddingRight="4dp">
 
-    <com.hiblock.caller.view.FontIconView
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
         android:id="@+id/imgReturn"
         android:layout_width="@dimen/dp48"
         android:layout_height="match_parent"
@@ -28,7 +28,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.hiblock.caller.view.CustomTextView
+        <TextView
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             android:textSize="18sp"
             tools:text="tasdadasdadaddadadadasdasdasdasdd" />
 
-        <com.hiblock.caller.view.CustomTextView
+        <TextView
             android:id="@+id/txtTitle_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             tools:visibility="gone" />
     </LinearLayout>
 
-    <com.hiblock.caller.view.FontIconView
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
         android:id="@+id/fiv_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
             android:textCursorDrawable="@null"
             android:textSize="16sp" />
 
-        <com.hiblock.caller.view.FontIconView
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
             android:id="@+id/fiv_clear_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1" />
 
-        <com.hiblock.caller.view.FontIconView
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
             android:id="@+id/fiv_contact_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/dp24" />
 
-        <com.hiblock.caller.view.FontIconView
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
             android:id="@+id/fiv_contact_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <com.hiblock.caller.view.FontIconView
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
             android:id="@+id/fiv_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone">
 
-        <com.hiblock.caller.view.FontIconView
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
             android:id="@+id/fiv_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
         android:visibility="gone"
         tools:visibility="gone">
 
-        <com.hiblock.caller.view.FontIconView
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
             android:id="@+id/fiv_phone"
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"
@@ -202,7 +202,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/dp24" />
 
-        <com.hiblock.caller.view.FontIconView
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
             android:id="@+id/fiv_menu"
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"

@@ -1,4 +1,4 @@
-package com.hiblock.caller.view;
+package blocker.call.wallpaper.screen.caller.ringtones.callercolor.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,9 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.hiblock.caller.R;
-import com.hiblock.caller.utils.LanguageSettingUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 
 /**
  * Created by Sandy on 16/7/5.
@@ -23,14 +23,12 @@ public class ActionBar extends RelativeLayout {
     TextView tvTitle;
     String fontIcon;
     String fontIconLdrtl;
-    private RoundedImageView ivContactPhoto;
     private LinearLayout layoutContactSearch;
     private EditText etSearch;
     private FontIconView fivCloseEditText;
     private LinearLayout layoutContactSearchAndAdd;
     private FontIconView fivContactSearch;
     private FontIconView fivContactAdd;
-    private FontIconView fivContactPhoto;
 
     public ActionBar(Context context) {
         super(context);
@@ -49,7 +47,6 @@ public class ActionBar extends RelativeLayout {
 
     private void init(Context context, AttributeSet attrs) {
 
-
         if (attrs != null) {
             TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ActionBar, 0, 0);
             try {
@@ -63,8 +60,6 @@ public class ActionBar extends RelativeLayout {
 
                 iconFontBack = (FontIconView) findViewById(R.id.imgReturn);
                 tvTitle = (TextView) findViewById(R.id.txtTitle);
-                ivContactPhoto = (RoundedImageView) findViewById(R.id.iv_contact_photo);
-                fivContactPhoto = (FontIconView) findViewById(R.id.fiv_contact_icon);
 
                 String font = attributes.getString(R.styleable.ActionBar_title);
                 tvTitle.setText(font);
@@ -83,12 +78,6 @@ public class ActionBar extends RelativeLayout {
                 } else if (fontIcon == null) {
                     fontIcon = getResources().getString(R.string.icon_arrow);
                     fontIconLdrtl = getResources().getString(R.string.icon_arrow);
-                }
-                if (LanguageSettingUtil.isLayoutReverse(context)) {
-                    iconFontBack.setText(fontIconLdrtl);
-                    iconFontBack.setRotation(180);
-                } else {
-                    iconFontBack.setText(fontIcon);
                 }
 
             } finally {
@@ -123,20 +112,4 @@ public class ActionBar extends RelativeLayout {
         iconFontBack.setOnClickListener(l);
     }
 
-    public void setContactPhoto(boolean isHavePhoto,Bitmap bitmap){
-        if (isHavePhoto){
-            if (bitmap!=null){
-                ivContactPhoto.setVisibility(VISIBLE);
-                fivContactPhoto.setVisibility(GONE);
-                ivContactPhoto.setImageBitmap(bitmap);
-            }else {
-                ivContactPhoto.setVisibility(GONE);
-                fivContactPhoto.setVisibility(VISIBLE);
-            }
-        }else {
-            ivContactPhoto.setVisibility(GONE);
-            fivContactPhoto.setVisibility(VISIBLE);
-        }
-
-    }
 }
