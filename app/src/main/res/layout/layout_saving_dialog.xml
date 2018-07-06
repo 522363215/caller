@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/btn_white_f8f8f8_selector_round4dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="@dimen/dp80"
+        android:layout_height="@dimen/dp80"
+        android:layout_marginTop="@dimen/dp16"
+        android:src="@drawable/ico_smile3" />
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.LoadingProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp36"
+        android:layout_marginTop="@dimen/dp8" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp8"
+        android:text="@string/call_flash_saving"
+        android:textColor="@color/color_FF00284D"
+        android:textSize="18sp" />
+</LinearLayout>

@@ -3,6 +3,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AppOpsManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,8 +13,11 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 
+import com.md.block.core.service.CallerNotificationListenerService;
+
 import java.util.ArrayList;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.PermissionDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventNoPermission;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
@@ -114,7 +118,7 @@ public class PermissionUtils {
                     if (!isMiAllowed) {
                         notGrantedPermissionsList.add(requestPermission);
                         if (requestPermission == Manifest.permission.READ_CALL_LOG) {
-                            PreferenceHelper.setBoolean(PreferenceHelper.PREF_KEY_IS_RETURN_FROM_SETTING_ACTIIVTY, false);
+                            PreferenceHelper.putBoolean(PreferenceHelper.PREF_KEY_IS_RETURN_FROM_SETTING_ACTIIVTY, false);
                         }
                         openSettingActivity(activity);
                         return null;
@@ -124,7 +128,7 @@ public class PermissionUtils {
                 // TODO: 2017/4/5 授权失败
                 notGrantedPermissionsList.add(requestPermission);
                 if (requestPermission == Manifest.permission.READ_CALL_LOG) {
-                    PreferenceHelper.setBoolean(PreferenceHelper.PREF_KEY_IS_RETURN_FROM_SETTING_ACTIIVTY, false);
+                    PreferenceHelper.putBoolean(PreferenceHelper.PREF_KEY_IS_RETURN_FROM_SETTING_ACTIIVTY, false);
                 }
             }
         }
@@ -300,5 +304,21 @@ public class PermissionUtils {
             LogUtil.e("perm_check", "checkOp exception: " + e.getMessage());
         }
         return is;
+    }
+
+    public static void toggleNotificationListenerService(Context context) {
+        if (context != null) {
+            try {
+                ComponentName thisComponent = new ComponentName(context, CallerNotificationListenerService.class);
+                PackageManager pm = context.getPackageManager();
+                pm.setComponentEnabledSetting(thisComponent, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+                pm.setComponentEnabledSetting(thisComponent, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+                LogUtil.d("notify_answer", "permissionUtil toggleNotificationListenerService() called");
+                PreferenceHelper.putBoolean("is_start_NotifiListernerOnFirst", true);
+            } catch (Exception e) {
+                LogUtil.e("notify_answer", "permissionUtil toggleNotificationListenerService exception: " + e.getMessage());
+            }
+
+        }
     }
 }

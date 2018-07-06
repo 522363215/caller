@@ -29,6 +29,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 
 /**
  * Created by John on 2015/12/17.
@@ -210,10 +212,7 @@ public final class CommonUtils {
 
     public static boolean isContactShortcut() {
         boolean is = false;
-
-        SharedPreferences pref = ApplicationEx.getInstance().getGlobalSettingPreference();
-
-        int isCreate = pref.getInt("pref_is_need_contact_shortcut", 1);
+        int isCreate = PreferenceHelper.getInt("pref_is_need_contact_shortcut", 1);
         if (isCreate == 1) {
             is = true;//创建
         }
@@ -224,9 +223,7 @@ public final class CommonUtils {
     public static boolean isSMSShortcut() {
         boolean is = false;
 
-        SharedPreferences pref = ApplicationEx.getInstance().getGlobalSettingPreference();
-
-        int isCreate = pref.getInt("pref_is_need_sms_shortcut", 1);
+        int isCreate = PreferenceHelper.getInt("pref_is_need_sms_shortcut", 1);
         if (isCreate == 1) {
             is = true;//创建
         }
@@ -236,17 +233,15 @@ public final class CommonUtils {
 
     public static boolean isShowEndCall() {
         boolean show = true;
-
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        int user_end_call_count = ad_pref.getInt("pref_user_end_call_count", 0);
+        int user_end_call_count = AdPreferenceHelper.getInt("pref_user_end_call_count", 0);
 
 
         if (!isShowEndCallToday()) {
             show = false;
         } else {
             int count = user_end_call_count + 1;
-            ad_pref.edit().putInt("pref_user_end_call_count", count).commit();
-            ad_pref.edit().putLong("pref_user_end_call_time", System.currentTimeMillis()).commit();
+            AdPreferenceHelper.putInt("pref_user_end_call_count", count);
+            AdPreferenceHelper.putLong("pref_user_end_call_time", System.currentTimeMillis());
         }
 
 
@@ -254,12 +249,9 @@ public final class CommonUtils {
     }
 
     private static boolean isShowEndCallToday() {
-
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-
-        int show_end_call_max_count = ad_pref.getInt("pref_show_end_call_max_count", 99);
-        int user_end_call_count = ad_pref.getInt("pref_user_end_call_count", 0);
-        long user_end_call_time = ad_pref.getLong("pref_user_end_call_time", 0);
+        int show_end_call_max_count = AdPreferenceHelper.getInt("pref_show_end_call_max_count", 99);
+        int user_end_call_count = AdPreferenceHelper.getInt("pref_user_end_call_count", 0);
+        long user_end_call_time = AdPreferenceHelper.getLong("pref_user_end_call_time", 0);
 
         boolean is = false;
         int show_today = user_end_call_count;
@@ -268,7 +260,7 @@ public final class CommonUtils {
                 is = true;
             }
         } else {
-            ad_pref.edit().putInt("pref_user_end_call_count", 0).commit();
+            AdPreferenceHelper.putInt("pref_user_end_call_count", 0);
             is = true;
         }
         return is;

@@ -16,6 +16,7 @@ import com.mopub.test.util.AdvertisingIdClient;
 import org.json.JSONObject;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -40,8 +41,7 @@ public class StatisticsUtil {
 
     public static void sendData(final Context context, final boolean bMain) {
         final ApplicationEx app = (ApplicationEx) context.getApplicationContext();
-        SharedPreferences setting = app.getGlobalSettingPreference();
-        final int used_day = bMain ? setting.getInt("used_day", 0) : setting.getInt("used_day_base", 0);
+        final int used_day = bMain ? PreferenceHelper.getInt("used_day", 0) : PreferenceHelper.getInt("used_day_base", 0);
         if (used_day != Stringutil.getTodayDayInYearGMT8()) {
             if (!(bMain ? isPostingMainData : isPostingBaseData)) {
                 if (bMain)
@@ -69,14 +69,12 @@ public class StatisticsUtil {
 
         try {
             object.put("aid", androidId);
-
-            SharedPreferences setting = ApplicationEx.getInstance().getGlobalSettingPreference();
             String channel = getChannel(context);
             LogUtil.d("postData channel", channel);
-            String from = setting.getString("from", "");
-            String sub_ch = setting.getString("sub_ch", "");
+            String from = PreferenceHelper.getString("from", "");
+            String sub_ch = PreferenceHelper.getString("sub_ch", "");
             object.put("sub_ch", sub_ch);
-            String referrer = setting.getString("referrer", "");
+            String referrer = PreferenceHelper.getString("referrer", "");
 
             if (!channel.equals("")) {
                 object.put("ch", channel);
@@ -89,7 +87,7 @@ public class StatisticsUtil {
                     from = channel;
                 }
 
-                setting.edit().putString("from", from).commit();
+                PreferenceHelper.putString("from", from);
             }
 
             object.put("from", from);
@@ -147,9 +145,9 @@ public class StatisticsUtil {
                 String result = res.body().string();
                 if (result.equals("0")) {
                     if (bMain)
-                        setting.edit().putInt("used_day", Stringutil.getTodayDayInYearGMT8()).commit();
+                        PreferenceHelper.putInt("used_day", Stringutil.getTodayDayInYearGMT8());
                     else
-                        setting.edit().putInt("used_day_base", Stringutil.getTodayDayInYearGMT8()).commit();
+                        PreferenceHelper.putInt("used_day_base", Stringutil.getTodayDayInYearGMT8());
                     LogUtil.d("ccooler", "post statistic result: " + result);
                 }
                 res.body().close();
@@ -169,20 +167,18 @@ public class StatisticsUtil {
     }
 
     public static String getSubChannel() {
-        String sub_ch = ApplicationEx.getInstance().getGlobalSettingPreference().getString("sub_ch", "");
+        String sub_ch = PreferenceHelper.getString("sub_ch", "");
         return sub_ch;
     }
 
     public static String getChannel(Context context) {
         String channel = "";
         if(ApplicationEx.getInstance() != null) {
-            SharedPreferences sp = ApplicationEx.getInstance().getGlobalSettingPreference();
-
             // get from 'channel'
-            channel = sp.getString("channel", null);
+            channel = PreferenceHelper.getString("channel", null);
             // get from 'from'
             if (TextUtils.isEmpty(channel)) {
-                channel = sp.getString("from", null);
+                channel = PreferenceHelper.getString("from", null);
             }
         }
         // get from Manifest
@@ -205,8 +201,7 @@ public class StatisticsUtil {
     public static String getSubChannel(Context context) {
         String sub_ch = "";
         if(ApplicationEx.getInstance() != null) {
-            SharedPreferences setting = ApplicationEx.getInstance().getGlobalSettingPreference();
-            sub_ch = setting.getString("sub_ch", "");
+            sub_ch = PreferenceHelper.getString("sub_ch", "");
         }
 
         return sub_ch;

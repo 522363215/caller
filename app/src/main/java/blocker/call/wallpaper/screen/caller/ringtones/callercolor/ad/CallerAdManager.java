@@ -18,6 +18,7 @@ import java.util.Random;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventInterstitialAdLoadSuccess;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.FullScreenAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
@@ -45,7 +46,7 @@ public class CallerAdManager {
     public final static int DU_ADS_CALL_FLASH = 3;
     public final static int DU_ADS_CALL_COMMON = 66;
 
-    //用新的share preference file, ApplicationEx.getInstance().getGlobalADPreference()
+    //用新的share preference file, AdPreferenceHelper
     //baidu sdk ads, 百度广告控制
     public static final String DU_AD_MASTER_SWITCH = "du_ad_master_switch"; //baidu 广告总开关, 0 关闭 ; 1 打开
 
@@ -283,58 +284,57 @@ public class CallerAdManager {
     //获取非来新秀相关界面的结果页插屏id
     private static String getInGroupAdIdResultByKey(String key) {
         String adid = "";
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         switch (key) {
             case KEY_IN_GROUP_FACEBOOK_HIGH:
-                adid = ad_pref.getString(key, IN_GROUP_FACEBOOK_HIGH_ID);
+                adid = AdPreferenceHelper.getString(key, IN_GROUP_FACEBOOK_HIGH_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = IN_GROUP_FACEBOOK_HIGH_ID;
                 }
                 break;
             case KEY_IN_GROUP_FACEBOOK_MEDIUM:
-                adid = ad_pref.getString(key, IN_GROUP_FACEBOOK_MEDIUM_ID);
+                adid = AdPreferenceHelper.getString(key, IN_GROUP_FACEBOOK_MEDIUM_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = IN_GROUP_FACEBOOK_MEDIUM_ID;
                 }
                 break;
             case KEY_IN_GROUP_FACEBOOK_NORMAL:
-                adid = ad_pref.getString(key, IN_GROUP_FACEBOOK_NORMAL_ID);
+                adid = AdPreferenceHelper.getString(key, IN_GROUP_FACEBOOK_NORMAL_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = IN_GROUP_FACEBOOK_NORMAL_ID;
                 }
                 break;
             case KEY_IN_GROUP_ADMOB_HIGH:
-                adid = ad_pref.getString(key, IN_GROUP_ADMOB_HIGH_ID);
+                adid = AdPreferenceHelper.getString(key, IN_GROUP_ADMOB_HIGH_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = IN_GROUP_ADMOB_HIGH_ID;
                 }
                 break;
             case KEY_IN_GROUP_ADMOB_MEDIUM:
-                adid = ad_pref.getString(key, IN_GROUP_ADMOB_MEDIUM_ID);
+                adid = AdPreferenceHelper.getString(key, IN_GROUP_ADMOB_MEDIUM_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = IN_GROUP_ADMOB_MEDIUM_ID;
                 }
                 break;
             case KEY_IN_GROUP_ADMOB_NORMAL:
-                adid = ad_pref.getString(key, IN_GROUP_ADMOB_NORMAL_ID);
+                adid = AdPreferenceHelper.getString(key, IN_GROUP_ADMOB_NORMAL_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = IN_GROUP_ADMOB_NORMAL_ID;
                 }
                 break;
             case KEY_IN_GROUP_ADMOB_ADX_HIGH:
-                adid = ad_pref.getString(key, IN_GROUP_ADMOB_ADX_HIGH_ID);
+                adid = AdPreferenceHelper.getString(key, IN_GROUP_ADMOB_ADX_HIGH_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = IN_GROUP_ADMOB_ADX_HIGH_ID;
                 }
                 break;
             case KEY_IN_GROUP_ADMOB_ADX_MEDIUM:
-                adid = ad_pref.getString(key, IN_GROUP_ADMOB_ADX_MEDIUM_ID);
+                adid = AdPreferenceHelper.getString(key, IN_GROUP_ADMOB_ADX_MEDIUM_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = IN_GROUP_ADMOB_ADX_MEDIUM_ID;
                 }
                 break;
             case KEY_IN_GROUP_ADMOB_ADX_NORMAL:
-                adid = ad_pref.getString(key, IN_GROUP_ADMOB_ADX_NORMAL_ID);
+                adid = AdPreferenceHelper.getString(key, IN_GROUP_ADMOB_ADX_NORMAL_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = IN_GROUP_ADMOB_ADX_NORMAL_ID;
                 }
@@ -348,58 +348,57 @@ public class CallerAdManager {
     //获取来电秀相关界面插屏id(包括设置插屏结果页的插屏)
     private static String getInGroupAdIdFlashByKey(String key) {
         String adid = "";
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         switch (key) {
             case KEY_FLASH_IN_GROUP_FACEBOOK_HIGH:
-                adid = ad_pref.getString(key, FLASH_IN_GROUP_FACEBOOK_HIGH_ID);
+                adid = AdPreferenceHelper.getString(key, FLASH_IN_GROUP_FACEBOOK_HIGH_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = FLASH_IN_GROUP_FACEBOOK_HIGH_ID;
                 }
                 break;
             case KEY_FLASH_IN_GROUP_FACEBOOK_MEDIUM:
-                adid = ad_pref.getString(key, FLASH_IN_GROUP_FACEBOOK_MEDIUM_ID);
+                adid = AdPreferenceHelper.getString(key, FLASH_IN_GROUP_FACEBOOK_MEDIUM_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = FLASH_IN_GROUP_FACEBOOK_MEDIUM_ID;
                 }
                 break;
             case KEY_FLASH_IN_GROUP_FACEBOOK_NORMAL:
-                adid = ad_pref.getString(key, FLASH_IN_GROUP_FACEBOOK_NORMAL_ID);
+                adid = AdPreferenceHelper.getString(key, FLASH_IN_GROUP_FACEBOOK_NORMAL_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = FLASH_IN_GROUP_FACEBOOK_NORMAL_ID;
                 }
                 break;
             case KEY_FLASH_IN_GROUP_ADMOB_HIGH:
-                adid = ad_pref.getString(key, FLASH_IN_GROUP_ADMOB_HIGH_ID);
+                adid = AdPreferenceHelper.getString(key, FLASH_IN_GROUP_ADMOB_HIGH_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = FLASH_IN_GROUP_ADMOB_HIGH_ID;
                 }
                 break;
             case KEY_FLASH_IN_GROUP_ADMOB_MEDIUM:
-                adid = ad_pref.getString(key, FLASH_IN_GROUP_ADMOB_MEDIUM_ID);
+                adid = AdPreferenceHelper.getString(key, FLASH_IN_GROUP_ADMOB_MEDIUM_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = FLASH_IN_GROUP_ADMOB_MEDIUM_ID;
                 }
                 break;
             case KEY_FLASH_IN_GROUP_ADMOB_NORMAL:
-                adid = ad_pref.getString(key, FLASH_IN_GROUP_ADMOB_NORMAL_ID);
+                adid = AdPreferenceHelper.getString(key, FLASH_IN_GROUP_ADMOB_NORMAL_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = FLASH_IN_GROUP_ADMOB_NORMAL_ID;
                 }
                 break;
             case KEY_FLASH_IN_GROUP_ADMOB_ADX_HIGH:
-                adid = ad_pref.getString(key, FLASH_IN_GROUP_ADMOB_ADX_HIGH_ID);
+                adid = AdPreferenceHelper.getString(key, FLASH_IN_GROUP_ADMOB_ADX_HIGH_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = FLASH_IN_GROUP_ADMOB_ADX_HIGH_ID;
                 }
                 break;
             case KEY_FLASH_IN_GROUP_ADMOB_ADX_MEDIUM:
-                adid = ad_pref.getString(key, FLASH_IN_GROUP_ADMOB_ADX_MEDIUM_ID);
+                adid = AdPreferenceHelper.getString(key, FLASH_IN_GROUP_ADMOB_ADX_MEDIUM_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = FLASH_IN_GROUP_ADMOB_ADX_MEDIUM_ID;
                 }
                 break;
             case KEY_FLASH_IN_GROUP_ADMOB_ADX_NORMAL:
-                adid = ad_pref.getString(key, FLASH_IN_GROUP_ADMOB_ADX_NORMAL_ID);
+                adid = AdPreferenceHelper.getString(key, FLASH_IN_GROUP_ADMOB_ADX_NORMAL_ID);
                 if (adid == null || adid.trim().equals("")) {
                     adid = FLASH_IN_GROUP_ADMOB_ADX_NORMAL_ID;
                 }
@@ -413,34 +412,33 @@ public class CallerAdManager {
     //来电秀下载页
     public static String getBigGroupIdByKey(String key) {
         String adid = "";
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         switch (key) {
             case KEY_FLASH_DOWN_GROUP_FACEBOOK_HIGH:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_FLASH_DOWN_GROUP_FACEBOOK_MEDIUM:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_FLASH_DOWN_GROUP_FACEBOOK_NORMAL:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_FLASH_DOWN_GROUP_ADMOB_HIGH:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_FLASH_DOWN_GROUP_ADMOB_MEDIUM:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_FLASH_DOWN_GROUP_ADMOB_NORMAL:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_FLASH_DOWN_GROUP_ADMOB_ADX_HIGH:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_FLASH_DOWN_GROUP_ADMOB_ADX_MEDIUM:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_FLASH_DOWN_GROUP_ADMOB_ADX_NORMAL:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             default:
                 break;
@@ -451,34 +449,33 @@ public class CallerAdManager {
 
     public static String getBannerGroupIdByKey(String key) {
         String adid = "";
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         switch (key) {
             case KEY_BANNER_GROUP_FACEBOOK_HIGH:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_BANNER_GROUP_FACEBOOK_MEDIUM:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_BANNER_GROUP_FACEBOOK_NORMAL:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_BANNER_GROUP_ADMOB_HIGH:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_BANNER_GROUP_ADMOB_MEDIUM:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_BANNER_GROUP_ADMOB_NORMAL:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_BANNER_GROUP_ADMOB_ADX_HIGH:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_BANNER_GROUP_ADMOB_ADX_MEDIUM:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             case KEY_BANNER_GROUP_ADMOB_ADX_NORMAL:
-                adid = ad_pref.getString(key, "");
+                adid = AdPreferenceHelper.getString(key, "");
                 break;
             default:
                 break;
@@ -490,7 +487,7 @@ public class CallerAdManager {
     //大图广告空白区域默认不可点
     public static boolean isWhiteSpacesClickable(String position) {
         boolean clickable = false;
-        if (ApplicationEx.getInstance().getGlobalSettingPreference().getInt(ConstantUtils.FB_BIG_WHITE_SPACES_CLICKABLE, 0) != 0) {
+        if (PreferenceHelper.getInt(ConstantUtils.FB_BIG_WHITE_SPACES_CLICKABLE, 0) != 0) {
             if (ConstantUtils.getBigFbClickablePosition().contains(position)) {
                 if (ConstantUtils.getBigFbClickableCountries().contains(ApplicationEx.getInstance().country)) {
                     clickable = true;
@@ -520,12 +517,11 @@ public class CallerAdManager {
         boolean is = false; //false not show, 默认关, test is true
         //get mopub all from server
 
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        if (ad_pref.getInt("pref_mopub_master_switcher", 0) != 0) { //mopub 总开关
+        if (AdPreferenceHelper.getInt("pref_mopub_master_switcher", 0) != 0) { //mopub 总开关
             is = true; //show
         }
         if (is) {
-            String countires = ad_pref.getString("pref_mopub_show_ads_countries", "");
+            String countires = AdPreferenceHelper.getString("pref_mopub_show_ads_countries", "");
             if (!TextUtils.isEmpty(countires) && (countires.equals(PARAM_ALL_COUNTRIES) || getShowMopubAdsCountries().contains(ApplicationEx.getInstance().country))) {
                 is = true;
             }
@@ -601,9 +597,8 @@ public class CallerAdManager {
 
     public static boolean isDU(int position) {
         boolean is = false;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
 
-        int master_switch = ad_pref.getInt(DU_AD_MASTER_SWITCH, 0);
+        int master_switch = AdPreferenceHelper.getInt(DU_AD_MASTER_SWITCH, 0);
 
         if (master_switch == 0) { //0 not show
             return is;
@@ -612,9 +607,9 @@ public class CallerAdManager {
 
         switch (position) {
             case DU_ADS_SPLASH:
-                int sw1 = ad_pref.getInt(DU_AD_STARTUP_SWITCH, 0);
+                int sw1 = AdPreferenceHelper.getInt(DU_AD_STARTUP_SWITCH, 0);
                 if (sw1 != 0) {
-                    String countires = ad_pref.getString(DU_AD_STARTUP_COUNTRIES, "");
+                    String countires = AdPreferenceHelper.getString(DU_AD_STARTUP_COUNTRIES, "");
                     if (!TextUtils.isEmpty(countires) && (countires.equals(PARAM_ALL_COUNTRIES) || getShowDUSplashAds().contains(ApplicationEx.getInstance().country))) {
                         if (isLessThanLimit(position)) {
                             is = true;
@@ -623,9 +618,9 @@ public class CallerAdManager {
                 }
                 break;
             case DU_ADS_RESULT:
-                int sw2 = ad_pref.getInt(DU_AD_RESULT_SWITCH, 0);
+                int sw2 = AdPreferenceHelper.getInt(DU_AD_RESULT_SWITCH, 0);
                 if (sw2 != 0) {
-                    String countires = ad_pref.getString(DU_AD_RESULT_COUNTRIES, "");
+                    String countires = AdPreferenceHelper.getString(DU_AD_RESULT_COUNTRIES, "");
                     if (!TextUtils.isEmpty(countires) && (countires.equals(PARAM_ALL_COUNTRIES) || getShowDUResultsAds().contains(ApplicationEx.getInstance().country))) {
                         if (isLessThanLimit(position)) {
                             is = true;
@@ -634,9 +629,9 @@ public class CallerAdManager {
                 }
                 break;
             case DU_ADS_CALL_FLASH:
-                int sw3 = ad_pref.getInt(DU_AD_CALL_FLASH_SWITCH, 0);
+                int sw3 = AdPreferenceHelper.getInt(DU_AD_CALL_FLASH_SWITCH, 0);
                 if (sw3 != 0) {
-                    String countires = ad_pref.getString(DU_AD_CALL_FLASH_COUNTRIES, "");
+                    String countires = AdPreferenceHelper.getString(DU_AD_CALL_FLASH_COUNTRIES, "");
                     if (!TextUtils.isEmpty(countires) && (countires.equals(PARAM_ALL_COUNTRIES) || getShowDUCallFlashAds().contains(ApplicationEx.getInstance().country))) {
                         if (isLessThanLimit(position)) {
                             is = true;
@@ -650,7 +645,7 @@ public class CallerAdManager {
                 break;
         }
 
-        LogUtil.d("du_ads", "isDU position: " + position + ", countires: " + ad_pref.getString(DU_AD_STARTUP_COUNTRIES, "") + ", switch: " + ad_pref.getInt(DU_AD_STARTUP_SWITCH, 0));
+        LogUtil.d("du_ads", "isDU position: " + position + ", countires: " + AdPreferenceHelper.getString(DU_AD_STARTUP_COUNTRIES, "") + ", switch: " + AdPreferenceHelper.getInt(DU_AD_STARTUP_SWITCH, 0));
 
         return is;
     }
@@ -658,9 +653,7 @@ public class CallerAdManager {
     private static boolean isLessThanLimit(int position) {
         boolean is = false;
 
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-
-        int master_switch = ad_pref.getInt(DU_AD_MASTER_SWITCH, 0);
+        int master_switch = AdPreferenceHelper.getInt(DU_AD_MASTER_SWITCH, 0);
 
         if (master_switch == 0) {
             return is;
@@ -668,9 +661,9 @@ public class CallerAdManager {
 
         switch (position) {
             case DU_ADS_SPLASH:
-                int count_limit1 = ad_pref.getInt(DU_AD_STARTUP_LIMIT, 99);
-                int count_today1 = ad_pref.getInt(DU_AD_STARTUP_COUNT, 0);
-                long show_day1 = ad_pref.getLong(DU_AD_STARTUP_DAY, 0);
+                int count_limit1 = AdPreferenceHelper.getInt(DU_AD_STARTUP_LIMIT, 99);
+                int count_today1 = AdPreferenceHelper.getInt(DU_AD_STARTUP_COUNT, 0);
+                long show_day1 = AdPreferenceHelper.getLong(DU_AD_STARTUP_DAY, 0);
                 if (!Stringutil.isTodayNew(show_day1)) {
                     count_today1 = 0;
                 }
@@ -678,13 +671,13 @@ public class CallerAdManager {
                     is = true;
                     count_today1++;
                 }
-                ad_pref.edit().putInt(DU_AD_STARTUP_COUNT, count_today1).commit();
-                ad_pref.edit().putLong(DU_AD_STARTUP_DAY, System.currentTimeMillis()).commit();
+                AdPreferenceHelper.putInt(DU_AD_STARTUP_COUNT, count_today1);
+                AdPreferenceHelper.putLong(DU_AD_STARTUP_DAY, System.currentTimeMillis());
                 break;
             case DU_ADS_RESULT:
-                int count_limit2 = ad_pref.getInt(DU_AD_RESULT_LIMIT, 99);
-                int count_today2 = ad_pref.getInt(DU_AD_RESULT_COUNT, 0);
-                long show_day2 = ad_pref.getLong(DU_AD_RESULT_DAY, 0);
+                int count_limit2 = AdPreferenceHelper.getInt(DU_AD_RESULT_LIMIT, 99);
+                int count_today2 = AdPreferenceHelper.getInt(DU_AD_RESULT_COUNT, 0);
+                long show_day2 = AdPreferenceHelper.getLong(DU_AD_RESULT_DAY, 0);
                 if (!Stringutil.isTodayNew(show_day2)) {
                     count_today2 = 0;
                 }
@@ -692,13 +685,13 @@ public class CallerAdManager {
                     is = true;
                     count_today2++;
                 }
-                ad_pref.edit().putInt(DU_AD_RESULT_COUNT, count_today2).commit();
-                ad_pref.edit().putLong(DU_AD_RESULT_DAY, System.currentTimeMillis()).commit();
+                AdPreferenceHelper.putInt(DU_AD_RESULT_COUNT, count_today2);
+                AdPreferenceHelper.putLong(DU_AD_RESULT_DAY, System.currentTimeMillis());
                 break;
             case DU_ADS_CALL_FLASH:
-                int count_limit3 = ad_pref.getInt(DU_AD_CALL_FLASH_LIMIT, 99);
-                int count_today3 = ad_pref.getInt(DU_AD_CALL_FLASH_COUNT, 0);
-                long show_day3 = ad_pref.getLong(DU_AD_CALL_FLASH_DAY, 0);
+                int count_limit3 = AdPreferenceHelper.getInt(DU_AD_CALL_FLASH_LIMIT, 99);
+                int count_today3 = AdPreferenceHelper.getInt(DU_AD_CALL_FLASH_COUNT, 0);
+                long show_day3 = AdPreferenceHelper.getLong(DU_AD_CALL_FLASH_DAY, 0);
                 if (!Stringutil.isTodayNew(show_day3)) {
                     count_today3 = 0;
                 }
@@ -706,8 +699,8 @@ public class CallerAdManager {
                     is = true;
                     count_today3++;
                 }
-                ad_pref.edit().putInt(DU_AD_CALL_FLASH_COUNT, count_today3).commit();
-                ad_pref.edit().putLong(DU_AD_CALL_FLASH_DAY, System.currentTimeMillis()).commit();
+                AdPreferenceHelper.putInt(DU_AD_CALL_FLASH_COUNT, count_today3);
+                AdPreferenceHelper.putLong(DU_AD_CALL_FLASH_DAY, System.currentTimeMillis());
                 break;
             default:
                 break;
@@ -718,15 +711,11 @@ public class CallerAdManager {
 
     private static boolean isLessThanLimitIn(int position) {
         boolean is = false;
-
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-
-
         switch (position) {
             case IN_ADS_RESULT:
-                int count_limit1 = ad_pref.getInt(IN_ADS_RESULT_LIMIT, 99);
-                int count_today1 = ad_pref.getInt(IN_ADS_RESULT_COUNT, 0);
-                long show_day1 = ad_pref.getLong(IN_ADS_RESULT_DAY, 0);
+                int count_limit1 = AdPreferenceHelper.getInt(IN_ADS_RESULT_LIMIT, 99);
+                int count_today1 = AdPreferenceHelper.getInt(IN_ADS_RESULT_COUNT, 0);
+                long show_day1 = AdPreferenceHelper.getLong(IN_ADS_RESULT_DAY, 0);
                 if (!Stringutil.isTodayNew(show_day1)) {
                     count_today1 = 0;
                 }
@@ -734,8 +723,8 @@ public class CallerAdManager {
                     is = true;
                     count_today1++;
                 }
-                ad_pref.edit().putInt(IN_ADS_RESULT_COUNT, count_today1).commit();
-                ad_pref.edit().putLong(IN_ADS_RESULT_DAY, System.currentTimeMillis()).commit();
+                AdPreferenceHelper.putInt(IN_ADS_RESULT_COUNT, count_today1);
+                AdPreferenceHelper.putLong(IN_ADS_RESULT_DAY, System.currentTimeMillis());
                 break;
             default:
                 break;
@@ -763,13 +752,12 @@ public class CallerAdManager {
      */
     public static boolean isShowInterstitial(int position) {
         boolean show = false;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         switch (position) {
             case IN_ADS_RESULT:
-                int sw = ad_pref.getInt("pref_show_interstitial_all_result", 0); //0 not show, //2018-04-12, 修改key, 这样以前的版本不会开启错误的插屏广告, old: is_interstitial_result
+                int sw = AdPreferenceHelper.getInt("pref_show_interstitial_all_result", 0); //0 not show, //2018-04-12, 修改key, 这样以前的版本不会开启错误的插屏广告, old: is_interstitial_result
                 if (sw == 1) {
-                    long show_guide = ApplicationEx.getInstance().getGlobalSettingPreference().getLong(ConstantUtils.PREF_KEY_SHOW_GUIDE_TIME, 0);
-                    long interval_from_install_bench = ad_pref.getLong("pref_interstitial_from_install_bench", 0); //us 等发达国家 , 自然量安装24小时后才显示插屏, 24 * 60 * 60 * 1000=86400000， 渠道量立即开
+                    long show_guide = PreferenceHelper.getLong(ConstantUtils.PREF_KEY_SHOW_GUIDE_TIME, 0);
+                    long interval_from_install_bench = AdPreferenceHelper.getLong("pref_interstitial_from_install_bench", 0); //us 等发达国家 , 自然量安装24小时后才显示插屏, 24 * 60 * 60 * 1000=86400000， 渠道量立即开
                     LogUtil.d("isShowInterstitial", "loadInterstitial IN_ADS_RESULT interval_from_install_bench: " + interval_from_install_bench);
                     if (Math.abs(System.currentTimeMillis() - show_guide) >= interval_from_install_bench) {
                         LogUtil.d("isShowInterstitial", "loadInterstitial IN_ADS_RESULT true: ");
@@ -779,7 +767,7 @@ public class CallerAdManager {
                 break;
             case IN_ADS_CALL_FLASH_RESULT:
             case IN_ADS_CALL_FLASH:
-                int show_call_flash = ad_pref.getInt("pref_show_interstitial_call_flash", 1); //0 not show, 1 show
+                int show_call_flash = AdPreferenceHelper.getInt("pref_show_interstitial_call_flash", 1); //0 not show, 1 show
                 if (show_call_flash == 1) {
                     LogUtil.d("isShowInterstitial", "loadInterstitial IN_ADS_CALL_FLASH true: ");
                     show = true;
@@ -809,7 +797,7 @@ public class CallerAdManager {
 
     //显示mopub广告的国家
     private static HashSet<String> getShowMopubAdsCountries() {
-        String countries = ApplicationEx.getInstance().getGlobalADPreference().getString("pref_mopub_show_ads_countries", "");
+        String countries = AdPreferenceHelper.getString("pref_mopub_show_ads_countries", "");
         HashSet<String> sets = getControlSet(countries);
         if (BuildConfig.DEBUG) {
             for (String cc : sets) {
@@ -821,7 +809,7 @@ public class CallerAdManager {
 
     //显示插页广告的国家
     private static HashSet<String> getShowInAdsCountries() {
-        String countries = ApplicationEx.getInstance().getGlobalADPreference().getString(CallerAdManager.IN_ADS_RESULT_COUNTRIES, "");
+        String countries = AdPreferenceHelper.getString(CallerAdManager.IN_ADS_RESULT_COUNTRIES, "");
         HashSet<String> sets = getControlSet(countries);
         if (BuildConfig.DEBUG) {
             for (String cc : sets) {
@@ -832,7 +820,7 @@ public class CallerAdManager {
     }
 
     private static HashSet<String> getShowDUSplashAds() {
-        String countries = ApplicationEx.getInstance().getGlobalADPreference().getString(CallerAdManager.DU_AD_STARTUP_COUNTRIES, "");
+        String countries = AdPreferenceHelper.getString(CallerAdManager.DU_AD_STARTUP_COUNTRIES, "");
         HashSet<String> sets = getControlSet(countries);
         if (BuildConfig.DEBUG) {
             for (String cc : sets) {
@@ -843,7 +831,7 @@ public class CallerAdManager {
     }
 
     private static HashSet<String> getShowDUResultsAds() {
-        String countries = ApplicationEx.getInstance().getGlobalADPreference().getString(CallerAdManager.DU_AD_RESULT_COUNTRIES, "");
+        String countries = AdPreferenceHelper.getString(CallerAdManager.DU_AD_RESULT_COUNTRIES, "");
         HashSet<String> sets = getControlSet(countries);
         if (BuildConfig.DEBUG) {
             for (String cc : sets) {
@@ -854,7 +842,7 @@ public class CallerAdManager {
     }
 
     private static HashSet<String> getShowDUCallFlashAds() {
-        String countries = ApplicationEx.getInstance().getGlobalADPreference().getString(CallerAdManager.DU_AD_CALL_FLASH_COUNTRIES, "");
+        String countries = AdPreferenceHelper.getString(CallerAdManager.DU_AD_CALL_FLASH_COUNTRIES, "");
         HashSet<String> sets = getControlSet(countries);
         if (BuildConfig.DEBUG) {
             for (String cc : sets) {
@@ -866,8 +854,7 @@ public class CallerAdManager {
 
     public static boolean isLoadFbInForOthers() {
         boolean load = false;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        int i_load = ad_pref.getInt("pref_load_fb_in_for_adx", 1);
+        int i_load = AdPreferenceHelper.getInt("pref_load_fb_in_for_adx", 1);
         if (i_load == 1) {
             load = true;
         }
@@ -945,9 +932,9 @@ public class CallerAdManager {
     //通话记录详情页
     public static String getPhoneDetailFbId() {
         String fb_id = "198653420649711_198697537311966";
-        int use_id = ApplicationEx.getInstance().getGlobalADPreference().getInt(PREF_IS_PHONE_DETAIL_NEW, 0);
+        int use_id = AdPreferenceHelper.getInt(PREF_IS_PHONE_DETAIL_NEW, 0);
         if (use_id == 99) {
-            fb_id = ApplicationEx.getInstance().getGlobalADPreference().getString(PREF_NEW_PHONE_DETAIL_FB_ID, "");
+            fb_id = AdPreferenceHelper.getString(PREF_NEW_PHONE_DETAIL_FB_ID, "");
         }
         return fb_id;
     }
@@ -972,129 +959,124 @@ public class CallerAdManager {
 
     public static String getCommonFbID(int position) {
         String fb_id = "";
-
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        SharedPreferences pref = ApplicationEx.getInstance().getGlobalSettingPreference();
-
-
         switch (position) {
             case POSITION_FB_ADS_CALLLOG:
                 fb_id = ConstantUtils.FB_FAKE_CALL_ID;
-                if (pref.getInt(ConstantUtils.IS_USE_CALLLOG_ID, 0) == 1) {
+                if (PreferenceHelper.getInt(ConstantUtils.IS_USE_CALLLOG_ID, 0) == 1) {
                     fb_id = ConstantUtils.FB_CALL_LOG_ID;
-                } else if (pref.getInt(ConstantUtils.IS_USE_CALLLOG_ID, 0) == 99) {
-                    fb_id = pref.getString("new_custom_calllog_fb_id", "");
+                } else if (PreferenceHelper.getInt(ConstantUtils.IS_USE_CALLLOG_ID, 0) == 99) {
+                    fb_id = PreferenceHelper.getString("new_custom_calllog_fb_id", "");
                 } else {//0
-                    if (pref.getInt(ConstantUtils.IS_CALL_FLASH_ID, 0) == 99) {
-                        fb_id = pref.getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
+                    if (PreferenceHelper.getInt(ConstantUtils.IS_CALL_FLASH_ID, 0) == 99) {
+                        fb_id = PreferenceHelper.getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
                     }
                 }
 
                 break;
             case POSITION_FB_ADS_SMSLIST:
                 fb_id = ConstantUtils.FB_FAKE_CALL_ID;
-                int use_spec_id = pref.getInt(ConstantUtils.IS_USE_SMS_LIST, 0);
+                int use_spec_id = PreferenceHelper.getInt(ConstantUtils.IS_USE_SMS_LIST, 0);
                 if (use_spec_id == 1) {
                     fb_id = ConstantUtils.FB_SMS_LIST_ID;
                 } else if (use_spec_id == 99) {
-                    fb_id = pref.getString("new_custom_smslist_fb_id", "");
+                    fb_id = PreferenceHelper.getString("new_custom_smslist_fb_id", "");
                 } else {//0
-                    int use_id = pref.getInt(ConstantUtils.IS_CALL_FLASH_ID, 0);
+                    int use_id = PreferenceHelper.getInt(ConstantUtils.IS_CALL_FLASH_ID, 0);
                     if (use_id == 0) {
                         fb_id = ConstantUtils.FB_FAKE_CALL_ID; //合并id
                     } else if (use_id == 99) {
-                        fb_id = pref.getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
+                        fb_id = PreferenceHelper.getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
                     }
                 }
 
                 break;
             case POSITION_FB_ADS_BLOCKHOME:
                 fb_id = ConstantUtils.FB_BLOCK_PAGE_ID;
-                int use_spec_id3 = pref.getInt(ConstantUtils.IS_USE_BLOCK_SCAN_HOME, 0);
+                int use_spec_id3 = PreferenceHelper.getInt(ConstantUtils.IS_USE_BLOCK_SCAN_HOME, 0);
                 if (use_spec_id3 == 1) {
                     fb_id = ConstantUtils.FB_BLOCK_PAGE_ID;
                 } else if (use_spec_id3 == 99) {
-                    fb_id = pref.getString("new_custom_blockhome_fb_id", "");
+                    fb_id = PreferenceHelper.getString("new_custom_blockhome_fb_id", "");
                 } else {//0
-                    int use_id = pref.getInt(ConstantUtils.IS_CALL_FLASH_ID, 0);
+                    int use_id = PreferenceHelper.getInt(ConstantUtils.IS_CALL_FLASH_ID, 0);
                     if (use_id == 0) {
                         fb_id = ConstantUtils.FB_FAKE_CALL_ID;
                     } else if (use_id == 99) {
-                        fb_id = pref.getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
+                        fb_id = PreferenceHelper.getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
                     }
                 }
 
                 break;
             case POSITION_FB_ADS_CONTACTLIST:
                 fb_id = ConstantUtils.FB_FAKE_CALL_ID;
-                if (pref.getInt(ConstantUtils.IS_USE_CONTACT_ID, 1) == 1) {
+                if (PreferenceHelper.getInt(ConstantUtils.IS_USE_CONTACT_ID, 1) == 1) {
                     fb_id = ConstantUtils.FB_CONTACT_LIST_ID;
-                } else if (pref.getInt(ConstantUtils.IS_USE_CONTACT_ID, 1) == 99) {
-                    fb_id = pref.getString("new_custom_contact_fb_id", "");
+                } else if (PreferenceHelper.getInt(ConstantUtils.IS_USE_CONTACT_ID, 1) == 99) {
+                    fb_id = PreferenceHelper.getString("new_custom_contact_fb_id", "");
                 } else {//0
-                    if (pref.getInt(ConstantUtils.IS_CALL_FLASH_ID, 0) == 99) {
-                        fb_id = pref.getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
+                    if (PreferenceHelper.getInt(ConstantUtils.IS_CALL_FLASH_ID, 0) == 99) {
+                        fb_id = PreferenceHelper.getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
                     }
                 }
                 break;
             case POSITION_FB_ADS_CALLGIFCUSTOM:
                 fb_id = ConstantUtils.FB_FAKE_CALL_ID;
-                int use_spec_id2 = pref.getInt(ConstantUtils.IS_USE_CALL_GIF_LIST, 1);
+                int use_spec_id2 = PreferenceHelper.getInt(ConstantUtils.IS_USE_CALL_GIF_LIST, 1);
                 if (use_spec_id2 == 1) {
                     fb_id = ConstantUtils.FB_SPAM_LIST_ID;
                 } else if (use_spec_id2 == 99) {
-                    fb_id = pref.getString("new_custom_call_gif_fb_id", "");
+                    fb_id = PreferenceHelper.getString("new_custom_call_gif_fb_id", "");
                 } else {//0
-                    int use_id = pref.getInt(ConstantUtils.IS_CALL_FLASH_ID, 0);
+                    int use_id = PreferenceHelper.getInt(ConstantUtils.IS_CALL_FLASH_ID, 0);
                     if (use_id == 0) {
                         fb_id = ConstantUtils.FB_FAKE_CALL_ID; //合并id
                     } else if (use_id == 99) {
-                        fb_id = pref.getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
+                        fb_id = PreferenceHelper.getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
                     }
                 }
 
                 break;
             case POSITION_FB_ADS_SMS_EDIT:  //短信编辑 大图
                 fb_id = ConstantUtils.FB_SCAN_RESULT_ID;
-                int use_spec_id6 = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(ConstantUtils.IS_USE_SMS_EDIT_SEND, 0);
+                int use_spec_id6 = PreferenceHelper.getInt(ConstantUtils.IS_USE_SMS_EDIT_SEND, 0);
                 if (use_spec_id6 == 1) {
                     fb_id = ConstantUtils.FB_SMS_EDIT_ID;
                 } else if (use_spec_id6 == 99) {
-                    fb_id = pref.getString("new_custom_sms_edit_fb_id", "");
+                    fb_id = PreferenceHelper.getString("new_custom_sms_edit_fb_id", "");
                 } else {//0
-                    int use_id = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(ConstantUtils.IS_USE_SCAN_ID, 0);
+                    int use_id = PreferenceHelper.getInt(ConstantUtils.IS_USE_SCAN_ID, 0);
                     if (use_id == 99) {
-                        fb_id = ApplicationEx.getInstance().getGlobalSettingPreference().getString(ConstantUtils.NEW_USE_SCAN_ID, "");
+                        fb_id = PreferenceHelper.getString(ConstantUtils.NEW_USE_SCAN_ID, "");
                     }
 
                 }
                 break;
             case POSITION_FB_ADS_CALLFLASH:
                 fb_id = ConstantUtils.FB_FAKE_CALL_ID;  //合并id
-                int use_id = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(ConstantUtils.IS_CALL_FLASH_ID, 0);
+                int use_id = PreferenceHelper.getInt(ConstantUtils.IS_CALL_FLASH_ID, 0);
                 if (use_id == 0) {
                     fb_id = ConstantUtils.FB_FAKE_CALL_ID;  //合并id
                 } else if (use_id == 1) {
                     fb_id = ConstantUtils.FB_FAKE_CALL_FLASH_ID; //独立id
                 } else if (use_id == 99) {
-                    fb_id = ApplicationEx.getInstance().getGlobalSettingPreference().getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
+                    fb_id = PreferenceHelper.getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
                 }
                 break;
             case POSITION_FB_ADS_FAKECALL_HOME:
                 fb_id = ConstantUtils.FB_FAKE_CALL_ID;
-                int id_fakecall = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(ConstantUtils.IS_USE_FAKECALL_HOME, 0);
+                int id_fakecall = PreferenceHelper.getInt(ConstantUtils.IS_USE_FAKECALL_HOME, 0);
                 if (id_fakecall == 1) {
                     fb_id = ConstantUtils.FB_FAKE_CALL_ID;
                 } else if (id_fakecall == 2) {
                     fb_id = ConstantUtils.FB_FAKE_CALL_FLASH_ID;//add on 2018-01-29
                 } else if (id_fakecall == 99) { //add on 2018-01-29
-                    fb_id = ApplicationEx.getInstance().getGlobalSettingPreference().getString("perf_fake_call_home_fb_id", "");
+                    fb_id = PreferenceHelper.getString("perf_fake_call_home_fb_id", "");
                 } else { //0
-                    int id_fakecall2 = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(ConstantUtils.IS_CALL_FLASH_ID, 0);
+                    int id_fakecall2 = PreferenceHelper.getInt(ConstantUtils.IS_CALL_FLASH_ID, 0);
                     if (id_fakecall2 == 0) {
                         fb_id = ConstantUtils.FB_FAKE_CALL_ID;
                     } else if (id_fakecall2 == 99) {
-                        fb_id = ApplicationEx.getInstance().getGlobalSettingPreference().getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
+                        fb_id = PreferenceHelper.getString(ConstantUtils.NEW_CALL_FLASH_ID, "");
                     }
                 }
             default:
@@ -1113,9 +1095,9 @@ public class CallerAdManager {
     //联系人列表大
     public static String getContactBigFbId() {
         String fb_id = "198653420649711_335093823672336"; //cid_ad131(大图, 80版本后), cid_ad130(banner), 12/27 update, old is FB_FAKE_CALL_TIME_ID, 虚拟来电时间设置
-        int use_id = ApplicationEx.getInstance().getGlobalADPreference().getInt(PREF_IS_CONTACT_BIG_NEW, 0);
+        int use_id = AdPreferenceHelper.getInt(PREF_IS_CONTACT_BIG_NEW, 0);
         if (use_id == 99) {
-            fb_id = ApplicationEx.getInstance().getGlobalADPreference().getString(PREF_NEW_CONTACT_BIG_FB_ID, "");
+            fb_id = AdPreferenceHelper.getString(PREF_NEW_CONTACT_BIG_FB_ID, "");
         }
         return fb_id;
     }
@@ -1123,25 +1105,25 @@ public class CallerAdManager {
     //more来电秀下载页面
     public static String getCallFlashDownFbId() {
         String fb_id = "198653420649711_241883872993332"; //cid_ad111, 虚拟来电时间设置
-        int use_id = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_call_flash_down_new", 0);
+        int use_id = AdPreferenceHelper.getInt("pref_call_flash_down_new", 0);
         if (use_id == 99) {
-            fb_id = ApplicationEx.getInstance().getGlobalADPreference().getString("pref_call_flash_down_new_id", "");
+            fb_id = AdPreferenceHelper.getString("pref_call_flash_down_new_id", "");
         }
         return fb_id;
     }
 
     //swipe fb id
     public static String getSwipeFbId() {
-        String fb_id = ApplicationEx.getInstance().getGlobalADPreference().getString("pref_swipe_fb_id", "198653420649711_241883872993332");
+        String fb_id = AdPreferenceHelper.getString("pref_swipe_fb_id", "198653420649711_241883872993332");
         return fb_id;
     }
 
     //开屏新的来电秀提示
     public static String getScreenOnCallFlash() {
         String fb_id = ""; //
-        int use_id = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_screen_on_call_flash_new", 0);
+        int use_id = AdPreferenceHelper.getInt("pref_screen_on_call_flash_new", 0);
         if (use_id == 99) {
-            fb_id = ApplicationEx.getInstance().getGlobalADPreference().getString("pref_screen_on_call_flash_new_id", "");
+            fb_id = AdPreferenceHelper.getString("pref_screen_on_call_flash_new_id", "");
         }
         return fb_id;
     }
@@ -1150,9 +1132,9 @@ public class CallerAdManager {
     public static String getResultInFbId() {
         String fb_id = "198653420649711_372123056636079"; //cid_ad136,  cid_ad124, cid_ad125
 
-        int use_id = ApplicationEx.getInstance().getGlobalADPreference().getInt(PREF_IS_IN_ADS_RESULT_NEW, 0);
+        int use_id = AdPreferenceHelper.getInt(PREF_IS_IN_ADS_RESULT_NEW, 0);
         if (use_id == 99) {
-            fb_id = ApplicationEx.getInstance().getGlobalADPreference().getString(PREF_NEW_IN_ADS_RESULT_FB_ID, "");
+            fb_id = AdPreferenceHelper.getString(PREF_NEW_IN_ADS_RESULT_FB_ID, "");
         }
 
         return fb_id;
@@ -1162,9 +1144,9 @@ public class CallerAdManager {
     public static String getResultInAdmobId() {
         String ad_id = ConstantUtils.ADMOB_ADV_AFTER_CALL_Interstitial_ID;
 
-        int use_id = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_in_ads_admob_result_new", 0);
+        int use_id = AdPreferenceHelper.getInt("pref_in_ads_admob_result_new", 0);
         if (use_id == 99) {
-            ad_id = ApplicationEx.getInstance().getGlobalADPreference().getString("pref_in_ads_admob_result_new_id", "");
+            ad_id = AdPreferenceHelper.getString("pref_in_ads_admob_result_new_id", "");
         }
 
         return ad_id;
@@ -1172,17 +1154,16 @@ public class CallerAdManager {
 
     public static boolean isShowAd(int position) {
         boolean show = false;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         int click = 0;
         switch (position) {
             case POSITION_FB_ADS_CONTACTLIST_BIG:
-                click = ad_pref.getInt("pref_is_contact_big_ad_show", 0);
+                click = AdPreferenceHelper.getInt("pref_is_contact_big_ad_show", 0);
                 if (click != 0) {
                     show = true;
                 }
                 break;
             case POSITION_FB_ADS_CALLFLASH_HOT:
-                click = ad_pref.getInt("pref_is_call_flash_hot_big_ad_show", 0);
+                click = AdPreferenceHelper.getInt("pref_is_call_flash_hot_big_ad_show", 0);
                 if (click != 0) {
                     show = true;
                 }
@@ -1194,20 +1175,20 @@ public class CallerAdManager {
     //number scan reuslt fb_id
     public static String getNumberScanResultFbId() {
         String fb_id = ConstantUtils.FB_SCAN_RESULT_ID;
-        int use_id = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(ConstantUtils.IS_USE_SCAN_ID, 0);
+        int use_id = PreferenceHelper.getInt(ConstantUtils.IS_USE_SCAN_ID, 0);
         if (use_id == 0) {
             fb_id = ConstantUtils.FB_SCAN_RESULT_ID;
         } else if (use_id == 2) {
             fb_id = ConstantUtils.FB_AFTER_CALL_ID;
         } else if (use_id == 99) {
-            fb_id = ApplicationEx.getInstance().getGlobalSettingPreference().getString(ConstantUtils.NEW_USE_SCAN_ID, "");
+            fb_id = PreferenceHelper.getString(ConstantUtils.NEW_USE_SCAN_ID, "");
         }
         return fb_id;
     }
 
     public static boolean isEnableLFProductIntro() {
         boolean is = false;
-        int enable = ApplicationEx.getInstance().getGlobalADPreference().getInt(PREF_IS_ENABLE_LF_INTRO, 0);
+        int enable = AdPreferenceHelper.getInt(PREF_IS_ENABLE_LF_INTRO, 0);
         if (enable == 0) {
             is = true;
         }
@@ -1218,25 +1199,24 @@ public class CallerAdManager {
 
         boolean show = false;
 
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        int sw = ad_pref.getInt(IS_SHOW_SPLASH_CURRENT_SWITCH, 0); //0 not show
+        int sw = AdPreferenceHelper.getInt(IS_SHOW_SPLASH_CURRENT_SWITCH, 0); //0 not show
         if (sw == 1) {
-            long show_guide = ApplicationEx.getInstance().getGlobalSettingPreference().getLong(ConstantUtils.PREF_KEY_SHOW_GUIDE_TIME, 0);
+            long show_guide = PreferenceHelper.getLong(ConstantUtils.PREF_KEY_SHOW_GUIDE_TIME, 0);
             if (show_guide == 0 || Stringutil.isTodayNew(show_guide)) {
                 return show;
             }
 
-            long show_interval = ad_pref.getLong("pref_last_show_back_splash_interval", 2 * 60 * 60 * 1000);//默认间隔2小时
-            long last_show = ad_pref.getLong("last_show_back_splash_time", 0);
+            long show_interval = AdPreferenceHelper.getLong("pref_last_show_back_splash_interval", 2 * 60 * 60 * 1000);//默认间隔2小时
+            long last_show = AdPreferenceHelper.getLong("last_show_back_splash_time", 0);
 
             if (last_show <= 0 || System.currentTimeMillis() - last_show >= show_interval) {
 
 
-                String countires = ad_pref.getString(IS_SHOW_SPLASH_CURRENT_COUNTRIES, "");
+                String countires = AdPreferenceHelper.getString(IS_SHOW_SPLASH_CURRENT_COUNTRIES, "");
                 if (!TextUtils.isEmpty(countires) && (countires.equals(PARAM_ALL_COUNTRIES) || getCommonShowAdsCountries(IS_SHOW_SPLASH_CURRENT_COUNTRIES).contains(ApplicationEx.getInstance().country))) {
 
                     show = true;
-                    ad_pref.edit().putLong("last_show_back_splash_time", System.currentTimeMillis()).commit();
+                    AdPreferenceHelper.putLong("last_show_back_splash_time", System.currentTimeMillis());
                 }
             }
         }
@@ -1246,7 +1226,7 @@ public class CallerAdManager {
 
     //从contact 入口返回时显示splash的国家
     private static HashSet<String> getCommonShowAdsCountries(String key) {
-        String countries = ApplicationEx.getInstance().getGlobalADPreference().getString(key, "");
+        String countries = AdPreferenceHelper.getString(key, "");
         HashSet<String> sets = getControlSet(countries);
         if (BuildConfig.DEBUG) {
             for (String cc : sets) {
@@ -1259,9 +1239,9 @@ public class CallerAdManager {
     //短信秀设置, 小
     public static String getSMSFlashSetFbId() {
         String fb_id = "198653420649711_232914513890268"; // 来电秀， facke call 首页
-        int use_id = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_is_sms_flash_set_new", 0);
+        int use_id = AdPreferenceHelper.getInt("pref_is_sms_flash_set_new", 0);
         if (use_id == 99) {
-            fb_id = ApplicationEx.getInstance().getGlobalADPreference().getString("pref_sms_flash_set_new_id", ""); //198653420649711_248674818980904,FB_FAKE_CALL_FLASH_ID //虚拟来电秀设置
+            fb_id = AdPreferenceHelper.getString("pref_sms_flash_set_new_id", ""); //198653420649711_248674818980904,FB_FAKE_CALL_FLASH_ID //虚拟来电秀设置
         }
         return fb_id;
     }
@@ -1269,9 +1249,9 @@ public class CallerAdManager {
     //短信秀收到, 大
     public static String getSMSFlashShowFbId() {
         String fb_id = "198653420649711_257498651431854"; //扫描结果页广告, smscomeactivity // 还可以用 call after, 还可以用ConstantUtils.FB_FAKE_CALL_FLASH_ID;
-        int use_id = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_is_sms_flash_show_new", 0);
+        int use_id = AdPreferenceHelper.getInt("pref_is_sms_flash_show_new", 0);
         if (use_id == 99) {
-            fb_id = ApplicationEx.getInstance().getGlobalADPreference().getString("pref_sms_flash_show_new_id", "");
+            fb_id = AdPreferenceHelper.getString("pref_sms_flash_show_new_id", "");
         }
         return fb_id;
     }
@@ -1279,16 +1259,16 @@ public class CallerAdManager {
     //短信秀设置结果页, 大
     public static String getSMSFlashSetResultFbId() {
         String fb_id = "198653420649711_203519680163085"; //call after, 还可以用ConstantUtils.FB_FAKE_CALL_FLASH_ID;
-        int use_id = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_is_sms_flash_set_result_new", 0);
+        int use_id = AdPreferenceHelper.getInt("pref_is_sms_flash_set_result_new", 0);
         if (use_id == 99) {
-            fb_id = ApplicationEx.getInstance().getGlobalADPreference().getString("pref_sms_flash_set_result_new_id", "");
+            fb_id = AdPreferenceHelper.getString("pref_sms_flash_set_result_new_id", "");
         }
         return fb_id;
     }
 
     //来电秀, 短信秀 - 跳动的按钮是否可以点击，默认可以点击
     public static boolean isFlashBtClickable() {
-        int click = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_is_flash_btn_clickable", 0);
+        int click = AdPreferenceHelper.getInt("pref_is_flash_btn_clickable", 0);
         if (click == 0) {
             return true;
         } else {
@@ -1298,7 +1278,7 @@ public class CallerAdManager {
 
     //联系人大头像ad img背景默认不可点
     public static boolean isAdImgBgClickable() {
-        int click = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_is_ad_img_background_clickable", 0);
+        int click = AdPreferenceHelper.getInt("pref_is_ad_img_background_clickable", 0);
         if (click == 0) {
             return false;
         } else {
@@ -1314,8 +1294,7 @@ public class CallerAdManager {
      */
     public static boolean isClickableByChannel(int condition) {
         boolean is = false;
-        SharedPreferences pref = ApplicationEx.getInstance().getGlobalSettingPreference();
-        String channel = pref.getString("channel", "");
+        String channel = PreferenceHelper.getString("channel", "");
         HashSet<String> ch = null;
         switch (condition) {
             case 1:
@@ -1344,17 +1323,16 @@ public class CallerAdManager {
     //fb大图广告 启动页 结果页空白区域可点, 默认否
     public static boolean isWhiteClickable(int position) {
         boolean is = false;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         int click = 0;
         switch (position) {
             case POSITION_FB_ADS_SCAN_RESULT_BIG:
-                click = ad_pref.getInt("pref_is_scan_result_white_clickable", 0);
+                click = AdPreferenceHelper.getInt("pref_is_scan_result_white_clickable", 0);
                 if (click != 0) {
                     is = true;
                 }
                 break;
             case POSITION_FB_ADS_SPLASH_BIG:
-                click = ad_pref.getInt("pref_is_splash_white_clickable", 0);
+                click = AdPreferenceHelper.getInt("pref_is_splash_white_clickable", 0);
                 if (click != 0) {
                     is = true;
                 }
@@ -1378,14 +1356,13 @@ public class CallerAdManager {
 
     private static int getWhitespacesClickPercent(int position) {
         int click = 100; //100 means all is spaces Clickable
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         switch (position) {
             case POSITION_FB_ADS_SCAN_RESULT_BIG:
-                click = ad_pref.getInt("pref_is_scan_result_white_percent", 100);
+                click = AdPreferenceHelper.getInt("pref_is_scan_result_white_percent", 100);
 
                 break;
             case POSITION_FB_ADS_SPLASH_BIG:
-                click = ad_pref.getInt("pref_is_splash_white_percent", 100);
+                click = AdPreferenceHelper.getInt("pref_is_splash_white_percent", 100);
 
                 break;
         }
@@ -1395,8 +1372,7 @@ public class CallerAdManager {
     public static boolean isUseSplashNewStyle() {
         boolean high = false;
         if (ApplicationEx.getInstance() != null) {
-            SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-            int click = ad_pref.getInt("pref_is_use_splash_new_style", 0);
+            int click = AdPreferenceHelper.getInt("pref_is_use_splash_new_style", 0);
             if (click == 1) {
                 high = true;
             }
@@ -1407,35 +1383,34 @@ public class CallerAdManager {
     //fb大图广告 and call flash set, sms flash show set, 只有行动按钮可点, 默认否
     public static boolean isOnlyBtnClickable(int position) {
         boolean is = false;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         int click = 0;
         switch (position) {
             case POSITION_FB_ADS_ENDCALL_BIG:
-                click = ad_pref.getInt("pref_is_endcall_only_btn_clickable", 0);
+                click = AdPreferenceHelper.getInt("pref_is_endcall_only_btn_clickable", 0);
                 if (click != 0) {
                     is = true;
                 }
                 break;
             case POSITION_FB_ADS_SCAN_RESULT_BIG:
-                click = ad_pref.getInt("pref_is_scan_result_only_btn_clickable", 0);
+                click = AdPreferenceHelper.getInt("pref_is_scan_result_only_btn_clickable", 0);
                 if (click != 0) {
                     is = true;
                 }
                 break;
             case POSITION_FB_ADS_SPLASH_BIG:
-                click = ad_pref.getInt("pref_is_splash_only_btn_clickable", 0);
+                click = AdPreferenceHelper.getInt("pref_is_splash_only_btn_clickable", 0);
                 if (click != 0) {
                     is = true;
                 }
                 break;
             case POSITION_FB_ADS_CALLFLASH:
-                click = ad_pref.getInt("pref_is_call_flash_set_only_btn_clickable", 1);
+                click = AdPreferenceHelper.getInt("pref_is_call_flash_set_only_btn_clickable", 1);
                 if (click != 0) {
                     is = true;
                 }
                 break;
             case POSITION_FB_ADS_SMS_FLASH_SHOW_SET:
-                click = ad_pref.getInt("pref_is_sms_flash_set_only_btn_clickable", 0);
+                click = AdPreferenceHelper.getInt("pref_is_sms_flash_set_only_btn_clickable", 0);
                 if (click != 0) {
                     is = true;
                 }
@@ -1467,26 +1442,25 @@ public class CallerAdManager {
 
     private static int getOnlyBtnPercent(int position) {
         int click = 100; //100 means all is only btn Clickable
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         switch (position) {
             case POSITION_FB_ADS_ENDCALL_BIG:
-                click = ad_pref.getInt("pref_is_endcall_only_btn_percent", 100);
+                click = AdPreferenceHelper.getInt("pref_is_endcall_only_btn_percent", 100);
 
                 break;
             case POSITION_FB_ADS_SCAN_RESULT_BIG:
-                click = ad_pref.getInt("pref_is_scan_result_only_btn_percent", 100);
+                click = AdPreferenceHelper.getInt("pref_is_scan_result_only_btn_percent", 100);
 
                 break;
             case POSITION_FB_ADS_SPLASH_BIG:
-                click = ad_pref.getInt("pref_is_splash_only_btn_percent", 100);
+                click = AdPreferenceHelper.getInt("pref_is_splash_only_btn_percent", 100);
 
                 break;
             case POSITION_FB_ADS_CALLFLASH:
-                click = ad_pref.getInt("pref_is_call_flash_set_only_btn_percent", 100);
+                click = AdPreferenceHelper.getInt("pref_is_call_flash_set_only_btn_percent", 100);
 
                 break;
             case POSITION_FB_ADS_SMS_FLASH_SHOW_SET:
-                click = ad_pref.getInt("pref_is_sms_flash_set_only_btn_percent", 100);
+                click = AdPreferenceHelper.getInt("pref_is_sms_flash_set_only_btn_percent", 100);
                 break;
         }
         return click;
@@ -1496,17 +1470,16 @@ public class CallerAdManager {
     //fb大图广告, ad img作为背景时 , img 可点为false(不可点)， 只有文字和按钮可点, 默认true, 目前只有两个位置, 短信秀， 短信编辑
     public static boolean isImgBgClickable(int position) { //isOnlyBtnAndTextClickable
         boolean is = false;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         int click = 0;
         switch (position) {
             case POSITION_FB_ADS_SMS_EDIT:
-                click = ad_pref.getInt("pref_is_smsedit_img_bg_clickable", 0);
+                click = AdPreferenceHelper.getInt("pref_is_smsedit_img_bg_clickable", 0);
                 if (click != 0) {
                     is = true;
                 }
                 break;
             case POSITION_FB_ADS_SMS_FLASH_SHOW:
-                click = ad_pref.getInt("pref_is_smsshow_img_bg_clickable", 0);
+                click = AdPreferenceHelper.getInt("pref_is_smsshow_img_bg_clickable", 0);
                 if (click != 0) {
                     is = true;
                 }
@@ -1526,17 +1499,16 @@ public class CallerAdManager {
     //fb 自动刷新, 默认 0 不自动刷新
     public static boolean isAutoRefresh(int position, String key) {
         boolean is = false;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         int click = 0;
         switch (position) {
             case POSITION_FB_ADS_CALLFLASH:
-                click = ad_pref.getInt("pref_is_call_flash_auto_refresh", 0);
+                click = AdPreferenceHelper.getInt("pref_is_call_flash_auto_refresh", 0);
                 if (click != 0) {
                     is = true;
                 }
                 break;
             case POSITION_FB_ADS_SCAN_RESULT_BIG:
-                click = ad_pref.getInt("pref_is_sc_result_auto_refresh", 0);
+                click = AdPreferenceHelper.getInt("pref_is_sc_result_auto_refresh", 0);
                 if (click != 0) {
                     is = true;
                 }
@@ -1553,13 +1525,12 @@ public class CallerAdManager {
     //fb 广告自动刷新间隔时间， 秒， second
     public static int getAutoRefreshInterval(int position) {
         int sec = 15; //15 is default
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         switch (position) {
             case POSITION_FB_ADS_CALLFLASH:
-                sec = ad_pref.getInt("interval_call_flash_auto_refresh", 15);
+                sec = AdPreferenceHelper.getInt("interval_call_flash_auto_refresh", 15);
                 break;
             case POSITION_FB_ADS_SCAN_RESULT_BIG:
-                sec = ad_pref.getInt("interval_sc_result_auto_refresh", 15);
+                sec = AdPreferenceHelper.getInt("interval_sc_result_auto_refresh", 15);
                 break;
         }
         return sec;
@@ -1569,13 +1540,12 @@ public class CallerAdManager {
     //fb 广告自动刷新最大次数，
     public static int getAutoRefreshMax(int position) {
         int count = 2;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         switch (position) {
             case POSITION_FB_ADS_CALLFLASH:
-                count = ad_pref.getInt("count_call_flash_auto_refresh", 2);
+                count = AdPreferenceHelper.getInt("count_call_flash_auto_refresh", 2);
                 break;
             case POSITION_FB_ADS_SCAN_RESULT_BIG:
-                count = ad_pref.getInt("count_sc_result_auto_refresh", 2);
+                count = AdPreferenceHelper.getInt("count_sc_result_auto_refresh", 2);
                 break;
         }
         return count;
@@ -1586,11 +1556,10 @@ public class CallerAdManager {
         //random_adid - {“0,50":"ID_2", "50,100":"ID_3"}
         LogUtil.d("random_adid", "getAdIDByPostion:" + position_key);
         String mopub_banner_id = "";
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        if (ad_pref.getInt("pref_cid_random_adid_enable", 0) != 0) {
+        if (AdPreferenceHelper.getInt("pref_cid_random_adid_enable", 0) != 0) {
             return mopub_banner_id;
         }
-        String random_adid = ad_pref.getString(KEY_SERVER_RANDOM_ADID_BASE + position_key, null);
+        String random_adid = AdPreferenceHelper.getString(KEY_SERVER_RANDOM_ADID_BASE + position_key, null);
 
         if (!TextUtils.isEmpty(random_adid)) {
             LogUtil.d("random_adid", "getAdIDByPostion random_adid:" + random_adid);
@@ -1638,9 +1607,7 @@ public class CallerAdManager {
     public static boolean isShowSplashFromOthers() {
         boolean is = true;
 
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-
-        int show = ad_pref.getInt("pref_is_show_splash_from_others", 0);
+        int show = AdPreferenceHelper.getInt("pref_is_show_splash_from_others", 0);
         if (show != 0) {
             is = false;
         }
@@ -1651,9 +1618,7 @@ public class CallerAdManager {
     public static boolean isShowCallRecordOnHome() {
         boolean is = true;
 
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-
-        int show = ad_pref.getInt("pref_is_show_record_on_home", 0);
+        int show = AdPreferenceHelper.getInt("pref_is_show_record_on_home", 0);
         if (show != 0) {
             is = false;
         }
@@ -1667,16 +1632,15 @@ public class CallerAdManager {
      */
     public static long getSplasAdTime(int type) {
         long adTime = 4000; // default 4s
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         switch (type) {
             case 1:
-                adTime = ad_pref.getLong("pref_splash_ad_first_load", 6500);
+                adTime = AdPreferenceHelper.getLong("pref_splash_ad_first_load", 6500);
                 break;
             case 2:
-                adTime = ad_pref.getLong("pref_splash_ad_load", 4500);
+                adTime = AdPreferenceHelper.getLong("pref_splash_ad_load", 4500);
                 break;
             case 3:
-                adTime = ad_pref.getLong("pref_splash_ad_show", 4000);
+                adTime = AdPreferenceHelper.getLong("pref_splash_ad_show", 4000);
                 break;
         }
         return adTime;
@@ -1689,8 +1653,7 @@ public class CallerAdManager {
      */
     public static long getAnswerCallSuccBench() {
         long bench = 1000;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        bench = ad_pref.getLong("pref_answer_call_succ_bench", 1000);
+        bench = AdPreferenceHelper.getLong("pref_answer_call_succ_bench", 1000);
         return bench;
     }
 
@@ -1702,8 +1665,7 @@ public class CallerAdManager {
 
     public static boolean isUseGroupBanner() {
         boolean group = true;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        int is = ad_pref.getInt("pref_is_use_group_banner", 1);
+        int is = AdPreferenceHelper.getInt("pref_is_use_group_banner", 1);
         if (is == 0) {
             group = false;
         }
@@ -1712,8 +1674,7 @@ public class CallerAdManager {
 
     public static boolean isUseGroupBannerNew() {
         boolean group = true;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        int is = ad_pref.getInt("pref_is_use_group_banner_new", 1);
+        int is = AdPreferenceHelper.getInt("pref_is_use_group_banner_new", 1);
         if (is == 0) {
             group = false;
         }
@@ -1722,8 +1683,7 @@ public class CallerAdManager {
 
     public static boolean isUseGroupAds() {
         boolean group = true;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        int is = ad_pref.getInt("pref_is_use_group_ads", 1);
+        int is = AdPreferenceHelper.getInt("pref_is_use_group_ads", 1);
         if (is == 0) {
             group = false;
         }
@@ -1733,8 +1693,7 @@ public class CallerAdManager {
     //开屏时弹出新来电秀提示
     public static boolean isShowNewFlashTips() {
         boolean show = false; //默认不显示, 1 不显示， 0 显示
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        int is = ad_pref.getInt("pref_is_show_new_flash_tips", 1);//1 不显示， 0 显示
+        int is = AdPreferenceHelper.getInt("pref_is_show_new_flash_tips", 1);//1 不显示， 0 显示
         if (is == 0) {
             show = true;
         }
@@ -1743,8 +1702,7 @@ public class CallerAdManager {
 
     public static boolean isAutoGoMain() {
         boolean autoGoMain = true; //默认自动跳转到main
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        int is = ad_pref.getInt("pref_is_auto_go_main", 0);//欧美发达国家，不自动跳过is=1
+        int is = AdPreferenceHelper.getInt("pref_is_auto_go_main", 0);//欧美发达国家，不自动跳过is=1
         if (is == 1) {
             autoGoMain = false;
         }
@@ -1754,8 +1712,7 @@ public class CallerAdManager {
     //第一次号码扫描结果页, 只对渠道量开启插屏
     public static boolean isShowInAdOnFirstScan() {
         boolean show = false;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        int is = ad_pref.getInt("pref_is_show_in_ad_first_scan", 0);//0 not show, 1 show
+        int is = AdPreferenceHelper.getInt("pref_is_show_in_ad_first_scan", 0);//0 not show, 1 show
         if (is == 1) {
             show = true;
         }
@@ -1766,15 +1723,14 @@ public class CallerAdManager {
         int days = 0;
         //安装几天以后夜间模式自动开启， 0 不开启
         if (ApplicationEx.getInstance() != null) {
-            SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-            days = ad_pref.getInt("pref_days_start_night_after_install", 0);//0 not enable, default is 3
+            days = AdPreferenceHelper.getInt("pref_days_start_night_after_install", 0);//0 not enable, default is 3
         }
         return days;
     }
 
     //new missed call
     public static String getMissedCallFbId() {
-        String fb_id = ApplicationEx.getInstance().getGlobalADPreference().getString("pref_missed_call_fb_id", "198653420649711_203519680163085");//default call after
+        String fb_id = AdPreferenceHelper.getString("pref_missed_call_fb_id", "198653420649711_203519680163085");//default call after
         return fb_id;
     }
 
@@ -1814,31 +1770,30 @@ public class CallerAdManager {
 
     public static String getAdmobIdForFirst(int position_first) {
         String admob_id = "";
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         switch (position_first) {
             case POSITION_FIRST_ADMOB_SPLASH:
-                admob_id = ad_pref.getString("pref_first_mode_splash_admob_id", ConstantUtils.ADMOB_ADV_FAKE_RESULT_ID);//ConstantUtils.ADMOB_ADV_FAKE_RESULT_ID
+                admob_id = AdPreferenceHelper.getString("pref_first_mode_splash_admob_id", ConstantUtils.ADMOB_ADV_FAKE_RESULT_ID);//ConstantUtils.ADMOB_ADV_FAKE_RESULT_ID
                 break;
             case POSITION_FIRST_ADMOB_SMSFLASH:
-                admob_id = ad_pref.getString("pref_first_mode_smsflash_admob_id", ConstantUtils.ADMOB_ADV_SMS_LIST_ID);//ConstantUtils.ADMOB_ADV_SMS_LIST_ID
+                admob_id = AdPreferenceHelper.getString("pref_first_mode_smsflash_admob_id", ConstantUtils.ADMOB_ADV_SMS_LIST_ID);//ConstantUtils.ADMOB_ADV_SMS_LIST_ID
                 break;
             case POSITION_FIRST_ADMOB_RESULT_SCAN_AND_UPDATE:
-                admob_id = ad_pref.getString("pref_first_mode_result_scan_admob_id", ConstantUtils.ADMOB_ADV_BLOCK_SCAN_ID);//ConstantUtils.ADMOB_ADV_BLOCK_SCAN_ID
+                admob_id = AdPreferenceHelper.getString("pref_first_mode_result_scan_admob_id", ConstantUtils.ADMOB_ADV_BLOCK_SCAN_ID);//ConstantUtils.ADMOB_ADV_BLOCK_SCAN_ID
                 break;
             case POSITION_FIRST_ADMOB_RESULT_FLASH_SET:
-                admob_id = ad_pref.getString("pref_first_mode_result_flashset_admob_id", ConstantUtils.ADMOB_ADV_SMS_EDIT_ID);//ConstantUtils.ADMOB_ADV_SMS_EDIT_ID
+                admob_id = AdPreferenceHelper.getString("pref_first_mode_result_flashset_admob_id", ConstantUtils.ADMOB_ADV_SMS_EDIT_ID);//ConstantUtils.ADMOB_ADV_SMS_EDIT_ID
                 break;
             case POSITION_FIRST_ADMOB_FULL_SCREEN_RESULT_BACK:
-                admob_id = ad_pref.getString("pref_first_mode_result_onback_admob_id", "");//结果页插屏
+                admob_id = AdPreferenceHelper.getString("pref_first_mode_result_onback_admob_id", "");//结果页插屏
                 break;
             case POSITION_FIRST_ADMOB_CALL_FLASH_PREVIEW:
-                admob_id = ad_pref.getString("pref_first_mode_callflash_preview_admob_id", ConstantUtils.ADMOB_ADV_CHARGE_LOCK_ID);//来电秀预览preview
+                admob_id = AdPreferenceHelper.getString("pref_first_mode_callflash_preview_admob_id", ConstantUtils.ADMOB_ADV_CHARGE_LOCK_ID);//来电秀预览preview
                 break;
             case POSITION_FIRST_ADMOB_CALL_FLASH_DETAIL:
-                admob_id = ad_pref.getString("pref_first_mode_callflash_download_admob_id", ConstantUtils.ADMOB_ADV_CALL_LOG_NATIVE_ID);//来电秀下载detail
+                admob_id = AdPreferenceHelper.getString("pref_first_mode_callflash_download_admob_id", ConstantUtils.ADMOB_ADV_CALL_LOG_NATIVE_ID);//来电秀下载detail
                 break;
             case POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL:
-                admob_id = ad_pref.getString("pref_first_mode_flash_down_onback_admob_id", "");//call flash detail 界面全屏广告. 自定义插屏
+                admob_id = AdPreferenceHelper.getString("pref_first_mode_flash_down_onback_admob_id", "");//call flash detail 界面全屏广告. 自定义插屏
                 break;
         }
         return admob_id;
@@ -1846,8 +1801,7 @@ public class CallerAdManager {
 
     public static boolean isUseMagicButton() {
         boolean use = false;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
-        int i = ad_pref.getInt("pref_is_use_magic_button", 0);
+        int i = AdPreferenceHelper.getInt("pref_is_use_magic_button", 0);
         if (i == 1) {
             use = true;
         }

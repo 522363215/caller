@@ -17,11 +17,12 @@ import java.util.Map;
 import java.util.Set;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 final public class PreferenceHelper {
     private static final String TAG = "PreferenceHelper";
-    private static final String PREF_FILE_NAME = "android_rate_pref_file";
+    private static final String PREF_FILE_NAME = ConstantUtils.PREF_FILE;
 
 
     /**
@@ -43,6 +44,16 @@ final public class PreferenceHelper {
      */
     public static final String PREF_LAST_CALL_FLASH_STOP_LOOPER_SHOW_AD_TIME = "last_call_flash_stop_looper_show_group_banner_ad_time";
 
+    /**
+     * 联系人是否查询完成
+     */
+    public static final String PREF_CONTACT_IS_QUERY_COMPLETE = "android_contact_is_query_complete";
+
+    /**
+     * 联系人的id对应的Version的map,用于判断联系人是否变化
+     */
+    public static final String PREF_CONTACT_VERSION_FOR_ID_MAP = "android_contact_version_for_id_map";
+
 
     private PreferenceHelper() {
     }
@@ -62,7 +73,7 @@ final public class PreferenceHelper {
         return getPreferences(ApplicationEx.getInstance()).getLong(key, defValue);
     }
 
-    public static void setLong(String key, long value) {
+    public static void putLong(String key, long value) {
         getPreferencesEditor(ApplicationEx.getInstance()).putLong(key, value).commit();
     }
 
@@ -73,7 +84,7 @@ final public class PreferenceHelper {
         return getPreferences(ApplicationEx.getInstance()).getString(key, defValue);
     }
 
-    public static void setString(String key, String value) {
+    public static void putString(String key, String value) {
         getPreferencesEditor(ApplicationEx.getInstance()).putString(key, value).commit();
     }
 
@@ -81,7 +92,7 @@ final public class PreferenceHelper {
         return getPreferences(ApplicationEx.getInstance()).getBoolean(key, defValue);
     }
 
-    public static void setBoolean(String key, boolean value) {
+    public static void putBoolean(String key, boolean value) {
         getPreferencesEditor(ApplicationEx.getInstance()).putBoolean(key, value).commit();
     }
 
@@ -89,7 +100,7 @@ final public class PreferenceHelper {
         return getPreferences(ApplicationEx.getInstance()).getInt(key, defValue);
     }
 
-    public static void setInt(String key, int value) {
+    public static void putInt(String key, int value) {
         getPreferencesEditor(ApplicationEx.getInstance()).putInt(key, value).commit();
     }
 
@@ -100,18 +111,18 @@ final public class PreferenceHelper {
      * @param map map数据
      * @return 保存是否成功
      */
-    public static <K, V> boolean setHashMapData(String key, Map<K, V> map) {
+    public static <K, V> boolean putHashMapData(String key, Map<K, V> map) {
         boolean result;
         Editor editor = getPreferencesEditor(ApplicationEx.getInstance());
         try {
             Gson gson = new Gson();
             String json = gson.toJson(map);
-            LogUtil.d(TAG, "setHashMapData json:" + json.toString());
+            LogUtil.d(TAG, "putHashMapData json:" + json.toString());
             editor.putString(key, json);
             result = true;
         } catch (Exception e) {
             result = false;
-            LogUtil.e(TAG, "setHashMapData e:" + e.getMessage());
+            LogUtil.e(TAG, "putHashMapData e:" + e.getMessage());
         }
         editor.apply();
         return result;
@@ -150,7 +161,7 @@ final public class PreferenceHelper {
      * @param key
      * @param datalist
      */
-    public static <T> void setDataList(String key, List<T> datalist) {
+    public static <T> void putDataList(String key, List<T> datalist) {
         Editor editor = getPreferencesEditor(ApplicationEx.getInstance());
         if (null == datalist) {
             editor.putString(key, null);

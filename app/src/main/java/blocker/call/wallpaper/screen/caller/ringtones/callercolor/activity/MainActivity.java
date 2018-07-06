@@ -1,6 +1,5 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,7 +41,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public int currentPage;
     private long mLastBackTime = 0;
     private NotScrollViewPager mViewPager;
-    private List<Fragment> mFragmentList;
+    private List<android.app.Fragment> mFragmentList;
     private LinearLayout mLeft_drawer;
     private DrawerLayout mMain_drawer_layout;
     private SideslipContraller sideslipContraller;

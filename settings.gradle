@@ -1,1 +1,1 @@
-include ':app', ':callflashsetsdk', ':serverflashsdk', ':callringsdk', ':facebook', ':callblocksdk'
+include ':app', ':callflashsetsdk', ':serverflashsdk', ':callringsdk', ':facebook', ':callblocksdk',':cpmindividualsdk'

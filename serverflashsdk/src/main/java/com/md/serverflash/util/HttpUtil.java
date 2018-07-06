@@ -81,7 +81,7 @@ public class HttpUtil {
         Map<String, String> params = new HashMap<>();
 
         params.put("language", mLanguage);
-        params.put("cid", getCid());
+        params.put("cid", "33");//getCid()
         params.put("aid", getAndroidId());
         params.put("ver", getVersionCode());
         params.put("os_ver", String.valueOf(Build.VERSION.SDK_INT));

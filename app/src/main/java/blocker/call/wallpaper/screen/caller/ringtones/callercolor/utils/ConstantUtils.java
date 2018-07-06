@@ -10,6 +10,7 @@ import java.util.HashSet;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 
 /**
  * Created by cattom on 11/25/2015.
@@ -86,7 +87,7 @@ public class ConstantUtils {
     public static final String PREF_KEY_TEL_NUMBER_COUNT = "tel_number_count";//从服务端获取的号码库总数
     public static final String PREF_KEY_TEL_NUMBER_COUNT_OLD = "tel_number_count_old";//从服务端获取的号码库总数
     public static final String PREF_KEY_TEL_NUMBER_COUNT_UPDATE_TIME = "tel_number_count_update_time";
-    public static final int PREF_KEY_REQ_TOP_SPAM_COUNT = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(PREF_KEY_TOP_SPAM_TAG_COUNT, 200); //默认从服务端获取的topspam 条数, 默认200
+    public static final int PREF_KEY_REQ_TOP_SPAM_COUNT = PreferenceHelper.getInt(PREF_KEY_TOP_SPAM_TAG_COUNT, 200); //默认从服务端获取的topspam 条数, 默认200
     public static final int REQ_TEL_NUMBER_COUNT_BASE = 2188532;
 
     //ads display control key
@@ -126,19 +127,19 @@ public class ConstantUtils {
     public static final String MESSAGE_NUMBER = "message_number";
 
     //caller server param
-    public static long REFRESH_TAG_INTERVAL = ApplicationEx.getInstance().getGlobalSettingPreference().getLong(PREF_KEY_REFRESH_TAG_INTERVAL, 24 * 60 * 60 * 1000); //1 day default
-    public static long UPDATE_SPAM_LOCAL_INTERVAL = ApplicationEx.getInstance().getGlobalSettingPreference().getLong(PREF_KEY_UPDATE_SPAM_LOCAL_INTERVAL, 24 * 60 * 60 * 1000); //1 day default, update spam db interval
-    public static long REFRESH_TAG_NO_TAG_INTERVAL = ApplicationEx.getInstance().getGlobalSettingPreference().getLong(PREF_KEY_REFRESH_TAG_NO_TAG_INTERVAL, 2 * 60 * 60 * 1000); //2 hours default, no tag or name yet
-    public static int BENCH_SPAM_TAG_COUNT = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(PREF_KEY_BENCH_SPAM_TAG_COUNT, 40); //getTagcount 40
-    public static int BENCH_SHOW_SPAM_TAG_COUNT = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(PREF_KEY_BENCH_SHOW_SPAM_TAG_COUNT, 20); //getTagcount 40
+    public static long REFRESH_TAG_INTERVAL = PreferenceHelper.getLong(PREF_KEY_REFRESH_TAG_INTERVAL, 24 * 60 * 60 * 1000); //1 day default
+    public static long UPDATE_SPAM_LOCAL_INTERVAL = PreferenceHelper.getLong(PREF_KEY_UPDATE_SPAM_LOCAL_INTERVAL, 24 * 60 * 60 * 1000); //1 day default, update spam db interval
+    public static long REFRESH_TAG_NO_TAG_INTERVAL = PreferenceHelper.getLong(PREF_KEY_REFRESH_TAG_NO_TAG_INTERVAL, 2 * 60 * 60 * 1000); //2 hours default, no tag or name yet
+    public static int BENCH_SPAM_TAG_COUNT = PreferenceHelper.getInt(PREF_KEY_BENCH_SPAM_TAG_COUNT, 40); //getTagcount 40
+    public static int BENCH_SHOW_SPAM_TAG_COUNT = PreferenceHelper.getInt(PREF_KEY_BENCH_SHOW_SPAM_TAG_COUNT, 20); //getTagcount 40
 
-    public static int SWITCH_FLASH_CALL_NOTIFY = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(PREF_SWITCH_FLASH_CALL_NOTIFY, 0); //default 0, off
-    public static int SWITCH_FULL_AFTER_CALL = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(PREF_SWITCH_FULL_AFTER_CALL, 0); //default 0, on
-    public static int SWITCH_FULL_AFTER_CALL_DELAYS = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(PREF_SWITCH_FULL_AFTER_CALL_DELAYS, 0); //default 0, off
+    public static int SWITCH_FLASH_CALL_NOTIFY = PreferenceHelper.getInt(PREF_SWITCH_FLASH_CALL_NOTIFY, 0); //default 0, off
+    public static int SWITCH_FULL_AFTER_CALL = PreferenceHelper.getInt(PREF_SWITCH_FULL_AFTER_CALL, 0); //default 0, on
+    public static int SWITCH_FULL_AFTER_CALL_DELAYS = PreferenceHelper.getInt(PREF_SWITCH_FULL_AFTER_CALL_DELAYS, 0); //default 0, off
 
     //    public static String URL_SPAM_THIRD = ""; //test
-    public static String URL_SPAM_THIRD = ApplicationEx.getInstance().getGlobalSettingPreference().getString(PREF_KEY_URL_SPAM_THIRD, ""); //https://www.show-caller.com/，https://www.shouldianswer.com/phone-number/
-    public static String URL_SEARCH_CC = ApplicationEx.getInstance().getGlobalSettingPreference().getString(PREF_KEY_URL_SEARCH_CC, ""); //used by search page
+    public static String URL_SPAM_THIRD = PreferenceHelper.getString(PREF_KEY_URL_SPAM_THIRD, ""); //https://www.show-caller.com/，https://www.shouldianswer.com/phone-number/
+    public static String URL_SEARCH_CC = PreferenceHelper.getString(PREF_KEY_URL_SEARCH_CC, ""); //used by search page
     public final static String SERVER_API_ANALYSIS_INTERFACE = "http://analysis.lionmobi.com/api.php";
     public final static String SERVER_API_UPLOAD = "http://caller.lionmobi.com/api.php";
     public final static String SERVER_API_CALLER_SHOW = "http://caller_show.lionmobi.com/api.php";
@@ -274,10 +275,10 @@ public class ConstantUtils {
     public static final String ADWORDS_PRICE = "0.00";
 
 
-    public static int SWITCH_SAPM_SERVER = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(PREF_KEY_SWITCH_SAPM_SERVER, 0); //是否从服务端获取spam tag总开关， 默认0打开
-    public static int SWITCH_USE_SAPM_THIRD = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(PREF_KEY_SWITCH_USE_SAPM_THIRD, 0); //是否从第三方获取tag开关， 默认0打开
+    public static int SWITCH_SAPM_SERVER = PreferenceHelper.getInt(PREF_KEY_SWITCH_SAPM_SERVER, 0); //是否从服务端获取spam tag总开关， 默认0打开
+    public static int SWITCH_USE_SAPM_THIRD = PreferenceHelper.getInt(PREF_KEY_SWITCH_USE_SAPM_THIRD, 0); //是否从第三方获取tag开关， 默认0打开
 
-    private static HashSet<String> getControlSet(String countries) {
+    public static HashSet<String> getControlSet(String countries) {
         HashSet<String> sets = new HashSet<>();
         if (!TextUtils.isEmpty(countries) && countries.indexOf(",") != -1) {
             String[] arrays = countries.split(",");
@@ -292,30 +293,8 @@ public class ConstantUtils {
         return sets;
     }
 
-    public static HashSet<String> getNotShowCallFlashTipsExit() {
-        String countries = ApplicationEx.getInstance().getGlobalSettingPreference().getString(NOT_SHOW_TIP_CALLFLASH_EXIT_LIST, "");
-        HashSet<String> sets = getControlSet(countries);
-        if (BuildConfig.DEBUG) {
-            for (String cc : sets) {
-                LogUtil.d("cidserver", "NotShowCallFlashTipsExit: " + cc);
-            }
-        }
-        return sets;
-    }
-
-    public static HashSet<String> getNotEnableCallFlashDefault() {
-        String countries = ApplicationEx.getInstance().getGlobalSettingPreference().getString(NOT_ENABLE_CALLFLASH_DEFAULT_LIST, "");
-        HashSet<String> sets = getControlSet(countries);
-        if (BuildConfig.DEBUG) {
-            for (String cc : sets) {
-                LogUtil.d("cidserver", "NotEnableCallFlashDefault: " + cc);
-            }
-        }
-        return sets;
-    }
-
     public static HashSet<String> getNotShowSplashAds() {
-        String countries = ApplicationEx.getInstance().getGlobalSettingPreference().getString(PREF_KEY_NOT_SHOW_ADS_SPLASH, "");
+        String countries = PreferenceHelper.getString(PREF_KEY_NOT_SHOW_ADS_SPLASH, "");
         HashSet<String> sets = getControlSet(countries);
         if (BuildConfig.DEBUG) {
             for (String cc : sets) {
@@ -326,7 +305,7 @@ public class ConstantUtils {
     }
 
     public static HashSet<String> getBigFbClickablePosition() {
-        String positions = ApplicationEx.getInstance().getGlobalSettingPreference().getString(PREF_KEY_BIG_FB_CLICKABLE_POSITION, "");
+        String positions = PreferenceHelper.getString(PREF_KEY_BIG_FB_CLICKABLE_POSITION, "");
         HashSet<String> sets = getControlSet(positions);
         if (BuildConfig.DEBUG) {
             for (String cc : sets) {
@@ -337,7 +316,7 @@ public class ConstantUtils {
     }
 
     public static HashSet<String> getBigFbClickableCountries() {
-        String positions = ApplicationEx.getInstance().getGlobalSettingPreference().getString(PREF_KEY_BIG_FB_CLICKABLE_COUNTRIES, "");
+        String positions = PreferenceHelper.getString(PREF_KEY_BIG_FB_CLICKABLE_COUNTRIES, "");
         HashSet<String> sets = getControlSet(positions);
         if (BuildConfig.DEBUG) {
             for (String cc : sets) {
@@ -348,7 +327,7 @@ public class ConstantUtils {
     }
 
     public static HashSet<String> getNotShowInterstitial() {
-        String countries = ApplicationEx.getInstance().getGlobalSettingPreference().getString(PREF_KEY_NOT_SHOW_INTERSTITIAL, "");
+        String countries = PreferenceHelper.getString(PREF_KEY_NOT_SHOW_INTERSTITIAL, "");
         HashSet<String> sets = getControlSet(countries);
         if (BuildConfig.DEBUG) {
             for (String cc : sets) {
@@ -360,7 +339,7 @@ public class ConstantUtils {
 
 
     public static HashSet<String> getShowInterstitialPosition() {
-        String positions = ApplicationEx.getInstance().getGlobalSettingPreference().getString(PREF_KEY_SHOW_INTERSTITIAL_POSITION, "");
+        String positions = PreferenceHelper.getString(PREF_KEY_SHOW_INTERSTITIAL_POSITION, "");
         HashSet<String> sets = getControlSet(positions);
         if (BuildConfig.DEBUG) {
             for (String cc : sets) {
@@ -384,7 +363,7 @@ public class ConstantUtils {
      */
     public static int getIsShowInterstitial() {
         int isShow = 1;
-        isShow = ApplicationEx.getInstance().getGlobalSettingPreference().getInt(PREF_KEY_IS_SHOW_INTERSTITIAL, 1);
+        isShow = PreferenceHelper.getInt(PREF_KEY_IS_SHOW_INTERSTITIAL, 1);
         return isShow;
     }
 
@@ -769,10 +748,7 @@ public class ConstantUtils {
     public static final String USER_SPLASH_AD_COUNT_TIME = "user_splash_ad_count_time"; //
     public static final String USER_SPLASH_VISIT_TIME = "user_splash_visit_time"; //
     //call flash setting exit tips
-    public static final String IS_SHOW_TIP_CALLFLASH_EXIT = "is_show_tip_callflash_exit";//退出callflash setting是否弹窗提示, 0 默认弹出
-    public static final String NOT_SHOW_TIP_CALLFLASH_EXIT_LIST = "not_show_tip_callflash_exit_list";//不显示弹窗提示的国家, 默认没有
-    public static final String IS_ENABLE_CALLFLASH_DEFAULT = "is_enable_callflash_default";//是否默认开启flashcall， 0 默认不开启
-    public static final String NOT_ENABLE_CALLFLASH_DEFAULT_LIST = "not_enable_callflash_default_list";//不默认开启flash call的国家, 默认没有, example "US,"
+
 
 
     //非联系人是否显示名字, 默认0显示
