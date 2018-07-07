@@ -17,7 +17,9 @@ import com.bumptech.glide.Glide;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
+import com.md.serverflash.beans.Category;
 import com.md.serverflash.beans.Theme;
+import com.md.serverflash.callback.CategoryCallback;
 import com.md.serverflash.callback.SingleTopicThemeCallback;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.CallFl
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashOnlineAdLoaded;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import event.EventBus;
 
@@ -40,6 +43,7 @@ public class HomeFragment extends Fragment {
     private static final int RECYCLER_ONLINE_CALL_FLASH_AD_SHOW_POSITION = 2;
 
     private static final long MAX_LOAD_THEME_FROM_NET_TIME = DateUtils.SECOND_IN_MILLIS * 5;
+    private static final String TAG = "HomeFragment";
 
     private View mRoot;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -96,10 +100,14 @@ public class HomeFragment extends Fragment {
             topic = CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED;
         }
         List<Theme> data = ThemeSyncManager.getInstance().getCacheTopicData(topic, mPageNumber, ONLINE_THEME_PAGE_LOAD_LENGTH + 1);
-
-        if (data != null && data.size() > CallFlashManager.SMALL_TOPIC_THEME_REQUEST_COUNT) {
+        if (data != null /*&& data.size() > CallFlashManager.SMALL_TOPIC_THEME_REQUEST_COUNT*/) {
+//            LogUtil.d(TAG, "initOnlineData data:" + data.size());
             model.clear();
-            model.addAll(CallFlashManager.getInstance().themeToCallFlashInfo(data.subList(0, ONLINE_THEME_PAGE_LOAD_LENGTH)));
+            if (data.size() > ONLINE_THEME_PAGE_LOAD_LENGTH) {
+                model.addAll(CallFlashManager.getInstance().themeToCallFlashInfo(data.subList(0, ONLINE_THEME_PAGE_LOAD_LENGTH)));
+            } else {
+                model.addAll(CallFlashManager.getInstance().themeToCallFlashInfo(data));
+            }
 
             if (mAdapter != null) {
                 mAdapter.notifyDataSetChanged();
@@ -195,6 +203,18 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         mAdapter.notifyDataSetChanged();
+
+        ThemeSyncManager.getInstance().syncCategoryList(new CategoryCallback() {
+            @Override
+            public void onSuccess(int code, List<Category> data) {
+
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+
+            }
+        });
     }
 
     @Override
@@ -274,13 +294,14 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (getActivity() == null || getActivity().isFinishing()) {
+                    return;
+                }
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
                         Glide.with(HomeFragment.this).resumeRequests();
                         break;
                     case RecyclerView.SCROLL_STATE_DRAGGING:
-                        Glide.with(HomeFragment.this).pauseRequests();
-                        break;
                     case RecyclerView.SCROLL_STATE_SETTLING:
                         Glide.with(HomeFragment.this).pauseRequests();
                         break;

@@ -47,7 +47,7 @@ import okhttp3.Response;
  */
 
 public class HttpUtil {
-    private static final String THEME_REQUEST_URL = "https://material.lionmobi.com/api.php";
+    private static final String THEME_REQUEST_URL = "https://material.topsearchdomain.info/api.php";
     private static final String KEY_HTTP = "*2od2S!#%s";
 
     private static final String ACTION_CATEGORY_LIST = "get_category_list"; // 获取分类素材列表
@@ -81,7 +81,7 @@ public class HttpUtil {
         Map<String, String> params = new HashMap<>();
 
         params.put("language", mLanguage);
-        params.put("cid", "33");//getCid()
+        params.put("cid", getCid());//
         params.put("aid", getAndroidId());
         params.put("ver", getVersionCode());
         params.put("os_ver", String.valueOf(Build.VERSION.SDK_INT));
@@ -121,7 +121,7 @@ public class HttpUtil {
         try {
             Context context = ThemeSyncManager.getInstance().getContext();
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), 128);
-            clientId = info.metaData.getInt("LionMobiClientID");
+            clientId = info.metaData.getInt("ClientID");
         } catch (Exception e) {
 
         }

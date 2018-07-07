@@ -166,15 +166,16 @@ public class AdvertisementSwitcher {
 
                 value = mPriorityInfo.get(key);
                 value.clear();
-                if (priorityList.contains(AD_DISABLE_FLAG)) {
-                    value.add(AD_DISABLE_FLAG);
-                } else {
-                    if (isDebugTest) {
-                        value.addAll(DebugPriority);
-                    } else {
-                        value.addAll(priorityList);
-                    }
-                }
+                value.add(AD_DISABLE_FLAG);
+//                if (priorityList.contains(AD_DISABLE_FLAG)) {
+//                    value.add(AD_DISABLE_FLAG);
+//                } else {
+//                    if (isDebugTest) {
+//                        value.addAll(DebugPriority);
+//                    } else {
+//                        value.addAll(priorityList);
+//                    }
+//                }
 
                 if (BuildConfig.DEBUG) {
                     String temp = "";

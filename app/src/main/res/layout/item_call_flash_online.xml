@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/border_20ffffff_round1dp"
-    card_view:cardCornerRadius="6dp">
+    card_view:cardCornerRadius="2dp">
 
     <RelativeLayout
         android:id="@+id/layout_call_flash"

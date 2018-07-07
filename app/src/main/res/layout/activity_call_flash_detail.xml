@@ -36,7 +36,14 @@
         <FrameLayout
             android:id="@+id/layout_flash_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_call_flash_bg_small"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+        </FrameLayout>
 
         <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CallFlashAvatarInfoView
             android:id="@+id/callFlashAvatarInfoView"

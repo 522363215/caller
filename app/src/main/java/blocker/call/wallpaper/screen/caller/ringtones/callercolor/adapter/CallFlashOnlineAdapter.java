@@ -3,8 +3,8 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,8 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.BitmapRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.GlideUrl;
 import com.md.flashset.View.FlashLed;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.manager.CallFlashManager;
@@ -28,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallFlashPreviewActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
@@ -51,6 +52,7 @@ import event.EventBus;
 public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnlineAdapter.ViewHolder> {
 
     private static final String TAG = "CallFlashOnlineAdapter";
+    private BitmapRequestBuilder<GlideUrl, Bitmap> mGlideBuilder;
     private Context context = null;
     private List<CallFlashInfo> model = null;
 
@@ -107,6 +109,15 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
             childViewWidth = (DeviceUtil.getScreenWidth() - dp8 * 3) / 2;
             childViewHeight = Stringutil.dpToPx(context, 252);
         }
+
+        //初始化glide
+        mGlideBuilder = Glide.with(context).from(GlideUrl.class)
+                .asBitmap()
+                .centerCrop()
+                .placeholder(R.drawable.icon_unloaded_bg)//加载中图片
+                .error(R.drawable.icon_unloaded_bg)//加载失败图片
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate();
     }
 
     @Override
@@ -118,7 +129,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         if (context == null) return;
-
         if (fragmentTag == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode() && position == mAdShowPosition) {
             // 广告相关.
             holder.layoutCallFlash.setVisibility(View.GONE);
@@ -174,13 +184,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
                 }
 
 
-                Glide.with(context)
-                        .load(imgUrl)
-                        .placeholder(R.drawable.icon_unloaded_bg)//加载中图片
-                        .error(R.drawable.icon_unloaded_bg)//加载失败图片
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .dontAnimate()
-                        .into(holder.coverImg);
+                mGlideBuilder.load(new GlideUrl(imgUrl)).into(holder.coverImg);
 
                 File videoFile = videoMap.get(info.url);
                 if (videoFile == null) {

@@ -338,7 +338,7 @@ public class CallFlashSetResultActivity extends BaseActivity {
 
     private void init() {
         initView();
-        initAd();
+//        initAd();
 
     }
 

@@ -98,7 +98,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         }
         setTranslucentStatusBar();
         mIsShowFirstAdMob = CallerAdManager.isShowFirstAdMob(CallerAdManager.POSITION_FIRST_ADMOB_CALL_FLASH_PREVIEW, true);
-        initAds();
+//        initAds();
         initView();
         onNewIntent(getIntent());
         FlurryAgent.logEvent("CallFlashPreviewActivity-start");
@@ -286,45 +286,6 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             mLayoutRecommend.setVisibility(View.GONE);
         }
     }
-
-    /*private void get2RandomCallFlashInfo() {
-        ThemeSyncManager.getInstance().getAllThemes(new ThemeSyncCallback() {
-            @Override
-            public void onLoadThemes(List<OnlineTheme> list) {
-                try {
-
-                    if (isFinishing()) {
-                        return;
-                    }
-                    ArrayList<CallFlashInfo> flashList = CallFlashManager.getInstance().onlineThemeListToFlashInfo(list);
-                    if (flashList != null && flashList.size() > 0) {
-                        Random random = new Random();
-                        int position1 = random.nextInt(flashList.size());
-                        recommendCallFlashInfo1 = flashList.get(position1);
-                        if (recommendCallFlashInfo1 != null && mInfo != null && mInfo.id != null && recommendCallFlashInfo1.id != null) {
-                            while (mInfo.id.equals(recommendCallFlashInfo1.id)) {
-                                position1 = random.nextInt(flashList.size());
-                                recommendCallFlashInfo1 = flashList.get(position1);
-                            }
-
-                            int position2 = random.nextInt(flashList.size());
-                            recommendCallFlashInfo2 = flashList.get(position2);
-                            while (mInfo.id.equals(recommendCallFlashInfo2.id) || recommendCallFlashInfo1.id.equals(recommendCallFlashInfo2.id)) {
-                                position2 = random.nextInt(flashList.size());
-                                recommendCallFlashInfo2 = flashList.get(position2);
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onLoadThemesFail() {
-            }
-        });
-    }*/
 
     private void initView() {
         mActionBar = (ActionBar) findViewById(R.id.actionbar);
