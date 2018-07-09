@@ -21,7 +21,7 @@ import android.view.KeyEvent;
 
 
 import com.android.internal.telephony.ITelephony;
-import com.md.block.beans.BlockHistory;
+import com.md.block.beans.BlockInfo;
 import com.md.block.callback.PhoneStateChangeCallback;
 import com.md.block.core.local.BlockLocal;
 import com.md.block.core.receiver.PhoneStateReceiver;
@@ -32,7 +32,6 @@ import com.md.block.util.SpecialPermissionsUtil;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by ChenR on 2018/7/2.
@@ -138,27 +137,23 @@ public class BlockManager {
         return appContext;
     }
 
-    public boolean setBlockContact (String number) {
-        return BlockLocal.setBlockContacts(number);
+    public boolean setBlockContact (BlockInfo contact) {
+        return BlockLocal.setBlockContacts(contact);
     }
 
-    public void setBlockContact (List<String> blockContacts) {
+    public void setBlockContact (List<BlockInfo> blockContacts) {
         BlockLocal.setBlockContacts(blockContacts);
     }
 
-    public void setBlockHistory (BlockHistory history) {
+    public void setBlockHistory (BlockInfo history) {
         BlockLocal.setBlockHistory(history);
     }
 
-    public List<String> getBlockContacts () {
-        Set<String> contacts = BlockLocal.getBlockContacts();
-        if (contacts == null) {
-            return null;
-        }
-        return new ArrayList<>(contacts);
+    public List<BlockInfo> getBlockContacts () {
+        return BlockLocal.getBlockContacts();
     }
 
-    public List<BlockHistory> getBlockHistory () {
+    public List<BlockInfo> getBlockHistory () {
         return BlockLocal.getBlockHistory();
     }
 
@@ -260,13 +255,13 @@ public class BlockManager {
             return suc;
         }
 
-        List<String> blockContacts = getBlockContacts();
+        List<BlockInfo> blockContacts = getBlockContacts();
         if (blockContacts == null) {
             return suc;
         }
 
-        for (String blockNumber : blockContacts) {
-            if (PhoneNumberUtils.compare(blockNumber, phoneNumber)) {
+        for (BlockInfo contact : blockContacts) {
+            if (PhoneNumberUtils.compare(contact.getNumber(), phoneNumber)) {
                 suc = endCall();
                 break;
             }

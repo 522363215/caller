@@ -1,19 +1,20 @@
 package com.md.block.beans;
 
-public class BlockHistory {
+public class BlockInfo {
+
 
     private String name;
     private String number;
-    private String location;
+    private String photoID;
     private long blockTime;
 
-    public BlockHistory() {
+    public BlockInfo() {
     }
 
-    public BlockHistory(String name, String number, String location, long blockTime) {
+    public BlockInfo(String name, String number, String photoID, long blockTime) {
         this.name = name;
         this.number = number;
-        this.location = location;
+        this.photoID = photoID;
         this.blockTime = blockTime;
     }
 
@@ -33,12 +34,12 @@ public class BlockHistory {
         this.number = number;
     }
 
-    public String getLocation() {
-        return location;
+    public String getPhotoID() {
+        return photoID;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setPhotoID(String photoID) {
+        this.photoID = photoID;
     }
 
     public long getBlockTime() {
@@ -54,29 +55,25 @@ public class BlockHistory {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BlockHistory that = (BlockHistory) o;
-
-        if (blockTime != that.blockTime) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (number != null ? !number.equals(that.number) : that.number != null) return false;
-        return location != null ? location.equals(that.location) : that.location == null;
+        BlockInfo that = (BlockInfo) o;
+        return number != null ? !number.equals(that.number) : that.number != null;
     }
 
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (number != null ? number.hashCode() : 0);
-        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (photoID != null ? photoID.hashCode() : 0);
         result = 31 * result + (int) (blockTime ^ (blockTime >>> 32));
         return result;
     }
 
     @Override
     public String toString() {
-        return "BlockHistory{" +
+        return "BlockInfo{" +
                 "name='" + name + '\'' +
                 ", number='" + number + '\'' +
-                ", location='" + location + '\'' +
+                ", photoID='" + photoID + '\'' +
                 ", blockTime=" + blockTime +
                 '}';
     }

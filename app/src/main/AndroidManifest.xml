@@ -138,7 +138,8 @@
             android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.BlockActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/CallFlashAppCompatTheme"/>
 
         <service
             android:name=".service.LocalService"

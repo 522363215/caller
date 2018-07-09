@@ -262,10 +262,8 @@ public class HttpUtil {
                             JSONObject responseObj = new JSONObject(responseString);
                             JSONObject status = responseObj.getJSONObject("status");
                             int statusCode = status.getInt("code");
-                            LogUtil.d(LogUtil.TAG, "requestPageData response, code: " + statusCode + ", msg: " + status.getString("msg"));
                             if (statusCode == 0) {
                                 String data = responseObj.getString("data");
-                                LogUtil.d(LogUtil.TAG, "requestPageData data: " + data);
                                 ThemeSyncLocal.getInstance().markSingleJsonData(ThemeSyncLocal.PREF_SUFFIX_PAGE_DATA, data);
 
                                 if (callback != null) {

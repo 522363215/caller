@@ -171,17 +171,17 @@ interface ITelephony {
     boolean setRadio(boolean turnOn);
 
     /**
-     * Request to update location information in service state
+     * Request to update photoID information in service state
      */
     void updateServiceLocation();
 
     /**
-     * Enable location update notifications.
+     * Enable photoID update notifications.
      */
     void enableLocationUpdates();
 
     /**
-     * Disable location update notifications.
+     * Disable photoID update notifications.
      */
     void disableLocationUpdates();
 

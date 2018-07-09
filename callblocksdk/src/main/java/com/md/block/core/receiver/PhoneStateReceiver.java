@@ -12,7 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
-import com.md.block.beans.BlockHistory;
+import com.md.block.beans.BlockInfo;
 import com.md.block.callback.PhoneStateChangeCallback;
 import com.md.block.core.BlockManager;
 import com.md.block.core.local.BlockLocal;
@@ -149,7 +149,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         if (BlockLocal.getBlockSwitchState() && BlockManager.getInstance().blockCall(number)) {
             BlockLocal.setPreferencesData("number_is_block_status", true);
 
-            BlockHistory history = new BlockHistory();
+            BlockInfo history = new BlockInfo();
             history.setNumber(number);
             history.setName(getContactNameForNumber(number));
             history.setBlockTime(System.currentTimeMillis());

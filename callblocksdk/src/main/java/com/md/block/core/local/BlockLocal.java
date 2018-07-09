@@ -7,7 +7,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.md.block.beans.BlockHistory;
+import com.md.block.beans.BlockInfo;
 import com.md.block.core.BlockManager;
 
 import java.lang.reflect.Type;
@@ -49,54 +49,79 @@ public class BlockLocal {
         return pref != null && pref.getBoolean(PREF_KEY_BLOCK_SWITCH_STATE, false);
     }
 
-    public static Set<String> getBlockContacts () {
+    public static List<BlockInfo> getBlockContacts () {
         SharedPreferences pref = getSharedPreferences();
-        return pref == null ? null : pref.getStringSet(PREF_KEY_BLOCK_CONTACT_LIST, null);
+        if (pref != null) {
+            String data = pref.getString(PREF_KEY_BLOCK_CONTACT_LIST, "");
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<BlockInfo>>() {}.getType();
+            return gson.fromJson(data, type);
+        }
+        return null;
     }
 
-    public static boolean setBlockContacts (String number) {
-        if (TextUtils.isEmpty(number)) {
+    public static boolean setBlockContacts (BlockInfo contact) {
+        if (contact == null || TextUtils.isEmpty(contact.getNumber())) {
             return false;
         }
 
-        Set<String> blockContacts = getBlockContacts();
+        List<BlockInfo> blockContacts = getBlockContacts();
         if (blockContacts == null) {
-            blockContacts = new HashSet<>();
+            blockContacts = new ArrayList<>();
         }
 
-        if (!blockContacts.contains(number)) {
-            boolean add = blockContacts.add(number);
+        if (!blockContacts.contains(contact)) {
+            boolean add = blockContacts.add(contact);
             SharedPreferences pref = getSharedPreferences();
             if (pref == null) {
                 return false;
             }
 
-            pref.edit().putStringSet(PREF_KEY_BLOCK_CONTACT_LIST, blockContacts).apply();
+            pref.edit().putString(PREF_KEY_BLOCK_CONTACT_LIST, new Gson().toJson(blockContacts)).apply();
             return add;
         } else
             return true;
 
     }
 
-    public static void setBlockContacts (List<String> blockContacts) {
+    public static void setBlockContacts (List<BlockInfo> blockContacts) {
         if (blockContacts == null || blockContacts.isEmpty()) {
             return;
         }
 
-        for (String number : blockContacts) {
-            setBlockContacts(number);
+        for (BlockInfo info : blockContacts) {
+            setBlockContacts(info);
         }
     }
 
     public static boolean removeBlockContact (String number) {
         boolean isSuc = false;
 
-        Set<String> contactSet = getBlockContacts();
+        List<BlockInfo> contactSet = getBlockContacts();
         if (contactSet != null && contactSet.size() > 0) {
-            Iterator<String> iterator = contactSet.iterator();
+            Iterator<BlockInfo> iterator = contactSet.iterator();
             while (iterator.hasNext()) {
-                String next = iterator.next();
-                if (PhoneNumberUtils.compare(number, next)) {
+                BlockInfo next = iterator.next();
+                if (PhoneNumberUtils.compare(number, next.getNumber())) {
+                    iterator.remove();
+                    isSuc = true;
+                    break;
+                }
+            }
+        }
+
+        return isSuc;
+    }
+
+    public static boolean removeBlockContact (BlockInfo contact) {
+        boolean isSuc = false;
+
+        List<BlockInfo> contactSet = getBlockContacts();
+        if (contactSet != null && contactSet.size() > 0) {
+            Iterator<BlockInfo> iterator = contactSet.iterator();
+            while (iterator.hasNext()) {
+                BlockInfo next = iterator.next();
+                if (next.equals(contact)) {
                     iterator.remove();
                     isSuc = true;
                     break;
@@ -114,19 +139,19 @@ public class BlockLocal {
         }
     }
 
-    public static List<BlockHistory> getBlockHistory () {
+    public static List<BlockInfo> getBlockHistory () {
         SharedPreferences pref = getSharedPreferences();
 
         if (pref == null) {
             return null;
         }
 
-        Type type = new TypeToken<List<BlockHistory>>() {}.getType();
-        List<BlockHistory> histories = new Gson().fromJson(pref.getString(PREF_KEY_BLOCK_HISTORY_LIST, ""), type);
+        Type type = new TypeToken<List<BlockInfo>>() {}.getType();
+        List<BlockInfo> histories = new Gson().fromJson(pref.getString(PREF_KEY_BLOCK_HISTORY_LIST, ""), type);
         if (histories != null) {
-            Collections.sort(histories, new Comparator<BlockHistory>() {
+            Collections.sort(histories, new Comparator<BlockInfo>() {
                 @Override
-                public int compare(BlockHistory o1, BlockHistory o2) {
+                public int compare(BlockInfo o1, BlockInfo o2) {
                     if (o1.getBlockTime() < o2.getBlockTime()) {
                         return 1;
                     } else if (o1.getBlockTime() > o2.getBlockTime()) {
@@ -139,29 +164,29 @@ public class BlockLocal {
         return histories;
     }
 
-    public static void setBlockHistory (BlockHistory history) {
+    public static void setBlockHistory (BlockInfo history) {
         if (history == null) {
             return;
         }
 
-        List<BlockHistory> blockHistory = getBlockHistory();
-        if (blockHistory == null) {
-            blockHistory = new ArrayList<>();
+        List<BlockInfo> blockInfo = getBlockHistory();
+        if (blockInfo == null) {
+            blockInfo = new ArrayList<>();
         }
-        blockHistory.add(0, history);
+        blockInfo.add(0, history);
 
         SharedPreferences pref = getSharedPreferences();
         if (pref != null) {
             return;
         }
-        String historyJson = new Gson().toJson(blockHistory);
+        String historyJson = new Gson().toJson(blockInfo);
         SharedPreferences.Editor edit = pref.edit();
         if (edit != null) {
             edit.putString(PREF_KEY_BLOCK_HISTORY_LIST, historyJson).apply();
         }
     }
 
-    public static boolean removeBlockHistory (BlockHistory history) {
+    public static boolean removeBlockHistory (BlockInfo history) {
         boolean isSuc = false;
 
         if (history != null) {
@@ -169,11 +194,11 @@ public class BlockLocal {
             if (pref != null) {
                 String data = pref.getString(PREF_KEY_BLOCK_HISTORY_LIST, "");
                 Gson gson = new Gson();
-                List<BlockHistory> saveHistory = gson.fromJson(data, new TypeToken<List<BlockHistory>>(){}.getType());
+                List<BlockInfo> saveHistory = gson.fromJson(data, new TypeToken<List<BlockInfo>>(){}.getType());
                 if (saveHistory != null && saveHistory.size() > 0) {
-                    Iterator<BlockHistory> iterator = saveHistory.iterator();
+                    Iterator<BlockInfo> iterator = saveHistory.iterator();
                     while (iterator.hasNext()) {
-                        BlockHistory next = iterator.next();
+                        BlockInfo next = iterator.next();
                         if (next.getBlockTime() == history.getBlockTime()) {
                             isSuc = true;
                             iterator.remove();

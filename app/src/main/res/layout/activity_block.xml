@@ -12,4 +12,26 @@
         android:layout_height="@dimen/dp56"
         app:title="@string/phone_detail_block" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_block_category_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp48"
+            app:tabIndicatorColor="@color/white"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/color_66FFFFFF"
+            app:tabBackground="@color/color_transparent"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"/>
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tab_block_category_title"/>
+
+    </RelativeLayout>
+
 </LinearLayout>
