@@ -32,6 +32,15 @@ public class GlideHelper {
                 .dontAnimate();
     }
 
+    public BitmapRequestBuilder<Integer, Bitmap> load(int resourceId) {
+        return Glide.with(mContext).load(resourceId).asBitmap()
+                .centerCrop()
+                .placeholder(R.drawable.glide_loading_bg)//加载中图片
+                .error(R.drawable.glide_load_failed_bg)//加载失败图片
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate();
+    }
+
     public DrawableRequestBuilder<Drawable> load(Drawable drawable) {
         return Glide.with(mContext).load(drawable)
                 .placeholder(R.drawable.glide_loading_bg)//加载中图片

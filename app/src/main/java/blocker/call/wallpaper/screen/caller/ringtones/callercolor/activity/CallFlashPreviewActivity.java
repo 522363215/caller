@@ -45,7 +45,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUt
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 import event.EventBus;
 
@@ -331,7 +330,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         if (mIsOnlineCallFlash) {
             GlideHelper.with(this).load(mInfo.img_vUrl).into(mIvPreview);
         } else {
-            GlideHelper.with(this).load("drawable://" + mInfo.imgResId).into(mIvPreview);
+            mIvPreview.setBackgroundResource(mInfo.imgResId);
         }
 
         File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);

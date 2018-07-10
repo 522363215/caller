@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -507,7 +508,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         } else if (isShowInterstitialAd /*&& isDownloadComplete*/) {
             showInterstitialAd(true);
         } else {
-            layout_call_flash.setVisibility(View.GONE);
             finish();
         }
     }
@@ -564,28 +564,12 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         if (mInfo.isOnlionCallFlash) {
             loadBackground(mInfo.img_vUrl);
         } else {
-            loadBackground("drawable://" + mInfo.imgResId);
+            setBlurBackground(BitmapFactory.decodeResource(getResources(),mInfo.imgResId));
         }
     }
 
     private void loadBackground(String url) {
         if (!TextUtils.isEmpty(url)) {
-//            Glide.with(this).load(url)
-//                    .centerCrop()
-//                    .placeholder(R.drawable.glide_loading_bg)//加载中图片
-//                    .error(R.drawable.glide_load_failed_bg)//加载失败图片
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .dontAnimate().listener(new RequestListener<String, GlideDrawable>() {
-//                @Override
-//                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-//                    return false;
-//                }
-//
-//                @Override
-//                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-//                    return false;
-//                }
-//            });
             GlideHelper.with(this).load(url).listener(new RequestListener<String, Bitmap>() {
                 @Override
                 public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
@@ -610,7 +594,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         if (resource != null) {
             iv_call_flash_bg_small.setImageBitmap(resource);
             //高斯模糊
-            Bitmap rsBitmap = IconUtil.rsBlur(CallFlashDetailActivity.this, resource, 25);
+            Bitmap rsBitmap = IconUtil.rsBlur(CallFlashDetailActivity.this, resource, 15);
             iv_call_flash_bg.setImageBitmap(rsBitmap);
             LogUtil.d(TAG, "setBackground resource:" + resource + ",rsBlur:" + rsBitmap);
         } else {
@@ -1220,7 +1204,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(CallerAdManager.IN_ADS_CALL_FLASH);
             if (interstitialAdvertisement == null) {
                 if (isBack) {
-                    layout_call_flash.setVisibility(View.GONE);
                     finish();
                 }
             } else {
@@ -1230,7 +1213,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                         LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdClosed");
                         ApplicationEx.getInstance().setInterstitialAdvertisement(null, CallerAdManager.IN_ADS_CALL_FLASH);
                         if (isBack) {
-                            layout_call_flash.setVisibility(View.GONE);
                             finish();
                         } else {
                             LogUtil.d(TAG, "toResultOkAction 4");
@@ -1257,7 +1239,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                         LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdError");
                         ApplicationEx.getInstance().setInterstitialAdvertisement(null, CallerAdManager.IN_ADS_CALL_FLASH);
                         if (isBack) {
-                            layout_call_flash.setVisibility(View.GONE);
                             finish();
                         } else {
                             LogUtil.d(TAG, "toResultOkAction 5");
@@ -1273,7 +1254,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         } catch (Exception e) {
             LogUtil.e(TAG, "showInterstitialAd e:" + e.getMessage());
             if (isBack) {
-                layout_call_flash.setVisibility(View.GONE);
                 finish();
             }
         }
@@ -1303,7 +1283,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                     LogUtil.d(TAG, "showFullScreenAd  onAdClosed");
                     FullScreenAdManager.getInstance().clear();
                     if (isBack) {
-                        layout_call_flash.setVisibility(View.GONE);
                         finish();
                     } else {
                         toResultOkAction();
@@ -1317,7 +1296,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             });
         } else {
             if (isBack) {
-                layout_call_flash.setVisibility(View.GONE);
                 finish();
             }
         }

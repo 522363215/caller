@@ -6,7 +6,7 @@
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/border_20ffffff_round1dp"
+    app:cardBackgroundColor="@color/color_transparent"
     card_view:cardCornerRadius="2dp">
 
     <RelativeLayout
@@ -21,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/glide_loading_bg"
             tools:src="@drawable/glide_loading_bg" />
 
         <LinearLayout

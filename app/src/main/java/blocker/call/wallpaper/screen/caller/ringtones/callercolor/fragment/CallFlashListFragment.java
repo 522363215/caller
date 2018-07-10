@@ -11,6 +11,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -59,6 +60,8 @@ public class CallFlashListFragment extends Fragment {
     private String topic = "";
     private AtomicBoolean isRefreshData = new AtomicBoolean(false);
     private int mCategoryId = -1;
+    private ProgressBar mPbLoading;
+    private Runnable mLoadMaxRunable;
 
     public static CallFlashListFragment newInstance(int dataType) {
         CallFlashListFragment fragment = new CallFlashListFragment();
@@ -103,10 +106,12 @@ public class CallFlashListFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if (view != null) {
             mSwipeRefreshLayout = view.findViewById(R.id.flash_swipe_refresh);
-            mSwipeRefreshLayout.setRefreshing(true);
-
             mTvRefreshFailed = view.findViewById(R.id.tv_refresh_failed);
             mRecyclerView = view.findViewById(R.id.rv_flash_list);
+            mPbLoading = view.findViewById(R.id.pb_loading);
+
+            mPbLoading.setVisibility(View.VISIBLE);
+            mSwipeRefreshLayout.setVisibility(View.GONE);
 
             initRecycleView(view);
             listener();
@@ -172,48 +177,45 @@ public class CallFlashListFragment extends Fragment {
         }
     }
 
-    private void updateUI(List<Theme> data) {
-        if (data != null && data.size() > 0) {
+    private void updateUI(List<Theme> data, boolean isSuccess) {
+        if (isSuccess && data != null && data.size() > 0 && mAdapter != null) {
 //            LogUtil.d(TAG, "initOnlineData data:" + data.size());
             model.clear();
             model.addAll(CallFlashManager.getInstance().themeToCallFlashInfo(data));
-            if (mAdapter != null) {
-                mAdapter.notifyDataSetChanged();
-            } else {
-                if (mTvRefreshFailed != null) {
-                    mTvRefreshFailed.setVisibility(View.VISIBLE);
-                }
-                if (mRecyclerView != null) {
-                    mRecyclerView.setVisibility(View.GONE);
-                }
+            mAdapter.notifyDataSetChanged();
+            if (mTvRefreshFailed != null) {
+                mTvRefreshFailed.setVisibility(View.GONE);
             }
-            stopRefresh();
+            if (mRecyclerView != null) {
+                mRecyclerView.setVisibility(View.VISIBLE);
+            }
         } else {
-            Async.scheduleTaskOnUiThread(MAX_LOAD_THEME_FROM_NET_TIME, new Runnable() {
-                @Override
-                public void run() {
-                    if (getActivity() != null && !getActivity().isFinishing() && isRefreshData.get()) {
-                        ToastUtils.showToast(getActivity(), getString(R.string.call_flash_more_refresh_online_themes_failed_tip));
-                        stopRefresh();
-                    }
-                }
-            });
+            loadFailed(isSuccess);
         }
+        mPbLoading.setVisibility(View.GONE);
+        mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+        stopRefresh();
     }
 
-    private void loadFailed() {
-        if (getActivity() == null || getActivity().isFinishing() || isRefreshData.get()) {
+    private void loadFailed(boolean isSuccess) {
+        if (getActivity() == null || getActivity().isFinishing() || !isRefreshData.get()) {
             return;
         }
-        stopRefresh();
-        if (mTvRefreshFailed != null) {
-            mTvRefreshFailed.setVisibility(View.VISIBLE);
-        }
-        if (mRecyclerView != null) {
-            mRecyclerView.setVisibility(View.GONE);
-        }
-        if (getActivity() != null) {
+        if (isSuccess) {
+            mTvRefreshFailed.setText(R.string.no_online_call_flash_list_tip);
+            ToastUtils.showToast(getActivity(), getActivity().getString(R.string.no_online_call_flash_list_tip));
+        } else {
+            mTvRefreshFailed.setText(R.string.call_flash_more_refresh_online_themes_load_failed);
             ToastUtils.showToast(getActivity(), getActivity().getString(R.string.call_flash_more_refresh_online_themes_failed_tip));
+        }
+
+        if (model == null || model.size() <= 0) {
+            if (mTvRefreshFailed != null) {
+                mTvRefreshFailed.setVisibility(View.VISIBLE);
+            }
+            if (mRecyclerView != null) {
+                mRecyclerView.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -226,12 +228,12 @@ public class CallFlashListFragment extends Fragment {
         ThemeSyncManager.getInstance().syncTopicData(new String[]{topic}, PAGE_NUMBER_MAX_COUNT, new TopicThemeCallback() {
             @Override
             public void onSuccess(int code, Map<String, List<Theme>> data) {
-                updateUI(data.get(topic));
+                updateUI(data.get(topic), true);
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                loadFailed();
+                updateUI(null, false);
             }
         });
     }
@@ -240,12 +242,12 @@ public class CallFlashListFragment extends Fragment {
         ThemeSyncManager.getInstance().syncPageData(mCategoryId, new ThemeSyncCallback() {
             @Override
             public void onSuccess(List<Theme> data) {
-                updateUI(data);
+                updateUI(data, true);
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                loadFailed();
+                updateUI(null, false);
             }
         });
     }
@@ -255,12 +257,22 @@ public class CallFlashListFragment extends Fragment {
             mSwipeRefreshLayout.setRefreshing(false);
         }
         isRefreshData.set(false);
+        Async.removeScheduledTaskOnUiThread(mLoadMaxRunable);
     }
 
     private void listener() {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                Async.scheduleTaskOnUiThread(MAX_LOAD_THEME_FROM_NET_TIME, mLoadMaxRunable = new Runnable() {
+                    @Override
+                    public void run() {
+                        if (getActivity() != null && !getActivity().isFinishing() && isRefreshData.get()) {
+                            loadFailed(false);
+                            stopRefresh();
+                        }
+                    }
+                });
                 initData();
             }
         });
