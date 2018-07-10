@@ -15,10 +15,10 @@
         android:scaleType="fitXY" />
 
     <ImageView
+        android:visibility="visible"
         android:id="@+id/iv_shape"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.5"
         android:background="@drawable/background_gradient" />
 
     <android.support.v7.widget.CardView
@@ -166,7 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@color/color_FF0084FF"
+                android:background="@color/color_FF27BB56"
                 android:gravity="center"
                 android:padding="@dimen/dp10"
                 android:text="@string/call_flash_detail_setting_action_to_set"
@@ -179,7 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@color/color_FF0084FF"
+                android:background="@color/color_FF27BB56"
                 android:gravity="center"
                 android:minWidth="@dimen/dp160"
                 android:padding="@dimen/dp10"
@@ -217,7 +217,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:progressBgColor="@color/color_half_transparent"
-                    app:progressColor="@color/color_FF0084FF" />
+                    app:progressColor="@color/color_FF27BB56" />
 
                 <TextView
                     android:id="@+id/tv_downloading_below_ad"
@@ -237,7 +237,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@color/color_FF0084FF"
+                android:background="@color/color_FF27BB56"
                 android:gravity="center"
                 android:padding="@dimen/dp10"
                 android:text="@string/call_flash_detail_setting_action_to_set"
@@ -250,7 +250,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@color/color_FF0084FF"
+                android:background="@color/color_FF27BB56"
                 android:gravity="center"
                 android:minWidth="@dimen/dp160"
                 android:padding="@dimen/dp10"

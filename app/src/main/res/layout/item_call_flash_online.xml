@@ -21,8 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/icon_unloaded_bg"
-            tools:src="@drawable/ic_bg_festival"/>
+            android:src="@drawable/glide_loading_bg"
+            tools:src="@drawable/glide_loading_bg" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,29 +37,29 @@
                 android:layout_height="40dp"
                 android:src="@drawable/icon_fake_photo_trump"
                 android:visibility="gone"
-                app:border_width="0dp"/>
+                app:border_width="0dp" />
 
             <TextView
                 android:id="@+id/tv_call_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/white"
                 android:fontFamily="@string/Roboto_Medium"
-                android:textSize="12sp"
                 android:text="@string/call_flash_example_name"
-                android:visibility="gone"/>
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_call_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:textColor="@color/white"
                 android:fontFamily="@string/Roboto_Medium"
-                android:textSize="10sp"
                 android:text="@string/example_number"
-                android:visibility="gone"/>
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:visibility="gone" />
 
         </LinearLayout>
 

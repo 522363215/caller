@@ -615,6 +615,7 @@
     <string name="page_title_block">BLOCK</string>
     <string name="page_title_search">SERACH</string>
     <string name="page_title_caller_theme">Caller Theme</string>
+    <string name="page_title_category">Category</string>
 
     <string name="call_flash_Halloween">Halloween</string>
 

@@ -137,6 +137,10 @@
             android:name=".activity.CallFlashSetResultActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.CategoryDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.PermissionTipActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" />

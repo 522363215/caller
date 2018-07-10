@@ -83,7 +83,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp56"
             android:layout_gravity="bottom"
-            android:background="@color/background"
             android:layoutDirection="ltr"
             android:orientation="horizontal">
 
@@ -102,13 +101,13 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/layout_sort"
+                android:id="@+id/layout_category"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
                 <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                    android:id="@+id/fiv_sort"
+                    android:id="@+id/fiv_category"
                     style="@style/main_check_button_text"
                     android:layout_centerInParent="true"
                     android:text="@string/icon_block_tab"

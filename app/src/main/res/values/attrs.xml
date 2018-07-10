@@ -49,6 +49,7 @@
     <declare-styleable name="BatteryProgressBar">
         <attr name="progressBgColor" format="color" />
         <attr name="progressColor" format="color" />
+        <attr name="progressCornerRadius" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="SmartProgressBar">

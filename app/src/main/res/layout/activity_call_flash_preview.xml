@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -66,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/background"
             android:orientation="vertical">
 
             <LinearLayout
@@ -78,26 +77,36 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp40"
+                    android:layout_height="@dimen/dp48"
                     android:layout_marginLeft="@dimen/dp60"
                     android:layout_marginRight="@dimen/dp60"
-                    android:layout_marginTop="@dimen/dp8">
+                    android:layout_marginTop="@dimen/dp16">
 
                     <FrameLayout
                         android:id="@+id/layout_progress_above_ad"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_alignBottom="@+id/tv_download_action_above_ad"
                         android:layout_alignTop="@+id/tv_download_action_above_ad"
                         android:visibility="visible">
 
-                        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar
+                        <ProgressBar
                             android:id="@+id/pb_downloading_above_ad"
-                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            app:progressBgColor="@color/color_half_transparent"
-                            app:progressColor="@color/color_FF0084FF" />
+                            android:max="100"
+                            android:progressDrawable="@drawable/layer_list_progress_drawable"
+                            tools:progress="20" />
+
+                        <!--<blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar-->
+                        <!--android:id="@+id/pb_downloading_above_ad"-->
+                        <!--style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--app:progressBgColor="@color/color_half_transparent"-->
+                        <!--app:progressColor="@color/color_FF27BB56"-->
+                        <!--app:progressCornerRadius="@dimen/dp50" />-->
 
                         <TextView
                             android:id="@+id/tv_downloading_above_ad"
@@ -106,9 +115,9 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:padding="@dimen/dp10"
+                            android:text="@string/call_flash_gif_show_connecte"
                             android:textColor="@color/white"
-                            android:textSize="14sp"
-                            tools:text="下载中 0%" />
+                            android:textSize="14sp" />
 
                     </FrameLayout>
 
@@ -116,7 +125,7 @@
                         android:id="@+id/tv_download_action_above_ad"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/shape_blue_bg_round2"
+                        android:background="@drawable/shape_green_bg_round2"
                         android:gravity="center"
                         android:text="@string/lion_family_active_download"
                         android:textColor="@color/white"
@@ -133,7 +142,7 @@
                     android:layout_marginTop="@dimen/dp8"
                     android:alpha="0.4"
                     android:background="@color/text_third_level_color"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
             </LinearLayout>
 
             <FrameLayout
@@ -178,31 +187,41 @@
                     android:layout_marginTop="@dimen/dp8"
                     android:alpha="0.4"
                     android:background="@color/text_third_level_color"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp40"
+                    android:layout_height="@dimen/dp48"
                     android:layout_marginBottom="@dimen/dp8"
                     android:layout_marginLeft="@dimen/dp60"
                     android:layout_marginRight="@dimen/dp60"
-                    android:layout_marginTop="@dimen/dp8">
+                    android:layout_marginTop="@dimen/dp16">
 
                     <FrameLayout
                         android:id="@+id/layout_progress_below_ad"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_alignBottom="@+id/tv_download_action_below_ad"
                         android:layout_alignTop="@+id/tv_download_action_below_ad"
                         android:visibility="visible">
 
-                        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar
+                        <ProgressBar
                             android:id="@+id/pb_downloading_below_ad"
-                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            app:progressBgColor="@color/color_half_transparent"
-                            app:progressColor="@color/color_FF0084FF" />
+                            android:max="100"
+                            android:progressDrawable="@drawable/layer_list_progress_drawable"
+                            tools:progress="20" />
+
+                        <!--<blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar-->
+                        <!--android:id="@+id/pb_downloading_below_ad"-->
+                        <!--style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--app:progressBgColor="@color/color_half_transparent"-->
+                        <!--app:progressColor="@color/color_FF27BB56"-->
+                        <!--app:progressCornerRadius="@dimen/dp50" />-->
 
                         <TextView
                             android:id="@+id/tv_downloading_below_ad"
@@ -211,9 +230,9 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:padding="@dimen/dp10"
+                            android:text="@string/call_flash_gif_show_connecte"
                             android:textColor="@color/white"
-                            android:textSize="14sp"
-                            tools:text="下载中 0%" />
+                            android:textSize="14sp" />
 
                     </FrameLayout>
 
@@ -221,7 +240,7 @@
                         android:id="@+id/tv_download_action_below_ad"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/shape_blue_bg_round2"
+                        android:background="@drawable/shape_green_bg_round2"
                         android:gravity="center"
                         android:text="@string/lion_family_active_download"
                         android:textColor="@color/white"
@@ -256,8 +275,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    tools:src="@drawable/icon_call_flash_pig_bg" />
+                    android:scaleType="centerCrop" />
 
                 <ImageView
                     android:id="@+id/iv_recommend_2"
@@ -266,8 +284,7 @@
                     android:layout_marginLeft="@dimen/dp8"
                     android:layout_marginStart="@dimen/dp8"
                     android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    tools:src="@drawable/icon_call_flash_pig_bg" />
+                    android:scaleType="centerCrop" />
             </LinearLayout>
         </LinearLayout>
 

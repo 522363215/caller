@@ -57,6 +57,7 @@ import java.util.Map;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 
@@ -1663,11 +1664,11 @@ public class Advertisement {
                 nativeAdCallToAction.setVisibility(mAdapter.shouldShowActionButton() ? View.VISIBLE : View.GONE);
             }
             if (nativeAdIcon != null) {
-                Glide.with(mContextBaiDu).load(nativeAd.getIconUrl()).into(nativeAdIcon);
+                GlideHelper.with(mContextBaiDu).load(nativeAd.getIconUrl()).into(nativeAdIcon);
                 clickableViews.add(nativeAdIcon);
             }
             if (nativeAdImage != null) {
-                Glide.with(mContextBaiDu).load(nativeAd.getImageUrl()).into(nativeAdImage);
+                GlideHelper.with(mContextBaiDu).load(nativeAd.getImageUrl()).into(nativeAdImage);
                 clickableViews.add(nativeAdImage);
             }
 

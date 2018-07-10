@@ -110,12 +110,12 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
             childViewHeight = Stringutil.dpToPx(context, 252);
         }
 
-        //初始化glide
+        //初始化glide,列表中优化
         mGlideBuilder = Glide.with(context).from(GlideUrl.class)
                 .asBitmap()
                 .centerCrop()
-                .placeholder(R.drawable.icon_unloaded_bg)//加载中图片
-                .error(R.drawable.icon_unloaded_bg)//加载失败图片
+                .placeholder(R.drawable.glide_loading_bg)//加载中图片
+                .error(R.drawable.glide_load_failed_bg)//加载失败图片
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .dontAnimate();
     }

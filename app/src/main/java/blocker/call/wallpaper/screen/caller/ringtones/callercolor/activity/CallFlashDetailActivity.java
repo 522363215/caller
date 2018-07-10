@@ -22,10 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.BitmapRequestBuilder;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.flurry.android.FlurryAgent;
@@ -60,6 +56,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.callflash.CallFlashCustomAnimFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.callflash.CallFlashGifFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.callflash.CallFlashVideoFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.FullScreenAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
@@ -135,7 +132,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private FontIconView mFivLike;
     private TextView mTvLikeCount;
     private ImageView iv_call_flash_bg_small;
-    private BitmapRequestBuilder<GlideUrl, Bitmap> mGlideBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,11 +146,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-
-        mGlideBuilder = Glide.with(this).from(GlideUrl.class).asBitmap().centerCrop().dontAnimate()
-                .placeholder(R.drawable.icon_unloaded_bg)
-                .error(R.drawable.icon_unloaded_bg)
-                .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         mInfo = (CallFlashInfo) getIntent().getSerializableExtra("flash_theme");
         mIsComeCallFlashPreview = getIntent().getBooleanExtra(ConstantUtils.COME_FROM_CALL_FLASH_PREVIEW, false);
@@ -579,34 +570,52 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     private void loadBackground(String url) {
         if (!TextUtils.isEmpty(url)) {
-            mGlideBuilder.load(new GlideUrl(url)).listener(new RequestListener<GlideUrl, Bitmap>() {
+//            Glide.with(this).load(url)
+//                    .centerCrop()
+//                    .placeholder(R.drawable.glide_loading_bg)//加载中图片
+//                    .error(R.drawable.glide_load_failed_bg)//加载失败图片
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .dontAnimate().listener(new RequestListener<String, GlideDrawable>() {
+//                @Override
+//                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+//                    return false;
+//                }
+//
+//                @Override
+//                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+//                    return false;
+//                }
+//            });
+            GlideHelper.with(this).load(url).listener(new RequestListener<String, Bitmap>() {
                 @Override
-                public boolean onException(Exception e, GlideUrl model, Target<Bitmap> target, boolean isFirstResource) {
+                public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
                     setBlurBackground(null);
                     return false;
                 }
 
                 @Override
-                public boolean onResourceReady(Bitmap resource, GlideUrl model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
                     setBlurBackground(resource);
                     return false;
                 }
-            }).into(iv_call_flash_bg_small);
+            }).into(iv_call_flash_bg);
         }
     }
 
     //设置高斯背景
-    private void setBlurBackground(Bitmap resource) {
+    private void setBlurBackground(final Bitmap resource) {
         if (isFinishing()) {
             return;
         }
         if (resource != null) {
+            iv_call_flash_bg_small.setImageBitmap(resource);
             //高斯模糊
-            Bitmap rsBitmap = IconUtil.rsBlur(CallFlashDetailActivity.this, resource, 10);
+            Bitmap rsBitmap = IconUtil.rsBlur(CallFlashDetailActivity.this, resource, 25);
             iv_call_flash_bg.setImageBitmap(rsBitmap);
-//            LogUtil.d(TAG, "setBackground resource:" + resource + ",rsBlur:" + rsBitmap);
+            LogUtil.d(TAG, "setBackground resource:" + resource + ",rsBlur:" + rsBitmap);
         } else {
-            iv_call_flash_bg.setBackgroundResource(R.drawable.icon_unloaded_bg);
+            iv_call_flash_bg.setBackgroundResource(R.drawable.glide_load_failed_bg);
+            iv_call_flash_bg_small.setBackgroundResource(R.drawable.glide_load_failed_bg);
         }
     }
 

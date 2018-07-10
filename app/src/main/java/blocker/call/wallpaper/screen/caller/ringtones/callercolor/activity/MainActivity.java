@@ -12,10 +12,11 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.flurry.android.FlurryAgent;
+import com.md.flashset.bean.CallFlashDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,8 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.MainPagerAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventLanguageChange;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.HomeFragment;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.SortFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CategoryFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
@@ -48,13 +49,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private DrawerLayout mMain_drawer_layout;
     private SideslipContraller sideslipContraller;
     private RelativeLayout mTabHome;
-    private RelativeLayout mTabSort;
+    private RelativeLayout mTabCategory;
     private MainPagerAdapter mMainPagerAdapter;
-    private HomeFragment mHomeFragment;
-    private SortFragment mSortFragment;
+    private CallFlashListFragment mCallFlashListFragment;
+    private CategoryFragment mCategoryFragment;
     private RelativeLayout mSideslipMenu;
     private ViewPager.OnPageChangeListener mOnPageChangeListener;
     private boolean mIsOnPageSelected;
+    private TextView mTvPageTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,8 +129,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.layout_home:
                 onHome();
                 break;
-            case R.id.layout_sort:
-                onSort();
+            case R.id.layout_category:
+                onCategory();
                 break;
             case R.id.sideslip_menu:
                 openSideslip(v);
@@ -207,17 +209,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mMain_drawer_layout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         mLeft_drawer = (LinearLayout) findViewById(R.id.left_drawer);
         mViewPager = (NotScrollViewPager) findViewById(R.id.viewpager);
-
+        mTvPageTitle = (TextView) findViewById(R.id.tv_page_title);
         mSideslipMenu = (RelativeLayout) findViewById(R.id.sideslip_menu);
 
         //底部tab按钮
         mTabHome = (RelativeLayout) findViewById(R.id.layout_home);
-        mTabSort = (RelativeLayout) findViewById(R.id.layout_sort);
+        mTabCategory = (RelativeLayout) findViewById(R.id.layout_category);
     }
 
     public void listener() {
         mTabHome.setOnClickListener(this);
-        mTabSort.setOnClickListener(this);
+        mTabCategory.setOnClickListener(this);
         mSideslipMenu.setOnClickListener(this);
     }
 
@@ -232,8 +234,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-    private void onSort() {
-        mViewPager.setCurrentItem(ConstantUtils.FRAGMENT_SORT);
+    private void onCategory() {
+        mViewPager.setCurrentItem(ConstantUtils.FRAGMENT_CATEGORY);
     }
 
     private void onHome() {
@@ -267,12 +269,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         final int selectSize = 32;
         final int unSelectSize = 24;
 
-        mHomeFragment = new HomeFragment();
-        mSortFragment = new SortFragment();
+        mCallFlashListFragment = CallFlashListFragment.newInstance(CallFlashDataType.CALL_FLASH_DATA_HOME);
+        mCategoryFragment = new CategoryFragment();
 
         mFragmentList = new ArrayList<>();
-        mFragmentList.add(mHomeFragment);
-        mFragmentList.add(mSortFragment);
+        mFragmentList.add(mCallFlashListFragment);
+        mFragmentList.add(mCategoryFragment);
 
         mMainPagerAdapter = new MainPagerAdapter(getFragmentManager(), mFragmentList, this);
         mViewPager.setAdapter(mMainPagerAdapter);
@@ -297,12 +299,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ((FontIconView) findViewById(R.id.fiv_home)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ConstantUtils.FRAGMENT_HOME ? selectSize : unSelectSize);
                 ((FontIconView) findViewById(R.id.fiv_home)).setAlpha(currentPage == ConstantUtils.FRAGMENT_HOME ? 1f : 0.4f);
 
-                ((FontIconView) findViewById(R.id.fiv_sort)).setTextColor(currentPage == ConstantUtils.FRAGMENT_SORT ? selectColor : unSelectColor);
-                ((FontIconView) findViewById(R.id.fiv_sort)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ConstantUtils.FRAGMENT_SORT ? selectSize : unSelectSize);
-                ((FontIconView) findViewById(R.id.fiv_sort)).setAlpha(currentPage == ConstantUtils.FRAGMENT_SORT ? 1f : 0.4f);
+                ((FontIconView) findViewById(R.id.fiv_category)).setTextColor(currentPage == ConstantUtils.FRAGMENT_CATEGORY ? selectColor : unSelectColor);
+                ((FontIconView) findViewById(R.id.fiv_category)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ConstantUtils.FRAGMENT_CATEGORY ? selectSize : unSelectSize);
+                ((FontIconView) findViewById(R.id.fiv_category)).setAlpha(currentPage == ConstantUtils.FRAGMENT_CATEGORY ? 1f : 0.4f);
+
+                setTvTitle(arg0);
             }
         });
         mViewPager.setOffscreenPageLimit(ConstantUtils.MAX_FRAGEMNTS);
+    }
+
+    private void setTvTitle(int position) {
+        switch (position) {
+            case ConstantUtils.FRAGMENT_HOME:
+                mTvPageTitle.setText(R.string.page_title_caller_theme);
+                break;
+            case ConstantUtils.FRAGMENT_CATEGORY:
+                mTvPageTitle.setText(R.string.page_title_category);
+                break;
+        }
     }
 
     public void onEventMainThread(EventLanguageChange event) {

@@ -456,7 +456,7 @@ public class ConstantUtils {
     public static final String SHAR_KEY = "wifiAcceleration";
 
     public final static int MAX_FRAGEMNTS = 4;
-    public final static int FRAGMENT_SORT = 1;
+    public final static int FRAGMENT_CATEGORY = 1;
     public final static int FRAGMENT_HOME = 0;
 
     public final static int FRAGMENT_DATAPLAN = 11;

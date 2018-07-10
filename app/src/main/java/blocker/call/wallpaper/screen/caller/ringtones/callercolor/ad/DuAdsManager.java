@@ -18,6 +18,7 @@ import java.util.List;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 /**
@@ -105,7 +106,7 @@ public class DuAdsManager {
             nativeAdTitle.setText(nativeAd.getTitle());
             nativeAdBody.setText(nativeAd.getShortDesc());
             nativeAdCallToAction.setText(nativeAd.getCallToAction());
-            Glide.with(ApplicationEx.getInstance()).load(nativeAd.getIconUrl()).into(nativeAdIcon);
+            GlideHelper.with(ApplicationEx.getInstance()).load(nativeAd.getIconUrl()).into(nativeAdIcon);
 
             // Register the Title and CTA button to listen for clicks.
             List<View> clickableViews = new ArrayList<>();
@@ -146,8 +147,8 @@ public class DuAdsManager {
             nativeAdTitle.setText(nativeAd.getTitle());
             nativeAdBody.setText(nativeAd.getShortDesc());
             nativeAdCallToAction.setText(nativeAd.getCallToAction());
-            Glide.with(ApplicationEx.getInstance()).load(nativeAd.getIconUrl()).into(nativeAdIcon);
-            Glide.with(ApplicationEx.getInstance()).load(nativeAd.getImageUrl()).into(nativeAdImage);
+            GlideHelper.with(ApplicationEx.getInstance()).load(nativeAd.getIconUrl()).into(nativeAdIcon);
+            GlideHelper.with(ApplicationEx.getInstance()).load(nativeAd.getImageUrl()).into(nativeAdImage);
 
             // Register the Title and CTA button to listen for clicks.
             List<View> clickableViews = new ArrayList<>();

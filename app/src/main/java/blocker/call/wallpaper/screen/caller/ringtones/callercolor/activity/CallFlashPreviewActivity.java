@@ -2,7 +2,6 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -15,10 +14,9 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.flurry.android.FlurryAgent;
 import com.individual.sdk.BaseAdContainer;
 import com.md.flashset.bean.CallFlashInfo;
@@ -40,12 +38,12 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdMan
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdContainer;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
@@ -76,10 +74,10 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     private BedsideAdManager mAdManager;
     private boolean mIsShowAd;
     private boolean mIsShowFirstAdMob;
-    private BatteryProgressBar mPbDownloadingAboveAd;
+    private ProgressBar mPbDownloadingAboveAd;
     private TextView mTvDownloadingAboveAd;
     private View mLayoutDownloadingAboveAd;
-    private BatteryProgressBar mPbDownloadingBelowAd;
+    private ProgressBar mPbDownloadingBelowAd;
     private TextView mTvDownloadingBelowAd;
     private View mLayoutDownloadingBelowAd;
     private View mLayoutButtonAboveAd;
@@ -267,21 +265,8 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     private void setRecommend() {
 //        get2RandomCallFlashInfo();
         if (recommendCallFlashInfo1 != null && recommendCallFlashInfo2 != null) {
-            Glide.with(this)
-                    .load(recommendCallFlashInfo1.img_vUrl)
-                    .placeholder(R.drawable.icon_unloaded_bg)//加载中图片
-                    .error(R.drawable.icon_unloaded_bg)//加载失败图片
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .dontAnimate()
-                    .into(mIvRecommend1);
-
-            Glide.with(this)
-                    .load(recommendCallFlashInfo2.img_vUrl)
-                    .placeholder(R.drawable.icon_unloaded_bg)//加载中图片
-                    .error(R.drawable.icon_unloaded_bg)//加载失败图片
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .dontAnimate()
-                    .into(mIvRecommend2);
+            GlideHelper.with(this).load(recommendCallFlashInfo1.img_vUrl).into(mIvRecommend1);
+            GlideHelper.with(this).load(recommendCallFlashInfo2.img_vUrl).into(mIvRecommend2);
         } else {
             mLayoutRecommend.setVisibility(View.GONE);
         }
@@ -307,18 +292,16 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         //above ad
         mLayoutButtonAboveAd = findViewById(R.id.layout_button_above_ad);
         mTvDownloadBtnAboveAd = (TextView) findViewById(R.id.tv_download_action_above_ad);
-        mPbDownloadingAboveAd = (BatteryProgressBar) findViewById(R.id.pb_downloading_above_ad);
+        mPbDownloadingAboveAd = (ProgressBar) findViewById(R.id.pb_downloading_above_ad);
         mTvDownloadingAboveAd = (TextView) findViewById(R.id.tv_downloading_above_ad);
         mLayoutDownloadingAboveAd = findViewById(R.id.layout_progress_above_ad);
-        mPbDownloadingAboveAd.setMaxProgress(100);
 
         //below ad
         mLayoutButtonBelowAd = findViewById(R.id.layout_button_below_ad);
         mTvDownloadBtnBelowAd = (TextView) findViewById(R.id.tv_download_action_below_ad);
-        mPbDownloadingBelowAd = (BatteryProgressBar) findViewById(R.id.pb_downloading_below_ad);
+        mPbDownloadingBelowAd = (ProgressBar) findViewById(R.id.pb_downloading_below_ad);
         mTvDownloadingBelowAd = (TextView) findViewById(R.id.tv_downloading_below_ad);
         mLayoutDownloadingBelowAd = findViewById(R.id.layout_progress_below_ad);
-        mPbDownloadingBelowAd.setMaxProgress(100);
 
         if (mIsShowFirstAdMob) {
             mLayoutButtonAboveAd.setVisibility(View.GONE);
@@ -346,21 +329,9 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     private void setView() {
         if (mInfo == null) return;
         if (mIsOnlineCallFlash) {
-            Glide.with(this)
-                    .load(mInfo.img_vUrl)
-                    .placeholder(R.drawable.icon_unloaded_bg)//加载中图片
-                    .error(R.drawable.icon_unloaded_bg)//加载失败图片
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .dontAnimate()
-                    .into(mIvPreview);
+            GlideHelper.with(this).load(mInfo.img_vUrl).into(mIvPreview);
         } else {
-            Glide.with(this)
-                    .load("drawable://" + mInfo.imgResId)
-                    .placeholder(R.drawable.icon_unloaded_bg)//加载中图片
-                    .error(R.drawable.icon_unloaded_bg)//加载失败图片
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .dontAnimate()
-                    .into(mIvPreview);
+            GlideHelper.with(this).load("drawable://" + mInfo.imgResId).into(mIvPreview);
         }
 
         File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
@@ -590,7 +561,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
                 mLayoutAd.setVisibility(View.VISIBLE);
                 mLayoutAdMopub.setVisibility(View.GONE);
                 mLayoutAdNormal.setVisibility(View.VISIBLE);
-            }catch (Exception e){
+            } catch (Exception e) {
                 LogUtil.e(ConstantUtils.NM_TAG, "call flash preview onAdLoaded exception: " + e.getMessage());
             }
 
