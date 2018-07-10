@@ -1068,4 +1068,6 @@
     <string name="time_300">5m</string>
     <string name="time_600">10m</string>
     <string name="time_1800">30m</string>
+
+    <string name="add_block_contact_title">"Call Log"</string>
 </resources>

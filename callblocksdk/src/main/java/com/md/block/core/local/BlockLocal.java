@@ -71,14 +71,13 @@ public class BlockLocal {
         }
 
         if (!blockContacts.contains(contact)) {
-            boolean add = blockContacts.add(contact);
+            blockContacts.add(contact);
             SharedPreferences pref = getSharedPreferences();
             if (pref == null) {
                 return false;
             }
 
-            pref.edit().putString(PREF_KEY_BLOCK_CONTACT_LIST, new Gson().toJson(blockContacts)).apply();
-            return add;
+            return pref.edit().putString(PREF_KEY_BLOCK_CONTACT_LIST, new Gson().toJson(blockContacts)).commit();
         } else
             return true;
 

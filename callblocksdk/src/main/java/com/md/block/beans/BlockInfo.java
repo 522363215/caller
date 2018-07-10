@@ -55,8 +55,8 @@ public class BlockInfo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BlockInfo that = (BlockInfo) o;
-        return number != null ? !number.equals(that.number) : that.number != null;
+        BlockInfo blockInfo = (BlockInfo) o;
+        return number != null ? number.equals(blockInfo.number) : blockInfo.number == null;
     }
 
     @Override

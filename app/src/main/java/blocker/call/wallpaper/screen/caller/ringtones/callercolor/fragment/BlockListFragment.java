@@ -25,7 +25,6 @@ public class BlockListFragment extends Fragment {
     private TextView tvEmpty;
 
     private ListView lvBlockContact;
-    private BlockAdapter mAdapter = null;
     List<BlockInfo> model = new ArrayList<>();
 
     private int mCurrentShowType = BLOCK_LIST_SHOW_CONTACT;
@@ -75,7 +74,8 @@ public class BlockListFragment extends Fragment {
         if (view != null) {
             tvEmpty = view.findViewById(R.id.tv_empty);
             lvBlockContact = view.findViewById(R.id.lv_block_contact);
-            mAdapter = new BlockAdapter(getActivity(), model);
+
+            BlockAdapter mAdapter = new BlockAdapter(getActivity(), model);
             lvBlockContact.setAdapter(mAdapter);
 
             lvBlockContact.setVisibility(model.isEmpty() ? View.GONE : View.VISIBLE);
