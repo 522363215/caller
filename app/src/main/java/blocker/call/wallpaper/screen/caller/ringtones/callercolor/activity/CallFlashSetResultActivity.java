@@ -6,8 +6,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -23,7 +21,6 @@ import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
@@ -143,7 +140,7 @@ public class CallFlashSetResultActivity extends BaseActivity {
     }
 
     private void callFlashStatistics() {
-        boolean isFlashSwitchOn = PreferenceHelper.getBoolean(ConstantUtils.CALL_FLASH_ON, false);
+        boolean isFlashSwitchOn = CallFlashPreferenceHelper.getBoolean(ConstantUtils.CALL_FLASH_ON, false);
         if (isFlashSwitchOn) {
             if (mCallFlashInfo == null) return;
             String id = mCallFlashInfo.id;
@@ -261,7 +258,7 @@ public class CallFlashSetResultActivity extends BaseActivity {
 
     private void showResult() {
 //        ((ActionBar) findViewById(R.id.actionbar)).setBackImg(R.string.icon_close);
-        int flashType = PreferenceHelper.getInt(ConstantUtils.CALL_FLASH_TYPE, FlashLed.FLASH_TYPE_DEFAULT);
+        int flashType = CallFlashPreferenceHelper.getInt(ConstantUtils.CALL_FLASH_TYPE, FlashLed.FLASH_TYPE_DEFAULT);
         boolean isCallFlashOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
         if (isCallFlashOn) {
             FlurryAgent.logEvent("CallFlashShowActivity-call_screen_set_" + getCallFlashName(flashType));
@@ -338,7 +335,7 @@ public class CallFlashSetResultActivity extends BaseActivity {
 
     private void init() {
         initView();
-        initAd();
+//        initAd();
 
     }
 
@@ -656,20 +653,8 @@ public class CallFlashSetResultActivity extends BaseActivity {
     private void onFinish() {
         isShowResult = getIntent().getBooleanExtra("is_show_result", true);
         if (isShowResult && !mIsFromDesktop) {
-            String showContent = getIntent().getStringExtra("result_des");
-            if (getResources().getString(R.string.call_flash_gif_show_setting_suc_reset).equals(showContent)) {
-                Intent intent = new Intent();
-                intent.setClass(CallFlashSetResultActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                this.startActivity(intent);
-                finish();
-            } else {
-                Intent intent = new Intent();
-                intent.setClass(CallFlashSetResultActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                this.startActivity(intent);
-                finish();
-            }
+            //-1表示不改变mainactiivty的page 页面
+            ActivityBuilder.toMain(this, ActivityBuilder.BACK_FROM_CALL_FLASH_RESULT);
         } else {
             finish();
         }

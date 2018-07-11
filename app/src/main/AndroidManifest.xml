@@ -106,6 +106,9 @@
         <meta-data
             android:name="blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideModelConfig"
             android:value="GlideModule" />
+        <meta-data
+            android:name="ClientID"
+            android:value="75" />
 
         <activity
             android:name=".activity.MainActivity"
@@ -134,9 +137,13 @@
             android:name=".activity.CallFlashSetResultActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PermissionTipActivity"
-            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            android:name=".activity.CategoryDetailActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PermissionTipActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" />
         <activity android:name=".activity.BlockActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CallFlashAppCompatTheme"/>

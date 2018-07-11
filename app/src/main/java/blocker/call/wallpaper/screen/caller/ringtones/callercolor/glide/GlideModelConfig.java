@@ -8,22 +8,25 @@ import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool;
 import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
-import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.stream.HttpUrlGlideUrlLoader;
 import com.bumptech.glide.module.GlideModule;
+
+import java.io.InputStream;
 
 public class GlideModelConfig implements GlideModule {
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
         //设置内存缓存大小
-//        int maxMemory = (int) Runtime.getRuntime().maxMemory();//获取系统分配给应用的总内存大小
-//        int memoryCacheSize = maxMemory / 8;//设置图片内存缓存占用八分之一
-//        builder.setMemoryCache(new LruResourceCache(memoryCacheSize));
+        int maxMemory = (int) Runtime.getRuntime().maxMemory();//获取系统分配给应用的总内存大小
+        int customMemoryCacheSize = maxMemory / 8;//设置图片内存缓存占用八分之一
+        int customBitmapPoolSize = maxMemory / 8;
         // 20%大的内存缓存作为 Glide 的默认值
-        MemorySizeCalculator calculator = new MemorySizeCalculator(context);
-        int defaultMemoryCacheSize = calculator.getMemoryCacheSize();
-        int defaultBitmapPoolSize = calculator.getBitmapPoolSize();
-        int customMemoryCacheSize = (int) (1.2 * defaultMemoryCacheSize);
-        int customBitmapPoolSize = (int) (1.2 * defaultBitmapPoolSize);
+//        MemorySizeCalculator calculator = new MemorySizeCalculator(context);
+//        int defaultMemoryCacheSize = calculator.getMemoryCacheSize();
+//        int defaultBitmapPoolSize = calculator.getBitmapPoolSize();
+//        int customMemoryCacheSize = (int) (1.2 * defaultMemoryCacheSize);
+//        int customBitmapPoolSize = (int) (1.2 * defaultBitmapPoolSize);
         builder.setMemoryCache(new LruResourceCache(customMemoryCacheSize));
         builder.setBitmapPool(new LruBitmapPool(customBitmapPoolSize));
 
@@ -40,5 +43,6 @@ public class GlideModelConfig implements GlideModule {
 
     @Override
     public void registerComponents(Context context, Glide glide) {
+        glide.register(GlideUrl.class, InputStream.class, new HttpUrlGlideUrlLoader.Factory());
     }
 }

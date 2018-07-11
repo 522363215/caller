@@ -16,13 +16,11 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 
 public class PermissionTipActivity extends BaseActivity implements View.OnClickListener {
-
     private LinearLayout btnOk;
     private FontIconView fivClose;
     private ImageView ivHand;
     private ImageView ivSwitch;
     private TextView mTvDes;
-    private String ac_from;
     private String mPremissionFor;
 
     @Override
@@ -31,11 +29,7 @@ public class PermissionTipActivity extends BaseActivity implements View.OnClickL
         this.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         this.getWindow().setWindowAnimations(R.style.dialog_animation);
         setContentView(R.layout.activity_notification_listener_setting_tip);
-
-        ac_from = getIntent().getStringExtra("is_from_ac_name");
         mPremissionFor = getIntent().getStringExtra("permission_for");
-        boolean isNotificationAcess = getIntent().getBooleanExtra("is_notification_acess", false);
-        boolean isAudioRecord = getIntent().getBooleanExtra("is_audio_record", false);
 
         btnOk = (LinearLayout) findViewById(R.id.layout_get_permission);
         fivClose = (FontIconView) findViewById(R.id.fiv_permission_close);
@@ -54,29 +48,9 @@ public class PermissionTipActivity extends BaseActivity implements View.OnClickL
             }
         }, 1000);
 
-        if (!TextUtils.isEmpty(mPremissionFor)) {
-            mTvDes.setText(Html.fromHtml(getString(R.string.call_flash_grant_permission_tip, mPremissionFor)));
-            findViewById(R.id.layout_space1).setVisibility(View.GONE);
-            findViewById(R.id.layout_space2).setVisibility(View.GONE);
-        } else {
-            if (isNotificationAcess) {
-                mTvDes.setText(getString(R.string.notification_listener_setting_tip));
-                findViewById(R.id.layout_space1).setVisibility(View.VISIBLE);
-                findViewById(R.id.layout_space2).setVisibility(View.VISIBLE);
-            } else if (isAudioRecord) {
-                mTvDes.setText(getString(R.string.record_call_permission_tip));
-                findViewById(R.id.layout_space1).setVisibility(View.GONE);
-                findViewById(R.id.layout_space2).setVisibility(View.GONE);
-            } else {
-                if (!TextUtils.isEmpty(ac_from) && ac_from.equals("MessageFlashShowActivity")) {
-                    mTvDes.setText(getString(R.string.sms_flash_permission_tip));
-                } else {
-                    mTvDes.setText(getString(R.string.call_flash_permission_tip));
-                }
-                findViewById(R.id.layout_space1).setVisibility(View.GONE);
-                findViewById(R.id.layout_space2).setVisibility(View.GONE);
-            }
-        }
+        mTvDes.setText(Html.fromHtml(getString(R.string.call_flash_grant_permission_tip, mPremissionFor)));
+        findViewById(R.id.layout_space1).setVisibility(View.GONE);
+        findViewById(R.id.layout_space2).setVisibility(View.GONE);
     }
 
     @Override

@@ -25,6 +25,7 @@ import java.io.File;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import event.EventBus;
 
@@ -97,13 +98,7 @@ public class CallFlashVideoFragment extends Fragment {
 //                    mImageView.setImageURI(Uri.parse(info.imgPath));
                     mImageView.setImageDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
                     if (!TextUtils.isEmpty(info.img_vUrl)) {
-                        Glide.with(this)
-                                .load(info.img_vUrl)
-                                .placeholder(R.drawable.icon_unloaded_bg)//加载中图片
-                                .error(R.drawable.icon_unloaded_bg)//加载失败图片
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .dontAnimate()
-                                .into(mImageView);
+                        GlideHelper.with(getActivity()).load(info.img_vUrl).into(mImageView);
                     }
                 }
             } else if (mVideoView != null && ((info.flashType == FlashLed.FLASH_TYPE_MONKEY)

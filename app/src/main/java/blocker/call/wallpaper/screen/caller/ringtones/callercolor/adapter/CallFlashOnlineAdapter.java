@@ -3,8 +3,8 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,10 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.BitmapRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.GlideUrl;
 import com.md.flashset.View.FlashLed;
 import com.md.flashset.bean.CallFlashInfo;
+import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.download.ThemeResourceHelper;
@@ -28,15 +31,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallFlashPreviewActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashOnlineAdLoaded;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -51,6 +53,7 @@ import event.EventBus;
 public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnlineAdapter.ViewHolder> {
 
     private static final String TAG = "CallFlashOnlineAdapter";
+    private BitmapRequestBuilder<GlideUrl, Bitmap> mGlideBuilder;
     private Context context = null;
     private List<CallFlashInfo> model = null;
 
@@ -97,16 +100,20 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
         videoMap = new ConcurrentHashMap<>();
         mDownloadListenerList = new ArrayList<>();
 
-        isFlashSwitchOn = PreferenceHelper.getBoolean(ConstantUtils.CALL_FLASH_ON, false);
-        mFlashType = PreferenceHelper.getInt(ConstantUtils.CALL_FLASH_TYPE, -1);
-        mCustomPath = PreferenceHelper.getString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, "");
-        mDynamicPath = PreferenceHelper.getString(ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
-
         if (context != null) {
             int dp8 = context.getResources().getDimensionPixelOffset(R.dimen.dp8);
             childViewWidth = (DeviceUtil.getScreenWidth() - dp8 * 3) / 2;
             childViewHeight = Stringutil.dpToPx(context, 252);
         }
+
+        //初始化glide,列表中优化
+        mGlideBuilder = Glide.with(context).from(GlideUrl.class)
+                .asBitmap()
+                .centerCrop()
+                .placeholder(R.drawable.glide_loading_bg)//加载中图片
+                .error(R.drawable.glide_load_failed_bg)//加载失败图片
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate();
     }
 
     @Override
@@ -118,6 +125,10 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         if (context == null) return;
+        isFlashSwitchOn = CallFlashPreferenceHelper.getBoolean(ConstantUtils.CALL_FLASH_ON, false);
+        mFlashType = CallFlashPreferenceHelper.getInt(ConstantUtils.CALL_FLASH_TYPE, -1);
+        mCustomPath = CallFlashPreferenceHelper.getString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, "");
+        mDynamicPath = CallFlashPreferenceHelper.getString(ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
 
         if (fragmentTag == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode() && position == mAdShowPosition) {
             // 广告相关.
@@ -174,13 +185,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
                 }
 
 
-                Glide.with(context)
-                        .load(imgUrl)
-                        .placeholder(R.drawable.icon_unloaded_bg)//加载中图片
-                        .error(R.drawable.icon_unloaded_bg)//加载失败图片
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .dontAnimate()
-                        .into(holder.coverImg);
+                mGlideBuilder.load(new GlideUrl(imgUrl)).into(holder.coverImg);
 
                 File videoFile = videoMap.get(info.url);
                 if (videoFile == null) {
@@ -193,13 +198,12 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
                 if (videoFile.exists()) {
                     holder.iv_download.setVisibility(View.GONE);
                     if (isFlashSwitchOn) {
+                        LogUtil.d("chenr", "current flash type: " + mFlashType + ", info flash type: " + info.flashType +
+                                ", \ninfo path: " + info.path + ", dynamic path: " + mDynamicPath + ", custom path: " + mCustomPath);
                         if (((info.flashType == FlashLed.FLASH_TYPE_CUSTOM && mCustomPath.equals(info.path))
                                 || (info.flashType == FlashLed.FLASH_TYPE_DYNAMIC && mDynamicPath.equals(info.path))
                                 || (info.flashType != FlashLed.FLASH_TYPE_CUSTOM && info.flashType != FlashLed.FLASH_TYPE_DYNAMIC))
                                 && info.flashType == mFlashType) {
-                            LogUtil.d("chenr", "current flash type: " + mFlashType + ", info flash type: " + info.flashType +
-                                    ", \ninfo path: " + info.path + ", dynamic path: " + mDynamicPath + ", custom path: " + mCustomPath);
-
                             holder.iv_call_select.setVisibility(View.VISIBLE);
                         } else {
                             holder.iv_call_select.setVisibility(View.GONE);
@@ -313,25 +317,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
                 CallFlashInfo info = getItem(pos);
 
                 // TODO: 2018/7/5  jump to CallFlashPreviewActivity
-                Intent intent = new Intent();
-                intent.setClass(context, CallFlashPreviewActivity.class);
-                intent.putExtra(ConstantUtils.COME_FROM_CALLAFTER, mIsComeCallAfter);
-                intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, mIsComePhoneDetail);
-                intent.putExtra(ConstantUtils.IS_ONLINE_FOR_CALL_FLASH, true);
-//                intent.putStringArrayListExtra(ConstantUtils.NUMBER_FOR_CALL_FLASH, mNumberForCallFlash);
-                intent.putExtra("flash_theme", info);
-                context.startActivity(intent);
-
-                //jump to CallFlashDetailActivity
-//                Intent intent = new Intent();
-//                intent.setClass(context, CallFlashDetailActivity.class);
-//                intent.putExtra(ConstantUtils.COME_FROM_CALLAFTER, mIsComeCallAfter);
-//                intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, mIsComePhoneDetail);
-//                intent.putExtra(ConstantUtils.COME_FROM_DESKTOP, false);
-//                intent.putExtra(ConstantUtils.COME_FROM_CALL_FLASH_PREVIEW, false);
-////                intent.putStringArrayListExtra(ConstantUtils.NUMBER_FOR_CALL_FLASH, mNumberForCallFlash);
-//                intent.putExtra("flash_theme", info);
-//                context.startActivity(intent);
+                ActivityBuilder.toCallFlashPreview(context, info, true);
             }
         }
     };

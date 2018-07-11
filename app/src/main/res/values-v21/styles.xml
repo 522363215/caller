@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="calllog_refresh_progressbar" parent="Widget.AppCompat.ProgressBar">
-        <item name="android:indeterminateTint">@color/background</item>
+        <item name="android:indeterminateTint">@color/color_FF27BB56</item>
         <item name="android:toDegrees">10</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>

@@ -5,214 +5,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:id="@+id/ll_top_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ll_top_action"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp56"
+                android:gravity="center_vertical">
+
+                <RelativeLayout
+                    android:id="@+id/sideslip_menu"
+                    android:layout_width="48dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp">
+
+                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/icon_left_menu"
+                        android:textColor="@color/white"
+                        android:textSize="24dp" />
+
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp56"
-                    android:gravity="center_vertical">
+                    android:layout_height="@dimen/dp40"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp8"
+                    android:layout_marginStart="@dimen/dp8"
+                    android:gravity="center_vertical"
+                    android:layoutDirection="ltr">
 
-                    <RelativeLayout
-                        android:id="@+id/sideslip_menu"
-                        android:layout_width="48dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginStart="4dp">
-
-                        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:gravity="center"
-                            android:text="@string/icon_left_menu"
-                            android:textColor="@color/white"
-                            android:textSize="24dp" />
-
-                    </RelativeLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_page_title"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp40"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/dp8"
-                        android:layout_marginStart="@dimen/dp8"
-                        android:gravity="center_vertical"
-                        android:layoutDirection="ltr">
-
-                        <TextView
-                            android:id="@+id/power"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-Medium"
-                            android:text="@string/main_text_first"
-                            android:textColor="@color/whitesmoke"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginRight="4dp"
-                            android:fontFamily="sans-serif-light"
-                            android:text="@string/main_text_second"
-                            android:textColor="@color/whitesmoke"
-                            android:textSize="16sp"
-                            android:visibility="gone" />
-
-                        <TextView
-                            android:id="@+id/tv_page_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginRight="4dp"
-                            android:text="@string/page_title_calllog"
-                            android:textColor="@color/whitesmoke"
-                            android:textSize="16sp"
-                            tools:text="@string/page_title_contact" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                        android:id="@+id/fiv_ad_gift"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="@dimen/dp24"
-                        android:layout_marginRight="@dimen/dp24"
-                        android:gravity="center"
-                        android:text="@string/icon_title_load"
-                        android:textColor="@color/white"
-                        android:textSize="22sp"
-                        android:visibility="gone"
-                        tools:visibility="gone" />
-
-                    <RelativeLayout
-                        android:id="@+id/rl_ads_gift"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="@dimen/dp24"
-                        android:layout_marginRight="@dimen/dp24"
-                        android:visibility="gone"
-                        tools:visibility="gone">
-
-                        <ImageView
-                            android:id="@+id/iv_user_photo"
-                            android:layout_width="26dp"
-                            android:layout_height="26dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/icon_woman" />
-
-                        <TextView
-                            android:id="@+id/tv_ads_gift_num"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/shape_shadow_sms_red_dot"
-                            android:gravity="center"
-                            android:text="5"
-                            android:textColor="@color/white"
-                            android:textSize="8sp" />
-                    </RelativeLayout>
-
-                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                        android:id="@+id/fiv_search"
-                        android:layout_width="@dimen/dp48"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="@dimen/dp16"
-                        android:gravity="center"
-                        android:text="@string/icon_search"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp24"
-                        android:visibility="gone" />
-
-                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                        android:id="@+id/fiv_sms_block"
-                        android:layout_width="@dimen/dp48"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="@string/icon_block"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp24"
-                        android:visibility="gone"
-                        tools:visibility="gone" />
-
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:text="@string/page_title_caller_theme"
+                        android:textColor="@color/whitesmoke"
+                        android:textSize="16sp"
+                        tools:text="@string/page_title_caller_theme" />
                 </LinearLayout>
-            </LinearLayout>
 
-            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager
-                android:id="@+id/viewpager"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:flipInterval="30"
-                android:persistentDrawingCache="animation"
-                android:visibility="visible"
-                tools:background="@color/white" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp56"
-                android:layout_gravity="bottom"
-                android:background="@color/white"
-                android:layoutDirection="ltr"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:id="@+id/layout_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                        android:id="@+id/fiv_home"
-                        style="@style/main_check_button_text"
-                        android:layout_centerInParent="true"
-                        android:text="@string/icon_phone"
-                        android:textColor="@color/background" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/layout_sort"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                        android:id="@+id/fiv_sort"
-                        style="@style/main_check_button_text"
-                        android:layout_centerInParent="true"
-                        android:alpha="0.4"
-                        android:text="@string/icon_block_tab"
-                        android:textColor="@color/color_FF0057A9" />
-
-                </RelativeLayout>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
             </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:flipInterval="30"
+            android:persistentDrawingCache="animation"
+            android:visibility="visible"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp56"
+            android:layout_gravity="bottom"
+            android:layoutDirection="ltr"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/layout_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                    android:id="@+id/fiv_home"
+                    style="@style/main_check_button_text"
+                    android:layout_centerInParent="true"
+                    android:text="@string/icon_phone"
+                    android:textColor="@color/fb_ad_green_button" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_category"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                    android:id="@+id/fiv_category"
+                    style="@style/main_check_button_text"
+                    android:layout_centerInParent="true"
+                    android:text="@string/icon_block_tab"
+                    android:textColor="@color/fb_ad_white_title" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/left_drawer"

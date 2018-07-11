@@ -9,12 +9,14 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 
 public class BatteryProgressBar extends View {
 
     private final int progressBgColor;
     private final int progressColor;
+    private final float cornerRadius;
     private float maxProgress = 10000;
     private float progress = 500;
     private float currentProgress = 0;
@@ -27,6 +29,7 @@ public class BatteryProgressBar extends View {
         TypedArray styled = getContext().obtainStyledAttributes(attrs, R.styleable.BatteryProgressBar);
         progressBgColor = styled.getColor(R.styleable.BatteryProgressBar_progressBgColor, getResources().getColor(R.color.progress_bg_default_color));
         progressColor = styled.getColor(R.styleable.BatteryProgressBar_progressColor, getResources().getColor(R.color.progress_default_color));
+        cornerRadius = styled.getDimension(R.styleable.BatteryProgressBar_progressCornerRadius, 0);
         styled.recycle();
 
     }
@@ -36,13 +39,17 @@ public class BatteryProgressBar extends View {
         super.onDraw(canvas);
         float width = this.getWidth();
         float height = this.getHeight();
-
+        LogUtil.d("dadaada", "onDraw cornerRadius:" + cornerRadius);
         RectF rect = new RectF(0, 0, width, height);
         Paint paint1 = new Paint();
 //		paint1.setColor(getResources().getColor(R.color.lightGray));
 //		paint1.setColor(Color.rgb(229, 229, 229));#E5E5E5
         paint1.setColor(progressBgColor);
-        canvas.drawRect(rect, paint1);
+        if (cornerRadius > 0) {
+            canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint1);
+        } else {
+            canvas.drawRect(rect, paint1);
+        }
 
 //		LogUtil.d(LOG_TAG, "2 width: "+width+", height: "+height);
         Paint paint2 = new Paint();
@@ -51,7 +58,11 @@ public class BatteryProgressBar extends View {
         paint2.setColor(progressColor);
         RectF progressRect = null;
         progressRect = new RectF(0, 0, width * currentProgress / maxProgress, height);
-        canvas.drawRect(progressRect, paint2);
+        if (cornerRadius > 0) {
+            canvas.drawRoundRect(progressRect, cornerRadius, cornerRadius, paint2);
+        } else {
+            canvas.drawRect(progressRect, paint2);
+        }
     }
 
 

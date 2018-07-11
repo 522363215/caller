@@ -12,9 +12,11 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.flurry.android.FlurryAgent;
+import com.md.flashset.bean.CallFlashDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +24,10 @@ import java.util.List;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.MainPagerAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventLanguageChange;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.HomeFragment;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.SortFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CategoryFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
@@ -46,11 +49,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private DrawerLayout mMain_drawer_layout;
     private SideslipContraller sideslipContraller;
     private RelativeLayout mTabHome;
-    private RelativeLayout mTabSort;
+    private RelativeLayout mTabCategory;
     private MainPagerAdapter mMainPagerAdapter;
-    private HomeFragment mHomeFragment;
-    private SortFragment mSortFragment;
+    private CallFlashListFragment mCallFlashListFragment;
+    private CategoryFragment mCategoryFragment;
     private RelativeLayout mSideslipMenu;
+    private ViewPager.OnPageChangeListener mOnPageChangeListener;
+    private boolean mIsOnPageSelected;
+    private TextView mTvPageTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +68,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
         initView();
         //初始化page
-        initFragment();
+        initViewPager();
         //初始化侧滑
         initSideSlip();
         listener();
+        initIndex(getIntent());
     }
+
 
     @Override
     protected void onStart() {
@@ -88,7 +96,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        initFragment();
+        initIndex(intent);
     }
 
     @Override
@@ -122,8 +130,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.layout_home:
                 onHome();
                 break;
-            case R.id.layout_sort:
-                onSort();
+            case R.id.layout_category:
+                onCategory();
                 break;
             case R.id.sideslip_menu:
                 openSideslip(v);
@@ -179,29 +187,44 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         });
     }
 
-    private void initFragment() {
-        int nIndex = getIntent().getIntExtra("fragment_index", 0xff);
-        if (nIndex >= ConstantUtils.MAX_FRAGEMNTS) {
-            nIndex = ConstantUtils.FRAGMENT_HOME;
+    private void initIndex(Intent intent) {
+        currentPage = intent.getIntExtra("fragment_index", 0xff);
+        //此值表示从callFlash 结果页返回时回到MainActivity 不需要改变page
+        if (currentPage == ActivityBuilder.BACK_FROM_CALL_FLASH_RESULT) {
+            return;
         }
-        initViewPager(nIndex);
+        if (currentPage >= ConstantUtils.MAX_FRAGEMNTS) {
+            currentPage = ConstantUtils.FRAGMENT_HOME;
+        }
+        mViewPager.setCurrentItem(currentPage, false);
+        //防止首次进入时不回调onPageSelected
+        Async.scheduleTaskOnUiThread(200, new Runnable() {
+            @Override
+            public void run() {
+                LogUtil.d(TAG, "addOnPageChangeListener onPageSelected mIsOnPageSelected:" + mIsOnPageSelected);
+                if (!mIsOnPageSelected) {
+                    mOnPageChangeListener.onPageSelected(currentPage);
+                }
+                mIsOnPageSelected = false;
+            }
+        });
     }
 
     private void initView() {
         mMain_drawer_layout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         mLeft_drawer = (LinearLayout) findViewById(R.id.left_drawer);
         mViewPager = (NotScrollViewPager) findViewById(R.id.viewpager);
-
+        mTvPageTitle = (TextView) findViewById(R.id.tv_page_title);
         mSideslipMenu = (RelativeLayout) findViewById(R.id.sideslip_menu);
 
         //底部tab按钮
         mTabHome = (RelativeLayout) findViewById(R.id.layout_home);
-        mTabSort = (RelativeLayout) findViewById(R.id.layout_sort);
+        mTabCategory = (RelativeLayout) findViewById(R.id.layout_category);
     }
 
     public void listener() {
         mTabHome.setOnClickListener(this);
-        mTabSort.setOnClickListener(this);
+        mTabCategory.setOnClickListener(this);
         mSideslipMenu.setOnClickListener(this);
     }
 
@@ -216,8 +239,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-    private void onSort() {
-        mViewPager.setCurrentItem(ConstantUtils.FRAGMENT_SORT);
+    private void onCategory() {
+        mViewPager.setCurrentItem(ConstantUtils.FRAGMENT_CATEGORY);
     }
 
     private void onHome() {
@@ -245,22 +268,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         return drawerOpen;
     }
 
-    private void initViewPager(int nIndex) {
-        final int selectColor = getResources().getColor(R.color.background);
-        final int unSelectColor = getResources().getColor(R.color.color_FF0057A9);
+    private void initViewPager() {
+        final int selectColor = getResources().getColor(R.color.fb_ad_green_button);
+        final int unSelectColor = getResources().getColor(R.color.fb_ad_white_title);
         final int selectSize = 32;
         final int unSelectSize = 24;
 
-        mHomeFragment = new HomeFragment();
-        mSortFragment = new SortFragment();
+        mCallFlashListFragment = CallFlashListFragment.newInstance(CallFlashDataType.CALL_FLASH_DATA_HOME);
+        mCategoryFragment = new CategoryFragment();
 
         mFragmentList = new ArrayList<>();
-        mFragmentList.add(mHomeFragment);
-        mFragmentList.add(mSortFragment);
+        mFragmentList.add(mCallFlashListFragment);
+        mFragmentList.add(mCategoryFragment);
 
         mMainPagerAdapter = new MainPagerAdapter(getFragmentManager(), mFragmentList, this);
         mViewPager.setAdapter(mMainPagerAdapter);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(mOnPageChangeListener = new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrollStateChanged(int arg0) {
 
@@ -274,21 +297,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             @Override
             public void onPageSelected(int arg0) {
+                LogUtil.d(TAG, "addOnPageChangeListener onPageSelected position:" + arg0);
+                mIsOnPageSelected = true;
                 currentPage = arg0;
                 ((FontIconView) findViewById(R.id.fiv_home)).setTextColor(currentPage == ConstantUtils.FRAGMENT_HOME ? selectColor : unSelectColor);
                 ((FontIconView) findViewById(R.id.fiv_home)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ConstantUtils.FRAGMENT_HOME ? selectSize : unSelectSize);
                 ((FontIconView) findViewById(R.id.fiv_home)).setAlpha(currentPage == ConstantUtils.FRAGMENT_HOME ? 1f : 0.4f);
 
-                ((FontIconView) findViewById(R.id.fiv_sort)).setTextColor(currentPage == ConstantUtils.FRAGMENT_SORT ? selectColor : unSelectColor);
-                ((FontIconView) findViewById(R.id.fiv_sort)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ConstantUtils.FRAGMENT_SORT ? selectSize : unSelectSize);
-                ((FontIconView) findViewById(R.id.fiv_sort)).setAlpha(currentPage == ConstantUtils.FRAGMENT_SORT ? 1f : 0.4f);
+                ((FontIconView) findViewById(R.id.fiv_category)).setTextColor(currentPage == ConstantUtils.FRAGMENT_CATEGORY ? selectColor : unSelectColor);
+                ((FontIconView) findViewById(R.id.fiv_category)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ConstantUtils.FRAGMENT_CATEGORY ? selectSize : unSelectSize);
+                ((FontIconView) findViewById(R.id.fiv_category)).setAlpha(currentPage == ConstantUtils.FRAGMENT_CATEGORY ? 1f : 0.4f);
 
-
+                setTvTitle(arg0);
             }
         });
-        currentPage = nIndex;
-        mViewPager.setCurrentItem(currentPage, false);
         mViewPager.setOffscreenPageLimit(ConstantUtils.MAX_FRAGEMNTS);
+    }
+
+    private void setTvTitle(int position) {
+        switch (position) {
+            case ConstantUtils.FRAGMENT_HOME:
+                mTvPageTitle.setText(R.string.page_title_caller_theme);
+                break;
+            case ConstantUtils.FRAGMENT_CATEGORY:
+                mTvPageTitle.setText(R.string.page_title_category);
+                break;
+        }
     }
 
     public void onEventMainThread(EventLanguageChange event) {
@@ -298,11 +332,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void exitAPP() {
         FlurryAgent.logEvent("ExitApplication");
         finish();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }
 

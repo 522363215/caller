@@ -144,7 +144,7 @@ public class ConstantUtils {
     public final static String SERVER_API_UPLOAD = "http://caller.lionmobi.com/api.php";
     public final static String SERVER_API_CALLER_SHOW = "http://caller_show.lionmobi.com/api.php";
     public final static String SERVER_API_PARAM = "http://parameter.lionmobi.com/api.php";
-    public final static int CALLER_STATISTICS_CHANNEL = 33; //
+    public final static int CALLER_STATISTICS_CHANNEL = 75; //
     public final static String NOTIFICATION_API_INTERFACE = "http://notification.lionmobi.com/viewSelected/portal/api.php";
     public final static String NOTIFICATION_ACTION = "notification_static";
     public final static String SERVER_API_CALLER_SHOW_LIKE = "http://callershow.lionmobi.com/api.php";
@@ -456,7 +456,7 @@ public class ConstantUtils {
     public static final String SHAR_KEY = "wifiAcceleration";
 
     public final static int MAX_FRAGEMNTS = 4;
-    public final static int FRAGMENT_SORT = 1;
+    public final static int FRAGMENT_CATEGORY = 1;
     public final static int FRAGMENT_HOME = 0;
 
     public final static int FRAGMENT_DATAPLAN = 11;

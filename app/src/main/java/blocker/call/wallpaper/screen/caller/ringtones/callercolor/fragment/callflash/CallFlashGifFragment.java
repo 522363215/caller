@@ -14,9 +14,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -28,6 +25,7 @@ import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallFlashAlbumactivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 
 /**
@@ -163,13 +161,11 @@ public class CallFlashGifFragment extends Fragment {
                 mAddCustomContainer.setVisibility(View.GONE);
                 if (!TextUtils.isEmpty(mCallFlashInfo.path) && new File(mCallFlashInfo.path).exists()) {
                     if (mCallFlashInfo.path.endsWith(".gif") || mCallFlashInfo.path.endsWith(".GIF")) {
-                        Glide.with(this).load(mCallFlashInfo.path).asGif().dontAnimate().listener(new RequestListener<String, GifDrawable>() {
+                        GlideHelper.with(getActivity()).loadGif(mCallFlashInfo.path).listener(new RequestListener<String, GifDrawable>() {
                             @Override
                             public boolean onException(Exception e, String model, Target<GifDrawable> target, boolean isFirstResource) {
                                 if (mCallFlashInfo.imgResId > 0) {
-                                    Glide.with(CallFlashGifFragment.this).load(mCallFlashInfo.imgResId).asGif().dontAnimate().into(mGifImageView);
-                                } else {
-                                    Glide.with(CallFlashGifFragment.this).load(new ColorDrawable(getResources().getColor(R.color.black))).dontAnimate().into(mGifImageView);
+                                    GlideHelper.with(getActivity()).loadGif(mCallFlashInfo.imgResId).into(mGifImageView);
                                 }
                                 return false;
                             }
@@ -182,43 +178,24 @@ public class CallFlashGifFragment extends Fragment {
                     } else if (mCallFlashInfo.path.endsWith(".png") || mCallFlashInfo.path.endsWith(".PNG")
                             || mCallFlashInfo.path.endsWith(".jpg") || mCallFlashInfo.path.endsWith(".JPG")
                             || mCallFlashInfo.path.endsWith(".jpeg") || mCallFlashInfo.path.endsWith(".JPEG")) {
-                        if (mAddCustomContainer != null)
+                        if (mAddCustomContainer != null) {
                             mAddCustomContainer.setVisibility(View.GONE);
-                        Glide.with(this).load("file://" + mCallFlashInfo.path).listener(new RequestListener<String, GlideDrawable>() {
-                            @Override
-                            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                Glide.with(CallFlashGifFragment.this).load(new ColorDrawable(getResources().getColor(R.color.black))).dontAnimate().into(mGifImageView);
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                return false;
-                            }
-                        }).into(mGifImageView);
+                        }
+                        GlideHelper.with(getActivity()).load("file://" + mCallFlashInfo.path).into(mGifImageView);
                     }
                 } else {
-                    Glide.with(this)
-                            .load(mCallFlashInfo.img_vUrl)
-                            .asGif()
-                            .placeholder(R.drawable.icon_unloaded_bg)//加载中图片
-                            .error(R.drawable.icon_unloaded_bg)//加载失败图片
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .dontAnimate()
-                            .into(mGifImageView);
+                    GlideHelper.with(getActivity()).load(mCallFlashInfo.img_vUrl).into(mGifImageView);
                 }
             } else {
                 // 本地来电秀, 自定义来电秀
                 if (mCallFlashInfo.flashType == FlashLed.FLASH_TYPE_CUSTOM) {
                     if (!TextUtils.isEmpty(mCallFlashInfo.path)) {
                         if (mCallFlashInfo.path.endsWith(".GIF") || mCallFlashInfo.path.endsWith(".gif")) {
-                            Glide.with(this).load(mCallFlashInfo.path).asGif().dontAnimate().listener(new RequestListener<String, GifDrawable>() {
+                            GlideHelper.with(getActivity()).loadGif(mCallFlashInfo.path).listener(new RequestListener<String, GifDrawable>() {
                                 @Override
                                 public boolean onException(Exception e, String model, Target<GifDrawable> target, boolean isFirstResource) {
                                     if (mCallFlashInfo.imgResId > 0) {
-                                        Glide.with(CallFlashGifFragment.this).load(mCallFlashInfo.imgResId).asGif().dontAnimate().into(mGifImageView);
-                                    } else {
-                                        Glide.with(CallFlashGifFragment.this).load(new ColorDrawable(getResources().getColor(R.color.black))).dontAnimate().into(mGifImageView);
+                                        GlideHelper.with(getActivity()).loadGif(mCallFlashInfo.imgResId).into(mGifImageView);
                                     }
                                     return false;
                                 }
@@ -229,18 +206,7 @@ public class CallFlashGifFragment extends Fragment {
                                 }
                             }).into(mGifImageView);
                         } else {
-                            Glide.with(this).load("file://" + mCallFlashInfo.path).listener(new RequestListener<String, GlideDrawable>() {
-                                @Override
-                                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                    Glide.with(CallFlashGifFragment.this).load(new ColorDrawable(getResources().getColor(R.color.black))).dontAnimate().into(mGifImageView);
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                    return false;
-                                }
-                            }).into(mGifImageView);
+                            GlideHelper.with(getActivity()).load("file://" + mCallFlashInfo.path).into(mGifImageView);
                         }
                     } else {
                         if (mAddCustomContainer != null) {
@@ -252,9 +218,9 @@ public class CallFlashGifFragment extends Fragment {
                         mAddCustomContainer.setVisibility(View.GONE);
                     }
                     if (mCallFlashInfo.imgResId > 0) {
-                        Glide.with(CallFlashGifFragment.this).load(mCallFlashInfo.imgResId).dontAnimate().into(mGifImageView);
+                        GlideHelper.with(getActivity()).loadGif(mCallFlashInfo.imgResId).into(mGifImageView);
                     } else {
-                        Glide.with(CallFlashGifFragment.this).load(new ColorDrawable(getResources().getColor(R.color.black))).dontAnimate().into(mGifImageView);
+                        GlideHelper.with(getActivity()).load(new ColorDrawable(getResources().getColor(R.color.black))).into(mGifImageView);
                     }
                 }
             }

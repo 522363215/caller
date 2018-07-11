@@ -615,7 +615,8 @@
     <string name="page_title_conversation">MESSAGES</string>
     <string name="page_title_block">BLOCK</string>
     <string name="page_title_search">SERACH</string>
-
+    <string name="page_title_caller_theme">Caller Theme</string>
+    <string name="page_title_category">Category</string>
 
     <string name="call_flash_Halloween">Halloween</string>
 
@@ -1068,6 +1069,6 @@
     <string name="time_300">5m</string>
     <string name="time_600">10m</string>
     <string name="time_1800">30m</string>
-
+    <string name="no_online_call_flash_list_tip">no call flash</string>
     <string name="add_block_contact_title">"Call Log"</string>
 </resources>

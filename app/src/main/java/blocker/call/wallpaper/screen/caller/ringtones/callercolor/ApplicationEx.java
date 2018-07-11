@@ -114,7 +114,7 @@ public class ApplicationEx extends Application {
         long expireTime = 2 * android.text.format.DateUtils.HOUR_IN_MILLIS;
         // TODO: 2018/2/9 should modify params(testMode) to false;
         boolean testMode = false;
-//        testMode = BuildConfig.DEBUG;
+        testMode = BuildConfig.DEBUG;
         ThemeSyncManager.getInstance().init(
                 getApplicationContext(),
                 Locale.getDefault().getLanguage(),
