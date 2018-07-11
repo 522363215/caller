@@ -7,9 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.md.flashset.View.FlashLed;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
@@ -20,10 +18,9 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallFlashPreviewActivity;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleProgressBar;
 
 /**
  * Created by ChenR on 2018/1/25.
@@ -142,14 +139,7 @@ public class CallFlashLocalAdapter extends RecyclerView.Adapter<CallFlashLocalAd
                 CallFlashInfo info = model.get(pos);
 
                 //  jump to CallFlashPreviewActivity
-                Intent intent = new Intent();
-                intent.setClass(context, CallFlashPreviewActivity.class);
-                intent.putExtra(ConstantUtils.COME_FROM_CALLAFTER, mIsComeCallAfter);
-                intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, mIsComePhoneDetail);
-                intent.putExtra(ConstantUtils.IS_ONLINE_FOR_CALL_FLASH, false);
-//                intent.putStringArrayListExtra(ConstantUtils.NUMBER_FOR_CALL_FLASH, mNumberForCallFlash);
-                intent.putExtra("flash_theme", info);
-                context.startActivity(intent);
+                ActivityBuilder.toCallFlashPreview(context, info, false);
 
 //                //jump to CallFlashDetailActivity
 //                Intent intent = new Intent();

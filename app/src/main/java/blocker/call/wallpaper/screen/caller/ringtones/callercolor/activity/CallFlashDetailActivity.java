@@ -53,6 +53,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.PreloadAdve
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.SaveingDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashDetailGroupAdShow;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventInterstitialAdLoadSuccess;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.callflash.CallFlashCustomAnimFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.callflash.CallFlashGifFragment;
@@ -103,7 +104,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private boolean mIsShowPermissionTipDialog;
     private Advertisement mAdvertisement;
     private CallFlashAvatarInfoView mCallFlashAvatarInfoView;
-    private boolean mIsComeCallFlashPreview;
     private boolean mIsShowInterstitialAd;
     private SaveingDialog mSavingDialog;
     private CardView layout_call_flash;
@@ -133,6 +133,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private FontIconView mFivLike;
     private TextView mTvLikeCount;
     private ImageView iv_call_flash_bg_small;
+    private boolean mIsToResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +150,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         }
 
         mInfo = (CallFlashInfo) getIntent().getSerializableExtra("flash_theme");
-        mIsComeCallFlashPreview = getIntent().getBooleanExtra(ConstantUtils.COME_FROM_CALL_FLASH_PREVIEW, false);
         initView();
 //        initAd();
         setScale();
@@ -395,9 +395,9 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void initSaveFlash() {
-        isFlashSwitchOn = PreferenceHelper.getBoolean(ConstantUtils.CALL_FLASH_ON, false);
-        mSaveFlashType = PreferenceHelper.getInt(ConstantUtils.CALL_FLASH_TYPE, -1);
-        mDynamicFlashPath = PreferenceHelper.getString(mSaveFlashType == FlashLed.FLASH_TYPE_DYNAMIC ?
+        isFlashSwitchOn = CallFlashPreferenceHelper.getBoolean(ConstantUtils.CALL_FLASH_ON, false);
+        mSaveFlashType = CallFlashPreferenceHelper.getInt(ConstantUtils.CALL_FLASH_TYPE, -1);
+        mDynamicFlashPath = CallFlashPreferenceHelper.getString(mSaveFlashType == FlashLed.FLASH_TYPE_DYNAMIC ?
                 ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH : ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, "");
         if (isFlashSwitchOn && mInfo != null) {
             if (mInfo.flashType == FlashLed.FLASH_TYPE_CUSTOM || mInfo.flashType == FlashLed.FLASH_TYPE_DYNAMIC) {
@@ -564,7 +564,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         if (mInfo.isOnlionCallFlash) {
             loadBackground(mInfo.img_vUrl);
         } else {
-            setBlurBackground(BitmapFactory.decodeResource(getResources(),mInfo.imgResId));
+            setBlurBackground(BitmapFactory.decodeResource(getResources(), mInfo.imgResId));
         }
     }
 
@@ -913,6 +913,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                         @Override
                         public void run() {
                             if (!mIsShowFullScreenAd) {
+                                LogUtil.d(TAG, "toResultOkAction 7");
                                 toResultOkAction();
                             }
                         }
@@ -923,6 +924,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                         @Override
                         public void run() {
                             if (!mIsShowInterstitialAd) {
+                                LogUtil.d(TAG, "toResultOkAction 1");
                                 toResultOkAction();
                             }
                         }
@@ -940,11 +942,11 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             if (!isCurrentFlashUsing) {
                 requestSpecialPermission(REQUEST_CODE_OVERLAY_PERMISSION, false);
             } else {
-                toCallFlashGifShowActivity(getString(R.string.call_flash_gif_show_setting_suc_reset));
-                PreferenceHelper.putBoolean(ConstantUtils.CALL_FLASH_ON, false);
-                PreferenceHelper.putInt(ConstantUtils.CALL_FLASH_TYPE, FlashLed.FLASH_TYPE_DEFAULT);
-                PreferenceHelper.putString(ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
-                PreferenceHelper.putString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, "");
+                toResult(getString(R.string.call_flash_gif_show_setting_suc_reset));
+                CallFlashPreferenceHelper.putBoolean(ConstantUtils.CALL_FLASH_ON, false);
+                CallFlashPreferenceHelper.putInt(ConstantUtils.CALL_FLASH_TYPE, FlashLed.FLASH_TYPE_DEFAULT);
+                CallFlashPreferenceHelper.putString(ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
+                CallFlashPreferenceHelper.putString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, "");
 
                 ArrayList<CallFlashInfo> list = CallFlashManager.getInstance().getLocalClassicFlashList();
 
@@ -1033,12 +1035,13 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 LogUtil.d("chenr", "申请手机铃声权限.");
 //                RingManager.reductionRing(this);
             default:
-                if (mIsComeCallFlashPreview) {
-                    showSaveDialog();
-                } else {
-                    LogUtil.d(TAG, "toResultOkAction 6");
-                    toResultOkAction();
-                }
+                showSaveDialog();
+//                if (mIsComeCallFlashPreview) {
+//                    showSaveDialog();
+//                } else {
+//                    LogUtil.d(TAG, "toResultOkAction 3");
+//                    toResultOkAction();
+//                }
         }
     }
 
@@ -1057,19 +1060,22 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void toResultOkAction() {
+        if (mIsToResult) {
+            return;
+        }
 //        RingManager.reductionRing(this);
         int resultDesId = -1;
         if (!isCurrentFlashUsing) {
-            PreferenceHelper.putBoolean(ConstantUtils.CALL_FLASH_ON, true);
-            PreferenceHelper.putInt(ConstantUtils.CALL_FLASH_TYPE, mInfo.flashType);
+            CallFlashPreferenceHelper.putBoolean(ConstantUtils.CALL_FLASH_ON, true);
+            CallFlashPreferenceHelper.putInt(ConstantUtils.CALL_FLASH_TYPE, mInfo.flashType);
 
             if (!TextUtils.isEmpty(mInfo.path)) {
                 if (mInfo.flashType == FlashLed.FLASH_TYPE_CUSTOM) {
-                    PreferenceHelper.putString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, mInfo.path);
-                    PreferenceHelper.putString(ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
+                    CallFlashPreferenceHelper.putString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, mInfo.path);
+                    CallFlashPreferenceHelper.putString(ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
                 } else {
-                    PreferenceHelper.putString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, "");
-                    PreferenceHelper.putString(ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH, mInfo.path);
+                    CallFlashPreferenceHelper.putString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, "");
+                    CallFlashPreferenceHelper.putString(ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH, mInfo.path);
                 }
             }
 
@@ -1078,10 +1084,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         } else {
             resultDesId = R.string.call_flash_gif_show_setting_suc_reset;
         }
-        toCallFlashGifShowActivity(getString(resultDesId));
+        toResult(getString(resultDesId));
     }
 
-    private void toCallFlashGifShowActivity(String resultDes) {
+    private void toResult(String resultDes) {
         Intent intent = new Intent(CallFlashDetailActivity.this, CallFlashSetResultActivity.class);
         intent.putExtra(ConstantUtils.COME_FROM_CALLAFTER, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_CALLAFTER, false));
         intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
@@ -1093,6 +1099,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         intent.putExtra("result_des", resultDes);
         startActivity(intent);
         finish();
+        mIsToResult = true;
+        EventBus.getDefault().post(new EventRefreshCallFlashList());
     }
 
     //跳转到系统app详情界面
@@ -1285,6 +1293,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                     if (isBack) {
                         finish();
                     } else {
+                        LogUtil.d(TAG, "toResultOkAction 6");
                         toResultOkAction();
                     }
                 }

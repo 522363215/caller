@@ -390,39 +390,17 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             case R.id.iv_preview:
             case R.id.tv_download_action_above_ad:
             case R.id.tv_download_action_below_ad:
-                Intent intent = new Intent();
-                intent.setClass(this, CallFlashDetailActivity.class);
-                intent.putExtra(ConstantUtils.COME_FROM_CALLAFTER, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_CALLAFTER, false));
-                intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
-                intent.putExtra(ConstantUtils.COME_FROM_DESKTOP, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false));
-                intent.putExtra(ConstantUtils.COME_FROM_CALL_FLASH_PREVIEW, true);
-//                intent.putStringArrayListExtra(ConstantUtils.NUMBER_FOR_CALL_FLASH, mNumberForCallFlash);
-                intent.putExtra("flash_theme", mInfo);
-                startActivity(intent);
+                ActivityBuilder.toCallFlashDetail(this,mInfo,getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false));
                 break;
             case R.id.iv_recommend_1:
                 finish();
-                Intent intent1 = new Intent();
-                intent1.setClass(this, CallFlashPreviewActivity.class);
-                intent1.putExtra(ConstantUtils.COME_FROM_CALLAFTER, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_CALLAFTER, false));
-                intent1.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
-                intent1.putExtra(ConstantUtils.COME_FROM_DESKTOP, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false));
-                intent1.putExtra(ConstantUtils.IS_ONLINE_FOR_CALL_FLASH, true);
-//                intent1.putStringArrayListExtra(ConstantUtils.NUMBER_FOR_CALL_FLASH, mNumberForCallFlash);
-                intent1.putExtra("flash_theme", recommendCallFlashInfo1);
-                startActivity(intent1);
+                boolean isComeDesktop = getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false);
+                ActivityBuilder.toCallFlashPreview(this, recommendCallFlashInfo1, true, isComeDesktop);
                 break;
             case R.id.iv_recommend_2:
                 finish();
-                Intent intent2 = new Intent();
-                intent2.setClass(this, CallFlashPreviewActivity.class);
-                intent2.putExtra(ConstantUtils.COME_FROM_CALLAFTER, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_CALLAFTER, false));
-                intent2.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
-                intent2.putExtra(ConstantUtils.COME_FROM_DESKTOP, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false));
-                intent2.putExtra(ConstantUtils.IS_ONLINE_FOR_CALL_FLASH, true);
-//                intent2.putStringArrayListExtra(ConstantUtils.NUMBER_FOR_CALL_FLASH, mNumberForCallFlash);
-                intent2.putExtra("flash_theme", recommendCallFlashInfo2);
-                startActivity(intent2);
+                boolean isComeDesktop2 = getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false);
+                ActivityBuilder.toCallFlashPreview(this, recommendCallFlashInfo2, true, isComeDesktop2);
                 break;
             case R.id.fiv_like:
                 if (mInfo != null) {

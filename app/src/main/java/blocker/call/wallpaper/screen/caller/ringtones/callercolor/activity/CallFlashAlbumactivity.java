@@ -162,20 +162,7 @@ public class CallFlashAlbumactivity extends BaseActivity {
 
             String path = FileUtil.getImagePath(this, data.getData());
             if (TextUtils.isEmpty(path)) return;
-
-            Intent intent = new Intent();
-//            intent.setClass(this, CallFlashGifShowActivity.class);
-            intent.setClass(this, CallFlashDetailActivity.class);
-            intent.putExtra(ConstantUtils.COME_FROM_CALLAFTER, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_CALLAFTER, false));
-            intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
-            intent.putExtra("flash_theme", CallFlashManager.getInstance().getCustomCallFlash(path));
-
-//            intent.putExtra(ConstantUtils.IS_CUSTOM_CALLFLASH, true);
-//            intent.putStringArrayListExtra(ConstantUtils.NUMBER_FOR_CALL_FLASH, mNumbersForCallFlash);
-//            intent.putExtra("is_from_system", true);
-//            intent.putExtra("is_show_result", false);
-//            intent.putExtra("image_path", path);
-            startActivity(intent);
+            ActivityBuilder.toCallFlashDetail(this, CallFlashManager.getInstance().getCustomCallFlash(path), false);
         }
     }
 

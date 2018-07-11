@@ -72,8 +72,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         //初始化侧滑
         initSideSlip();
         listener();
-        initIndex();
+        initIndex(getIntent());
     }
+
 
     @Override
     protected void onStart() {
@@ -95,7 +96,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        initIndex();
+        initIndex(intent);
     }
 
     @Override
@@ -186,8 +187,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         });
     }
 
-    private void initIndex() {
-        currentPage = getIntent().getIntExtra("fragment_index", 0xff);
+    private void initIndex(Intent intent) {
+        currentPage = intent.getIntExtra("fragment_index", 0xff);
+        //此值表示从callFlash 结果页返回时回到MainActivity 不需要改变page
+        if (currentPage == ActivityBuilder.BACK_FROM_CALL_FLASH_RESULT) {
+            return;
+        }
         if (currentPage >= ConstantUtils.MAX_FRAGEMNTS) {
             currentPage = ConstantUtils.FRAGMENT_HOME;
         }
