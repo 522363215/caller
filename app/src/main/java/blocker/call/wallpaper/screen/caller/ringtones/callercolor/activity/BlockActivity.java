@@ -120,6 +120,16 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
             case R.id.fiv_add: {
                 AddBlockContactDialog dialog = new AddBlockContactDialog(BlockActivity.this);
                 dialog.show();
+
+                dialog.setOnAddBlockContactListener(new AddBlockContactDialog.OnAddBlockContactListener() {
+                    @Override
+                    public void onAddBlockContact(boolean isSuccess, String blockNumber) {
+                        if (isSuccess) {
+                            BlockListFragment fragment = (BlockListFragment) fragmentList.get(0);
+                            fragment.updateData();
+                        }
+                    }
+                });
             }
             break;
         }

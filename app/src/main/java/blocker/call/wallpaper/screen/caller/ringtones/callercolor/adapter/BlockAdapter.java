@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.md.block.beans.BlockInfo;
+import com.md.block.core.BlockManager;
 
 import java.util.List;
 
@@ -22,6 +23,15 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconV
 public class BlockAdapter extends BaseAdapter {
     private List<BlockInfo> model;
     private Context mContext;
+
+    private View.OnClickListener mOnRemoveClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int pos = (int) v.getTag();
+            BlockInfo blockInfo = model.get(pos);
+            //BlockManager.getInstance().
+        }
+    };
 
     public BlockAdapter (Context context, List<BlockInfo> model) {
         this.mContext = context;
@@ -54,19 +64,17 @@ public class BlockAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        holder.fivRemove.setTag(position);
+
         BlockInfo item = getItem(position);
         if (item != null) {
             Bitmap photo = ContactManager.getInstance().getContactPhoto(item.getPhotoID());
-            holder.imageView.setVisibility(photo == null ? View.GONE : View.VISIBLE);
-            holder.imageView.setImageBitmap(photo);
+            if (photo != null) {
+                holder.ivPhoto.setImageBitmap(photo);
+            }
 
             if (TextUtils.isEmpty(item.getName())) {
                 String number = NumberUtil.getFormatNumber(item.getNumber());
-                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    PhoneNumberUtils.formatNumber(item.getNumber(), NumberUtil.getDefaultCountry());
-                } else {
-
-                }*/
                 holder.textView.setText(number);
                 LogUtil.d("chenr", "BlockAdapter show format number by NumberUtil.getFormatNumber:  " + number);
             } else {
@@ -77,15 +85,19 @@ public class BlockAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        private FontIconView fontIconView;
-        private ImageView imageView;
+        private FontIconView fivPhoto;
+        private ImageView ivPhoto;
         private TextView textView;
+        private View fivRemove;
 
         public ViewHolder (View root) {
             if (root != null) {
-                fontIconView = root.findViewById(R.id.fiv_photo);
-                imageView = root.findViewById(R.id.iv_photo);
+                fivPhoto = root.findViewById(R.id.fiv_photo);
+                ivPhoto = root.findViewById(R.id.iv_photo);
                 textView = root.findViewById(R.id.tv_name);
+                fivRemove = root.findViewById(R.id.fiv_remove);
+
+
             }
         }
     }
