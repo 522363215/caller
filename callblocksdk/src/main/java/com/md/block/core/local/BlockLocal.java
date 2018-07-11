@@ -87,22 +87,24 @@ public class BlockLocal {
         if (blockContacts == null || blockContacts.isEmpty()) {
             return;
         }
-
-        for (BlockInfo info : blockContacts) {
-            setBlockContacts(info);
+        SharedPreferences pref = getSharedPreferences();
+        if (pref == null) {
+            return;
         }
+        pref.edit().putString(PREF_KEY_BLOCK_CONTACT_LIST, new Gson().toJson(blockContacts)).commit();
     }
 
     public static boolean removeBlockContact (String number) {
         boolean isSuc = false;
 
-        List<BlockInfo> contactSet = getBlockContacts();
-        if (contactSet != null && contactSet.size() > 0) {
-            Iterator<BlockInfo> iterator = contactSet.iterator();
+        List<BlockInfo> contactList = getBlockContacts();
+        if (contactList != null && contactList.size() > 0) {
+            Iterator<BlockInfo> iterator = contactList.iterator();
             while (iterator.hasNext()) {
                 BlockInfo next = iterator.next();
                 if (PhoneNumberUtils.compare(number, next.getNumber())) {
                     iterator.remove();
+                    setBlockContacts(contactList);
                     isSuc = true;
                     break;
                 }
@@ -115,13 +117,14 @@ public class BlockLocal {
     public static boolean removeBlockContact (BlockInfo contact) {
         boolean isSuc = false;
 
-        List<BlockInfo> contactSet = getBlockContacts();
-        if (contactSet != null && contactSet.size() > 0) {
-            Iterator<BlockInfo> iterator = contactSet.iterator();
+        List<BlockInfo> contactList = getBlockContacts();
+        if (contactList != null && contactList.size() > 0) {
+            Iterator<BlockInfo> iterator = contactList.iterator();
             while (iterator.hasNext()) {
                 BlockInfo next = iterator.next();
                 if (next.equals(contact)) {
                     iterator.remove();
+                    setBlockContacts(contactList);
                     isSuc = true;
                     break;
                 }

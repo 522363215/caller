@@ -145,6 +145,18 @@ public class BlockManager {
         BlockLocal.setBlockContacts(blockContacts);
     }
 
+    public boolean removeBlockContact(BlockInfo info) {
+        return BlockLocal.removeBlockContact(info);
+    }
+
+    public boolean removeBlockContact(String number) {
+        return BlockLocal.removeBlockContact(number);
+    }
+
+    public void clearBlockContacts () {
+        BlockLocal.clearBlockContacts();
+    }
+
     public void setBlockHistory (BlockInfo history) {
         BlockLocal.setBlockHistory(history);
     }
@@ -155,6 +167,14 @@ public class BlockManager {
 
     public List<BlockInfo> getBlockHistory () {
         return BlockLocal.getBlockHistory();
+    }
+
+    public boolean removeBlockHistory (BlockInfo history) {
+        return BlockLocal.removeBlockHistory(history);
+    }
+
+    public void clearBlockHistory () {
+        BlockLocal.clearBlockHistory();
     }
 
     public boolean setBlockSwitchState (boolean bool) {

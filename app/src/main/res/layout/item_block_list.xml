@@ -13,8 +13,8 @@
         android:padding="@dimen/dp8">
 
         <FrameLayout
-            android:layout_width="@dimen/dp36"
-            android:layout_height="@dimen/dp36">
+            android:layout_width="@dimen/dp48"
+            android:layout_height="@dimen/dp48">
 
             <ImageView
                 android:id="@+id/iv_photo"
@@ -48,13 +48,16 @@
 
         <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
             android:id="@+id/fiv_remove"
-            android:layout_width="@dimen/dp24"
-            android:layout_height="@dimen/dp24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/dp12"
+            android:layout_marginRight="@dimen/dp12"
+            android:padding="@dimen/dp6"
             android:gravity="center"
+            android:text="@string/icon_remove"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="@dimen/dp22"
-            tools:text="@string/icon_remove" />
+            android:textSize="@dimen/dp22" />
 
     </LinearLayout>
 

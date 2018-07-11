@@ -18,6 +18,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 
 public class BlockAdapter extends BaseAdapter {
@@ -27,9 +28,22 @@ public class BlockAdapter extends BaseAdapter {
     private View.OnClickListener mOnRemoveClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if (mContext == null) {
+                return;
+            }
+
             int pos = (int) v.getTag();
             BlockInfo blockInfo = model.get(pos);
-            //BlockManager.getInstance().
+            boolean isSuc = BlockManager.getInstance().removeBlockContact(blockInfo);
+
+            LogUtil.d("chenr", "remove block contact is success: " + isSuc);
+
+            if (isSuc) {
+                model.remove(blockInfo);
+                notifyDataSetChanged();
+            } else {
+                ToastUtils.showToast(mContext, "Delete block contact success!");
+            }
         }
     };
 
@@ -97,7 +111,7 @@ public class BlockAdapter extends BaseAdapter {
                 textView = root.findViewById(R.id.tv_name);
                 fivRemove = root.findViewById(R.id.fiv_remove);
 
-
+                fivRemove.setOnClickListener(mOnRemoveClickListener);
             }
         }
     }
