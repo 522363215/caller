@@ -37,6 +37,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdverti
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdContainer;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
@@ -63,7 +64,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     private CallFlashInfo recommendCallFlashInfo1;
     private CallFlashInfo recommendCallFlashInfo2;
     private FontIconView mFivBack;
-    private LinearLayout mLavoutLike;
+    private LinearLayout mLavoutLikeAndDownload;
     private FontIconView mFivLike;
     private TextView mTvLikeCount;
     private float mLastValue = 1.0f;
@@ -85,6 +86,8 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     private TextView mTvDownloadBtnBelowAd;
     private LinearLayout mLayoutAdNormal;
     private FrameLayout mLayoutAdMopub;
+    private FontIconView mFivDownload;
+    private TextView mTvDownloadCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,7 +169,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         downloadListener();
         setView();
 //        setRecommend();
-        setLike();
+        setLikeAndDownload();
     }
 
     private void downloadListener() {
@@ -214,6 +217,8 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             public void onSuccess(String url, File file) {
                 if (mInfo != null && !TextUtils.isEmpty(url) && url.equals(mInfo.url)) {
                     mIsDownloading = false;
+                    CallFlashManager.getInstance().saveCallFlashDownloadCount(mInfo);
+                    EventBus.getDefault().post(new EventRefreshCallFlashDownloadCount());
                     if (mIsShowFirstAdMob) {
                         mLayoutDownloadingBelowAd.setVisibility(View.GONE);
                         mTvDownloadBtnBelowAd.setVisibility(View.VISIBLE);
@@ -278,10 +283,12 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         mLayoutRecommend = (LinearLayout) findViewById(R.id.layout_recommend);
         mIvRecommend1 = (ImageView) findViewById(R.id.iv_recommend_1);
         mIvRecommend2 = (ImageView) findViewById(R.id.iv_recommend_2);
-        //点赞
-        mLavoutLike = (LinearLayout) findViewById(R.id.layout_like);
+        //点赞数和下载数
+        mLavoutLikeAndDownload = (LinearLayout) findViewById(R.id.layout_like_and_download);
         mFivLike = (FontIconView) findViewById(R.id.fiv_like);
         mTvLikeCount = (TextView) findViewById(R.id.tv_like_count);
+        mFivDownload = (FontIconView) findViewById(R.id.fiv_download);
+        mTvDownloadCount = (TextView) findViewById(R.id.tv_download_count);
 
         //广告
         mLayoutAd = (FrameLayout) findViewById(R.id.layout_ad_view);
@@ -363,19 +370,21 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         }
     }
 
-    private void setLike() {
+    private void setLikeAndDownload() {
         //点赞
         if (mInfo == null) return;
         if (!mInfo.isOnlionCallFlash) {
-            mLavoutLike.setVisibility(View.GONE);
+            mLavoutLikeAndDownload.setVisibility(View.GONE);
             return;
         }
         CallFlashInfo cacheCallFlashInfo = CallFlashManager.getInstance().getCacheJustLikeFlashList(mInfo.id);
         if (cacheCallFlashInfo != null) {
             mInfo.likeCount = cacheCallFlashInfo.likeCount;
+            mInfo.downloadCount = cacheCallFlashInfo.downloadCount;
             mInfo.isLike = cacheCallFlashInfo.isLike;
         }
         mTvLikeCount.setText("" + mInfo.likeCount);
+        mTvDownloadCount.setText("" + mInfo.downloadCount);
         if (mInfo.isLike) {
             mFivLike.setTextColor(getResources().getColor(R.color.color_FFE05A52));
         } else {
@@ -390,7 +399,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             case R.id.iv_preview:
             case R.id.tv_download_action_above_ad:
             case R.id.tv_download_action_below_ad:
-                ActivityBuilder.toCallFlashDetail(this,mInfo,getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false));
+                ActivityBuilder.toCallFlashDetail(this, mInfo, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false));
                 break;
             case R.id.iv_recommend_1:
                 finish();
@@ -614,5 +623,9 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             mAdManager.destroy();
             mAdManager = null;
         }
+    }
+
+    public void onEventMainThread(EventRefreshCallFlashDownloadCount event) {
+        setLikeAndDownload();
     }
 }

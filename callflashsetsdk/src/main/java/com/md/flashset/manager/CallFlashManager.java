@@ -596,7 +596,6 @@ public class CallFlashManager {
             item.likeCount = info.likeCount;
         } else {
             list.add(info);
-
         }
         CallFlashPreferenceHelper.setDataList(CallFlashPreferenceHelper.PREF_JUST_LIKE_FLASH_LIST, list);
     }
@@ -618,6 +617,36 @@ public class CallFlashManager {
     public String getTopicOnHome() {
         String type = ONLINE_THEME_TOPIC_NAME_FEATURED;//default is featured
         return type;
+    }
+
+    public void saveCallFlashDownloadCount(CallFlashInfo info) {
+        if (info == null || TextUtils.isEmpty(info.id)) {
+            return;
+        }
+
+        List<String> saveDownloadCountCallFlashUrl = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.CALL_FLASH_SAVE_DOWNLOAD_COUNT_URLS, String[].class);
+        if (saveDownloadCountCallFlashUrl != null && saveDownloadCountCallFlashUrl.contains(info.url)) {
+            //已经保存过
+            return;
+        }
+        if (saveDownloadCountCallFlashUrl == null) {
+            saveDownloadCountCallFlashUrl = new ArrayList<>();
+        }
+        saveDownloadCountCallFlashUrl.add(info.url);
+        CallFlashPreferenceHelper.setDataList(CallFlashPreferenceHelper.CALL_FLASH_SAVE_DOWNLOAD_COUNT_URLS, saveDownloadCountCallFlashUrl);
+
+        List<CallFlashInfo> list = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_JUST_LIKE_FLASH_LIST, CallFlashInfo[].class);
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        if (list.contains(info)) {
+            CallFlashInfo item = list.get(list.indexOf(info));
+            item.downloadCount = info.downloadCount + 1;
+        } else {
+            info.downloadCount = info.downloadCount + 1;
+            list.add(info);
+        }
+        CallFlashPreferenceHelper.setDataList(CallFlashPreferenceHelper.PREF_JUST_LIKE_FLASH_LIST, list);
     }
 
 }
