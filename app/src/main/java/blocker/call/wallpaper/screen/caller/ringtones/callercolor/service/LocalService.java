@@ -3,6 +3,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.IBinder;
 
 import com.md.block.core.BlockManager;
@@ -10,11 +11,13 @@ import com.md.block.core.BlockManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventForeground;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PhoneStateListenImpl;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.NetworkConnectChangedReceiver;
 import event.EventBus;
 
 public class LocalService extends Service {
     private static final String TAG = "LocalService";
     private static LocalService sInstance;
+    private NetworkConnectChangedReceiver mNetworkChangeListener;
 
     public LocalService() {
     }
@@ -30,8 +33,18 @@ public class LocalService extends Service {
         if (!EventBus.getDefault().isRegistered(LocalService.this)) {
             EventBus.getDefault().register(LocalService.this);
         }
-
+        registerReceivers();
         initBlock();
+    }
+
+    private void registerReceivers() {
+        //网络变化广告
+        mNetworkChangeListener = new NetworkConnectChangedReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
+        filter.addAction("android.net.wifi.STATE_CHANGE");
+        registerReceiver(mNetworkChangeListener, filter);
     }
 
     private void initBlock() {
@@ -57,6 +70,7 @@ public class LocalService extends Service {
         if (EventBus.getDefault().isRegistered(LocalService.this)) {
             EventBus.getDefault().unregister(LocalService.this);
         }
+        unregisterReceiver(mNetworkChangeListener);
     }
 
     private boolean isForeground = false;
