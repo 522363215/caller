@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.md.flashset.bean.CallFlashDataType;
 import com.md.flashset.bean.CallFlashInfo;
-import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
@@ -117,7 +116,7 @@ public class CallFlashListFragment extends Fragment {
 
             initRecycleView(view);
             listener();
-            initData();
+            initData(true);
         }
     }
 
@@ -160,7 +159,7 @@ public class CallFlashListFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void initData() {
+    public void initData(boolean isGetCacheData) {
         try {
             if (getActivity() == null || getActivity().isFinishing()) {
                 return;
@@ -168,10 +167,10 @@ public class CallFlashListFragment extends Fragment {
             isRefreshData.set(true);
             switch (mDataType) {
                 case CallFlashDataType.CALL_FLASH_DATA_HOME:
-                    initHomeData();
+                    initHomeData(isGetCacheData);
                     break;
                 case CallFlashDataType.CALL_FLASH_DATA_CATEGORY:
-                    initCategoryData();
+                    initCategoryData(isGetCacheData);
                     break;
                 case CallFlashDataType.CALL_FLASH_DATA_COLLECTION:
                     initCollectionData();
@@ -183,6 +182,9 @@ public class CallFlashListFragment extends Fragment {
     }
 
     private void updateUI(List<CallFlashInfo> data, boolean isSuccess) {
+        if (getActivity() == null || getActivity().isFinishing()) {
+            return;
+        }
         if (isSuccess && data != null && data.size() > 0 && mAdapter != null) {
 //            LogUtil.d(TAG, "initOnlineData data:" + data.size());
             model.clear();
@@ -195,21 +197,26 @@ public class CallFlashListFragment extends Fragment {
                 mRecyclerView.setVisibility(View.VISIBLE);
             }
         } else {
-            loadFailed(isSuccess);
+            //当数据为0时只有收藏界面才刷新，其他界面保持不变
+            if (mDataType == CallFlashDataType.CALL_FLASH_DATA_COLLECTION && data != null && data.size() == 0) {
+                model.clear();
+                mAdapter.notifyDataSetChanged();
+            }
+            updateUIForNoData(isSuccess);
         }
         mPbLoading.setVisibility(View.GONE);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
         stopRefresh();
     }
 
-    private void loadFailed(boolean isSuccess) {
+    private void updateUIForNoData(boolean isSuccess) {
         if (getActivity() == null || getActivity().isFinishing() || !isRefreshData.get()) {
             return;
         }
         if (isSuccess) {
             if (mDataType == CallFlashDataType.CALL_FLASH_DATA_COLLECTION) {
                 mTvRefreshFailed.setText(R.string.no_collection_call_flash_list_tip);
-                ToastUtils.showToast(getActivity(), getActivity().getString(R.string.no_collection_call_flash_list_tip));
+//                ToastUtils.showToast(getActivity(), getActivity().getString(R.string.no_collection_call_flash_list_tip));
             } else {
                 mTvRefreshFailed.setText(R.string.no_online_call_flash_list_tip);
                 ToastUtils.showToast(getActivity(), getActivity().getString(R.string.no_online_call_flash_list_tip));
@@ -229,37 +236,53 @@ public class CallFlashListFragment extends Fragment {
         }
     }
 
-    private void initHomeData() {
+    private void initHomeData(boolean isGetCacheData) {
 //        if (mOnlineFlashType == -1) {
 //            topic = CallFlashManager.ONLINE_THEME_TOPIC_NAME_NON_FEATURED;
 //        } else {
         topic = CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED;
 //        }
-        ThemeSyncManager.getInstance().syncTopicData(new String[]{topic}, PAGE_NUMBER_MAX_COUNT, new TopicThemeCallback() {
-            @Override
-            public void onSuccess(int code, Map<String, List<Theme>> data) {
-                updateUI(CallFlashManager.getInstance().themeToCallFlashInfo(data.get(topic)), true);
-            }
+        List<Theme> cacheTopicDataList = ThemeSyncManager.getInstance().getCacheTopicDataList(topic);
+        if (isGetCacheData && cacheTopicDataList != null && cacheTopicDataList.size() > 0) {
+            //缓存数据存在的时候相当于每次进来优先显示缓存然后再下拉刷新
+            updateUI(CallFlashManager.getInstance().themeToCallFlashInfo(cacheTopicDataList), true);
+            mSwipeRefreshLayout.setRefreshing(true);
+            initData(false);
+        } else {
+            ThemeSyncManager.getInstance().syncTopicData(new String[]{topic}, PAGE_NUMBER_MAX_COUNT, new TopicThemeCallback() {
+                @Override
+                public void onSuccess(int code, Map<String, List<Theme>> data) {
+                    updateUI(CallFlashManager.getInstance().themeToCallFlashInfo(data.get(topic)), true);
+                }
 
-            @Override
-            public void onFailure(int code, String msg) {
-                updateUI(null, false);
-            }
-        });
+                @Override
+                public void onFailure(int code, String msg) {
+                    updateUI(null, false);
+                }
+            });
+        }
     }
 
-    private void initCategoryData() {
-        ThemeSyncManager.getInstance().syncPageData(mCategoryId, new ThemeSyncCallback() {
-            @Override
-            public void onSuccess(List<Theme> data) {
-                updateUI(CallFlashManager.getInstance().themeToCallFlashInfo(data), true);
-            }
+    private void initCategoryData(boolean isGetCacheData) {
+        List<Theme> cacheCategoryDataList = ThemeSyncManager.getInstance().getCacheCategoryDataList(mCategoryId);
+        if (isGetCacheData && cacheCategoryDataList != null && cacheCategoryDataList.size() > 0) {
+            //缓存数据存在的时候相当于每次进来优先显示缓存然后再下拉刷新
+            updateUI(CallFlashManager.getInstance().themeToCallFlashInfo(cacheCategoryDataList), true);
+            mSwipeRefreshLayout.setRefreshing(true);
+            initData(false);
+        } else {
+            ThemeSyncManager.getInstance().syncPageData(mCategoryId, new ThemeSyncCallback() {
+                @Override
+                public void onSuccess(List<Theme> data) {
+                    updateUI(CallFlashManager.getInstance().themeToCallFlashInfo(data), true);
+                }
 
-            @Override
-            public void onFailure(int code, String msg) {
-                updateUI(null, false);
-            }
-        });
+                @Override
+                public void onFailure(int code, String msg) {
+                    updateUI(null, false);
+                }
+            });
+        }
     }
 
     private void initCollectionData() {
@@ -282,12 +305,12 @@ public class CallFlashListFragment extends Fragment {
                     @Override
                     public void run() {
                         if (getActivity() != null && !getActivity().isFinishing() && isRefreshData.get()) {
-                            loadFailed(false);
+                            updateUIForNoData(false);
                             stopRefresh();
                         }
                     }
                 });
-                initData();
+                initData(false);
             }
         });
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

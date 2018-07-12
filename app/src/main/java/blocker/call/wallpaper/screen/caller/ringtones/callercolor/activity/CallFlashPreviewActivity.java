@@ -38,6 +38,8 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdMan
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdContainer;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCollection;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
@@ -424,6 +426,8 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
                     CallFlashManager.saveFlashJustLike(mInfo);
                     startLikeAnim(mInfo.isLike);
                     uploadLike(mInfo.isLike);
+                    //刷新收藏界面
+                    EventBus.getDefault().post(new EventRefreshCollection());
                 }
                 break;
 

@@ -46,7 +46,7 @@ public class CallFlashLocalListFragment extends Fragment {
     }
 
     private void initFlashData() {
-        List<CallFlashInfo> flashList = CallFlashManager.getInstance().getLocalClassMoreThemeList();
+        List<CallFlashInfo> flashList = CallFlashManager.getInstance().getAllLocalFlashList();
         if (flashList != null) {
             mFlashInfoList.addAll(flashList);
         }
