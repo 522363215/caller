@@ -399,10 +399,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void initSaveFlash() {
-        isFlashSwitchOn = CallFlashPreferenceHelper.getBoolean(ConstantUtils.CALL_FLASH_ON, false);
-        mSaveFlashType = CallFlashPreferenceHelper.getInt(ConstantUtils.CALL_FLASH_TYPE, -1);
+        isFlashSwitchOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
+        mSaveFlashType = CallFlashPreferenceHelper.getInt(CallFlashPreferenceHelper.CALL_FLASH_TYPE, -1);
         mDynamicFlashPath = CallFlashPreferenceHelper.getString(mSaveFlashType == FlashLed.FLASH_TYPE_DYNAMIC ?
-                ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH : ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, "");
+                CallFlashPreferenceHelper.CALL_FLASH_TYPE_DYNAMIC_PATH : CallFlashPreferenceHelper.CALL_FLASH_CUSTOM_BG_PATH, "");
         if (isFlashSwitchOn && mInfo != null) {
             if (mInfo.flashType == FlashLed.FLASH_TYPE_CUSTOM || mInfo.flashType == FlashLed.FLASH_TYPE_DYNAMIC) {
                 isCurrentFlashUsing = mSaveFlashType == mInfo.flashType && mInfo.path != null
@@ -947,17 +947,17 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 requestSpecialPermission(REQUEST_CODE_OVERLAY_PERMISSION, false);
             } else {
                 toResult(getString(R.string.call_flash_gif_show_setting_suc_reset));
-                CallFlashPreferenceHelper.putBoolean(ConstantUtils.CALL_FLASH_ON, false);
-                CallFlashPreferenceHelper.putInt(ConstantUtils.CALL_FLASH_TYPE, FlashLed.FLASH_TYPE_DEFAULT);
-                CallFlashPreferenceHelper.putString(ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
-                CallFlashPreferenceHelper.putString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, "");
+                CallFlashPreferenceHelper.putBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
+                CallFlashPreferenceHelper.putInt(CallFlashPreferenceHelper.CALL_FLASH_TYPE, FlashLed.FLASH_TYPE_DEFAULT);
+                CallFlashPreferenceHelper.putString(CallFlashPreferenceHelper.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
+                CallFlashPreferenceHelper.putString(CallFlashPreferenceHelper.CALL_FLASH_CUSTOM_BG_PATH, "");
 
                 ArrayList<CallFlashInfo> list = CallFlashManager.getInstance().getLocalClassicFlashList();
 
                 if (list != null && !list.isEmpty()) {
                     for (CallFlashInfo info : list) {
                         if (info.flashType == FlashLed.FLASH_TYPE_DEFAULT) {
-                            CallFlashPreferenceHelper.setObject(ConstantUtils.CALL_FLASH_SHOW_TYPE_INSTANCE, info);
+                            CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, info);
                             break;
                         }
                     }
@@ -1070,20 +1070,20 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 //        RingManager.reductionRing(this);
         int resultDesId = -1;
         if (!isCurrentFlashUsing) {
-            CallFlashPreferenceHelper.putBoolean(ConstantUtils.CALL_FLASH_ON, true);
-            CallFlashPreferenceHelper.putInt(ConstantUtils.CALL_FLASH_TYPE, mInfo.flashType);
+            CallFlashPreferenceHelper.putBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, true);
+            CallFlashPreferenceHelper.putInt(CallFlashPreferenceHelper.CALL_FLASH_TYPE, mInfo.flashType);
 
             if (!TextUtils.isEmpty(mInfo.path)) {
                 if (mInfo.flashType == FlashLed.FLASH_TYPE_CUSTOM) {
-                    CallFlashPreferenceHelper.putString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, mInfo.path);
-                    CallFlashPreferenceHelper.putString(ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
+                    CallFlashPreferenceHelper.putString(CallFlashPreferenceHelper.CALL_FLASH_CUSTOM_BG_PATH, mInfo.path);
+                    CallFlashPreferenceHelper.putString(CallFlashPreferenceHelper.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
                 } else {
-                    CallFlashPreferenceHelper.putString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, "");
-                    CallFlashPreferenceHelper.putString(ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH, mInfo.path);
+                    CallFlashPreferenceHelper.putString(CallFlashPreferenceHelper.CALL_FLASH_CUSTOM_BG_PATH, "");
+                    CallFlashPreferenceHelper.putString(CallFlashPreferenceHelper.CALL_FLASH_TYPE_DYNAMIC_PATH, mInfo.path);
                 }
             }
 
-            CallFlashPreferenceHelper.setObject(ConstantUtils.CALL_FLASH_SHOW_TYPE_INSTANCE, mInfo);
+            CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, mInfo);
             resultDesId = R.string.call_flash_gif_show_setting_suc;
         } else {
             resultDesId = R.string.call_flash_gif_show_setting_suc_reset;

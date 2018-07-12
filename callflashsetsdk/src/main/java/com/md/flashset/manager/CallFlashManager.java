@@ -649,4 +649,16 @@ public class CallFlashManager {
         CallFlashPreferenceHelper.setDataList(CallFlashPreferenceHelper.PREF_JUST_LIKE_FLASH_LIST, list);
     }
 
+    public List<CallFlashInfo> getCollectionCallFlash() {
+        List<CallFlashInfo> collectionList = new ArrayList<>();
+        List<CallFlashInfo> list = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_JUST_LIKE_FLASH_LIST, CallFlashInfo[].class);
+        if (list == null) return collectionList;
+        for (CallFlashInfo info : list) {
+            if (info.isLike) {
+                collectionList.add(info);
+            }
+        }
+        return collectionList;
+    }
+
 }

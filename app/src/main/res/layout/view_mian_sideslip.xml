@@ -6,133 +6,236 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp184"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/dp56"
+            android:layout_height="@dimen/dp56"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp16"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp4"
+            android:alpha="0.3"
+            android:text="@string/side_slip_title_des"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_FF2E2F41" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="16dp"
                 tools:visibility="visible">
 
                 <LinearLayout
-                    android:id="@+id/menu_block"
+                    android:id="@+id/menu_close"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/selector_click"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp16">
 
                     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/icon_block_tab"
-                        android:textColor="@color/setting_option_text_des_color"
+                        android:gravity="center"
+                        android:text="@string/icon_close"
+                        android:textColor="@color/white"
                         android:textSize="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp16"
+                        android:layout_marginStart="@dimen/dp16"
                         android:gravity="center_vertical"
-                        android:paddingEnd="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingStart="16dp"
+                        android:text="@string/side_slip_close_call_flash"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
+                        android:id="@+id/sb_enable"
+                        android:layout_width="@dimen/dp48"
+                        android:layout_height="@dimen/dp26"
+                        app:sb_button_color="@color/color_FFBABECB"
+                        app:sb_checked="false"
+                        app:sb_checked_color="@color/color_FF27BB56"
+                        app:sb_shadow_effect="true"
+                        app:sb_show_indicator="false"
+                        app:sb_uncheck_color="@color/color_FF22222D" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/menu_block"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_click"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp16">
+
+                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/icon_block_tab"
+                        android:textColor="@color/white"
+                        android:textSize="24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp16"
+                        android:layout_marginStart="@dimen/dp16"
+                        android:gravity="center_vertical"
                         android:text="@string/main_menu_block"
-                        android:textColor="@color/setting_title_text_color"
-                        android:textSize="14sp" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/menu_collection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_click"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp16">
+
+                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/icon_is_like"
+                        android:textColor="@color/white"
+                        android:textSize="24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp16"
+                        android:layout_marginStart="@dimen/dp16"
+                        android:gravity="center_vertical"
+                        android:text="@string/side_slip_collection"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/menu_settings"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/selector_click"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp16">
 
                     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/icon_setting"
-                        android:textColor="@color/setting_option_text_des_color"
+                        android:textColor="@color/white"
                         android:textSize="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:gravity="center_vertical"
-                        android:paddingEnd="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingStart="16dp"
                         android:text="@string/main_menu_settings"
-                        android:textColor="@color/setting_title_text_color"
-                        android:textSize="14sp" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/menu_rate"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/selector_click"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp16">
 
                     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/icon_like"
-                        android:textColor="@color/setting_option_text_des_color"
+                        android:textColor="@color/white"
                         android:textSize="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:gravity="center_vertical"
-                        android:paddingEnd="8dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="8dp"
-                        android:paddingStart="16dp"
                         android:text="@string/about_rote_gp"
-                        android:textColor="@color/setting_title_text_color"
-                        android:textSize="14sp" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/menu_feedback"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/selector_click"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp16"
+                    tools:visibility="gone">
 
                     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/icon_email"
-                        android:textColor="@color/setting_option_text_des_color"
+                        android:textColor="@color/white"
                         android:textSize="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:gravity="center_vertical"
-                        android:paddingEnd="8dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="8dp"
-                        android:paddingStart="16dp"
                         android:text="@string/rate_dialog_negative_title"
-                        android:textColor="@color/setting_title_text_color"
+                        android:textColor="@color/white"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -140,56 +243,55 @@
                 <LinearLayout
                     android:id="@+id/menu_about"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/selector_click"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp16"
+                    tools:visibility="gone">
 
                     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/icon_attention"
-                        android:textColor="@color/setting_option_text_des_color"
+                        android:textColor="@color/white"
                         android:textSize="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:gravity="center_vertical"
-                        android:paddingEnd="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingStart="16dp"
                         android:text="@string/about_title"
-                        android:textColor="@color/setting_title_text_color"
-                        android:textSize="14sp" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/menu_test"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/selector_click"
                     android:gravity="center_vertical"
+                    android:padding="@dimen/dp16"
                     android:visibility="gone">
 
                     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/icon_attention"
-                        android:textColor="@color/setting_option_text_des_color"
+                        android:textColor="@color/white"
                         android:textSize="24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:gravity="center_vertical"
-                        android:paddingEnd="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingStart="16dp"
                         android:text="TEST"
-                        android:textColor="@color/setting_title_text_color"
+                        android:textColor="@color/white"
                         android:textSize="14sp" />
 
                 </LinearLayout>
