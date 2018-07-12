@@ -65,7 +65,7 @@
             <!-- Blue button pressed -->
             <item>
                 <shape android:shape="oval">
-                    <solid android:color="#90CAF9" />
+                    <solid android:color="@color/color_FF009E54" />
                 </shape>
             </item>
         </layer-list>
@@ -134,7 +134,7 @@
             <!-- Blue button -->
             <item>
                 <shape android:shape="oval">
-                    <solid android:color="@color/background" />
+                    <solid android:color="@color/fb_ad_green_button" />
                 </shape>
             </item>
         </layer-list>

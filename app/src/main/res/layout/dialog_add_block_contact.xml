@@ -12,9 +12,9 @@
         android:layout_marginLeft="@dimen/dp8"
         android:layout_marginStart="@dimen/dp8"
         android:layout_marginTop="@dimen/dp8"
+        android:text="@string/add_block_contact_title"
         android:textColor="@color/color_FF00284D"
-        android:textSize="16sp"
-        android:text="@string/add_block_contact_title" />
+        android:textSize="16sp" />
 
     <View
         android:layout_width="match_parent"
@@ -26,6 +26,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp8"
         android:minHeight="@dimen/dp160">
 
         <ListView
@@ -43,7 +44,7 @@
             android:layout_width="@dimen/dp136"
             android:layout_height="@dimen/dp36"
             android:layout_gravity="center"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
     </FrameLayout>
 

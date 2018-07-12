@@ -13,8 +13,8 @@
         android:padding="@dimen/dp8">
 
         <FrameLayout
-            android:layout_width="@dimen/dp48"
-            android:layout_height="@dimen/dp48">
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40">
 
             <ImageView
                 android:id="@+id/iv_photo"
@@ -31,15 +31,31 @@
 
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/tv_name"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp16"
             android:layout_marginStart="@dimen/dp16"
-            android:textColor="@color/color_FF00284D"
-            android:textSize="18sp"
-            tools:text="this is block contact" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:alpha="0.7"
+                android:textSize="18sp"
+                tools:text="this is block contact" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:alpha="0.3"/>
+
+        </LinearLayout>
 
         <View
             android:layout_width="0dp"
@@ -56,8 +72,8 @@
             android:padding="@dimen/dp6"
             android:gravity="center"
             android:text="@string/icon_remove"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="@dimen/dp22" />
+            android:textColor="@color/color_FF464654"
+            android:textSize="@dimen/dp20" />
 
     </LinearLayout>
 

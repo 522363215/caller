@@ -8,7 +8,7 @@ import com.md.block.BuildConfig;
 public class LogUtil {
 
     public static void d(String TAG, String msg) {
-        if (BuildConfig.DEBUG)
+//        if (BuildConfig.DEBUG)
             Log.d(TAG, msg);
     }
 

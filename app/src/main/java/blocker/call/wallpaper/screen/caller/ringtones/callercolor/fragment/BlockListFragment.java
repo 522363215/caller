@@ -83,6 +83,7 @@ public class BlockListFragment extends Fragment {
             lvBlockContact = view.findViewById(R.id.lv_block_contact);
 
             mAdapter = new BlockAdapter(getActivity(), model);
+            mAdapter.setShowType(mCurrentShowType);
             lvBlockContact.setAdapter(mAdapter);
 
             lvBlockContact.setVisibility(model.isEmpty() ? View.GONE : View.VISIBLE);

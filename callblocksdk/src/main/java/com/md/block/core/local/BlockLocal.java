@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.md.block.beans.BlockInfo;
 import com.md.block.core.BlockManager;
+import com.md.block.util.LogUtil;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -170,7 +171,6 @@ public class BlockLocal {
         if (history == null) {
             return;
         }
-
         List<BlockInfo> blockInfo = getBlockHistory();
         if (blockInfo == null) {
             blockInfo = new ArrayList<>();
@@ -178,14 +178,11 @@ public class BlockLocal {
         blockInfo.add(0, history);
 
         SharedPreferences pref = getSharedPreferences();
-        if (pref != null) {
+        if (pref == null) {
             return;
         }
         String historyJson = new Gson().toJson(blockInfo);
-        SharedPreferences.Editor edit = pref.edit();
-        if (edit != null) {
-            edit.putString(PREF_KEY_BLOCK_HISTORY_LIST, historyJson).apply();
-        }
+        pref.edit().putString(PREF_KEY_BLOCK_HISTORY_LIST, historyJson).commit();
     }
 
     public static boolean removeBlockHistory (BlockInfo history) {

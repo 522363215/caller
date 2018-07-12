@@ -16,6 +16,7 @@ import com.md.block.beans.BlockInfo;
 import com.md.block.callback.PhoneStateChangeCallback;
 import com.md.block.core.BlockManager;
 import com.md.block.core.local.BlockLocal;
+import com.md.block.util.LogUtil;
 import com.md.block.util.NumberUtil;
 
 import java.util.List;
@@ -148,6 +149,8 @@ public class PhoneStateReceiver extends BroadcastReceiver {
     private void executeBlock(String number) {
         if (BlockLocal.getBlockSwitchState() && BlockManager.getInstance().blockCall(number)) {
             BlockLocal.setPreferencesData("number_is_block_status", true);
+
+            LogUtil.d("chenr", "block success.");
 
             BlockInfo history = new BlockInfo();
             history.setNumber(number);
