@@ -10,7 +10,23 @@
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp56"
-        app:title="@string/phone_detail_block" />
+        app:title="@string/phone_detail_block" >
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+            android:id="@+id/fiv_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp4"
+            android:textSize="@dimen/dp16"
+            android:textColor="@color/white"
+            android:text="@string/icon_option"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"/>
+
+    </blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar>
 
     <RelativeLayout
         android:layout_width="match_parent"
