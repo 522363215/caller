@@ -30,7 +30,8 @@
     <string name="block_list_title">Ver lista de Spam &amp; bloqueio</string>
     <string name="block_list_mine">Lista de bloqueio de chamadas</string>
     <string name="block_list_common">Spammers comuns</string>
-    <string name="block_list_empty">Você não criou uma lista negra</string>
+    <!--<string name="block_list_empty">Você não criou uma lista negra</string>-->
+    <string name="block_list_empty">Nenhum registro ainda</string>
     <string name="block_setting_title">Definições de bloqueio</string>
     <string name="block_setting_name">Configurações de bloqueio</string>
     <string name="block_setting_common_block_desc">Chamadas de operador de telemarketing e incômodos reportados como spam pelos usuários</string>

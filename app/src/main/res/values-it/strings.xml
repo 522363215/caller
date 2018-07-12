@@ -30,7 +30,8 @@
     <string name="block_list_title">Visualizza lista spam e blocco</string>
     <string name="block_list_mine">Elenco chiamate bloccate</string>
     <string name="block_list_common">Spammer comuni</string>
-    <string name="block_list_empty">Non hai aggiunto una lista nera</string>
+    <!--<string name="block_list_empty">Non hai aggiunto una lista nera</string>-->
+    <string name="block_list_empty">Nessun record ancora</string>
     <string name="block_setting_title">Impostazioni blocchi</string>
     <string name="block_setting_name">Blocco</string>
     <string name="block_setting_common_block_desc">Operatori e chiamanti indesiderati segnalati dagli utenti</string>

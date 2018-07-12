@@ -30,7 +30,8 @@
     <string name="block_list_title">ดูสแปมและรายการบล็อก</string>
     <string name="block_list_mine">รายการบล็อกการโทร</string>
     <string name="block_list_common">ผู้ส่งอีเมลขยะทั่วไป</string>
-    <string name="block_list_empty">คุณไม่ได้เพิ่มบัญชีดำ</string>
+    <!--<string name="block_list_empty">คุณไม่ได้เพิ่มบัญชีดำ</string>-->
+    <string name="block_list_empty">ยังไม่มีการบันทึก</string>
     <string name="block_setting_title">การตั้งค่าบล็อก</string>
     <string name="block_setting_name">บล็อก</string>
     <string name="block_setting_common_block_desc">รายงานการตลาดทางโทรศัพท์และสายรบกวนจากผู้ใช้ว่าเป็นสแปม</string>

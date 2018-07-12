@@ -32,7 +32,8 @@
     <string name="block_list_title">Xem Rác &amp; Danh sách chặn</string>
     <string name="block_list_mine">Danh sách chặn cuộc gọi</string>
     <string name="block_list_common">Đối tượng gửi rác phổ biến</string>
-    <string name="block_list_empty">Bạn không thêm một danh sách đen</string>
+    <!--<string name="block_list_empty">Bạn không thêm một danh sách đen</string>-->
+    <string name="block_list_empty">Chưa có bản ghi nào</string>
     <string name="block_setting_title">Cài đặt chặn</string>
     <string name="block_setting_name">Chặn</string>
     <string name="block_setting_common_block_desc">Người gọi tiếp thị qua điện thoại và làm phiền bị người dùng báo cáo</string>

@@ -59,17 +59,6 @@
     <string name="setting_lauage_dialog_title">"Choose Language"</string>
     <!-- 设置页面 结束-->
 
-    <!--拦截记录页面 开始-->
-    <string name="block_log_query_log_failed">"Query Failed"</string>
-    <!--拦截记录页面 结束-->
-
-    <!--黑名单管理页面 开始-->
-    <string name="block_list_title">"View Spam&#160;&#038;&#160;Block list"</string>
-    <string name="block_list_mine">"Call Block list"</string>
-    <string name="block_list_common">"Common Spammers"</string>
-    <string name="block_list_empty">"Nothing in the Blocklist"</string>
-    <!--黑名单管理页面 结束-->
-
     <!--拦截设置页面 开始-->
     <string name="block_setting_title">"Block Settings"</string>
     <string name="block_setting_name">"Block"</string>
@@ -1083,6 +1072,8 @@
     <string name="block_option_toast_clear_all_contacts_success">"Clear all contacts success!"</string>
     <string name="block_option_clear_all_history">"Clear All Block Logs"</string>
     <string name="block_option_toast_clear_all_history_success">"Clear all history success!"</string>
+
+    <string name="block_list_empty">No records</string>
 
     <!--side slip-->
     <string name="side_slip_title_des">"别出心裁，秀随我变"</string>

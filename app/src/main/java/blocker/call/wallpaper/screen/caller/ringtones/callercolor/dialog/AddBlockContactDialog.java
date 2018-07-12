@@ -156,7 +156,6 @@ public class AddBlockContactDialog extends Dialog {
             if (blockContacts != null && blockContacts.size() > 0) {
                 blockedNumber = new ArrayList<>();
                 for (BlockInfo info : blockContacts) {
-                    LogUtil.d("chenr", "黑名单: " + info.getNumber() + ",  name: " + info.getName());
                     blockedNumber.add(info.getNumber());
                 }
             }

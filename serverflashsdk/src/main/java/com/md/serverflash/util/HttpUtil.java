@@ -1,8 +1,11 @@
 package com.md.serverflash.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -313,7 +316,7 @@ public class HttpUtil {
         });
     }
 
-    public static void requestTopicData (final String topic, int pageNumber, int pageLength, final SingleTopicThemeCallback callback) {
+    public static void requestTopicData(final String topic, int pageNumber, int pageLength, final SingleTopicThemeCallback callback) {
         if (TextUtils.isEmpty(topic)) {
             return;
         }
@@ -358,7 +361,8 @@ public class HttpUtil {
                             JSONObject data = responseObj.optJSONObject("data");
                             Gson gson = new Gson();
                             String dataJson = data.getString(topic);
-                            final List<Theme> topicList = gson.fromJson(dataJson, new TypeToken<List<Theme>>(){}.getType());
+                            final List<Theme> topicList = gson.fromJson(dataJson, new TypeToken<List<Theme>>() {
+                            }.getType());
                             if (topicList != null) {
                                 // save data for current topic;
                                 ThemeSyncLocal.getInstance().markTopicData(topic, gson.toJson(topicList));
@@ -402,7 +406,7 @@ public class HttpUtil {
         for (int i = 0; i < length; i++) {
             sb.append(topicName[i]).append(",").append(topicWhichNum[i]).append(",").append(pageNumber[i]).append(";");
         }
-        LogUtil.d(LogUtil.TAG, "requestTopicData topicName: "+sb.toString());
+        LogUtil.d(LogUtil.TAG, "requestTopicData topicName: " + sb.toString());
         String topicList = sb.substring(0, sb.lastIndexOf(";"));
         JSONObject jsonObject = getCommonJsonObject();
         try {
@@ -442,7 +446,8 @@ public class HttpUtil {
 
                                 final Map<String, List<Theme>> topicMap = new HashMap<String, List<Theme>>();
                                 Gson gson = new Gson();
-                                Type type = new TypeToken<List<Theme>>() {}.getType();
+                                Type type = new TypeToken<List<Theme>>() {
+                                }.getType();
                                 Iterator<String> keys = dataObject.keys();
 
                                 while (keys.hasNext()) {
@@ -884,7 +889,7 @@ public class HttpUtil {
                 }
             }
 
-            private void onFailed (final int code, final String msg) {
+            private void onFailed(final int code, final String msg) {
                 if (callback == null) {
                     return;
                 }
@@ -960,7 +965,7 @@ public class HttpUtil {
                 }
             }
 
-            private void onFailed (final int code, final String msg) {
+            private void onFailed(final int code, final String msg) {
                 if (callback == null) return;
 
                 Async.runOnUiThread(new Runnable() {
@@ -1054,7 +1059,7 @@ public class HttpUtil {
                 }
             }
 
-            private void onFailed (final int code, final String msg) {
+            private void onFailed(final int code, final String msg) {
                 if (callback == null) return;
 
                 Async.runOnUiThread(new Runnable() {
@@ -1139,7 +1144,7 @@ public class HttpUtil {
         });
     }
 
-    public static void requestEventStatistics (final String eventName, final long objId) {
+    public static void requestEventStatistics(final String eventName, final long objId) {
         JSONObject object = getCommonJsonObject();
 
         try {
@@ -1164,7 +1169,35 @@ public class HttpUtil {
 
     }
 
+    /**
+     * 检查网络是否可用
+     *
+     * @param context
+     * @return
+     */
+    private static boolean isNetworkAvailable(Context context) {
+        if (context == null) {
+            return false;
+        }
+        ConnectivityManager manager = (ConnectivityManager) context
+                .getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (manager == null) {
+            return false;
+        }
+
+        @SuppressLint("MissingPermission")
+        NetworkInfo networkinfo = manager.getActiveNetworkInfo();
+        return networkinfo != null && networkinfo.isAvailable();
+    }
+
+
     private static void makeRequest(JSONObject jsonObject, Callback callback) {
+        if (!isNetworkAvailable(ThemeSyncManager.getInstance().getContext())) {
+            callback.onFailure(null, new IOException("Network not connected!"));
+            return;
+        }
+
         OkHttpClient mClient = new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)

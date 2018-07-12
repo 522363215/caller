@@ -30,7 +30,8 @@
     <string name="block_list_title">عرض البريد العشوائي قائمة الحظر</string>
     <string name="block_list_mine">اشر عليها بانها قرات</string>
     <string name="block_list_common">مرسلي البريد العشوائي الشائعين</string>
-    <string name="block_list_empty">لم تضف قائمة سوداء</string>
+    <!--<string name="block_list_empty">لم تضف قائمة سوداء</string>-->
+    <string name="block_list_empty">لا يوجد سجل حتى الآن</string>
     <string name="block_setting_title">إعدادات الحظر</string>
     <string name="block_setting_name">حظر</string>
     <string name="block_setting_common_block_desc">تقارير المسوّق عبر الهاتف والمتصلين المزعجين في صورة بريد عشوائي وبواسطة</string>

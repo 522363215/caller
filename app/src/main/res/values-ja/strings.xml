@@ -30,7 +30,8 @@
     <string name="block_list_title">スパム＆ブロックリストの表示</string>
     <string name="block_list_mine">コールブロックリスト</string>
     <string name="block_list_common">スパマー</string>
-    <string name="block_list_empty">ブラックリストを追加しませんでした</string>
+    <!--<string name="block_list_empty">ブラックリストを追加しませんでした</string>-->
+    <string name="block_list_empty">まだレコードがありません</string>
     <string name="block_setting_title">ブロック設定</string>
     <string name="block_setting_name">ブロック</string>
     <string name="block_setting_common_block_desc">テレマーケターや迷惑な人の着信スパムとして報告します。</string>

@@ -22,7 +22,7 @@ public class BlockListFragment extends Fragment {
     public static final int BLOCK_LIST_SHOW_CONTACT = 0;
     public static final int BLOCK_LIST_SHOW_HISTORY = 1;
 
-    private TextView tvEmpty;
+    private View layoutEmpty;
 
     private ListView lvBlockContact;
     private BlockAdapter mAdapter;
@@ -79,7 +79,7 @@ public class BlockListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if (view != null) {
-            tvEmpty = view.findViewById(R.id.tv_empty);
+            layoutEmpty = view.findViewById(R.id.layout_empty);
             lvBlockContact = view.findViewById(R.id.lv_block_contact);
 
             mAdapter = new BlockAdapter(getActivity(), model);
@@ -87,7 +87,7 @@ public class BlockListFragment extends Fragment {
             lvBlockContact.setAdapter(mAdapter);
 
             lvBlockContact.setVisibility(model.isEmpty() ? View.GONE : View.VISIBLE);
-            tvEmpty.setVisibility(model.isEmpty() ? View.VISIBLE : View.GONE);
+            layoutEmpty.setVisibility(model.isEmpty() ? View.VISIBLE : View.GONE);
         }
 
     }

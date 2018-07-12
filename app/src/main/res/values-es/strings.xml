@@ -29,7 +29,8 @@
     <string name="block_list_title">Ver lista de Bloqueo &amp; Spam</string>
     <string name="block_list_mine">Lista de bloqueo de llamadas</string>
     <string name="block_list_common">Spammer Comunes</string>
-    <string name="block_list_empty">No has agregado una lista negra</string>
+    <!--<string name="block_list_empty">No has agregado una lista negra</string>-->
+    <string name="block_list_empty">Sin registro aún</string>
     <string name="block_setting_title">Bloquear Configuración</string>
     <string name="block_setting_name">Bloquear </string>
     <string name="block_setting_common_block_desc">Tele-vendedores y reporte de llamadas maliciosas como spam de usuarios</string>
