@@ -144,9 +144,21 @@
             android:name=".activity.PermissionTipActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" />
-        <activity android:name=".activity.BlockActivity"
+        <activity
+            android:name=".activity.BlockActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/CallFlashAppCompatTheme"/>
+            android:theme="@style/CallFlashAppCompatTheme" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.BrowserActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.CollectionActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".service.LocalService"

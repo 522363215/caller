@@ -114,13 +114,15 @@ public class CallFlashPreferenceHelper {
 
     public static final String NOT_SHOW_TIP_CALLFLASH_EXIT_LIST = "not_show_tip_callflash_exit_list";//不显示弹窗提示的国家, 默认没有
 
-    public static final String CALL_FLASH_ON = "call_flash_on";
+    public static final String CALL_FLASH_ON = "call_flash_on";//call flash 是否开启
 
-    public static final String CALL_FLASH_TYPE = "call_flash_type";
+    public static final String CALL_FLASH_TYPE = "call_flash_type";//当前设置的 call falsh type
 
     public static final String CALL_FLASH_TYPE_DYNAMIC_PATH = "call_flash_type_dynamic_path";
 
     public static final String CALL_FLASH_SHOW_TYPE_INSTANCE = "call_flash_show_type_instance"; // 当前使用的flash的实例(string形式)
+
+    public static final String CALL_FLASH_CUSTOM_BG_PATH = "call_flash_custom_bg_path";
 
     public static final String CALL_FLASH_LAST_ENTER_TIME = "call_flash_last_enter_time";
 

@@ -839,19 +839,14 @@ public class ConstantUtils {
 
     // call flash;
     public static final String WEEKEND_CALL_FLASH_TYPE = "weekend_call_flash_type";
-    public static final String CALL_FLASH_TYPE = "call_flash_type";
-    public static final String CALL_FLASH_TYPE_DYNAMIC_PATH = "call_flash_type_dynamic_path";
-    public static final String CALL_FLASH_ON = "call_flash_on";
     public static final String CALL_FLASH_SHOW_EXIT_INTRO = "call_flash_intro_dialog_is_show"; // 第一次进入应用引导弹窗弹出标志,
     public static final String CALL_FLASH_SHOW_DIALOG_TIME = "call_flash_show_dialog_time"; // call flash dialog 引导弹出时间,
-    public static final String CALL_FLASH_SHOW_TYPE_INSTANCE = "call_flash_show_type_instance"; // 当前使用的flash的实例(string形式)
     //    public static final String CALL_FLASH_JUST_SHOW_EXIT_INTRO = "call_flash_just_show_exit_intro";
 //    public static final String CALL_FLASH_FESTIVAL_EVER_SELECT = "call_flash_festival_ever_select";
 //    public static final String CALL_FLASH_LOVE_EVER_SELECT = "call_flash_love_ever_select";
     public static final String CALL_FLASH_PUSH_TOOLS_SHOW = "call_flash_push_tools_show";
     public static final String CALL_FLASH_LAST_ENTER_TIME = "call_flash_last_enter_time";
     public static final String CALL_FLASH_NOTIFY_TIME_OLD_USER = "call_flash_notify_time_old_user";
-    public static final String CALL_FLASH_CUSTOM_BG_PATH = "call_flash_custom_bg_path";
     public static final String CALL_FLASH_CUSTOM_BG_PATH_OLD = "call_flash_custom_bg_path_old";
 
     public static Context mContext = ApplicationEx.getInstance().getBaseContext();
@@ -976,8 +971,6 @@ public class ConstantUtils {
     public final static String SMS_DELIVERED = "blocker.call.wallpaper.screen.caller.ringtones.callercolor.sms.SMS_DELIVERED";
     public final static String SMS_SENT_FAIL = "blocker.call.wallpaper.screen.caller.ringtones.callercolor.sms.SMS_SENT_FAIL";
 
-
-    public final static String PREF_KEY_LAST_FEEDBACK_TIME = "pref_key_last_feedback_time";
 
     public final static String ACTION_FINISH_ACTIVITY = "action_finish_actiivty";
 

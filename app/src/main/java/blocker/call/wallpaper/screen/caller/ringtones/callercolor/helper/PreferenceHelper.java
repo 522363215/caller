@@ -54,6 +54,10 @@ final public class PreferenceHelper {
      */
     public static final String PREF_CONTACT_VERSION_FOR_ID_MAP = "android_contact_version_for_id_map";
 
+    public final static String PREF_KEY_LAST_FEEDBACK_TIME = "pref_key_last_feedback_time";
+
+    public static final String PREF_KEY_IS_AGREE_SHOW_DIALOG = "android_rate_is_agree_show_dialog";
+
 
     private PreferenceHelper() {
     }

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.md.flashset.bean.CallFlashDataType;
 import com.md.flashset.bean.CallFlashInfo;
+import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
@@ -172,17 +173,20 @@ public class CallFlashListFragment extends Fragment {
                 case CallFlashDataType.CALL_FLASH_DATA_CATEGORY:
                     initCategoryData();
                     break;
+                case CallFlashDataType.CALL_FLASH_DATA_COLLECTION:
+                    initCollectionData();
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void updateUI(List<Theme> data, boolean isSuccess) {
+    private void updateUI(List<CallFlashInfo> data, boolean isSuccess) {
         if (isSuccess && data != null && data.size() > 0 && mAdapter != null) {
 //            LogUtil.d(TAG, "initOnlineData data:" + data.size());
             model.clear();
-            model.addAll(CallFlashManager.getInstance().themeToCallFlashInfo(data));
+            model.addAll(data);
             mAdapter.notifyDataSetChanged();
             if (mTvRefreshFailed != null) {
                 mTvRefreshFailed.setVisibility(View.GONE);
@@ -203,8 +207,13 @@ public class CallFlashListFragment extends Fragment {
             return;
         }
         if (isSuccess) {
-            mTvRefreshFailed.setText(R.string.no_online_call_flash_list_tip);
-            ToastUtils.showToast(getActivity(), getActivity().getString(R.string.no_online_call_flash_list_tip));
+            if (mDataType == CallFlashDataType.CALL_FLASH_DATA_COLLECTION) {
+                mTvRefreshFailed.setText(R.string.no_collection_call_flash_list_tip);
+                ToastUtils.showToast(getActivity(), getActivity().getString(R.string.no_collection_call_flash_list_tip));
+            } else {
+                mTvRefreshFailed.setText(R.string.no_online_call_flash_list_tip);
+                ToastUtils.showToast(getActivity(), getActivity().getString(R.string.no_online_call_flash_list_tip));
+            }
         } else {
             mTvRefreshFailed.setText(R.string.call_flash_more_refresh_online_themes_load_failed);
             ToastUtils.showToast(getActivity(), getActivity().getString(R.string.call_flash_more_refresh_online_themes_failed_tip));
@@ -229,7 +238,7 @@ public class CallFlashListFragment extends Fragment {
         ThemeSyncManager.getInstance().syncTopicData(new String[]{topic}, PAGE_NUMBER_MAX_COUNT, new TopicThemeCallback() {
             @Override
             public void onSuccess(int code, Map<String, List<Theme>> data) {
-                updateUI(data.get(topic), true);
+                updateUI(CallFlashManager.getInstance().themeToCallFlashInfo(data.get(topic)), true);
             }
 
             @Override
@@ -243,7 +252,7 @@ public class CallFlashListFragment extends Fragment {
         ThemeSyncManager.getInstance().syncPageData(mCategoryId, new ThemeSyncCallback() {
             @Override
             public void onSuccess(List<Theme> data) {
-                updateUI(data, true);
+                updateUI(CallFlashManager.getInstance().themeToCallFlashInfo(data), true);
             }
 
             @Override
@@ -251,6 +260,10 @@ public class CallFlashListFragment extends Fragment {
                 updateUI(null, false);
             }
         });
+    }
+
+    private void initCollectionData() {
+        updateUI(CallFlashManager.getInstance().getCollectionCallFlash(), true);
     }
 
     private void stopRefresh() {
