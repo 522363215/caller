@@ -122,20 +122,6 @@ public class ApplicationEx extends Application {
                 subChannel,
                 expireTime,
                 testMode);
-        initFlashData();
-    }
-
-    private void initFlashData() {
-        LogUtil.d("initFlashData", "initFlashData start.");
-        String[] topicArr = new String[3];
-        topicArr[0] = CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED;
-        topicArr[1] = CallFlashManager.ONLINE_THEME_TOPIC_NAME_NON_FEATURED;
-        topicArr[2] = CallFlashManager.ONLINE_THEME_TOPIC_NAME_LOCAL_HOME;
-//        topicArr[3] = CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH;
-        for (String topic : topicArr) {
-            final String str = topic;
-            ThemeSyncManager.getInstance().syncTopicData(topic, CallFlashManager.getMaxReqCount(), null);
-        }
     }
 
     private void saveVersioncode() {
