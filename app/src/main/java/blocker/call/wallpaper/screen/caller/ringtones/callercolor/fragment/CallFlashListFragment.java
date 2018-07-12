@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.md.flashset.bean.CallFlashDataType;
 import com.md.flashset.bean.CallFlashInfo;
-import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
@@ -160,7 +159,7 @@ public class CallFlashListFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void initData() {
+    public void initData() {
         try {
             if (getActivity() == null || getActivity().isFinishing()) {
                 return;
@@ -195,21 +194,26 @@ public class CallFlashListFragment extends Fragment {
                 mRecyclerView.setVisibility(View.VISIBLE);
             }
         } else {
-            loadFailed(isSuccess);
+            //当数据为0时只有收藏界面才刷新，其他界面保持不变
+            if (mDataType == CallFlashDataType.CALL_FLASH_DATA_COLLECTION && data != null && data.size() == 0) {
+                model.clear();
+                mAdapter.notifyDataSetChanged();
+            }
+            updateUIForNoData(isSuccess);
         }
         mPbLoading.setVisibility(View.GONE);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
         stopRefresh();
     }
 
-    private void loadFailed(boolean isSuccess) {
+    private void updateUIForNoData(boolean isSuccess) {
         if (getActivity() == null || getActivity().isFinishing() || !isRefreshData.get()) {
             return;
         }
         if (isSuccess) {
             if (mDataType == CallFlashDataType.CALL_FLASH_DATA_COLLECTION) {
                 mTvRefreshFailed.setText(R.string.no_collection_call_flash_list_tip);
-                ToastUtils.showToast(getActivity(), getActivity().getString(R.string.no_collection_call_flash_list_tip));
+//                ToastUtils.showToast(getActivity(), getActivity().getString(R.string.no_collection_call_flash_list_tip));
             } else {
                 mTvRefreshFailed.setText(R.string.no_online_call_flash_list_tip);
                 ToastUtils.showToast(getActivity(), getActivity().getString(R.string.no_online_call_flash_list_tip));
@@ -282,7 +286,7 @@ public class CallFlashListFragment extends Fragment {
                     @Override
                     public void run() {
                         if (getActivity() != null && !getActivity().isFinishing() && isRefreshData.get()) {
-                            loadFailed(false);
+                            updateUIForNoData(false);
                             stopRefresh();
                         }
                     }
