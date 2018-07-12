@@ -138,7 +138,7 @@ public class BlockLocal {
     public static void clearBlockContacts () {
         SharedPreferences pref = getSharedPreferences();
         if (pref != null) {
-            pref.edit().putStringSet(PREF_KEY_BLOCK_CONTACT_LIST, null).commit();
+            pref.edit().putString(PREF_KEY_BLOCK_CONTACT_LIST, "").commit();
         }
     }
 

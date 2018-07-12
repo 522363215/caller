@@ -1069,6 +1069,17 @@
     <string name="time_300">5m</string>
     <string name="time_600">10m</string>
     <string name="time_1800">30m</string>
+
     <string name="no_online_call_flash_list_tip">no call flash</string>
     <string name="add_block_contact_title">"Call Log"</string>
+
+    <string name="block_option_open_switch">"Open Block"</string>
+    <string name="block_option_toast_open_success">"Open block switch success!"</string>
+    <string name="block_option_close_switch">"Close Block"</string>
+    <string name="block_option_toast_close_success">"Close block switch success!"</string>
+
+    <string name="block_option_clear_all_contacts">"Clear All Contacts"</string>
+    <string name="block_option_toast_clear_all_contacts_success">"Clear all contacts success!"</string>
+    <string name="block_option_clear_all_history">"Clear All Block Logs"</string>
+    <string name="block_option_toast_clear_all_history_success">"Clear all history success!"</string>
 </resources>

@@ -1,12 +1,11 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
-import android.animation.FloatEvaluator;
-import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.View;
 
 import com.md.block.core.BlockManager;
@@ -18,6 +17,8 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.BlockPagerAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.AddBlockContactDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.BlockListFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.popup.BlockOptionWindow;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager;
 
@@ -30,6 +31,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
     private NotScrollViewPager viewPager;
     private TabLayout tabBlockCategoryTitle;
     private View fivAddBlockContact;
+    private View fivOption;
 
     private int mCurrentIndex = 0;
 
@@ -50,6 +52,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         viewPager = findViewById(R.id.viewpager);
         tabBlockCategoryTitle = findViewById(R.id.tab_block_category_title);
         fivAddBlockContact = findViewById(R.id.fiv_add);
+        fivOption = findViewById(R.id.fiv_option);
 
         BlockListFragment contactFragment = BlockListFragment.newInstance(BlockListFragment.BLOCK_LIST_SHOW_CONTACT);
         BlockListFragment historyFragment = BlockListFragment.newInstance(BlockListFragment.BLOCK_LIST_SHOW_HISTORY);
@@ -63,10 +66,12 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         setAddBlockContactState(mCurrentIndex);
         tabBlockCategoryTitle.setupWithViewPager(viewPager);
 
-        fivAddBlockContact.setOnClickListener(this);
     }
 
     private void listener() {
+        fivOption.setOnClickListener(this);
+        fivAddBlockContact.setOnClickListener(this);
+
         ((ActionBar) findViewById(R.id.action_bar)).setOnBackClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +139,20 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
                         }
                     }
                 });
+            }
+            break;
+            case R.id.fiv_option: {
+                BlockOptionWindow window = new BlockOptionWindow(BlockActivity.this, mCurrentIndex);
+                window.setWidth(DeviceUtil.dp2Px(140));
+
+                window.setClearCallback(new BlockOptionWindow.OnClearDataCallback() {
+                    @Override
+                    public void onClearData(int clearIndex) {
+                        ((BlockListFragment) fragmentList.get(clearIndex)).updateData();
+                    }
+                });
+
+                window.showAtLocation(fivOption, Gravity.END | Gravity.TOP, 40, 120);
             }
             break;
         }
