@@ -50,7 +50,7 @@ public class CollectionActivity extends BaseActivity {
 
     public void onEventMainThread(EventRefreshCollection event) {
         if (mCallFlashListFragment != null) {
-            mCallFlashListFragment.initData();
+            mCallFlashListFragment.initData(true);
         }
     }
 }

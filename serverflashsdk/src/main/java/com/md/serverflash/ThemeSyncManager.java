@@ -31,11 +31,12 @@ public class ThemeSyncManager {
     public static long EXPIRE_TIME = 2 * DateUtils.HOUR_IN_MILLIS;
     private static final String THEME_RESOURCES_DIR = Environment.DIRECTORY_MOVIES;
 
-    private ThemeSyncManager () {}
+    private ThemeSyncManager() {
+    }
 
     private static ThemeSyncManager instance = null;
 
-    public static ThemeSyncManager getInstance () {
+    public static ThemeSyncManager getInstance() {
         if (instance == null) {
             synchronized (ThemeSyncManager.class) {
                 if (instance == null) {
@@ -53,12 +54,11 @@ public class ThemeSyncManager {
     private int testMode;
 
     /**
-     *
      * @param context
      * @param language
      * @param channel
      * @param subChannel
-     * @param isTest 0 => formal, 1 => test;
+     * @param isTest     0 => formal, 1 => test;
      */
     public void init(Context context, String language, String channel, String subChannel, long minSyncInterval, boolean isTest) {
         this.mContext = new WeakReference<Context>(context);
@@ -71,11 +71,11 @@ public class ThemeSyncManager {
         HttpUtil.initHttpConfig(language, channel, subChannel, testMode);
     }
 
-    public Context getContext () {
+    public Context getContext() {
         return mContext.get();
     }
 
-    public File getFileByUrl (Context appContext, String url) {
+    public File getFileByUrl(Context appContext, String url) {
         String themeDir = getThemeStorageDir(appContext);
         String fileName = getFileNameFromUrl(url);
         File file = null;
@@ -83,7 +83,8 @@ public class ThemeSyncManager {
             if (!TextUtils.isEmpty(themeDir)) {
                 file = new File(themeDir, fileName);
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         return file;
     }
 
@@ -106,12 +107,12 @@ public class ThemeSyncManager {
         return path;
     }
 
-    public boolean existThemeResourcesByUrl (String url) {
+    public boolean existThemeResourcesByUrl(String url) {
         File file = getFileByUrl(mContext.get(), url);
         return file != null && file.exists();
     }
 
-    public void syncCategoryList (final CategoryCallback callback) {
+    public void syncCategoryList(final CategoryCallback callback) {
         if (mContext == null || mContext.get() == null) {
             LogUtil.e(LogUtil.TAG, "syncCategoryList: context is null");
             return;
@@ -131,9 +132,10 @@ public class ThemeSyncManager {
 
     /**
      * 素材列表; 默认第一页, 50条数据, 所有文件类型;
-     * @param categoryListId    对应分类列表id (px_id)
+     *
+     * @param categoryListId 对应分类列表id (px_id)
      */
-    public void syncPageData (int categoryListId, final ThemeSyncCallback callback) {
+    public void syncPageData(int categoryListId, final ThemeSyncCallback callback) {
         if (mContext == null || mContext.get() == null) {
             LogUtil.e(LogUtil.TAG, "syncPageData: context is null.");
             return;
@@ -152,7 +154,7 @@ public class ThemeSyncManager {
         HttpUtil.requestPageData(50, 1, categoryListId, 0, callback);
     }
 
-    public void syncTopicData (String topic, int pageLength, final SingleTopicThemeCallback callback) {
+    public void syncTopicData(String topic, int pageLength, final SingleTopicThemeCallback callback) {
         if (mContext == null || mContext.get() == null) {
             LogUtil.e(LogUtil.TAG, "syncTopicData: context is null.");
             return;
@@ -183,9 +185,10 @@ public class ThemeSyncManager {
 
     /**
      * 获取专题列表; 默认请求专题的第一页,
-     * @param topicName         专题名称;
+     *
+     * @param topicName 专题名称;
      */
-    public void syncTopicData (String[] topicName, int pageNum, final TopicThemeCallback callback) {
+    public void syncTopicData(String[] topicName, int pageNum, final TopicThemeCallback callback) {
         if (mContext == null || mContext.get() == null) {
             LogUtil.e(LogUtil.TAG, "syncTopicData: context is null.");
             return;
@@ -213,7 +216,7 @@ public class ThemeSyncManager {
 //                    if (list.size() > pageNum) {
 //                        map.put(topic, list.subList(0, pageNum));
 //                    } else/* if (pageNum < 10 && list.size() < 10)*/ {
-                        map.put(topic, list);
+                    map.put(topic, list);
 //                    }
                 }
             }
@@ -223,8 +226,8 @@ public class ThemeSyncManager {
             }
         }
 
-        int [] topicWhichNum = new int[topicName.length];
-        int [] pageNumber = new int[topicName.length];
+        int[] topicWhichNum = new int[topicName.length];
+        int[] pageNumber = new int[topicName.length];
         for (int i = 0; i < topicName.length; i++) {
             topicWhichNum[i] = 1;
             pageNumber[i] = pageNum;
@@ -233,7 +236,7 @@ public class ThemeSyncManager {
         HttpUtil.requestTopicData(topicName, topicWhichNum, pageNumber, callback);
     }
 
-    public void syncJustLike (long themeId, boolean like, final ThemeNormalCallback callback) {
+    public void syncJustLike(long themeId, boolean like, final ThemeNormalCallback callback) {
         if (mContext == null || mContext.get() == null) {
             LogUtil.d(LogUtil.TAG, "syncJustLike: context is null");
             return;
@@ -244,10 +247,11 @@ public class ThemeSyncManager {
 
     /**
      * 获取分类版本
-     * @param typeName      专题版本的名字, 如: Recommend (区分大小写)
-     * @param type          请求的flash版本类型; 1 => 分类 3 => 专题
+     *
+     * @param typeName 专题版本的名字, 如: Recommend (区分大小写)
+     * @param type     请求的flash版本类型; 1 => 分类 3 => 专题
      */
-    public void syncTypeVersion (String typeName, int type, final ThemeNormalCallback callback) {
+    public void syncTypeVersion(String typeName, int type, final ThemeNormalCallback callback) {
         if (mContext == null || mContext.get() == null) {
             LogUtil.e(LogUtil.TAG, "syncTypeVersion: context is null");
             return;
@@ -265,9 +269,10 @@ public class ThemeSyncManager {
 
     /**
      * 获取指定专题下的子专题列表
+     *
      * @param topicName 父专题名称, 如: diy_3d;
      */
-    public void syncTopicList (String topicName, final ThemeSyncCallback callback) {
+    public void syncTopicList(String topicName, final ThemeSyncCallback callback) {
         if (mContext == null || mContext.get() == null) {
             LogUtil.e(LogUtil.TAG, "syncTopicList: context is null.");
             return;
@@ -285,7 +290,7 @@ public class ThemeSyncManager {
         HttpUtil.requestTopicList(topicName, callback);
     }
 
-    public void syncHomePageData (final TopicThemeCallback callback) {
+    public void syncHomePageData(final TopicThemeCallback callback) {
         if (mContext == null || mContext.get() == null) {
             LogUtil.e(LogUtil.TAG, "syncHomePageData: context is null.");
             return;
@@ -305,10 +310,11 @@ public class ThemeSyncManager {
 
     /**
      * 举报素材
-     * @param themeId   举报的素材id
-     * @param reason    举报原因;
+     *
+     * @param themeId 举报的素材id
+     * @param reason  举报原因;
      */
-    public void syncReportTheme (long themeId, String reason, ThemeNormalCallback callback) {
+    public void syncReportTheme(long themeId, String reason, ThemeNormalCallback callback) {
         if (mContext == null || mContext.get() == null) {
             LogUtil.e(LogUtil.TAG, "syncReportTheme: context is null.");
             return;
@@ -318,14 +324,15 @@ public class ThemeSyncManager {
     }
 
     /**
-     *  todo 2018/5/10 需要添加新的回调接口(Search 相关)
+     * todo 2018/5/10 需要添加新的回调接口(Search 相关)
      * 搜索
-     * @param keyword       关键字
-     * @param fileType      文件类型
-     * @param pageNumber    每页数量
-     * @param whichPage     第几页
+     *
+     * @param keyword    关键字
+     * @param fileType   文件类型
+     * @param pageNumber 每页数量
+     * @param whichPage  第几页
      */
-    public void search (String keyword, int fileType, int pageNumber, int whichPage, final ThemeSyncCallback callback) {
+    public void search(String keyword, int fileType, int pageNumber, int whichPage, final ThemeSyncCallback callback) {
         if (mContext == null || mContext.get() == null) {
             LogUtil.e(LogUtil.TAG, "search: context is null.");
             return;
@@ -337,7 +344,7 @@ public class ThemeSyncManager {
     /**
      * 回调返回值示例:  aaaa,bbbb,cccc,ddddd
      */
-    public void syncHotKeys (final ThemeNormalCallback callback) {
+    public void syncHotKeys(final ThemeNormalCallback callback) {
         if (mContext == null || mContext.get() == null) {
             LogUtil.e(LogUtil.TAG, "syncHotKeys: context is null.");
             return;
@@ -353,19 +360,19 @@ public class ThemeSyncManager {
         HttpUtil.requestHotKeys(callback);
     }
 
-    public List<Theme> getDownloadedThemeList () {
+    public List<Theme> getDownloadedThemeList() {
         return ThemeSyncLocal.getInstance().getDownloadedList();
     }
 
-    public List<Theme> getRecommendNewList () {
+    public List<Theme> getRecommendNewList() {
         return ThemeSyncLocal.getInstance().getRecommendNewList();
     }
 
-    public long getRecommendNewLastUpdateTime () {
+    public long getRecommendNewLastUpdateTime() {
         return ThemeSyncLocal.getInstance().getRecommendNewLastUpdateTime();
     }
 
-    public void clearRecommendNew () {
+    public void clearRecommendNew() {
         ThemeSyncLocal.getInstance().clearRecommendNew();
     }
 
@@ -382,14 +389,14 @@ public class ThemeSyncManager {
         return dir;
     }
 
-    public List<Theme> getCacheTopicData (String topic, int pageNumber, int pageLength) {
+    public List<Theme> getCacheTopicData(String topic, int pageNumber, int pageLength) {
         List<Theme> data = null;
         if (!TextUtils.isEmpty(topic) && pageNumber > 0 && pageLength > 0) {
             List<Theme> topicList = ThemeSyncLocal.getInstance().getTopicDataList(topic);
             if (topicList != null && !topicList.isEmpty()) {
                 int index = (pageNumber - 1) * pageLength;
                 int size = topicList.size();
-                if (size > index ) {
+                if (size > index) {
                     int toIndex = index + pageLength;
                     data = topicList.subList(index, size > toIndex ? toIndex : size);
                 }
@@ -398,8 +405,22 @@ public class ThemeSyncManager {
         return data;
     }
 
-    public void resetTopicDataCache () {
+    public void resetTopicDataCache() {
         ThemeSyncLocal.getInstance().resetTopicDataCache();
+    }
+
+    /**
+     * 获取首页缓存的数据
+     */
+    public List<Theme> getCacheTopicDataList(String topicName) {
+        return ThemeSyncLocal.getInstance().getTopicDataList(topicName);
+    }
+
+    /**
+     *获取每一类缓存的数据
+     * */
+    public List<Theme> getCacheCategoryDataList(int categoryListId) {
+        return ThemeSyncLocal.getInstance().getPageData(categoryListId);
     }
 
 }

@@ -20,7 +20,6 @@ import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.CallFlashCategoryAdapter;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
@@ -65,7 +64,7 @@ public class CategoryFragment extends Fragment {
     }
 
     private void updateUI(List<Category> data) {
-        if (getActivity().isFinishing()) {
+        if (getActivity() == null || getActivity().isFinishing()) {
             return;
         }
         if (data != null) {
