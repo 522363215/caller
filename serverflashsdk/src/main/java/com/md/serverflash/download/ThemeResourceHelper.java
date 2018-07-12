@@ -82,6 +82,10 @@ public class ThemeResourceHelper {
     }
 
     public void downloadThemeResources(final String objId, final String url, final OnDownloadListener listener) {
+        if (HttpUtil.isNetworkAvailable(ThemeSyncManager.getInstance().getContext())) {
+            listener.onFailure(url);
+            return;
+        }
         if (mDownloadUrl.contains(url)) {
             // downloading already
             if (listener != null) {
@@ -100,7 +104,6 @@ public class ThemeResourceHelper {
         // download from server
         final File file = ThemeSyncManager.getInstance().getFileByUrl(ThemeSyncManager.getInstance().getContext(), url);
         final File tempFile = new File(file.getAbsoluteFile() + ".temp");
-        LogUtil.d("adadada", "downloadThemeResources file path:" + file.getAbsolutePath());
         mDownloadUrl.add(url);
         if (listener != null) mListenerMap.put(url, listener);
         Request request = new Request.Builder().url(url).build();
@@ -110,7 +113,6 @@ public class ThemeResourceHelper {
         reportDownloadEvent(url, objId, "download_request");
 
         if (!isCanWriteInStorage(tempFile)) {
-            LogUtil.d("dadadada", "downloadThemeResources not can write in storage need sdcard permission");
             Async.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

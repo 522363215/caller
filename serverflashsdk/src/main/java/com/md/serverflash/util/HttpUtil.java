@@ -1175,7 +1175,7 @@ public class HttpUtil {
      * @param context
      * @return
      */
-    private static boolean isNetworkAvailable(Context context) {
+    public static boolean isNetworkAvailable(Context context) {
         if (context == null) {
             return false;
         }
