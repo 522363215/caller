@@ -53,6 +53,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.PreloadAdve
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.SaveingDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashDetailGroupAdShow;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventInterstitialAdLoadSuccess;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.callflash.CallFlashCustomAnimFragment;
@@ -318,6 +319,9 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                         mInfo.path = file.getAbsolutePath();
 
                         startFlashAnim();
+
+                        CallFlashManager.getInstance().saveCallFlashDownloadCount(mInfo);
+                        EventBus.getDefault().post(new EventRefreshCallFlashDownloadCount());
 
                         layout_progress_above_ad.post(new Runnable() {
                             @Override

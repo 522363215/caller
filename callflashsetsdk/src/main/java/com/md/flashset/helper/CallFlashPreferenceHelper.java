@@ -4,10 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.md.serverflash.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Zhq on 2018/1/10.
@@ -120,6 +127,11 @@ public class CallFlashPreferenceHelper {
     public static final String IS_ENABLE_CALLFLASH_DEFAULT = "is_enable_callflash_default";//是否默认开启flashcall， 0 默认不开启
     public static final String NOT_ENABLE_CALLFLASH_DEFAULT_LIST = "not_enable_callflash_default_list";//不默认开启flash call的国家, 默认没有, example "US,"
 
+    /**
+     * 已经保存过下载数的callflash url
+     * */
+    public static final String CALL_FLASH_SAVE_DOWNLOAD_COUNT_URLS = "call_flash_save_download_count_urls";
+
     private static Context mContext;
 
     private CallFlashPreferenceHelper() {
@@ -174,7 +186,7 @@ public class CallFlashPreferenceHelper {
 
     public static void putBoolean(String key, boolean value) {
         if (mContext == null) {
-            return ;
+            return;
         }
         getPreferencesEditor(mContext).putBoolean(key, value).commit();
     }
@@ -188,7 +200,7 @@ public class CallFlashPreferenceHelper {
 
     public static void putInt(String key, int value) {
         if (mContext == null) {
-            return ;
+            return;
         }
         getPreferencesEditor(mContext).putInt(key, value).commit();
     }
@@ -201,7 +213,7 @@ public class CallFlashPreferenceHelper {
      */
     public static <T> void setDataList(String key, List<T> datalist) {
         if (mContext == null) {
-            return ;
+            return;
         }
         SharedPreferences.Editor editor = getPreferencesEditor(mContext);
         if (null == datalist) {
@@ -242,7 +254,7 @@ public class CallFlashPreferenceHelper {
      * @param data
      */
     public static <T> void setObject(String key, T data) {
-        if (null == data||mContext==null)
+        if (null == data || mContext == null)
             return;
         SharedPreferences.Editor editor = getPreferencesEditor(mContext);
         Gson gson = new Gson();
@@ -270,4 +282,62 @@ public class CallFlashPreferenceHelper {
         T arr = new Gson().fromJson(strJson, clas);
         return arr;
     }
+
+    /**
+     * 用于保存集合
+     *
+     * @param key key
+     * @param map map数据
+     * @return 保存是否成功
+     */
+    public static <K, V> boolean putHashMapData(String key, Map<K, V> map) {
+        if (mContext == null) {
+            return false;
+        }
+        boolean result;
+        SharedPreferences.Editor editor = getPreferencesEditor(mContext);
+        try {
+            Gson gson = new Gson();
+            String json = gson.toJson(map);
+            LogUtil.d(TAG, "putHashMapData json:" + json.toString());
+            editor.putString(key, json);
+            result = true;
+        } catch (Exception e) {
+            result = false;
+            LogUtil.e(TAG, "putHashMapData e:" + e.getMessage());
+        }
+        editor.apply();
+        return result;
+    }
+
+    /**
+     * 用于保存集合
+     *
+     * @param key key
+     * @return HashMap
+     */
+    public static <V> HashMap<String, V> getHashMapData(String key, Class<V> clsV) {
+        if (mContext == null) {
+            return null;
+        }
+        String json = getPreferences(mContext).getString(key, "");
+        HashMap<String, V> map = new HashMap<>();
+        try {
+            Gson gson = new Gson();
+            JsonObject obj = new JsonParser().parse(json).getAsJsonObject();
+            Set<Map.Entry<String, JsonElement>> entrySet = obj.entrySet();
+            for (Map.Entry<String, JsonElement> entry : entrySet) {
+                String entryKey = entry.getKey();
+                JsonElement value = entry.getValue();
+                map.put(entryKey, gson.fromJson(value, clsV));
+            }
+            LogUtil.d(TAG, "getHashMapData obj:" + obj.toString());
+        } catch (Exception e) {
+            LogUtil.e(TAG, "getHashMapData e:" + e.getMessage());
+        }
+
+        return map;
+    }
 }
+
+

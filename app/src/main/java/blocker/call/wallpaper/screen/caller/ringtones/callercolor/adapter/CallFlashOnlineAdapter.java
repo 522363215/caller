@@ -2,7 +2,6 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.support.v4.app.ActivityCompat;
@@ -33,12 +32,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallFlashPreviewActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashOnlineAdLoaded;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -328,7 +327,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
             int pos = (int) v.getTag();
 
             if (model != null && model.size() > 0) {
-                CallFlashInfo info = getItem(pos);
+                final CallFlashInfo info = getItem(pos);
                 final View view = (View) v.getParent();
                 final CircleProgressBar pb_loading = view.findViewById(R.id.pb_loading);
                 final View iv_download = view.findViewById(R.id.iv_download);
@@ -389,6 +388,8 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
                 holder.iv_download.setVisibility(View.GONE);
                 holder.iv_call_select.setVisibility(View.GONE);
                 holder.pb_loading.setVisibility(View.GONE);
+                CallFlashManager.getInstance().saveCallFlashDownloadCount(info);
+                EventBus.getDefault().post(new EventRefreshCallFlashDownloadCount());
             }
         }
 
