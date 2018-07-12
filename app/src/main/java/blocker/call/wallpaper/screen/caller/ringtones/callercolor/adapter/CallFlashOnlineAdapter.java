@@ -124,10 +124,10 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         if (context == null) return;
-        isFlashSwitchOn = CallFlashPreferenceHelper.getBoolean(ConstantUtils.CALL_FLASH_ON, false);
-        mFlashType = CallFlashPreferenceHelper.getInt(ConstantUtils.CALL_FLASH_TYPE, -1);
-        mCustomPath = CallFlashPreferenceHelper.getString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, "");
-        mDynamicPath = CallFlashPreferenceHelper.getString(ConstantUtils.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
+        isFlashSwitchOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
+        mFlashType = CallFlashPreferenceHelper.getInt(CallFlashPreferenceHelper.CALL_FLASH_TYPE, -1);
+        mCustomPath = CallFlashPreferenceHelper.getString(CallFlashPreferenceHelper.CALL_FLASH_CUSTOM_BG_PATH, "");
+        mDynamicPath = CallFlashPreferenceHelper.getString(CallFlashPreferenceHelper.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
 
         if (fragmentTag == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode() && position == mAdShowPosition) {
             // 广告相关.

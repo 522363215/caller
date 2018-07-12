@@ -225,4 +225,9 @@ public class ApplicationEx extends Application {
             LogUtil.e("Advertise", "initPriorityAds exception: " + e.getMessage());
         }
     }
+
+    public static boolean isReleaseHUAWEI() {
+        boolean is = false; // 华为渠道包， 手动改为true
+        return is;
+    }
 }

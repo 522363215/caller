@@ -140,7 +140,7 @@ public class CallFlashSetResultActivity extends BaseActivity {
     }
 
     private void callFlashStatistics() {
-        boolean isFlashSwitchOn = CallFlashPreferenceHelper.getBoolean(ConstantUtils.CALL_FLASH_ON, false);
+        boolean isFlashSwitchOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
         if (isFlashSwitchOn) {
             if (mCallFlashInfo == null) return;
             String id = mCallFlashInfo.id;
@@ -258,7 +258,7 @@ public class CallFlashSetResultActivity extends BaseActivity {
 
     private void showResult() {
 //        ((ActionBar) findViewById(R.id.actionbar)).setBackImg(R.string.icon_close);
-        int flashType = CallFlashPreferenceHelper.getInt(ConstantUtils.CALL_FLASH_TYPE, FlashLed.FLASH_TYPE_DEFAULT);
+        int flashType = CallFlashPreferenceHelper.getInt(CallFlashPreferenceHelper.CALL_FLASH_TYPE, FlashLed.FLASH_TYPE_DEFAULT);
         boolean isCallFlashOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
         if (isCallFlashOn) {
             FlurryAgent.logEvent("CallFlashShowActivity-call_screen_set_" + getCallFlashName(flashType));

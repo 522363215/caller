@@ -13,17 +13,21 @@ import android.view.ViewStub;
 import android.widget.LinearLayout;
 
 import com.flurry.android.FlurryAgent;
+import com.md.flashset.helper.CallFlashPreferenceHelper;
 
 import java.lang.reflect.Method;
 import java.util.Locale;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.AboutActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.BlockActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CollectionActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton;
 
 /**
  * Created by Admin on 2016/10/18.
@@ -39,6 +43,9 @@ public class SideslipContraller implements View.OnClickListener {
     private View mMenuTest;
     private String deviceInfo;
     private int versionCode;
+    private View mMenuCollection;
+    private View mMenuFeedback;
+    private SwitchButton mSwitchButton;
 
     public SideslipContraller(MainActivity mAct) {
         this.mAct = mAct;
@@ -55,17 +62,24 @@ public class SideslipContraller implements View.OnClickListener {
             }
             root = stub.inflate();
 
+            mSwitchButton = root.findViewById(R.id.sb_enable);
             mMenuBlock = root.findViewById(R.id.menu_block);
+            mMenuCollection = root.findViewById(R.id.menu_collection);
             mMenuSettings = root.findViewById(R.id.menu_settings);
             mMenuRate = root.findViewById(R.id.menu_rate);
+            mMenuFeedback = root.findViewById(R.id.menu_feedback);
             mMenuAbout = root.findViewById(R.id.menu_about);
             mMenuTest = root.findViewById(R.id.menu_test);
 
             mMenuBlock.setOnClickListener(this);
+            mMenuCollection.setOnClickListener(this);
             mMenuSettings.setOnClickListener(this);
             mMenuRate.setOnClickListener(this);
+            mMenuFeedback.setOnClickListener(this);
             mMenuAbout.setOnClickListener(this);
             mMenuTest.setOnClickListener(this);
+
+            setSwitchButton();
 
             PackageManager manager = mAct.getPackageManager();
             try {
@@ -77,6 +91,17 @@ public class SideslipContraller implements View.OnClickListener {
             }
             deviceInfo = getDeviceInfo();
         }
+    }
+
+    private void setSwitchButton() {
+        boolean isCallFlashOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
+        mSwitchButton.setChecked(isCallFlashOn);
+        mSwitchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                CallFlashPreferenceHelper.putBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, isChecked);
+            }
+        });
     }
 
     private String getDeviceInfo() {
@@ -122,7 +147,6 @@ public class SideslipContraller implements View.OnClickListener {
     }
 
     private String getResolution() {
-
         String resolution = "";
 
         int width = 0;
@@ -179,10 +203,21 @@ public class SideslipContraller implements View.OnClickListener {
             case R.id.menu_feedback:
                 sendEmail();
                 break;
+            case R.id.menu_collection:
+                onCollection();
+                break;
         }
         if (callBack != null) {
             callBack.menuClick();
         }
+    }
+
+    private void onCollection() {
+        FlurryAgent.logEvent("left_collection_click");
+        if (mAct == null) return;
+        Intent intent = new Intent();
+        intent.setClass(mAct, CollectionActivity.class);
+        mAct.startActivity(intent);
     }
 
     private void sendEmail() {
@@ -226,6 +261,9 @@ public class SideslipContraller implements View.OnClickListener {
 
     public void onAbout() {
         FlurryAgent.logEvent("left_about_click");
+        if (mAct == null) return;
+        Intent intentAbout = new Intent(mAct, AboutActivity.class);
+        mAct.startActivity(intentAbout);
     }
 
     public void onRate() {
