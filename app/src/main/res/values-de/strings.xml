@@ -29,7 +29,8 @@
     <string name="block_list_title">Spam- und Sperrliste betrachten</string>
     <string name="block_list_mine">Anrufsperre Liste</string>
     <string name="block_list_common">Bekannte Spammer</string>
-    <string name="block_list_empty">Du hast keine Blacklist hinzugefügt</string>
+    <!--<string name="block_list_empty">Du hast keine Blacklist hinzugefügt</string>-->
+    <string name="block_list_empty">Noch keine Aufzeichnung</string>
     <string name="block_setting_title">Sperreinstellungen</string>
     <string name="block_setting_name">Sperre</string>
     <string name="block_setting_common_block_desc">Telemarketer und belästigende Anrufer werden von Nutzern als Spam gemeldet</string>

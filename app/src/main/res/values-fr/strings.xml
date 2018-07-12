@@ -30,7 +30,8 @@
     <string name="block_list_title">Voir liste de blocage&amp;Spam</string>
     <string name="block_list_mine">"Liste d'appels bloqués"</string>
     <string name="block_list_common">Spammeurs communs</string>
-    <string name="block_list_empty">Vous n\'avez pas ajouté une liste noire</string>
+    <!--<string name="block_list_empty">Vous n\'avez pas ajouté une liste noire</string>-->
+    <string name="block_list_empty">Aucun enregistrement pour le moment</string>
     <string name="block_setting_title">bloquer paramètres</string>
     <string name="block_setting_name">bloquer</string>
     <string name="block_setting_common_block_desc">Le téléspectateur et les appelants nuisibles sont du spam pour les utilisateurs</string>

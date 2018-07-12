@@ -29,7 +29,8 @@
     <string name="block_list_title">स्पैम व ब्लॉक सूची देखें</string>
     <string name="block_list_mine">कॉल ब्लॉक सूची</string>
     <string name="block_list_common">सामान्य स्पैमर्स</string>
-    <string name="block_list_empty">आपने ब्लैकलिस्ट नहीं जोड़ी</string>
+    <!--<string name="block_list_empty">आपने ब्लैकलिस्ट नहीं जोड़ी</string>-->
+    <string name="block_list_empty">अभी तक कोई रिकॉर्ड नहीं</string>
     <string name="block_setting_title">ब्लॉक सेटिंग्स</string>
     <string name="block_setting_name">ब्लॉक</string>
     <string name="block_setting_common_block_desc">टेलीमार्केटर व परेशान करने वाले कॉलर्स उपयोगकर्ताओं द्वारा स्पैम रिपोर्ट किए गए</string>

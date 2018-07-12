@@ -30,7 +30,8 @@
     <string name="block_list_title">Просмотреть Спам и Список блокировки</string>
     <string name="block_list_mine">Список блокировки вызовов</string>
     <string name="block_list_common">Известные спамеры </string>
-    <string name="block_list_empty">Вы не добавили черный список</string>
+    <!--<string name="block_list_empty">Вы не добавили черный список</string>-->
+    <string name="block_list_empty">Пока нет записи</string>
     <string name="block_setting_title">Настройки блокировок</string>
     <string name="block_setting_name">Блокировка</string>
     <string name="block_setting_common_block_desc">Телемаркетеры и неудобные абоненты отмечаются пользователями как спам</string>

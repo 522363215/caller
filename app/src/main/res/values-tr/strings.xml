@@ -29,7 +29,8 @@
     <string name="block_list_title">Spam ve Engellenmiş listesine bak</string>
     <string name="block_list_mine">Çağrı engelleme listesi</string>
     <string name="block_list_common">Bilinen İstenmeyen Num.</string>
-    <string name="block_list_empty">Bir kara liste eklemediniz</string>
+    <!--<string name="block_list_empty">Bir kara liste eklemediniz</string>-->
+    <string name="block_list_empty">Henüz kayıt yok</string>
     <string name="block_setting_title">Engelleme Ayarları</string>
     <string name="block_setting_name">Engelleme</string>
     <string name="block_setting_common_block_desc">Kullanıcılar tarafından ihbar edilen pazarlamacı ve rahatsız edenler</string>

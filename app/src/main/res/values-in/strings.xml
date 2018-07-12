@@ -30,7 +30,8 @@
     <string name="block_list_title">Lihat daftar Spam &amp; Blokir</string>
     <string name="block_list_mine">Daftar panggilan blokir</string>
     <string name="block_list_common">Spammer Umum</string>
-    <string name="block_list_empty">Daftar hitam tidak ditambah</string>
+    <!--<string name="block_list_empty">Daftar hitam tidak ditambah</string>-->
+    <string name="block_list_empty">Belum ada catatan</string>
     <string name="block_setting_title">Pengaturan Blokir</string>
     <string name="block_setting_name">Blokir</string>
     <string name="block_setting_common_block_desc">Laporkan nomor telepon pemasar dan pengganggu sebagai spam</string>
