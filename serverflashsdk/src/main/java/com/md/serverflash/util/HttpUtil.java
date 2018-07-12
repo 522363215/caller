@@ -173,11 +173,9 @@ public class HttpUtil {
                             JSONObject status = responseObj.getJSONObject("status");
                             int statusCode = status.getInt("code");
                             String msg = status.getString("msg");
-                            LogUtil.d(LogUtil.TAG, "requestCategoryList response, code: " + statusCode + ", msg: " + msg);
 
                             if (statusCode == 0) {
                                 String data = responseObj.getString("data");
-                                LogUtil.d(LogUtil.TAG, "requestCategoryList data: " + data);
                                 ThemeSyncLocal.getInstance().markSingleJsonData(ThemeSyncLocal.PREF_SUFFIX_CATEGORY_LIST, data);
 
                                 final List<Category> categoryList = new Gson().fromJson(data, new TypeToken<List<Category>>() {
@@ -226,7 +224,7 @@ public class HttpUtil {
      * @param categoryListId 对应分类列表id
      * @param fileType       文件类型 0=>全部 100 => 普通 102 => 全景 103=>视频 104=>3D
      */
-    public static void requestPageData(int pageNumber, int whichPage, int categoryListId, int fileType, final ThemeSyncCallback callback) {
+    public static void requestPageData(int pageNumber, int whichPage, final int categoryListId, int fileType, final ThemeSyncCallback callback) {
         JSONObject jsonObject = getCommonJsonObject();
 
         try {
@@ -264,7 +262,7 @@ public class HttpUtil {
                             int statusCode = status.getInt("code");
                             if (statusCode == 0) {
                                 String data = responseObj.getString("data");
-                                ThemeSyncLocal.getInstance().markSingleJsonData(ThemeSyncLocal.PREF_SUFFIX_PAGE_DATA, data);
+                                ThemeSyncLocal.getInstance().markPageData(categoryListId, data);
 
                                 if (callback != null) {
                                     final List<Theme> themeList = new Gson().fromJson(data, new TypeToken<List<Theme>>() {
