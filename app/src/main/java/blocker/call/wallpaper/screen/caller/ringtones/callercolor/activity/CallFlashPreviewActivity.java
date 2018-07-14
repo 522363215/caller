@@ -12,7 +12,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,10 +37,8 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdMan
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdContainer;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCollection;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
@@ -49,16 +46,13 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Language
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 import event.EventBus;
 
 public class CallFlashPreviewActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "CallFlashPreviewActivity";
     private ActionBar mActionBar;
-    private ImageView mIvPreview;
-    private ImageView mIvRecommend1;
-    private ImageView mIvRecommend2;
-    private LinearLayout mLayoutRecommend;
     private Advertisement mAdvertisement;
     private CallFlashInfo mInfo;
     private boolean mIsOnlineCallFlash;
@@ -90,6 +84,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     private FrameLayout mLayoutAdMopub;
     private FontIconView mFivDownload;
     private TextView mTvDownloadCount;
+    private GlideView mGvPreview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -268,23 +263,10 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
 //        });
     }
 
-    private void setRecommend() {
-//        get2RandomCallFlashInfo();
-        if (recommendCallFlashInfo1 != null && recommendCallFlashInfo2 != null) {
-            GlideHelper.with(this).load(recommendCallFlashInfo1.img_vUrl).into(mIvRecommend1);
-            GlideHelper.with(this).load(recommendCallFlashInfo2.img_vUrl).into(mIvRecommend2);
-        } else {
-            mLayoutRecommend.setVisibility(View.GONE);
-        }
-    }
-
     private void initView() {
         mActionBar = (ActionBar) findViewById(R.id.actionbar);
         mFivBack = (FontIconView) mActionBar.findViewById(R.id.imgReturn);
-        mIvPreview = (ImageView) findViewById(R.id.iv_preview);
-        mLayoutRecommend = (LinearLayout) findViewById(R.id.layout_recommend);
-        mIvRecommend1 = (ImageView) findViewById(R.id.iv_recommend_1);
-        mIvRecommend2 = (ImageView) findViewById(R.id.iv_recommend_2);
+        mGvPreview = (GlideView) findViewById(R.id.gv_preview);
         //点赞数和下载数
         mLavoutLikeAndDownload = (LinearLayout) findViewById(R.id.layout_like_and_download);
         mFivLike = (FontIconView) findViewById(R.id.fiv_like);
@@ -325,11 +307,9 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
                 onBackPressed();
             }
         });
-        mIvPreview.setOnClickListener(this);
+        mGvPreview.setOnClickListener(this);
         mTvDownloadBtnAboveAd.setOnClickListener(this);
         mTvDownloadBtnBelowAd.setOnClickListener(this);
-        mIvRecommend1.setOnClickListener(this);
-        mIvRecommend2.setOnClickListener(this);
         mFivLike.setOnClickListener(this);
         mFivBack.setShadowLayer(10f, 0, 0, 0xff000000);
     }
@@ -337,9 +317,10 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     private void setView() {
         if (mInfo == null) return;
         if (mIsOnlineCallFlash) {
-            GlideHelper.with(this).load(mInfo.img_vUrl).into(mIvPreview);
+            LogUtil.d(TAG, "setView loadBackground img_vUrl:" + mInfo.img_vUrl + ",\nthumbnail_imgUrl:" + mInfo.thumbnail_imgUrl);
+            mGvPreview.showImageWithThumbnail(mInfo.img_vUrl, mInfo.thumbnail_imgUrl);
         } else {
-            mIvPreview.setBackgroundResource(mInfo.imgResId);
+            mGvPreview.showImage(mInfo.imgResId);
         }
 
         File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
@@ -398,20 +379,10 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.iv_preview:
+            case R.id.gv_preview:
             case R.id.tv_download_action_above_ad:
             case R.id.tv_download_action_below_ad:
                 ActivityBuilder.toCallFlashDetail(this, mInfo, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false));
-                break;
-            case R.id.iv_recommend_1:
-                finish();
-                boolean isComeDesktop = getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false);
-                ActivityBuilder.toCallFlashPreview(this, recommendCallFlashInfo1, true, isComeDesktop);
-                break;
-            case R.id.iv_recommend_2:
-                finish();
-                boolean isComeDesktop2 = getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false);
-                ActivityBuilder.toCallFlashPreview(this, recommendCallFlashInfo2, true, isComeDesktop2);
                 break;
             case R.id.fiv_like:
                 if (mInfo != null) {

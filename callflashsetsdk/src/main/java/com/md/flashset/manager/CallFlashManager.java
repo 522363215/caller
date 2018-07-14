@@ -1,7 +1,6 @@
 package com.md.flashset.manager;
 
 import android.content.Context;
-import android.os.Environment;
 import android.text.TextUtils;
 
 import com.md.flashset.R;
@@ -14,13 +13,10 @@ import com.md.flashset.download.DownloadState;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
-import com.md.serverflash.util.LogUtil;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Leo on 17/9/4.
@@ -211,6 +207,8 @@ public class CallFlashManager {
                     info.format = CallFlashFormat.FORMAT_VIDEO;
                 } else if (info.url.endsWith("gif") || info.url.endsWith("GIF")) {
                     info.format = CallFlashFormat.FORMAT_GIF;
+                } else {
+                    info.format = CallFlashFormat.FORMAT_IMAGE;
                 }
                 dot.add(info);
             }
@@ -227,7 +225,11 @@ public class CallFlashManager {
             info.path = sourcePath;
             info.isDownloadSuccess = true;
             info.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-            info.format = CallFlashFormat.FORMAT_GIF;
+            if (sourcePath.endsWith(".gif") || sourcePath.endsWith(".GIF")) {
+                info.format = CallFlashFormat.FORMAT_GIF;
+            } else {
+                info.format = CallFlashFormat.FORMAT_IMAGE;
+            }
             info.flashType = FlashLed.FLASH_TYPE_CUSTOM;
             info.img_vUrl = info.url = info.logoUrl = info.logoPressUrl = info.img_hUrl = "";
             info.isDownloaded = true;
