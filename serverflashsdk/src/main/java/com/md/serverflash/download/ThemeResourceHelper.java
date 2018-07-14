@@ -82,7 +82,7 @@ public class ThemeResourceHelper {
     }
 
     public void downloadThemeResources(final String objId, final String url, final OnDownloadListener listener) {
-        if (HttpUtil.isNetworkAvailable(ThemeSyncManager.getInstance().getContext())) {
+        if (!HttpUtil.isNetworkAvailable(ThemeSyncManager.getInstance().getContext())) {
             listener.onFailure(url);
             return;
         }
@@ -291,7 +291,7 @@ public class ThemeResourceHelper {
                     e.printStackTrace();
                 }
             }
-            if(tempFile!=null && tempFile.exists()) {
+            if (tempFile != null && tempFile.exists()) {
                 tempFile.delete();
             }
         }
