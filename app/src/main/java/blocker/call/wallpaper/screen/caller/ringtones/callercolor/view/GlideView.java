@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.BitmapRequestBuilder;
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
@@ -194,4 +195,11 @@ public class GlideView extends RelativeLayout {
             GlideHelper.with(mContext).loadGif(resId).into(mImageView);
         }
     }
+
+    public void showVideoFirstFrame(String videoPath) {
+        if (mImageView != null) {
+            Glide.with(mContext).load(videoPath).into(mImageView);
+        }
+    }
+
 }

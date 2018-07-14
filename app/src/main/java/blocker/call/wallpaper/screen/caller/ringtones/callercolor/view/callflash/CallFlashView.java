@@ -1,6 +1,7 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -26,7 +27,7 @@ public class CallFlashView extends RelativeLayout {
     private CallFlashInfo mCallFlashInfo;
     private int mCallFlashFormat;
     private CallFlashCustomAnimView mCustomAnimView;
-    private int mVidepPlayProgress;
+    private int mVideoPlayProgress;
     private boolean misStart;
 
     public CallFlashView(Context context) {
@@ -88,12 +89,8 @@ public class CallFlashView extends RelativeLayout {
      */
     public void stop() {
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
-            Async.scheduleTaskOnUiThread(300, new Runnable() {
-                @Override
-                public void run() {
-                    mVideoView.stopPlayback();
-                }
-            });
+            mVideoView.stopPlayback();
+            mVideoView.setVisibility(INVISIBLE);
         }
     }
 
@@ -102,7 +99,7 @@ public class CallFlashView extends RelativeLayout {
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
             //记录播放的progress,避免黑屏
             mVideoView.pause();
-            mVidepPlayProgress = mVideoView.getCurrentPosition();
+            mVideoPlayProgress = mVideoView.getCurrentPosition();
         } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null) {
             mCustomAnimView.update(true, mCallFlashInfo.flashType);
         }
@@ -111,7 +108,13 @@ public class CallFlashView extends RelativeLayout {
     public void continuePlay() {
         if (misStart) return;
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
-            mVideoView.seekTo(mVidepPlayProgress);
+            LogUtil.d(TAG, "continuePlay mVideoPlayProgress:" + mVideoPlayProgress);
+            if (mGlideView != null && mCallFlashInfo != null) {
+                //显示视频第一帧防止黑屏
+                mGlideView.setVisibility(VISIBLE);
+                mGlideView.showVideoFirstFrame(mCallFlashInfo.path);
+            }
+            mVideoView.seekTo(mVideoPlayProgress);
             mVideoView.start();
             misStart = true;
         } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null) {
@@ -133,7 +136,12 @@ public class CallFlashView extends RelativeLayout {
         if (info == null) return;
         final String path = info.path;
         int flashType = info.flashType;
-        if (mVideoView != null && !TextUtils.isEmpty(path) && (flashType == FlashLed.FLASH_TYPE_MONKEY || new File(info.path).exists())) {
+        if (mVideoView != null && !TextUtils.isEmpty(path) && (flashType == FlashLed.FLASH_TYPE_MONKEY || new File(path).exists())) {
+            if (mGlideView != null) {
+                //显示视频第一帧防止黑屏
+                mGlideView.setVisibility(VISIBLE);
+                mGlideView.showVideoFirstFrame(path);
+            }
             misStart = true;
             mVideoView.setVisibility(VISIBLE);
             mVideoView.setVideoPath(path);
@@ -182,6 +190,30 @@ public class CallFlashView extends RelativeLayout {
                     LogUtil.e("chenr", "video play error, what: " + what + ", extra: " + extra + ", flashType: " + mCallFlashInfo.flashType);
                 }
                 return true;
+            }
+        });
+
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                LogUtil.d(TAG, "setOnPreparedListener mp:" + mp);
+                Async.scheduleTaskOnUiThread(500, new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mGlideView != null) {
+                            mGlideView.setVisibility(GONE);
+                        }
+                    }
+                });
+                mp.setOnInfoListener(new MediaPlayer.OnInfoListener() {
+                    @Override
+                    public boolean onInfo(MediaPlayer mp, int what, int extra) {
+                        LogUtil.d(TAG, "setOnInfoListener mp:" + mp + ",what:" + what);
+                        if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START)
+                            mVideoView.setBackgroundColor(Color.TRANSPARENT);
+                        return false;
+                    }
+                });
             }
         });
     }
