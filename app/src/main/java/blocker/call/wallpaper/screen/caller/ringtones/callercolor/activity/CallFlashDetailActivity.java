@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
@@ -113,6 +114,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private CallFlashView mCallFlashView;
     private GlideView mGvCallFlashBg;
     private View mLayoutCallFlashOthers;
+    private LinearLayout mLayourAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +153,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             @Override
             public void run() {
                 setCallFlashLayout(148);
-                findViewById(R.id.layout_ad_view).setVisibility(View.VISIBLE);
+                mLayourAd.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -171,6 +173,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         mCallFlashAvatarInfoView = (CallFlashAvatarInfoView) findViewById(R.id.callFlashAvatarInfoView);
         mGvCallFlashBg = findViewById(R.id.gv_call_flash_bg);
         mLayoutCallFlashOthers = findViewById(R.id.layout_call_flash_others);
+
+        mLayourAd = findViewById(R.id.layout_ad_view);
 
         //above ad
         layout_above_ad = findViewById(R.id.layout_above_ad);
@@ -959,7 +963,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 //                    CallFlashDetailGroupAdHelper.getInstance().loadGroupAd(AdvertisementSwitcher.SERVER_KEY_CALL_FLASH_DOWN_GROUP, false, PreloadAdvertisement.ADMOB_TYPE_NATIVE_ADVANCED,
 //                            PreloadAdvertisement.ADMOB_ADX_TYPE_NATIVE_ADVANCED);
 //                }
-                findViewById(R.id.layout_ad_view).setVisibility(View.GONE);
+                mLayourAd.setVisibility(View.GONE);
             }
         }
 
@@ -1127,7 +1131,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         LogUtil.d(TAG, "showBannerGroupAd showGroupAd 1");
         CallFlashDetailGroupAdHelper.getInstance().showGroupAd(
                 isResetShowAd,
-                findViewById(R.id.layout_ad_view),
+                mLayourAd,
                 AdvertisementSwitcher.SERVER_KEY_CALL_FLASH_DOWN_GROUP,
                 false,
                 PreloadAdvertisement.ADMOB_TYPE_NATIVE_ADVANCED,
