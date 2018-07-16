@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.md.block.callback.PhoneStateChangeCallback;
 
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.CallFlashDialog;
 
 /**
  * Created by ChenR on 2018/7/5.
@@ -13,16 +13,18 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 public class PhoneStateListenImpl implements PhoneStateChangeCallback {
     private Context mContext = null;
 
-    public PhoneStateListenImpl (Context context) {
+    public PhoneStateListenImpl(Context context) {
         this.mContext = context;
     }
 
     @Override
     public void onPhoneIdle(String number) {
+        CallFlashDialog.getInstance().hideFloatView();
     }
 
     @Override
     public void onPhoneRinging(String number) {
+        CallFlashDialog.getInstance().showFloatView(number);
     }
 
     @Override
