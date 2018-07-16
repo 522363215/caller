@@ -7,6 +7,12 @@
     card_view:cardBackgroundColor="@color/transparent"
     card_view:cardCornerRadius="2dp">
 
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
+        android:id="@+id/glide_view_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.FullScreenVideoView
         android:id="@+id/video_view"
         android:layout_width="match_parent"

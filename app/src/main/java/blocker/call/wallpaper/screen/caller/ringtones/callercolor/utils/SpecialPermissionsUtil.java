@@ -56,14 +56,6 @@ public class SpecialPermissionsUtil {
         return true;
     }
 
-    public static boolean isCallerNotificationServiceRunning() {
-        boolean is = false;
-        if(ApplicationEx.getInstance()!=null){
-            is = PreferenceHelper.getBoolean("is_cid_callernotificationlistenerservice_running",false);
-        }
-        return is;
-    }
-
     /**
      * 判断是否获取WriteSetting 权限
      */

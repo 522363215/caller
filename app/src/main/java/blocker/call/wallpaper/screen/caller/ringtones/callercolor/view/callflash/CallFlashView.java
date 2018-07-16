@@ -29,6 +29,7 @@ public class CallFlashView extends RelativeLayout {
     private CallFlashCustomAnimView mCustomAnimView;
     private int mVideoPlayProgress;
     private boolean misStart;
+    private GlideView mGlideViewPreview;
 
     public CallFlashView(Context context) {
         super(context);
@@ -49,15 +50,20 @@ public class CallFlashView extends RelativeLayout {
         mContext = context;
         LayoutInflater.from(context).inflate(R.layout.layout_call_flash_view, this);
 
-        mGlideView = findViewById(R.id.glide_view);
-        mVideoView = findViewById(R.id.video_view);
-        mCustomAnimView = findViewById(R.id.custom_anim_view);
+        mGlideView = findViewById(R.id.glide_view);//用于显示GIF或者图片
+        mVideoView = findViewById(R.id.video_view);//用于显示视频
+        mCustomAnimView = findViewById(R.id.custom_anim_view);//用于显示自定义动画callflash
+
+        mGlideViewPreview = findViewById(R.id.glide_view_preview);//在没下载的时候用于显示预览图
         setVideoListener();
     }
 
     public void showCallFlashView(CallFlashInfo info) {
         mCallFlashInfo = info;
         if (info == null) return;
+        if (mGlideViewPreview != null) {
+            mGlideViewPreview.setVisibility(GONE);
+        }
         if (mGlideView != null) {
             mGlideView.setVisibility(GONE);
         }
@@ -222,9 +228,9 @@ public class CallFlashView extends RelativeLayout {
      * 如果没有下载，则显示预览图
      */
     private void showPreview(CallFlashInfo info) {
-        if (info == null || mGlideView == null) return;
-        mGlideView.setVisibility(VISIBLE);
-        mGlideView.showImageWithThumbnail(info.img_vUrl, info.thumbnail_imgUrl);
+        if (info == null || mGlideViewPreview == null) return;
+        mGlideViewPreview.setVisibility(VISIBLE);
+        mGlideViewPreview.showImageWithThumbnail(info.img_vUrl, info.thumbnail_imgUrl);
     }
 
 }
