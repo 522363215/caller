@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_FF0A2134">
+
+    <LinearLayout
+        android:id="@+id/rl_caller"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+            android:id="@+id/fiv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:alpha="0.4"
+            android:gravity="center"
+            android:text="@string/icon_arrow"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="36dp"
+            android:layout_marginStart="36dp"
+            android:alpha="0.4"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+            android:id="@+id/fiv_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:alpha="0.4"
+            android:text="@string/icon_option"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_number_infos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_caller"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/ll_callerid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp16"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingStart="@dimen/dp16"
+            android:paddingTop="@dimen/dp16">
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp72"
+                android:layout_height="@dimen/dp72">
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.AvatarView
+                    android:id="@+id/av_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:fontSize="36.0" />
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                    android:id="@+id/fiv_call_type"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/call_type_icon_bg"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    tools:text="@string/icon_incoming" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp32"
+                android:layout_marginStart="@dimen/dp32"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_call_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    tools:text="+86 10-01137387" />
+
+                <TextView
+                    android:id="@+id/tv_call_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp6"
+                    android:alpha="0.7"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    tools:text="The call lasted 2 minutes ago" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_call_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.7"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        tools:text="Chengdu, Sichuan" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginStart="6dp"
+                        android:gravity="bottom"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="15dp"
+                            android:alpha="0.7"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_tag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:alpha="0.5"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:maxLength="11"
+                            android:maxWidth="@dimen/dp60"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            tools:text="name" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/ll_callerid"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp">
+
+                <RelativeLayout
+                    android:id="@+id/rl_call_back"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:alpha="0.5"
+                            android:gravity="center"
+                            android:text="@string/icon_phone"
+                            android:textColor="@color/white"
+                            android:textSize="24dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:alpha="0.5"
+                            android:gravity="center"
+                            android:text="@string/call_after_phone"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_call_flase_personal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:alpha="0.5"
+                            android:gravity="center"
+                            android:text="@string/icon_callflash_personal"
+                            android:textColor="@color/white"
+                            android:textSize="24dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:alpha="0.5"
+                            android:gravity="center"
+                            android:text="@string/phone_detail_set_call_flash_call_show"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_call_block"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:alpha="0.5"
+                            android:gravity="center"
+                            android:text="@string/icon_block"
+                            android:textColor="@color/white"
+                            android:textSize="24dp" />
+
+                        <TextView
+                            android:id="@+id/tv_block"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:alpha="0.5"
+                            android:gravity="center"
+                            android:text="@string/phone_detail_block"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_call_sms"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:alpha="0.5"
+                            android:gravity="center"
+                            android:text="@string/icon_sms"
+                            android:textColor="@color/white"
+                            android:textSize="24dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:alpha="0.5"
+                            android:gravity="center"
+                            android:text="@string/call_after_message"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_ad_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:gravity="bottom"
+            tools:visibility="gone">
+
+            <include layout="@layout/layout_advertisement" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_menu_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/layout_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp8"
+            android:layout_marginTop="@dimen/dp17"
+            android:background="@color/color_FF0A2134"
+            android:orientation="vertical"
+            android:padding="@dimen/dp8"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_close"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:gravity="left"
+                android:padding="@dimen/dp8"
+                android:text="@string/call_after_close"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_disable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:alpha="0.5"
+                android:padding="@dimen/dp8"
+                android:text="@string/call_after_disable"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
