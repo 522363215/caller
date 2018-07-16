@@ -212,6 +212,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                 }
 
                 OKCancelDialog dialog = new OKCancelDialog(CallAfterActivity.this, true);
+                dialog.show();
                 dialog.setContent(getString(R.string.phone_detail_block_dialog_title), true, false);
                 dialog.setOKCancel(R.string.ok_string, R.string.no_string);
                 dialog.setOkClickListener(new OKCancelDialog.OKClickListener() {
