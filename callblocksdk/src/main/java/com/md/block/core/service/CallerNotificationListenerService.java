@@ -14,6 +14,7 @@ import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 
 import com.md.block.R;
+import com.md.block.core.local.BlockLocal;
 import com.md.block.util.LogUtil;
 
 import java.util.Locale;
@@ -29,6 +30,7 @@ public class CallerNotificationListenerService extends NotificationListenerServi
     @Override
     public void onCreate() {
         super.onCreate();
+        BlockLocal.setPreferencesData("is_cc_callernotificationlistenerservice_running", true);
     }
 
     @Override
@@ -54,7 +56,7 @@ public class CallerNotificationListenerService extends NotificationListenerServi
             }
 
             for (Notification.Action action : actions) {
-                if(action == null) {
+                if (action == null) {
                     continue;
                 }
                 PendingIntent intent = action.actionIntent;
