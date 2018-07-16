@@ -9,6 +9,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallA
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.CallFlashDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
 
 /**
@@ -18,12 +19,13 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUt
 public class PhoneStateListenImpl implements PhoneStateChangeCallback {
     private Context mContext = null;
 
-    public PhoneStateListenImpl (Context context) {
+    public PhoneStateListenImpl(Context context) {
         this.mContext = context;
     }
 
     @Override
     public void onPhoneIdle(String number) {
+        CallFlashDialog.getInstance().hideFloatView();
         LogUtil.d("chenr", "caller color phone idle.");
 
         CallLogInfo info = new CallLogInfo();
@@ -40,6 +42,7 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
 
     @Override
     public void onPhoneRinging(String number) {
+        CallFlashDialog.getInstance().showFloatView(number);
     }
 
     @Override
