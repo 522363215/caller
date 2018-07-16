@@ -1,10 +1,15 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.md.block.callback.PhoneStateChangeCallback;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallAfterActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
 
 /**
  * Created by ChenR on 2018/7/5.
@@ -19,6 +24,18 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
 
     @Override
     public void onPhoneIdle(String number) {
+        LogUtil.d("chenr", "caller color phone idle.");
+
+        CallLogInfo info = new CallLogInfo();
+        info.callNumber = number;
+        info.callLoction = NumberUtil.getNumberLocationForCallLog(number);
+        info.date = System.currentTimeMillis();
+        info.callType = CallUtils.getCallLogType(number);
+
+        Intent intent = new Intent();
+        intent.putExtra("lm_call_after_info", info);
+        intent.setClass(mContext, CallAfterActivity.class);
+        mContext.startActivity(intent);
     }
 
     @Override

@@ -160,6 +160,14 @@
             android:name=".activity.CollectionActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.CallAfterActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait" />
+
         <service
             android:name=".service.LocalService"
             android:exported="true"

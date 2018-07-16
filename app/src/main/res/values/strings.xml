@@ -104,22 +104,6 @@
     <string name="add_number_as_spam">"Report a spam"</string>
     <!--手动添加黑名单弹窗 结束-->
 
-    <!--从联系人添加黑名单 开始-->
-    <string name="from_contacts_title">"From contacts"</string>
-    <string name="from_contacts_quick_filtering">"Quick search"</string>
-    <string name="from_contacts_read_failed">"Failed to read the contacts!"</string>
-    <!--从联系人添加黑名单 结束-->
-
-    <!--从通话记录添加黑名单 开始-->
-    <string name="from_call_log_title">"From call history"</string>
-    <string name="from_call_log_read_failed">"Failed to read the call history!"</string>
-    <!--从通话记录添加黑名单 结束-->
-
-    <!--选择国家弹窗 开始-->
-    <string name="country_list_title">"Please select your country"</string>
-    <string name="country_list_name_hint">"Country name or code&#8230;"</string>
-    <!--选择国家弹窗 结束-->
-
     <!--未接、拒绝来电悬浮窗 开始-->
     <string name="call_coming_back">"Call back"</string> <!--回拨-->
     <string name="call_coming_detail">"Details"</string>
@@ -486,11 +470,6 @@
     <string name="number_scan_exit_intro_title">New Number Scan</string>
     <string name="number_scan_exit_intro_content">A new unknown number, please click to verify the security.</string>
     <string name="number_scan_exit_btn_to_scan">@string/frag_block_update_scan_phone_number</string>
-
-    <string name="scan_anim_title">Scanning spam calls...</string>
-
-    <string name="sms_scan_exit_intro_title">SMS Cleaner</string>
-    <string name="sms_scan_exit_intro_content">Found too many old text messages, clean up now?</string>
 
     <string name="call_flash_led_panda">"Panda"</string>
     <string name="call_flash_led_custom">"Customize"</string>
@@ -1074,6 +1053,8 @@
     <string name="block_option_toast_clear_all_history_success">"Clear all history success!"</string>
 
     <string name="block_list_empty">No records</string>
+
+    <string name="block_contacts_added_failed">Added Failed!</string>
 
     <!--side slip-->
     <string name="side_slip_title_des">"别出心裁，秀随我变"</string>
