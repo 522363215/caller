@@ -19,15 +19,14 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 
-
 import com.android.internal.telephony.ITelephony;
 import com.md.block.beans.BlockInfo;
 import com.md.block.callback.PhoneStateChangeCallback;
 import com.md.block.core.local.BlockLocal;
 import com.md.block.core.receiver.PhoneStateReceiver;
 import com.md.block.core.service.CallerNotificationListenerService;
+import com.md.block.util.BlockPermissionsUtil;
 import com.md.block.util.LogUtil;
-import com.md.block.util.SpecialPermissionsUtil;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -47,10 +46,10 @@ public class BlockManager {
 
     private static List<PhoneStateChangeCallback> mPhoneStateListenerList = new ArrayList<>();
 
-    private BlockManager () {
+    private BlockManager() {
     }
 
-    public static BlockManager getInstance () {
+    public static BlockManager getInstance() {
         if (instance == null) {
             synchronized (BlockManager.class) {
                 if (instance == null) {
@@ -78,24 +77,24 @@ public class BlockManager {
         }
     }
 
-    public static void addPhoneStateListener (PhoneStateChangeCallback callback) {
+    public static void addPhoneStateListener(PhoneStateChangeCallback callback) {
         if (callback != null) {
             mPhoneStateListenerList.add(callback);
         }
     }
 
-    public List<PhoneStateChangeCallback> getPhoneStateListenerList () {
+    public List<PhoneStateChangeCallback> getPhoneStateListenerList() {
         List<PhoneStateChangeCallback> list = (List<PhoneStateChangeCallback>) ((ArrayList<PhoneStateChangeCallback>) mPhoneStateListenerList).clone();
         return list;
     }
 
-    public void removePhoneStateChangeCallback (PhoneStateChangeCallback callback) {
+    public void removePhoneStateChangeCallback(PhoneStateChangeCallback callback) {
         if (mPhoneStateListenerList.contains(callback)) {
             mPhoneStateListenerList.remove(callback);
         }
     }
 
-    public void clearPhoneStateChangeCallbackList () {
+    public void clearPhoneStateChangeCallbackList() {
         mPhoneStateListenerList.clear();
     }
 
@@ -111,9 +110,10 @@ public class BlockManager {
         }
     };
 
-    public void initialize (Context applicationContext) {
+    public void initialize(Context applicationContext) {
         this.appContext = applicationContext;
-        mTele = (TelephonyManager) applicationContext.getSystemService(Context.TELEPHONY_SERVICE);;
+        mTele = (TelephonyManager) applicationContext.getSystemService(Context.TELEPHONY_SERVICE);
+        ;
 
         Intent intent = new Intent();
         intent.setClass(applicationContext, CallerNotificationListenerService.class);
@@ -121,7 +121,7 @@ public class BlockManager {
         applicationContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
-    public void registerPhoneReceiver (Context context) {
+    public void registerPhoneReceiver(Context context) {
         if (context == null) {
             throw new NullPointerException("The context used to register the receiver must not be empty.");
         }
@@ -133,15 +133,15 @@ public class BlockManager {
         context.registerReceiver(phoneStateReceiver, filter);
     }
 
-    public Context getAppContext () {
+    public Context getAppContext() {
         return appContext;
     }
 
-    public boolean setBlockContact (BlockInfo contact) {
+    public boolean setBlockContact(BlockInfo contact) {
         return BlockLocal.setBlockContacts(contact);
     }
 
-    public void setBlockContact (List<BlockInfo> blockContacts) {
+    public void setBlockContact(List<BlockInfo> blockContacts) {
         BlockLocal.setBlockContacts(blockContacts);
     }
 
@@ -153,39 +153,39 @@ public class BlockManager {
         return BlockLocal.removeBlockContact(number);
     }
 
-    public void clearBlockContacts () {
+    public void clearBlockContacts() {
         BlockLocal.clearBlockContacts();
     }
 
-    public void setBlockHistory (BlockInfo history) {
+    public void setBlockHistory(BlockInfo history) {
         BlockLocal.setBlockHistory(history);
     }
 
-    public List<BlockInfo> getBlockContacts () {
+    public List<BlockInfo> getBlockContacts() {
         return BlockLocal.getBlockContacts();
     }
 
-    public List<BlockInfo> getBlockHistory () {
+    public List<BlockInfo> getBlockHistory() {
         return BlockLocal.getBlockHistory();
     }
 
-    public boolean removeBlockHistory (BlockInfo history) {
+    public boolean removeBlockHistory(BlockInfo history) {
         return BlockLocal.removeBlockHistory(history);
     }
 
-    public void clearBlockHistory () {
+    public void clearBlockHistory() {
         BlockLocal.clearBlockHistory();
     }
 
-    public boolean setBlockSwitchState (boolean bool) {
+    public boolean setBlockSwitchState(boolean bool) {
         return BlockLocal.setBlockSwitchState(bool);
     }
 
-    public boolean getBlockSwitchState () {
+    public boolean getBlockSwitchState() {
         return BlockLocal.getBlockSwitchState();
     }
 
-    public void answerCall () {
+    public void answerCall() {
         try {
             if (mTele == null) {
                 throw new NullPointerException("tm == null");
@@ -195,7 +195,9 @@ public class BlockManager {
         } catch (Throwable th) {
             LogUtil.d("notify_answer", "answerCall 2");
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                if (SpecialPermissionsUtil.isNotificationServiceRunning() && SpecialPermissionsUtil.isCallerNotificationServiceRunning()) {
+                boolean isNotificationServiceRunning = BlockPermissionsUtil.isNotificationServiceRunning();
+                boolean isCallerNotificationServiceRunning = BlockPermissionsUtil.isCallerNotificationServiceRunning();
+                if (isNotificationServiceRunning && isCallerNotificationServiceRunning) {
                     try {
                         acceptCall(appContext);
                     } catch (Throwable th2) {
@@ -243,7 +245,7 @@ public class BlockManager {
         context.sendOrderedBroadcast(intent, str);
     }
 
-    private void answerByNotificationBar () {
+    private void answerByNotificationBar() {
         Message msg = new Message();
         msg.arg1 = NOTIFICATION_BAR_FOR_ANSWER_CALL;
         try {
@@ -269,7 +271,7 @@ public class BlockManager {
         }
     }
 
-    public boolean blockCall (String phoneNumber) {
+    public boolean blockCall(String phoneNumber) {
         boolean suc = false;
         if (TextUtils.isEmpty(phoneNumber)) {
             return suc;
@@ -290,7 +292,7 @@ public class BlockManager {
         return suc;
     }
 
-    private boolean endCall() {
+    public boolean endCall() {
         if (mITelephony == null) {
             LogUtil.e(TAG, "ITelephony is null reference.");
             return false;

@@ -1,20 +1,12 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog;
 
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
-import android.media.session.MediaController;
-import android.media.session.MediaSessionManager;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,12 +18,10 @@ import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
 import com.md.block.core.BlockManager;
-import com.md.block.core.service.CallerNotificationListenerService;
 import com.md.flashset.View.FlashLed;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
@@ -43,7 +33,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.Contac
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.RingManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.RomUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SystemInfoUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CallFlashAvatarInfoView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
@@ -103,7 +92,7 @@ public class CallFlashDialog implements View.OnClickListener {
                     @Override
                     public void run() {
                         PreferenceHelper.putLong(PreferenceHelper.PREF_CALL_SHOW_ANSWER_CLICK_START, System.currentTimeMillis());
-                        answerCall();
+                        BlockManager.getInstance().answerCall();
                         LogUtil.d("callflashDialog", "answerCall answerCall");
                         Async.scheduleTaskOnUiThread(300, new Runnable() {
                             @Override
@@ -120,7 +109,7 @@ public class CallFlashDialog implements View.OnClickListener {
                 Async.run(new Runnable() {
                     @Override
                     public void run() {
-                        mBlockManager.blockCall(mNumber);
+                        mBlockManager.endCall();
                         Async.scheduleTaskOnUiThread(300, new Runnable() {
                             @Override
                             public void run() {
@@ -231,79 +220,6 @@ public class CallFlashDialog implements View.OnClickListener {
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
 
         mFloatViewLayoutParams = layoutParams;
-    }
-
-    public void answerCall() {
-        try {
-            if (mTele == null) {
-                throw new NullPointerException("tm == null");
-            }
-            mTele.getClass().getMethod("answerRingingCall").invoke(mTele);
-            LogUtil.d("notify_answer", "answerCall 1");
-        } catch (Throwable th) {
-            LogUtil.d("notify_answer", "answerCall 2");
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                if (SpecialPermissionsUtil.isNotificationServiceRunning() && SpecialPermissionsUtil.isCallerNotificationServiceRunning()) {
-                    try {
-                        acceptCall(ApplicationEx.getInstance());
-                    } catch (Throwable th2) {
-                        LogUtil.e("notify_answer", "all 22api acceptCall error: " + th2.getMessage());
-                    }
-                } else {
-                    answerNow();
-                }
-            } else {
-                answerNow();
-            }
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void acceptCall(Context context) {
-        /* 模拟耳机插入动作,用于接听电话 */
-        /* 由于Android8.0的限制, 这里通过通知栏去触发模拟事件, 算是走了个大弯 */
-        LogUtil.d("notify_answer", "22api samsung CallSchemeAcceptAPI26 acceptCall start:");
-        MediaSessionManager mediaSessionManager = (MediaSessionManager)
-                context.getApplicationContext().getSystemService(Context.MEDIA_SESSION_SERVICE);
-        List<MediaController> mediaControllerList = mediaSessionManager
-                .getActiveSessions(new ComponentName(context.getApplicationContext(), CallerNotificationListenerService.class));
-        for (MediaController m : mediaControllerList) {
-            if ("com.android.server.telecom".equals(m.getPackageName())) {
-                m.dispatchMediaButtonEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_HEADSETHOOK));
-                m.dispatchMediaButtonEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_HEADSETHOOK));
-                LogUtil.d("notify_answer", "samsung CallSchemeAcceptAPI26 acceptCall end:");
-                break;
-            }
-        }
-    }
-
-    private void answerNow() {
-        try {
-            if (Build.VERSION.SDK_INT >= 19) {
-                AudioManager audioManager = (AudioManager) ApplicationEx.getInstance().getSystemService(Context.AUDIO_SERVICE);
-                //long uptimeMillis = SystemClock.uptimeMillis() - 1;
-                KeyEvent keyEvent = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_HEADSETHOOK);
-                KeyEvent keyEvent2 = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_HEADSETHOOK);
-                audioManager.dispatchMediaKeyEvent(keyEvent);
-                audioManager.dispatchMediaKeyEvent(keyEvent2);
-                LogUtil.d("callflashnew", "answerNow 19 up: ");
-            } else {
-                LogUtil.d("callflashnew", "answerNow 19 down: ");
-                Runtime.getRuntime().exec("input keyevent " + Integer.toString(KeyEvent.KEYCODE_HEADSETHOOK));
-            }
-        } catch (Throwable th) {
-            answerByEarPhone(ApplicationEx.getInstance());
-            LogUtil.e("callflashnew", "answerNow error: " + th.getMessage());
-        } finally {
-        }
-    }
-
-    private void answerByEarPhone(Context context) {
-        String str = !((AudioManager) context.getSystemService(Context.AUDIO_SERVICE)).isWiredHeadsetOn() ? Build.VERSION.SDK_INT >= 15 ? null : "android.permission.CALL_PRIVILEGED" : null;
-        Intent intent = new Intent(Intent.ACTION_MEDIA_BUTTON);
-        intent.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_HEADSETHOOK));
-        ApplicationEx.getInstance().sendOrderedBroadcast(intent, str);
-        LogUtil.d("callflashnew", "answerByEarPhone: ");
     }
 
     private void startAnimations() {
