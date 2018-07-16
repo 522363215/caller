@@ -1,130 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_call_flash_bg"
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
+        android:id="@+id/gv_call_flash_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
 
-    <ImageView
-        android:id="@+id/iv_shape"
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView
+        android:id="@+id/call_flash_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_gradient"
-        android:visibility="visible" />
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/layout_call_flash"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/layout_btn"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="150dp"
-        android:background="@drawable/shape_shadow_floating_bg"
-        card_view:cardCornerRadius="2dp"
-        tools:cardBackgroundColor="@color/com_facebook_blue"
-        tools:visibility="visible">
+        android:layout_marginBottom="@dimen/dp2"
+        android:layout_marginTop="@dimen/dp48" />
 
-        <FrameLayout
-            android:id="@+id/layout_flash_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/layout_call_flash_others"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_call_flash_bg_small"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY" />
-        </FrameLayout>
+        <include layout="@layout/layout_call_flash_others" />
+    </RelativeLayout>
 
-        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CallFlashAvatarInfoView
-            android:id="@+id/callFlashAvatarInfoView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dp80"
-            android:gravity="center_horizontal"
-            android:visibility="visible"
-            app:layoutSmall="true" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/iv_call_hang"
-                android:layout_width="@dimen/dp40"
-                android:layout_height="@dimen/dp40"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginBottom="@dimen/dp96"
-                android:layout_marginLeft="@dimen/dp50"
-                android:layout_marginStart="@dimen/dp50"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_call_hang" />
-
-            <ImageView
-                android:id="@+id/iv_call_answer"
-                android:layout_width="@dimen/dp40"
-                android:layout_height="@dimen/dp40"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="@dimen/dp96"
-                android:layout_marginEnd="@dimen/dp50"
-                android:layout_marginRight="@dimen/dp50"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_call_answer" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_like"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:background="@drawable/background_trans_black"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                android:id="@+id/fiv_like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp12"
-                android:text="@string/icon_is_like"
-                android:textColor="@color/whiteSmoke"
-                android:textSize="@dimen/dp30" />
-
-            <TextView
-                android:id="@+id/tv_like_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp8"
-                android:layout_marginRight="@dimen/dp16"
-                android:text="45545"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/layout_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -194,8 +102,9 @@
         <LinearLayout
             android:id="@+id/layout_ad_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/color_FF191B1E">
+            android:layout_height="@dimen/dp100"
+            android:background="@color/transparent"
+            android:visibility="gone">
 
             <include layout="@layout/layout_advertisement" />
         </LinearLayout>
@@ -266,7 +175,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp56"
+        android:layout_height="@dimen/dp48"
         android:visibility="visible">
 
         <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView

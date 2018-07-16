@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:gravity="center_horizontal"
+    tools:background="@color/result_pc_download_text_color">
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CallFlashAvatarInfoView
+        android:id="@+id/callFlashAvatarInfoView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp80"
+        android:gravity="center_horizontal"
+        android:visibility="visible" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_call_hang"
+            android:layout_width="@dimen/dp56"
+            android:layout_height="@dimen/dp56"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="@dimen/dp140"
+            android:layout_marginLeft="@dimen/dp72"
+            android:layout_marginStart="@dimen/dp72"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_call_hang" />
+
+        <ImageView
+            android:id="@+id/iv_call_answer"
+            android:layout_width="@dimen/dp56"
+            android:layout_height="@dimen/dp56"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/dp140"
+            android:layout_marginEnd="@dimen/dp72"
+            android:layout_marginRight="@dimen/dp72"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_call_answer" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -20,8 +20,10 @@ import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.CallFlashCategoryAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import event.EventBus;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +37,14 @@ public class CategoryFragment extends Fragment {
     private ProgressBar mPbLoading;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_category, container, false);
@@ -46,6 +56,14 @@ public class CategoryFragment extends Fragment {
         if (view != null) {
             initView(view);
             initData();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
         }
     }
 
@@ -97,5 +115,11 @@ public class CategoryFragment extends Fragment {
         mRvCategory.addItemDecoration(new CallFlashMarginDecoration());
         mCategoryAdapter = new CallFlashCategoryAdapter(getActivity(), mData);
         mRvCategory.setAdapter(mCategoryAdapter);
+    }
+
+    public void onEventMainThread(EventRefreshWhenNetConnected event) {
+        if (mData == null || mData.size() <= 1) {
+            initData();
+        }
     }
 }

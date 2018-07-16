@@ -6,7 +6,7 @@ package com.md.flashset.bean;
 
 public class CallFlashFormat {
     /**
-     * GIF or PNG
+     * GIF
      */
     public static final int FORMAT_GIF = 0;
     /**
@@ -14,17 +14,11 @@ public class CallFlashFormat {
      */
     public static final int FORMAT_VIDEO = 1;
     /**
+     * 图片
+     */
+    public static final int FORMAT_IMAGE = 2;
+    /**
      * 自定义动画
      */
-    public static final int FORMAT_CUSTOM_ANIM = 2;
-
-    /**
-     * 用户自己自定义的callflash
-     */
-    public static final int FORMAT_CUSTOM_FOR_USER = 3;
-
-    /**
-     * png callflash
-     */
-    public static final int FORMAT_PNG = 4;
+    public static final int FORMAT_CUSTOM_ANIM = 3;
 }

@@ -99,19 +99,11 @@ public class CallFlashAvatarInfoView extends RelativeLayout {
     }
 
     public void setDefaultAvatar(int flashType) {
-        if (flashType == FlashLed.FLASH_TYPE_PANDA) {
-            mAvatarCall.setAvatarDrawable(R.drawable.ico_panda_head);
-        } else {
-            mAvatarCall.setAvatarDrawable(0);
-        }
+        mAvatarCall.setAvatarDrawable(0);
     }
 
     public void setDefaultAvatar(String name) {
-        if (ConstantUtils.CALL_FLASH_THEME_GIF_NAME_PANDA.equals(name)) {
-            ((CallFlashAvatarInfoView) findViewById(R.id.callFlashAvatarInfoView)).setAvatar(R.drawable.ico_panda_head);
-        } else {
-            ((CallFlashAvatarInfoView) findViewById(R.id.callFlashAvatarInfoView)).setAvatar(0);
-        }
+        ((CallFlashAvatarInfoView) findViewById(R.id.callFlashAvatarInfoView)).setAvatar(0);
     }
 
     public void setNumber(String number) {

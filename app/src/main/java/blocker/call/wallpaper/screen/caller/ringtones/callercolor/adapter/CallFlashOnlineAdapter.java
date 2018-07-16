@@ -179,11 +179,8 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
                 if (childViewHeight != 0 && childViewWidth != 0) {
                     imgUrl += "_" + childViewWidth + "x" + childViewHeight;
                 }
-                if (fragmentTag != -1 && position < 6) {
-                    imgUrl = info.img_vUrl;
-                }
 
-
+                info.thumbnail_imgUrl = imgUrl;
                 mGlideBuilder.load(new GlideUrl(imgUrl)).into(holder.coverImg);
 
                 File videoFile = videoMap.get(info.url);

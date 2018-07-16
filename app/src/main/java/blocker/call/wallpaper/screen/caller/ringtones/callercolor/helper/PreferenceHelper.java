@@ -58,6 +58,31 @@ final public class PreferenceHelper {
 
     public static final String PREF_KEY_IS_AGREE_SHOW_DIALOG = "android_rate_is_agree_show_dialog";
 
+    public static final String PREF_CALL_SHOW_ANSWER_CLICK_END = "android_call_show_answer_click_end";
+
+    public static final String PREF_CALL_SHOW_ANSWER_CLICK_START = "android_call_show_answer_click_start";
+
+    /**
+     * 当前媒体音量大小
+     */
+    public static final String PREF_CURRENT_MUSIC_VOLUEM = "android_current_music_coluem";
+
+    /**
+     * 上一次的铃声
+     */
+    public static final String PREF_LAST_RING_PATH = "android_last_ring_path";
+
+    /**
+     * 当前铃声的音量值
+     */
+    public static final String PREF_CURRENT_RING_VOLUME = "android_current_ring_volume";
+
+    /**
+     * 设为静音模式以前的模式
+     */
+    public static final String PREF_KEY_RING_MODE_BEFORE_SET_SILENT = "android_ring_mode_before_set_silent";
+
+
 
     private PreferenceHelper() {
     }

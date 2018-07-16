@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/black">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginStart="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp8"
+            android:alpha="0.5"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+            android:id="@+id/fiv_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="@dimen/dp8"
+            android:alpha="0.5"
+            android:text="@string/icon_option"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_menu_root"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp120"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/layout_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp8"
+            android:layout_marginTop="@dimen/dp26"
+            android:background="@color/color_FF00284D"
+            android:orientation="vertical"
+            android:padding="@dimen/dp8"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_disable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|start"
+                android:alpha="0.5"
+                android:padding="@dimen/dp8"
+                android:text="@string/call_after_close"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView
+        android:id="@+id/call_flash_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/layout_call_flash_others"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/layout_call_flash_others" />
+    </RelativeLayout>
+
+</RelativeLayout>
