@@ -42,8 +42,6 @@ public class BlockAdapter extends BaseAdapter {
             BlockInfo blockInfo = model.get(pos);
             boolean isSuc = BlockManager.getInstance().removeBlockContact(blockInfo);
 
-            LogUtil.d("chenr", "remove block contact is success: " + isSuc);
-
             if (isSuc) {
                 model.remove(blockInfo);
                 notifyDataSetChanged();
@@ -108,9 +106,8 @@ public class BlockAdapter extends BaseAdapter {
             holder.tvDate.setText(DateUtils.getHmdForTime(item.getBlockTime(), Locale.getDefault()));
 
             if (TextUtils.isEmpty(item.getName())) {
-                String number = NumberUtil.getFormatNumber(item.getNumber());
+                String number = NumberUtil.getLocalizationNumber(item.getNumber());
                 holder.tvName.setText(number);
-                LogUtil.d("chenr", "BlockAdapter show format number by NumberUtil.getFormatNumber:  " + number);
             } else {
                 holder.tvName.setText(item.getName());
             }
