@@ -9,8 +9,9 @@ import android.os.IBinder;
 import com.md.block.core.BlockManager;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventForeground;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PhoneStateListenImpl;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.CallerCommonReceiver;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.MessageReceiver;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.NetworkConnectChangedReceiver;
 import event.EventBus;
 
@@ -18,6 +19,8 @@ public class LocalService extends Service {
     private static final String TAG = "LocalService";
     private static LocalService sInstance;
     private NetworkConnectChangedReceiver mNetworkChangeListener;
+    private MessageReceiver mMessageReceiver;
+    private CallerCommonReceiver mCallerCommonReceiver;
 
     public LocalService() {
     }
@@ -30,21 +33,37 @@ public class LocalService extends Service {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
-        if (!EventBus.getDefault().isRegistered(LocalService.this)) {
-            EventBus.getDefault().register(LocalService.this);
-        }
         registerReceivers();
         initBlock();
     }
 
     private void registerReceivers() {
-        //网络变化广告
+        //网络变化广播
         mNetworkChangeListener = new NetworkConnectChangedReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
-        filter.addAction("android.net.wifi.STATE_CHANGE");
-        registerReceiver(mNetworkChangeListener, filter);
+        IntentFilter networkChangefilter = new IntentFilter();
+        networkChangefilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        networkChangefilter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
+        networkChangefilter.addAction("android.net.wifi.STATE_CHANGE");
+        registerReceiver(mNetworkChangeListener, networkChangefilter);
+
+        //接收短信的广播
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter messageFilter = new IntentFilter();
+        messageFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
+        registerReceiver(mMessageReceiver, messageFilter);
+
+        //常用功能广播
+        IntentFilter commonFilter = new IntentFilter(); //for notification check
+        commonFilter.addAction(CallerCommonReceiver.RANDOM_NOTIFY_TASK_24);
+        commonFilter.addAction(CallerCommonReceiver.COMMON_CHECK_24);
+        commonFilter.addAction(CallerCommonReceiver.RANDOM_NOTIFY_CALL_FLASH);
+        //daydream
+        commonFilter.addAction(Intent.ACTION_DREAMING_STARTED);
+        commonFilter.addAction(Intent.ACTION_DREAMING_STOPPED);
+        commonFilter.addAction(Intent.ACTION_USER_PRESENT);
+        commonFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+        mCallerCommonReceiver = new CallerCommonReceiver();
+        this.registerReceiver(mCallerCommonReceiver, commonFilter);
     }
 
     private void initBlock() {
@@ -67,20 +86,8 @@ public class LocalService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(LocalService.this)) {
-            EventBus.getDefault().unregister(LocalService.this);
-        }
         unregisterReceiver(mNetworkChangeListener);
+        unregisterReceiver(mCallerCommonReceiver);
+        unregisterReceiver(mMessageReceiver);
     }
-
-    private boolean isForeground = false;
-
-    public boolean getIsForeground() {
-        return isForeground;
-    }
-
-    public void onEvent(EventForeground event) {
-        isForeground = event.m_bIsForeground;
-    }
-
 }

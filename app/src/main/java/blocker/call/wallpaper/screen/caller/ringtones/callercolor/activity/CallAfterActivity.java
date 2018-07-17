@@ -2,7 +2,6 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.text.TextUtils;
@@ -233,7 +232,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                     ToastUtils.showToast(this, getResources().getString(R.string.call_after_click_toast));
                     break;
                 }
-                DeviceUtil.callOut(Uri.parse("tel:" + mInfo.callNumber), this);
+                DeviceUtil.callOut(this, mInfo.callNumber);
 //                finish();
                 break;
             case R.id.rl_call_sms:
@@ -304,7 +303,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void toMain() {
-        ActivityBuilder.toMain(this, ConstantUtils.FRAGMENT_HOME);
+        ActivityBuilder.toMain(this, ActivityBuilder.FRAGMENT_HOME);
         if (!isFinishing()) {
             finish();
         }
@@ -318,7 +317,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
             rl_menu_root.setVisibility(View.GONE);
         } else {
             if (isToMain()) {
-                ActivityBuilder.toMain(this, ConstantUtils.FRAGMENT_HOME);
+                ActivityBuilder.toMain(this, ActivityBuilder.FRAGMENT_HOME);
             }
             if (!isFinishing()) {
                 finish();
@@ -327,7 +326,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
     }
 
     public boolean isToMain() {
-        long install_time = PreferenceHelper.getInt(ConstantUtils.PREF_KEY_INSTALL_TIME, 0);
+        long install_time = PreferenceHelper.getInt(PreferenceHelper.PREF_KEY_INSTALL_TIME, 0);
 //        long lastShowSplashTime = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_TO_SPALSH_TIME, 0);
         if (!DateUtils.isToday(install_time)/* && !DateUtils.isToday(lastShowSplashTime)*/) {
             Calendar cal = Calendar.getInstance();

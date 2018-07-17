@@ -34,9 +34,9 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallFlashDetailGroupAdHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.PreloadAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
@@ -44,11 +44,10 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.Saveing
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashDetailGroupAdShow;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventInterstitialAdLoadSuccess;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashEnable;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.FullScreenAdManager;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -59,10 +58,10 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringut
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CallFlashAvatarInfoView;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.OKCancelDialog;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
 import event.EventBus;
 
 public class CallFlashDetailActivity extends BaseActivity implements View.OnClickListener {
@@ -129,7 +128,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             EventBus.getDefault().register(this);
         }
 
-        mInfo = (CallFlashInfo) getIntent().getSerializableExtra("flash_theme");
+        mInfo = (CallFlashInfo) getIntent().getSerializableExtra(ActivityBuilder.CALL_FLASH_INFO);
         initView();
         listener();
         downloadListener();
@@ -156,16 +155,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 mLayourAd.setVisibility(View.VISIBLE);
             }
         });
-    }
-
-    private void initAd() {
-        mIsShowFirstAdmob = CallerAdManager.isShowFirstAdMob(CallerAdManager.POSITION_FIRST_ADMOB_CALL_FLASH_DETAIL, true);
-        if (mIsShowFirstAdmob || !CallerAdManager.isUseGroupAds()) {
-            initAds();
-        } else {
-            CallFlashDetailGroupAdHelper.getInstance().loadGroupAd(AdvertisementSwitcher.SERVER_KEY_CALL_FLASH_DOWN_GROUP, false, PreloadAdvertisement.ADMOB_TYPE_NATIVE_ADVANCED,
-                    PreloadAdvertisement.ADMOB_ADX_TYPE_NATIVE_ADVANCED);
-        }
     }
 
     private void initView() {
@@ -321,7 +310,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private boolean isShowAboveAdBtn() {
-        return CallerAdManager.isUseMagicButton() && mIsShowFirstAdmob;
+        return /*CallerAdManager.isUseMagicButton() && */mIsShowFirstAdmob;
     }
 
     /**
@@ -356,7 +345,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void loadInterstitialAd() {
-        CallerAdManager.loadInterstitialAd(this, CallerAdManager.IN_ADS_CALL_FLASH);
+        InterstitialAdUtil.loadInterstitialAd(this, CallerAdManager.IN_ADS_CALL_FLASH);
 //        LogUtil.d(TAG, "call_flash_detail loadInterstitialAd:" + CallerAdManager.getResultInFbId());
     }
 
@@ -395,7 +384,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mInfo = (CallFlashInfo) intent.getSerializableExtra("flash_theme");
+        mInfo = (CallFlashInfo) intent.getSerializableExtra(ActivityBuilder.CALL_FLASH_INFO);
         showCallFlash();
         setFlashBackground();
         showDownloadProgress();
@@ -483,11 +472,11 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
-        final boolean isShowInterstitialAd = CallerAdManager.isShowInterstitial(CallerAdManager.IN_ADS_CALL_FLASH);
+        final boolean isShowInterstitialAd = InterstitialAdUtil.isShowInterstitial(CallerAdManager.IN_ADS_CALL_FLASH);
         File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
         boolean fileExist = file != null && file.exists();
 //        boolean isDownloadComplete = mInfo != null && (!mInfo.isOnlionCallFlash || fileExist || (!TextUtils.isEmpty(mInfo.path) && new File(mInfo.path).exists()));
-        if (CallerAdManager.isShowFullScreenAd(CallerAdManager.IN_ADS_CALL_FLASH) /*&& isDownloadComplete*/) {
+        if (InterstitialAdUtil.isShowFullScreenAd(CallerAdManager.IN_ADS_CALL_FLASH) /*&& isDownloadComplete*/) {
             showFullScreenAd(true);
         } else if (isShowInterstitialAd /*&& isDownloadComplete*/) {
             showInterstitialAd(true);
@@ -533,6 +522,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void showDownloadProgress() {
+        if (mInfo == null) return;
         File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
         if ((file != null && file.exists()) || (!TextUtils.isEmpty(mInfo.path) && new File(mInfo.path).exists())) {
             if (mIsShowAboveAdBtn) {
@@ -708,8 +698,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         layout_progress_below_ad.postDelayed(new Runnable() {
             @Override
             public void run() {
-                final boolean isShowInterstitialAd = CallerAdManager.isShowInterstitial(CallerAdManager.IN_ADS_CALL_FLASH);
-                if (CallerAdManager.isShowFullScreenAd(CallerAdManager.IN_ADS_CALL_FLASH)) {
+                final boolean isShowInterstitialAd = InterstitialAdUtil.isShowInterstitial(CallerAdManager.IN_ADS_CALL_FLASH);
+                if (InterstitialAdUtil.isShowFullScreenAd(CallerAdManager.IN_ADS_CALL_FLASH)) {
                     showFullScreenAd(false);
                     layout_progress_below_ad.postDelayed(new Runnable() {
                         @Override
@@ -883,6 +873,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
             CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, mInfo);
             resultDesId = R.string.call_flash_gif_show_setting_suc;
+            EventBus.getDefault().post(new EventRefreshCallFlashEnable(true));
         } else {
             resultDesId = R.string.call_flash_gif_show_setting_suc_reset;
         }
@@ -891,11 +882,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     private void toResult(String resultDes) {
         Intent intent = new Intent(CallFlashDetailActivity.this, CallFlashSetResultActivity.class);
-        intent.putExtra(ConstantUtils.COME_FROM_CALLAFTER, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_CALLAFTER, false));
-        intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
-        intent.putExtra(ConstantUtils.COME_FROM_DESKTOP, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false));
-        intent.putExtra(ConstantUtils.COME_FROM_FLASH_DETAIL, true);
-        intent.putExtra(ConstantUtils.CALL_FLASH_INFO, mInfo);
+        intent.putExtra(ActivityBuilder.IS_COME_FROM_DESKTOP, getIntent().getBooleanExtra(ActivityBuilder.IS_COME_FROM_DESKTOP, false));
+        intent.putExtra(ActivityBuilder.CALL_FLASH_INFO, mInfo);
 //        intent.putStringArrayListExtra(ConstantUtils.NUMBER_FOR_CALL_FLASH, mNumbersForCallFlash);
         intent.putExtra("is_show_result", true);
         intent.putExtra("result_des", resultDes);
@@ -911,101 +899,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
         intent.setData(Uri.fromParts("package", getPackageName(), null));
         startActivityForResult(intent, REQUEST_CODE_APP_DETAILS_SETTINGS);
-    }
-
-    private void initAds() {
-        String placementId = AdvertisementSwitcher.SERVER_KEY_CONTACT_BIG_NEW;
-        String admobId = ConstantUtils.ADMOB_ADV_CONTACT_ACTIVITY_ID;
-        if (mIsShowFirstAdmob) {
-            placementId = AdvertisementSwitcher.SERVER_KEY_FIRST_SHOW_ADMOB;
-            admobId = CallerAdManager.getAdmobIdForFirst(CallerAdManager.POSITION_FIRST_ADMOB_CALL_FLASH_DETAIL);
-        }
-        LogUtil.d("random_adid", "end call initAds:");
-        MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
-                CallerAdManager.getCallFlashDownFbId(),//ConstantUtils.FB_FAKE_CALL_TIME_ID
-                admobId,//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
-                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
-                CallerAdManager.MOPUB_NATIVE_ADV_BIG_CALL_AFTER_ID,
-                Advertisement.MOPUB_TYPE_NATIVE,
-                CallerAdManager.BAIDU_ADV_BIG_CALL_AFTER_ID,
-                "",
-                placementId,
-                false);
-
-
-        mAdvertisement = new Advertisement(adapter);
-        mAdvertisement.setRefreshWhenClicked(false);
-        mAdvertisement.refreshAD(true);
-
-
-        mAdvertisement.isAdaptiveSize(true);
-    }
-
-    private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
-
-        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, String placementId, boolean isBanner) {
-            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, placementId, isBanner);
-        }
-
-        @Override
-        public void onAdLoaded() {
-            super.onAdLoaded();
-        }
-
-        @Override
-        public void onAdClicked(boolean isAdmob) {
-            super.onAdClicked(isAdmob);
-            if (mIsShowFirstAdmob) {
-//                mIsShowFirstAdmob = false;
-//                if (!CallerAdManager.isUseGroupAds()) {
-//                    initAds();
-//                } else {
-//                    CallFlashDetailGroupAdHelper.getInstance().loadGroupAd(AdvertisementSwitcher.SERVER_KEY_CALL_FLASH_DOWN_GROUP, false, PreloadAdvertisement.ADMOB_TYPE_NATIVE_ADVANCED,
-//                            PreloadAdvertisement.ADMOB_ADX_TYPE_NATIVE_ADVANCED);
-//                }
-                mLayourAd.setVisibility(View.GONE);
-            }
-        }
-
-        @Override
-        public void onAdShow() {
-            super.onAdShow();
-            saveFirstShowAdmobTime();
-        }
-
-        private void saveFirstShowAdmobTime() {
-            if (mIsShowFirstAdmob) {
-                HashMap<String, Long> data = PreferenceHelper.getHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, Long.class);
-                if (data == null) {
-                    data = new HashMap<>();
-                }
-                data.put(String.valueOf(CallerAdManager.POSITION_FIRST_ADMOB_CALL_FLASH_DETAIL), System.currentTimeMillis());
-                PreferenceHelper.putHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, data);
-            }
-        }
-
-        @Override
-        public int getFbViewRes() {
-            return mIsBanner ? R.layout.facebook_preview_new_banner_native_ads : R.layout.facebook_preview_new_banner_native_ads;
-        }
-
-        @Override
-        public int getAdmobViewRes(int type, boolean isAppInstall) {
-            if (mIsShowFirstAdmob) {
-                return isAppInstall ? R.layout.admob_preview_new_banner_app_install_ads : R.layout.admob_preview_new_banner_content_ads;
-            }
-            return isAppInstall ? R.layout.admob_preview_new_banner_app_install_ads : R.layout.admob_preview_new_banner_content_ads;
-        }
-
-        @Override
-        public int getBaiDuViewRes() {
-            return mIsBanner ? R.layout.du_preview_new_banner_native_ads : R.layout.du_preview_new_banner_native_ads;
-        }
-
-        @Override
-        public int getMoPubViewRes() {
-            return mIsBanner ? R.layout.layout_mopub_ad_banner_flash_show : R.layout.layout_mopub_ad_new_banner_flash_preview;
-        }
     }
 
     private void showInterstitialAd(final boolean isBack) {

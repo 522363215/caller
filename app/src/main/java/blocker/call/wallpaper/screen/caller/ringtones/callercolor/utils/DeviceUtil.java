@@ -31,12 +31,12 @@ import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
 
-
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Scanner;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 
 public class DeviceUtil {
     public static final double DOUBLE = 10.;
@@ -264,7 +264,7 @@ public class DeviceUtil {
     /**
      * 直接拨打电话
      */
-    public static void callOut(final Uri uri, Context context) {
+    public static void callOut(Context context, final String number) {
         if (Build.VERSION.SDK_INT >= 23) {
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 return;
@@ -272,18 +272,18 @@ public class DeviceUtil {
         }
 
         try {
-            Intent intent = new Intent(Intent.ACTION_CALL, uri);
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + NumberUtil.getLocalizationNumber(number)));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         } catch (Exception e) {
             try {
-                Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + NumberUtil.getLocalizationNumber(number)));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             } catch (Exception e2) {
                 try {
                     Intent intent = new Intent();
-                    intent.setData(uri);
+                    intent.setData(Uri.parse("tel:" + NumberUtil.getLocalizationNumber(number)));
                     intent.setClassName("com.google.android.dialer", "com.android.dialer.DialtactsActivity");
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
@@ -297,10 +297,10 @@ public class DeviceUtil {
     /**
      * 调换到系统短信界面
      */
-    public static void toSystemSms(String number, Context context) {
+    public static void toSystemSms(Context context, String number) {
         try {
             Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
-            sendIntent.setData(Uri.parse("smsto:" + number));
+            sendIntent.setData(Uri.parse("smsto:" + NumberUtil.getLocalizationNumber(number)));
             context.startActivity(sendIntent);
         } catch (Exception e) {
             LogUtil.e("deviceutil", "end call to sms:" + e.getMessage());
@@ -609,6 +609,20 @@ public class DeviceUtil {
             }
             window.setAttributes(lp);
         } catch (Exception e) {
+        }
+    }
+
+    public static boolean isScreenOff(Context context) {
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        KeyguardManager mKeyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        boolean flag = mKeyguardManager.inKeyguardRestrictedInputMode();
+        boolean isDayDream = PreferenceHelper.getBoolean(PreferenceHelper.PREF_KEY_DAY_DREAM_STATUS, false);
+        if (Build.VERSION.SDK_INT > 19) {
+            LogUtil.d(TAG, "isInteractive :" + pm.isInteractive() + ",flag:" + flag + "isDayDream," + isDayDream);
+            LogUtil.d("deviceUtil", "isScreenOff:" + (!pm.isInteractive() || flag));
+            return !pm.isInteractive() || flag || isDayDream;
+        } else {
+            return !pm.isScreenOn() || flag || isDayDream;
         }
     }
 

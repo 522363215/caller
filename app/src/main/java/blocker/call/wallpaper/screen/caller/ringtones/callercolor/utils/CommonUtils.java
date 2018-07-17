@@ -3,7 +3,6 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -14,7 +13,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,7 +26,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 
@@ -36,6 +33,9 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
  * Created by John on 2015/12/17.
  */
 public final class CommonUtils {
+    // 应用大字体最大scale
+    public static final float MAX_FONT_SCALE = 1.2f;
+
     private CommonUtils() {
     }
 
@@ -144,8 +144,8 @@ public final class CommonUtils {
         }
         Configuration config = res.getConfiguration();
         //LogUtil.e(ConstantUtils.NM_TAG, "fontScale:" + config.fontScale);
-        if (config.fontScale > ConstantUtils.MAX_FONT_SCALE) {
-            config.fontScale = ConstantUtils.MAX_FONT_SCALE;
+        if (config.fontScale > MAX_FONT_SCALE) {
+            config.fontScale = MAX_FONT_SCALE;
             config.setTo(config);
             DisplayMetrics dm = res.getDisplayMetrics();
             res.updateConfiguration(config, dm);

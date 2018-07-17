@@ -139,19 +139,19 @@ public class CallFlashDetailGroupAdHelper {
         for (String ad : adPriority) {
             if (AdvertisementSwitcher.AD_FACEBOOK.equals(ad)) {
                 if (PreloadAdvertisement.AdShowPriority.HIGH.equals(adShowPriority)) {
-                    String fbAdHighId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_FACEBOOK_HIGH);
+                    String fbAdHighId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_FACEBOOK_HIGH);
                     if (!TextUtils.isEmpty(fbAdHighId)) {
                         AdIdInfo info = new AdIdInfo(fbAdHighId, PreloadAdvertisement.AdShowPriority.HIGH, AdvertisementSwitcher.AD_FACEBOOK);
                         mAdShowPriority.add(info);
                     }
                 } else if (PreloadAdvertisement.AdShowPriority.MEDIUM.equals(adShowPriority)) {
-                    String fbAdMediumId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_FACEBOOK_MEDIUM);
+                    String fbAdMediumId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_FACEBOOK_MEDIUM);
                     if (!TextUtils.isEmpty(fbAdMediumId)) {
                         AdIdInfo info = new AdIdInfo(fbAdMediumId, PreloadAdvertisement.AdShowPriority.MEDIUM, AdvertisementSwitcher.AD_FACEBOOK);
                         mAdShowPriority.add(info);
                     }
                 } else if (PreloadAdvertisement.AdShowPriority.NORMAL.equals(adShowPriority)) {
-                    String fbAdNormalId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_FACEBOOK_NORMAL);
+                    String fbAdNormalId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_FACEBOOK_NORMAL);
                     if (!TextUtils.isEmpty(fbAdNormalId)) {
                         AdIdInfo info = new AdIdInfo(fbAdNormalId, PreloadAdvertisement.AdShowPriority.NORMAL, AdvertisementSwitcher.AD_FACEBOOK);
                         mAdShowPriority.add(info);
@@ -159,19 +159,19 @@ public class CallFlashDetailGroupAdHelper {
                 }
             } else if (AdvertisementSwitcher.AD_ADMOB.equals(ad)) {
                 if (PreloadAdvertisement.AdShowPriority.HIGH.equals(adShowPriority)) {
-                    String admobAdHighId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_ADMOB_HIGH);
+                    String admobAdHighId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_ADMOB_HIGH);
                     if (!TextUtils.isEmpty(admobAdHighId)) {
                         AdIdInfo info = new AdIdInfo(admobAdHighId, PreloadAdvertisement.AdShowPriority.HIGH, AdvertisementSwitcher.AD_ADMOB);
                         mAdShowPriority.add(info);
                     }
                 } else if (PreloadAdvertisement.AdShowPriority.MEDIUM.equals(adShowPriority)) {
-                    String admobAdMediumId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_ADMOB_MEDIUM);
+                    String admobAdMediumId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_ADMOB_MEDIUM);
                     if (!TextUtils.isEmpty(admobAdMediumId)) {
                         AdIdInfo info = new AdIdInfo(admobAdMediumId, PreloadAdvertisement.AdShowPriority.MEDIUM, AdvertisementSwitcher.AD_ADMOB);
                         mAdShowPriority.add(info);
                     }
                 } else if (PreloadAdvertisement.AdShowPriority.NORMAL.equals(adShowPriority)) {
-                    String admobAdNormalId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_ADMOB_NORMAL);
+                    String admobAdNormalId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_ADMOB_NORMAL);
                     if (!TextUtils.isEmpty(admobAdNormalId)) {
                         AdIdInfo info = new AdIdInfo(admobAdNormalId, PreloadAdvertisement.AdShowPriority.NORMAL, AdvertisementSwitcher.AD_ADMOB);
                         mAdShowPriority.add(info);
@@ -179,19 +179,19 @@ public class CallFlashDetailGroupAdHelper {
                 }
             } else if (AdvertisementSwitcher.AD_ADMOB_ADX.equals(ad)) {
                 if (PreloadAdvertisement.AdShowPriority.HIGH.equals(adShowPriority)) {
-                    String admobAdxAdHighId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_ADMOB_ADX_HIGH);
+                    String admobAdxAdHighId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_ADMOB_ADX_HIGH);
                     if (!TextUtils.isEmpty(admobAdxAdHighId)) {
                         AdIdInfo info = new AdIdInfo(admobAdxAdHighId, PreloadAdvertisement.AdShowPriority.HIGH, AdvertisementSwitcher.AD_ADMOB_ADX);
                         mAdShowPriority.add(info);
                     }
                 } else if (PreloadAdvertisement.AdShowPriority.MEDIUM.equals(adShowPriority)) {
-                    String admobAdxAdMediumId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_ADMOB_ADX_MEDIUM);
+                    String admobAdxAdMediumId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_ADMOB_ADX_MEDIUM);
                     if (!TextUtils.isEmpty(admobAdxAdMediumId)) {
                         AdIdInfo info = new AdIdInfo(admobAdxAdMediumId, PreloadAdvertisement.AdShowPriority.MEDIUM, AdvertisementSwitcher.AD_ADMOB_ADX);
                         mAdShowPriority.add(info);
                     }
                 } else if (PreloadAdvertisement.AdShowPriority.NORMAL.equals(adShowPriority)) {
-                    String admobAdxAdNormalId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_ADMOB_ADX_NORMAL);
+                    String admobAdxAdNormalId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_ADMOB_ADX_NORMAL);
                     if (!TextUtils.isEmpty(admobAdxAdNormalId)) {
                         AdIdInfo info = new AdIdInfo(admobAdxAdNormalId, PreloadAdvertisement.AdShowPriority.NORMAL, AdvertisementSwitcher.AD_ADMOB_ADX);
                         mAdShowPriority.add(info);
@@ -205,9 +205,9 @@ public class CallFlashDetailGroupAdHelper {
         PreloadAdvertisement.AdTypeInfo adTypeInfo = new PreloadAdvertisement.AdTypeInfo();
         adTypeInfo.adType = AdvertisementSwitcher.AD_FACEBOOK;
 
-        String fbAdHighId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_FACEBOOK_HIGH);
-        String fbAdMediumId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_FACEBOOK_MEDIUM);
-        String fbAdNormalId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_FACEBOOK_NORMAL);
+        String fbAdHighId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_FACEBOOK_HIGH);
+        String fbAdMediumId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_FACEBOOK_MEDIUM);
+        String fbAdNormalId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_FACEBOOK_NORMAL);
         LogUtil.d(TAG, "AdId\nfbAdHighId:" + fbAdHighId + "\nfbAdMediumId:" + fbAdMediumId + "\nfbAdNormalId:" + fbAdNormalId);
 
         loadAd(fbAdHighId, key, isBanner, PreloadAdvertisement.AdShowPriority.HIGH, adTypeInfo);
@@ -220,9 +220,9 @@ public class CallFlashDetailGroupAdHelper {
         adTypeInfo.adType = AdvertisementSwitcher.AD_ADMOB;
         adTypeInfo.admobType = admobType;
 
-        String admobAdHighId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_ADMOB_HIGH);
-        String admobAdMediumId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_ADMOB_MEDIUM);
-        String admobAdNormalId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_ADMOB_NORMAL);
+        String admobAdHighId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_ADMOB_HIGH);
+        String admobAdMediumId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_ADMOB_MEDIUM);
+        String admobAdNormalId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_ADMOB_NORMAL);
         LogUtil.d(TAG, "AdId\nadmobAdHighId:" + admobAdHighId + "\nadmobAdMediumId:" + admobAdMediumId + "\nadmobAdNormalId:" + admobAdNormalId);
 
         loadAd(admobAdHighId, key, isBanner, PreloadAdvertisement.AdShowPriority.HIGH, adTypeInfo);
@@ -235,9 +235,9 @@ public class CallFlashDetailGroupAdHelper {
         adTypeInfo.adType = AdvertisementSwitcher.AD_ADMOB_ADX;
         adTypeInfo.admobAdxType = admobAdxType;
 
-        String admobAdxAdHighId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_ADMOB_ADX_HIGH);
-        String admobAdxAdMediumId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_ADMOB_ADX_MEDIUM);
-        String admobAdxAdNormalId = CallerAdManager.getBigGroupIdByKey(CallerAdManager.KEY_FLASH_DOWN_GROUP_ADMOB_ADX_NORMAL);
+        String admobAdxAdHighId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_ADMOB_ADX_HIGH);
+        String admobAdxAdMediumId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_ADMOB_ADX_MEDIUM);
+        String admobAdxAdNormalId = GroupAdUtil.getBigGroupIdByKey(GroupAdUtil.KEY_FLASH_DOWN_GROUP_ADMOB_ADX_NORMAL);
         LogUtil.d(TAG, "AdId\nadmobAdxAdHighId:" + admobAdxAdHighId + "\nadmobAdxAdMediumId:" + admobAdxAdMediumId + "\nadmobAdxAdNormalId:" + admobAdxAdNormalId);
 
         loadAd(admobAdxAdHighId, key, isBanner, PreloadAdvertisement.AdShowPriority.HIGH, adTypeInfo);

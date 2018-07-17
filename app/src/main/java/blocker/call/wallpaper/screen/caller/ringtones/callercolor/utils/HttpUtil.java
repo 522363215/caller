@@ -1,9 +1,6 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils;
 
-import android.app.Activity;
-import android.app.Service;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.os.Build;
@@ -19,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 
 public class HttpUtil {
@@ -27,6 +23,8 @@ public class HttpUtil {
     public static final int ACTION_TYPE_CLICK = 2;
     public final static String NOTIFICATION_TYPE_SHOW = "notification_show";
     public final static String NOTIFICATION_TYPE_CLICK = "notification_click";
+    public final static String NOTIFICATION_ACTION = "notification_static";
+    public final static String NOTIFICATION_API_INTERFACE = "http://notification.lionmobi.com/viewSelected/portal/api.php";
 
 
     public static void postNofityData(final Context context, final int actionType, final String notificationType, final AjaxCallback<JSONObject> ajaxCallback) {
@@ -34,7 +32,7 @@ public class HttpUtil {
         try {
             if (makeBasicParam4Json(context, object)) {
                 TimeZone tz = Calendar.getInstance().getTimeZone();
-                object.put("action", ConstantUtils.NOTIFICATION_ACTION);
+                object.put("action", NOTIFICATION_ACTION);
                 object.put("action_type", actionType);
                 object.put("notification_type", notificationType);
                 object.put("client", ConstantUtils.CALLER_STATISTICS_CHANNEL);
@@ -46,7 +44,7 @@ public class HttpUtil {
                 Map<String, Object> params = new HashMap<>();
                 params.put("data", object.toString());
                 params.put("v", sig);
-                aq.ajax(ConstantUtils.NOTIFICATION_API_INTERFACE, params, JSONObject.class, ajaxCallback);
+                aq.ajax(NOTIFICATION_API_INTERFACE, params, JSONObject.class, ajaxCallback);
             }
         } catch (Exception e) {
             LogUtil.e("liontools", "postNofityData exception: " + e.getMessage());

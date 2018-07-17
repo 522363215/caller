@@ -505,65 +505,6 @@ public class ContactManager {
         return photoId;
     }
 
-    public Bitmap getDisplayContactPhoto(long contactId) {
-        if (contactId == -1L) {
-            return null;
-        }
-
-        Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId);
-        // get bitmap from cache;
-        String cacheKey = contactUri.toString();
-        Bitmap displayPhoto = IconUtil.getPhoto(cacheKey);
-
-        if (displayPhoto == null) {
-            Cursor queryPhoto = mContext.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
-                    new String[]{ContactsContract.Contacts.PHOTO_URI},
-                    ContactsContract.Contacts._ID + "=" + contactId,
-                    null,
-                    null);
-
-            if (queryPhoto != null && queryPhoto.moveToFirst()) {
-                String photoUri = queryPhoto.getString(queryPhoto.getColumnIndex(ContactsContract.Contacts.PHOTO_URI));
-                if (!TextUtils.isEmpty(photoUri)) {
-                    InputStream is = getPhotoInputStream(contactUri);
-                    if (is != null) {
-                        BitmapFactory.Options options = new BitmapFactory.Options();
-                        options.inJustDecodeBounds = true;
-                        BitmapFactory.decodeStream(is, null, options);
-                        options.inSampleSize = FileUtil.calculateInSampleSize(options, Utils.dp2Px(160), Utils.dp2Px(160));
-                        options.inJustDecodeBounds = false;
-                        InputStream inputStream = getPhotoInputStream(contactUri);
-                        if (inputStream != null && (displayPhoto = BitmapFactory.decodeStream(inputStream, null, options)) != null) {
-                            IconUtil.addToPhotoCache(cacheKey, displayPhoto);
-                            try {
-                                is.close();
-                                inputStream.close();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            LogUtil.d(TAG, "contact photo, height: " + displayPhoto.getHeight() + ", width: " + displayPhoto.getWidth()
-                                    + ",  size: " + (displayPhoto.getByteCount() / 1024.0f) + "KB");
-                        }
-                    }
-
-                }
-                queryPhoto.close();
-            }
-        }
-
-        return displayPhoto;
-    }
-
-    private InputStream getPhotoInputStream(Uri contactUri) {
-        long totalMemory = PreferenceHelper.getLong(ConstantUtils.PREF_KEY_SYSTEM_TOTAL_MEMORY_SIZE, 0);
-        boolean preferHighres = totalMemory >= 1024 * 1024 * 1024 * 1.5f; // 手机RAM小于1.5GB时使用头像的缩略图;
-//        boolean preferHighres = false;
-        return ContactsContract.Contacts.openContactPhotoInputStream(
-                mContext.getContentResolver(),
-                contactUri,
-                preferHighres);
-    }
-
     /**
      * 根据号码获取联系人信息
      */

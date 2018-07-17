@@ -34,7 +34,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchBut
  * Created by Admin on 2016/10/18.
  */
 public class SideslipContraller implements View.OnClickListener {
-    public static final int REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS = 2713;
     private MainActivity mAct;
     private View root;
     private View mMenuBlock;
@@ -80,7 +79,8 @@ public class SideslipContraller implements View.OnClickListener {
             mMenuAbout.setOnClickListener(this);
             mMenuTest.setOnClickListener(this);
 
-            setSwitchButton();
+            boolean isCallFlashOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
+            setSwitchButton(isCallFlashOn);
 
             PackageManager manager = mAct.getPackageManager();
             try {
@@ -94,8 +94,7 @@ public class SideslipContraller implements View.OnClickListener {
         }
     }
 
-    private void setSwitchButton() {
-        boolean isCallFlashOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
+    public void setSwitchButton(boolean isCallFlashOn) {
         mSwitchButton.setChecked(isCallFlashOn);
         mSwitchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
@@ -256,23 +255,23 @@ public class SideslipContraller implements View.OnClickListener {
         mAct.startActivity(intent);
     }
 
-    public void onSettings() {
+    private void onSettings() {
         FlurryAgent.logEvent("left_setting_click");
     }
 
-    public void onAbout() {
+    private void onAbout() {
         FlurryAgent.logEvent("left_about_click");
         if (mAct == null) return;
         Intent intentAbout = new Intent(mAct, AboutActivity.class);
         mAct.startActivity(intentAbout);
     }
 
-    public void onRate() {
+    private void onRate() {
         FlurryAgent.logEvent("left_rate_us_click");
         new RatingDialog(mAct).show();
     }
 
-    protected SideslipContrallerCallBack callBack;
+    private SideslipContrallerCallBack callBack;
 
     public interface SideslipContrallerCallBack {
         void menuClick();

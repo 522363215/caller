@@ -10,6 +10,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertiseme
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BasePreloadAdvertisementAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.FirstShowAdmobUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.PreloadAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.FullScreenAdDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
@@ -76,12 +77,8 @@ public class FullScreenAdManager {
     private String getAdId(int position) {
         String adId = "";
         switch (position) {
-            case CallerAdManager.IN_ADS_RESULT:
-                adId = CallerAdManager.getAdmobIdForFirst(CallerAdManager.POSITION_FIRST_ADMOB_FULL_SCREEN_RESULT_BACK);
-                break;
             case CallerAdManager.IN_ADS_CALL_FLASH:
-            case CallerAdManager.IN_ADS_CALL_FLASH_RESULT:
-                adId = CallerAdManager.getAdmobIdForFirst(CallerAdManager.POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL);
+                adId = FirstShowAdmobUtil.getAdmobIdForFirst(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL);
                 break;
         }
         return adId;
@@ -147,19 +144,11 @@ public class FullScreenAdManager {
         private void saveFirstShowAdmobTime() {
             HashMap<String, Long> data = PreferenceHelper.getHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, Long.class);
             switch (mPosition) {
-                case CallerAdManager.IN_ADS_RESULT:
-                    if (data == null) {
-                        data = new HashMap<>();
-                    }
-                    data.put(String.valueOf(CallerAdManager.POSITION_FIRST_ADMOB_FULL_SCREEN_RESULT_BACK), System.currentTimeMillis());
-                    PreferenceHelper.putHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, data);
-                    break;
                 case CallerAdManager.IN_ADS_CALL_FLASH:
-                case CallerAdManager.IN_ADS_CALL_FLASH_RESULT:
                     if (data == null) {
                         data = new HashMap<>();
                     }
-                    data.put(String.valueOf(CallerAdManager.POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL), System.currentTimeMillis());
+                    data.put(String.valueOf(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL), System.currentTimeMillis());
                     PreferenceHelper.putHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, data);
                     break;
             }
