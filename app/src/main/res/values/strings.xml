@@ -234,23 +234,6 @@
     <string name="call_after_click_toast">"The number is hidden!"</string>
     <!--call after end-->
 
-    <!-- Seach Fragment start-->
-    <string name="search_input_hint">Enter a number</string>
-    <string name="search_number_hint">Search among 100,000,000 groups of phone numbers</string>
-    <string name="search_recently_record">Recent search results</string>
-    <string name="search_no_result">No search results yet</string>
-    <string name="search_no_result2">No search results, please select another country code and try again.</string>
-    <string name="search_no_result_hint">Your recent search results will be shown here.</string>
-    <string name="search_content_hint">Search in Caller ID</string>
-    <string name="search_delete_all_content">"Confirm to delete all search history ?"</string>
-    <!-- Seach Fragment end-->
-
-    <!--Search Activity start-->
-    <string name="search_clear_all_record">"Clear recent search history"</string>
-    <string name="search_invalid_number">"Please input a correct number"</string>
-    <string name="search_number_tip">"Please input a correct number"</string>
-    <!--Search Activity end-->
-
     <!-- dialing start-->
     <string name="dialing_title">Call</string>
     <!-- dialing end-->
