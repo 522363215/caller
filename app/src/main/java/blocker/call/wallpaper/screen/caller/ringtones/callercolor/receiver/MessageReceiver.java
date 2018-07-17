@@ -13,7 +13,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUt
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 public class MessageReceiver extends BroadcastReceiver {
-    private final String TAG = "MessagingReceiver";
+    private final String TAG = "MessageReceiver";
     private Context mContext;
     private String mAddress;
     private String mBody;
@@ -56,9 +56,8 @@ public class MessageReceiver extends BroadcastReceiver {
                 mAddress = sms.getDisplayOriginatingAddress();
                 mDate = System.currentTimeMillis();
                 mDatesent = sms.getTimestampMillis();
-                LogUtil.d("messsagingreceiver", "datedatedate  messsagingreceiver:" + mDatesent);
+                LogUtil.d(TAG, "datedatedate  messsagingreceiver:" + mDatesent);
             }
-            LogUtil.d("message_flash", "onReceive show insertMessage");
             setMessage();
         } catch (Exception e) {
             LogUtil.e(TAG, "MessagingReceiver exception: " + e.getMessage());
@@ -70,7 +69,7 @@ public class MessageReceiver extends BroadcastReceiver {
         if (isMessageOn) {
             if (DeviceUtil.isScreenOff(mContext) || SmsComeActivity.isForeground(mContext)) {
                 //跳转到短信界面
-                LogUtil.d("messageRecever", "onReceive showsmsComeActvity isScreenOff:" + DeviceUtil.isScreenOff(mContext)
+                LogUtil.d(TAG, "onReceive showsmsComeActvity isScreenOff:" + DeviceUtil.isScreenOff(mContext)
                         + ",isForeground:" + SmsComeActivity.isForeground(mContext));
                 Intent smsIntent = new Intent(mContext, SmsComeActivity.class);
                 Message message = new Message();
@@ -85,7 +84,7 @@ public class MessageReceiver extends BroadcastReceiver {
         } else {
             if (SmsComeActivity.isForeground(mContext)) {
                 //跳转到短信界面
-                LogUtil.d("messageRecever", "onReceive showsmsComeActvity");
+                LogUtil.d(TAG, "onReceive showsmsComeActvity");
                 Intent smsIntent = new Intent(mContext, SmsComeActivity.class);
                 Message message = new Message();
                 message.address = mAddress;
