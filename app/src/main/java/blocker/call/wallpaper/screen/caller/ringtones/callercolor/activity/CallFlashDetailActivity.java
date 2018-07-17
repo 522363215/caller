@@ -44,6 +44,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.Saveing
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashDetailGroupAdShow;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventInterstitialAdLoadSuccess;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashEnable;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.FullScreenAdManager;
@@ -872,6 +873,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
             CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, mInfo);
             resultDesId = R.string.call_flash_gif_show_setting_suc;
+            EventBus.getDefault().post(new EventRefreshCallFlashEnable(true));
         } else {
             resultDesId = R.string.call_flash_gif_show_setting_suc_reset;
         }

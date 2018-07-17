@@ -25,7 +25,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 import event.EventBus;
 
-
 public class SmsComeActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "SmsComeActivity";
     private ListView mLvSms;
@@ -40,12 +39,9 @@ public class SmsComeActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isAlive = true;
         setContentView(R.layout.activity_sms_come);
+        isAlive = true;
         mClassName = getClass().getName();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
         initView();
         onNewIntent(getIntent());
     }
@@ -53,6 +49,7 @@ public class SmsComeActivity extends BaseActivity implements View.OnClickListene
     private void initData(Intent intent) {
         Message message = (Message) intent.getSerializableExtra(ActivityBuilder.SMS_COME_MESSAGE);
         if (message != null) {
+            LogUtil.d(TAG, "initData message address:" + message.address);
             messages.add(message);
             Collections.sort(messages, new SortComparator());
             mSmsComeAdapter.notifyDataSetChanged();
@@ -72,10 +69,8 @@ public class SmsComeActivity extends BaseActivity implements View.OnClickListene
     protected void onDestroy() {
         super.onDestroy();
         isAlive = false;
+        mClassName = null;
         messages.clear();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
     }
 
 

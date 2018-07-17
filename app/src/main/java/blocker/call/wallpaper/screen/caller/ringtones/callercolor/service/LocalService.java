@@ -52,7 +52,6 @@ public class LocalService extends Service {
         messageFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
         registerReceiver(mMessageReceiver, messageFilter);
 
-
         //常用功能广播
         IntentFilter commonFilter = new IntentFilter(); //for notification check
         commonFilter.addAction(CallerCommonReceiver.RANDOM_NOTIFY_TASK_24);
@@ -88,5 +87,7 @@ public class LocalService extends Service {
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mNetworkChangeListener);
+        unregisterReceiver(mCallerCommonReceiver);
+        unregisterReceiver(mMessageReceiver);
     }
 }
