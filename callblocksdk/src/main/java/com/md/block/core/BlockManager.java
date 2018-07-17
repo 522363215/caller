@@ -145,6 +145,10 @@ public class BlockManager {
         BlockLocal.setBlockContacts(blockContacts);
     }
 
+    public boolean existInBlockContacts (String number) {
+        return BlockLocal.existInBlockContacts(number);
+    }
+
     public boolean removeBlockContact(BlockInfo info) {
         return BlockLocal.removeBlockContact(info);
     }

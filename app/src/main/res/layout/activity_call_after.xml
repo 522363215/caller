@@ -227,7 +227,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rl_call_flase_personal"
+                    android:id="@+id/rl_call_flash"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">

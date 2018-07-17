@@ -21,7 +21,6 @@ import java.util.Map;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.NumberInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallUtils;
@@ -53,6 +52,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
     private TextView tvBlock;
     private long mStartTime;
     private RelativeLayout layout_number_infos;
+    private boolean isAddedInBlockContacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
         findViewById(R.id.tv_close).setOnClickListener(this);
         findViewById(R.id.tv_disable).setOnClickListener(this);
         findViewById(R.id.layout_menu_root).setOnClickListener(this);
-        findViewById(R.id.rl_call_flase_personal).setOnClickListener(this);
+        findViewById(R.id.rl_call_flash).setOnClickListener(this);
     }
 
     private void initView() {
@@ -122,6 +122,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
             String name = mInfo.callName;
             String number = mInfo.callNumber;
 
+            tv_number.setText(TextUtils.isEmpty(name) ? number : name);
             tv_location.setText(mInfo.callLoction);
             mInfo.callType = CallUtils.getCallTypeForEndCall(mInfo.callNumber);
             setCallType(mInfo.callType);
@@ -136,6 +137,11 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                 callDate = mInfo.callDate;
             }
             tv_time.setText(callDate);
+
+            isAddedInBlockContacts = BlockManager.getInstance().existInBlockContacts(number);
+            tvBlock.setText(isAddedInBlockContacts ? R.string.phone_detail_unblock : R.string.phone_detail_block);
+            LogUtil.d("chenr", "is added in block contact list: " + isAddedInBlockContacts);
+
             setCallPhoto();
         } else {
             finish();
@@ -207,40 +213,10 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                 rl_menu_root.setVisibility(View.GONE);
                 break;
             case R.id.rl_call_block:
-                if (isFinishing() || mInfo == null) {
-                    return;
-                }
-
-                OKCancelDialog dialog = new OKCancelDialog(CallAfterActivity.this, true);
-                dialog.show();
-                dialog.setContent(getString(R.string.phone_detail_block_dialog_title), true, false);
-                dialog.setOKCancel(R.string.ok_string, R.string.no_string);
-                dialog.setOkClickListener(new OKCancelDialog.OKClickListener() {
-                    @Override
-                    public void Ok() {
-                        Async.run(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (mInfo == null) {
-                                    return;
-                                }
-                                BlockInfo info = new BlockInfo();
-                                info.setNumber(NumberUtil.getFormatNumberForDb(mInfo.callNumber));
-                                info.setName(ContactManager.getInstance().getContactNameForNumber(mInfo.callNumber));
-                                final boolean isSuc = BlockManager.getInstance().setBlockContact(info);
-                                Async.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        int content = isSuc ? R.string.phone_detail_have_no_tag : R.string.block_contacts_added_failed;
-                                        ToastUtils.showToast(CallAfterActivity.this, getString(content));
-                                    }
-                                });
-
-                            }
-                        });
-                    }
-                });
-
+                aboutBlock();
+                break;
+            case R.id.rl_call_flash:
+                toMain();
                 break;
             case R.id.tv_disable:
                 try {
@@ -259,10 +235,6 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                     ToastUtils.showToast(this, getResources().getString(R.string.call_after_click_toast));
                     break;
                 }
-                /*Intent callbackIntent = new Intent();
-                callbackIntent.setAction(Intent.ACTION_CALL);
-                callbackIntent.setData(Uri.parse("tel:" + mInfo.callNumber));
-                startActivity(callbackIntent);*/
                 DeviceUtil.callOut(Uri.parse("tel:" + mInfo.callNumber), this);
 //                finish();
                 break;
@@ -277,6 +249,54 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
 //                finish();
                 break;
         }
+    }
+
+    private void aboutBlock() {
+        if (isFinishing() || mInfo == null) {
+            return;
+        }
+
+        OKCancelDialog dialog = new OKCancelDialog(CallAfterActivity.this, true);
+        dialog.show();
+        int content = isAddedInBlockContacts ? R.string.phone_detail_cancel_block : R.string.phone_detail_block_dialog_title;
+        dialog.setContent(getString(content), true, false);
+        dialog.setOKCancel(R.string.ok_string, R.string.no_string);
+        dialog.setOkClickListener(new OKCancelDialog.OKClickListener() {
+            @Override
+            public void Ok() {
+                Async.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mInfo == null) {
+                            return;
+                        }
+                        BlockInfo info = new BlockInfo();
+                        info.setNumber(NumberUtil.getFormatNumberForDb(mInfo.callNumber));
+                        info.setName(ContactManager.getInstance().getContactNameForNumber(mInfo.callNumber));
+                        if (isAddedInBlockContacts) {
+                            final boolean isSuc = BlockManager.getInstance().removeBlockContact(info);
+                            Async.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    int content = isSuc ? R.string.block_contacts_remove_success : R.string.block_contacts_remove_failed;
+                                    ToastUtils.showToast(CallAfterActivity.this, getString(content));
+                                }
+                            });
+                        } else {
+                            final boolean isSuc = BlockManager.getInstance().setBlockContact(info);
+                            Async.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    int content = isSuc ? R.string.phone_detail_have_no_tag : R.string.block_contacts_added_failed;
+                                    ToastUtils.showToast(CallAfterActivity.this, getString(content));
+                                }
+                            });
+                        }
+
+                    }
+                });
+            }
+        });
     }
 
     private void toMain() {

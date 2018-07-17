@@ -1055,6 +1055,8 @@
     <string name="block_list_empty">No records</string>
 
     <string name="block_contacts_added_failed">Added Failed!</string>
+    <string name="block_contacts_remove_success">Remove Success!</string>
+    <string name="block_contacts_remove_failed">Remove Failed!</string>
 
     <!--side slip-->
     <string name="side_slip_title_des">"别出心裁，秀随我变"</string>

@@ -95,6 +95,25 @@ public class BlockLocal {
         pref.edit().putString(PREF_KEY_BLOCK_CONTACT_LIST, new Gson().toJson(blockContacts)).commit();
     }
 
+    public static boolean existInBlockContacts (String number) {
+        boolean exist = false;
+        if (TextUtils.isEmpty(number)) {
+            return false;
+        }
+
+        List<BlockInfo> blockContactList = getBlockContacts();
+        if (blockContactList != null && blockContactList.size() > 0) {
+            for (BlockInfo contact : blockContactList) {
+                if (PhoneNumberUtils.compare(contact.getNumber(), number)) {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+
+        return exist;
+    }
+
     public static boolean removeBlockContact (String number) {
         boolean isSuc = false;
 
