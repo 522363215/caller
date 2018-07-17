@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_sms_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_FF0A2134">
+
+
+    <RelativeLayout
+        android:id="@+id/layout_sms_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingStart="@dimen/dp16">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_FFEEF0F1"
+            android:visibility="gone" />
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.AvatarView
+            android:id="@+id/av_sms"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:visibility="visible"
+            app:fontSize="18" />
+
+        <LinearLayout
+            android:id="@+id/layout_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/av_sms"
+            android:layout_alignTop="@+id/av_sms"
+            android:layout_toEndOf="@+id/av_sms"
+            android:layout_toRightOf="@+id/av_sms"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.6"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    tools:text="1252013890548849" />
+
+                <TextView
+                    android:id="@+id/tv_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:alpha="0.4"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    tools:text="484548454548" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_sms_info"
+        android:layout_marginEnd="@dimen/dp24"
+        android:layout_marginLeft="@dimen/dp72"
+        android:layout_marginRight="@dimen/dp24"
+        android:layout_marginStart="@dimen/dp72"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@drawable/shape_gray_bg_round30"
+        android:orientation="vertical"
+        android:padding="@dimen/dp8">
+
+        <TextView
+            android:id="@+id/tv_sms_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.6"
+            android:lineSpacingExtra="4sp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="visible"
+            tools:text="土地是以它的肥沃和收获而被估价的；才能也是土地，不过它生产的不是粮食，而是真理。如果只能滋生瞑想和幻想的话，即使再大的才能也只是砂地或盐池，那上面连小草也长不出来的。 —— 别林斯基" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:alpha="0.6"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            tools:text="dadadad" />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignLeft="@+id/layout_content"
+        android:layout_alignStart="@+id/layout_content"
+        android:layout_below="@+id/layout_content"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@color/color_FFEEF0F1"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layout_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_content"
+        android:layout_marginTop="@dimen/dp8"
+        android:paddingBottom="@dimen/dp8"
+        android:paddingTop="@dimen/dp8">
+
+        <LinearLayout
+            android:id="@+id/layout_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                android:id="@+id/fiv_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/icon_user"
+                android:textColor="@color/color_FF7594B2"
+                android:textSize="@dimen/dp18" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp8"
+                android:text="@string/call_coming_detail"
+                android:textColor="@color/color_FF7594B2"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_block"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                android:id="@+id/fiv_block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/icon_block"
+                android:textColor="@color/color_FF7594B2"
+                android:textSize="@dimen/dp18" />
+
+            <TextView
+                android:id="@+id/tv_block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp8"
+                android:text="@string/phone_detail_block"
+                android:textColor="@color/color_FF7594B2"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_dail"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                android:id="@+id/fiv_dail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/icon_phone"
+                android:textColor="@color/color_FF7594B2"
+                android:textSize="@dimen/dp24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp6"
+                android:gravity="center_vertical"
+                android:text="@string/dail"
+                android:textColor="@color/color_FF7594B2"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                android:id="@+id/fiv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/icon_delete"
+                android:textColor="@color/color_FF7594B2"
+                android:textSize="@dimen/dp24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp8"
+                android:text="@string/delete"
+                android:textColor="@color/color_FF7594B2"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                android:id="@+id/fiv_replay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/icon_reply"
+                android:textColor="@color/color_FF7594B2"
+                android:textSize="@dimen/dp24" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp6"
+                android:gravity="center_vertical"
+                android:text="@string/reply"
+                android:textColor="@color/color_FF7594B2"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

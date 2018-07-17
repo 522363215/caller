@@ -140,17 +140,6 @@ public class CallFlashLocalAdapter extends RecyclerView.Adapter<CallFlashLocalAd
 
                 //  jump to CallFlashPreviewActivity
                 ActivityBuilder.toCallFlashPreview(context, info, false);
-
-//                //jump to CallFlashDetailActivity
-//                Intent intent = new Intent();
-//                intent.setClass(context, CallFlashDetailActivity.class);
-//                intent.putExtra(ConstantUtils.COME_FROM_CALLAFTER, mIsComeCallAfter);
-//                intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, mIsComePhoneDetail);
-//                intent.putExtra(ConstantUtils.COME_FROM_DESKTOP, false);
-//                intent.putExtra(ConstantUtils.COME_FROM_CALL_FLASH_PREVIEW, false);
-////                intent.putStringArrayListExtra(ConstantUtils.NUMBER_FOR_CALL_FLASH, mNumberForCallFlash);
-//                intent.putExtra("flash_theme", info);
-//                context.startActivity(intent);
             }
         }
     };

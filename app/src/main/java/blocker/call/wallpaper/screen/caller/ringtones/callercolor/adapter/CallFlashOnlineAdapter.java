@@ -33,12 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashOnlineAdLoaded;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
@@ -64,8 +59,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
     private Advertisement mAdvertisement;
     private boolean mIsAdloaded;
     private int mAdShowPosition = -1;
-    private boolean mIsComeCallAfter;
-    private boolean mIsComePhoneDetail;
     private ConcurrentHashMap<String, File> videoMap;
     private List<OnOnlineDownloadListener> mDownloadListenerList = null;
 
@@ -135,9 +128,9 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
             holder.layout_ad_view.setVisibility(View.VISIBLE);
 
             if (!mIsAdloaded) {
-                if (CallerAdManager.isShowAd(CallerAdManager.POSITION_FB_ADS_CALLFLASH_HOT)) {
-//                    initAd(holder.itemView, holder);
-                }
+//                if (CallerAdManager.isShowAd(CallerAdManager.POSITION_FB_ADS_CALLFLASH_HOT)) {
+////                    initAd(holder.itemView, holder);
+//                }
             } else {
                 int childCount = holder.layout_ad_admob.getChildCount();
                 if (childCount == 0) {
@@ -247,11 +240,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
         }
 
         return info;
-    }
-
-    public void setCome(boolean isComeCallAfter, boolean isComePhoneDetail) {
-        mIsComeCallAfter = isComeCallAfter;
-        mIsComePhoneDetail = isComePhoneDetail;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -412,170 +400,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
 
 //                ToastUtils.showToast(context, context.getString(R.string.call_flash_gif_show_load_failed));
             }
-        }
-    }
-
-//    private class OnOnlineDownloadListener implements ThemeDownloadListener {
-//        private ViewHolder holder;
-//        private CallFlashInfo info;
-//
-//        public void setDownloadParams(ViewHolder holder, CallFlashInfo info) {
-//            this.holder = holder;
-//            this.info = info;
-//
-//            if (holder != null && info != null) {
-//                holder.pb_loading.setProgress(info.progress);
-//            }
-//        }
-//
-//        @Override
-//        public void onDownloadSuccess(String s, File file) {
-//            if (info != null && info.url != null && info.url.equals(s)) {
-//                holder.iv_download.setVisibility(View.GONE);
-//                holder.iv_call_select.setVisibility(View.GONE);
-//                holder.pb_loading.setVisibility(View.GONE);
-//            }
-//        }
-//
-//        @Override
-//        public void onDownloading(String s, int i) {
-//            if (info != null && info.url != null && info.url.equals(s)) {
-//                holder.iv_download.setVisibility(View.GONE);
-//                holder.iv_call_select.setVisibility(View.GONE);
-//                holder.pb_loading.setVisibility(View.VISIBLE);
-//
-//                info.progress = i;
-//
-//                holder.pb_loading.setProgress(i);
-//            }
-//        }
-//
-//        @Override
-//        public void onDownloadFailed(String s) {
-//            if (info != null && info.url != null && info.url.equals(s)) {
-//                holder.iv_download.setVisibility(View.VISIBLE);
-//                holder.iv_call_select.setVisibility(View.GONE);
-//                holder.pb_loading.setVisibility(View.GONE);
-//
-////                ToastUtils.showToast(context, context.getString(R.string.call_flash_gif_show_load_failed));
-//            }
-//        }
-//    }
-
-    private void initAd(View view, ViewHolder holder) {
-        if (misInitAd) {
-            return;
-        }
-        LogUtil.d(TAG, "initAds contactRecycler");
-        misInitAd = true;
-//        MyAdvertisementAdapter adapter = null;
-//            adapter = new MyAdvertisementAdapter(viewSelected,
-//                    "",//ConstantUtils.FB_FAKE_CALL_TIME_ID
-//                    ConstantUtils.ADMOB_ADV_FAKE_RESULT_ID,//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
-//                    Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
-//                    "",
-//                    false
-//                    , holder);
-//
-//        mAdvertisement = new Advertisement(adapter);
-//        mAdvertisement.setShowType(true);
-//        mAdvertisement.setRefreshWhenClicked(true);
-//        mAdvertisement.refreshAD(true);
-        MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(view,
-                CallerAdManager.getContactBigFbId(),//ConstantUtils.FB_AFTER_CALL_ID
-                ConstantUtils.ADMOB_ADV_CONTACT_ACTIVITY_ID,//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
-                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
-                CallerAdManager.MOPUB_NATIVE_ADV_BANNER_CONTACT_ID,
-                Advertisement.MOPUB_TYPE_NATIVE,
-                CallerAdManager.BAIDU_ADV_BANNER_CONTACT_ID,
-                "",
-                false,
-                holder);
-        if (context != null) {
-            adapter.setAdMobBannerKey(CallerAdManager.ADMOB_BIG_BANNER_CONTACT_BIG_ID);
-        }
-        mAdvertisement = new Advertisement(adapter);
-        mAdvertisement.setRefreshWhenClicked(false);
-        mAdvertisement.refreshAD(true);
-
-    }
-
-    private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
-
-        private ViewHolder holder;
-
-        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType,
-                                      String eventKey, boolean isBanner) {
-            super(context, facebookKey, admobKey, admobType, eventKey, isBanner,
-                    AdvertisementSwitcher.SERVER_KEY_CONTACT_BIG_NEW);
-        }
-
-        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType,
-                                      String mopubKey, int moPubType, int baiduKey, String eventKey, boolean isBanner, ViewHolder holder) {
-            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey,
-                    eventKey, AdvertisementSwitcher.SERVER_KEY_CONTACT_BIG_NEW, isBanner);
-            this.holder = holder;
-        }
-
-        @Override
-        public void onAdLoaded() {
-            super.onAdLoaded();
-            mIsAdloaded = true;
-            holder.itemView.setVisibility(View.VISIBLE);
-            EventBus.getDefault().post(new EventCallFlashOnlineAdLoaded());
-            LogUtil.d("adver", "CallFlashOnlineAdapter onAdLoaded");
-        }
-
-        //        @Override
-//        public void adjustAdmobView(FrameLayout layoutAdmob) {
-//            isShowAd = true;
-//            View layout_ad_view = root.findViewById(R.id.layout_contact_list_ad_view);
-//            FrameLayout layout_admob = (FrameLayout) layout_ad_view.findViewById(R.id.layout_admob);
-//
-//            layout_ad_view.setVisibility(View.VISIBLE);
-//            layout_admob.setVisibility(View.VISIBLE);
-//        }
-//
-        @Override
-        public void adjustFbContainerView(LinearLayout layoutFacebook) {
-            ViewGroup.LayoutParams params = layoutFacebook.getLayoutParams();
-            params.width = DeviceUtil.getScreenWidth() - Stringutil.dpToPx(context, 16);
-            layoutFacebook.setLayoutParams(params);
-        }
-
-        @Override
-        public int getFbViewRes() {
-            return mIsBanner ? R.layout.layout_facebook_ad_banner_contact_white_font : R.layout.facebook_ads_hot_callflash_recycleview;
-        }
-
-        @Override
-        public int getAdmobViewRes(int type, boolean isAppInstall) {
-            return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_messageflash :
-                    R.layout.layout_admob_advanced_content_ad_messageflash;
-        }
-
-        @Override
-        public int getMoPubViewRes() {
-            return mIsBanner ? R.layout.layout_mopub_ad_banner_contact_white_font : R.layout.layout_mopub_no_icon_native_ads;
-        }
-
-        @Override
-        public int getBaiDuViewRes() {
-            return mIsBanner ? R.layout.layout_du_ad_banner_contact_list_white_font : R.layout.layout_du_ad_big;
-        }
-
-        @Override
-        public void adjustMoPubContainerView(LinearLayout layoutMoPub) {
-            int offset = context.getResources().getDimensionPixelOffset(R.dimen.dp16) + Stringutil.dpToPx(context, 24);
-            int screenWidth = DeviceUtil.getScreenWidth();
-
-            ViewGroup.LayoutParams params = layoutMoPub.getLayoutParams();
-            if (params == null) {
-                params = new ViewGroup.LayoutParams((screenWidth - offset), ViewGroup.LayoutParams.WRAP_CONTENT);
-            } else {
-                params.width = screenWidth - offset;
-            }
-            layoutMoPub.setLayoutParams(params);
         }
     }
 }

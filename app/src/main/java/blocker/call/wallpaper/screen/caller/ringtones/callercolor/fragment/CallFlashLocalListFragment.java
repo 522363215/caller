@@ -42,7 +42,6 @@ public class CallFlashLocalListFragment extends Fragment {
 
     private void initField() {
         mAdapter = new CallFlashLocalAdapter(getActivity(), mFlashInfoList);
-        mAdapter.setCome(getActivity().getIntent().getBooleanExtra(ConstantUtils.COME_FROM_CALLAFTER, false), getActivity().getIntent().getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
     }
 
     private void initFlashData() {

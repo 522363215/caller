@@ -96,7 +96,7 @@ public class ApplicationEx extends Application {
         // 加载语言
         loadLanguage();
         //upgrade setting
-        new FlurryAgent.Builder().withLogEnabled(BuildConfig.DEBUG).build(getInstance(), ConstantUtils.KEY_FLURRY);
+        new FlurryAgent.Builder().withLogEnabled(BuildConfig.DEBUG).build(getInstance(), BuildConfig.FLURRY_KEY);
         saveVersioncode();
         startService();
         CallFlashSet.init(this);
@@ -177,7 +177,7 @@ public class ApplicationEx extends Application {
             mAdPriorityMgr.setIsSeparate(false);
             mAdPriorityMgr.setFirstSynServerConfigTime(PreferenceHelper.getLong("key_cid_first_sync_server_time", 0));
 
-            long firstLaunchTime = PreferenceHelper.getLong(ConstantUtils.PREF_KEY_INSTALL_TIME, 0);
+            long firstLaunchTime = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_INSTALL_TIME, 0);
             if (firstLaunchTime == 0) {
                 firstLaunchTime = System.currentTimeMillis();
             }

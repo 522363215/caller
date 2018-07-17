@@ -289,34 +289,6 @@ public class AppUtils {
         }
     }
 
-    /**
-     * 检测当前程序是否在前台
-     *
-     * @param context
-     * @return
-     */
-    public static boolean isProcessForeground(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AppUtils appUtils = new AppUtils();
-            String topPackage = appUtils.getTopPackageName(context);
-            if (!TextUtils.isEmpty(topPackage)) {
-                try {
-                    PackageInfo pkg = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-                    String pkgName = pkg.packageName;
-                    return pkgName != null && pkgName.equals(topPackage);
-                } catch (Exception e) {
-                    return false;
-                }
-            } else {
-                return LocalService.getInstance().getIsForeground();
-            }
-        } else {
-            String curPkg = AppUtils.getCurrentPkg(context);
-            return curPkg.equals(context.getPackageName());
-        }
-    }
-
-
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private String getProcessNew(Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)

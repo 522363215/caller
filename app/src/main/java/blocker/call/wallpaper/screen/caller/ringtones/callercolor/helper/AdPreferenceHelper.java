@@ -17,12 +17,11 @@ import java.util.Map;
 import java.util.Set;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 final public class AdPreferenceHelper {
-    private static final String TAG = "PreferenceHelper";
-    private static final String PREF_FILE_NAME = ConstantUtils.AD_PREF_FILE;
+    private static final String TAG = "AdPreferenceHelper";
+    private static final String PREF_FILE_NAME = "ad_com_callercolor_pref";
 
 
     private AdPreferenceHelper() {

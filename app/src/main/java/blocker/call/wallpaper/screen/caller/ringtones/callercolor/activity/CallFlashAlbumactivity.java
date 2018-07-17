@@ -21,11 +21,6 @@ import com.md.flashset.manager.CallFlashManager;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.FacebookConstant;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.FileUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import event.EventBus;
@@ -177,53 +172,5 @@ public class CallFlashAlbumactivity extends BaseActivity {
         }
 
         if (mOkhttpCall != null) mOkhttpCall.cancel();
-    }
-
-
-    private void initAds() {
-        String fb_id = CallerAdManager.getCommonFbID(CallerAdManager.POSITION_FB_ADS_CALLGIFCUSTOM);
-        mAdvertisement = new Advertisement(new MyAdvertisementAdapter(getWindow().getDecorView(),
-                fb_id,
-                ConstantUtils.ADMOB_ADV_FAKE_HOME_ID,
-                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,
-                CallerAdManager.MOPUB_NATIVE_ADV_BIG_CALL_AFTER_ID,
-                Advertisement.MOPUB_TYPE_NATIVE,
-                CallerAdManager.BAIDU_ADV_BANNER_CALL_FLASH_ID,
-                "",
-                true));
-        mAdvertisement.setRefreshWhenClicked(false);
-        mAdvertisement.refreshAD(true);
-    }
-
-    private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
-
-        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, boolean isBanner) {
-            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, AdvertisementSwitcher.SERVER_KEY_QUICK_DEFAULT, isBanner);
-        }
-
-        @Override
-        public void onAdLoaded() {
-            super.onAdLoaded();
-        }
-
-        @Override
-        public int getFbViewRes() {
-            return mIsBanner ? R.layout.facebook_native_ads_banner_call_flash : FacebookConstant.FB_AD_BIG_VIEW_RES_ID;
-        }
-
-        @Override
-        public int getAdmobViewRes(int type, boolean isAppInstall) {
-            return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_flash : R.layout.layout_admob_advanced_content_ad_flash;
-        }
-
-        @Override
-        public int getBaiDuViewRes() {
-            return mIsBanner ? R.layout.layout_du_ad_banner_falsh_show : R.layout.layout_du_ad_big;
-        }
-
-        @Override
-        public int getMoPubViewRes() {
-            return mIsBanner ? R.layout.layout_mopub_ad_banner_flash_show : R.layout.layout_mopub_no_icon_native_ads;
-        }
     }
 }
