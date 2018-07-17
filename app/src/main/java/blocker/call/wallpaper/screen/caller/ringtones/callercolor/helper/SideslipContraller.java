@@ -23,6 +23,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.About
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.BlockActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CollectionActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.SettingActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
@@ -257,6 +258,9 @@ public class SideslipContraller implements View.OnClickListener {
 
     private void onSettings() {
         FlurryAgent.logEvent("left_setting_click");
+        Intent intent = new Intent();
+        intent.setClass(mAct, SettingActivity.class);
+        mAct.startActivity(intent);
     }
 
     private void onAbout() {
