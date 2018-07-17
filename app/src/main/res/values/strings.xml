@@ -1075,6 +1075,22 @@
     <string name="no_collection_call_flash_list_tip">no collection call flash</string>
     <string name="add_block_contact_title">"Call Log"</string>
 
+    <string name="block_option_open_switch">"Open Block"</string>
+    <string name="block_option_toast_open_success">"Open block switch success!"</string>
+    <string name="block_option_close_switch">"Close Block"</string>
+    <string name="block_option_toast_close_success">"Close block switch success!"</string>
+
+    <string name="block_option_clear_all_contacts">"Clear All Contacts"</string>
+    <string name="block_option_toast_clear_all_contacts_success">"Clear all contacts success!"</string>
+    <string name="block_option_clear_all_history">"Clear All Block Logs"</string>
+    <string name="block_option_toast_clear_all_history_success">"Clear all history success!"</string>
+
+    <string name="block_list_empty">No records</string>
+
+    <string name="block_contacts_added_failed">Added Failed!</string>
+    <string name="block_contacts_remove_success">Remove Success!</string>
+    <string name="block_contacts_remove_failed">Remove Failed!</string>
+
     <!--side slip-->
     <string name="side_slip_title_des">"别出心裁，秀随我变"</string>
     <string name="side_slip_close_call_flash">Close Caller Show</string>

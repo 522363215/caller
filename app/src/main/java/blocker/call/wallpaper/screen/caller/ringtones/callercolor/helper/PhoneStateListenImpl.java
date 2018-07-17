@@ -5,9 +5,12 @@ import android.content.Intent;
 
 import com.md.block.callback.PhoneStateChangeCallback;
 
+import java.util.Locale;
+
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallAfterActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DateUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.CallFlashDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
@@ -32,6 +35,7 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
         info.callNumber = number;
         info.callLoction = NumberUtil.getNumberLocationForCallLog(number);
         info.date = System.currentTimeMillis();
+        info.callDate = DateUtils.getHmForTime(info.date, Locale.getDefault());
         info.callType = CallUtils.getCallLogType(number);
 
         Intent intent = new Intent();
