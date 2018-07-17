@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.CallFlashOnlineAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashOnlineAdLoaded;
@@ -153,7 +154,6 @@ public class CallFlashListFragment extends Fragment {
 //            mCallFlashMarginDecoration.setAdShowPosition(RECYCLER_ONLINE_CALL_FLASH_AD_SHOW_POSITION);
         mRecyclerView.addItemDecoration(mCallFlashMarginDecoration);
         mAdapter = new CallFlashOnlineAdapter(view.getContext(), model);
-        mAdapter.setCome(getActivity().getIntent().getBooleanExtra(ConstantUtils.COME_FROM_CALLAFTER, false), getActivity().getIntent().getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mOnlineFlashType == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode()) {
 //                mAdapter.setAdShowPosition(RECYCLER_ONLINE_CALL_FLASH_AD_SHOW_POSITION);
 //            }

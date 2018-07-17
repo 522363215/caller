@@ -162,11 +162,20 @@
 
         <activity
             android:name=".activity.CallAfterActivity"
-            android:screenOrientation="portrait" />
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:taskAffinity="cc.permission.phonecall" />
 
         <activity
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SmsComeActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:taskAffinity="cc.permission.phonesms" />
 
         <service
             android:name=".service.LocalService"

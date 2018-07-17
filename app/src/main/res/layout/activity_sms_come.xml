@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_FF0A2134"
+    android:orientation="vertical">
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp56"
+        android:background="@color/color_FF0A2134" />
+
+    <ListView
+        android:id="@+id/lv_sms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_ad_view"
+        android:layout_below="@+id/action_bar"
+        android:divider="@null"
+        android:scrollbars="none" />
+
+    <LinearLayout
+        android:id="@+id/layout_ad_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/color_FF0A2134">
+
+        <include layout="@layout/layout_advertisement" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_menu_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/layout_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp8"
+            android:layout_marginTop="@dimen/dp30"
+            android:background="@color/color_FF0A2134"
+            android:orientation="vertical"
+            android:padding="@dimen/dp8"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_close"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:gravity="left"
+                android:padding="@dimen/dp8"
+                android:text="@string/call_after_close"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_disable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:alpha="0.5"
+                android:padding="@dimen/dp8"
+                android:text="@string/call_after_disable"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

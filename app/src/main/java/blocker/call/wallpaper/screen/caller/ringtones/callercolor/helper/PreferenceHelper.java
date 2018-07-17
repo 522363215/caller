@@ -17,12 +17,11 @@ import java.util.Map;
 import java.util.Set;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 final public class PreferenceHelper {
     private static final String TAG = "PreferenceHelper";
-    private static final String PREF_FILE_NAME = ConstantUtils.PREF_FILE;
+    private static final String PREF_FILE_NAME = "com_callercolor_pref";
 
 
     /**
@@ -84,6 +83,18 @@ final public class PreferenceHelper {
 
     // 是否开启callAfter;
     public static final String PREF_KEY_ENABLE_SHOW_CALL_AFTER = "caller_color_enable_show_call_after";
+    /**
+     * 来短信时是否显示短信界面
+     */
+    public static final String SHOW_MESSAGE_COME = "show_message_come";
+
+    //daydream status
+    public static final String PREF_KEY_DAY_DREAM_STATUS = "cc_day_dream_status";
+
+    /**
+     * 安装时间
+     */
+    public static final String PREF_KEY_INSTALL_TIME = "android_install_time";
 
 
     private PreferenceHelper() {

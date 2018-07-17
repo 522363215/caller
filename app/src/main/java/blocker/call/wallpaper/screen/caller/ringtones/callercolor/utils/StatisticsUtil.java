@@ -30,6 +30,7 @@ public class StatisticsUtil {
     // post base data
     private static boolean isPostingBaseData = false;
     private static boolean isPostingMainData = false;
+    public final static String SERVER_API_ANALYSIS_INTERFACE = "http://analysis.lionmobi.com/api.php";
 
     public static void sendBaseData(final Context context) {
         sendData(context, false);
@@ -137,7 +138,7 @@ public class StatisticsUtil {
                     .add("data", object.toString())
                     .add("sig", sig)
                     .build();
-            Request request = new Request.Builder().url(ConstantUtils.SERVER_API_ANALYSIS_INTERFACE).post(formBody).build();
+            Request request = new Request.Builder().url(SERVER_API_ANALYSIS_INTERFACE).post(formBody).build();
 
             OkHttpClient client = new OkHttpClient();
             Response res = client.newCall(request).execute();
@@ -151,7 +152,7 @@ public class StatisticsUtil {
                     LogUtil.d("ccooler", "post statistic result: " + result);
                 }
                 res.body().close();
-                LogUtil.d("get channel", "statistics postData get channel: "+StatisticsUtil.getChannel());
+                LogUtil.d("get channel", "statistics postData get channel: " + StatisticsUtil.getChannel());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -173,7 +174,7 @@ public class StatisticsUtil {
 
     public static String getChannel(Context context) {
         String channel = "";
-        if(ApplicationEx.getInstance() != null) {
+        if (ApplicationEx.getInstance() != null) {
             // get from 'channel'
             channel = PreferenceHelper.getString("channel", null);
             // get from 'from'
@@ -200,7 +201,7 @@ public class StatisticsUtil {
 
     public static String getSubChannel(Context context) {
         String sub_ch = "";
-        if(ApplicationEx.getInstance() != null) {
+        if (ApplicationEx.getInstance() != null) {
             sub_ch = PreferenceHelper.getString("sub_ch", "");
         }
 

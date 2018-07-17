@@ -17,32 +17,24 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
-import com.individual.sdk.BaseAdContainer;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.callback.ThemeNormalCallback;
 import com.md.serverflash.download.ThemeResourceHelper;
-import com.mopub.test.manager.TestManager;
 
 import java.io.File;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdContainer;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.FirstShowAdmobUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCollection;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
@@ -53,12 +45,8 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
 
     private static final String TAG = "CallFlashPreviewActivity";
     private ActionBar mActionBar;
-    private Advertisement mAdvertisement;
     private CallFlashInfo mInfo;
     private boolean mIsOnlineCallFlash;
-    private FrameLayout mLayoutAd;
-    private CallFlashInfo recommendCallFlashInfo1;
-    private CallFlashInfo recommendCallFlashInfo2;
     private FontIconView mFivBack;
     private LinearLayout mLavoutLikeAndDownload;
     private FontIconView mFivLike;
@@ -85,6 +73,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     private FontIconView mFivDownload;
     private TextView mTvDownloadCount;
     private GlideView mGvPreview;
+    private FrameLayout mLayoutAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +83,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             EventBus.getDefault().register(this);
         }
         setTranslucentStatusBar();
-        mIsShowFirstAdMob = CallerAdManager.isShowFirstAdMob(CallerAdManager.POSITION_FIRST_ADMOB_CALL_FLASH_PREVIEW, true);
+        mIsShowFirstAdMob = FirstShowAdmobUtil.isShowFirstAdMob(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_CALL_FLASH_PREVIEW, true);
 //        initAds();
         initView();
         onNewIntent(getIntent());
@@ -104,7 +93,6 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
-        showAd();
     }
 
     @Override
@@ -119,7 +107,6 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         if (mOnDownloadListener != null) {
             ThemeResourceHelper.getInstance().removeGeneralListener(mOnDownloadListener);
         }
-        destroyAd();
     }
 
     private void setTranslucentStatusBar() {
@@ -161,8 +148,8 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mInfo = (CallFlashInfo) getIntent().getSerializableExtra("flash_theme");
-        mIsOnlineCallFlash = intent.getBooleanExtra(ConstantUtils.IS_ONLINE_FOR_CALL_FLASH, false);
+        mInfo = (CallFlashInfo) getIntent().getSerializableExtra(ActivityBuilder.CALL_FLASH_INFO);
+        mIsOnlineCallFlash = intent.getBooleanExtra(ActivityBuilder.IS_ONLINE_FOR_CALL_FLASH, false);
         downloadListener();
         setView();
 //        setRecommend();
@@ -382,7 +369,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             case R.id.gv_preview:
             case R.id.tv_download_action_above_ad:
             case R.id.tv_download_action_below_ad:
-                ActivityBuilder.toCallFlashDetail(this, mInfo, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_DESKTOP, false));
+                ActivityBuilder.toCallFlashDetail(this, mInfo, getIntent().getBooleanExtra(ActivityBuilder.IS_COME_FROM_CALL_AFTER, false));
                 break;
             case R.id.fiv_like:
                 if (mInfo != null) {
@@ -464,139 +451,6 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             mTvDownloadBtnBelowAd.setText(R.string.call_flash_preview_now);
         } else {
             mTvDownloadBtnAboveAd.setText(R.string.call_flash_preview_now);
-        }
-    }
-
-    private void initAds() {
-        if (CallerAdManager.isMopubBannerSelf(AdvertisementSwitcher.SERVER_KEY_FLASH_PREVIEW)) {
-            MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
-                    "",//ConstantUtils.FB_AFTER_CALL_ID
-                    "",//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
-                    Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
-                    CallerAdManager.MOPUB_NATIVE_ADV_BIG_CALL_AFTER_ID,
-                    Advertisement.MOPUB_TYPE_NATIVE,
-                    -1,
-                    "",
-                    false);
-
-            String mopub_banner_id = TestManager.getInstance(this.getApplicationContext()).getMopubId(AdvertisementSwitcher.SERVER_KEY_FLASH_PREVIEW);
-            LogUtil.d("mopub_self", "mopub_banner_id flash preview: " + mopub_banner_id);
-            adapter.setMopubBannerKey(mopub_banner_id); //mopub banner id
-            mAdvertisement = new Advertisement(adapter);
-
-            mAdvertisement.setRefreshWhenClicked(false);
-            mAdvertisement.refreshAD(true);
-
-        } else {
-            initAd();
-        }
-    }
-
-    private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
-
-        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String eventKey, boolean isBanner) {
-            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, AdvertisementSwitcher.SERVER_KEY_FLASH_PREVIEW);
-        }
-
-        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, boolean isBanner) {
-            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, AdvertisementSwitcher.SERVER_KEY_FLASH_PREVIEW, isBanner);
-        }
-
-        @Override
-        public void onAdLoaded() {
-//            try {
-//                LinearLayout fbContainerView = getFbContainerView();
-//
-//                TextView tvAction = (TextView) fbContainerView.findViewById(R.id.nativeAdCallToAction);
-//                TextView tvActionVisible = (TextView) fbContainerView.findViewById(R.id.nativeAdCallToActionCopy);
-//                tvActionVisible.setText(tvAction.getText());
-//
-//                final View viewSelected = fbContainerView.findViewById(R.id.nativeAdCallToDetails);
-//
-//                setLayoutReverse(viewSelected);
-//                setHeartAnim(viewSelected);
-//            } catch (Exception e) {
-//                LogUtil.e(ConstantUtils.NM_TAG, "CallAfterActivity onAdLoaded: " + e.getMessage());
-//            }
-            try {
-                mLayoutAd.setVisibility(View.VISIBLE);
-                mLayoutAdMopub.setVisibility(View.GONE);
-                mLayoutAdNormal.setVisibility(View.VISIBLE);
-            } catch (Exception e) {
-                LogUtil.e(ConstantUtils.NM_TAG, "call flash preview onAdLoaded exception: " + e.getMessage());
-            }
-
-        }
-
-
-        private void setLayoutReverse(View view) {
-            if (LanguageSettingUtil.isLayoutReverse(CallFlashPreviewActivity.this)) {
-                view.setRotation(180);
-            }
-        }
-
-
-        @Override
-        public int getFbViewRes() {
-            return mIsBanner ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_no_icon_native_ads_call_after_big;
-        }
-
-        @Override
-        public int getAdmobViewRes(int type, boolean isAppInstall) {
-            return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_callafter : R.layout.layout_admob_advanced_content_ad_callafter;
-        }
-
-        @Override
-        public int getMoPubViewRes() {
-            return mIsBanner ? R.layout.layout_mopub_ad_banner : R.layout.layout_mopub_native_big_call_after;
-        }
-
-        @Override
-        public int getBaiDuViewRes() {
-            return mIsBanner ? R.layout.layout_du_ad_banner : R.layout.layout_du_ad_call_after_big;
-        }
-
-        @Override
-        public int getAdmobHeight() {
-            return 180;
-        }
-    }
-
-    private void initAd() {
-        //LogUtil.e(TAG, "initAd, AD_SHOW_DELAY:" + AD_SHOW_DELAY);
-        mAdManager = new BedsideAdManager(this, false, new BedsideAdContainer.Callback() {
-            @Override
-            public void onAdClick(BaseAdContainer ad) {
-
-            }
-
-            @Override
-            public void onAdLoaded(BedsideAdContainer ad) {
-                if (ad != null && !mIsShowAd) {
-                    mLayoutAd.setVisibility(View.VISIBLE);
-                    mLayoutAdMopub.setVisibility(View.VISIBLE);
-                    mLayoutAdNormal.setVisibility(View.GONE);
-                    mIsShowAd = true;
-                    ad.show(mLayoutAdMopub);
-                }
-            }
-        });
-    }
-
-    public void showAd() {
-        // 正常展示在前端才进行展示&请求
-        if (mAdManager != null && !mIsShowAd) {
-            LogUtil.d(TAG, "showAN");
-            mIsShowAd = mAdManager.show(this, mLayoutAdMopub);
-        } else {
-            LogUtil.d(TAG, "showAN failed! cause manager is " + (mAdManager == null ? "Null" : "NotNull"));
-        }
-    }
-
-    private void destroyAd() {
-        if (mAdManager != null) {
-            mAdManager.destroy();
-            mAdManager = null;
         }
     }
 

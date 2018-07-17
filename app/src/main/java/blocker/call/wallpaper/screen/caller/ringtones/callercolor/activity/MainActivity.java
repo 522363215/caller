@@ -193,8 +193,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (currentPage == ActivityBuilder.BACK_FROM_CALL_FLASH_RESULT) {
             return;
         }
-        if (currentPage >= ConstantUtils.MAX_FRAGEMNTS) {
-            currentPage = ConstantUtils.FRAGMENT_HOME;
+        if (currentPage >= ActivityBuilder.MAX_FRAGEMNTS) {
+            currentPage = ActivityBuilder.FRAGMENT_HOME;
         }
         mViewPager.setCurrentItem(currentPage, false);
         //防止首次进入时不回调onPageSelected
@@ -240,11 +240,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void onCategory() {
-        mViewPager.setCurrentItem(ConstantUtils.FRAGMENT_CATEGORY);
+        mViewPager.setCurrentItem(ActivityBuilder.FRAGMENT_CATEGORY);
     }
 
     private void onHome() {
-        mViewPager.setCurrentItem(ConstantUtils.FRAGMENT_HOME);
+        mViewPager.setCurrentItem(ActivityBuilder.FRAGMENT_HOME);
     }
 
     //打开侧滑
@@ -300,26 +300,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 LogUtil.d(TAG, "addOnPageChangeListener onPageSelected position:" + arg0);
                 mIsOnPageSelected = true;
                 currentPage = arg0;
-                ((FontIconView) findViewById(R.id.fiv_home)).setTextColor(currentPage == ConstantUtils.FRAGMENT_HOME ? selectColor : unSelectColor);
-                ((FontIconView) findViewById(R.id.fiv_home)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ConstantUtils.FRAGMENT_HOME ? selectSize : unSelectSize);
-                ((FontIconView) findViewById(R.id.fiv_home)).setAlpha(currentPage == ConstantUtils.FRAGMENT_HOME ? 1f : 0.4f);
+                ((FontIconView) findViewById(R.id.fiv_home)).setTextColor(currentPage == ActivityBuilder.FRAGMENT_HOME ? selectColor : unSelectColor);
+                ((FontIconView) findViewById(R.id.fiv_home)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ActivityBuilder.FRAGMENT_HOME ? selectSize : unSelectSize);
+                ((FontIconView) findViewById(R.id.fiv_home)).setAlpha(currentPage == ActivityBuilder.FRAGMENT_HOME ? 1f : 0.4f);
 
-                ((FontIconView) findViewById(R.id.fiv_category)).setTextColor(currentPage == ConstantUtils.FRAGMENT_CATEGORY ? selectColor : unSelectColor);
-                ((FontIconView) findViewById(R.id.fiv_category)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ConstantUtils.FRAGMENT_CATEGORY ? selectSize : unSelectSize);
-                ((FontIconView) findViewById(R.id.fiv_category)).setAlpha(currentPage == ConstantUtils.FRAGMENT_CATEGORY ? 1f : 0.4f);
+                ((FontIconView) findViewById(R.id.fiv_category)).setTextColor(currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? selectColor : unSelectColor);
+                ((FontIconView) findViewById(R.id.fiv_category)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? selectSize : unSelectSize);
+                ((FontIconView) findViewById(R.id.fiv_category)).setAlpha(currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? 1f : 0.4f);
 
                 setTvTitle(arg0);
             }
         });
-        mViewPager.setOffscreenPageLimit(ConstantUtils.MAX_FRAGEMNTS);
+        mViewPager.setOffscreenPageLimit(ActivityBuilder.MAX_FRAGEMNTS);
     }
 
     private void setTvTitle(int position) {
         switch (position) {
-            case ConstantUtils.FRAGMENT_HOME:
+            case ActivityBuilder.FRAGMENT_HOME:
                 mTvPageTitle.setText(R.string.page_title_caller_theme);
                 break;
-            case ConstantUtils.FRAGMENT_CATEGORY:
+            case ActivityBuilder.FRAGMENT_CATEGORY:
                 mTvPageTitle.setText(R.string.page_title_category);
                 break;
         }

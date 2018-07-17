@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.md.flashset.View.FlashLed;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallFlashAlbumactivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
@@ -72,10 +73,8 @@ public class CallFlashAvatarInfoView extends RelativeLayout {
                     Intent intent = new Intent();
                     intent.setClass(mContext, CallFlashAlbumactivity.class);
                     if (getContext() != null && getContext() instanceof Activity) {
-                        intent.putExtra(ConstantUtils.COME_FROM_CALLAFTER, ((Activity) getContext()).getIntent()
-                                .getBooleanExtra(ConstantUtils.COME_FROM_CALLAFTER, false));
-                        intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, ((Activity) getContext()).getIntent()
-                                .getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
+                        intent.putExtra(ActivityBuilder.IS_COME_FROM_CALL_AFTER, ((Activity) getContext()).getIntent()
+                                .getBooleanExtra(ActivityBuilder.IS_COME_FROM_CALL_AFTER, false));
                     }
 //                intent.putStringArrayListExtra(ConstantUtils.NUMBER_FOR_CALL_FLASH, mNumbersForCallFlash);
                     mContext.startActivity(intent);
