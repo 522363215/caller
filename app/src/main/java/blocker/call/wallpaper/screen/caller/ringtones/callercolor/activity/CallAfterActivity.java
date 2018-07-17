@@ -140,8 +140,6 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
 
             isAddedInBlockContacts = BlockManager.getInstance().existInBlockContacts(number);
             tvBlock.setText(isAddedInBlockContacts ? R.string.phone_detail_unblock : R.string.phone_detail_block);
-            LogUtil.d("chenr", "is added in block contact list: " + isAddedInBlockContacts);
-
             setCallPhoto();
         } else {
             finish();
@@ -278,6 +276,9 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                             Async.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    if (isSuc) {
+                                        tvBlock.setText(R.string.phone_detail_block);
+                                    }
                                     int content = isSuc ? R.string.block_contacts_remove_success : R.string.block_contacts_remove_failed;
                                     ToastUtils.showToast(CallAfterActivity.this, getString(content));
                                 }
@@ -287,6 +288,9 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                             Async.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    if (isSuc) {
+                                        tvBlock.setText(R.string.phone_detail_unblock);
+                                    }
                                     int content = isSuc ? R.string.phone_detail_have_no_tag : R.string.block_contacts_added_failed;
                                     ToastUtils.showToast(CallAfterActivity.this, getString(content));
                                 }
