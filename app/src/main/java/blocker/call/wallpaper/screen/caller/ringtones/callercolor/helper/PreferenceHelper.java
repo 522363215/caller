@@ -82,6 +82,8 @@ final public class PreferenceHelper {
      */
     public static final String PREF_KEY_RING_MODE_BEFORE_SET_SILENT = "android_ring_mode_before_set_silent";
 
+    // 是否开启callAfter;
+    public static final String PREF_KEY_ENABLE_SHOW_CALL_AFTER = "caller_color_enable_show_call_after";
 
 
     private PreferenceHelper() {
