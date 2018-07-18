@@ -6,11 +6,13 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
@@ -22,10 +24,13 @@ import java.util.Locale;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.RomUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 
 public class BaseActivity extends Activity implements PermissionUtils.PermissionGrant {
 
@@ -119,6 +124,104 @@ public class BaseActivity extends Activity implements PermissionUtils.Permission
         PermissionUtils.requestPermissionsResult(this, requestCode, permissions, grantResults, this);
     }
 
+    public void requestSpecialPermission(String permission) {
+        if (PermissionUtils.PERMISSION_OVERLAY.equals(permission)) {
+            requestSpecialPermission(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION, false);
+        } else if (PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS.equals(permission)) {
+            requestSpecialPermission(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS, false);
+        }
+    }
+
+    /**
+     * 请求特殊权限，如悬浮窗权限，通知服务权限，修改系统设置权限等非常规权限
+     */
+    private void requestSpecialPermission(int requestCode, boolean isOnActivityResult) {
+        switch (requestCode) {
+            case PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION://draw overlay
+                if (isOnActivityResult) {
+                    //overlay premission返回时针对不同的手机判断
+                    if (RomUtils.checkIsHuaweiRom()) {
+                        if (!SpecialPermissionsUtil.checkFloatWindowPermission(this)) {
+                            SpecialPermissionsUtil.applyFloatWindowPermission(this);
+                            return;
+                        }
+                    } else {
+                        if (!SpecialPermissionsUtil.checkFloatWindowPermission(this)) {
+                            toAppDetailSetting();
+                            return;
+                        }
+                    }
+                    if (!SpecialPermissionsUtil.canDrawOverlays(this)) {
+                        onPermissionNotGranted(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION);
+                    } else {
+                        onPermissionGranted(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION);
+                    }
+                } else {
+                    if (!SpecialPermissionsUtil.canDrawOverlays(this) && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        // 检查overlay权限
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+                        startActivityForResult(intent, PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION);
+                        showPermissionTipDialog(getString(R.string.permission_for_show_call_flash));
+                    } else {
+                        onPermissionGranted(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION);
+                    }
+                }
+                break;
+            case PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS://通知管理,7.0以上用于接听电话
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                    if (isOnActivityResult) {
+                        if (!SpecialPermissionsUtil.isNotificationServiceRunning()) {
+                            onPermissionNotGranted(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
+                        } else {
+                            onPermissionGranted(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
+                            PermissionUtils.toggleNotificationListenerService(ApplicationEx.getInstance());
+                        }
+                    } else {
+                        if (!SpecialPermissionsUtil.isNotificationServiceRunning()) {
+                            // 检查通知使用权
+                            Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
+                            startActivityForResult(intent, PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
+                            showPermissionTipDialog(getString(R.string.permission_for_answer_call));
+                        } else {
+                            onPermissionGranted(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
+                        }
+                    }
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //特殊权限结果返回
+        if (requestCode == PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION || requestCode == PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS
+                || requestCode == PermissionUtils.REQUEST_CODE_WRITE_SETTINGS) {
+            requestSpecialPermission(requestCode, true);
+        }
+
+        //华为悬浮窗权限
+        if (requestCode == SpecialPermissionsUtil.REQUEST_CODE_FLOAT_WINDAOW_PERMISSION) {
+            if (RomUtils.checkIsHuaweiRom()) {
+                if (!SpecialPermissionsUtil.checkFloatWindowPermission(this)) {
+                    ToastUtils.showToast(this, getString(R.string.permission_denied_txt));
+                    return;
+                }
+            }
+            requestSpecialPermission(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION, true);
+        }
+
+        //跳转app details settings 返回
+        if (requestCode == PermissionUtils.REQUEST_CODE_APP_DETAILS_SETTINGS) {
+            if (!SpecialPermissionsUtil.checkFloatWindowPermission(this)) {
+                ToastUtils.showToast(this, getString(R.string.permission_denied_txt));
+                return;
+            }
+            requestSpecialPermission(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION, true);
+        }
+
+    }
+
     @Override
     public void onPermissionGranted(int requestCode) {
 
@@ -127,6 +230,26 @@ public class BaseActivity extends Activity implements PermissionUtils.Permission
     @Override
     public void onPermissionNotGranted(int requestCode) {
         Toast.makeText(this, getString(R.string.permission_denied_txt), Toast.LENGTH_SHORT).show();
+    }
+
+
+    //跳转到系统app详情界面
+    private void toAppDetailSetting() {
+        Intent intent = new Intent();
+        intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+        intent.setData(Uri.fromParts("package", getPackageName(), null));
+        startActivityForResult(intent, PermissionUtils.REQUEST_CODE_APP_DETAILS_SETTINGS);
+    }
+
+    private void showPermissionTipDialog(final String permissionFor) {
+        Async.scheduleTaskOnUiThread(200, new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(BaseActivity.this, PermissionTipActivity.class);
+                intent.putExtra("permission_for", permissionFor);
+                startActivity(intent);
+            }
+        });
     }
     //**************************************请求权限 end**************************//
 }

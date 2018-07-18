@@ -10,10 +10,10 @@ import com.md.block.core.BlockManager;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PhoneStateListenImpl;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.CallerCommonReceiver;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.MessageReceiver;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.NetworkConnectChangedReceiver;
-import event.EventBus;
 
 public class LocalService extends Service {
     private static final String TAG = "LocalService";
@@ -33,6 +33,10 @@ public class LocalService extends Service {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        //保存安装时间
+        if (PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_INSTALL_TIME, 0) <= 0) {
+            PreferenceHelper.putLong(PreferenceHelper.PREF_KEY_INSTALL_TIME, System.currentTimeMillis());
+        }
         registerReceivers();
         initBlock();
     }

@@ -1045,4 +1045,25 @@
     <string name="side_slip_title_des">"别出心裁，秀随我变"</string>
     <string name="side_slip_close_call_flash">Close Caller Show</string>
     <string name="side_slip_collection">Collection</string>
+
+    <!--permission actiivty-->
+    <string name="permission_welcome">"欢迎"</string>
+    <string name="permission_des">第一次启动需要先进行一些设置，点击下方按钮开始设置</string>
+    <string name="permission_get_permission">授予权限</string>
+    <string name="permission_float_window_title">悬浮窗介绍</string>
+    <string name="permission_float_window_des">允许CallerColor出现在系统顶部，才能让CallerColor发挥强大功能，点击授权按钮，让CallerColor更好的服务</string>
+    <string name="permission_notification_title">获取通知权限</string>
+    <string name="permission_notification_des">授予应用程序通知权限，可解决来电秀接听失败的问题</string>
+    <string name="permission_storage_title">存储访问</string>
+    <string name="permission_storage_des">授予应用程序存储权限用来保存下载的来电秀，使CallerColor正常工作</string>
+    <string name="permission_phone_title">电话访问</string>
+    <string name="permission_phone_des">授予应用程序通话状态权限，使来电秀能够正常显示</string>
+    <string name="permission_sms_title">短信权限</string>
+    <string name="permission_sms_des">授予应用程序接收短信权限，使来电秀能够正常显示</string>
+    <string name="permission_contact_title">联系人权限</string>
+    <string name="permission_contact_des">授予应用程序联系人权限，使来电秀能够正常显示</string>
+    <string name="permission_tip_des">若要体验全部功能，请前往授权</string>
+    <string name="permission_enabled">已经授权</string>
+    <string name="permission_for_show_call_flash">show call flash</string>
+    <string name="permission_for_answer_call">answering calls</string>
 </resources>

@@ -36,16 +36,14 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import event.EventBus;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CallFlashListFragment extends Fragment {
-    private static final int ONLINE_THEME_PAGE_LOAD_LENGTH = 6;
-    private static final int RECYCLER_ONLINE_CALL_FLASH_AD_SHOW_POSITION = 2;
+public class CallFlashListFragment extends Fragment implements View.OnClickListener {
     private static final long MAX_LOAD_THEME_FROM_NET_TIME = DateUtils.SECOND_IN_MILLIS * 5;
     private static final String TAG = "CallFlashListFragment";
     private static final String DATA_TYPE = "data_type";
@@ -56,8 +54,6 @@ public class CallFlashListFragment extends Fragment {
     private TextView mTvRefreshFailed;
     private CallFlashOnlineAdapter mAdapter = null;
     private List<CallFlashInfo> model = new ArrayList<>();
-    private boolean isRefreshed = false;
-    private boolean isEmptyData;
     private int mDataType = 0;
     private CallFlashMarginDecoration mCallFlashMarginDecoration;
     private String topic = "";
@@ -65,6 +61,7 @@ public class CallFlashListFragment extends Fragment {
     private int mCategoryId = -1;
     private ProgressBar mPbLoading;
     private Runnable mLoadMaxRunable;
+    private View mLayoutPermissionTip;
 
     public static CallFlashListFragment newInstance(int dataType) {
         CallFlashListFragment fragment = new CallFlashListFragment();
@@ -102,7 +99,7 @@ public class CallFlashListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_call_flash_classic, container, false);
+        return inflater.inflate(R.layout.fragment_call_flash_list, container, false);
     }
 
     @Override
@@ -113,6 +110,8 @@ public class CallFlashListFragment extends Fragment {
             mRecyclerView = view.findViewById(R.id.rv_flash_list);
             mPbLoading = view.findViewById(R.id.pb_loading);
 
+            mLayoutPermissionTip = view.findViewById(R.id.layout_permission_tip);
+
             mPbLoading.setVisibility(View.VISIBLE);
             mSwipeRefreshLayout.setVisibility(View.GONE);
 
@@ -120,6 +119,12 @@ public class CallFlashListFragment extends Fragment {
             listener();
             initData(true);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showPermissionTip();
     }
 
     @Override
@@ -133,6 +138,16 @@ public class CallFlashListFragment extends Fragment {
         }
         if (mAdapter != null) {
             mAdapter.clearMap();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.layout_permission_tip:
+                ActivityBuilder.toPermissionActivity(getActivity(), true);
+                break;
         }
     }
 
@@ -299,6 +314,7 @@ public class CallFlashListFragment extends Fragment {
     }
 
     private void listener() {
+        mLayoutPermissionTip.setOnClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -360,6 +376,17 @@ public class CallFlashListFragment extends Fragment {
                 mSwipeRefreshLayout.setRefreshing(true);
             }
             initData(false);
+        }
+    }
+
+    public void showPermissionTip() {
+        if (mLayoutPermissionTip != null) {
+            boolean isHaveAllPermission = PermissionUtils.isHaveAllPermission(getActivity());
+            if (!isHaveAllPermission) {
+                mLayoutPermissionTip.setVisibility(View.VISIBLE);
+            } else {
+                mLayoutPermissionTip.setVisibility(View.GONE);
+            }
         }
     }
 }

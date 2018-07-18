@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.manager.CallFlashManager;
@@ -20,8 +19,6 @@ import java.util.List;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.CallFlashLocalAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
-import event.EventBus;
 
 /**
  * Created by ChenR on 2018/1/25.
@@ -54,7 +51,7 @@ public class CallFlashLocalListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_call_flash_classic, container, false);
+        return inflater.inflate(R.layout.fragment_call_flash_list, container, false);
     }
 
     @Override

@@ -25,6 +25,7 @@ public class ActivityBuilder {
     public static final int MAX_FRAGEMNTS = 4;
 
     public static final String SMS_COME_MESSAGE = "sms_come_message";
+    public static final String IS_SHOW_PERMISSIONS = "is_show_permissions";
 
 
     /**
@@ -72,6 +73,15 @@ public class ActivityBuilder {
 //        intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
         intent.putExtra(IS_COME_FROM_DESKTOP, isComeDesktop);
         intent.putExtra(CALL_FLASH_INFO, info);
+        context.startActivity(intent);
+    }
+
+    /**
+     * @param isShowPermission true:显示当前已经获取的权限信息，false:请求权限
+     */
+    public static void toPermissionActivity(Context context, boolean isShowPermission) {
+        Intent intent = new Intent(context, PermissionActivity.class);
+        intent.putExtra(ActivityBuilder.IS_SHOW_PERMISSIONS, isShowPermission);
         context.startActivity(intent);
     }
 }

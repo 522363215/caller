@@ -326,7 +326,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
     }
 
     public boolean isToMain() {
-        long install_time = PreferenceHelper.getInt(PreferenceHelper.PREF_KEY_INSTALL_TIME, 0);
+        long install_time = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_INSTALL_TIME, 0);
 //        long lastShowSplashTime = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_TO_SPALSH_TIME, 0);
         if (!DateUtils.isToday(install_time)/* && !DateUtils.isToday(lastShowSplashTime)*/) {
             Calendar cal = Calendar.getInstance();
