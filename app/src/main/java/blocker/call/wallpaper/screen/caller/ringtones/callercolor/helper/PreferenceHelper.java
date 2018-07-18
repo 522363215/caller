@@ -96,6 +96,19 @@ final public class PreferenceHelper {
      */
     public static final String PREF_KEY_INSTALL_TIME = "android_install_time";
 
+    /**
+     * 上一次显示启动页广告的时间
+     */
+    public static final String PREF_LAST_SHOW_SPLASH_AD_TIME = "android_last_show_splash_ad_time";
+    /**
+     * 上一次显示启动页初始化的时间
+     */
+    public static final String PREF_LAST_SHOW_SPLASH_INIT_TIME = "android_last_show_splash_init_time";
+    /**
+     * 上一次显示主动申请权限界面的时间
+     */
+    public static final String PREF_LAST_REQUEST_PERMISSION_TIME = "android_last_request_permission_time";
+
 
     private PreferenceHelper() {
     }

@@ -3,9 +3,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -52,8 +50,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUt
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.RomUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar;
@@ -442,35 +438,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //特殊权限结果返回
-        if (requestCode == REQUEST_CODE_OVERLAY_PERMISSION || requestCode == REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS
-                || requestCode == REQUEST_CODE_WRITE_SETTINGS) {
-            requestSpecialPermission(requestCode, true);
-        }
-
-        //华为悬浮窗权限
-        if (requestCode == SpecialPermissionsUtil.REQUEST_CODE_FLOAT_WINDAOW_PERMISSION) {
-            if (RomUtils.checkIsHuaweiRom()) {
-                if (!SpecialPermissionsUtil.checkFloatWindowPermission(this)) {
-                    ToastUtils.showToast(this, getString(R.string.call_flash_gif_show_setting_fail2));
-                    return;
-                }
-            }
-            requestSpecialPermission(REQUEST_CODE_OVERLAY_PERMISSION, true);
-        }
-
-        //跳转app details settings 返回
-        if (requestCode == REQUEST_CODE_APP_DETAILS_SETTINGS) {
-            if (!SpecialPermissionsUtil.checkFloatWindowPermission(this)) {
-                ToastUtils.showToast(this, getString(R.string.call_flash_gif_show_setting_fail2));
-                return;
-            }
-            requestSpecialPermission(REQUEST_CODE_OVERLAY_PERMISSION, true);
-        }
-    }
-
-    @Override
     public void onBackPressed() {
         final boolean isShowInterstitialAd = InterstitialAdUtil.isShowInterstitial(CallerAdManager.IN_ADS_CALL_FLASH);
         File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
@@ -732,7 +699,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private void setOrCancelFlash() {
         if (!isFinishing()) {
             if (!isCurrentFlashUsing) {
-                requestSpecialPermission(REQUEST_CODE_OVERLAY_PERMISSION, false);
+                //单个权限请求，一个权限成功之后继续续请求下一个
+                requestSpecialPermission(PermissionUtils.PERMISSION_OVERLAY);
             } else {
                 toResult(getString(R.string.call_flash_gif_show_setting_suc_reset));
                 CallFlashPreferenceHelper.putBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
@@ -752,103 +720,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 }
             }
         }
-    }
-
-    /**
-     * 申请权限顺序 drawoverlay--NOTIFICATION_LISTENER_SETTINGS--writesetting Or NOTIFICATION_POLICY_ACCESS_SETTINGS
-     */
-    private void requestSpecialPermission(int requestCode, boolean isOnActivityResult) {
-        switch (requestCode) {
-            case REQUEST_CODE_OVERLAY_PERMISSION://draw overlay
-                LogUtil.d("chenr", "申请显示在其他应用上面权限.");
-                if (isOnActivityResult) {
-                    //overlay premission返回时针对不同的手机判断
-                    if (RomUtils.checkIsHuaweiRom()) {
-                        if (!SpecialPermissionsUtil.checkFloatWindowPermission(this)) {
-                            SpecialPermissionsUtil.applyFloatWindowPermission(this);
-                            return;
-                        }
-                    } else {
-                        if (!SpecialPermissionsUtil.checkFloatWindowPermission(this)) {
-                            toAppDetailSetting();
-                            return;
-                        }
-                    }
-                    if (!SpecialPermissionsUtil.canDrawOverlays(CallFlashDetailActivity.this)) {
-                        ToastUtils.showToast(this, getString(R.string.call_flash_gif_show_setting_fail2));
-                        return;
-                    } else {
-                        FlurryAgent.logEvent("CallFlashDetailActivity--drawOverlay--success");
-                        isOnActivityResult = false;
-                    }
-                } else {
-                    if (!SpecialPermissionsUtil.canDrawOverlays(CallFlashDetailActivity.this)) {
-                        // 检查overlay权限
-                        LogUtil.d("chenr", "检查 overlay");
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
-                            startActivityForResult(intent, REQUEST_CODE_OVERLAY_PERMISSION);
-                            if (!mIsShowPermissionTipDialog) {
-                                showPermissionTipDialog(false);
-                            }
-                            FlurryAgent.logEvent("CallFlashDetailActivity--drawOverlay--show");
-                            return;
-                        }
-                    }
-                }
-            case REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS://通知管理,7.0以上用于接听电话
-                LogUtil.d("chenr", "申请通知管理权限.");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                    if (isOnActivityResult) {
-                        if (!SpecialPermissionsUtil.isNotificationServiceRunning()) {
-                            //屏蔽此处表示该权限同意或者不同意都可以
-//                            ToastUtils.showToast(this, getString(R.string.call_flash_gif_show_setting_fail2));
-//                            return;
-                            isOnActivityResult = false;//此句该权限同意或者不同意都可以的时候才添加
-                        } else {
-                            isOnActivityResult = false;
-                            PermissionUtils.toggleNotificationListenerService(ApplicationEx.getInstance());
-                            FlurryAgent.logEvent("CallFlashDetailActivity--notificationListenerSetting--Success");
-                        }
-                    } else {
-                        if (!SpecialPermissionsUtil.isNotificationServiceRunning()) {
-                            // 检查通知使用权
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                                Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
-                                startActivityForResult(intent, REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
-                                showPermissionTipDialog(true);
-                                FlurryAgent.logEvent("CallFlashDetailActivity--notificationListenerSetting--show");
-                                return;
-                            }
-                        }
-                    }
-                }
-            case REQUEST_CODE_WRITE_SETTINGS://write setting，用于设置手机铃声
-                LogUtil.d("chenr", "申请手机铃声权限.");
-//                RingManager.reductionRing(this);
-            default:
-                showSaveDialog();
-//                if (mIsComeCallFlashPreview) {
-//                    showSaveDialog();
-//                } else {
-//                    LogUtil.d(TAG, "toResultOkAction 3");
-//                    toResultOkAction();
-//                }
-        }
-    }
-
-    private void showPermissionTipDialog(final boolean isNotificationAcess) {
-        tv_setting_action_below_ad.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(CallFlashDetailActivity.this, PermissionTipActivity.class);
-                intent.putExtra("is_notification_acess", isNotificationAcess);
-                startActivity(intent);
-                if (!isNotificationAcess) {
-                    mIsShowPermissionTipDialog = true;
-                }
-            }
-        }, 200);
     }
 
     private void toResultOkAction() {
@@ -891,14 +762,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         onFinish();
         mIsToResult = true;
         EventBus.getDefault().post(new EventRefreshCallFlashList());
-    }
-
-    //跳转到系统app详情界面
-    private void toAppDetailSetting() {
-        Intent intent = new Intent();
-        intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
-        intent.setData(Uri.fromParts("package", getPackageName(), null));
-        startActivityForResult(intent, REQUEST_CODE_APP_DETAILS_SETTINGS);
     }
 
     private void showInterstitialAd(final boolean isBack) {
@@ -1031,7 +894,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 PreloadAdvertisement.ADMOB_ADX_TYPE_NATIVE_ADVANCED, false);
     }
 
-
     //---------------------------获取权限----------------------------------
     private void getSdCardPermission() {
         FlurryAgent.logEvent("CallFlashDetailActivity-downloadFailed-noSdCardPermission");
@@ -1042,7 +904,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         dialog.setOkClickListener(new OKCancelDialog.OKClickListener() {
             @Override
             public void Ok() {
-                requestPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionUtils.CODE_EXTERNAL_STORAGE_PERMISSION);
+                requestPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionUtils.REQUEST_CODE_EXTERNAL_STORAGE_PERMISSION);
             }
         });
     }
@@ -1050,7 +912,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     @Override
     public void onPermissionGranted(int requestCode) {
         switch (requestCode) {
-            case PermissionUtils.CODE_EXTERNAL_STORAGE_PERMISSION:
+            case PermissionUtils.REQUEST_CODE_EXTERNAL_STORAGE_PERMISSION:
                 LogUtil.d(TAG, "MyPermissionGrant onPermissionGranted CODE_EXTERNAL_STORAGE_PERMISSION");
                 if (mIsShowAboveAdBtn) {
                     layout_progress_above_ad.setVisibility(View.VISIBLE);
@@ -1064,6 +926,12 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 if (!TextUtils.isEmpty(mInfo.url)) {
                     downloadFlashResourceFile();
                 }
+                break;
+            case PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION:
+                requestSpecialPermission(PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS);
+                break;
+            case PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS:
+                showSaveDialog();
                 break;
         }
     }

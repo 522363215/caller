@@ -66,6 +66,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().registerSticky(this);
         }
+        toPermissionActivity();
         initView();
         //初始化page
         initViewPager();
@@ -75,6 +76,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         initIndex(getIntent());
     }
 
+    private void toPermissionActivity() {
+        boolean isShowPermissionActivity = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_REQUEST_PERMISSION_TIME, 0) <= 0;
+        if (isShowPermissionActivity) {
+            PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_REQUEST_PERMISSION_TIME, System.currentTimeMillis());
+            ActivityBuilder.toPermissionActivity(this, false);
+        }
+    }
 
     @Override
     protected void onStart() {

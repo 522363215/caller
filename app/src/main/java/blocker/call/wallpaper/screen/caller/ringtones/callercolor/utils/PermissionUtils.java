@@ -17,7 +17,6 @@ import com.md.block.core.service.CallerNotificationListenerService;
 
 import java.util.ArrayList;
 
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.PermissionDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventNoPermission;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
@@ -28,38 +27,25 @@ import event.EventBus;
  */
 public class PermissionUtils {
     private static final String TAG = PermissionUtils.class.getSimpleName();
-    //权限
-    public static final String PERMISSION_WRITE_CALL_LOG = "android.permission.WRITE_CALL_LOG";
-    public static final String PERMISSION_READ_CALL_LOG = "android.permission.READ_CALL_LOG";
-    public static final String PERMISSION_READ_CONTACTS = "android.permission.READ_CONTACTS";
-    public static final String PERMISSION_WRITE_CONTACTS = "android.permission.WRITE_CONTACTS";
-    public static final String PERMISSION_CALL_PHONE = "android.permission.CALL_PHONE";
-    public static final String PERMISSION_READ_SMS = "android.permission.READ_SMS";
-    public static final String PERMISSION_READ_PHONE_STATE = "android.permission.READ_PHONE_STATE";
-    public static final String PERMISSION_INTERNET = "android.permission.INTERNET";
-
+    private static PermissionDialog mPermissionDialog;
 
     //request code
-    public static final int CODE_WRITE_CALL_LOG = 0;
-    public static final int CODE_READ_CALL_LOG = 1;
-    public static final int CODE_READ_CONTACTS = 2;
-    public static final int CODE_WRITE_CONTACTS = 3;
-    public static final int CODE_CALL_PHONE = 4;
-    public static final int CODE_READ_SMS = 5;
-    public static final int CODE_READ_PHONE_STATE = 6;
-    public static final int CODE_INTERNET = 7;
-    public static final int CODE_MULTI_PERMISSION = 200;//一次申请多个权限的requestcode
-    public static final int CODE_REQUEST_PERMISSION_SETTING = 201;//带返回结果的跳转到系统权限设置界面的请求码
-    public static final int CODE_CALLLOG_PERMISSION = 202;
-    public static final int CODE_CONTACT_PERMISSION = 203;
-    public static final int CODE_SMS_PERMISSION = 204;
-    public static final int CODE_PHONE_PERMISSION = 205;
-    public static final int CODE_EXTERNAL_STORAGE_PERMISSION = 206;
-    public static final int CODE_CAMERA = 207;
+    public static final int REQUEST_CODE_ALL_PERMISSION_ = 1024;
+    private static final int REQUEST_CODE_REQUEST_PERMISSION_SETTING = 201;//带返回结果的跳转到系统权限设置界面的请求码
+    public static final int REQUEST_CODE_EXTERNAL_STORAGE_PERMISSION = 206;
+    public static final int REQUEST_CODE_PHONE_STATE_PERMISSION = 207;
+    public static final int REQUEST_CODE_RECEIVE_SMS_PERMISSION = 208;
+    public static final int REQUEST_CODE_READ_CONTACT_PERMISSION = 209;
 
-    public static final int CODE_ALERT_WINDOW_PERMISSION = 301; // incoming call dialog
+    //特殊权限code
+    public static final int REQUEST_CODE_OVERLAY_PERMISSION = 1712;
+    public static final int REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS = 1713;
+    public static final int REQUEST_CODE_WRITE_SETTINGS = 1715;
+    public static final int REQUEST_CODE_APP_DETAILS_SETTINGS = 1716;
 
-    private static PermissionDialog mPermissionDialog;
+
+    public static final String PERMISSION_OVERLAY = "permission_overlay";//悬浮窗权限
+    public static final String PERMISSION_NOTIFICATION_POLICY_ACCESS = "permission_notification_policy_acCess";//通知服务权限
 
     public interface PermissionGrant {
         void onPermissionGranted(int requestCode);
@@ -222,7 +208,7 @@ public class PermissionUtils {
                     LogUtil.d(TAG, "getPackageName(): " + activity.getPackageName());
                     Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
                     intent.setData(uri);
-                    activity.startActivityForResult(intent, CODE_REQUEST_PERMISSION_SETTING);
+                    activity.startActivityForResult(intent, REQUEST_CODE_REQUEST_PERMISSION_SETTING);
                 } else {
                     Intent intent = new Intent();
                     intent.setAction("miui.intent.action.APP_PERM_EDITOR");
@@ -230,7 +216,7 @@ public class PermissionUtils {
 //                    ComponentName componentName = new ComponentName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
 //                    intent.setComponent(componentName);
                     intent.putExtra("extra_pkgname", activity.getPackageName());
-                    activity.startActivityForResult(intent, CODE_REQUEST_PERMISSION_SETTING);
+                    activity.startActivityForResult(intent, REQUEST_CODE_REQUEST_PERMISSION_SETTING);
                 }
 
             }
@@ -261,8 +247,16 @@ public class PermissionUtils {
     }
     //***********************************************显示对话框 end**************************************************/
 
-    public static boolean hasPermission(Activity activity, String permission) {
-        if (ActivityCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED) {
+    public static boolean hasPermission(Context context, String permission) {
+        if (PERMISSION_OVERLAY.equals(permission)) {
+            return SpecialPermissionsUtil.canDrawOverlays(context);
+        }
+
+        if (PERMISSION_NOTIFICATION_POLICY_ACCESS.equals(permission)) {
+            return SpecialPermissionsUtil.isHaveNotificationPolicyAccess(context);
+        }
+
+        if (ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
         return false;
@@ -320,5 +314,16 @@ public class PermissionUtils {
             }
 
         }
+    }
+
+
+    public static boolean isHaveAllPermission(Context context) {
+        boolean canDrawOverlays = SpecialPermissionsUtil.canDrawOverlays(context);
+        boolean isHaveNotificationPolicyAccess = SpecialPermissionsUtil.isHaveNotificationPolicyAccess(context);
+        boolean isHavePhone = hasPermission(context, Manifest.permission.READ_PHONE_STATE);
+        boolean isHaveSMS = hasPermission(context, Manifest.permission.RECEIVE_SMS);
+        boolean isHaveStorage = hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        boolean isHaveContact = hasPermission(context, Manifest.permission.READ_CONTACTS);
+        return canDrawOverlays && isHaveNotificationPolicyAccess && isHavePhone && isHaveSMS && isHaveStorage && isHaveContact;
     }
 }
