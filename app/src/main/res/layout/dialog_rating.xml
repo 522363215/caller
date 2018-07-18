@@ -99,7 +99,6 @@
             android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:background="@color/total_background_gray_color"
-            android:clickable="true"
             android:gravity="center"
             android:text="@string/rate_dialog_cancel"
             android:textColor="@color/wifi_connect_detail_button_color"

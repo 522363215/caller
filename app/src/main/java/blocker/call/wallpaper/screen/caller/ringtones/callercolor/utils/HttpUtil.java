@@ -52,33 +52,6 @@ public class HttpUtil {
         }
     }
 
-//	public static void  postWifiConfig(Context context, WifiConfigurationBean bean, AjaxCallback<JSONObject> ajaxCallback) {
-//		AQuery aq = new AQuery(context);
-//		Map<String, Object> params = new HashMap<>();
-//		JSONObject object = new JSONObject();
-//		try {
-//			if(makeBasicParam4Json(context, object)) {
-//				object.put("action", ConstantUtils.WIFI_INFO_ACTION);
-//				object.put("b_ssid", bean.getRSSID());
-//				object.put("ssid", bean.getSsid());
-//				object.put("frequency", bean.getFrequency());
-//				object.put("password", bean.getPassWord());
-//				object.put("history_speed", bean.getHistorySpeed());
-//				object.put("history_speed_time", bean.getHistorySpeedTime());
-//				object.put("safe_test_result", bean.getSafeTestResult());
-//				object.put("safe_test_time", bean.getSafeTestTime());
-//				object.put("latitude", bean.getLatitude());
-//				object.put("longitude", bean.getLongitude());
-//
-//				params.put("data", object.toString());
-//				String sig = Stringutil.MD5Encode(object.toString() + "");
-//				params.put("v", sig);
-//				aq.ajax(ConstantUtils.SERVER_API_INTERFACE, params, JSONObject.class, ajaxCallback);
-//			}
-//		} catch (Exception e) {
-//		}
-//	}
-
     public static int pkgVersion(Context context) {
         PackageInfo pkg;
         int version = 0;

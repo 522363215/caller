@@ -61,7 +61,6 @@
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:visibility="visible"
-                    tools:text="@string/frag_block_update_scan_phone_number_desc"
                     tools:visibility="visible" />
 
             </LinearLayout>
