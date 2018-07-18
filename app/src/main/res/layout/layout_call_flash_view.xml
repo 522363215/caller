@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_shadow_floating_bg"
-    card_view:cardBackgroundColor="@color/transparent"
+    card_view:cardBackgroundColor="@color/color_transparent"
     card_view:cardCornerRadius="2dp">
 
     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView

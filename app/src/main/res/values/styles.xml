@@ -14,9 +14,6 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <style name="SearchViewTheme" parent="AppTheme">
-        <item name="android:textColorHint">@color/text_third_level_color</item>
-    </style>
     <style name="CallFlashAppCompatTheme" parent="@style/Theme.AppCompat.Light">
         <item name="android:windowIsTranslucent">false</item>
         <item name="windowActionBar">false</item>
@@ -24,195 +21,8 @@
         <item name="android:windowBackground">@color/background</item>
     </style>
 
-    <style name="vpn_protect_checkbox" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/vpn_protect</item>
-    </style>
-
-    <style name="FullBleedTheme" parent="AppTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
-
-    <style name="ProcessCleanDialog" parent="@android:style/Theme.Light">
-        <item name="android:windowBackground">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-    </style>
-
-    <style name="toggle_setting" parent="@android:style/Theme.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="custom_ratingbar_style" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/custom_ratingbar_progress</item>
-        <item name="android:minHeight">16dip</item>
-        <item name="android:maxHeight">16dip</item>
-        <item name="android:stepSize">0.2</item>
-        <item name="android:isIndicator">true</item>
-        <item name="android:paddingTop">6dip</item>
-    </style>
-
-    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/checkbox_style</item>
-    </style>
-
-    <style name="Dialog" parent="android:style/Theme.Dialog">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-    </style>
-
-    <style name="no_close_dialog" parent="Dialog">
-        <item name="android:windowCloseOnTouchOutside">false</item>
-    </style>
-
-    <!-- Add by Feng Yun for NotificationSettingDialog Start -->
-    <style name="notification_setting_style" parent="android:style/Theme.Dialog">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:windowBackground">@drawable/notification_setting_bg</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-    <!-- Add by Feng Yun for NotificationSettingDialog End -->
-
-    <style name="Transparent" parent="android:Theme">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowAnimationStyle">@style/noAnimation</item>
-    </style>
-
-    <style name="noAnimation">
-        <item name="android:activityOpenEnterAnimation">@null</item>
-        <item name="android:activityOpenExitAnimation">@null</item>
-        <item name="android:activityCloseEnterAnimation">@null</item>
-        <item name="android:activityCloseExitAnimation">@null</item>
-        <item name="android:taskOpenEnterAnimation">@null</item>
-        <item name="android:taskOpenExitAnimation">@null</item>
-        <item name="android:taskCloseEnterAnimation">@null</item>
-        <item name="android:taskCloseExitAnimation">@null</item>
-        <item name="android:taskToFrontEnterAnimation">@null</item>
-        <item name="android:taskToFrontExitAnimation">@null</item>
-        <item name="android:taskToBackEnterAnimation">@null</item>
-        <item name="android:taskToBackExitAnimation">@null</item>
-    </style>
-
-    <style name="CustomDialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
-    </style>
-
-    <style name="CustomProgressDialog" parent="@style/CustomDialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-
     <style name="dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
-    </style>
-
-    <style name="Theme.notAnimation" parent="AppTheme">
-        <item name="android:windowAnimationStyle">@style/notAnimation</item>
-    </style>
-
-    <style name="notAnimation">
-        <item name="android:activityOpenEnterAnimation">@null</item>
-        <item name="android:activityOpenExitAnimation">@null</item>
-        <item name="android:activityCloseEnterAnimation">@null</item>
-        <item name="android:activityCloseExitAnimation">@null</item>
-        <item name="android:taskOpenEnterAnimation">@null</item>
-        <item name="android:taskOpenExitAnimation">@null</item>
-        <item name="android:taskCloseEnterAnimation">@null</item>
-        <item name="android:taskCloseExitAnimation">@null</item>
-        <item name="android:taskToFrontEnterAnimation">@null</item>
-        <item name="android:taskToFrontExitAnimation">@null</item>
-        <item name="android:taskToBackEnterAnimation">@null</item>
-        <item name="android:taskToBackExitAnimation">@null</item>
-    </style>
-
-    <!-- android:gravity="center_vertical"
-     android:layout_weight="1"
-     android:layout_width="match_parent"
-     android:layout_height="0dp"
-     android:fontFamily="sans-serif-light"
-     android:textColor="@color/result_pc_download_text_color"
-     android:textSize="12dp"-->
-
-    <!--android:textSize="48dp"
-    android:text="A"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginTop="8dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"-->
-
-    <!--黑名单弹窗标题格式-->
-    <style name="dialog_block_list_title">
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingLeft">@dimen/dp16</item>
-        <item name="android:paddingStart">@dimen/dp16</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/color_DE000000</item>
-    </style>
-
-    <!--黑名单弹窗添加内容格式-->
-    <style name="dialog_block_list_item">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dp50</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingLeft">@dimen/dp16</item>
-        <item name="android:paddingStart">@dimen/dp16</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/color_DE000000</item>
-    </style>
-
-    <style name="dialog_devices_manual_hint_text">
-        <item name="android:textColor">@color/speed_boost_normal_text_color</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-    </style>
-
-    <style name="dialog_devices_manual_hint_dot" parent="dialog_devices_manual_hint_text">
-        <item name="android:textSize">6dp</item>
-        <item name="android:layout_marginRight">3dp</item>
-        <item name="android:layout_marginLeft">4dp</item>
-        <item name="android:gravity">top</item>
-    </style>
-
-    <style name="operation_list_style" parent="android:Animation">
-        <item name="@android:windowEnterAnimation">@anim/dialog_enter</item>
-        //进入时的动画
-        <item name="@android:windowExitAnimation">@anim/dialog_exit</item>
-        //退出时的动画
-    </style>
-
-    <style name="Shortcut" parent="android:Theme.Translucent">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowFrame">@null</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:windowCloseOnTouchOutside">false</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:backgroundDimEnabled">true</item>
-    </style>
-
-    <style name="ActivityDialog" parent="@android:style/Theme.Light">
-        <item name="android:windowBackground">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowFrame">@null</item>
-        <item name="android:background">@null</item>
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
 
     <style name="main_check_button_text">
@@ -229,55 +39,10 @@
         <item name="android:windowExitAnimation">@anim/dialog_exit</item>
     </style>
 
-    <style name="phoneDetailTheme" parent="Base.Theme.AppCompat">
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowBackground">@color/white</item>
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
-
     <style name="calllog_refresh_progressbar" parent="Widget.AppCompat.ProgressBar">
         <item name="android:indeterminateTint" tools:targetApi="lollipop">@color/color_FF27BB56</item>
         <item name="android:toDegrees">10</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
-
-    <style name="ActivityDialogTheme" parent="@android:style/Theme.Dialog">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@color/color_transparent</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:backgroundDimEnabled">true</item>
-    </style>
-
-    <style name="LionRatingBar" parent="Base.Widget.AppCompat.RatingBar.Indicator">
-        <item name="android:progressDrawable">@drawable/lion_family_rating_star_bg</item>
-        <!--<item name="android:maxHeight">@dimen/dp16</item>-->
-        <!--<item name="android:minHeight">@dimen/dp16</item>-->
-        <item name="android:stepSize">0.2</item>
-    </style>
-
-    <style name="TransparentBgDialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <!--去除背景模糊-->
-        <item name="android:backgroundDimEnabled">false</item>
-        <item name="android:backgroundDimAmount">0.6</item>
-    </style>
-
-    <style name="TransparentBgDialog2" parent="@android:style/Theme.Dialog">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="FullScreenAdDialog" parent="@android:style/Theme.Dialog">
@@ -293,18 +58,6 @@
         <item name="android:backgroundDimEnabled">true</item>
         <!--无标题 -->
         <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <!-- ligehui lazyswipe start -->
-    <!-- Base application theme. -->
-    <style name="SwipeSettingTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
-
-
-    <!-- ligehui lazyswipe end -->
-
-    <style name="Toolbar.style" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:colorBackground">@color/white</item>
-        <item name="android:textColor">@color/black_87</item>
     </style>
 
 </resources>

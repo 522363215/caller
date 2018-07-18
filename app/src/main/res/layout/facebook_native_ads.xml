@@ -133,7 +133,6 @@
             android:id="@+id/nativeAdCallToAction"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@drawable/frag_block_switch_enable_bg"
             android:gravity="center"
             android:padding="5dp"
             android:textColor="@color/whiteSmoke"

@@ -19,8 +19,7 @@
             <FrameLayout
                 android:id="@+id/layout_fb_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/layout_btn_ripple">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/iv_content"

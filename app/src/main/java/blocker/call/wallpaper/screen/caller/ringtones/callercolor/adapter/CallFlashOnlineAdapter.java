@@ -254,7 +254,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
         private TextView tv_call_name;
 
         FrameLayout layout_ad_admob;
-        LinearLayout fb_native_ad_container;
         LinearLayout layout_mopub;
 
         private OnOnlineDownloadListener mOnDownloadListener;
@@ -273,7 +272,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
             layoutCallFlash.setOnClickListener(mOnItemClickListener);
             layout_ad_view = itemView.findViewById(R.id.layout_ad_view);
             layout_ad_admob = (FrameLayout) layout_ad_view.findViewById(R.id.layout_admob);
-            fb_native_ad_container = (LinearLayout) itemView.findViewById(R.id.fb_native_ad_container);
             layout_mopub = (LinearLayout) itemView.findViewById(R.id.layout_mopub_native_view);
 
             coverImg = itemView.findViewById(R.id.coverImg);

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_ad_view_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/layout_ad_view_root"
-    android:paddingBottom="8dp"
-    android:paddingLeft="8dp"
-    android:paddingStart="8dp"
-    android:paddingRight="8dp"
-    android:paddingEnd="8dp"
     android:background="@color/color_transparent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingEnd="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingStart="8dp">
 
     <FrameLayout
         android:id="@+id/layout_fb_image"
@@ -20,6 +20,7 @@
             android:id="@+id/nativeAdMedia"
             android:layout_width="fill_parent"
             android:layout_height="80dp" />
+
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -34,17 +35,17 @@
             android:gravity="left|start"
             android:orientation="vertical"
             android:paddingBottom="8dp"
-            android:paddingLeft="8dp"
-            android:paddingStart="8dp"
-            android:paddingRight="8dp"
             android:paddingEnd="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingStart="8dp"
             android:paddingTop="8dp"
             android:visibility="visible">
 
             <FrameLayout
                 android:id="@+id/layout_ad_choise_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/nativeAdTitle"
@@ -61,14 +62,15 @@
                 android:id="@+id/nativeAdBody"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:alpha="0.8"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-light"
                 android:gravity="top"
                 android:maxLines="2"
                 android:text="aaaaa"
-                android:textColor="@color/white_80"
+                android:textColor="@color/white"
                 android:textSize="12sp"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
         </LinearLayout>
 
