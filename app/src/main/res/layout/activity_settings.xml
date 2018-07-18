@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:text="@string/whtas_new_title_name"/>
+            android:text="@string/setting_call_after"/>
 
         <View
             android:layout_width="0dp"

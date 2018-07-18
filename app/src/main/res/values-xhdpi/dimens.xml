@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <!-- 1280*720 xhdpi -->
-    <dimen name="actionbar_height">56dp</dimen>
-    <dimen name="protable_hotspot_magin_top">24dp</dimen>
-    <dimen name="protable_hotspot_magin">16dp</dimen>
-    <dimen name="portable_hospot_cicle">150dp</dimen>
-
-    <dimen name="quick_charging_time_top_margin">24dp</dimen>
-    <dimen name="quick_charging_battery_top_margin">24dp</dimen>
-    <dimen name="quick_charging_left_padding">24dp</dimen>
-
-    <dimen name="ad_image_big_radius">8dp</dimen>
-    <dimen name="ad_image_small_radius">8dp</dimen>
-
-    <dimen name="dp_8">-8dp</dimen>
-    <dimen name="dp_14">-14dp</dimen>
-
     <dimen name="dp1">1dp</dimen>
     <dimen name="dp4">4dp</dimen>
     <dimen name="dp5">5dp</dimen>

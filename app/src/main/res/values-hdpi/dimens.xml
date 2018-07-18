@@ -2,22 +2,6 @@
 <resources>
 <!-- 800*480 -->
     <dimen name="actionbar_height">50dp</dimen>
-    <dimen name="protable_hotspot_magin_top">24dp</dimen>
-    <dimen name="protable_hotspot_magin">16dp</dimen>
-
-    <dimen name="portable_hospot_cicle">150dp</dimen>
-
-    <dimen name="quick_charging_time_top_margin">6dp</dimen>
-    <dimen name="quick_charging_battery_top_margin">16dp</dimen>
-    <dimen name="quick_charging_left_padding">16dp</dimen>
-
-    <dimen name="ad_image_big_radius">8dp</dimen>
-    <dimen name="ad_image_small_radius">8dp</dimen>
-
-
-    <dimen name="dp_8">-7dp</dimen>
-    <dimen name="dp_14">-12.5dp</dimen>
-
     <dimen name="dp1">0.75dp</dimen>
     <dimen name="dp4">3.5dp</dimen>
     <dimen name="dp5">4.5dp</dimen>

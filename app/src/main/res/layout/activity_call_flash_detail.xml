@@ -103,7 +103,7 @@
             android:id="@+id/layout_ad_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp100"
-            android:background="@color/transparent"
+            android:background="@color/color_transparent"
             android:visibility="gone">
 
             <include layout="@layout/layout_advertisement" />
