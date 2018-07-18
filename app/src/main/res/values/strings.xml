@@ -130,7 +130,7 @@
     <string name="notification_listener_setting_tip">Allow notification for answering calls, it will not be used for any other purpose.</string>
     <string name="call_flash_saving">Saving...</string>
     <string name="call_flash_grant_permission_tip">This permission is only used to set %1$s, it will not be used for any other purpose.</string>
-    <string name="no_app_to_share">"Sorry, you don't have apps avaliable to share."</string>
+    <string name="no_app_to_share">"Sorry, you don't have apps available to share."</string>
     <string name="no_online_call_flash_list_tip">no call flash</string>
     <string name="no_collection_call_flash_list_tip">no collection call flash</string>
     <string name="add_block_contact_title">"Call Log"</string>

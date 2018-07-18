@@ -144,12 +144,6 @@ public class ApplicationEx extends Application {
         }
     }
 
-    private void intiAdManager() {
-        // init du ads sdk 
-        DuAdNetwork.init(getApplicationContext(), FileUtil.getConfigJson(this, DuAdsConstant.DU_ADS_CONFIG_FILE));
-//        AdManager.getInstance(getApplicationContext()).initAdData(false);
-    }
-
     public void setInterstitialAdvertisement(InterstitialAdvertisement interstitialAdvertisement, int position) {
         if (mInterstitialAdvertisementMap == null) {
             mInterstitialAdvertisementMap = new ConcurrentHashMap<>();
@@ -167,49 +161,6 @@ public class ApplicationEx extends Application {
             return mInterstitialAdvertisementMap.get(position);
         }
         return null;
-    }
-
-    private void initPriorityAds() {
-        try {
-            mAdPriorityMgr = AdPriorityManager.getInstance(MainInstance.getApplicationContext());
-            mAdPriorityMgr.setChannel(StatisticsUtil.getChannel());
-            mAdPriorityMgr.setSubChannel(StatisticsUtil.getSubChannel());
-            mAdPriorityMgr.setIsSeparate(false);
-            mAdPriorityMgr.setFirstSynServerConfigTime(PreferenceHelper.getLong("key_cid_first_sync_server_time", 0));
-
-            long firstLaunchTime = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_INSTALL_TIME, 0);
-            if (firstLaunchTime == 0) {
-                firstLaunchTime = System.currentTimeMillis();
-            }
-            mAdPriorityMgr.setFirstLaunch(firstLaunchTime);
-            AdvertisementSwitcher.getInstance().initFromConfigCache(mAdPriorityMgr);//do this init job sync in main thread
-
-            LogUtil.d("get channel", "initPriorityAds get channel: " + StatisticsUtil.getChannel());
-
-            mAdPriorityMgr.setAdPriorityListener(new AdPriorityListener() {
-                @Override
-                public void onPriorityLoaded() {
-                    if (System.currentTimeMillis() - mLastUpdateAdConfigTime < 5 * 60 * 1000) {
-                        return;
-                    }
-//
-                    LogUtil.d("advertise", "init ad priority onPriorityLoaded.");
-                    mLastUpdateAdConfigTime = System.currentTimeMillis();
-                    AdvertisementSwitcher.getInstance().updateConfig(mAdPriorityMgr);
-//                    LionLocalStorageManager.setLong(SharePrefConstant.LAST_REFRESH_AD_PRIORITY_CONFIG_TIME, System.currentTimeMillis());
-                }
-
-                @Override
-                public void onPriorityError(int i) {
-                    LogUtil.d("advertise", "init error.");
-                }
-            });
-
-            mAdPriorityMgr.getAdPriorityData();
-
-        } catch (Exception e) {
-            LogUtil.e("Advertise", "initPriorityAds exception: " + e.getMessage());
-        }
     }
 
     public static boolean isReleaseHUAWEI() {

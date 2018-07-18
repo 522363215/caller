@@ -39,34 +39,6 @@ public final class CommonUtils {
     private CommonUtils() {
     }
 
-    /**
-     * object array as map,eg:
-     * <pre>
-     * // result is {"username":"admin","password":"admin"}
-     * Map&lt;String,String&gt; map = asMap(new Object[]{"username","admin","password","admin"});
-     *
-     * </pre>
-     *
-     * @param objects map entry
-     * @param <K>     map key type
-     * @param <V>     map value type
-     * @return a map
-     * @throws IllegalArgumentException when objects.length%2!=0
-     */
-    public static <K, V> Map<K, V> asMap(Object... objects) throws IllegalArgumentException {
-        if (objects.length % 2 != 0) {
-            throw new IllegalArgumentException("object len error.must be len%2==0");
-        }
-
-        Map<K, V> map = new HashMap<K, V>(objects.length / 2);
-
-        for (int i = 0; i < objects.length; ++i) {
-            map.put((K) objects[i], (V) objects[++i]);
-        }
-
-        return map;
-    }
-
     //设置状态栏融合，5.0以上
     public static void translucentStatusBar(Activity context) {
         // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -121,18 +93,6 @@ public final class CommonUtils {
         String currentHour = sdf.format(new Date());
         int hour = Integer.valueOf(currentHour);
         return time1 <= hour && hour < time2;
-    }
-
-    /**
-     * 当前是否正在连接VPN（5.0后有效）
-     *
-     * @param context
-     * @return
-     */
-    public static boolean isVpnConnecting(Context context) {
-        ConnectivityManager connectManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = connectManager.getNetworkInfo(ConnectivityManager.TYPE_VPN);
-        return info == null ? false : info.isConnected();
     }
 
     /**
@@ -205,67 +165,9 @@ public final class CommonUtils {
         return null;
     }
 
-
     public static ExecutorService globalFixedPool = Executors.newFixedThreadPool(1);
     public static ExecutorService globalFixedPool2 = Executors.newFixedThreadPool(4);
     public static ScheduledExecutorService globalScheduledFixedPool = Executors.newScheduledThreadPool(1);
-
-    public static boolean isContactShortcut() {
-        boolean is = false;
-        int isCreate = PreferenceHelper.getInt("pref_is_need_contact_shortcut", 1);
-        if (isCreate == 1) {
-            is = true;//创建
-        }
-
-        return is;
-    }
-
-    public static boolean isSMSShortcut() {
-        boolean is = false;
-
-        int isCreate = PreferenceHelper.getInt("pref_is_need_sms_shortcut", 1);
-        if (isCreate == 1) {
-            is = true;//创建
-        }
-
-        return is;
-    }
-
-    public static boolean isShowEndCall() {
-        boolean show = true;
-        int user_end_call_count = AdPreferenceHelper.getInt("pref_user_end_call_count", 0);
-
-
-        if (!isShowEndCallToday()) {
-            show = false;
-        } else {
-            int count = user_end_call_count + 1;
-            AdPreferenceHelper.putInt("pref_user_end_call_count", count);
-            AdPreferenceHelper.putLong("pref_user_end_call_time", System.currentTimeMillis());
-        }
-
-
-        return show;
-    }
-
-    private static boolean isShowEndCallToday() {
-        int show_end_call_max_count = AdPreferenceHelper.getInt("pref_show_end_call_max_count", 99);
-        int user_end_call_count = AdPreferenceHelper.getInt("pref_user_end_call_count", 0);
-        long user_end_call_time = AdPreferenceHelper.getLong("pref_user_end_call_time", 0);
-
-        boolean is = false;
-        int show_today = user_end_call_count;
-        if (Stringutil.isTodayNew(user_end_call_time)) {
-            if (show_today < show_end_call_max_count) {
-                is = true;
-            }
-        } else {
-            AdPreferenceHelper.putInt("pref_user_end_call_count", 0);
-            is = true;
-        }
-        return is;
-    }
-
 
     /**
      * 获取一个范围内的随机数

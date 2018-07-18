@@ -45,19 +45,6 @@ public class AppUtils {
     public static final String CMD = "ps";
     public static final String SPACES_FILTER_REG = "\\s+";
     public static final String USER_APP_NAME_PREFIX = "com.";
-    public static final String KEY_NETWORK_PROTECT = "network_protect";
-    public static final String KEY_DEVICE_PROTECT = "device_protect";
-    public static final String KEY_LAST_SCREEN_LOCK_OFF_SHOW_TIME = "last_screen_lock_off_show_time";
-    public static final String KEY_LAST_SCREEN_LOCK_OFF_PRESENT_TIME = "last_screen_lock_off_present_time";
-    public static final String KEY_LAST_SCREEN_LOCK_PRESENT_TIME = "last_screen_lock_show_time";
-    public static final String KEY_LAST_SCREEN_LOCK_PRESENT_FREQUENCY = "last_screen_lock_show_frequency";
-    public static final String KEY_IS_SCREEN_LOCK_SHOWING = "is_screen_lock_showing";
-    public static final String KEY_LAST_SCREEN_FAILED_TIME = "last_screen_failed_time";
-    public static final String KEY_LAST_SCREEN_FAILED_FREQUENCY = "last_screen_failed_frequency";
-    public static final String KEY_IS_QUICK_CHARGE_SHOWING = "is_quick_charge_showing";
-    public static final String KEY_IS_QUICK_CHARGE_ON = "is_quick_charge_on";
-    public static final String KEY_IS_WHATS_NEW_SHOW = "is_whats_new_show";
-    public static final String KEY_LAST_QUICK_CHARGE_PRESENT_TIME = "last_quick_charge_present_time";
 
     public static final String SP_NAME_APP_CONFIG = "app_utils_config";
 
@@ -84,7 +71,6 @@ public class AppUtils {
         int curVercode = PreferenceHelper.getInt(KEY_CUR_VERCODE, -1);
         return initVercode != curVercode;
     }
-
 
     private static boolean isAppInstalled(Context context, String packagename) {
         PackageInfo packageInfo;
@@ -126,7 +112,6 @@ public class AppUtils {
                 String.format("the %s is not running, isAppAlive return false", packageName));
         return false;
     }
-
 
     public static void collapseNotification(Context context) {
         try {
@@ -359,7 +344,6 @@ public class AppUtils {
         }
     }
 
-
     public static long getAppFirstInstallTime(Context context, String pkgName) {
         PackageInfo packageInfo;
         try {
@@ -375,23 +359,6 @@ public class AppUtils {
             return 0;
         }
     }
-
-//    public static int getUidByPkg(Context mContext, String pkg) {
-//        int uid = -1;
-//        if (mContext == null || TextUtils.isEmpty(pkg)) {
-//            return uid;
-//        }
-//        try {
-//            PackageManager pm = mContext.getPackageManager();
-//            ApplicationInfo ai = pm.getApplicationInfo(pkg, PackageManager.GET_ACTIVITIES);//PackageManager.GET_ACTIVITIES, 1
-//            uid = ai.uid;
-//        } catch (Exception e) {
-//            LogUtil.e(ConstantUtils.NM_TAG, "getUidByPkg exception: " + e.getMessage());
-//        }
-//
-//        return uid;
-//    }
-
 
     //检测系统是否有App Usage权限设置
     public static boolean hasUsageAccessSetting(Context context) {
@@ -436,34 +403,6 @@ public class AppUtils {
         }
 
     }
-
-    /**
-     * boost计次
-     *
-     * @param context
-     */
-    public static void countBoostFrequency(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(SP_NAME_APP_CONFIG, Context.MODE_PRIVATE);
-        long boostTime = sp.getLong("last_boost_time", 0);
-        Calendar cal = Calendar.getInstance();
-        int currentDay = cal.get(Calendar.DAY_OF_YEAR);
-        int currentYear = cal.get(Calendar.YEAR);
-        cal.setTimeInMillis(boostTime);
-        int boostDay = cal.get(Calendar.DAY_OF_YEAR);
-        int boostYear = cal.get(Calendar.YEAR);
-
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putLong("last_boost_time", System.currentTimeMillis());
-        if (currentYear == boostYear && currentDay == boostDay) {
-            long frequency = sp.getLong("boost_frequency", 0);
-            editor.putLong("boost_frequency", frequency + 1);
-        } else {
-            // 今天第一次计次
-            editor.putLong("boost_frequency", 1);
-        }
-        editor.commit();
-    }
-
 
     /**
      * 不过滤系统应用
@@ -512,7 +451,6 @@ public class AppUtils {
         return ((pInfo.applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0);
     }
 
-
     /**
      * 获取状态栏的高度
      *
@@ -537,6 +475,5 @@ public class AppUtils {
             }
         }
     }
-
 
 }

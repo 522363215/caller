@@ -11,13 +11,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
-import com.md.flashset.View.FlashLed;
-
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallFlashAlbumactivity;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
 
 /**
@@ -81,6 +77,7 @@ public class CallFlashAvatarInfoView extends RelativeLayout {
                 }
             }
         });
+        attributes.recycle();
     }
 
     public void setAvatar(String uri) {
