@@ -46,40 +46,16 @@ public class FlashLed {
     public int mFlashType;
 
     public static final int FLASH_TYPE_STREAMER = 0;
-    //    public static final int FLASH_TYPE_BLOOM = 1;
-//    public static final int FLASH_TYPE_GRADIENT = 2;
-//    public static final int FLASH_TYPE_NEON = 3;
-    public static final int FLASH_TYPE_FESTIVAL = 4;
-    public static final int FLASH_TYPE_LOVE = 5;
-    public static final int FLASH_TYPE_KISS = 6;
-    public static final int FLASH_TYPE_ROSE = 7;
-    public static final int FLASH_TYPE_CUSTOM = 8;
-    public static final int FLASH_TYPE_PANDA = 9;
-    //    public static final int FLASH_TYPE_HALLOWEEN = 10;
-    public static final int FLASH_TYPE_LOVE1 = 11;
-    //    public static final int FLASH_TYPE_LOVE2 = 12;
-    public static final int FLASH_TYPE_VISUAL_1 = 13;
-    public static final int FLASH_TYPE_VISUAL_2 = 14;
-    public static final int FLASH_TYPE_VISUAL_3 = 15;
-    //    public static final int FLASH_TYPE_COLOR_FLASH = 16;
-    public static final int FLASH_TYPE_WEEKEND = 17;
-    public static final int FLASH_TYPE_MONKEY = 18;
-    //    public static final int FLASH_TYPE_CHRISTMAS_SNOWMAN = 19;
-//    public static final int FLASH_TYPE_SANTA_CLAUS = 20;
-    public static final int FLASH_TYPE_DANCE_PIG = 21;
-    public static final int FLASH_TYPE_RAP = 22;
-    public static final int FLASH_TYPE_BEAR = 23;
+    public static final int FLASH_TYPE_FESTIVAL = 1;
+    public static final int FLASH_TYPE_LOVE = 2;
+    public static final int FLASH_TYPE_KISS = 3;
+    public static final int FLASH_TYPE_ROSE = 4;
+    public static final int FLASH_TYPE_MONKEY = 5;
 
-
-    //以下为weekend flash
-    public static final int FLASH_TYPE_BUTTERFLY = 500;
-    public static final int FLASH_TYPE_FIREWORKS = 501;
-    public static final int FLASH_TYPE_MELT = 502;
-
+    public static final int FLASH_TYPE_CUSTOM = 6;
     public static final int FLASH_TYPE_DYNAMIC = 0x10001;
 
     public static int FLASH_TYPE_DEFAULT = FLASH_TYPE_ROSE;
-
     private int mViewWidth = 0;
     private int mViewHeight = 0;
     private int mVerticalCount = 0;

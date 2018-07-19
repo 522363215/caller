@@ -104,6 +104,12 @@ public class GlideView extends RelativeLayout {
         }
     }
 
+    public void showImage(String urlOrPath, RequestListener<String, Bitmap> requestListener) {
+        if (mImageView != null) {
+            GlideHelper.with(mContext).load(urlOrPath).listener(requestListener).into(mImageView);
+        }
+    }
+
     /**
      * 加载图片时显示缩略图
      *
@@ -117,6 +123,23 @@ public class GlideView extends RelativeLayout {
                 GlideHelper.with(mContext).load(urlOrPath).thumbnail(load).into(mImageView);
             } else {
                 showImage(urlOrPath);
+            }
+        }
+    }
+
+    /**
+     * 加载图片时显示缩略图，并且伴随共享动画
+     *
+     * @param urlOrPath    实际资源的url 或者路径
+     * @param thumbnailUrl 缩略图的额url
+     */
+    public void showImageWithThumbnailAndShareAnim(String urlOrPath, String thumbnailUrl, RequestListener<String, Bitmap> requestListener) {
+        if (mImageView != null) {
+            if (!TextUtils.isEmpty(thumbnailUrl) && !thumbnailUrl.equals(urlOrPath)) {
+                BitmapRequestBuilder<String, Bitmap> load = GlideHelper.with(mContext).load(thumbnailUrl).listener(requestListener);
+                GlideHelper.with(mContext).load(urlOrPath).thumbnail(load).into(mImageView);
+            } else {
+                GlideHelper.with(mContext).load(urlOrPath).listener(requestListener).into(mImageView);
             }
         }
     }
@@ -202,5 +225,4 @@ public class GlideView extends RelativeLayout {
             Glide.with(mContext).load(videoPath).into(mImageView);
         }
     }
-
 }

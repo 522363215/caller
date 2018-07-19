@@ -154,68 +154,7 @@ public class CallFlashSetResultActivity extends BaseActivity {
         });
     }
 
-    private String getCallFlashName(int flashType) {
-        String name = "unknownCallFlash";
-        switch (flashType) {
-            case FlashLed.FLASH_TYPE_STREAMER:
-                name = "STREAMER";
-                break;
-            case FlashLed.FLASH_TYPE_FESTIVAL:
-                name = "FESTIVAL";
-                break;
-            case FlashLed.FLASH_TYPE_LOVE:
-                name = "LOVE";
-                break;
-            case FlashLed.FLASH_TYPE_KISS:
-                name = "KISS";
-                break;
-            case FlashLed.FLASH_TYPE_ROSE:
-                name = "ROSE";
-                break;
-            case FlashLed.FLASH_TYPE_CUSTOM:
-                name = "CUSTOM";
-                break;
-            case FlashLed.FLASH_TYPE_PANDA:
-                name = "PANDA";
-                break;
-            case FlashLed.FLASH_TYPE_LOVE1:
-                name = "LOVE1";
-                break;
-            case FlashLed.FLASH_TYPE_VISUAL_1:
-                name = "VISUAL_1";
-                break;
-            case FlashLed.FLASH_TYPE_VISUAL_2:
-                name = "VISUAL_2";
-                break;
-            case FlashLed.FLASH_TYPE_VISUAL_3:
-                name = "VISUAL_3";
-                break;
-            case FlashLed.FLASH_TYPE_MONKEY:
-                name = "MONKEY";
-                break;
-            case FlashLed.FLASH_TYPE_RAP:
-                name = "RAP";
-                break;
-            case FlashLed.FLASH_TYPE_DANCE_PIG:
-                name = "PIG";
-                break;
-            case FlashLed.FLASH_TYPE_BEAR:
-                name = "BEAR";
-                break;
-        }
-        return name;
-    }
-
     private void showResult() {
-//        ((ActionBar) findViewById(R.id.actionbar)).setBackImg(R.string.icon_close);
-        int flashType = CallFlashPreferenceHelper.getInt(CallFlashPreferenceHelper.CALL_FLASH_TYPE, FlashLed.FLASH_TYPE_DEFAULT);
-        boolean isCallFlashOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
-        if (isCallFlashOn) {
-            FlurryAgent.logEvent("CallFlashShowActivity-call_screen_set_" + getCallFlashName(flashType));
-        } else {
-//            FlurryAgent.logEvent("CallFlashShowActivity-call_screen_cancel_" + getCallFlashName(flashType));
-        }
-
         mStartTime = System.currentTimeMillis();
         mLayoutTop.setVisibility(View.GONE);
         mLayoutSuccessBig.setVisibility(View.VISIBLE);
