@@ -1,9 +1,15 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 
 import com.md.flashset.bean.CallFlashInfo;
+
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 
 
 /**
@@ -15,7 +21,6 @@ public class ActivityBuilder {
      */
     public static final int BACK_FROM_CALL_FLASH_RESULT = -1024;
     public static final String MAIN_FRAGMENT_INDEX = "main_fragment_index";
-    public static final String IS_ONLINE_FOR_CALL_FLASH = "is_online_for_call_flash";
     public static final String IS_COME_FROM_DESKTOP = "is_come_from_desktop";
     public static final String IS_COME_FROM_CALL_AFTER = "is_come_from_call_after";
     public static final String CALL_FLASH_INFO = "call_flash_info";
@@ -27,6 +32,7 @@ public class ActivityBuilder {
     public static final String SMS_COME_MESSAGE = "sms_come_message";
     public static final String IS_SHOW_PERMISSIONS = "is_show_permissions";
 
+    public static final String CALL_FLASH_SHARE_PREVIEW = "call_flash_preview";
 
     /**
      * 主页（ClEAR_TOP）
@@ -49,21 +55,26 @@ public class ActivityBuilder {
         return intent;
     }
 
-    public static void toCallFlashPreview(Context context, CallFlashInfo info, boolean isOnlineCallFlash, boolean isComeDesktop) {
+    public static void toCallFlashPreview(Context context, CallFlashInfo info, GlideView glideView, boolean isComeDesktop) {
         if (context != null) {
             Intent intent = new Intent();
             intent.setClass(context, CallFlashPreviewActivity.class);
 //            intent.putExtra(ConstantUtils.COME_FROM_CALLAFTER, isComeCallAfter);
 //            intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, mIsComePhoneDetail);
-            intent.putExtra(IS_ONLINE_FOR_CALL_FLASH, isOnlineCallFlash);
             intent.putExtra(IS_COME_FROM_DESKTOP, isComeDesktop);
             intent.putExtra(CALL_FLASH_INFO, info);
-            context.startActivity(intent);
+            if (context instanceof Activity && glideView != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityOptionsCompat options = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation((Activity) context, glideView, CALL_FLASH_SHARE_PREVIEW);
+                ActivityCompat.startActivity(context, intent, options.toBundle());
+            } else {
+                context.startActivity(intent);
+            }
         }
     }
 
-    public static void toCallFlashPreview(Context context, CallFlashInfo info, boolean isOnlineCallFlash) {
-        toCallFlashPreview(context, info, isOnlineCallFlash, false);
+    public static void toCallFlashPreview(Context context, CallFlashInfo info, GlideView glideView) {
+        toCallFlashPreview(context, info, glideView, false);
     }
 
     public static void toCallFlashDetail(Context context, CallFlashInfo info, boolean isComeDesktop) {
