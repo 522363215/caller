@@ -9,10 +9,9 @@ import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.GifRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.Target;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class GlideHelper {
     private static final String TAG = "GlideHelper";
@@ -72,6 +71,24 @@ public class GlideHelper {
                 .error(R.drawable.glide_load_failed_bg)//加载失败图片
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .dontAnimate();
+    }
+
+    public DrawableRequestBuilder<String> loadForBlur(String urlOrPath) {
+        return Glide.with(mContext)
+                .load(urlOrPath)
+                .dontAnimate()
+                .centerCrop()
+                // 设置高斯模糊
+                .bitmapTransform(new BlurTransformation(mContext, 14, 3));
+    }
+
+    public DrawableRequestBuilder<Integer> loadForBlur(int resourceId) {
+        return Glide.with(mContext)
+                .load(resourceId)
+                .dontAnimate()
+                .centerCrop()
+                // 设置高斯模糊
+                .bitmapTransform(new BlurTransformation(mContext, 14, 3));
     }
 
 }

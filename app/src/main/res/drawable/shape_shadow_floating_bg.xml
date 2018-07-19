@@ -8,6 +8,13 @@
                     <item>
                         <shape android:shape="rectangle">
                             <corners android:radius="2dp" />
+                            <solid android:color="#06000000" />
+                            <padding android:bottom="5px" android:left="5px" android:right="5px" android:top="5px" />
+                        </shape>
+                    </item>
+                    <item>
+                        <shape android:shape="rectangle">
+                            <corners android:radius="2dp" />
                             <solid android:color="#08000000" />
                             <padding android:bottom="4px" android:left="4px" android:right="4px" android:top="4px" />
                         </shape>

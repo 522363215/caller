@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -73,8 +74,10 @@ public class IconUtil {
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public static Bitmap rsBlur(Context context, Bitmap source, int radius) {
-
+    public static Bitmap rsBlur(Context context, Bitmap source, float radius) {
+        if (radius > 25) {
+            radius = 25;
+        }
         Bitmap inputBmp = source;
         //(1)
         RenderScript renderScript = RenderScript.create(context);
