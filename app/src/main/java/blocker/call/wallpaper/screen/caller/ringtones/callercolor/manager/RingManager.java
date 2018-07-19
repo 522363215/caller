@@ -346,14 +346,6 @@ public class RingManager {
     }
 
     /**
-     * 判断是否为Video的flash
-     */
-    public static boolean isVideoFlash(int flashType) {
-        return flashType == FlashLed.FLASH_TYPE_MONKEY || flashType == FlashLed.FLASH_TYPE_DANCE_PIG
-                || flashType == FlashLed.FLASH_TYPE_RAP;
-    }
-
-    /**
      * @param isSet      true:媒体音量大小设为当前铃声音量大小，false:还原媒体音量大小
      * @param isGradient true:声音渐变
      */

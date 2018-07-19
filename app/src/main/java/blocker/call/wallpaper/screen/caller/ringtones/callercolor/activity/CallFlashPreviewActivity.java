@@ -2,6 +2,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
@@ -17,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.flurry.android.FlurryAgent;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.manager.CallFlashManager;
@@ -30,6 +33,7 @@ import java.io.File;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.FirstShowAdmobUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCollection;
@@ -74,6 +78,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     private TextView mTvDownloadCount;
     private GlideView mGvPreview;
     private FrameLayout mLayoutAd;
+    private boolean mIsStartEnterAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,9 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         setContentView(R.layout.activity_call_flash_preview);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            postponeEnterTransition();
         }
         setTranslucentStatusBar();
         mIsShowFirstAdMob = FirstShowAdmobUtil.isShowFirstAdMob(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_CALL_FLASH_PREVIEW, true);
@@ -302,16 +310,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
 
     private void setView() {
         if (mInfo == null) return;
-        if (mInfo.isOnlionCallFlash) {
-            LogUtil.d(TAG, "setView loadBackground img_vUrl:" + mInfo.img_vUrl + ",\nthumbnail_imgUrl:" + mInfo.thumbnail_imgUrl);
-            mGvPreview.showImageWithThumbnail(mInfo.img_vUrl, mInfo.thumbnail_imgUrl);
-        } else {
-            mGvPreview.showImage(mInfo.imgResId);
-        }
-        //共享动画
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ViewCompat.setTransitionName(mGvPreview, ActivityBuilder.CALL_FLASH_SHARE_PREVIEW);
-        }
+        setBackground();
         File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
         if ((file != null && file.exists()) || (!TextUtils.isEmpty(mInfo.path) && new File(mInfo.path).exists())) {
             if (mIsShowFirstAdMob) {
@@ -339,6 +338,46 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
                     mTvDownloadBtnAboveAd.setText(R.string.lion_family_active_download);
                 }
             }
+        }
+    }
+
+    private void setBackground() {
+        if (mInfo.isOnlionCallFlash) {
+            LogUtil.d(TAG, "setView loadBackground img_vUrl:" + mInfo.img_vUrl + ",\nthumbnail_imgUrl:" + mInfo.thumbnail_imgUrl);
+            mGvPreview.showImageWithThumbnailAndShareAnim(mInfo.img_vUrl, mInfo.thumbnail_imgUrl, new RequestListener<String, Bitmap>() {
+                @Override
+                public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    startEnterAnim();
+                    return false;
+                }
+            });
+        } else {
+            mGvPreview.showImage(mInfo.imgResId);
+            startEnterAnim();
+        }
+
+        //共享动画
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ViewCompat.setTransitionName(mGvPreview, ActivityBuilder.CALL_FLASH_SHARE_PREVIEW);
+            //防止没有回调onResourceReady()，造成永远不跳转
+            Async.scheduleTaskOnUiThread(200, new Runnable() {
+                @Override
+                public void run() {
+                    startEnterAnim();
+                }
+            });
+        }
+    }
+
+    private void startEnterAnim() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !mIsStartEnterAnim) {
+            mIsStartEnterAnim = true;
+            startPostponedEnterTransition();
         }
     }
 
