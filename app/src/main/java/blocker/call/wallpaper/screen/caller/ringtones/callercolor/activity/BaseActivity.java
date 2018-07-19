@@ -1,6 +1,5 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
-import android.app.Activity;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -14,6 +13,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
@@ -32,7 +32,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.RomUtils
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 
-public class BaseActivity extends Activity implements PermissionUtils.PermissionGrant {
+public class BaseActivity extends AppCompatActivity implements PermissionUtils.PermissionGrant {
 
     protected LanguageSettingUtil languageSetting;
     protected ApplicationEx app;
@@ -54,7 +54,7 @@ public class BaseActivity extends Activity implements PermissionUtils.Permission
     @Override
     protected void onDestroy() {
         // Log.d("ACT", this.getClass().getSimpleName() + "(onDestroy)");
-        setContentView(R.layout.view_null);
+//        setContentView(R.layout.view_null);
         super.onDestroy();
         unbindService(mServiceConnection);
     }

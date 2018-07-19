@@ -1,7 +1,6 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,8 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallFlashPreviewActivity;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 
 /**
  * Created by ChenR on 2018/1/25.
@@ -67,7 +65,7 @@ public class CallFlashLocalAdapter extends RecyclerView.Adapter<CallFlashLocalAd
                 if (info.flashType == FlashLed.FLASH_TYPE_FESTIVAL) {
                     imgId = R.drawable.icon_flash_festival_small;
                 }
-                holder.coverImg.setBackgroundResource(imgId);
+                holder.gv_bg.showImage(imgId);
             }
             if (!TextUtils.isEmpty(info.url)) {
                 File file = videoMap.get(info.url);
@@ -109,7 +107,7 @@ public class CallFlashLocalAdapter extends RecyclerView.Adapter<CallFlashLocalAd
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private View root;
-        private ImageView coverImg;
+        private GlideView gv_bg;
         private ImageView iv_call_select;
         private ImageView iv_call_photo;
         private ImageView iv_download;
@@ -118,7 +116,7 @@ public class CallFlashLocalAdapter extends RecyclerView.Adapter<CallFlashLocalAd
             super(itemView);
             root = itemView.findViewById(R.id.layout_root);
             root.setOnClickListener(mOnClickListener);
-            coverImg = itemView.findViewById(R.id.coverImg);
+            gv_bg = itemView.findViewById(R.id.gv_bg);
             iv_call_photo = itemView.findViewById(R.id.iv_call_photo);
             iv_call_select = itemView.findViewById(R.id.iv_select);
             iv_download = itemView.findViewById(R.id.iv_download);
@@ -138,8 +136,9 @@ public class CallFlashLocalAdapter extends RecyclerView.Adapter<CallFlashLocalAd
             if (model != null && model.size() > 0) {
                 CallFlashInfo info = model.get(pos);
 
+                GlideView glideView = v.findViewById(R.id.gv_bg);
                 //  jump to CallFlashPreviewActivity
-                ActivityBuilder.toCallFlashPreview(context, info, false);
+                ActivityBuilder.toCallFlashPreview(context, info, glideView);
             }
         }
     };

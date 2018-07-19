@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -46,7 +47,6 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     private static final String TAG = "CallFlashPreviewActivity";
     private ActionBar mActionBar;
     private CallFlashInfo mInfo;
-    private boolean mIsOnlineCallFlash;
     private FontIconView mFivBack;
     private LinearLayout mLavoutLikeAndDownload;
     private FontIconView mFivLike;
@@ -149,7 +149,6 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         mInfo = (CallFlashInfo) getIntent().getSerializableExtra(ActivityBuilder.CALL_FLASH_INFO);
-        mIsOnlineCallFlash = intent.getBooleanExtra(ActivityBuilder.IS_ONLINE_FOR_CALL_FLASH, false);
         downloadListener();
         setView();
 //        setRecommend();
@@ -303,13 +302,16 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
 
     private void setView() {
         if (mInfo == null) return;
-        if (mIsOnlineCallFlash) {
+        if (mInfo.isOnlionCallFlash) {
             LogUtil.d(TAG, "setView loadBackground img_vUrl:" + mInfo.img_vUrl + ",\nthumbnail_imgUrl:" + mInfo.thumbnail_imgUrl);
             mGvPreview.showImageWithThumbnail(mInfo.img_vUrl, mInfo.thumbnail_imgUrl);
         } else {
             mGvPreview.showImage(mInfo.imgResId);
         }
-
+        //共享动画
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ViewCompat.setTransitionName(mGvPreview, ActivityBuilder.CALL_FLASH_SHARE_PREVIEW);
+        }
         File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
         if ((file != null && file.exists()) || (!TextUtils.isEmpty(mInfo.path) && new File(mInfo.path).exists())) {
             if (mIsShowFirstAdMob) {
@@ -369,7 +371,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             case R.id.gv_preview:
             case R.id.tv_download_action_above_ad:
             case R.id.tv_download_action_below_ad:
-                ActivityBuilder.toCallFlashDetail(this, mInfo, getIntent().getBooleanExtra(ActivityBuilder.IS_COME_FROM_CALL_AFTER, false));
+                ActivityBuilder.toCallFlashDetail(this, mInfo, getIntent().getBooleanExtra(ActivityBuilder.IS_COME_FROM_DESKTOP, false));
                 break;
             case R.id.fiv_like:
                 if (mInfo != null) {
