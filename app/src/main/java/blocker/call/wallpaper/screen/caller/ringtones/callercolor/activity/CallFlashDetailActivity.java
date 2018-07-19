@@ -134,11 +134,11 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void updateUI() {
+        setFlashBackground();
         setLanguageBack();
         setCallFlashLayout(48);
         showCallFlash();
         startAnswerAnim();
-        setFlashBackground();
         showDownloadProgress();
 //        setLike();
 
@@ -481,9 +481,9 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             if (!TextUtils.isEmpty(mInfo.thumbnail_imgUrl) && !url.equals(mInfo.thumbnail_imgUrl)) {
                 url = mInfo.thumbnail_imgUrl;
             }
-            mGvCallFlashBg.showImageWithBlur(url, 15);
+            mGvCallFlashBg.showImageWithBlur(url);
         } else {
-            mGvCallFlashBg.showImageWithBlur(mInfo.imgResId, 15);
+            mGvCallFlashBg.showImageWithBlur(mInfo.imgResId);
         }
     }
 

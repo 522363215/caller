@@ -3,7 +3,6 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -13,12 +12,12 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.BitmapRequestBuilder;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideHelper;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.IconUtil;
 
 public class GlideView extends RelativeLayout {
     private Context mContext;
@@ -125,29 +124,24 @@ public class GlideView extends RelativeLayout {
     /**
      * 高斯模糊显示图片
      *
-     * @param urlOrPath  实际资源的url 或者路径
-     * @param blurRadius 高斯模糊的值，值越大越模糊
+     * @param urlOrPath 实际资源的url 或者路径
      */
-    public void showImageWithBlur(String urlOrPath, final int blurRadius) {
+    public void showImageWithBlur(String urlOrPath) {
+        if (mIvShape != null) {
+            mIvShape.setVisibility(VISIBLE);
+            GlideHelper.with(mContext).load(urlOrPath).into(mIvShape);
+        }
         if (mImageView != null) {
-            GlideHelper.with(mContext).load(urlOrPath).listener(new RequestListener<String, Bitmap>() {
+            GlideHelper.with(mContext).loadForBlur(urlOrPath).listener(new RequestListener<String, GlideDrawable>() {
                 @Override
-                public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
+                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                     return false;
                 }
 
                 @Override
-                public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    if (resource != null) {
-                        //高斯模糊
-                        Bitmap rsBitmap = IconUtil.rsBlur(mContext, resource, blurRadius);
-                        if (mIvShape != null) {
-                            mIvShape.setVisibility(VISIBLE);
-                        }
-                        if (mImageView != null) {
-                            mImageView.setImageBitmap(rsBitmap);
-                        }
-//                        LogUtil.d(TAG, "setBackground resource:" + resource + ",rsBlur:" + rsBitmap);
+                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    if (mIvShape != null) {
+                        mIvShape.setVisibility(GONE);
                     }
                     return false;
                 }
@@ -155,19 +149,26 @@ public class GlideView extends RelativeLayout {
         }
     }
 
-    public void showImageWithBlur(int resId, final int blurRadius) {
+    public void showImageWithBlur(int resId) {
+        if (mIvShape != null) {
+            mIvShape.setVisibility(VISIBLE);
+            GlideHelper.with(mContext).load(resId).into(mIvShape);
+        }
         if (mImageView != null) {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resId);
-            if (bitmap != null) {
-                //高斯模糊
-                Bitmap rsBitmap = IconUtil.rsBlur(mContext, bitmap, blurRadius);
-                mImageView.setImageBitmap(rsBitmap);
-            } else {
-                showImage(resId);
-            }
-            if (mIvShape != null) {
-                mIvShape.setVisibility(VISIBLE);
-            }
+            GlideHelper.with(mContext).loadForBlur(resId).listener(new RequestListener<Integer, GlideDrawable>() {
+                @Override
+                public boolean onException(Exception e, Integer model, Target<GlideDrawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GlideDrawable resource, Integer model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    if (mIvShape != null) {
+                        mIvShape.setVisibility(GONE);
+                    }
+                    return false;
+                }
+            }).into(mImageView);
         }
     }
 
