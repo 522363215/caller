@@ -14,15 +14,16 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="PermissionAppCompatTheme" parent="@style/Base.Theme.AppCompat.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="CallFlashAppCompatTheme" parent="@style/Theme.AppCompat.Light">
         <item name="android:windowIsTranslucent">false</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@color/background</item>
-    </style>
-
-    <style name="dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="main_check_button_text">
@@ -40,7 +41,8 @@
     </style>
 
     <style name="calllog_refresh_progressbar" parent="Widget.AppCompat.ProgressBar">
-        <item name="android:indeterminateTint" tools:targetApi="lollipop">@color/color_FF27BB56</item>
+        <item name="android:indeterminateTint" tools:targetApi="lollipop">@color/color_FF27BB56
+        </item>
         <item name="android:toDegrees">10</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
