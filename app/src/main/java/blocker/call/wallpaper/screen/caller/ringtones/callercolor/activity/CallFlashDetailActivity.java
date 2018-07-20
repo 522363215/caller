@@ -937,7 +937,14 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onPermissionNotGranted(int requestCode) {
-
+        switch (requestCode) {
+            case PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION:
+                ToastUtils.showToast(this, getString(R.string.permission_denied_txt));
+                break;
+            case PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS:
+                showSaveDialog();
+                break;
+        }
     }
     //---------------------------获取权限----------------------------------
 
