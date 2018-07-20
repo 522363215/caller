@@ -2,6 +2,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -78,7 +79,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void toPermissionActivity() {
         boolean isShowPermissionActivity = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_REQUEST_PERMISSION_TIME, 0) <= 0;
-        if (isShowPermissionActivity) {
+        if (isShowPermissionActivity && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_REQUEST_PERMISSION_TIME, System.currentTimeMillis());
             ActivityBuilder.toPermissionActivity(this, false);
         }

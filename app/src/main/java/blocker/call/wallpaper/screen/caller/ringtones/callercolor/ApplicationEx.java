@@ -3,6 +3,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
 import com.duapps.ad.base.DuAdNetwork;
@@ -84,6 +85,7 @@ public class ApplicationEx extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+        MultiDex.install(base);
     }
 
     private void startService() {
@@ -99,7 +101,7 @@ public class ApplicationEx extends Application {
         new FlurryAgent.Builder().withLogEnabled(BuildConfig.DEBUG).build(getInstance(), BuildConfig.FLURRY_KEY);
         saveVersioncode();
         startService();
-        CallFlashSet.init(this);
+        CallFlashSet.init(getApplicationContext());
         initCallFlashBase();
         // TODO: 2018/7/5 广告暂时屏蔽
 //        intiAdManager();
