@@ -216,6 +216,10 @@ public class CallFlashDialog implements View.OnClickListener {
             layoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
         }
 
+        if (Build.VERSION.SDK_INT >= 26) {
+            layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        }
+
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
 
@@ -332,27 +336,25 @@ public class CallFlashDialog implements View.OnClickListener {
                 audioManager.setStreamMute(AudioManager.STREAM_RING, true);
             }
         } else {
-            if ((mCallFlashView.getVisibility() == View.VISIBLE) && (mCallFlashInfo != null && mCallFlashInfo.isHaveSound)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (!mOriginalMute) {
-                        audioManager.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_UNMUTE, FLAG_ALLOW_RINGER_MODES);
-                        if (!SystemInfoUtil.isMiui() && !RomUtils.checkIsMiuiRom()) {
-                            try {
-                                if (mRingOldMode == -1) {
-                                    mRingOldMode = AudioManager.MODE_NORMAL;
-                                }
-                                audioManager.setRingerMode(mRingOldMode);
-                            } catch (Exception e) {
-                                LogUtil.e("blockCall", "keepSilence e:" + e.getMessage());
-                                // TODO: 2017/7/19  部分手机设置静音失效，异常： Not allowed to change Do Not Disturb state，需要打开应用程序的免打扰访问设置
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!mOriginalMute) {
+                    audioManager.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_UNMUTE, FLAG_ALLOW_RINGER_MODES);
+                    if (!SystemInfoUtil.isMiui() && !RomUtils.checkIsMiuiRom()) {
+                        try {
+                            if (mRingOldMode == -1) {
+                                mRingOldMode = AudioManager.MODE_NORMAL;
                             }
+                            audioManager.setRingerMode(mRingOldMode);
+                        } catch (Exception e) {
+                            LogUtil.e("blockCall", "keepSilence e:" + e.getMessage());
+                            // TODO: 2017/7/19  部分手机设置静音失效，异常： Not allowed to change Do Not Disturb state，需要打开应用程序的免打扰访问设置
                         }
                     }
-                } else {
-                    audioManager.setStreamMute(AudioManager.STREAM_RING, false);
                 }
-                LogUtil.d(TAG, "setVideoRingVolume restore ring currentRingVoluem :" + audioManager.getStreamVolume(AudioManager.STREAM_RING));
+            } else {
+                audioManager.setStreamMute(AudioManager.STREAM_RING, false);
             }
+            LogUtil.d(TAG, "setVideoRingVolume restore ring currentRingVoluem :" + audioManager.getStreamVolume(AudioManager.STREAM_RING));
         }
     }
 }

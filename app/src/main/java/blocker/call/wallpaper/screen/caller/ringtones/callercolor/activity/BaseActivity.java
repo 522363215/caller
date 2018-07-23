@@ -25,6 +25,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobSchedulerService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
@@ -63,9 +64,18 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
     protected void onCreate(Bundle savedInstanceState) {
         // Log.d("ACT", this.getClass().getSimpleName() + "(onCreate)");
         super.onCreate(savedInstanceState);
-        Intent intent = new Intent(this, LocalService.class);
-        bindService(intent, mServiceConnection, Service.BIND_AUTO_CREATE);
+        bindService();
         SwitchLang();
+    }
+
+    private void bindService() {
+        Intent intent = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            intent = new Intent(this, JobSchedulerService.class);
+        } else {
+            intent = new Intent(this, LocalService.class);
+        }
+        bindService(intent, mServiceConnection, Service.BIND_AUTO_CREATE);
     }
 
     @Override

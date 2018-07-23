@@ -188,6 +188,10 @@
             android:taskAffinity="cc.permission.phonesms" />
 
         <service
+            android:name=".service.JobSchedulerService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service
             android:name=".service.LocalService"
             android:exported="true"
             android:priority="900" />

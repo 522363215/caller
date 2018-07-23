@@ -87,13 +87,13 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            postponeEnterTransition();
-        }
         setTranslucentStatusBar();
         mIsShowFirstAdMob = FirstShowAdmobUtil.isShowFirstAdMob(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_CALL_FLASH_PREVIEW, true);
 //        initAds();
         initView();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            postponeEnterTransition();
+        }
         onNewIntent(getIntent());
         FlurryAgent.logEvent("CallFlashPreviewActivity-start");
     }
@@ -352,6 +352,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
 
                 @Override
                 public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    LogUtil.d(TAG,"setBackground onResourceReady");
                     startEnterAnim();
                     return false;
                 }
@@ -368,6 +369,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             Async.scheduleTaskOnUiThread(200, new Runnable() {
                 @Override
                 public void run() {
+                    LogUtil.d(TAG,"setBackground scheduleTaskOnUiThread");
                     startEnterAnim();
                 }
             });

@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.flurry.android.FlurryAgent;
 import com.md.flashset.bean.CallFlashDataType;
 
@@ -341,6 +342,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void exitAPP() {
         FlurryAgent.logEvent("ExitApplication");
         finish();
+        Glide.get(this).clearMemory();
     }
 
     public void onEventMainThread(EventRefreshCallFlashEnable event) {
