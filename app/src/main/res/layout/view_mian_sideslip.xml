@@ -211,6 +211,32 @@
                         android:textSize="16sp" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/menu_ring"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_click"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp16">
+
+                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/icon_block_tab"
+                        android:textColor="@color/white"
+                        android:textSize="24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp16"
+                        android:layout_marginStart="@dimen/dp16"
+                        android:gravity="center_vertical"
+                        android:text="@string/main_menu_ring"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/menu_feedback"

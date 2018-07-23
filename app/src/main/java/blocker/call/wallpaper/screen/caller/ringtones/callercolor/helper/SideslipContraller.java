@@ -23,6 +23,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.About
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.BlockActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CollectionActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.RingActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.SettingActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
@@ -38,6 +39,7 @@ public class SideslipContraller implements View.OnClickListener {
     private MainActivity mAct;
     private View root;
     private View mMenuBlock;
+    private View mMenuRing;
     private View mMenuSettings;
     private View mMenuRate;
     private View mMenuAbout;
@@ -71,6 +73,7 @@ public class SideslipContraller implements View.OnClickListener {
             mMenuFeedback = root.findViewById(R.id.menu_feedback);
             mMenuAbout = root.findViewById(R.id.menu_about);
             mMenuTest = root.findViewById(R.id.menu_test);
+            mMenuRing = root.findViewById(R.id.menu_ring);
 
             mMenuBlock.setOnClickListener(this);
             mMenuCollection.setOnClickListener(this);
@@ -79,6 +82,7 @@ public class SideslipContraller implements View.OnClickListener {
             mMenuFeedback.setOnClickListener(this);
             mMenuAbout.setOnClickListener(this);
             mMenuTest.setOnClickListener(this);
+            mMenuRing.setOnClickListener(this);
 
             boolean isCallFlashOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
             setSwitchButton(isCallFlashOn);
@@ -207,6 +211,9 @@ public class SideslipContraller implements View.OnClickListener {
             case R.id.menu_collection:
                 onCollection();
                 break;
+            case R.id.menu_ring:
+                onRing();
+                break;
         }
         if (callBack != null) {
             callBack.menuClick();
@@ -218,6 +225,14 @@ public class SideslipContraller implements View.OnClickListener {
         if (mAct == null) return;
         Intent intent = new Intent();
         intent.setClass(mAct, CollectionActivity.class);
+        mAct.startActivity(intent);
+    }
+
+    private void onRing() {
+        FlurryAgent.logEvent("left_collection_click");
+        if (mAct == null) return;
+        Intent intent = new Intent();
+        intent.setClass(mAct, RingActivity.class);
         mAct.startActivity(intent);
     }
 

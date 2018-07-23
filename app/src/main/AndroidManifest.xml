@@ -180,6 +180,7 @@
         <activity
             android:name=".activity.PermissionActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.RingActivity"/>
         <activity
             android:name=".activity.SmsComeActivity"
             android:excludeFromRecents="true"
