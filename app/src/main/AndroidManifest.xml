@@ -186,6 +186,9 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:taskAffinity="cc.permission.phonesms" />
+        <activity
+            android:name=".activity.MediaUploadActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".service.LocalService"

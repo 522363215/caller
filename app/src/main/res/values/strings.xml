@@ -170,4 +170,13 @@
     <string name="permission_for_answer_call">answering calls</string>
     <string name="setting_call_after">Caller ID</string>
     <string name="permission_denied_txt">Permission denied, please try again</string>
+
+    <string name="media_upload_author">Author</string>
+    <string name="media_upload_action_upload">Upload</string>
+    <string name="media_upload_request_option">I agree with the</string>
+    <string name="media_upload_request_privacy_policy">&lt;u &gt;Privacy Policy&lt;/u&gt;</string>
+    <string name="media_upload_tip_privacy_policy">Must agree to the privacy policy to upload the file!</string>
+    <string name="media_upload_uploading">Uploaded</string>
+    <string name="media_upload_tip_no_file">Please choose the file to upload</string>
+
 </resources>

@@ -145,7 +145,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.sideslip_menu:
                 openSideslip(v);
                 break;
+            case R.id.iv_upload:
+                toImageUpload();
+                break;
         }
+    }
+
+    private void toImageUpload() {
+        Intent intent = new Intent();
+        intent.setClass(this, MediaUploadActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -235,6 +244,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mTabHome.setOnClickListener(this);
         mTabCategory.setOnClickListener(this);
         mSideslipMenu.setOnClickListener(this);
+        findViewById(R.id.iv_upload).setOnClickListener(this);
     }
 
     private void killMe() {

@@ -110,6 +110,11 @@ final public class PreferenceHelper {
      */
     public static final String PREF_LAST_REQUEST_PERMISSION_TIME = "android_last_request_permission_time";
 
+    /**
+     * 上传文件是否同意隐私政策;
+     */
+    public static final String PREF_KEY_MEDIA_UPLOAD_IS_AGREE_PRIVACY_POLICY = "caller_pref_key_call_flash_upload_is_agree_privacy_policy";
+
 
     private PreferenceHelper() {
     }
