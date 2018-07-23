@@ -1,19 +1,23 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.service;
 
 import android.app.Service;
+import android.app.job.JobService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 
 import com.md.block.core.BlockManager;
+import com.md.flashset.CallFlashSet;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PhoneStateListenImpl;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServiceProcessingManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.CallerCommonReceiver;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.MessageReceiver;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.NetworkConnectChangedReceiver;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 public class LocalService extends Service {
     private static final String TAG = "LocalService";
@@ -32,50 +36,13 @@ public class LocalService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        LogUtil.d(TAG, "LocalService onCreate");
         sInstance = this;
-        //保存安装时间
-        if (PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_INSTALL_TIME, 0) <= 0) {
-            PreferenceHelper.putLong(PreferenceHelper.PREF_KEY_INSTALL_TIME, System.currentTimeMillis());
-        }
-        registerReceivers();
-        initBlock();
+        //服务中所有的初始化工作都要写在这里里面，8.0以上是在另一个服务中进行，防止漏写
+        ServiceProcessingManager.getInstance().create(getApplicationContext());
     }
 
-    private void registerReceivers() {
-        //网络变化广播
-        mNetworkChangeListener = new NetworkConnectChangedReceiver();
-        IntentFilter networkChangefilter = new IntentFilter();
-        networkChangefilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        networkChangefilter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
-        networkChangefilter.addAction("android.net.wifi.STATE_CHANGE");
-        registerReceiver(mNetworkChangeListener, networkChangefilter);
 
-        //接收短信的广播
-        mMessageReceiver = new MessageReceiver();
-        IntentFilter messageFilter = new IntentFilter();
-        messageFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
-        registerReceiver(mMessageReceiver, messageFilter);
-
-        //常用功能广播
-        IntentFilter commonFilter = new IntentFilter(); //for notification check
-        commonFilter.addAction(CallerCommonReceiver.RANDOM_NOTIFY_TASK_24);
-        commonFilter.addAction(CallerCommonReceiver.COMMON_CHECK_24);
-        commonFilter.addAction(CallerCommonReceiver.RANDOM_NOTIFY_CALL_FLASH);
-        //daydream
-        commonFilter.addAction(Intent.ACTION_DREAMING_STARTED);
-        commonFilter.addAction(Intent.ACTION_DREAMING_STOPPED);
-        commonFilter.addAction(Intent.ACTION_USER_PRESENT);
-        commonFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
-        mCallerCommonReceiver = new CallerCommonReceiver();
-        this.registerReceiver(mCallerCommonReceiver, commonFilter);
-    }
-
-    private void initBlock() {
-        Context appContext = ApplicationEx.getInstance().getApplicationContext();
-        BlockManager.getInstance().initialize(appContext);
-        BlockManager.getInstance().registerPhoneReceiver(appContext);
-        BlockManager.addPhoneStateListener(new PhoneStateListenImpl(appContext));
-    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -84,14 +51,14 @@ public class LocalService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        LogUtil.d(TAG, "LocalService onStartCommand");
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mNetworkChangeListener);
-        unregisterReceiver(mCallerCommonReceiver);
-        unregisterReceiver(mMessageReceiver);
+        LogUtil.d(TAG, "LocalService onDestroy");
+        ServiceProcessingManager.getInstance().destroy(getApplicationContext());
     }
 }
