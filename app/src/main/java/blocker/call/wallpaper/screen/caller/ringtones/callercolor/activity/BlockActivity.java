@@ -42,8 +42,6 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_block);
 
-        BlockManager.getInstance().setBlockSwitchState(true);
-
         initView();
         listener();
     }

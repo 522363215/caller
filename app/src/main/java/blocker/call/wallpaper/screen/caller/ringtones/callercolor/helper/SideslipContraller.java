@@ -174,7 +174,6 @@ public class SideslipContraller implements View.OnClickListener {
 
         }
 
-
         resolution = height + "*" + width;
         return resolution;
 

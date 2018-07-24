@@ -23,6 +23,8 @@ final public class PreferenceHelper {
     private static final String TAG = "PreferenceHelper";
     private static final String PREF_FILE_NAME = "com_callercolor_pref";
 
+    public static final boolean DEFAULT_VALUE_FOR_CALLER_ID = false;
+    public static final boolean DEFAULT_VALUE_FOR_MESSAGE = false;
 
     /**
      * 获取权限是否由设置界面返回

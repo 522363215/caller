@@ -85,7 +85,7 @@ public class BlockLocal {
     }
 
     public static void setBlockContacts (List<BlockInfo> blockContacts) {
-        if (blockContacts == null || blockContacts.isEmpty()) {
+        if (blockContacts == null) {
             return;
         }
         SharedPreferences pref = getSharedPreferences();
@@ -144,10 +144,12 @@ public class BlockLocal {
                 BlockInfo next = iterator.next();
                 if (next.equals(contact)) {
                     iterator.remove();
-                    setBlockContacts(contactList);
                     isSuc = true;
                     break;
                 }
+            }
+            if (isSuc) {
+                setBlockContacts(contactList);
             }
         }
 

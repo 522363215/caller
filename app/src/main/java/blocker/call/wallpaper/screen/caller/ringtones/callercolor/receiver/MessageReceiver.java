@@ -65,7 +65,7 @@ public class MessageReceiver extends BroadcastReceiver {
     }
 
     private void setMessage() {
-        boolean isMessageOn = PreferenceHelper.getBoolean(PreferenceHelper.SHOW_MESSAGE_COME, false);
+        boolean isMessageOn = PreferenceHelper.getBoolean(PreferenceHelper.SHOW_MESSAGE_COME, PreferenceHelper.DEFAULT_VALUE_FOR_MESSAGE);
         if (isMessageOn) {
             if (DeviceUtil.isScreenOff(mContext) || SmsComeActivity.isForeground(mContext)) {
                 //跳转到短信界面

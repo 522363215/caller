@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.md.block.callback.PhoneStateChangeCallback;
+import com.md.flashset.helper.CallFlashPreferenceHelper;
 
 import java.util.Locale;
 
@@ -28,26 +29,30 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
 
     @Override
     public void onPhoneIdle(String number) {
-        LogUtil.d("chenr", "caller color phone idle.");
+        boolean enableCallerId = PreferenceHelper.getBoolean(PreferenceHelper.PREF_KEY_ENABLE_SHOW_CALL_AFTER, PreferenceHelper.DEFAULT_VALUE_FOR_CALLER_ID);
+        if (enableCallerId) {
+            CallLogInfo info = new CallLogInfo();
+            info.callNumber = number;
+            info.callLoction = NumberUtil.getNumberLocationForCallLog(number);
+            info.date = System.currentTimeMillis();
+            info.callDate = DateUtils.getHmForTime(info.date, Locale.getDefault());
+            info.callType = CallUtils.getCallLogType(number);
 
-        CallLogInfo info = new CallLogInfo();
-        info.callNumber = number;
-        info.callLoction = NumberUtil.getNumberLocationForCallLog(number);
-        info.date = System.currentTimeMillis();
-        info.callDate = DateUtils.getHmForTime(info.date, Locale.getDefault());
-        info.callType = CallUtils.getCallLogType(number);
-
-        Intent intent = new Intent();
-        intent.putExtra("lm_call_after_info", info);
-        intent.setClass(mContext, CallAfterActivity.class);
-        mContext.startActivity(intent);
+            Intent intent = new Intent();
+            intent.putExtra("lm_call_after_info", info);
+            intent.setClass(mContext, CallAfterActivity.class);
+            mContext.startActivity(intent);
+        }
 
         CallFlashDialog.getInstance().hideFloatView();
     }
 
     @Override
     public void onPhoneRinging(String number) {
-        CallFlashDialog.getInstance().showFloatView(number);
+        boolean isShowCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
+        if (isShowCallFlash) {
+            CallFlashDialog.getInstance().showFloatView(number);
+        }
     }
 
     @Override

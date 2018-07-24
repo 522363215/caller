@@ -241,7 +241,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                     ToastUtils.showToast(this, getResources().getString(R.string.call_after_click_toast));
                     break;
                 } else {
-//                    ActivityBuilder.toMessageActivity(this, mInfo.callNumber, true);
+                    DeviceUtil.toSystemSms(this, mInfo.callNumber);
                 }
 //                finish();
                 break;
@@ -284,6 +284,9 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                             });
                         } else {
                             final boolean isSuc = BlockManager.getInstance().setBlockContact(info);
+                            if (isSuc) {
+                                BlockManager.getInstance().setBlockSwitchState(true);
+                            }
                             Async.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

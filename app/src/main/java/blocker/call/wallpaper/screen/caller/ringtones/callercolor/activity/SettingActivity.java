@@ -1,12 +1,13 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.md.block.core.BlockManager;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton;
 
 /**
@@ -31,6 +32,13 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
     }
 
     private void listener() {
+        ((ActionBar) findViewById(R.id.action_bar)).setOnBackClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         sbBlock.setOnCheckedChangeListener(this);
         sbCallerId.setOnCheckedChangeListener(this);
         sbMessage.setOnCheckedChangeListener(this);
@@ -42,8 +50,8 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
         sbMessage = findViewById(R.id.sb_message);
 
         enableBlock = BlockManager.getInstance().getBlockSwitchState();
-        enableCallerId = PreferenceHelper.getBoolean(PreferenceHelper.PREF_KEY_ENABLE_SHOW_CALL_AFTER, false);
-        enableMessage = PreferenceHelper.getBoolean(PreferenceHelper.SHOW_MESSAGE_COME, true);
+        enableCallerId = PreferenceHelper.getBoolean(PreferenceHelper.PREF_KEY_ENABLE_SHOW_CALL_AFTER, PreferenceHelper.DEFAULT_VALUE_FOR_CALLER_ID);
+        enableMessage = PreferenceHelper.getBoolean(PreferenceHelper.SHOW_MESSAGE_COME, PreferenceHelper.DEFAULT_VALUE_FOR_MESSAGE);
 
         sbBlock.setChecked(enableBlock);
         sbCallerId.setChecked(enableCallerId);
