@@ -1,32 +1,32 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor;
 
 import android.app.Application;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
-import com.duapps.ad.base.DuAdNetwork;
 import com.flurry.android.FlurryAgent;
-import com.lionmobi.sdk.adpriority.AdPriorityListener;
 import com.lionmobi.sdk.adpriority.AdPriorityManager;
-import com.md.flashset.CallFlashSet;
-import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.DuAdsConstant;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobSchedulerService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.FileUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.HttpUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -42,6 +42,9 @@ public class ApplicationEx extends Application {
     public String country;
     private AdPriorityManager mAdPriorityMgr;
     private long mLastUpdateAdConfigTime;
+    private BroadcastReceiver mNetworkChangeListener;
+    private BroadcastReceiver mCallerCommonReceiver;
+    private BroadcastReceiver mMessageReceiver;
 
     //main process
     public static ApplicationEx getInstance() {
@@ -89,7 +92,13 @@ public class ApplicationEx extends Application {
     }
 
     private void startService() {
-        startService(new Intent(this, LocalService.class));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Intent intent = new Intent(this, JobSchedulerService.class);
+            startService(intent);
+        } else {
+            Intent intent = new Intent(this, LocalService.class);
+            startService(intent);
+        }
     }
 
     private void initAppData() {
@@ -101,12 +110,10 @@ public class ApplicationEx extends Application {
         new FlurryAgent.Builder().withLogEnabled(BuildConfig.DEBUG).build(getInstance(), BuildConfig.FLURRY_KEY);
         saveVersioncode();
         startService();
-        CallFlashSet.init(getApplicationContext());
         initCallFlashBase();
         // TODO: 2018/7/5 广告暂时屏蔽
 //        intiAdManager();
 //        initPriorityAds();
-
     }
 
     private void initCallFlashBase() {
@@ -169,4 +176,5 @@ public class ApplicationEx extends Application {
         boolean is = false; // 华为渠道包， 手动改为true
         return is;
     }
+
 }
