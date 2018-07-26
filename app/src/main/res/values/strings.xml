@@ -1,5 +1,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name" translatable="false">Caller Color</string>
+    <string name="app_name" translatable="false">Color Phone</string>
 
     <string name="push_tools_missed">"Missed calls."</string>
 
