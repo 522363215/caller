@@ -33,8 +33,8 @@ public class Setting {
         values.put(MediaStore.MediaColumns.TITLE, filePath.getName());
         // The MIME type of the file
         values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp3");
-        // values.put(MediaStore.Audio.Media.ARTIST, "Madonna");
-        // values.put(MediaStore.Audio.Media.DURATION, 230);
+        // values.put(MediaStore.AudioUtil.Media.ARTIST, "Madonna");
+        // values.put(MediaStore.AudioUtil.Media.DURATION, 230);
         // 来电铃声
         // 第二个参数若是true则会在铃音库中显示
         values.put(MediaStore.Audio.Media.IS_RINGTONE, true);
