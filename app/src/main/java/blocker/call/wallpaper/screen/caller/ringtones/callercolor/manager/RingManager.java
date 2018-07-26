@@ -18,7 +18,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.animation.LinearInterpolator;
 
-import com.md.flashset.View.FlashLed;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 
 import java.io.File;
@@ -512,18 +511,6 @@ public class RingManager {
             PreferenceHelper.putInt(PreferenceHelper.PREF_CURRENT_RING_VOLUME, currVolume);
             mLastSaveTime = System.currentTimeMillis();
             LogUtil.d("phoneStateReceiver", "save currVolume:" + currVolume);
-        }
-    }
-
-    /**
-     * 退出callflash设置界面后还原媒体铃声
-     */
-    public static void reStoreMusicVoluem() {
-        AudioManager am = (AudioManager) ApplicationEx.getInstance().getBaseContext().getSystemService(Service.AUDIO_SERVICE);
-        int currentVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
-        int lastMusicVolume = PreferenceHelper.getInt(PreferenceHelper.PREF_CURRENT_MUSIC_VOLUEM, currentVolume);
-        if (lastMusicVolume != currentVolume) {
-            am.setStreamVolume(AudioManager.STREAM_MUSIC, lastMusicVolume, 0);
         }
     }
 }
