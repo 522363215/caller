@@ -148,6 +148,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.iv_upload:
                 toImageUpload();
+
+                /*NotifyInfo info = new NotifyInfo();
+                info.setNotifyId(NotifyInfo.NotifyId.NOTIFY_NEW_FLASH);
+                info.setTitle("There are new flash.");
+                info.setContent("new flash don't show with you.");
+                NotifyManager.getInstance(this).showNotify(info);*/
                 break;
         }
     }
