@@ -47,6 +47,11 @@ public class PermissionUtils {
     public static final String PERMISSION_OVERLAY = "permission_overlay";//悬浮窗权限
     public static final String PERMISSION_NOTIFICATION_POLICY_ACCESS = "permission_notification_policy_acCess";//通知服务权限
 
+    public static final String[] PERMISSION_GROUP_PHONE = new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CALL_LOG, Manifest.permission.WRITE_CALL_LOG};
+    public static final String[] PERMISSION_GROUP_SMS = new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS};
+    public static final String[] PERMISSION_GROUP_CONTACT = new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS};
+    public static final String[] PERMISSION_GROUP_STORAGE = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
     public interface PermissionGrant {
         void onPermissionGranted(int requestCode);
 
@@ -256,6 +261,22 @@ public class PermissionUtils {
             return SpecialPermissionsUtil.isHaveNotificationPolicyAccess(context);
         }
 
+        if (Manifest.permission_group.PHONE.equals(permission)) {
+            return hasPermissions(context, PermissionUtils.PERMISSION_GROUP_PHONE);
+        }
+
+        if (Manifest.permission_group.CONTACTS.equals(permission)) {
+            return hasPermissions(context, PermissionUtils.PERMISSION_GROUP_CONTACT);
+        }
+
+        if (Manifest.permission_group.SMS.equals(permission)) {
+            return hasPermissions(context, PermissionUtils.PERMISSION_GROUP_SMS);
+        }
+
+        if (Manifest.permission_group.STORAGE.equals(permission)) {
+            return hasPermissions(context, PermissionUtils.PERMISSION_GROUP_STORAGE);
+        }
+
         if (ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
@@ -320,10 +341,19 @@ public class PermissionUtils {
     public static boolean isHaveAllPermission(Context context) {
         boolean canDrawOverlays = SpecialPermissionsUtil.canDrawOverlays(context);
         boolean isHaveNotificationPolicyAccess = SpecialPermissionsUtil.isHaveNotificationPolicyAccess(context);
-        boolean isHavePhone = hasPermission(context, Manifest.permission.READ_PHONE_STATE);
-        boolean isHaveSMS = hasPermission(context, Manifest.permission.RECEIVE_SMS);
-        boolean isHaveStorage = hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        boolean isHaveContact = hasPermission(context, Manifest.permission.READ_CONTACTS);
+        boolean isHavePhone = hasPermissions(context, PERMISSION_GROUP_PHONE);
+        boolean isHaveSMS = hasPermissions(context, PERMISSION_GROUP_SMS);
+        boolean isHaveStorage = hasPermissions(context, PERMISSION_GROUP_STORAGE);
+        boolean isHaveContact = hasPermissions(context, PERMISSION_GROUP_CONTACT);
         return canDrawOverlays && isHaveNotificationPolicyAccess && isHavePhone && isHaveSMS && isHaveStorage && isHaveContact;
+    }
+
+    public static boolean hasPermissions(Context context, String[] permissions) {
+        for (String permission : permissions) {
+            if (!hasPermission(context, permission)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
