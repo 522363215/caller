@@ -20,8 +20,7 @@
         android:layout_above="@+id/layout_btn"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp2"
-        android:layout_marginTop="@dimen/dp48"
-        android:background="@drawable/shape_shadow_floating_bg" />
+        android:layout_marginTop="@dimen/dp48" />
 
     <RelativeLayout
         android:id="@+id/layout_call_flash_others"
