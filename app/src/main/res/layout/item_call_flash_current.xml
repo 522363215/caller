@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/color_transparent"
+    card_view:cardCornerRadius="2dp">
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView
+        android:id="@+id/call_flash_view"
+        android:layout_width="match_parent"
+        android:layout_height="252dp"/>
+
+</android.support.v7.widget.CardView>

@@ -34,14 +34,16 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleProgressBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
 import event.EventBus;
 
 /**
  * Created by ChenR on 2018/1/31.
  */
 
-public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnlineAdapter.ViewHolder> {
-
+public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int ITEM_TYPE_NORMAL = 0;
+    private static final int ITEM_TYPE_CURRENT = 1;
     private static final String TAG = "CallFlashOnlineAdapter";
     private Context context = null;
     private List<CallFlashInfo> model = null;
@@ -95,20 +97,55 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View item = View.inflate(context, R.layout.item_call_flash_online, null);
-        return new CallFlashOnlineAdapter.ViewHolder(item);
+    public int getItemViewType(int position) {
+        CallFlashInfo info = getItem(position);
+        if (isFlashSwitchOn) {
+            if (((info.flashType == FlashLed.FLASH_TYPE_CUSTOM && mCustomPath.equals(info.path))
+                    || (info.flashType == FlashLed.FLASH_TYPE_DYNAMIC && mDynamicPath.equals(info.path))
+                    || (info.flashType != FlashLed.FLASH_TYPE_CUSTOM && info.flashType != FlashLed.FLASH_TYPE_DYNAMIC))
+                    && info.flashType == mFlashType) {
+                return ITEM_TYPE_CURRENT;
+            }
+        }
+
+        return ITEM_TYPE_NORMAL;
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == ITEM_TYPE_CURRENT) {
+            View view = View.inflate(context, R.layout.item_call_flash_current, null);
+            return new CurrentHolder(view);
+        } else {
+            View item = View.inflate(context, R.layout.item_call_flash_online, null);
+            return new NormalViewHolder(item);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (context == null) return;
         isFlashSwitchOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
         mFlashType = CallFlashPreferenceHelper.getInt(CallFlashPreferenceHelper.CALL_FLASH_TYPE, -1);
         mCustomPath = CallFlashPreferenceHelper.getString(CallFlashPreferenceHelper.CALL_FLASH_CUSTOM_BG_PATH, "");
         mDynamicPath = CallFlashPreferenceHelper.getString(CallFlashPreferenceHelper.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
 
-        if (fragmentTag == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode() && position == mAdShowPosition) {
+        int viewType = getItemViewType(position);
+        if (viewType == ITEM_TYPE_CURRENT) {
+            setCurrentHolder((CurrentHolder) holder, position);
+        } else {
+            setNormalHolder((NormalViewHolder) holder, position);
+        }
+    }
+
+    private void setCurrentHolder (CurrentHolder holder, int pos) {
+        CallFlashInfo info = getItem(pos);
+
+        holder.callFlashView.showCallFlashView(info);
+    }
+
+    private void setNormalHolder(NormalViewHolder holder, int pos) {
+        if (fragmentTag == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode() && pos == mAdShowPosition) {
             // 广告相关.
             holder.layoutCallFlash.setVisibility(View.GONE);
             holder.layout_ad_view.setVisibility(View.VISIBLE);
@@ -144,15 +181,15 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
                 }
             }
         } else {
+            CallFlashInfo info = getItem(pos);
             holder.itemView.setVisibility(View.VISIBLE);
             holder.layoutCallFlash.setVisibility(View.VISIBLE);
             holder.layout_ad_view.setVisibility(View.GONE);
-            final CallFlashInfo info = getItem(position);
             if (info != null) {
-                holder.root.setTag(position);
-                holder.layoutCallFlash.setTag(position);
-                holder.iv_download.setTag(position);
-//            holder.tv_call_name.setText(info.title);
+                holder.root.setTag(pos);
+                holder.layoutCallFlash.setTag(pos);
+                holder.iv_download.setTag(pos);
+//              holder.tv_call_name.setText(info.title);
 
                 String imgUrl = info.img_vUrl;
                 if (childViewHeight != 0 && childViewWidth != 0) {
@@ -170,25 +207,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
                     }
                 }
 
-                if (videoFile.exists()) {
-                    holder.iv_download.setVisibility(View.GONE);
-                    if (isFlashSwitchOn) {
-                        LogUtil.d("chenr", "current flash type: " + mFlashType + ", info flash type: " + info.flashType +
-                                ", \ninfo path: " + info.path + ", dynamic path: " + mDynamicPath + ", custom path: " + mCustomPath);
-                        if (((info.flashType == FlashLed.FLASH_TYPE_CUSTOM && mCustomPath.equals(info.path))
-                                || (info.flashType == FlashLed.FLASH_TYPE_DYNAMIC && mDynamicPath.equals(info.path))
-                                || (info.flashType != FlashLed.FLASH_TYPE_CUSTOM && info.flashType != FlashLed.FLASH_TYPE_DYNAMIC))
-                                && info.flashType == mFlashType) {
-                            holder.iv_call_select.setVisibility(View.VISIBLE);
-                        } else {
-                            holder.iv_call_select.setVisibility(View.GONE);
-                        }
-                    } else {
-                        holder.iv_call_select.setVisibility(View.GONE);
-                    }
-                } else {
-                    holder.iv_download.setVisibility(View.VISIBLE);
-                }
+                holder.iv_download.setVisibility(videoFile.exists() ? View.VISIBLE : View.GONE);
                 holder.mOnDownloadListener.setDownloadParams(holder, info);
             }
         }
@@ -228,7 +247,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
         return info;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class NormalViewHolder extends RecyclerView.ViewHolder {
         private View root;
         private RelativeLayout layoutCallFlash;
         private LinearLayout layout_ad_view;
@@ -244,7 +263,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
 
         private OnOnlineDownloadListener mOnDownloadListener;
 
-        public ViewHolder(View itemView) {
+        public NormalViewHolder(View itemView) {
             super(itemView);
             root = itemView.findViewById(R.id.layout_root);
             layoutCallFlash = itemView.findViewById(R.id.layout_call_flash);
@@ -266,6 +285,15 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
 //            ThemeDownloadApi.addGeneralListener(mOnDownloadListener);
             ThemeResourceHelper.getInstance().addGeneralListener(mOnDownloadListener);
             mDownloadListenerList.add(mOnDownloadListener);
+        }
+    }
+
+    class CurrentHolder extends RecyclerView.ViewHolder {
+        private CallFlashView callFlashView;
+
+        public CurrentHolder(View itemView) {
+            super(itemView);
+            callFlashView = itemView.findViewById(R.id.call_flash_view);
         }
     }
 
@@ -327,10 +355,10 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<CallFlashOnline
     };
 
     private class OnOnlineDownloadListener implements OnDownloadListener {
-        private ViewHolder holder;
+        private NormalViewHolder holder;
         private CallFlashInfo info;
 
-        public void setDownloadParams(ViewHolder holder, CallFlashInfo info) {
+        public void setDownloadParams(NormalViewHolder holder, CallFlashInfo info) {
             this.holder = holder;
             this.info = info;
 
