@@ -24,95 +24,10 @@ public class CallFlashPreferenceHelper {
     private static final String TAG = "CallFlashPreferenceHelper";
     private static final String PREF_FILE_NAME = "android_call_flash_pref_file";
 
-
-    /**
-     * old path to new path time
-     */
-    public static final String PREF_MOVE_CALL_FLASH_TO_NEW_TIME = "move_call_flash_to_new_time";
-
-    /**
-     * reset wrong callflashinfo
-     */
-    public static final String PREF_RESET_CALL_FLASH_INFO_TIME = "key_reset_call_flash_info_time";
-
-    /**
-     * 推荐插入的位置
-     */
-    public static final String PREF_SET_INSERT_POSITION = "key_new_flash_insert_position";
-
-    /**
-     * 上一次callflash 刷新时间
-     */
-    public static final String PREF_LAST_CALL_FLASH_REFRESH_TIME = "android_last_call_flash_refresh_time";
-
-    /**
-     * 最热 callflash info
-     */
-    public static final String PREF_HOT_ONLION_CALL_FLASH_INFO = "android_hot_onlion_call_flash_info";
-
-    /**
-     * 最新  callflash info
-     */
-    public static final String PREF_NEW_ONLION_CALL_FLASH_INFO = "android_new_onlion_call_flash_info";
-
-    /**
-     * 推荐 info
-     */
-    public static final String PREF_RECOMMEND_ONLION_CALL_FLASH_INFO = "android_recommend_onlion_call_flash_info";
-
-    /**
-     * 设置的全局callflash
-     */
-    public static final String PREF_SET_GLOBAL_CALL_FLASH = "android_set_global_call_flash";
-
-    /**
-     * 上一次后台下载最新callflash成功的时间
-     */
-    public static final String PREF_LAST_DOWNLOAD_CALLFLASH_NEW_IN_BACKGROUND_TIME = "android_last_download_callflash_new_in_background_time";
-
-    /**
-     * 上一次后台下载最热callflash成功的时间
-     */
-    public static final String PREF_LAST_DOWNLOAD_CALLFLASH_HOT_IN_BACKGROUND_TIME = "android_last_download_callflash_hot_in_background_time";
-
-    /**
-     * 上一次后台下载推荐callflash成功的时间
-     */
-    public static final String PREF_LAST_DOWNLOAD_CALLFLASH_RECOMMEND_IN_BACKGROUND_TIME = "android_last_download_callflash_recommend_in_background_time";
-
-    /**
-     * 在线callflash请求刷新间隔时间refresh
-     */
-    public static final String PREF_REQUEST_ONLION_CALLFLASH_REFRESH_INTERVAL_TIME = "android_request_onlion_callflash_refresh_interval_time";
-
-    /**
-     * 后台是否在下载在线callflash
-     */
-    public static final String PREF_IS_DOWNLOADING_ONLINE_CALLFALASH_IN_BACKGROUND = "android_is_downloading_online_callflash_in_background";
-
-    // 在线来电秀, 之前预制的部分;
-    public static final String PREF_PRESET_ONLINE_FLASH = "preset_online_flash";
-    // 最新的来电秀对象;
-    public static final String PREF_NEWEST_FLASH_INSTANCE = "caller_flash_newest_instance";
-    // 上一个发送通知的最新来电秀对象;
-    public static final String PREF_PREVIOUS_NEWEST_FLASH_INSTANCE = "caller_flash_previous_newest_instance";
-
-    /**
-     * 上一次进入call flash more 的时间
-     */
-    public static final String PREF_LAST_TO_CALL_FLASH_MORE_TIME = "android_last_to_call_flash_more_time";
-    /**
-     * 所有在线的callflash
-     */
-    public static final String PREF_ALL_ONLINE_FlASH = "android_all_online_flash";
     /**
      * 点赞来电秀集合
      */
     public static final String PREF_JUST_LIKE_FLASH_LIST = "caller_id_pref_just_like_flash_list";
-
-    public static final String IS_SHOW_TIP_CALLFLASH_EXIT = "is_show_tip_callflash_exit";//退出callflash setting是否弹窗提示, 0 默认弹出
-
-    public static final String NOT_SHOW_TIP_CALLFLASH_EXIT_LIST = "not_show_tip_callflash_exit_list";//不显示弹窗提示的国家, 默认没有
 
     public static final String CALL_FLASH_ON = "call_flash_on";//call flash 是否开启
 
@@ -123,11 +38,6 @@ public class CallFlashPreferenceHelper {
     public static final String CALL_FLASH_SHOW_TYPE_INSTANCE = "call_flash_show_type_instance"; // 当前使用的flash的实例(string形式)
 
     public static final String CALL_FLASH_CUSTOM_BG_PATH = "call_flash_custom_bg_path";
-
-    public static final String CALL_FLASH_LAST_ENTER_TIME = "call_flash_last_enter_time";
-
-    public static final String IS_ENABLE_CALLFLASH_DEFAULT = "is_enable_callflash_default";//是否默认开启flashcall， 0 默认不开启
-    public static final String NOT_ENABLE_CALLFLASH_DEFAULT_LIST = "not_enable_callflash_default_list";//不默认开启flash call的国家, 默认没有, example "US,"
 
     /**
      * 已经保存过下载数的callflash url

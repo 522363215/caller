@@ -22,9 +22,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringut
 public class LocalService extends Service {
     private static final String TAG = "LocalService";
     private static LocalService sInstance;
-    private NetworkConnectChangedReceiver mNetworkChangeListener;
-    private MessageReceiver mMessageReceiver;
-    private CallerCommonReceiver mCallerCommonReceiver;
 
     private static ExecutorService caServiceThreadPool = Executors.newFixedThreadPool(4);
 
