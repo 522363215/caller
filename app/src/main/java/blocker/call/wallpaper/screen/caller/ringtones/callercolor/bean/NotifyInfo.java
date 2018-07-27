@@ -10,6 +10,7 @@ public class NotifyInfo {
 
     private String title = "";
     private String content = "";
+    // 任意内容的字符串...
     public String arg1 = "";
     public String arg2 = "";
 

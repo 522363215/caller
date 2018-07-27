@@ -44,7 +44,7 @@ public class NotifyManager {
 
     private NotifyManager(Context context) {
         if (context == null) {
-            throw new NullPointerException("NotifyManager context parameter is null.");
+            LogUtil.e(TAG, "NotifyManager context parameter is null.");
         }
         mContext = context;
         mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
