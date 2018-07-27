@@ -148,7 +148,7 @@
     <string name="block_contacts_remove_failed">Remove Failed!</string>
     <string name="side_slip_title_des">"别出心裁，秀随我变"</string>
     <string name="side_slip_close_call_flash">Close Caller Show</string>
-    <string name="side_slip_collection">Collection</string>
+    <string name="side_slip_collection">Favorite</string>
     <string name="permission_welcome">"欢迎"</string>
     <string name="permission_des">第一次启动需要先进行一些设置，点击下方按钮开始设置</string>
     <string name="permission_get_permission">授予权限</string>
