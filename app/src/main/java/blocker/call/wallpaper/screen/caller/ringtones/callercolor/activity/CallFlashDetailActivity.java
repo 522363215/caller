@@ -42,7 +42,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Interstitia
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.PreloadAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.SaveingDialog;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.SavingDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashDetailGroupAdShow;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventInterstitialAdLoadSuccess;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
@@ -84,7 +84,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private Advertisement mAdvertisement;
     private CallFlashAvatarInfoView mCallFlashAvatarInfoView;
     private boolean mIsShowInterstitialAd;
-    private SaveingDialog mSavingDialog;
+    private SavingDialog mSavingDialog;
     private boolean mIsBack;
     private boolean mIsShow;
 
@@ -669,7 +669,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void showSaveDialog() {
-        mSavingDialog = new SaveingDialog(this);
+        mSavingDialog = new SavingDialog(this);
         mSavingDialog.show();
         layout_progress_below_ad.postDelayed(new Runnable() {
             @Override
