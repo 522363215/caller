@@ -1,10 +1,13 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.Manifest;
+import android.app.Service;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -18,6 +21,8 @@ import com.md.flashset.View.FlashLed;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
+import com.md.flashset.volume.VolumeChangeListenAdapter;
+import com.md.flashset.volume.VolumeChangeObserver;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.download.ThemeResourceHelper;
@@ -49,6 +54,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUt
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar;
@@ -60,10 +66,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash
 import event.EventBus;
 
 public class CallFlashDetailActivity extends BaseActivity implements View.OnClickListener {
-    private static final int REQUEST_CODE_OVERLAY_PERMISSION = 1712;
-    private static final int REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS = 1713;
-    public static final int REQUEST_CODE_WRITE_SETTINGS = 1715;
-    private static final int REQUEST_CODE_APP_DETAILS_SETTINGS = 1716;
     private static final String TAG = "CallFlashDetailActivity";
     private static final long SAVING_DIALOG_MAX_TIME = 3500;
     private static final long SAVING_DIALOG_MIN_TIME = 1200;
@@ -109,6 +111,9 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private GlideView mGvCallFlashBg;
     private View mLayoutCallFlashOthers;
     private LinearLayout mLayourAd;
+    private boolean mIsResume;
+    private VolumeChangeObserver mVolumeChangeObserver;
+    private VolumeChangeListenAdapter mVolumeChangeListenAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +130,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
         mInfo = (CallFlashInfo) getIntent().getSerializableExtra(ActivityBuilder.CALL_FLASH_INFO);
         initView();
+        initVolumeChangeObserver(true);
         listener();
         downloadListener();
 //        initAd();
@@ -168,7 +174,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         tv_downloading_above_ad = findViewById(R.id.tv_downloading_above_ad);
         layout_progress_above_ad = findViewById(R.id.layout_progress_above_ad);
         pb_downloading_above_ad.setMaxProgress(100);
-        tv_downloading_above_ad.setText(Html.fromHtml(getString(R.string.call_flash_gif_show_load, 0)));
+        tv_downloading_above_ad.setText(getString(R.string.call_flash_gif_show_connecte));
 
         //below ad
         layout_below_ad = findViewById(R.id.layout_below_ad);
@@ -178,7 +184,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         tv_downloading_below_ad = findViewById(R.id.tv_downloading_below_ad);
         layout_progress_below_ad = findViewById(R.id.layout_progress_below_ad);
         pb_downloading_below_ad.setMaxProgress(100);
-        tv_downloading_below_ad.setText(Html.fromHtml(getString(R.string.call_flash_gif_show_load, 0)));
+        tv_downloading_below_ad.setText(getString(R.string.call_flash_gif_show_connecte));
 
         ((FontIconView) findViewById(R.id.fiv_back)).setShadowLayer(10f, 0, 0, 0xff000000);
 
@@ -388,6 +394,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
+        mIsResume = true;
+        setVolumeChange(true);
         FlurryAgent.logEvent("CallFlashDetailActivity-start");
         if (mCallFlashView != null)
             mCallFlashView.continuePlay();
@@ -396,6 +404,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onPause() {
         super.onPause();
+        mIsResume = false;
+        setVolumeChange(false);
         if (mCallFlashView != null)
             mCallFlashView.pause();
     }
@@ -947,5 +957,89 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         }
     }
     //---------------------------获取权限----------------------------------
+
+
+    //*********************************音量设置*********************************************
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        try {
+            if (mInfo != null && mInfo.isHaveSound && mIsResume) {
+                int ringMode = mVolumeChangeObserver.getRingerMode();
+                AudioManager am = mVolumeChangeObserver.getAudioManager();
+                switch (keyCode) {
+                    case KeyEvent.KEYCODE_VOLUME_UP:
+                        if (ringMode == AudioManager.RINGER_MODE_SILENT && !SpecialPermissionsUtil.isHaveNotificationPolicyAccess(this)) {
+                            ToastUtils.showToast(this, R.string.mute_no_permission_tip2);
+                        } else {
+                            am.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
+                            LogUtil.d(TAG, "onKeyDown before ringMode:" + ringMode + ",after ringMode:" + am.getRingerMode());
+                        }
+                        return true;
+                    case KeyEvent.KEYCODE_VOLUME_DOWN:
+                        am.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
+                        LogUtil.d(TAG, "onKeyDown before ringMode:" + ringMode + ",after ringMode:" + am.getRingerMode());
+                        return true;
+                }
+            }
+        } catch (Exception e) {
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void initVolumeChangeObserver(boolean isSaveMusicVolume) {
+        //实例化对象并设置监听器
+        mVolumeChangeObserver = new VolumeChangeObserver(this);
+        mVolumeChangeObserver.setVolumeChangeListener(mVolumeChangeListenAdapter = new VolumeChangeListenAdapter() {
+            @Override
+            public void onRingVolumeChanged(int ringVolume) {
+                super.onRingVolumeChanged(ringVolume);
+                //系统媒体音量改变时的回调
+                int maxMusicVolume = mVolumeChangeObserver.getMaxStreamVolume(AudioManager.STREAM_MUSIC);
+                int maxRingVolume = mVolumeChangeObserver.getMaxStreamVolume(AudioManager.STREAM_RING);
+                //修改媒体音量
+                mVolumeChangeObserver.setStreamVolume(AudioManager.STREAM_MUSIC, (ringVolume * maxMusicVolume) / maxRingVolume);
+                LogUtil.d(TAG, "onVolumeChanged()--->currentMusicVolume:" + mVolumeChangeObserver.getStreamVolume(AudioManager.STREAM_MUSIC) + ",maxMusicVolume:" + maxMusicVolume + ",currentRingVolume:" + ringVolume + ",maxRingVolume:" + maxRingVolume);
+            }
+        });
+        if (isSaveMusicVolume) {
+            //保存媒体声用于还原
+            LogUtil.d(TAG, "initVolumeChangeObserver SaveMusicVolume:" + mVolumeChangeObserver.getStreamVolume(AudioManager.STREAM_MUSIC));
+            CallFlashPreferenceHelper.putInt(CallFlashPreferenceHelper.PREF_CURRENT_MUSIC_VOLUME_WHEN_SET_CALL_FLASH, mVolumeChangeObserver.getStreamVolume(AudioManager.STREAM_MUSIC));
+        }
+    }
+
+    private void setVolumeChange(boolean isResume) {
+        if (isResume) {
+            if (mVolumeChangeObserver.getVolumeChangeListener() == null) {
+                mVolumeChangeObserver.setVolumeChangeListener(mVolumeChangeListenAdapter);
+            }
+            mVolumeChangeObserver.registerReceiver();
+            //媒体音设为铃声音量大小
+            int maxMusicVolume = mVolumeChangeObserver.getMaxStreamVolume(AudioManager.STREAM_MUSIC);
+            int maxRingVolume = mVolumeChangeObserver.getMaxStreamVolume(AudioManager.STREAM_RING);
+            mVolumeChangeObserver.setStreamVolume(AudioManager.STREAM_MUSIC, (mVolumeChangeObserver.getStreamVolume(AudioManager.STREAM_RING) * maxMusicVolume) / maxRingVolume);
+        } else {
+            mVolumeChangeObserver.unregisterReceiver();
+            //还原媒体音量
+            reStoreMusicVolume();
+        }
+    }
+
+    /**
+     * 退出callflash设置界面后还原媒体铃声
+     */
+    public static void reStoreMusicVolume() {
+        AudioManager am = (AudioManager) ApplicationEx.getInstance().getBaseContext().getSystemService(Service.AUDIO_SERVICE);
+        int currentVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int lastMusicVolume = CallFlashPreferenceHelper.getInt(CallFlashPreferenceHelper.PREF_CURRENT_MUSIC_VOLUME_WHEN_SET_CALL_FLASH, currentVolume);
+        LogUtil.d(TAG, "reStoreMusicVoluem lastMusicVolume:" + lastMusicVolume + ",currentVolume:" + currentVolume);
+        if (lastMusicVolume != currentVolume) {
+            am.setStreamVolume(AudioManager.STREAM_MUSIC, lastMusicVolume, 0);
+        }
+    }
+
+    //*********************************音量设置*********************************************
+
 
 }

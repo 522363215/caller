@@ -131,8 +131,12 @@ public class CallFlashPreferenceHelper {
 
     /**
      * 已经保存过下载数的callflash url
-     * */
+     */
     public static final String CALL_FLASH_SAVE_DOWNLOAD_COUNT_URLS = "call_flash_save_download_count_urls";
+    /**
+     * 当前媒体音量大小
+     */
+    public static final String PREF_CURRENT_MUSIC_VOLUME_WHEN_SET_CALL_FLASH = "android_current_music_volume_when_set_call_flash";
 
     private static Context mContext;
 

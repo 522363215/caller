@@ -196,6 +196,8 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
                             onPermissionGranted(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
                         }
                     }
+                } else {
+                    onPermissionGranted(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
                 }
                 break;
         }

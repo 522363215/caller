@@ -1,5 +1,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name" translatable="false">Caller Color</string>
+    <string name="app_name" translatable="false">Color Phone</string>
 
     <string name="push_tools_missed">"Missed calls."</string>
 
@@ -132,7 +132,7 @@
     <string name="call_flash_grant_permission_tip">This permission is only used to set %1$s, it will not be used for any other purpose.</string>
     <string name="no_app_to_share">"Sorry, you don't have apps available to share."</string>
     <string name="no_online_call_flash_list_tip">no call flash</string>
-    <string name="no_collection_call_flash_list_tip">no collection call flash</string>
+    <string name="no_collection_call_flash_list_tip">暂无记录</string>
     <string name="add_block_contact_title">"Call Log"</string>
     <string name="block_option_open_switch">"Open Block"</string>
     <string name="block_option_toast_open_success">"Open block switch success!"</string>
@@ -148,7 +148,7 @@
     <string name="block_contacts_remove_failed">Remove Failed!</string>
     <string name="side_slip_title_des">"别出心裁，秀随我变"</string>
     <string name="side_slip_close_call_flash">Close Caller Show</string>
-    <string name="side_slip_collection">Collection</string>
+    <string name="side_slip_collection">Favorite</string>
     <string name="permission_welcome">"欢迎"</string>
     <string name="permission_des">第一次启动需要先进行一些设置，点击下方按钮开始设置</string>
     <string name="permission_get_permission">授予权限</string>
@@ -178,8 +178,10 @@
     <string name="media_upload_tip_privacy_policy">Must agree to the privacy policy to upload the file!</string>
     <string name="media_upload_uploading">Uploaded</string>
     <string name="media_upload_tip_no_file">Please choose the file to upload</string>
-
+    <string name="mute_no_permission_tip2">Please turn off silent mode manually</string>
     <!--Android 8.0及以上通知渠道名称-->
     <string name="notify_channel_subscribe">Subscribed</string>
+
+    <string name="call_flash_view">View</string>
 
 </resources>

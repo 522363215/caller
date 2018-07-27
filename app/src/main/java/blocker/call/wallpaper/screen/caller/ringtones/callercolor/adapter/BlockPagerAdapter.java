@@ -15,7 +15,7 @@ import java.util.List;
 public class BlockPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> model;
 
-    private String [] mPageTitle = {"Contacts", "History"};
+    private String [] mPageTitle = {"Block list", "BLock logs"};
 
     public BlockPagerAdapter(FragmentManager fm, List<android.app.Fragment> model) {
         super(fm);

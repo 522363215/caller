@@ -6,7 +6,6 @@ import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -14,10 +13,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.text.TextUtils;
-
 
 import java.io.File;
 import java.security.MessageDigest;
@@ -25,6 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +31,6 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 
@@ -83,12 +80,14 @@ public class Stringutil {
         c.setTimeInMillis(System.currentTimeMillis());
         return c.get(Calendar.DAY_OF_YEAR);
     }
+
     public static int getTodayDayByServer() {
         long tm_server = PreferenceHelper.getLong("true_time_from_server", 0);
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(tm_server);
         return c.get(Calendar.DAY_OF_YEAR);
     }
+
     public static int getCurrentYearOfLocal(long ms) {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(ms);
@@ -96,7 +95,7 @@ public class Stringutil {
     }
 
     public static int getTodayDayByMs(long ms) {
-        if(ms <= 0){
+        if (ms <= 0) {
             return -1;
         }
         Calendar c = Calendar.getInstance();
@@ -137,7 +136,7 @@ public class Stringutil {
     public static final int HOLIDAY_THANKFUL = 12; //感恩节
     public static final int HOLIDAY_ZHONGGUOYEAR = 13; //春节
 
-    private static int getSpecialDays(long ms, int dayType){
+    private static int getSpecialDays(long ms, int dayType) {
         int day = -1;
 
         Calendar c = Calendar.getInstance();
@@ -162,7 +161,7 @@ public class Stringutil {
         Calendar calendar = Calendar.getInstance();
 //        long tm_server = PreferenceHelper.getLong("true_time_from_server", 0);
         long tm_server = System.currentTimeMillis(); // for test
-        if(tm_server > 0) {
+        if (tm_server > 0) {
             calendar.setTimeInMillis(tm_server);
             int day_of_week = calendar.get(Calendar.DAY_OF_WEEK) - 1; //0 is sunday, 6 is saturday
             if (day_of_week == 0 || day_of_week == 6) {
@@ -174,7 +173,7 @@ public class Stringutil {
 
     public static boolean isWeekend(long ms) {
         boolean is = false;
-        if(ms > 0) {
+        if (ms > 0) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(ms);
             int day_of_week = calendar.get(Calendar.DAY_OF_WEEK) - 1; //0 is sunday, 6 is saturday
@@ -186,13 +185,12 @@ public class Stringutil {
     }
 
     /**
-     *
      * @param ms
      * @return 0 is sunday, 6 is saturday
      */
     public static int getDayOfWeek(long ms) {
         int day_of_week = -1;
-        if(ms > 0) {
+        if (ms > 0) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(ms);
             day_of_week = calendar.get(Calendar.DAY_OF_WEEK) - 1; //0 is sunday, 6 is saturday
@@ -1218,5 +1216,23 @@ public class Stringutil {
             return false;
         }
         return TextUtils.equals(str1, str2);
+    }
+
+
+    /**
+     * 合并多个数组为一个数组
+     */
+    public static <T> T[] concatAll(T[] first, T[]... rest) {
+        int totalLength = first.length;
+        for (T[] array : rest) {
+            totalLength += array.length;
+        }
+        T[] result = Arrays.copyOf(first, totalLength);
+        int offset = first.length;
+        for (T[] array : rest) {
+            System.arraycopy(array, 0, result, offset, array.length);
+            offset += array.length;
+        }
+        return result;
     }
 }

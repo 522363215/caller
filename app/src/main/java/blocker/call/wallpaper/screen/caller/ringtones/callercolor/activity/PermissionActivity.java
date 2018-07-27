@@ -2,6 +2,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.PermissionShowAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.PermissionInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 
 public class PermissionActivity extends BaseActivity implements View.OnClickListener, PermissionShowAdapter.ItemClickListener {
@@ -113,29 +114,32 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
         storagePermission.iconResId = R.drawable.ic_launcher;
         storagePermission.title = getString(R.string.permission_storage_title);
         storagePermission.permissionDes = getString(R.string.permission_storage_des);
-        storagePermission.permission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        storagePermission.permission = Manifest.permission_group.STORAGE;
         mPermissionInfos.add(storagePermission);
 
-        PermissionInfo phonePermission = new PermissionInfo();
-        phonePermission.iconResId = R.drawable.ic_launcher;
-        phonePermission.title = getString(R.string.permission_phone_title);
-        phonePermission.permissionDes = getString(R.string.permission_phone_des);
-        phonePermission.permission = Manifest.permission.READ_PHONE_STATE;
-        mPermissionInfos.add(phonePermission);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PermissionInfo phonePermission = new PermissionInfo();
+            phonePermission.iconResId = R.drawable.ic_launcher;
+            phonePermission.title = getString(R.string.permission_phone_title);
+            phonePermission.permissionDes = getString(R.string.permission_phone_des);
+            phonePermission.permission = Manifest.permission_group.PHONE;
+            mPermissionInfos.add(phonePermission);
 
-        PermissionInfo smsPermission = new PermissionInfo();
-        smsPermission.iconResId = R.drawable.ic_launcher;
-        smsPermission.title = getString(R.string.permission_sms_title);
-        smsPermission.permissionDes = getString(R.string.permission_sms_des);
-        smsPermission.permission = Manifest.permission.RECEIVE_SMS;
-        mPermissionInfos.add(smsPermission);
+            PermissionInfo smsPermission = new PermissionInfo();
+            smsPermission.iconResId = R.drawable.ic_launcher;
+            smsPermission.title = getString(R.string.permission_sms_title);
+            smsPermission.permissionDes = getString(R.string.permission_sms_des);
+            smsPermission.permission = Manifest.permission_group.SMS;
+            mPermissionInfos.add(smsPermission);
 
-        PermissionInfo contactPermission = new PermissionInfo();
-        contactPermission.iconResId = R.drawable.ic_launcher;
-        contactPermission.title = getString(R.string.permission_contact_title);
-        contactPermission.permissionDes = getString(R.string.permission_contact_des);
-        contactPermission.permission = Manifest.permission.READ_CONTACTS;
-        mPermissionInfos.add(contactPermission);
+            PermissionInfo contactPermission = new PermissionInfo();
+            contactPermission.iconResId = R.drawable.ic_launcher;
+            contactPermission.title = getString(R.string.permission_contact_title);
+            contactPermission.permissionDes = getString(R.string.permission_contact_des);
+            contactPermission.permission = Manifest.permission_group.CONTACTS;
+            mPermissionInfos.add(contactPermission);
+        }
+
         mPermissionShowAdapter.notifyDataSetChanged();
     }
 
@@ -144,7 +148,9 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
         int id = v.getId();
         switch (id) {
             case R.id.tv_request_permission:
-                requestPermission(new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_CONTACTS}, PermissionUtils.REQUEST_CODE_ALL_PERMISSION_);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermission(Stringutil.concatAll(PermissionUtils.PERMISSION_GROUP_PHONE, PermissionUtils.PERMISSION_GROUP_SMS, PermissionUtils.PERMISSION_GROUP_CONTACT), PermissionUtils.REQUEST_CODE_ALL_PERMISSION_);
+                }
                 break;
         }
     }
@@ -195,14 +201,20 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
             requestSpecialPermission(PermissionUtils.PERMISSION_OVERLAY);
         } else if (PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS.equals(permission)) {
             requestSpecialPermission(PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS);
-        } else if (Manifest.permission.READ_PHONE_STATE.equals(permission)) {
-            requestPermission(new String[]{Manifest.permission.READ_PHONE_STATE}, PermissionUtils.REQUEST_CODE_PHONE_STATE_PERMISSION);
-        } else if (Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permission)) {
-            requestPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionUtils.REQUEST_CODE_EXTERNAL_STORAGE_PERMISSION);
-        } else if (Manifest.permission.RECEIVE_SMS.equals(permission)) {
-            requestPermission(new String[]{Manifest.permission.RECEIVE_SMS}, PermissionUtils.REQUEST_CODE_RECEIVE_SMS_PERMISSION);
-        } else if (Manifest.permission.READ_CONTACTS.equals(permission)) {
-            requestPermission(new String[]{Manifest.permission.READ_CONTACTS}, PermissionUtils.REQUEST_CODE_READ_CONTACT_PERMISSION);
+        } else if (Manifest.permission_group.STORAGE.equals(permission)) {
+            requestPermission(PermissionUtils.PERMISSION_GROUP_STORAGE, PermissionUtils.REQUEST_CODE_EXTERNAL_STORAGE_PERMISSION);
+        } else if (Manifest.permission_group.PHONE.equals(permission)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermission(PermissionUtils.PERMISSION_GROUP_PHONE, PermissionUtils.REQUEST_CODE_PHONE_STATE_PERMISSION);
+            }
+        } else if (Manifest.permission_group.SMS.equals(permission)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermission(PermissionUtils.PERMISSION_GROUP_SMS, PermissionUtils.REQUEST_CODE_RECEIVE_SMS_PERMISSION);
+            }
+        } else if (Manifest.permission_group.CONTACTS.equals(permission)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermission(PermissionUtils.PERMISSION_GROUP_CONTACT, PermissionUtils.REQUEST_CODE_READ_CONTACT_PERMISSION);
+            }
         }
     }
 }

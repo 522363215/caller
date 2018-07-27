@@ -23,6 +23,7 @@ public class GlideView extends RelativeLayout {
     private Context mContext;
     private ImageView mImageView;
     private ImageView mIvShape;
+    private ImageView mIvShape2;
 
     public GlideView(Context context) {
         super(context);
@@ -59,6 +60,7 @@ public class GlideView extends RelativeLayout {
             LayoutInflater.from(context).inflate(R.layout.layout_glide_view, this);
             mImageView = findViewById(R.id.imageView);
             mIvShape = findViewById(R.id.iv_shape);
+            mIvShape2 = findViewById(R.id.iv_shape2);
             setScaleType(scaleType);
         } finally {
             attributes.recycle();
@@ -150,6 +152,9 @@ public class GlideView extends RelativeLayout {
      * @param urlOrPath 实际资源的url 或者路径
      */
     public void showImageWithBlur(String urlOrPath) {
+        if (mIvShape2 != null) {
+            mIvShape2.setVisibility(VISIBLE);
+        }
         if (mIvShape != null) {
             mIvShape.setVisibility(VISIBLE);
             GlideHelper.with(mContext).load(urlOrPath).into(mIvShape);

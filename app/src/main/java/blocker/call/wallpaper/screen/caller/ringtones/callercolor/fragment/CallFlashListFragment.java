@@ -11,6 +11,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -62,6 +63,8 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
     private ProgressBar mPbLoading;
     private Runnable mLoadMaxRunable;
     private View mLayoutPermissionTip;
+    private LinearLayout mLayoutNoCallFlash;
+    private TextView mTvView;
 
     public static CallFlashListFragment newInstance(int dataType) {
         CallFlashListFragment fragment = new CallFlashListFragment();
@@ -106,11 +109,14 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if (view != null) {
             mSwipeRefreshLayout = view.findViewById(R.id.flash_swipe_refresh);
-            mTvRefreshFailed = view.findViewById(R.id.tv_refresh_failed);
             mRecyclerView = view.findViewById(R.id.rv_flash_list);
             mPbLoading = view.findViewById(R.id.pb_loading);
 
             mLayoutPermissionTip = view.findViewById(R.id.layout_permission_tip);
+
+            mLayoutNoCallFlash = view.findViewById(R.id.layout_no_call_flash);
+            mTvRefreshFailed = view.findViewById(R.id.tv_refresh_failed);
+            mTvView = view.findViewById(R.id.tv_view);
 
             mPbLoading.setVisibility(View.VISIBLE);
             mSwipeRefreshLayout.setVisibility(View.GONE);
@@ -147,6 +153,9 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         switch (id) {
             case R.id.layout_permission_tip:
                 ActivityBuilder.toPermissionActivity(getActivity(), true);
+                break;
+            case R.id.tv_view:
+                getActivity().finish();
                 break;
         }
     }
@@ -206,8 +215,8 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             model.clear();
             model.addAll(data);
             mAdapter.notifyDataSetChanged();
-            if (mTvRefreshFailed != null) {
-                mTvRefreshFailed.setVisibility(View.GONE);
+            if (mLayoutNoCallFlash != null) {
+                mLayoutNoCallFlash.setVisibility(View.GONE);
             }
             if (mRecyclerView != null) {
                 mRecyclerView.setVisibility(View.VISIBLE);
@@ -243,8 +252,8 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         }
 
         if (model == null || model.size() <= 0) {
-            if (mTvRefreshFailed != null) {
-                mTvRefreshFailed.setVisibility(View.VISIBLE);
+            if (mLayoutNoCallFlash != null) {
+                mLayoutNoCallFlash.setVisibility(View.VISIBLE);
             }
             if (mRecyclerView != null) {
                 mRecyclerView.setVisibility(View.GONE);
@@ -314,6 +323,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
     }
 
     private void listener() {
+        mTvView.setOnClickListener(this);
         mLayoutPermissionTip.setOnClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

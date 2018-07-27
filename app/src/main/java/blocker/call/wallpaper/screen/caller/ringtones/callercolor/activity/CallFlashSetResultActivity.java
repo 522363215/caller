@@ -410,7 +410,7 @@ public class CallFlashSetResultActivity extends BaseActivity {
     private void onFinish() {
         isShowResult = getIntent().getBooleanExtra("is_show_result", true);
         if (isShowResult && !mIsFromDesktop) {
-            //-1表示不改变mainactiivty的page 页面
+            //BACK_FROM_CALL_FLASH_RESULT表示不改变mainactiivty的page 页面
             ActivityBuilder.toMain(this, ActivityBuilder.BACK_FROM_CALL_FLASH_RESULT);
         } else {
             finish();
