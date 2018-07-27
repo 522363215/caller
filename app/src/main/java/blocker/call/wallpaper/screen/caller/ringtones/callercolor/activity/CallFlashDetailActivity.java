@@ -66,10 +66,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash
 import event.EventBus;
 
 public class CallFlashDetailActivity extends BaseActivity implements View.OnClickListener {
-    private static final int REQUEST_CODE_OVERLAY_PERMISSION = 1712;
-    private static final int REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS = 1713;
-    public static final int REQUEST_CODE_WRITE_SETTINGS = 1715;
-    private static final int REQUEST_CODE_APP_DETAILS_SETTINGS = 1716;
     private static final String TAG = "CallFlashDetailActivity";
     private static final long SAVING_DIALOG_MAX_TIME = 3500;
     private static final long SAVING_DIALOG_MIN_TIME = 1200;
@@ -178,7 +174,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         tv_downloading_above_ad = findViewById(R.id.tv_downloading_above_ad);
         layout_progress_above_ad = findViewById(R.id.layout_progress_above_ad);
         pb_downloading_above_ad.setMaxProgress(100);
-        tv_downloading_above_ad.setText(Html.fromHtml(getString(R.string.call_flash_gif_show_load, 0)));
+        tv_downloading_above_ad.setText(getString(R.string.call_flash_gif_show_connecte));
 
         //below ad
         layout_below_ad = findViewById(R.id.layout_below_ad);
@@ -188,7 +184,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         tv_downloading_below_ad = findViewById(R.id.tv_downloading_below_ad);
         layout_progress_below_ad = findViewById(R.id.layout_progress_below_ad);
         pb_downloading_below_ad.setMaxProgress(100);
-        tv_downloading_below_ad.setText(Html.fromHtml(getString(R.string.call_flash_gif_show_load, 0)));
+        tv_downloading_below_ad.setText(getString(R.string.call_flash_gif_show_connecte));
 
         ((FontIconView) findViewById(R.id.fiv_back)).setShadowLayer(10f, 0, 0, 0xff000000);
 

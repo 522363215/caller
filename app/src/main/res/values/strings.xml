@@ -132,7 +132,7 @@
     <string name="call_flash_grant_permission_tip">This permission is only used to set %1$s, it will not be used for any other purpose.</string>
     <string name="no_app_to_share">"Sorry, you don't have apps available to share."</string>
     <string name="no_online_call_flash_list_tip">no call flash</string>
-    <string name="no_collection_call_flash_list_tip">no collection call flash</string>
+    <string name="no_collection_call_flash_list_tip">暂无记录</string>
     <string name="add_block_contact_title">"Call Log"</string>
     <string name="block_option_open_switch">"Open Block"</string>
     <string name="block_option_toast_open_success">"Open block switch success!"</string>
@@ -180,5 +180,7 @@
     <string name="media_upload_tip_no_file">Please choose the file to upload</string>
     <string name="mute_no_permission_tip2">Please turn off silent mode manually</string>
     <string name="notify_channel_subscribe">Subscribed</string>
+
+    <string name="call_flash_view">View</string>
 
 </resources>

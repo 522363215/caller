@@ -440,15 +440,6 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
      */
     private void uploadLike(boolean isLike) {
         if (mInfo == null) return;
-//        JSONObject callFlashLikeJson = JsonUtil.createCallFlashLikeJson(mInfo.id, isLike);
-//        LogUtil.d(TAG, "uploadCLike callFlashLikeJson:" + callFlashLikeJson);
-//        ServerManager.getInstance().requestData(callFlashLikeJson, ConstantUtils.SERVER_API_CALLER_SHOW_LIKE, new ServerManager.UploadNumberInfoCallBack() {
-//            @Override
-//            public void onRequest(boolean hasSuccess, String data) {
-//                LogUtil.d(TAG, "uploadLike data:" + data + ",hasSuccess:" + hasSuccess);
-//            }
-//        });
-
         ThemeSyncManager.getInstance().syncJustLike(Long.parseLong(mInfo.id), isLike, new ThemeNormalCallback() {
             @Override
             public void onSuccess(int code, String msg) {
