@@ -203,6 +203,12 @@ public class CallFlashView extends RelativeLayout {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 LogUtil.d(TAG, "setOnPreparedListener mp:" + mp);
+                //设置videoView 静音
+                if (mCallFlashInfo != null && mCallFlashInfo.isVideoMute) {
+                    mp.setVolume(0f, 0f);
+                    mp.start();
+                }
+
                 Async.scheduleTaskOnUiThread(500, new Runnable() {
                     @Override
                     public void run() {
