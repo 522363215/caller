@@ -42,7 +42,7 @@ public class CallerCommonReceiver extends BroadcastReceiver {
                     case BatteryManager.BATTERY_PLUGGED_AC:
                     case BatteryManager.BATTERY_PLUGGED_USB:
                     case BatteryManager.BATTERY_PLUGGED_WIRELESS:
-                        LogUtil.d("CommonReceiver", "BATTERY_CHANGED.");
+//                        LogUtil.d("CommonReceiver", "BATTERY_CHANGED.");
 //                            mIsCharging = true;
                         break;
                     case -1:

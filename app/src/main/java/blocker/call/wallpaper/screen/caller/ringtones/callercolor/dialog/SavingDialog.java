@@ -8,15 +8,15 @@ import android.view.KeyEvent;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 
 
-public class SaveingDialog extends BaseDialog {
+public class SavingDialog extends BaseDialog {
     private Context mContext;
 
-    public SaveingDialog(Context context) {
+    public SavingDialog(Context context) {
         super(context);
         mContext = context;
     }
 
-    public SaveingDialog(Context context, int themeResId) {
+    public SavingDialog(Context context, int themeResId) {
         super(context, themeResId);
     }
 
