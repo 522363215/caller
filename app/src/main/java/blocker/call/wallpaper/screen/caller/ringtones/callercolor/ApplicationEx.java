@@ -1,12 +1,10 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor;
 
 import android.app.Application;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
@@ -18,7 +16,6 @@ import com.md.serverflash.ThemeSyncManager;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
@@ -131,6 +128,16 @@ public class ApplicationEx extends Application {
                 subChannel,
                 expireTime,
                 testMode);
+    }
+
+    public SharedPreferences getGlobalSettingPreference() {
+        SharedPreferences globalSettingPreference = getSharedPreferences(ConstantUtils.PREF_FILE, Context.MODE_PRIVATE);
+        return globalSettingPreference;
+    }
+
+    public SharedPreferences getGlobalADPreference() {
+        SharedPreferences adPreference = getSharedPreferences(ConstantUtils.AD_PREF_FILE, Context.MODE_PRIVATE);
+        return adPreference;
     }
 
     private void saveVersioncode() {

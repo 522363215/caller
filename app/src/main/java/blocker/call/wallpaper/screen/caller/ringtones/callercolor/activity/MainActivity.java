@@ -2,6 +2,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -22,7 +23,10 @@ import com.md.flashset.bean.CallFlashDataType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.MainPagerAdapter;
@@ -33,8 +37,11 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallF
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CategoryFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.StatisticsUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager;
 import event.EventBus;
@@ -60,6 +67,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private boolean mIsOnPageSelected;
     private TextView mTvPageTitle;
 
+    private boolean isPostingMainData = false;
+    private static ExecutorService mainFixedThreadPool = Executors.newFixedThreadPool(1);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +86,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         initSideSlip();
         listener();
         initIndex(getIntent());
+
+        //发送统计
+        SharedPreferences setting = ApplicationEx.getInstance().getGlobalSettingPreference();
+        int used_day = setting.getInt("used_day", 0);
+        if (used_day != Stringutil.getTodayDayInYearGMT8()) {
+            if (!isPostingMainData) {
+                isPostingMainData = true;
+                CommonUtils.wrappedSubmit(mainFixedThreadPool, new Runnable() {
+                    @Override
+                    public void run() {
+                        StatisticsUtil.sendMainData(MainActivity.this);
+                    }
+                });
+            }
+        }
     }
 
     private void toPermissionActivity() {
