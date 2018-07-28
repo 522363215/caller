@@ -1,5 +1,6 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -21,12 +22,14 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.popup.BlockOpt
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.OKCancelDialog;
 
 /**
  * Created by ChenR on 2018/7/5.
  */
 
 public class BlockActivity extends BaseActivity implements View.OnClickListener {
+    private static final int REQUEST_PERMISSION_CODE = 1086;
 
     private NotScrollViewPager viewPager;
     private TabLayout tabBlockCategoryTitle;
@@ -42,8 +45,42 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_block);
 
-        initView();
-        listener();
+        showRequestPermission();
+    }
+
+    public void showRequestPermission() {
+        OKCancelDialog dialog = new OKCancelDialog(this, true);
+        dialog.show();
+        dialog.setOKCancel(R.string.ok_string, R.string.no_string);
+        dialog.setContent(getString(R.string.block_list_request_permission_tip, getString(R.string.app_name)), true, false);
+
+        dialog.setOkClickListener(new OKCancelDialog.OKClickListener() {
+            @Override
+            public void Ok() {
+                requestPermission(new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG}, REQUEST_PERMISSION_CODE);
+            }
+        });
+        dialog.setOnCancelClickListener(new OKCancelDialog.OnCancelClickListener() {
+            @Override
+            public void cancel() {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onPermissionGranted(int requestCode) {
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            initView();
+            listener();
+        }
+    }
+
+    @Override
+    public void onPermissionNotGranted(int requestCode) {
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            finish();
+        }
     }
 
     private void initView() {
@@ -57,13 +94,11 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         fragmentList.add(contactFragment);
         fragmentList.add(historyFragment);
 
-
         viewPager.setCurrentItem(mCurrentIndex);
         viewPager.setOffscreenPageLimit(fragmentList.size());
         viewPager.setAdapter(new BlockPagerAdapter(getFragmentManager(), fragmentList));
         setAddBlockContactState(mCurrentIndex);
         tabBlockCategoryTitle.setupWithViewPager(viewPager);
-
     }
 
     private void listener() {

@@ -99,7 +99,8 @@
         android:paddingLeft="@dimen/dp16"
         android:paddingRight="@dimen/dp16"
         android:paddingStart="@dimen/dp16"
-        android:paddingTop="@dimen/dp6">
+        android:paddingTop="@dimen/dp6"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"

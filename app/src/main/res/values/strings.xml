@@ -184,4 +184,8 @@
 
     <string name="call_flash_view">View</string>
 
+    <string name="block_list_tab_contact">Block list</string>
+    <string name="block_list_tab_logs">Block logs</string>
+    <string name="block_list_request_permission_tip">%1$s needs the necessary permissions for block.</string>
+
 </resources>

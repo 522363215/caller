@@ -8,6 +8,9 @@ import android.support.v4.view.PagerAdapter;
 
 import java.util.List;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+
 /**
  * Created by ChenR on 2018/7/7.
  */
@@ -15,11 +18,14 @@ import java.util.List;
 public class BlockPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> model;
 
-    private String [] mPageTitle = {"Block list", "BLock logs"};
+    private String [] mPageTitle;
 
     public BlockPagerAdapter(FragmentManager fm, List<android.app.Fragment> model) {
         super(fm);
         this.model = model;
+        mPageTitle = new String[model.size()];
+        mPageTitle[0] = ApplicationEx.getInstance().getString(R.string.block_list_tab_contact);
+        mPageTitle[1] = ApplicationEx.getInstance().getString(R.string.block_list_tab_logs);
     }
 
     @Override
