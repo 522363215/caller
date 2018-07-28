@@ -30,7 +30,7 @@ public class ActivityBuilder {
     public static final int MAX_FRAGEMNTS = 4;
 
     public static final String SMS_COME_MESSAGE = "sms_come_message";
-    public static final String IS_SHOW_PERMISSIONS = "is_show_permissions";
+    public static final String IS_LETS_START = "is_lets_start";
 
     public static final String CALL_FLASH_SHARE_PREVIEW = "call_flash_preview";
 
@@ -88,11 +88,11 @@ public class ActivityBuilder {
     }
 
     /**
-     * @param isShowPermission true:显示当前已经获取的权限信息，false:请求权限
+     * @param isLetsStart true:显示title为check，false:请求权限
      */
-    public static void toPermissionActivity(Context context, boolean isShowPermission) {
+    public static void toPermissionActivity(Context context, boolean isLetsStart) {
         Intent intent = new Intent(context, PermissionActivity.class);
-        intent.putExtra(ActivityBuilder.IS_SHOW_PERMISSIONS, isShowPermission);
+        intent.putExtra(ActivityBuilder.IS_LETS_START, isLetsStart);
         context.startActivity(intent);
     }
 }

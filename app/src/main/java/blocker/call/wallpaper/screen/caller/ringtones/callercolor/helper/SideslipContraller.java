@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.AboutActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.BlockActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CollectionActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainActivity;
@@ -47,6 +48,7 @@ public class SideslipContraller implements View.OnClickListener {
     private View mMenuCollection;
     private View mMenuFeedback;
     private SwitchButton mSwitchButton;
+    private View mMenuPermission;
 
     public SideslipContraller(MainActivity mAct) {
         this.mAct = mAct;
@@ -71,6 +73,7 @@ public class SideslipContraller implements View.OnClickListener {
             mMenuFeedback = root.findViewById(R.id.menu_feedback);
             mMenuAbout = root.findViewById(R.id.menu_about);
             mMenuTest = root.findViewById(R.id.menu_test);
+            mMenuPermission = root.findViewById(R.id.menu_permission);
 
             mMenuBlock.setOnClickListener(this);
             mMenuCollection.setOnClickListener(this);
@@ -79,6 +82,7 @@ public class SideslipContraller implements View.OnClickListener {
             mMenuFeedback.setOnClickListener(this);
             mMenuAbout.setOnClickListener(this);
             mMenuTest.setOnClickListener(this);
+            mMenuPermission.setOnClickListener(this);
 
             boolean isCallFlashOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
             setSwitchButton(isCallFlashOn);
@@ -206,10 +210,17 @@ public class SideslipContraller implements View.OnClickListener {
             case R.id.menu_collection:
                 onCollection();
                 break;
+            case R.id.menu_permission:
+                onPermission();
+                break;
         }
         if (callBack != null) {
             callBack.menuClick();
         }
+    }
+
+    private void onPermission() {
+        ActivityBuilder.toPermissionActivity(mAct, false);
     }
 
     private void onCollection() {

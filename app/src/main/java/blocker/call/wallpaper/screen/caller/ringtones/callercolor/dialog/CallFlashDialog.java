@@ -320,7 +320,7 @@ public class CallFlashDialog implements View.OnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 mOriginalMute = audioManager.isStreamMute(AudioManager.STREAM_RING);
                 audioManager.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_MUTE, FLAG_ALLOW_RINGER_MODES);
-                if (!SystemInfoUtil.isMiui() && !RomUtils.checkIsMiuiRom()) {
+                if (!SystemInfoUtil.isMiui()) {
                     try {
                         mRingOldMode = audioManager.getRingerMode();
                         if (mRingOldMode == AudioManager.RINGER_MODE_NORMAL) {
@@ -339,7 +339,7 @@ public class CallFlashDialog implements View.OnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (!mOriginalMute) {
                     audioManager.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_UNMUTE, FLAG_ALLOW_RINGER_MODES);
-                    if (!SystemInfoUtil.isMiui() && !RomUtils.checkIsMiuiRom()) {
+                    if (!SystemInfoUtil.isMiui()) {
                         try {
                             if (mRingOldMode == -1) {
                                 mRingOldMode = AudioManager.MODE_NORMAL;

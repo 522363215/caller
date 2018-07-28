@@ -117,6 +117,16 @@ final public class PreferenceHelper {
      */
     public static final String PREF_KEY_MEDIA_UPLOAD_IS_AGREE_PRIVACY_POLICY = "caller_pref_key_call_flash_upload_is_agree_privacy_policy";
 
+    /**
+     * 上一次跳转到小米获取show on lock 权限的时间;
+     */
+    public static final String PREF_KEY_LAST_TO_XIAO_MI_SHOW_ON_LOCK_PERMISSION_ACTIVITY = "caller_pref_key_last_to_xiao_mi_show_on_lock_permission_activity";
+
+    /**
+     * 上一次跳转到小米获取自启动权限的时间;
+     */
+    public static final String PREF_KEY_LAST_TO_XIAO_MI_AUTO_START_BOOT_PERMISSION_ACTIVITY = "caller_pref_key_last_to_xiao_mi_auto_start_boot_permission_activity";
+
 
     private PreferenceHelper() {
     }
