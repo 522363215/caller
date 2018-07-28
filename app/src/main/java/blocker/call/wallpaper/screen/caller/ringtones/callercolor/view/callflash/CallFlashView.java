@@ -30,6 +30,7 @@ public class CallFlashView extends RelativeLayout {
     private int mVideoPlayProgress;
     private boolean misStart;
     private GlideView mGlideViewPreview;
+    private boolean isVideoMute;
 
     public CallFlashView(Context context) {
         super(context);
@@ -204,10 +205,10 @@ public class CallFlashView extends RelativeLayout {
             public void onPrepared(MediaPlayer mp) {
                 LogUtil.d(TAG, "setOnPreparedListener mp:" + mp);
                 //设置videoView 静音
-                if (mCallFlashInfo != null && mCallFlashInfo.isVideoMute) {
+                if (isVideoMute) {
                     mp.setVolume(0f, 0f);
-                    mp.start();
                 }
+                mp.start();
 
                 Async.scheduleTaskOnUiThread(500, new Runnable() {
                     @Override
@@ -239,4 +240,7 @@ public class CallFlashView extends RelativeLayout {
         mGlideViewPreview.showImageWithThumbnail(info.img_vUrl, info.thumbnail_imgUrl);
     }
 
+    public void setVideoMute(boolean mVideoMute) {
+        this.isVideoMute = mVideoMute;
+    }
 }

@@ -61,7 +61,6 @@ public class CallFlashInfo implements Serializable {
     public int flashType = -100;
     public boolean isHaveSound; // flash素材是否有声音;
     public String thumbnail_imgUrl;//列表中背景图片的缩略图url
-    public boolean isVideoMute;
 
     @Override
     public boolean equals(Object obj) {

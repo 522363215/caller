@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.md.flashset.View.FlashLed;
+import com.md.flashset.bean.CallFlashDataType;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
@@ -42,8 +44,6 @@ import event.EventBus;
  */
 
 public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final int ITEM_TYPE_NORMAL = 0;
-    private static final int ITEM_TYPE_CURRENT = 1;
     private static final String TAG = "CallFlashOnlineAdapter";
     private Context context = null;
     private List<CallFlashInfo> model = null;
@@ -66,6 +66,11 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private int fragmentTag = -99;
+    private int mDataType = 0;
+
+    public void setDataType (int dataType) {
+        this.mDataType = dataType;
+    }
 
     public void clearMap() {
         try {
@@ -97,29 +102,9 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     @Override
-    public int getItemViewType(int position) {
-        CallFlashInfo info = getItem(position);
-        if (isFlashSwitchOn) {
-            if (((info.flashType == FlashLed.FLASH_TYPE_CUSTOM && mCustomPath.equals(info.path))
-                    || (info.flashType == FlashLed.FLASH_TYPE_DYNAMIC && mDynamicPath.equals(info.path))
-                    || (info.flashType != FlashLed.FLASH_TYPE_CUSTOM && info.flashType != FlashLed.FLASH_TYPE_DYNAMIC))
-                    && info.flashType == mFlashType) {
-                return ITEM_TYPE_CURRENT;
-            }
-        }
-
-        return ITEM_TYPE_NORMAL;
-    }
-
-    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == ITEM_TYPE_CURRENT) {
-            View view = View.inflate(context, R.layout.item_call_flash_current, null);
-            return new CurrentHolder(view);
-        } else {
-            View item = View.inflate(context, R.layout.item_call_flash_online, null);
-            return new NormalViewHolder(item);
-        }
+        View item = View.inflate(context, R.layout.item_call_flash_online, null);
+        return new NormalViewHolder(item);
     }
 
     @Override
@@ -131,20 +116,12 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         mDynamicPath = CallFlashPreferenceHelper.getString(CallFlashPreferenceHelper.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
 
         int viewType = getItemViewType(position);
-        if (viewType == ITEM_TYPE_CURRENT) {
-            setCurrentHolder((CurrentHolder) holder, position);
-        } else {
-            setNormalHolder((NormalViewHolder) holder, position);
-        }
-    }
-
-    private void setCurrentHolder (CurrentHolder holder, int pos) {
-        CallFlashInfo info = getItem(pos);
-
-        holder.callFlashView.showCallFlashView(info);
+        setNormalHolder((NormalViewHolder) holder, position);
     }
 
     private void setNormalHolder(NormalViewHolder holder, int pos) {
+        holder.gv_bg.setVisibility(View.VISIBLE);
+        holder.callFlashView.setVisibility(View.INVISIBLE);
         if (fragmentTag == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode() && pos == mAdShowPosition) {
             // 广告相关.
             holder.layoutCallFlash.setVisibility(View.GONE);
@@ -189,6 +166,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 holder.root.setTag(pos);
                 holder.layoutCallFlash.setTag(pos);
                 holder.iv_download.setTag(pos);
+                holder.callFlashView.pause();
 //              holder.tv_call_name.setText(info.title);
 
                 String imgUrl = info.img_vUrl;
@@ -207,7 +185,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
                 }
 
-                holder.iv_download.setVisibility(videoFile.exists() ? View.VISIBLE : View.GONE);
+                holder.iv_download.setVisibility(videoFile.exists() ? View.GONE : View.VISIBLE);
                 holder.mOnDownloadListener.setDownloadParams(holder, info);
             }
         }
@@ -257,6 +235,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         private ImageView iv_download;
         private CircleProgressBar pb_loading;
         private TextView tv_call_name;
+        private CallFlashView callFlashView;
 
         FrameLayout layout_ad_admob;
         LinearLayout layout_mopub;
@@ -278,22 +257,19 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             iv_download = itemView.findViewById(R.id.iv_download);
             pb_loading = itemView.findViewById(R.id.pb_loading);
             tv_call_name = itemView.findViewById(R.id.tv_call_name);
+            callFlashView = itemView.findViewById(R.id.layout_call_flash_view);
+//            callFlashView.setVideoMute(true);
 
+            CardView cardView = callFlashView.findViewById(R.id.layout_card_view);
+            cardView.setCardElevation(0);
+            cardView.setPreventCornerOverlap(false);
+            cardView.setUseCompatPadding(false);
 //            iv_download.setOnClickListener(mOnDownloadClickListener);
 
             mOnDownloadListener = new OnOnlineDownloadListener();
 //            ThemeDownloadApi.addGeneralListener(mOnDownloadListener);
             ThemeResourceHelper.getInstance().addGeneralListener(mOnDownloadListener);
             mDownloadListenerList.add(mOnDownloadListener);
-        }
-    }
-
-    class CurrentHolder extends RecyclerView.ViewHolder {
-        private CallFlashView callFlashView;
-
-        public CurrentHolder(View itemView) {
-            super(itemView);
-            callFlashView = itemView.findViewById(R.id.call_flash_view);
         }
     }
 

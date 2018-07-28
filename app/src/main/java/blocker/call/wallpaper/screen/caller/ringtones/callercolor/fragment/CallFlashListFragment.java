@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.md.flashset.bean.CallFlashDataType;
 import com.md.flashset.bean.CallFlashInfo;
+import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
@@ -37,8 +38,10 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
 import event.EventBus;
 
 /**
@@ -181,6 +184,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mOnlineFlashType == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode()) {
 //                mAdapter.setAdShowPosition(RECYCLER_ONLINE_CALL_FLASH_AD_SHOW_POSITION);
 //            }
+        mAdapter.setDataType(mDataType);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -340,12 +344,51 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                 initData(false);
             }
         });
+
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (getActivity() == null || getActivity().isFinishing()) {
                     return;
                 }
+
+                if (mDataType == CallFlashDataType.CALL_FLASH_DATA_HOME) {
+                    GridLayoutManager layoutManager = (GridLayoutManager) mRecyclerView.getLayoutManager();
+                    int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+                    int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+
+                    CallFlashInfo info = CallFlashPreferenceHelper.getObject(
+                            CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
+                    if (info != null) {
+                        int index = model.indexOf(info);
+                        if (index >= firstVisibleItemPosition && index <= lastVisibleItemPosition) {
+                            View view = layoutManager.findViewByPosition(index);
+                            final CallFlashView callFlashView = view.findViewById(R.id.layout_call_flash_view);
+                            final View gvBg = view.findViewById(R.id.gv_bg);
+                            view.findViewById(R.id.iv_select).setVisibility(View.VISIBLE);
+                            view.findViewById(R.id.iv_download).setVisibility(View.GONE);
+                            if (newState == RecyclerView.SCROLL_STATE_IDLE && ((int) view.getTag()) == index) {
+                                if (callFlashView != null) {
+                                    callFlashView.showCallFlashView(info);
+                                }
+                                view.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        gvBg.setVisibility(View.GONE);
+                                        if (callFlashView != null) {
+                                            callFlashView.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+                                }, 2000);
+                            } else {
+                                if (callFlashView != null) {
+                                    callFlashView.pause();
+                                }
+                            }
+                        }
+                    }
+                }
+
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
                         Glide.with(CallFlashListFragment.this).resumeRequests();
