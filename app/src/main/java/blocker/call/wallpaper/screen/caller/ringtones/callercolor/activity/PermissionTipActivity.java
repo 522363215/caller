@@ -64,7 +64,7 @@ public class PermissionTipActivity extends BaseActivity implements View.OnClickL
         findViewById(R.id.layout_space1).setVisibility(View.GONE);
         findViewById(R.id.layout_space2).setVisibility(View.GONE);
         if (!TextUtils.isEmpty(mPremissionFor)) {
-            if (SystemInfoUtil.isMiui()) {
+            if (SystemInfoUtil.isMiui() && getString(R.string.permission_for_show_call_flash).equals(mPremissionFor)) {
                 mLayoutNormal.setVisibility(View.GONE);
                 mLayoutXiaoMi.setVisibility(View.VISIBLE);
                 mTvDes.setText(Html.fromHtml(getString(R.string.call_flash_grant_permission_tip, mPremissionFor)) + getString(R.string.permission_xiao_mi_tip));

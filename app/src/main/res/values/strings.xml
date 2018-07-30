@@ -70,7 +70,7 @@
     <string name="call_after_block">@string/block_setting_name</string>
     <string name="call_after_message">"Message"</string>
     <string name="call_after_click_toast">"The number is hidden!"</string>
-    <string name="permission_tip">To identify unknown calls and block harassments properly, please enable the following permissions.</string>
+    <string name="permission_tip">为了来电秀和号码拦截能够正常使用, please enable the following permissions.</string>
     <string name="permission_sysytem_permission">Permission Manager</string>
     <string name="permission_to_get_permsiion">Enable</string>
     <string name="permission_phone">"Phone Call"</string>
@@ -191,10 +191,17 @@
     <string name="permission_sett_lock_screen">Allow apps to show on lock screen for call flash screens</string>
     <string name="permission_xiao_mi_tip">(滑动到屏幕最底部)</string>
 
-    <!--这几个权限描述为小米手机中的描述，不能修改-->
+    <!--这几个权限描述为小米手机中的描述，不能修改,多语言也需要与小米手机中的描述一致-->
     <string name="permission_xiao_mi_overlay_title">Display pop_up window</string>
     <string name="permission_xiao_mi_overlay_des">display pop_up window</string>
     <string name="permission_xiao_mi_show_on_lock_title">Show on Lock screen</string>
     <string name="permission_xiao_mi_show_on_lock_des">be Shown on Lock screen</string>
-    <!--这几个权限描述为小米手机中的描述，不能修改-->
+
+    <string name="permission_xiao_mi_make_phone_calls">Make phone calls</string>
+    <string name="permission_xiao_mi_modify_and_delete_contacts">Modify and delete contacts</string>
+    <string name="permission_xiao_mi_read_your_contacts">Read your contacts</string>
+    <string name="permission_xiao_mi_write_and_delete_call_history">Write and delete call history</string>
+    <string name="permission_xiao_mi_read_call_history">Read call history</string>
+    <string name="permission_xiao_mi_get_device_info">Get device info</string>
+    <!--这几个权限描述为小米手机中的描述，不能修改，多语言也需要与小米手机中的描述一致-->
 </resources>
