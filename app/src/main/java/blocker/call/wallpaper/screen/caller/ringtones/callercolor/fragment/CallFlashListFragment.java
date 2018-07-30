@@ -346,6 +346,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (getActivity() == null || getActivity().isFinishing()) {
@@ -353,38 +354,34 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                 }
 
                 if (mDataType == CallFlashDataType.CALL_FLASH_DATA_HOME) {
-                    GridLayoutManager layoutManager = (GridLayoutManager) mRecyclerView.getLayoutManager();
-                    int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-                    int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-
                     CallFlashInfo info = CallFlashPreferenceHelper.getObject(
                             CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
                     if (info != null) {
                         int index = model.indexOf(info);
-                        if (index >= firstVisibleItemPosition && index <= lastVisibleItemPosition) {
-                            View view = layoutManager.findViewByPosition(index);
-                            final CallFlashView callFlashView = view.findViewById(R.id.layout_call_flash_view);
-                            final View gvBg = view.findViewById(R.id.gv_bg);
-                            view.findViewById(R.id.iv_select).setVisibility(View.VISIBLE);
-                            view.findViewById(R.id.iv_download).setVisibility(View.GONE);
-                            if (newState == RecyclerView.SCROLL_STATE_IDLE && ((int) view.getTag()) == index) {
-                                if (callFlashView != null) {
-                                    callFlashView.showCallFlashView(info);
-                                }
-                                view.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        gvBg.setVisibility(View.GONE);
-                                        if (callFlashView != null) {
-                                            callFlashView.setVisibility(View.VISIBLE);
-                                        }
+                        RecyclerView.ViewHolder holder = recyclerView.findViewHolderForLayoutPosition(index);
+                        if (holder != null) {
+                            holder.itemView.findViewById(R.id.iv_select).setVisibility(View.VISIBLE);
+                            CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
+                            View gvBackground = holder.itemView.findViewById(R.id.gv_bg);
+                            gvBackground.setVisibility(View.GONE);
+                            view.setVisibility(View.VISIBLE);
+
+                            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                                if (view.isStopVideo()) {
+                                    view.showCallFlashView(info);
+                                } else {
+                                    if (view.isPauseVideo()) {
+                                        view.continuePlay();
+                                    } else {
+                                        view.showCallFlashView(info);
                                     }
-                                }, 2000);
-                            } else {
-                                if (callFlashView != null) {
-                                    callFlashView.pause();
+                                }
+                            } else if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                                if (!view.isPauseVideo()) {
+                                    view.pause();
                                 }
                             }
+
                         }
                     }
                 }

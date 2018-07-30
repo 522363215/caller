@@ -13,6 +13,7 @@ import com.md.flashset.bean.CallFlashFormat;
 import com.md.flashset.bean.CallFlashInfo;
 
 import java.io.File;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
@@ -31,6 +32,9 @@ public class CallFlashView extends RelativeLayout {
     private boolean misStart;
     private GlideView mGlideViewPreview;
     private boolean isVideoMute;
+
+    private AtomicBoolean isStop = new AtomicBoolean(false);
+    private AtomicBoolean isPause = new AtomicBoolean(false);
 
     public CallFlashView(Context context) {
         super(context);
@@ -57,6 +61,18 @@ public class CallFlashView extends RelativeLayout {
 
         mGlideViewPreview = findViewById(R.id.glide_view_preview);//在没下载的时候用于显示预览图
         setVideoListener();
+    }
+
+    public CallFlashInfo getCallFlashInfo () {
+        return mCallFlashInfo;
+    }
+
+    public boolean isStopVideo () {
+        return isStop.get();
+    }
+
+    public boolean isPauseVideo () {
+        return isPause.get();
     }
 
     public void showCallFlashView(CallFlashInfo info) {
@@ -98,12 +114,14 @@ public class CallFlashView extends RelativeLayout {
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
             mVideoView.stopPlayback();
             mVideoView.setVisibility(INVISIBLE);
+            isStop.set(true);
         }
     }
 
     public void pause() {
         misStart = false;
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
+            isPause.set(true);
             //记录播放的progress,避免黑屏
             mVideoView.pause();
             mVideoPlayProgress = mVideoView.getCurrentPosition();
@@ -116,14 +134,15 @@ public class CallFlashView extends RelativeLayout {
         if (misStart) return;
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
             LogUtil.d(TAG, "continuePlay mVideoPlayProgress:" + mVideoPlayProgress);
-            if (mGlideView != null && mCallFlashInfo != null) {
-                //显示视频第一帧防止黑屏
-                mGlideView.setVisibility(VISIBLE);
-                mGlideView.showVideoFirstFrame(mCallFlashInfo.path);
-            }
+//            if (mGlideView != null && mCallFlashInfo != null) {
+//                //显示视频第一帧防止黑屏
+//                mGlideView.setVisibility(VISIBLE);
+//                mGlideView.showVideoFirstFrame(mCallFlashInfo.path);
+//            }
             mVideoView.seekTo(mVideoPlayProgress);
             mVideoView.start();
             misStart = true;
+            isPause.set(false);
         } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null) {
             mCustomAnimView.update(false, mCallFlashInfo.flashType);
             misStart = true;
@@ -153,6 +172,7 @@ public class CallFlashView extends RelativeLayout {
             mVideoView.setVisibility(VISIBLE);
             mVideoView.setVideoPath(path);
             mVideoView.start();
+            isStop.set(false);
         } else {
             showPreview(info);
         }
@@ -203,7 +223,6 @@ public class CallFlashView extends RelativeLayout {
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                LogUtil.d(TAG, "setOnPreparedListener mp:" + mp);
                 //设置videoView 静音
                 if (isVideoMute) {
                     mp.setVolume(0f, 0f);
@@ -222,8 +241,10 @@ public class CallFlashView extends RelativeLayout {
                     @Override
                     public boolean onInfo(MediaPlayer mp, int what, int extra) {
                         LogUtil.d(TAG, "setOnInfoListener mp:" + mp + ",what:" + what);
-                        if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START)
+                        if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
                             mVideoView.setBackgroundColor(Color.TRANSPARENT);
+                            return true;
+                        }
                         return false;
                     }
                 });

@@ -49,9 +49,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private List<CallFlashInfo> model = null;
 
     private boolean isFlashSwitchOn = false;
-    private int mFlashType = -1;
-    private String mCustomPath = "";
-    private String mDynamicPath = "";
+    private CallFlashInfo mCurrentFlash;
     private boolean misInitAd;
     private Advertisement mAdvertisement;
     private boolean mIsAdloaded;
@@ -111,17 +109,12 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (context == null) return;
         isFlashSwitchOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
-        mFlashType = CallFlashPreferenceHelper.getInt(CallFlashPreferenceHelper.CALL_FLASH_TYPE, -1);
-        mCustomPath = CallFlashPreferenceHelper.getString(CallFlashPreferenceHelper.CALL_FLASH_CUSTOM_BG_PATH, "");
-        mDynamicPath = CallFlashPreferenceHelper.getString(CallFlashPreferenceHelper.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
+        mCurrentFlash = CallFlashPreferenceHelper.getObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
 
-        int viewType = getItemViewType(position);
         setNormalHolder((NormalViewHolder) holder, position);
     }
 
     private void setNormalHolder(NormalViewHolder holder, int pos) {
-        holder.gv_bg.setVisibility(View.VISIBLE);
-        holder.callFlashView.setVisibility(View.INVISIBLE);
         if (fragmentTag == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode() && pos == mAdShowPosition) {
             // 广告相关.
             holder.layoutCallFlash.setVisibility(View.GONE);
@@ -166,8 +159,24 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 holder.root.setTag(pos);
                 holder.layoutCallFlash.setTag(pos);
                 holder.iv_download.setTag(pos);
-                holder.callFlashView.pause();
-//              holder.tv_call_name.setText(info.title);
+
+                if (mCurrentFlash != null && mCurrentFlash.equals(info)) {
+                        holder.gv_bg.setVisibility(View.INVISIBLE);
+                        holder.callFlashView.setVisibility(View.VISIBLE);
+                    if (holder.callFlashView.isStopVideo()) {
+                        holder.callFlashView.showCallFlashView(info);
+                    } else {
+                        if (holder.callFlashView.isPauseVideo()) {
+                            holder.callFlashView.continuePlay();
+                        } else {
+                            holder.callFlashView.showCallFlashView(info);
+                        }
+                    }
+                } else {
+                    holder.gv_bg.setVisibility(View.VISIBLE);
+                    holder.callFlashView.setVisibility(View.INVISIBLE);
+                    holder.callFlashView.stop();
+                }
 
                 String imgUrl = info.img_vUrl;
                 if (childViewHeight != 0 && childViewWidth != 0) {
@@ -184,8 +193,17 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         videoMap.put(info.url, videoFile);
                     }
                 }
+                if (videoFile != null) {
+                    if (videoFile.exists()) {
+                        holder.iv_download.setVisibility(View.GONE);
+                        holder.iv_call_select.setVisibility((mCurrentFlash != null && mCurrentFlash.equals(info))
+                                ? View.VISIBLE : View.GONE);
+                    } else {
+                        holder.iv_download.setVisibility(View.VISIBLE);
+                        holder.iv_call_select.setVisibility(View.GONE);
+                    }
+                }
 
-                holder.iv_download.setVisibility(videoFile.exists() ? View.GONE : View.VISIBLE);
                 holder.mOnDownloadListener.setDownloadParams(holder, info);
             }
         }
@@ -300,7 +318,8 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 pb_loading.setVisibility(View.VISIBLE);
                 iv_download.setVisibility(View.GONE);
-                ThemeResourceHelper.getInstance().isCanWriteInStorage(ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+                ThemeResourceHelper.getInstance().isCanWriteInStorage(ActivityCompat.checkSelfPermission(context,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
                 ThemeResourceHelper.getInstance().downloadThemeResources(info.id, info.url, new OnDownloadListener() {
                     @Override
                     public void onFailure(String url) {
