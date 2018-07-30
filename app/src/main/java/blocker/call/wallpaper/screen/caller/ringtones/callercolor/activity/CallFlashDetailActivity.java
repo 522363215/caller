@@ -913,7 +913,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         dialog.setOkClickListener(new OKCancelDialog.OKClickListener() {
             @Override
             public void Ok() {
-                requestPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionUtils.REQUEST_CODE_EXTERNAL_STORAGE_PERMISSION);
+                requestPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionUtils.REQUEST_CODE_STORAGE_PERMISSION);
             }
         });
     }
@@ -921,7 +921,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     @Override
     public void onPermissionGranted(int requestCode) {
         switch (requestCode) {
-            case PermissionUtils.REQUEST_CODE_EXTERNAL_STORAGE_PERMISSION:
+            case PermissionUtils.REQUEST_CODE_STORAGE_PERMISSION:
                 LogUtil.d(TAG, "MyPermissionGrant onPermissionGranted CODE_EXTERNAL_STORAGE_PERMISSION");
                 if (mIsShowAboveAdBtn) {
                     layout_progress_above_ad.setVisibility(View.VISIBLE);

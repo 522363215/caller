@@ -139,6 +139,10 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
             requestSpecialPermission(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION, false);
         } else if (PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS.equals(permission)) {
             requestSpecialPermission(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS, false);
+        } else if (PermissionUtils.PERMISSION_SHOW_ON_LOCK.equals(permission)) {
+            SpecialPermissionsUtil.toXiaomiShowOnLockPermssion(this);
+        } else if (PermissionUtils.PERMISSION_AUTO_START.equals(permission)) {
+            SpecialPermissionsUtil.toXiaomiAutoStartPermission(this);
         }
     }
 

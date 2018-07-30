@@ -1,13 +1,11 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter;
 
-import android.Manifest;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -19,7 +17,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Permissi
 public class PermissionShowAdapter extends RecyclerView.Adapter<PermissionShowAdapter.ViewHolder> {
     private List<PermissionInfo> mPermissionInfos;
     private Context mContext;
-    private ItemClickListener mItemClickListener;
+    private SetClickListener mSetClickListener;
 
     public PermissionShowAdapter(Context context, List<PermissionInfo> permissionInfos) {
         mContext = context;
@@ -43,19 +41,31 @@ public class PermissionShowAdapter extends RecyclerView.Adapter<PermissionShowAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         PermissionInfo info = getItem(position);
         if (info == null) return;
-        holder.tvEnable.setTag(position);
+        holder.tvSet.setTag(position);
 
-        holder.ivIcon.setBackgroundResource(info.iconResId);
+//        holder.ivIcon.setBackgroundResource(info.iconResId);
         holder.tvTitle.setText(info.title);
         holder.tvDes.setText(info.permissionDes);
 
-        info.isGet = PermissionUtils.hasPermission(mContext, info.permission);
-        if (info.isGet) {
-            holder.layoutEnabled.setVisibility(View.VISIBLE);
-            holder.tvEnable.setVisibility(View.GONE);
+        if (PermissionUtils.PERMISSION_SHOW_ON_LOCK.equals(info.permission) || PermissionUtils.PERMISSION_AUTO_START.equals(info.permission)) {
+            holder.tvSet.setText(R.string.call_flash_view);
         } else {
-            holder.layoutEnabled.setVisibility(View.GONE);
-            holder.tvEnable.setVisibility(View.VISIBLE);
+            holder.tvSet.setText(R.string.permission_set);
+        }
+
+        info.isGet = PermissionUtils.hasPermission(mContext, info.permission);
+        if (!PermissionUtils.PERMISSION_SHOW_ON_LOCK.equals(info.permission) && !PermissionUtils.PERMISSION_AUTO_START.equals(info.permission) && info.isGet) {
+            holder.ivGet.setVisibility(View.VISIBLE);
+            holder.tvSet.setVisibility(View.GONE);
+        } else {
+            holder.ivGet.setVisibility(View.GONE);
+            holder.tvSet.setVisibility(View.VISIBLE);
+        }
+
+        if (position == mPermissionInfos.size() - 1) {
+            holder.layoutLine.setVisibility(View.GONE);
+        } else {
+            holder.layoutLine.setVisibility(View.VISIBLE);
         }
     }
 
@@ -78,24 +88,25 @@ public class PermissionShowAdapter extends RecyclerView.Adapter<PermissionShowAd
         ImageView ivIcon;
         TextView tvTitle;
         TextView tvDes;
-        TextView tvEnable;
-        LinearLayout layoutEnabled;
+        TextView tvSet;
+        ImageView ivGet;
+        View layoutLine;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ivIcon = itemView.findViewById(R.id.iv_icon);
             tvTitle = itemView.findViewById(R.id.tv_title);
             tvDes = itemView.findViewById(R.id.tv_des);
-            tvEnable = itemView.findViewById(R.id.tv_enable);
-            layoutEnabled = itemView.findViewById(R.id.layout_enabled);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
+            tvSet = itemView.findViewById(R.id.tv_set);
+            ivGet = itemView.findViewById(R.id.iv_get);
+            layoutLine = itemView.findViewById(R.id.layout_line);
+            tvSet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (tvEnable.getTag() != null) {
-                        int position = (int) tvEnable.getTag();
-                        if (mItemClickListener != null) {
-                            mItemClickListener.onItemClickListener(position);
+                    if (tvSet.getTag() != null) {
+                        int position = (int) tvSet.getTag();
+                        if (mSetClickListener != null) {
+                            mSetClickListener.onSetClickListener(position);
                         }
                     }
                 }
@@ -103,11 +114,11 @@ public class PermissionShowAdapter extends RecyclerView.Adapter<PermissionShowAd
         }
     }
 
-    public interface ItemClickListener {
-        void onItemClickListener(int position);
+    public interface SetClickListener {
+        void onSetClickListener(int position);
     }
 
-    public void setOnItemClickListener(ItemClickListener listener) {
-        mItemClickListener = listener;
+    public void setOnItemClickListener(SetClickListener listener) {
+        mSetClickListener = listener;
     }
 }

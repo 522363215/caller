@@ -29,25 +29,33 @@ public class PermissionUtils {
     private static final String TAG = PermissionUtils.class.getSimpleName();
     private static PermissionDialog mPermissionDialog;
 
-    //request code
-    public static final int REQUEST_CODE_ALL_PERMISSION_ = 1024;
     private static final int REQUEST_CODE_REQUEST_PERMISSION_SETTING = 201;//带返回结果的跳转到系统权限设置界面的请求码
-    public static final int REQUEST_CODE_EXTERNAL_STORAGE_PERMISSION = 206;
-    public static final int REQUEST_CODE_PHONE_STATE_PERMISSION = 207;
-    public static final int REQUEST_CODE_RECEIVE_SMS_PERMISSION = 208;
-    public static final int REQUEST_CODE_READ_CONTACT_PERMISSION = 209;
+
+    //request code
+    public static final int REQUEST_CODE_STORAGE_PERMISSION = 206;
+    public static final int REQUEST_CODE_PHONE_PERMISSION = 207;
+    public static final int REQUEST_CODE_SMS_PERMISSION = 208;
+    public static final int REQUEST_CODE_CONTACT_PERMISSION = 209;
+    public static final int REQUEST_CODE_PHONE_AND_CONTACT_PERMISSION = 210;
+    public static final int REQUEST_CODE_READ_CALL_LOG_PERMISSION = 211;
 
     //特殊权限code
     public static final int REQUEST_CODE_OVERLAY_PERMISSION = 1712;
     public static final int REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS = 1713;
     public static final int REQUEST_CODE_WRITE_SETTINGS = 1715;
     public static final int REQUEST_CODE_APP_DETAILS_SETTINGS = 1716;
-
+    public static final int REQUEST_CODE_SHOW_ON_LOCK = 1717;
+    public static final int REQUEST_CODE_AUTO_START = 1718;
 
     public static final String PERMISSION_OVERLAY = "permission_overlay";//悬浮窗权限
     public static final String PERMISSION_NOTIFICATION_POLICY_ACCESS = "permission_notification_policy_acCess";//通知服务权限
+    public static final String PERMISSION_SHOW_ON_LOCK = "permission_show_on_lock";//小米专用，显示在锁屏界面上
+    public static final String PERMISSION_AUTO_START = "permission_auto_start";//小米专用，自启动权限，防止重启手机后无法启动应用造成来电秀无法显示
+    public static final String PERMISSION_PHONE_AND_CONTACT = "permission_phone_and_contact";//电话和联系人权限
+
 
     public static final String[] PERMISSION_GROUP_PHONE = new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CALL_LOG, Manifest.permission.WRITE_CALL_LOG};
+    public static final String[] PERMISSION_GROUP_PHONE_AND_CONTACT = new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CALL_LOG, Manifest.permission.WRITE_CALL_LOG, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS};
     public static final String[] PERMISSION_GROUP_SMS = new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS};
     public static final String[] PERMISSION_GROUP_CONTACT = new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS};
     public static final String[] PERMISSION_GROUP_STORAGE = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -101,10 +109,8 @@ public class PermissionUtils {
 
             if (checkSelfPermission || Build.VERSION.SDK_INT < 23) {
                 // TODO: 2017/4/5 授权成功
-                if (SystemInfoUtil.isMiui() || RomUtils.checkIsMiuiRom()) {
-                    boolean isMiAllowed = (PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_CONTACTS)
-                            && PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_SMS)
-                            && PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_CALL_LOG));
+                if (SystemInfoUtil.isMiui()) {
+                    boolean isMiAllowed = checkXiaoMiPermission(activity, requestPermissions);
                     LogUtil.d("perm_check", "onPermissionGranted mi: " + isMiAllowed);
                     if (!isMiAllowed) {
                         notGrantedPermissionsList.add(requestPermission);
@@ -124,6 +130,27 @@ public class PermissionUtils {
             }
         }
         return notGrantedPermissionsList;
+    }
+
+    private static boolean checkXiaoMiPermission(Activity activity, String[] requestPermissions) {
+        boolean isAllow = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            for (String permission : requestPermissions) {
+                if (Manifest.permission.READ_CONTACTS.equals(permission)) {
+                    isAllow = PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_CONTACTS);
+                } else if (Manifest.permission.READ_SMS.equals(permission)) {
+                    isAllow = PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_SMS);
+                } else if (Manifest.permission.READ_CALL_LOG.equals(permission)) {
+                    isAllow = PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_CALL_LOG);
+                } else if (Manifest.permission.READ_PHONE_STATE.equals(permission)) {
+                    isAllow = PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_PHONE_STATE);
+                } else if (Manifest.permission.CALL_PHONE.equals(permission)) {
+                    isAllow = PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_CALL_PHONE);
+                }
+                LogUtil.d(TAG, "checkXiaoMiPermission permission:" + permission + ",isAllow:" + isAllow);
+            }
+        }
+        return isAllow;
     }
     //***********************************************请求权限  end***********************************************/
 
@@ -157,10 +184,8 @@ public class PermissionUtils {
             for (int i = 0; i < grantResults.length; i++) {
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {//授权成功
 
-                    if (SystemInfoUtil.isMiui() || RomUtils.checkIsMiuiRom()) {
-                        boolean isMiAllowed = (PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_CONTACTS)
-                                && PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_SMS)
-                                && PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_CALL_LOG));
+                    if (SystemInfoUtil.isMiui()) {
+                        boolean isMiAllowed = checkXiaoMiPermission(activity, permissions);
                         LogUtil.d("perm_check", "onPermissionGranted mi: " + isMiAllowed);
                         if (!isMiAllowed) {
                             notGranted.add(permissions[i]);
@@ -261,6 +286,18 @@ public class PermissionUtils {
             return SpecialPermissionsUtil.isHaveNotificationPolicyAccess(context);
         }
 
+        if (PERMISSION_PHONE_AND_CONTACT.equals(permission)) {
+            return hasPermissions(context, PermissionUtils.PERMISSION_GROUP_PHONE_AND_CONTACT);
+        }
+
+        if (PERMISSION_AUTO_START.equals(permission)) {
+            return PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_LAST_TO_XIAO_MI_AUTO_START_BOOT_PERMISSION_ACTIVITY, 0) > 0;
+        }
+
+        if (PERMISSION_SHOW_ON_LOCK.equals(permission)) {
+            return PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_LAST_TO_XIAO_MI_SHOW_ON_LOCK_PERMISSION_ACTIVITY, 0) > 0;
+        }
+
         if (Manifest.permission_group.PHONE.equals(permission)) {
             return hasPermissions(context, PermissionUtils.PERMISSION_GROUP_PHONE);
         }
@@ -341,11 +378,13 @@ public class PermissionUtils {
     public static boolean isHaveAllPermission(Context context) {
         boolean canDrawOverlays = SpecialPermissionsUtil.canDrawOverlays(context);
         boolean isHaveNotificationPolicyAccess = SpecialPermissionsUtil.isHaveNotificationPolicyAccess(context);
-        boolean isHavePhone = hasPermissions(context, PERMISSION_GROUP_PHONE);
-        boolean isHaveSMS = hasPermissions(context, PERMISSION_GROUP_SMS);
-        boolean isHaveStorage = hasPermissions(context, PERMISSION_GROUP_STORAGE);
-        boolean isHaveContact = hasPermissions(context, PERMISSION_GROUP_CONTACT);
-        return canDrawOverlays && isHaveNotificationPolicyAccess && isHavePhone && isHaveSMS && isHaveStorage && isHaveContact;
+        boolean isHavePhoneAndContact = hasPermissions(context, PERMISSION_GROUP_PHONE_AND_CONTACT);
+        boolean isHaveShowOnLock = hasPermission(context, PERMISSION_SHOW_ON_LOCK);
+        boolean isHaveAutoStart = hasPermission(context, PERMISSION_AUTO_START);
+        if (SystemInfoUtil.isMiui()) {
+            return canDrawOverlays && isHaveNotificationPolicyAccess && isHavePhoneAndContact && isHaveShowOnLock && isHaveAutoStart;
+        }
+        return canDrawOverlays && isHaveNotificationPolicyAccess && isHavePhoneAndContact;
     }
 
     public static boolean hasPermissions(Context context, String[] permissions) {
