@@ -11,9 +11,6 @@ import java.util.concurrent.Executors;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServerManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServiceProcessingManager;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.CallerCommonReceiver;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.MessageReceiver;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.NetworkConnectChangedReceiver;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.StatisticsUtil;
@@ -76,7 +73,8 @@ public class LocalService extends Service {
 //        }
 //
 //        startForeground(0, notification);
-        return Service.START_STICKY;
+//        return Service.START_STICKY;
+        return super.onStartCommand(intent,flags,startId);
     }
 
     private class sendBaseThread implements Runnable {

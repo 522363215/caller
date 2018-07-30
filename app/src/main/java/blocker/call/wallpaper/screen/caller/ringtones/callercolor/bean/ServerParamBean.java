@@ -381,5 +381,7 @@ public class ServerParamBean implements Serializable {
 
         //preload check interval
         public int preload_ad_check_interval = 239;
+
+        public String splash_fb_id = ""; //
     }
 }

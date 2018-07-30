@@ -222,6 +222,8 @@ public class ServerManager {
                     String tm_ms = bean.getStatus().getMillisecond();
                     ad_pref.edit().putLong("true_time_from_server", Long.valueOf(tm_ms)).apply();
 
+                    LogUtil.d("colorphone", "splash_fb_id:"+dataBean.splash_fb_id);
+
                     //first sync time
                     if (pref.getLong("key_cid_first_sync_server_time", 0) <= 0) {
                         pref.edit().putLong("key_cid_first_sync_server_time", Long.valueOf(tm_ms)).apply();
