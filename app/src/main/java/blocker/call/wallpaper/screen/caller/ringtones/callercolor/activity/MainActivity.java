@@ -107,7 +107,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         boolean isShowPermissionActivity = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_REQUEST_PERMISSION_TIME, 0) <= 0;
         if (isShowPermissionActivity && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_REQUEST_PERMISSION_TIME, System.currentTimeMillis());
-            ActivityBuilder.toPermissionActivity(this, false);
+            ActivityBuilder.toPermissionActivity(this, true);
         }
     }
 

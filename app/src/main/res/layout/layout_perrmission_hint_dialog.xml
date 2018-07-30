@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -22,9 +21,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginBottom="@dimen/dp8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp8"
         android:layout_marginEnd="@dimen/dp16"
         android:layout_marginLeft="@dimen/dp16"
         android:layout_marginRight="@dimen/dp16"
@@ -33,17 +32,18 @@
         android:gravity="center_vertical">
 
         <TextView
-            android:layout_marginLeft="@dimen/dp8"
-            android:layout_marginRight="@dimen/dp8"
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp8"
             android:text="@string/permission_tip"
             android:textColor="@color/color_FF00284D"
             android:textSize="14sp" />
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/layout_normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp16"
@@ -53,7 +53,8 @@
         android:paddingLeft="@dimen/dp16"
         android:paddingRight="@dimen/dp16"
         android:paddingStart="@dimen/dp16"
-        android:paddingTop="@dimen/dp16">
+        android:paddingTop="@dimen/dp16"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,9 +70,9 @@
                 android:paddingTop="@dimen/dp10">
 
                 <TextView
-                    android:alpha="0.8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:alpha="0.8"
                     android:text="@string/permission_sysytem_permission"
                     android:textColor="@color/color_FF00284D"
                     android:textSize="14sp" />
@@ -84,11 +85,11 @@
                 android:paddingTop="@dimen/dp10">
 
                 <TextView
-                    android:alpha="0.7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp12"
                     android:layout_marginStart="@dimen/dp12"
+                    android:alpha="0.7"
                     android:text="@string/call_log_contact"
                     android:textColor="@color/color_FF00284D"
                     android:textSize="14sp" />
@@ -104,17 +105,18 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/dp10"
                 android:paddingTop="@dimen/dp10">
 
                 <TextView
-                    android:alpha="0.8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp12"
                     android:layout_marginStart="@dimen/dp12"
+                    android:alpha="0.8"
                     android:text="@string/permission_phone"
                     android:textColor="@color/color_FF00284D"
                     android:textSize="14sp" />
@@ -136,12 +138,12 @@
                 android:paddingTop="@dimen/dp10">
 
                 <TextView
-                    android:alpha="0.8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp12"
                     android:layout_marginStart="@dimen/dp12"
-                    android:text="@string/permission_SMS"
+                    android:alpha="0.8"
+                    android:text="@string/permission_phone"
                     android:textColor="@color/color_FF00284D"
                     android:textSize="14sp" />
 
@@ -165,7 +167,211 @@
             android:layout_alignParentRight="true"
             android:layout_marginEnd="@dimen/dp16"
             android:layout_marginRight="@dimen/dp16"
-            android:layout_marginTop="@dimen/dp95"
+            android:layout_marginTop="@dimen/dp64"
+            android:background="@drawable/handindicator" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_xiaomi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:background="@color/color_F1F7FE"
+        android:paddingEnd="@dimen/dp16"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        android:visibility="gone"
+        android:paddingStart="@dimen/dp16"
+        android:paddingTop="@dimen/dp16">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingTop="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.8"
+                    android:text="@string/permission_sysytem_permission"
+                    android:textColor="@color/color_FF00284D"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingTop="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp12"
+                    android:layout_marginStart="@dimen/dp12"
+                    android:alpha="0.7"
+                    android:text="@string/permission_xiao_mi_make_phone_calls"
+                    android:textColor="@color/color_FF00284D"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp16"
+                    android:layout_height="@dimen/dp16"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="@dimen/dp30"
+                    android:layout_marginRight="@dimen/dp30"
+                    android:background="@drawable/icon_xiao_mi_permission_accept" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingTop="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp12"
+                    android:layout_marginStart="@dimen/dp12"
+                    android:alpha="0.7"
+                    android:text="@string/permission_xiao_mi_modify_and_delete_contacts"
+                    android:textColor="@color/color_FF00284D"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp16"
+                    android:layout_height="@dimen/dp16"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="@dimen/dp30"
+                    android:layout_marginRight="@dimen/dp30"
+                    android:background="@drawable/icon_xiao_mi_permission_accept" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingTop="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp12"
+                    android:layout_marginStart="@dimen/dp12"
+                    android:alpha="0.7"
+                    android:text="@string/permission_xiao_mi_read_your_contacts"
+                    android:textColor="@color/color_FF00284D"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp16"
+                    android:layout_height="@dimen/dp16"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="@dimen/dp30"
+                    android:layout_marginRight="@dimen/dp30"
+                    android:background="@drawable/icon_xiao_mi_permission_accept" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingTop="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp12"
+                    android:layout_marginStart="@dimen/dp12"
+                    android:alpha="0.7"
+                    android:text="@string/permission_xiao_mi_write_and_delete_call_history"
+                    android:textColor="@color/color_FF00284D"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp16"
+                    android:layout_height="@dimen/dp16"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="@dimen/dp30"
+                    android:layout_marginRight="@dimen/dp30"
+                    android:background="@drawable/icon_xiao_mi_permission_accept" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingTop="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp12"
+                    android:layout_marginStart="@dimen/dp12"
+                    android:alpha="0.7"
+                    android:text="@string/permission_xiao_mi_read_call_history"
+                    android:textColor="@color/color_FF00284D"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp16"
+                    android:layout_height="@dimen/dp16"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="@dimen/dp30"
+                    android:layout_marginRight="@dimen/dp30"
+                    android:background="@drawable/icon_xiao_mi_permission_accept" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingTop="@dimen/dp10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp12"
+                    android:layout_marginStart="@dimen/dp12"
+                    android:alpha="0.7"
+                    android:text="@string/permission_xiao_mi_get_device_info"
+                    android:textColor="@color/color_FF00284D"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/iv_switch_xiao_mi"
+                    android:layout_width="@dimen/dp16"
+                    android:layout_height="@dimen/dp16"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="@dimen/dp30"
+                    android:layout_marginRight="@dimen/dp30"
+                    android:background="@drawable/icon_xiao_mi_permission_deny" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_hand_xiao_mi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp210"
             android:background="@drawable/handindicator" />
     </RelativeLayout>
 
