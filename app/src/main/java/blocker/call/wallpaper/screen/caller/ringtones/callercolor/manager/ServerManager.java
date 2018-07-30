@@ -36,7 +36,7 @@ import okhttp3.Response;
  */
 
 public class ServerManager {
-    private static final String TAG = "ServerManager";
+    private static final String TAG = "cpservice";
     private static ServerManager sInstance;
     private OkHttpClient mClient;
 
@@ -80,7 +80,7 @@ public class ServerManager {
             @Override
             public void onFailure(Call call, IOException e) {
                 responseError(callBack);
-                LogUtil.d("ccooler", "ccooler onFailure:" + e.getMessage());
+                LogUtil.d("cpservice", "ccooler onFailure:" + e.getMessage());
             }
 
             @Override
@@ -120,10 +120,10 @@ public class ServerManager {
             long interval = 60 * 1000 * 60 * 1; //2 hours, >1
             if (last_req == 0 || Math.abs(now - last_req) > interval) {
                 requestControlParam(ApplicationEx.getInstance(), ConstantUtils.SERVER_API_PARAM);
-                LogUtil.d("ccserver", "getParamFromServer server: " + ConstantUtils.SERVER_API_PARAM);
+                LogUtil.d("cpservice", "getParamFromServer server: " + ConstantUtils.SERVER_API_PARAM);
             }
         } catch (Exception e) {
-            LogUtil.e("ccserver", "getParamFromServer exception: " + e.getMessage());
+            LogUtil.e("cpservice", "getParamFromServer exception: " + e.getMessage());
         }
     }
 
@@ -131,7 +131,7 @@ public class ServerManager {
         JSONObject object = new JSONObject();
         try {
             String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            LogUtil.d("ccserver", "requestControlParm androidId:" + androidId);
+            LogUtil.d("cpservice", "requestControlParm androidId:" + androidId);
             object.put("action", "get_config");
             object.put("aid", androidId);
             object.put("cid", ConstantUtils.CALLER_STATISTICS_CHANNEL);
@@ -167,11 +167,11 @@ public class ServerManager {
 
 
         } catch (Exception e) {
-            LogUtil.e("ccserver", "requestControlParm data excption:" + e.getMessage());
+            LogUtil.e("cpservice", "requestControlParm data excption:" + e.getMessage());
         }
         String sig = Stringutil.MD5Encode(ConstantUtils.KEY_HTTP + object.toString());
-        LogUtil.d("ccserver", "sig: " + sig);
-        LogUtil.d("ccserver", "data req: " + object.toString());
+        LogUtil.d("cpservice", "sig: " + sig);
+        LogUtil.d("cpservice", "data req: " + object.toString());
         RequestBody formBody = new FormBody.Builder()
                 .add("data", object.toString())
                 .add("sig", sig)
@@ -186,7 +186,7 @@ public class ServerManager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                LogUtil.e("ccserver", "requestControlParam onFailure:" + e.getMessage());
+                LogUtil.e("cpservice", "requestControlParam onFailure:" + e.getMessage());
             }
 
             @Override
@@ -194,7 +194,7 @@ public class ServerManager {
                 if (response.code() == 200) {
                     processParam(response.body().string());
                 } else {
-                    LogUtil.d("ccserver", "onResponse not 200: " + response.code());
+                    LogUtil.d("cpservice", "onResponse not 200: " + response.code());
                 }
             }
         });
@@ -222,7 +222,7 @@ public class ServerManager {
                     String tm_ms = bean.getStatus().getMillisecond();
                     ad_pref.edit().putLong("true_time_from_server", Long.valueOf(tm_ms)).apply();
 
-                    LogUtil.d("ccserver", "splash_fb_id:"+dataBean.splash_fb_id);
+                    LogUtil.d("cpservice", "splash_fb_id:"+dataBean.splash_fb_id);
 
                     //first sync time
                     if (pref.getLong("key_cid_first_sync_server_time", 0) <= 0) {
@@ -231,13 +231,13 @@ public class ServerManager {
 
 
                 } else {
-                    LogUtil.d("ccserver", "processParam getDataBean is null.");
+                    LogUtil.d("cpservice", "processParam getDataBean is null.");
                 }
             } else {
-                LogUtil.d("ccserver", "processParam bean is null.");
+                LogUtil.d("cpservice", "processParam bean is null.");
             }
         } catch (Exception e) {
-            LogUtil.e("ccserver", "processParam exception:" + e.getMessage());
+            LogUtil.e("cpservice", "processParam exception:" + e.getMessage());
         }
     }
 

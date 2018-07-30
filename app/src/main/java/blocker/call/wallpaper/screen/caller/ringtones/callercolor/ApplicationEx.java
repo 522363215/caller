@@ -98,9 +98,9 @@ public class ApplicationEx extends Application {
 
             JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
             JobInfo jobInfo = new JobInfo.Builder(101, new ComponentName(getPackageName(), JobLocalService.class.getName()))
-//                    .setPeriodic(120000)//2mins
-                    .setOverrideDeadline(3*1000)
-                    .setMinimumLatency(1*1000)
+                    .setPeriodic(120000)//2mins
+//                    .setOverrideDeadline(3*1000)
+//                    .setMinimumLatency(1*1000)
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setPersisted(true)
                     .build();

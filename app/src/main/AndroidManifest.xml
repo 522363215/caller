@@ -203,6 +203,16 @@
             android:name=".service.LocalService"
             android:exported="true"
             android:priority="900" />
+
+
+
+        <receiver android:name=".receiver.BootStartServiceReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+
     </application>
 
 </manifest>

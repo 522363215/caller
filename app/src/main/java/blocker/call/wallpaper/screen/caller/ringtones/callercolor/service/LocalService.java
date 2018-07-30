@@ -25,8 +25,9 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Statisti
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 
 public class LocalService extends Service {
-    private static final String TAG = "ccserver";
+    private static final String TAG = "cpservice";
     private static LocalService sInstance;
+
 
     private static ExecutorService caServiceThreadPool = Executors.newFixedThreadPool(4);
 

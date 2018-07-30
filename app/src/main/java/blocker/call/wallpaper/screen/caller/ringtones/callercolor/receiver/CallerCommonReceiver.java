@@ -9,7 +9,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 public class CallerCommonReceiver extends BroadcastReceiver {
-    private static final String TAG = "CallerCommonReceiver";
+    private static final String TAG = "cpservice";
     public final static String RANDOM_NOTIFY_TASK_24 = "android.intent.action.RANDOM_CALLER_24";
     public final static String RANDOM_NOTIFY_CALL_FLASH = "android.intent.action.RANDOM_CALL_FLASH";
     public final static String COMMON_CHECK_24 = "android.intent.action.COMMON_CHECK_24";
@@ -19,7 +19,7 @@ public class CallerCommonReceiver extends BroadcastReceiver {
         // 接收通知广播
         try {
             if (COMMON_CHECK_24.equals(intent.getAction())) {
-                LogUtil.d("CommonReceiver", "backgroundDownloadOnlionCallFlash COMMON_CHECK_24");
+                LogUtil.d(TAG, "backgroundDownloadOnlionCallFlash COMMON_CHECK_24");
             }
 
             if (RANDOM_NOTIFY_TASK_24.equals(intent.getAction())) {
@@ -28,12 +28,12 @@ public class CallerCommonReceiver extends BroadcastReceiver {
 
             //day dream
             if (Intent.ACTION_DREAMING_STARTED.equals(intent.getAction())) {
-                LogUtil.d("CommonReceiver", "daydream started.");
+                LogUtil.d(TAG, "daydream started.");
                 setDaydreamStatus(true);
             }
             //day dream
             if (Intent.ACTION_DREAMING_STOPPED.equals(intent.getAction())) {
-                LogUtil.d("CommonReceiver", "daydream stoped.");
+                LogUtil.d(TAG, "daydream stoped.");
                 setDaydreamStatus(false);
             }
             //充电
