@@ -19,7 +19,7 @@ import com.md.block.util.LogUtil;
 
 import java.util.Locale;
 
-@RequiresApi(api = Build.VERSION_CODES.N)
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
 public class CallerNotificationListenerService extends NotificationListenerService {
     public final static String CHINESE = "zh_rCN";
 
