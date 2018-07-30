@@ -33,7 +33,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ThemeResourceHelper {
-    private static final String THEME_REQUEST_URL = "http://material.lionmobi.com/api.php";
+    private static final String UPLOAD_URL = "http://material.lionmobi.com/api.php";
     private static final String KEY_HTTP = "*2od2S!#%s";
     private boolean mIsCanWrite;
 
@@ -340,7 +340,7 @@ public class ThemeResourceHelper {
         builder.addFormDataPart("file", file.getName(), RequestBody.create(mediaType, file));
 
         final Request.Builder requestBuilder = new Request.Builder();
-        Request request = requestBuilder.url(THEME_REQUEST_URL).post(builder.build()).build();
+        Request request = requestBuilder.url(UPLOAD_URL).post(builder.build()).build();
 
         OkHttpClient mClient = new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
@@ -352,7 +352,7 @@ public class ThemeResourceHelper {
             @Override
             public void onFailure(Call call, IOException e) {
                 if (listener != null) {
-                    listener.onFailure(THEME_REQUEST_URL);
+                    listener.onFailure(UPLOAD_URL);
                 }
             }
 

@@ -105,8 +105,8 @@ public class ServiceProcessingManager {
     }
 
     private void startWaketask2() {
-//        long scheduled_interval = 2 * 45 * 60 * 1000; //2 hours - 90 mins
-        long scheduled_interval = 5 * 60 * 1000; //5, 20 mins // for test
+        long scheduled_interval = 2 * 45 * 60 * 1000; //2 hours - 90 mins
+//        long scheduled_interval = 5 * 60 * 1000; //5, 20 mins // for test
 //        long timeDelay = 18 * 60 * 1000 * 60 + 30 * 60 * 1000 + 30 * 1000; // 18:30 PM
 //        long timeDelay = 60 * 1000;
 
