@@ -31,6 +31,7 @@ public class CallerNotificationListenerService extends NotificationListenerServi
     public void onCreate() {
         super.onCreate();
         BlockLocal.setPreferencesData("is_cc_callernotificationlistenerservice_running", true);
+        LogUtil.d("cpservice", "start.");
     }
 
     @Override
@@ -70,7 +71,7 @@ public class CallerNotificationListenerService extends NotificationListenerServi
                 }
 
                 if (strTitle.equalsIgnoreCase(defaultAnswer) || isHwAnswer) {
-                    LogUtil.d("chenr", "get answer button action.");
+                    LogUtil.d("cpservice", "get answer button action.");
                     answer = intent;
                 }
             }
