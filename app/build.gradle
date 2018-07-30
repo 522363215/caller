@@ -14,13 +14,13 @@ android {
     }
     buildTypes {
         release {
-            buildConfigField "String", "FLURRY_KEY", "\"FB5H33T8CCQQDG83RJYK\""
+            buildConfigField "String", "FLURRY_KEY", "\"PKKRTY7YV3W94DSMV2HV\""
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-//            buildConfigField "String", "FLURRY_KEY", "\"FB5H33T8CCQQDG83RJYK\""
-            buildConfigField "String", "FLURRY_KEY", "\"cool_caller_test\""
+            buildConfigField "String", "FLURRY_KEY", "\"PKKRTY7YV3W94DSMV2HV\""
+//            buildConfigField "String", "FLURRY_KEY", "\"color_phone_test\""
             //_test
             signingConfig signingConfigs.debug
         }
@@ -56,7 +56,7 @@ dependencies {
     compile(name: 'mopub-sdk-banner_3.0.7', ext: 'aar')
     compile(name: 'mopub-sdk-native-static_3.0.7', ext: 'aar')
     compile 'com.mopub.volley:mopub-volley:2.0.0'
-    compile 'com.flurry.android:analytics:8.2.0@aar'
+    compile 'com.flurry.android:analytics:11.1.1@aar'
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.squareup.okhttp3:okhttp:3.9.1'
     compile 'com.google.firebase:firebase-core:9.6.1'

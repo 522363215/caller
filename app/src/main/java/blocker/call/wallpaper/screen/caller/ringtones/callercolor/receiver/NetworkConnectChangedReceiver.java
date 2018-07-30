@@ -13,10 +13,11 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import event.EventBus;
 
 public class NetworkConnectChangedReceiver extends BroadcastReceiver {
-    private static final String TAG = "NetworkConnectChangedReceiver";
+    private static final String TAG = "cpservice";
     private boolean mIsWifiEnable;
     private boolean mIsWifiConnected;
     private boolean mIsMobileConnected;
+
 
     @Override
     public void onReceive(Context context, Intent intent) {

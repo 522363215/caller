@@ -195,9 +195,24 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service
+            android:name=".service.JobLocalService"
+            android:label="job_local_service"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service
             android:name=".service.LocalService"
             android:exported="true"
             android:priority="900" />
+
+
+
+        <receiver android:name=".receiver.BootStartServiceReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+
     </application>
 
 </manifest>

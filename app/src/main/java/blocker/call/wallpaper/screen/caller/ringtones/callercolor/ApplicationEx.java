@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
@@ -18,11 +19,10 @@ import com.md.serverflash.ThemeSyncManager;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobSchedulerService;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobLocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
@@ -93,8 +93,18 @@ public class ApplicationEx extends Application {
 
     private void startService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Intent intent = new Intent(this, JobSchedulerService.class);
-            startService(intent);
+//            Intent intent = new Intent(this, JobSchedulerService.class);
+//            startService(intent);
+
+            JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+            JobInfo jobInfo = new JobInfo.Builder(101, new ComponentName(getPackageName(), JobLocalService.class.getName()))
+                    .setPeriodic(120000)//2mins
+//                    .setOverrideDeadline(3*1000)
+//                    .setMinimumLatency(1*1000)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setPersisted(true)
+                    .build();
+            jobScheduler.schedule(jobInfo);
         } else {
             Intent intent = new Intent(this, LocalService.class);
             startService(intent);
@@ -131,6 +141,16 @@ public class ApplicationEx extends Application {
                 subChannel,
                 expireTime,
                 testMode);
+    }
+
+    public SharedPreferences getGlobalSettingPreference() {
+        SharedPreferences globalSettingPreference = getSharedPreferences(ConstantUtils.PREF_FILE, Context.MODE_PRIVATE);
+        return globalSettingPreference;
+    }
+
+    public SharedPreferences getGlobalADPreference() {
+        SharedPreferences adPreference = getSharedPreferences(ConstantUtils.AD_PREF_FILE, Context.MODE_PRIVATE);
+        return adPreference;
     }
 
     private void saveVersioncode() {

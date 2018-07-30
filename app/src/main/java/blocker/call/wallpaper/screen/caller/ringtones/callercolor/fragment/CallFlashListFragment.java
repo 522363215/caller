@@ -155,7 +155,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         int id = v.getId();
         switch (id) {
             case R.id.layout_permission_tip:
-                ActivityBuilder.toPermissionActivity(getActivity(), true);
+                ActivityBuilder.toPermissionActivity(getActivity(), false);
                 break;
             case R.id.tv_view:
                 getActivity().finish();
