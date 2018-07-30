@@ -1,7 +1,10 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor;
 
 import android.app.Application;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobSchedulerService;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobLocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
@@ -90,8 +93,18 @@ public class ApplicationEx extends Application {
 
     private void startService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Intent intent = new Intent(this, JobSchedulerService.class);
-            startService(intent);
+//            Intent intent = new Intent(this, JobSchedulerService.class);
+//            startService(intent);
+
+            JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+            JobInfo jobInfo = new JobInfo.Builder(101, new ComponentName(getPackageName(), JobLocalService.class.getName()))
+//                    .setPeriodic(120000)//2mins
+                    .setOverrideDeadline(3*1000)
+                    .setMinimumLatency(1*1000)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setPersisted(true)
+                    .build();
+            jobScheduler.schedule(jobInfo);
         } else {
             Intent intent = new Intent(this, LocalService.class);
             startService(intent);

@@ -1,14 +1,22 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.service;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.IBinder;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServerManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServiceProcessingManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
@@ -17,7 +25,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Statisti
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 
 public class LocalService extends Service {
-    private static final String TAG = "LocalService";
+    private static final String TAG = "ccserver";
     private static LocalService sInstance;
 
     private static ExecutorService caServiceThreadPool = Executors.newFixedThreadPool(4);
@@ -42,7 +50,6 @@ public class LocalService extends Service {
     }
 
 
-
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -50,38 +57,42 @@ public class LocalService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        LogUtil.d(TAG, "LocalService onStartCommand");
-//        Notification notification = null;
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-//            notification = new Notification();
-//            notification.icon = R.drawable.ic_launcher;
-//            try {
-//                Method deprecatedMethod = notification.getClass().getMethod("setLatestEventInfo", Context.class, CharSequence.class, CharSequence.class, PendingIntent.class);
-//                deprecatedMethod.invoke(notification, this, "Foreground Service Started.", "Foreground service", null);
-//            } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException
-//                    | InvocationTargetException e) {
-//                LogUtil.e(TAG, "Local service onstart Method not found");
-//            }
-//        } else {
-//            // Use new API
-//            Notification.Builder builder = new Notification.Builder(this)
-//                    .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0))
-//                    .setSmallIcon(R.drawable.notification_small_icon)
-//                    .setAutoCancel(true)
-//                    .setContentTitle(getString(R.string.app_name));
-//            notification = builder.build();
-//        }
-//
-//        startForeground(0, notification);
-//        return Service.START_STICKY;
-        return super.onStartCommand(intent,flags,startId);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return super.onStartCommand(intent, flags, startId);
+        } else {
+            LogUtil.d(TAG, "LocalService onStartCommand");
+            Notification notification = null;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+                notification = new Notification();
+                notification.icon = R.drawable.ic_launcher;
+                try {
+                    Method deprecatedMethod = notification.getClass().getMethod("setLatestEventInfo", Context.class, CharSequence.class, CharSequence.class, PendingIntent.class);
+                    deprecatedMethod.invoke(notification, this, "Foreground Service Started.", "Foreground service", null);
+                } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException
+                        | InvocationTargetException e) {
+                    LogUtil.e(TAG, "Local service onstart Method not found");
+                }
+            } else {
+                // Use new API
+                Notification.Builder builder = new Notification.Builder(this)
+                        .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0))
+                        .setSmallIcon(R.drawable.notification_small_icon)
+                        .setAutoCancel(true)
+                        .setContentTitle(getString(R.string.app_name));
+                notification = builder.build();
+            }
+
+            startForeground(0, notification);
+            return Service.START_STICKY;
+        }
+
     }
 
     private class sendBaseThread implements Runnable {
         @Override
         public void run() {
             StatisticsUtil.sendBaseData(ApplicationEx.getInstance());
-            LogUtil.d("ca_service", "sendBaseThread sent");
+            LogUtil.d(TAG, "sendBaseThread sent");
         }
     }
 
@@ -89,7 +100,7 @@ public class LocalService extends Service {
         @Override
         public void run() {
             StatisticsUtil.sendMainData(ApplicationEx.getInstance());
-            LogUtil.d("ca_service", "sendMainThread sent");
+            LogUtil.d(TAG, "sendMainThread sent");
         }
     }
 

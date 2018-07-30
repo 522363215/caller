@@ -195,6 +195,11 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service
+            android:name=".service.JobLocalService"
+            android:label="job_local_service"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service
             android:name=".service.LocalService"
             android:exported="true"
             android:priority="900" />
