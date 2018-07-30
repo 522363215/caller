@@ -33,7 +33,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ThemeResourceHelper {
-    private static final String UPLOAD_URL = "http://material.lionmobi.com/api.php";
+    private static final String UPLOAD_URL = "http://locker.topsearchdomain.info/api.php";
     private static final String KEY_HTTP = "*2od2S!#%s";
     private boolean mIsCanWrite;
 
@@ -335,6 +335,7 @@ public class ThemeResourceHelper {
         String jsonData = jsonObject.toString();
         MediaType mediaType = MediaType.parse("application/octet-stream");
         MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
         builder.addFormDataPart("data", jsonData);
         builder.addFormDataPart("sig", HttpUtil.MD5Encode(KEY_HTTP.replace("%s", jsonData)));
         builder.addFormDataPart("file", file.getName(), RequestBody.create(mediaType, file));
@@ -351,6 +352,7 @@ public class ThemeResourceHelper {
         mClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                LogUtil.d("cp_uploadfile", "upload onFailure ");
                 if (listener != null) {
                     listener.onFailure(UPLOAD_URL);
                 }
@@ -360,9 +362,10 @@ public class ThemeResourceHelper {
             public void onResponse(Call call, Response response) throws IOException {
                 int responseCode = response.code();
                 if (responseCode == 200) {
-
+                    LogUtil.d("cp_uploadfile", "upload file success response: " + response.body().string());
                 } else {
 
+                    LogUtil.d("cp_uploadfile", "upload file not 200 " + response.body().string());
                 }
             }
         });
