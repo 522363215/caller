@@ -168,6 +168,7 @@
     <string name="permission_for_show_call_flash">show call flash</string>
     <string name="permission_for_answer_call">answering calls</string>
     <string name="setting_call_after">Caller ID</string>
+    <string name="setting_caller_show">Caller Show</string>
     <string name="permission_denied_txt">Permission denied, please try again</string>
     <string name="permission_next">NEXT</string>
     <string name="permission_all_set">All Set!</string>
