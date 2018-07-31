@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.flurry.android.FlurryAgent;
 
+import org.jsoup.select.Evaluator;
+
 import java.util.Locale;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
@@ -260,6 +262,25 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
                 startActivity(intent);
             }
         });
+    }
+
+    protected void openActivity(Class cls,int startAnim, int endAnim,boolean finsh){
+        Intent intent = new Intent(this,cls);
+        startActivity(intent);
+        overridePendingTransition(startAnim,endAnim);
+        if (finsh){
+            finish();
+        }
+    }
+
+    protected void openActivity(Class cls,Bundle bundle,int startAnim, int endAnim,boolean finsh){
+        Intent intent = new Intent(this,cls);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        overridePendingTransition(startAnim,endAnim);
+        if (finsh){
+            finish();
+        }
     }
     //**************************************请求权限 end**************************//
 }

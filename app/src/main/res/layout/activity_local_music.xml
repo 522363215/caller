@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ll_setting"
+    android:layout_height="match_parent">
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        app:title="@string/about_title" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_setting"
+        android:visibility="gone"
+        android:listSelector="@android:color/transparent">
+
+    </ListView>
+</LinearLayout>
