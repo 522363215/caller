@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.md.flashset.bean.CallFlashDataType;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
@@ -47,6 +48,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private List<CallFlashInfo> mSetRecordData = new ArrayList<>();
     private List<CallFlashInfo> mDownloadData = new ArrayList<>();
     private CallFlashInfo mCurrentCallFlashInfo;
+    private View mLayoutCollectAllBtn;
+    private View mLayoutSetRecordAllBtn;
+    private View mLayoutDownloadedAllBtn;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +67,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
+        listener();
     }
 
     @Override
@@ -92,6 +97,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         //设置记录
         mLayoutSetRecord = view.findViewById(R.id.layout_set_record);
         mRvSetRecord = view.findViewById(R.id.rv_set_record);
+        mLayoutSetRecordAllBtn = view.findViewById(R.id.layout_set_record_all_btn);
+
         mSetRecordAdapter = new HorizontalCallFlashAdapter(getActivity(), mSetRecordData);
         mRvSetRecord.setLayoutManager(new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false));
         mRvSetRecord.addItemDecoration(new HorizontalCallFlashMarginDecoration());
@@ -102,6 +109,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         //收藏
         mLayoutCollect = view.findViewById(R.id.layout_collect);
         mRvCollect = view.findViewById(R.id.rv_collect);
+        mLayoutCollectAllBtn = view.findViewById(R.id.layout_collect_all_btn);
+
         mCollectAdapter = new HorizontalCallFlashAdapter(getActivity(), mCollectData);
         mRvCollect.setLayoutManager(new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false));
         mRvCollect.addItemDecoration(new HorizontalCallFlashMarginDecoration());
@@ -112,12 +121,20 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         //已下载
         mLayoutDownloaded = view.findViewById(R.id.layout_download);
         mRvDownload = view.findViewById(R.id.rv_download);
+        mLayoutDownloadedAllBtn = view.findViewById(R.id.layout_downloaded_all_btn);
+
         mDownloadAdapter = new HorizontalCallFlashAdapter(getActivity(), mDownloadData);
         mRvDownload.setLayoutManager(new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false));
         mRvDownload.addItemDecoration(new HorizontalCallFlashMarginDecoration());
         mRvDownload.setHasFixedSize(true);
         mRvDownload.setNestedScrollingEnabled(false);
         mRvDownload.setAdapter(mDownloadAdapter);
+    }
+
+    private void listener() {
+        mLayoutCollectAllBtn.setOnClickListener(this);
+        mLayoutDownloadedAllBtn.setOnClickListener(this);
+        mLayoutSetRecordAllBtn.setOnClickListener(this);
     }
 
     private void setCurrentCallFlashBg() {
@@ -211,6 +228,15 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 if (mCurrentCallFlashInfo != null) {
                     ActivityBuilder.toCallFlashDetail(getActivity(), mCurrentCallFlashInfo, false);
                 }
+                break;
+            case R.id.layout_collect_all_btn:
+                ActivityBuilder.toCallFlashList(getActivity(), CallFlashDataType.CALL_FLASH_DATA_COLLECTION);
+                break;
+            case R.id.layout_downloaded_all_btn:
+                ActivityBuilder.toCallFlashList(getActivity(), CallFlashDataType.CALL_FLASH_DATA_DOWNLOADED);
+                break;
+            case R.id.layout_set_record_all_btn:
+                ActivityBuilder.toCallFlashList(getActivity(), CallFlashDataType.CALL_FLASH_DATA_SET_RECORD);
                 break;
         }
     }

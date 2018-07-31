@@ -215,7 +215,8 @@
     <string name="mine_current_call_flash">Current Call Flash</string>
     <string name="mine_set_before">设置记录</string>
     <string name="mine_downloaded">已下载</string>
-    <string name="mine_collect">已收藏</string>
+    <string name="mine_collect">@string/side_slip_collection</string>
+    <string name="mine_all">全部</string>
     <string name="mine_no_current_call_flash">没有设置，点击查看去设置</string>
 
     <string name="click_like_tip">下载后才可以收藏</string>

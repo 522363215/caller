@@ -38,7 +38,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
@@ -203,6 +202,12 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                     break;
                 case CallFlashDataType.CALL_FLASH_DATA_COLLECTION:
                     initCollectionData();
+                    break;
+                case CallFlashDataType.CALL_FLASH_DATA_DOWNLOADED:
+                    updateUI(CallFlashManager.getInstance().getDownloadedCallFlash(), true);
+                    break;
+                case CallFlashDataType.CALL_FLASH_DATA_SET_RECORD:
+                    updateUI(CallFlashManager.getInstance().getSetRecordCallFlash(), true);
                     break;
             }
         } catch (Exception e) {
