@@ -38,6 +38,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
@@ -395,22 +396,6 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                 initData(false);
             }
         });
-
-        mRecyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
-            @Override
-            public void onChildViewAttachedToWindow(View view) {
-                View root = view.findViewById(R.id.layout_root);
-                LogUtil.d("chenr", "attached view id: " + root.getTag());
-            }
-
-            @Override
-            public void onChildViewDetachedFromWindow(View view) {
-                View root = view.findViewById(R.id.layout_root);
-                LogUtil.d("chenr", "detached view id ------ " + root.getTag());
-
-            }
-        });
-
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
