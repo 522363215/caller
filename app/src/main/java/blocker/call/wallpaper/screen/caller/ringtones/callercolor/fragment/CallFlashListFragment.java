@@ -69,6 +69,8 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
     private LinearLayout mLayoutNoCallFlash;
     private TextView mTvView;
 
+    private int mCurrentFlashIndex = -1;
+
     public static CallFlashListFragment newInstance(int dataType) {
         CallFlashListFragment fragment = new CallFlashListFragment();
         Bundle bundle = new Bundle();
@@ -134,6 +136,19 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
     public void onResume() {
         super.onResume();
         showPermissionTip();
+
+        CallFlashInfo info = CallFlashPreferenceHelper.getObject(
+                CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
+        if (info != null) {
+            mCurrentFlashIndex = model.indexOf(info);
+        }
+        continuePlayVideo();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        pauseVideoPlay();
     }
 
     @Override
@@ -215,7 +230,6 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             return;
         }
         if (isSuccess && data != null && data.size() > 0 && mAdapter != null) {
-//            LogUtil.d(TAG, "initOnlineData data:" + data.size());
             model.clear();
             model.addAll(data);
             mAdapter.notifyDataSetChanged();
@@ -225,6 +239,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             if (mRecyclerView != null) {
                 mRecyclerView.setVisibility(View.VISIBLE);
             }
+
         } else {
             //当数据为0时只有收藏界面才刷新，其他界面保持不变
             if (mDataType == CallFlashDataType.CALL_FLASH_DATA_COLLECTION && data != null && data.size() == 0) {
@@ -326,6 +341,37 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         Async.removeScheduledTaskOnUiThread(mLoadMaxRunable);
     }
 
+    public void pauseVideoPlay() {
+        if (getActivity() == null || getActivity().isFinishing() || mRecyclerView == null
+                || mCurrentFlashIndex == -1) {
+            return;
+        }
+        RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForLayoutPosition(mCurrentFlashIndex);
+        CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
+        view.pause();
+    }
+
+    public void continuePlayVideo() {
+        if (getActivity() == null || getActivity().isFinishing() || mRecyclerView == null
+                || mCurrentFlashIndex == -1 || model.isEmpty()) {
+            return;
+        }
+        RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForLayoutPosition(mCurrentFlashIndex);
+        if (holder == null) {
+            return;
+        }
+        CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
+        if (view.isStopVideo()) {
+            view.showCallFlashView(model.get(mCurrentFlashIndex));
+        } else {
+            if (view.isPauseVideo()) {
+                view.continuePlay();
+            } else {
+                view.showCallFlashView(model.get(mCurrentFlashIndex));
+            }
+        }
+    }
+
     private void listener() {
         mTvView.setOnClickListener(this);
         mLayoutPermissionTip.setOnClickListener(this);
@@ -345,6 +391,22 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             }
         });
 
+        mRecyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
+            @Override
+            public void onChildViewAttachedToWindow(View view) {
+                View root = view.findViewById(R.id.layout_root);
+                LogUtil.d("chenr", "attached view id: " + root.getTag());
+            }
+
+            @Override
+            public void onChildViewDetachedFromWindow(View view) {
+                View root = view.findViewById(R.id.layout_root);
+                LogUtil.d("chenr", "detached view id ------ " + root.getTag());
+
+            }
+        });
+
+
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -354,10 +416,9 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                 }
 
                 if (mDataType == CallFlashDataType.CALL_FLASH_DATA_HOME) {
-                    CallFlashInfo info = CallFlashPreferenceHelper.getObject(
-                            CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
-                    if (info != null) {
-                        int index = model.indexOf(info);
+                    int index = mCurrentFlashIndex;
+
+                    if (index != -1) {
                         RecyclerView.ViewHolder holder = recyclerView.findViewHolderForLayoutPosition(index);
                         if (holder != null) {
                             holder.itemView.findViewById(R.id.iv_select).setVisibility(View.VISIBLE);
@@ -368,12 +429,12 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
 
                             if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                                 if (view.isStopVideo()) {
-                                    view.showCallFlashView(info);
+                                    view.showCallFlashView(model.get(index));
                                 } else {
                                     if (view.isPauseVideo()) {
                                         view.continuePlay();
                                     } else {
-                                        view.showCallFlashView(info);
+                                        view.showCallFlashView(model.get(index));
                                     }
                                 }
                             } else if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {

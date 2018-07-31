@@ -276,7 +276,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             pb_loading = itemView.findViewById(R.id.pb_loading);
             tv_call_name = itemView.findViewById(R.id.tv_call_name);
             callFlashView = itemView.findViewById(R.id.layout_call_flash_view);
-//            callFlashView.setVideoMute(true);
+            callFlashView.setVideoMute(true);
 
             CardView cardView = callFlashView.findViewById(R.id.layout_card_view);
             cardView.setCardElevation(0);

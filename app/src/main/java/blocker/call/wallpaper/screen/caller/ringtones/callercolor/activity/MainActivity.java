@@ -348,7 +348,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             @Override
             public void onPageSelected(int arg0) {
-                LogUtil.d(TAG, "addOnPageChangeListener onPageSelected position:" + arg0);
                 mIsOnPageSelected = true;
                 currentPage = arg0;
                 ((FontIconView) findViewById(R.id.fiv_home)).setTextColor(currentPage == ActivityBuilder.FRAGMENT_HOME ? selectColor : unSelectColor);
@@ -358,6 +357,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ((FontIconView) findViewById(R.id.fiv_category)).setTextColor(currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? selectColor : unSelectColor);
                 ((FontIconView) findViewById(R.id.fiv_category)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? selectSize : unSelectSize);
                 ((FontIconView) findViewById(R.id.fiv_category)).setAlpha(currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? 1f : 0.4f);
+
+                if (mCallFlashListFragment != null) {
+                    if (arg0 == CallFlashDataType.CALL_FLASH_DATA_HOME)
+                        mCallFlashListFragment.continuePlayVideo();
+                    else
+                        mCallFlashListFragment.pauseVideoPlay();
+                }
 
                 setTvTitle(arg0);
             }
