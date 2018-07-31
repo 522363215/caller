@@ -71,9 +71,9 @@ public class SpecialPermissionsUtil {
     }
 
     /**
-     * 免打扰权限
+     * 针对接电话获取权限，7.0以上才需要
      */
-    public static boolean isHaveNotificationPolicyAccess(Context context) {
+    public static boolean isHaveNotificationPolicyAccessForAnswerCall(Context context) {
         boolean isHaveNotificationPolicyAccess = true;
         if (mNotificationManager == null) {
             mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

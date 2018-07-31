@@ -283,7 +283,7 @@ public class PermissionUtils {
         }
 
         if (PERMISSION_NOTIFICATION_POLICY_ACCESS.equals(permission)) {
-            return SpecialPermissionsUtil.isHaveNotificationPolicyAccess(context);
+            return SpecialPermissionsUtil.isHaveNotificationPolicyAccessForAnswerCall(context);
         }
 
         if (PERMISSION_PHONE_AND_CONTACT.equals(permission)) {
@@ -377,14 +377,14 @@ public class PermissionUtils {
 
     public static boolean isHaveAllPermission(Context context) {
         boolean canDrawOverlays = SpecialPermissionsUtil.canDrawOverlays(context);
-        boolean isHaveNotificationPolicyAccess = SpecialPermissionsUtil.isHaveNotificationPolicyAccess(context);
+        boolean isHaveNotificationPolicyAccessForAnswerCall = SpecialPermissionsUtil.isHaveNotificationPolicyAccessForAnswerCall(context);
         boolean isHavePhoneAndContact = hasPermissions(context, PERMISSION_GROUP_PHONE_AND_CONTACT);
         boolean isHaveShowOnLock = hasPermission(context, PERMISSION_SHOW_ON_LOCK);
         boolean isHaveAutoStart = hasPermission(context, PERMISSION_AUTO_START);
         if (SystemInfoUtil.isMiui()) {
-            return canDrawOverlays && isHaveNotificationPolicyAccess && isHavePhoneAndContact && isHaveShowOnLock && isHaveAutoStart;
+            return canDrawOverlays && isHaveNotificationPolicyAccessForAnswerCall && isHavePhoneAndContact && isHaveShowOnLock && isHaveAutoStart;
         }
-        return canDrawOverlays && isHaveNotificationPolicyAccess && isHavePhoneAndContact;
+        return canDrawOverlays && isHaveNotificationPolicyAccessForAnswerCall && isHavePhoneAndContact;
     }
 
     public static boolean hasPermissions(Context context, String[] permissions) {

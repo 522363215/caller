@@ -184,14 +184,14 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
             case PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS://通知管理,7.0以上用于接听电话
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                     if (isOnActivityResult) {
-                        if (!SpecialPermissionsUtil.isNotificationServiceRunning()) {
+                        if (!SpecialPermissionsUtil.isHaveNotificationPolicyAccessForAnswerCall(this)) {
                             onPermissionNotGranted(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
                         } else {
                             onPermissionGranted(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
                             PermissionUtils.toggleNotificationListenerService(ApplicationEx.getInstance());
                         }
                     } else {
-                        if (!SpecialPermissionsUtil.isNotificationServiceRunning()) {
+                        if (!SpecialPermissionsUtil.isHaveNotificationPolicyAccessForAnswerCall(this)) {
                             // 检查通知使用权
                             Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
                             startActivityForResult(intent, PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);

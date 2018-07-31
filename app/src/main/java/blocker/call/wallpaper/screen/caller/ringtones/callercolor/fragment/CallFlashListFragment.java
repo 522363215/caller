@@ -69,6 +69,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
     private TextView mTvView;
 
     private int mCurrentFlashIndex = -1;
+    private GridLayoutManager mLayoutManager;
 
     public static CallFlashListFragment newInstance(int dataType) {
         CallFlashListFragment fragment = new CallFlashListFragment();
@@ -178,7 +179,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
     }
 
     private void initRecycleView(View view) {
-        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2, GridLayoutManager.VERTICAL, false);
+        mLayoutManager = new GridLayoutManager(view.getContext(), 2, GridLayoutManager.VERTICAL, false);
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mOnlineFlashType == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode()) {
 //                layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
 //                    @Override
@@ -187,7 +188,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
 //                    }
 //                });
 //            }
-        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mCallFlashMarginDecoration = new CallFlashMarginDecoration();
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mOnlineFlashType == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode()) {
 //                mCallFlashMarginDecoration.isHaveAd(true);
@@ -409,8 +410,10 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
 
                 if (mDataType == CallFlashDataType.CALL_FLASH_DATA_HOME) {
                     int index = mCurrentFlashIndex;
-
-                    if (index != -1) {
+                    //获取当前recycleView屏幕可见的第一项和最后一项的Position
+                    int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
+                    int lastItemPosition = mLayoutManager.findLastVisibleItemPosition();
+                    if (index != -1 && index >= firstItemPosition && index <= lastItemPosition) {
                         RecyclerView.ViewHolder holder = recyclerView.findViewHolderForLayoutPosition(index);
                         if (holder != null) {
                             holder.itemView.findViewById(R.id.iv_select).setVisibility(View.VISIBLE);
@@ -418,7 +421,6 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                             View gvBackground = holder.itemView.findViewById(R.id.gv_bg);
                             gvBackground.setVisibility(View.GONE);
                             view.setVisibility(View.VISIBLE);
-
                             if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                                 if (view.isStopVideo()) {
                                     view.showCallFlashView(model.get(index));
@@ -429,12 +431,11 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                                         view.showCallFlashView(model.get(index));
                                     }
                                 }
-                            } else if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                            } else if (newState == RecyclerView.SCROLL_STATE_DRAGGING || newState == RecyclerView.SCROLL_STATE_SETTLING) {
                                 if (!view.isPauseVideo()) {
                                     view.pause();
                                 }
                             }
-
                         }
                     }
                 }
