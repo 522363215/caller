@@ -300,7 +300,9 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 CallFlashInfo info = getItem(pos);
                 GlideView glideView = v.findViewById(R.id.gv_bg);
                 // TODO: 2018/7/5  jump to CallFlashPreviewActivity
-                ActivityBuilder.toCallFlashPreview(context, info, glideView);
+//                ActivityBuilder.toCallFlashPreview(context, info, glideView);
+
+                ActivityBuilder.toCallFlashDetail(context,info,false);
             }
         }
     };
@@ -373,7 +375,9 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 holder.iv_download.setVisibility(View.GONE);
                 holder.iv_call_select.setVisibility(View.GONE);
                 holder.pb_loading.setVisibility(View.GONE);
+
                 CallFlashManager.getInstance().saveCallFlashDownloadCount(info);
+                CallFlashManager.getInstance().saveDownloadedCallFlash(info);
                 EventBus.getDefault().post(new EventRefreshCallFlashDownloadCount());
             }
         }

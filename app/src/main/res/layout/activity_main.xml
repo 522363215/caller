@@ -110,6 +110,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/layout_category"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -120,6 +121,21 @@
                     style="@style/main_check_button_text"
                     android:layout_centerInParent="true"
                     android:text="@string/icon_block_tab"
+                    android:textColor="@color/fb_ad_white_title" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_mine"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                    android:id="@+id/fiv_mine"
+                    style="@style/main_check_button_text"
+                    android:layout_centerInParent="true"
+                    android:text="@string/icon_user"
                     android:textColor="@color/fb_ad_white_title" />
 
             </RelativeLayout>

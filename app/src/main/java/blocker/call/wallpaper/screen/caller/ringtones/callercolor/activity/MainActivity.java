@@ -35,6 +35,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashEnable;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CategoryFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.MineFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
@@ -62,6 +63,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private MainPagerAdapter mMainPagerAdapter;
     private CallFlashListFragment mCallFlashListFragment;
     private CategoryFragment mCategoryFragment;
+    private MineFragment mMineFragment;
     private RelativeLayout mSideslipMenu;
     private ViewPager.OnPageChangeListener mOnPageChangeListener;
     private boolean mIsOnPageSelected;
@@ -69,6 +71,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private boolean isPostingMainData = false;
     private static ExecutorService mainFixedThreadPool = Executors.newFixedThreadPool(1);
+    private RelativeLayout mTabMine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +170,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.layout_category:
                 onCategory();
+                break;
+            case R.id.layout_mine:
+                onMine();
                 break;
             case R.id.sideslip_menu:
                 openSideslip(v);
@@ -270,11 +276,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         //底部tab按钮
         mTabHome = (RelativeLayout) findViewById(R.id.layout_home);
         mTabCategory = (RelativeLayout) findViewById(R.id.layout_category);
+        mTabMine = (RelativeLayout) findViewById(R.id.layout_mine);
     }
 
     public void listener() {
         mTabHome.setOnClickListener(this);
         mTabCategory.setOnClickListener(this);
+        mTabMine.setOnClickListener(this);
         mSideslipMenu.setOnClickListener(this);
         findViewById(R.id.iv_upload).setOnClickListener(this);
     }
@@ -292,6 +300,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void onCategory() {
         mViewPager.setCurrentItem(ActivityBuilder.FRAGMENT_CATEGORY);
+    }
+
+    private void onMine() {
+        mViewPager.setCurrentItem(ActivityBuilder.FRAGMENT_MINE);
     }
 
     private void onHome() {
@@ -326,11 +338,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         final int unSelectSize = 24;
 
         mCallFlashListFragment = CallFlashListFragment.newInstance(CallFlashDataType.CALL_FLASH_DATA_HOME);
-        mCategoryFragment = new CategoryFragment();
+//        mCategoryFragment = new CategoryFragment();
+        mMineFragment = new MineFragment();
 
         mFragmentList = new ArrayList<>();
         mFragmentList.add(mCallFlashListFragment);
-        mFragmentList.add(mCategoryFragment);
+//        mFragmentList.add(mCategoryFragment);
+        mFragmentList.add(mMineFragment);
 
         mMainPagerAdapter = new MainPagerAdapter(getFragmentManager(), mFragmentList, this);
         mViewPager.setAdapter(mMainPagerAdapter);
@@ -359,6 +373,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ((FontIconView) findViewById(R.id.fiv_category)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? selectSize : unSelectSize);
                 ((FontIconView) findViewById(R.id.fiv_category)).setAlpha(currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? 1f : 0.4f);
 
+                ((FontIconView) findViewById(R.id.fiv_mine)).setTextColor(currentPage == ActivityBuilder.FRAGMENT_MINE ? selectColor : unSelectColor);
+                ((FontIconView) findViewById(R.id.fiv_mine)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ActivityBuilder.FRAGMENT_MINE ? selectSize : unSelectSize);
+                ((FontIconView) findViewById(R.id.fiv_mine)).setAlpha(currentPage == ActivityBuilder.FRAGMENT_MINE ? 1f : 0.4f);
+
                 setTvTitle(arg0);
             }
         });
@@ -372,6 +390,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case ActivityBuilder.FRAGMENT_CATEGORY:
                 mTvPageTitle.setText(R.string.page_title_category);
+                break;
+            case ActivityBuilder.FRAGMENT_MINE:
+                mTvPageTitle.setText(R.string.page_title_mine);
                 break;
         }
     }

@@ -26,8 +26,9 @@ public class ActivityBuilder {
     public static final String CALL_FLASH_INFO = "call_flash_info";
 
     public static final int FRAGMENT_HOME = 0;
-    public static final int FRAGMENT_CATEGORY = 1;
-    public static final int MAX_FRAGEMNTS = 4;
+    public static final int FRAGMENT_MINE = 1;
+    public static final int FRAGMENT_CATEGORY = 2;
+    public static final int MAX_FRAGEMNTS = 2;
 
     public static final String SMS_COME_MESSAGE = "sms_come_message";
     public static final String IS_LETS_START = "is_lets_start";

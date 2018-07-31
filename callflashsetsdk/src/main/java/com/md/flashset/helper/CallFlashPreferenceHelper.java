@@ -48,6 +48,16 @@ public class CallFlashPreferenceHelper {
      */
     public static final String PREF_CURRENT_MUSIC_VOLUME_WHEN_SET_CALL_FLASH = "android_current_music_volume_when_set_call_flash";
 
+    /**
+     * 已经下载过的来电秀集合
+     */
+    public static final String PREF_DOWNLOADED_CALL_FLASH_LIST = "android_downloaded_call_flash_list";
+
+    /**
+     * 被设置过的来电秀几个
+     */
+    public static final String PREF_CALL_FLASH_SET_RECORD_LIST = "android_call_flash_set_record_list";
+
     private static Context mContext;
 
     private CallFlashPreferenceHelper() {

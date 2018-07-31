@@ -208,7 +208,9 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             public void onSuccess(String url, File file) {
                 if (mInfo != null && !TextUtils.isEmpty(url) && url.equals(mInfo.url)) {
                     mIsDownloading = false;
+
                     CallFlashManager.getInstance().saveCallFlashDownloadCount(mInfo);
+                    CallFlashManager.getInstance().saveDownloadedCallFlash(mInfo);
                     EventBus.getDefault().post(new EventRefreshCallFlashDownloadCount());
                     if (mIsShowFirstAdMob) {
                         mLayoutDownloadingBelowAd.setVisibility(View.GONE);
@@ -352,7 +354,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
 
                 @Override
                 public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    LogUtil.d(TAG,"setBackground onResourceReady");
+                    LogUtil.d(TAG, "setBackground onResourceReady");
                     startEnterAnim();
                     return false;
                 }
@@ -369,7 +371,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             Async.scheduleTaskOnUiThread(200, new Runnable() {
                 @Override
                 public void run() {
-                    LogUtil.d(TAG,"setBackground scheduleTaskOnUiThread");
+                    LogUtil.d(TAG, "setBackground scheduleTaskOnUiThread");
                     startEnterAnim();
                 }
             });

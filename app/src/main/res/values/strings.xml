@@ -108,6 +108,7 @@
     <string name="call_flash_gif_show_setting_suc_reset">Your call screen has been reset.</string>
     <string name="page_title_caller_theme">Caller Theme</string>
     <string name="page_title_category">Category</string>
+    <string name="page_title_mine">Mine</string>
     <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
     <string name="about_email_us">"Email us"</string>
     <string name="email_choose_one">"Please choose one to send Email."</string>
@@ -209,5 +210,14 @@
     <string name="permission_xiao_mi_read_call_history">Read call history</string>
     <string name="permission_xiao_mi_get_device_info">Get device info</string>
     <!--这几个权限描述为小米手机中的描述，不能修改，多语言也需要与小米手机中的描述一致-->
+
+
+    <string name="mine_current_call_flash">Current Call Flash</string>
+    <string name="mine_set_before">设置记录</string>
+    <string name="mine_downloaded">已下载</string>
+    <string name="mine_collect">已收藏</string>
+    <string name="mine_no_current_call_flash">没有设置，点击查看去设置</string>
+
+    <string name="click_like_tip">下载后才可以收藏</string>
     <string name="permission_grand_title_desc">We will not upload and store any of your data, like contacts, call logs, photos etc.</string>
 </resources>

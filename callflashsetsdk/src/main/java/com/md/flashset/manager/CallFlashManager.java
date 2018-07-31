@@ -16,6 +16,8 @@ import com.md.serverflash.beans.Theme;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -65,6 +67,7 @@ public class CallFlashManager {
         monkey.flashType = FlashLed.FLASH_TYPE_MONKEY;
         monkey.position = 3;
         monkey.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
+        monkey.downloadSuccessTime = -1;
 
         CallFlashInfo festival = new CallFlashInfo();
         festival.id = String.valueOf(FlashLed.FLASH_TYPE_FESTIVAL);
@@ -78,6 +81,7 @@ public class CallFlashManager {
         festival.flashType = FlashLed.FLASH_TYPE_FESTIVAL;
         festival.position = 5;
         festival.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
+        festival.downloadSuccessTime = -2;
 
         CallFlashInfo love = new CallFlashInfo();
         love.id = String.valueOf(FlashLed.FLASH_TYPE_LOVE);
@@ -91,6 +95,7 @@ public class CallFlashManager {
         love.flashType = FlashLed.FLASH_TYPE_LOVE;
         love.position = 6;
         love.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
+        love.downloadSuccessTime = -3;
 
         CallFlashInfo kiss = new CallFlashInfo();
         kiss.id = String.valueOf(FlashLed.FLASH_TYPE_KISS);
@@ -104,6 +109,7 @@ public class CallFlashManager {
         kiss.flashType = FlashLed.FLASH_TYPE_KISS;
         kiss.position = 7;
         kiss.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
+        kiss.downloadSuccessTime = -4;
 
         CallFlashInfo rose = new CallFlashInfo();
         rose.id = String.valueOf(FlashLed.FLASH_TYPE_ROSE);
@@ -117,6 +123,7 @@ public class CallFlashManager {
         rose.flashType = FlashLed.FLASH_TYPE_ROSE;
         rose.position = 7;
         rose.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
+        rose.downloadSuccessTime = -5;
 
         CallFlashInfo streamer = new CallFlashInfo();
         streamer.id = String.valueOf(FlashLed.FLASH_TYPE_STREAMER);
@@ -128,6 +135,8 @@ public class CallFlashManager {
         streamer.isDownloadSuccess = true;
         streamer.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
         streamer.flashType = FlashLed.FLASH_TYPE_STREAMER;
+        streamer.downloadSuccessTime = -6;
+
         classicList.add(love);
         classicList.add(monkey);
         classicList.add(kiss);
@@ -143,7 +152,6 @@ public class CallFlashManager {
         }
         return mAllLocalFlashList;
     }
-
 
     public List<CallFlashInfo> themeToCallFlashInfo(List<Theme> res) {
         List<CallFlashInfo> dot = null;
@@ -261,13 +269,21 @@ public class CallFlashManager {
         if (list == null) {
             list = new ArrayList<>();
         }
+
         if (list.contains(info)) {
             CallFlashInfo item = list.get(list.indexOf(info));
+            if (item.isLike) {
+                item.collectTime = System.currentTimeMillis();
+            }
             item.isLike = info.isLike;
             item.likeCount = info.likeCount;
         } else {
+            if (info.isLike) {
+                info.collectTime = System.currentTimeMillis();
+            }
             list.add(info);
         }
+
         CallFlashPreferenceHelper.setDataList(CallFlashPreferenceHelper.PREF_JUST_LIKE_FLASH_LIST, list);
     }
 
@@ -324,7 +340,111 @@ public class CallFlashManager {
                 collectionList.add(info);
             }
         }
+
+        if (collectionList.size() > 0) {
+            //排序(按下载时间排序)
+            Collections.sort(collectionList, new Comparator<CallFlashInfo>() {
+                @Override
+                public int compare(CallFlashInfo o1, CallFlashInfo o2) {
+                    if (o1 == null || o2 == null) return 1;
+                    if (o1.collectTime > o2.collectTime) {
+                        return -1;
+                    } else if (o1.collectTime < o2.collectTime) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            });
+        }
+
         return collectionList;
+    }
+
+    public void saveDownloadedCallFlash(CallFlashInfo info) {
+        if (info == null) return;
+        List<CallFlashInfo> downloadedCallFlashs = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_DOWNLOADED_CALL_FLASH_LIST, CallFlashInfo[].class);
+        if (downloadedCallFlashs == null) {
+            downloadedCallFlashs = new ArrayList<>();
+        }
+
+        //去重，并留下最新的数据
+        if (downloadedCallFlashs.contains(info)) {
+            downloadedCallFlashs.remove(info);
+        }
+
+        info.downloadSuccessTime = System.currentTimeMillis();
+        downloadedCallFlashs.add(info);
+
+        CallFlashPreferenceHelper.setDataList(CallFlashPreferenceHelper.PREF_DOWNLOADED_CALL_FLASH_LIST, downloadedCallFlashs);
+    }
+
+    public List<CallFlashInfo> getDownloadedCallFlash() {
+        List<CallFlashInfo> list = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_DOWNLOADED_CALL_FLASH_LIST, CallFlashInfo[].class);
+        ArrayList<CallFlashInfo> allLocalFlashList = CallFlashManager.getInstance().getAllLocalFlashList();
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+
+        if (allLocalFlashList != null && allLocalFlashList.size() > 0) {
+            list.addAll(allLocalFlashList);
+        }
+        if (list.size() > 0) {
+            //排序(按下载时间排序)
+            Collections.sort(list, new Comparator<CallFlashInfo>() {
+                @Override
+                public int compare(CallFlashInfo o1, CallFlashInfo o2) {
+                    if (o1 == null || o2 == null) return 1;
+                    if (o1.downloadSuccessTime > o2.downloadSuccessTime) {
+                        return -1;
+                    } else if (o1.downloadSuccessTime < o2.downloadSuccessTime) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            });
+        }
+        return list;
+    }
+
+    /**
+     * 保存设置过的来电秀
+     */
+    public void saveSetRecordCallFlash(CallFlashInfo info) {
+        if (info == null) return;
+        List<CallFlashInfo> setCallFlashs = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_CALL_FLASH_SET_RECORD_LIST, CallFlashInfo[].class);
+        if (setCallFlashs == null) {
+            setCallFlashs = new ArrayList<>();
+        }
+        //去重，并留下最新的数据
+        if (setCallFlashs.contains(info)) {
+            setCallFlashs.remove(info);
+        }
+        info.setToCallFlashTime = System.currentTimeMillis();
+        setCallFlashs.add(info);
+        CallFlashPreferenceHelper.setDataList(CallFlashPreferenceHelper.PREF_CALL_FLASH_SET_RECORD_LIST, setCallFlashs);
+    }
+
+    public List<CallFlashInfo> getSetRecordCallFlash() {
+        List<CallFlashInfo> list = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_CALL_FLASH_SET_RECORD_LIST, CallFlashInfo[].class);
+        if (list != null && list.size() > 0) {
+            //排序(按设置的时间排序)
+            Collections.sort(list, new Comparator<CallFlashInfo>() {
+                @Override
+                public int compare(CallFlashInfo o1, CallFlashInfo o2) {
+                    if (o1 == null || o2 == null) return 1;
+                    if (o1.setToCallFlashTime > o2.setToCallFlashTime) {
+                        return -1;
+                    } else if (o1.setToCallFlashTime < o2.setToCallFlashTime) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            });
+        }
+        return list;
     }
 
 }
