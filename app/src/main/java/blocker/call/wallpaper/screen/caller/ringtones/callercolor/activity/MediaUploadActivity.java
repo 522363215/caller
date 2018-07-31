@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.download.ThemeResourceHelper;
 
 import java.io.File;
@@ -105,24 +104,28 @@ public class MediaUploadActivity extends BaseActivity implements View.OnClickLis
                     ToastUtils.showToast(this, getString(R.string.media_upload_tip_privacy_policy));
                     return;
                 }
-                if (!TextUtils.isEmpty(imagePath)) {
-                    File file = new File(imagePath);
-                    if (file.exists() && file.length() < (1024*1024*5)) {
-                        String author = edtAuthor.getText().toString();
-                        if (TextUtils.isEmpty(author)) {
-                            author = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                try {
+                    if (!TextUtils.isEmpty(imagePath)) {
+                        File file = new File(imagePath);
+                        if (file.exists() && file.length() < (1024 * 1024 * 5)) {
+                            String author = edtAuthor.getText().toString();
+                            if (TextUtils.isEmpty(author)) {
+                                author = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                            }
+                            Map<String, String> params = new HashMap<>();
+                            params.put("name", file.getName());
+                            params.put("file", "");
+                            params.put("username", author);
+                            params.put("action", "up_picture");
+                            ThemeResourceHelper.getInstance().uploadFile(params, file, null);
                         }
-                        Map<String, String> params = new HashMap<>();
-                        params.put("name", file.getName());
-                        params.put("file", "");
-                        params.put("username", "author");
-                        params.put("action", "up_picture");
-                        ThemeResourceHelper.getInstance().uploadFile(params, file, null);
+                        ToastUtils.showToast(this, getString(R.string.media_upload_uploading));
+                        finish();
+                    } else {
+                        ToastUtils.showToast(this, getString(R.string.media_upload_tip_no_file));
                     }
-                    ToastUtils.showToast(this, getString(R.string.media_upload_uploading));
-                    finish();
-                } else {
-                    ToastUtils.showToast(this, getString(R.string.media_upload_tip_no_file));
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
                 break;
             case R.id.iv_upload:
