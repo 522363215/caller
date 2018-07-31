@@ -3,8 +3,10 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.app.Fragment;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v13.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
@@ -45,7 +47,15 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_block);
 
-        showRequestPermission();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG)
+                        != PackageManager.PERMISSION_GRANTED) {
+            showRequestPermission();
+        } else {
+            initView();
+            listener();
+        }
     }
 
     public void showRequestPermission() {
