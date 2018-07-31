@@ -152,17 +152,17 @@
 
 
     <string name="permission_title">"LET'S START"</string>
-    <string name="permission_phone_and_contact_title">"phone &amp; contacts"</string>
+    <string name="permission_phone_and_contact_title">"Phone &amp; Contacts"</string>
     <string name="permission_phone_and_contact_des">to manage phone calls and show contacts</string>
-    <string name="permission_screen_permission_title">screen permission(overlay)</string>
+    <string name="permission_screen_permission_title">Screen permission</string>
     <string name="permission_screen_permission_des">to show call screen</string>
-    <string name="permission_call_permission_title">call permission</string>
+    <string name="permission_call_permission_title">Call permission</string>
     <string name="permission_call_permission_des">to enable answer the calls</string>
-    <string name="permission_show_on_lock_title">show on lock screen</string>
+    <string name="permission_show_on_lock_title">Show on lock screen</string>
     <string name="permission_show_on_lock_des">to shown on the lock screen</string>
     <string name="permission_auto_start_title">自启动显示来电秀</string>
     <string name="permission_auto_start_des">重启手机后能够显示来电秀</string>
-    <string name="permission_read_call_log_title">read call logs</string>
+    <string name="permission_read_call_log_title">Read call logs</string>
     <string name="permission_read_call_log_des">to enable block unwanted calls</string>
     <string name="permission_for_show_call_flash">show call flash</string>
     <string name="permission_for_answer_call">answering calls</string>
@@ -209,4 +209,5 @@
     <string name="permission_xiao_mi_read_call_history">Read call history</string>
     <string name="permission_xiao_mi_get_device_info">Get device info</string>
     <!--这几个权限描述为小米手机中的描述，不能修改，多语言也需要与小米手机中的描述一致-->
+    <string name="permission_grand_title_desc">We will not upload and store any of your data, like contacts, call logs, photos etc.</string>
 </resources>
