@@ -1,6 +1,7 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.Manifest;
+import android.animation.ValueAnimator;
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -13,7 +14,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
@@ -25,6 +28,7 @@ import com.md.flashset.volume.VolumeChangeListenAdapter;
 import com.md.flashset.volume.VolumeChangeObserver;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.callback.OnDownloadListener;
+import com.md.serverflash.callback.ThemeNormalCallback;
 import com.md.serverflash.download.ThemeResourceHelper;
 
 import java.io.File;
@@ -48,6 +52,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashEnable;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCollection;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.FullScreenAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
@@ -114,6 +119,11 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private boolean mIsResume;
     private VolumeChangeObserver mVolumeChangeObserver;
     private VolumeChangeListenAdapter mVolumeChangeListenAdapter;
+    private LinearLayout mLavoutLikeAndDownload;
+    private FontIconView mFivLike;
+    private TextView mTvLikeCount;
+    private FontIconView mFivDownload;
+    private TextView mTvDownloadCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +156,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         showCallFlash();
         startAnswerAnim();
         showDownloadProgress();
+        setLikeAndDownload();
 //        setLike();
 
         //test 模拟广告加载成功
@@ -165,6 +176,13 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         mLayoutCallFlashOthers = findViewById(R.id.layout_call_flash_others);
 
         mLayourAd = findViewById(R.id.layout_ad_view);
+
+        //点赞数和下载数
+        mLavoutLikeAndDownload = (LinearLayout) findViewById(R.id.layout_like_and_download);
+        mFivLike = (FontIconView) findViewById(R.id.fiv_like);
+        mTvLikeCount = (TextView) findViewById(R.id.tv_like_count);
+        mFivDownload = (FontIconView) findViewById(R.id.fiv_download);
+        mTvDownloadCount = (TextView) findViewById(R.id.tv_download_count);
 
         //above ad
         layout_above_ad = findViewById(R.id.layout_above_ad);
@@ -280,6 +298,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                         showCallFlash();
 
                         CallFlashManager.getInstance().saveCallFlashDownloadCount(mInfo);
+                        CallFlashManager.getInstance().saveDownloadedCallFlash(mInfo);
                         EventBus.getDefault().post(new EventRefreshCallFlashDownloadCount());
 
                         layout_progress_above_ad.post(new Runnable() {
@@ -389,6 +408,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         showCallFlash();
         setFlashBackground();
         showDownloadProgress();
+        setLikeAndDownload();
     }
 
     @Override
@@ -472,6 +492,29 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         tv_setting_action_above_ad.setOnClickListener(this);
         tv_download_action_above_ad.setOnClickListener(this);
         findViewById(R.id.fiv_back).setOnClickListener(this);
+        mFivLike.setOnClickListener(this);
+    }
+
+    private void setLikeAndDownload() {
+        //点赞
+        if (mInfo == null) return;
+        if (!mInfo.isOnlionCallFlash) {
+            mLavoutLikeAndDownload.setVisibility(View.GONE);
+            return;
+        }
+        CallFlashInfo cacheCallFlashInfo = CallFlashManager.getInstance().getCacheJustLikeFlashList(mInfo.id);
+        if (cacheCallFlashInfo != null) {
+            mInfo.likeCount = cacheCallFlashInfo.likeCount;
+            mInfo.downloadCount = cacheCallFlashInfo.downloadCount;
+            mInfo.isLike = cacheCallFlashInfo.isLike;
+        }
+        mTvLikeCount.setText("" + mInfo.likeCount);
+        mTvDownloadCount.setText("" + mInfo.downloadCount);
+        if (mInfo.isLike) {
+            mFivLike.setTextColor(getResources().getColor(R.color.color_FFE05A52));
+        } else {
+            mFivLike.setTextColor(getResources().getColor(R.color.whiteSmoke));
+        }
     }
 
     private void showCallFlash() {
@@ -665,7 +708,74 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                     downloadFlashResourceFile();
                 }
                 break;
+            case R.id.fiv_like:
+                if (mInfo != null) {
+                    File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
+                    if ((file != null && file.exists()) || (!TextUtils.isEmpty(mInfo.path) && new File(mInfo.path).exists())) {
+                        if (mInfo.isLike) {
+                            mInfo.isLike = false;
+                            mInfo.likeCount = mInfo.likeCount - 1;
+                        } else {
+                            mInfo.isLike = true;
+                            mInfo.likeCount = mInfo.likeCount + 1;
+                        }
+                        mTvLikeCount.setText("" + mInfo.likeCount);
+                        CallFlashManager.saveFlashJustLike(mInfo);
+                        startLikeAnim(mInfo.isLike);
+                        uploadLike(mInfo.isLike);
+                        //刷新收藏界面
+                        EventBus.getDefault().post(new EventRefreshCollection());
+                    } else {
+                        ToastUtils.showToast(this, R.string.click_like_tip);
+                    }
+                }
+                break;
         }
+    }
+
+    /**
+     * @param isLike true:上传收藏，flash:上传取消收藏
+     */
+    private void uploadLike(boolean isLike) {
+        if (mInfo == null) return;
+        ThemeSyncManager.getInstance().syncJustLike(Long.parseLong(mInfo.id), isLike, new ThemeNormalCallback() {
+            @Override
+            public void onSuccess(int code, String msg) {
+                LogUtil.d(TAG, "uploadLike onSuccess msg: " + msg + ", code: " + code);
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                LogUtil.d(TAG, "uploadLike onFailure msg: " + msg + ", code: " + code);
+            }
+        });
+    }
+
+    /**
+     * @param isLike true:收藏动画，flash:取消动画
+     */
+    private void startLikeAnim(final boolean isLike) {
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1f, 0, 1f);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (float) animation.getAnimatedValue();
+                mFivLike.setScaleX(value);
+                mFivLike.setScaleY(value);
+                LogUtil.d(TAG, "startLikeAnim value:" + value);
+                if (value > mLastValue) {
+                    if (isLike) {
+                        mFivLike.setTextColor(getResources().getColor(R.color.color_FFE05A52));
+                    } else {
+                        mFivLike.setTextColor(getResources().getColor(R.color.whiteSmoke));
+                    }
+                }
+                mLastValue = value;
+            }
+        });
+        valueAnimator.setDuration(500);
+        valueAnimator.setInterpolator(new DecelerateInterpolator());
+        valueAnimator.start();
     }
 
     private void showSaveDialog() {
@@ -752,6 +862,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             }
 
             CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, mInfo);
+            CallFlashManager.getInstance().saveSetRecordCallFlash(mInfo);
             resultDesId = R.string.call_flash_gif_show_setting_suc;
             EventBus.getDefault().post(new EventRefreshCallFlashEnable(true));
         } else {

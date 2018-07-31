@@ -24,10 +24,12 @@ public class ActivityBuilder {
     public static final String IS_COME_FROM_DESKTOP = "is_come_from_desktop";
     public static final String IS_COME_FROM_CALL_AFTER = "is_come_from_call_after";
     public static final String CALL_FLASH_INFO = "call_flash_info";
+    public static final String CALL_FLASH_DATA_TYPE = "call_flash_data_type";
 
     public static final int FRAGMENT_HOME = 0;
-    public static final int FRAGMENT_CATEGORY = 1;
-    public static final int MAX_FRAGEMNTS = 4;
+    public static final int FRAGMENT_MINE = 1;
+    public static final int FRAGMENT_CATEGORY = 2;
+    public static final int MAX_FRAGEMNTS = 2;
 
     public static final String SMS_COME_MESSAGE = "sms_come_message";
     public static final String IS_LETS_START = "is_lets_start";
@@ -84,6 +86,16 @@ public class ActivityBuilder {
 //        intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
         intent.putExtra(IS_COME_FROM_DESKTOP, isComeDesktop);
         intent.putExtra(CALL_FLASH_INFO, info);
+        context.startActivity(intent);
+    }
+
+    /**
+     * @param dataType CallFlashDataType 中的type
+     */
+    public static void toCallFlashList(Context context, int dataType) {
+        Intent intent = new Intent();
+        intent.setClass(context, CallFlashListActivity.class);
+        intent.putExtra(CALL_FLASH_DATA_TYPE, dataType);
         context.startActivity(intent);
     }
 

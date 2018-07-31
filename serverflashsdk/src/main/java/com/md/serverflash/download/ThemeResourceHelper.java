@@ -34,7 +34,9 @@ import okhttp3.Response;
 
 public class ThemeResourceHelper {
     private static final String UPLOAD_URL = "http://locker.topsearchdomain.info/api.php";
-    private static final String KEY_HTTP = "*2od2S!#%s";
+    private static final String KEY_HTTP = "*2od2S!#";
+    private static final int CP_STATISTICS_CHANNEL = 75;
+
     private boolean mIsCanWrite;
 
     private ThemeResourceHelper() {
@@ -332,13 +334,23 @@ public class ThemeResourceHelper {
         }
 
         JSONObject jsonObject = new JSONObject(params);
+        try {
+            jsonObject.put("cid", CP_STATISTICS_CHANNEL);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         String jsonData = jsonObject.toString();
+
+        String sig = HttpUtil.MD5EncodeFromStr(KEY_HTTP + jsonData);
+        LogUtil.d("cp_uploadfile", "upload jsonData: "+jsonData);
+
         MediaType mediaType = MediaType.parse("application/octet-stream");
         MultipartBody.Builder builder = new MultipartBody.Builder();
-        builder.setType(MultipartBody.FORM);
-        builder.addFormDataPart("data", jsonData);
-        builder.addFormDataPart("sig", HttpUtil.MD5Encode(KEY_HTTP.replace("%s", jsonData)));
-        builder.addFormDataPart("file", file.getName(), RequestBody.create(mediaType, file));
+        builder.setType(MultipartBody.FORM)
+        .addFormDataPart("data", jsonData)
+        .addFormDataPart("sig", sig)
+        .addFormDataPart("file", file.getName(), RequestBody.create(mediaType, file));
 
         final Request.Builder requestBuilder = new Request.Builder();
         Request request = requestBuilder.url(UPLOAD_URL).post(builder.build()).build();

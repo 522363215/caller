@@ -138,7 +138,9 @@ public class CallFlashLocalAdapter extends RecyclerView.Adapter<CallFlashLocalAd
 
                 GlideView glideView = v.findViewById(R.id.gv_bg);
                 //  jump to CallFlashPreviewActivity
-                ActivityBuilder.toCallFlashPreview(context, info, glideView);
+//                ActivityBuilder.toCallFlashPreview(context, info, glideView);
+
+                ActivityBuilder.toCallFlashDetail(context,info,false);
             }
         }
     };

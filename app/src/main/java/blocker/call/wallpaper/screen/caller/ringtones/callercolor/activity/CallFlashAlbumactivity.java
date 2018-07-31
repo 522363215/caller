@@ -157,7 +157,7 @@ public class CallFlashAlbumactivity extends BaseActivity {
 
             String path = FileUtil.getImagePath(this, data.getData());
             if (TextUtils.isEmpty(path)) return;
-            ActivityBuilder.toCallFlashDetail(this, CallFlashManager.getInstance().getCustomCallFlash(path), false);
+            ActivityBuilder.toCallFlashDetail(this, CallFlashManager.getInstance().getCustomCallFlash(path),false);
         }
     }
 

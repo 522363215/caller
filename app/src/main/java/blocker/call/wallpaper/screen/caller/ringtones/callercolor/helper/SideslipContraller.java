@@ -13,6 +13,7 @@ import android.view.ViewStub;
 import android.widget.LinearLayout;
 
 import com.flurry.android.FlurryAgent;
+import com.md.flashset.bean.CallFlashDataType;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 
 import java.lang.reflect.Method;
@@ -22,7 +23,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.AboutActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.BlockActivity;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CollectionActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.SettingActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingDialog;
@@ -226,9 +226,7 @@ public class SideslipContraller implements View.OnClickListener {
     private void onCollection() {
         FlurryAgent.logEvent("left_collection_click");
         if (mAct == null) return;
-        Intent intent = new Intent();
-        intent.setClass(mAct, CollectionActivity.class);
-        mAct.startActivity(intent);
+        ActivityBuilder.toCallFlashList(mAct, CallFlashDataType.CALL_FLASH_DATA_COLLECTION);
     }
 
     private void sendEmail() {

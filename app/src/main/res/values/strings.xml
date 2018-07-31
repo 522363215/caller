@@ -108,6 +108,7 @@
     <string name="call_flash_gif_show_setting_suc_reset">Your call screen has been reset.</string>
     <string name="page_title_caller_theme">Caller Theme</string>
     <string name="page_title_category">Category</string>
+    <string name="page_title_mine">Mine</string>
     <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
     <string name="about_email_us">"Email us"</string>
     <string name="email_choose_one">"Please choose one to send Email."</string>
@@ -152,21 +153,22 @@
 
 
     <string name="permission_title">"LET'S START"</string>
-    <string name="permission_phone_and_contact_title">"phone &amp; contacts"</string>
+    <string name="permission_phone_and_contact_title">"Phone &amp; Contacts"</string>
     <string name="permission_phone_and_contact_des">to manage phone calls and show contacts</string>
-    <string name="permission_screen_permission_title">screen permission(overlay)</string>
+    <string name="permission_screen_permission_title">Screen permission</string>
     <string name="permission_screen_permission_des">to show call screen</string>
-    <string name="permission_call_permission_title">call permission</string>
+    <string name="permission_call_permission_title">Call permission</string>
     <string name="permission_call_permission_des">to enable answer the calls</string>
-    <string name="permission_show_on_lock_title">show on lock screen</string>
+    <string name="permission_show_on_lock_title">Show on lock screen</string>
     <string name="permission_show_on_lock_des">to shown on the lock screen</string>
     <string name="permission_auto_start_title">自启动显示来电秀</string>
     <string name="permission_auto_start_des">重启手机后能够显示来电秀</string>
-    <string name="permission_read_call_log_title">read call logs</string>
+    <string name="permission_read_call_log_title">Read call logs</string>
     <string name="permission_read_call_log_des">to enable block unwanted calls</string>
     <string name="permission_for_show_call_flash">show call flash</string>
     <string name="permission_for_answer_call">answering calls</string>
     <string name="setting_call_after">Caller ID</string>
+    <string name="setting_caller_show">Caller Show</string>
     <string name="permission_denied_txt">Permission denied, please try again</string>
     <string name="permission_next">NEXT</string>
     <string name="permission_all_set">All Set!</string>
@@ -209,4 +211,15 @@
     <string name="permission_xiao_mi_read_call_history">Read call history</string>
     <string name="permission_xiao_mi_get_device_info">Get device info</string>
     <!--这几个权限描述为小米手机中的描述，不能修改，多语言也需要与小米手机中的描述一致-->
+
+
+    <string name="mine_current_call_flash">Current Call Flash</string>
+    <string name="mine_set_before">设置记录</string>
+    <string name="mine_downloaded">已下载</string>
+    <string name="mine_collect">@string/side_slip_collection</string>
+    <string name="mine_all">全部</string>
+    <string name="mine_no_current_call_flash">没有设置，点击查看去设置</string>
+
+    <string name="click_like_tip">下载后才可以收藏</string>
+    <string name="permission_grand_title_desc">We will not upload and store any of your data, like contacts, call logs, photos etc.</string>
 </resources>

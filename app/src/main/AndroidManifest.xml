@@ -163,7 +163,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.CollectionActivity"
+            android:name=".activity.CallFlashListActivity"
             android:screenOrientation="portrait" />
 
         <activity
