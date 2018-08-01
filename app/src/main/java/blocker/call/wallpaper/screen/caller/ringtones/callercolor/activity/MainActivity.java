@@ -378,9 +378,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
                 if (mCallFlashListFragment != null) {
                     if (arg0 == ActivityBuilder.FRAGMENT_HOME)
-                        mCallFlashListFragment.continuePlayVideo();
+                        mCallFlashListFragment.pauseOrContinuePlayVideo(true);
                     else
-                        mCallFlashListFragment.pauseVideoPlay();
+                        mCallFlashListFragment.pauseOrContinuePlayVideo(false);
                 }
 
                 setTvTitle(arg0);

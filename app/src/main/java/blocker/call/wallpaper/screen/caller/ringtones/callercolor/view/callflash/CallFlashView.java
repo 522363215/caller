@@ -29,7 +29,7 @@ public class CallFlashView extends RelativeLayout {
     private int mCallFlashFormat;
     private CallFlashCustomAnimView mCustomAnimView;
     private int mVideoPlayProgress;
-    private boolean misStart;
+    private boolean mIsPlaying;
     private GlideView mGlideViewPreview;
     private boolean isVideoMute;
 
@@ -63,15 +63,19 @@ public class CallFlashView extends RelativeLayout {
         setVideoListener();
     }
 
-    public CallFlashInfo getCallFlashInfo () {
+    public CallFlashInfo getCallFlashInfo() {
         return mCallFlashInfo;
     }
 
-    public boolean isStopVideo () {
+    public boolean isStopVideo() {
         return isStop.get();
     }
 
-    public boolean isPauseVideo () {
+    public boolean isPlaying() {
+        return mIsPlaying;
+    }
+
+    public boolean isPause() {
         return isPause.get();
     }
 
@@ -119,19 +123,21 @@ public class CallFlashView extends RelativeLayout {
     }
 
     public void pause() {
-        misStart = false;
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
+            mIsPlaying = false;
             isPause.set(true);
             //记录播放的progress,避免黑屏
             mVideoView.pause();
             mVideoPlayProgress = mVideoView.getCurrentPosition();
         } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null) {
             mCustomAnimView.update(true, mCallFlashInfo.flashType);
+            isPause.set(true);
+            mIsPlaying = false;
         }
     }
 
     public void continuePlay() {
-        if (misStart) return;
+        if (mIsPlaying) return;
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
             LogUtil.d(TAG, "continuePlay mVideoPlayProgress:" + mVideoPlayProgress);
 //            if (mGlideView != null && mCallFlashInfo != null) {
@@ -141,11 +147,12 @@ public class CallFlashView extends RelativeLayout {
 //            }
             mVideoView.seekTo(mVideoPlayProgress);
             mVideoView.start();
-            misStart = true;
+            mIsPlaying = true;
             isPause.set(false);
         } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null) {
             mCustomAnimView.update(false, mCallFlashInfo.flashType);
-            misStart = true;
+            mIsPlaying = true;
+            isPause.set(false);
         }
     }
 
@@ -168,10 +175,10 @@ public class CallFlashView extends RelativeLayout {
                 mGlideView.setVisibility(VISIBLE);
                 mGlideView.showVideoFirstFrame(path);
             }
-            misStart = true;
             mVideoView.setVisibility(VISIBLE);
             mVideoView.setVideoPath(path);
             mVideoView.start();
+            mIsPlaying = true;
             isStop.set(false);
         } else {
             showPreview(info);
@@ -216,6 +223,8 @@ public class CallFlashView extends RelativeLayout {
                 if (mCallFlashInfo != null) {
                     LogUtil.e("chenr", "video play error, what: " + what + ", extra: " + extra + ", flashType: " + mCallFlashInfo.flashType);
                 }
+                mIsPlaying = false;
+                isStop.set(true);
                 return true;
             }
         });

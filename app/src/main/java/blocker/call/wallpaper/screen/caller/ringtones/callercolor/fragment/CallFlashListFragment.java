@@ -38,6 +38,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
@@ -70,6 +71,8 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
 
     private int mCurrentFlashIndex = -1;
     private GridLayoutManager mLayoutManager;
+    private RecyclerView.ViewHolder mCurrentFlashHolder;
+    private int mLastCurrentFlashIndex;
 
     public static CallFlashListFragment newInstance(int dataType) {
         CallFlashListFragment fragment = new CallFlashListFragment();
@@ -142,13 +145,13 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         if (info != null) {
             mCurrentFlashIndex = model.indexOf(info);
         }
-        continuePlayVideo();
+        pauseOrContinuePlayVideo(true);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        pauseVideoPlay();
+        pauseOrContinuePlayVideo(false);
     }
 
     @Override
@@ -347,37 +350,40 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         Async.removeScheduledTaskOnUiThread(mLoadMaxRunable);
     }
 
-    public void pauseVideoPlay() {
+
+    /**
+     * @param isContinuePlay true:继续播放，false：暂停播放
+     */
+    public void pauseOrContinuePlayVideo(boolean isContinuePlay) {
         if (getActivity() == null || getActivity().isFinishing() || mRecyclerView == null
                 || mCurrentFlashIndex == -1) {
             return;
         }
-        RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForLayoutPosition(mCurrentFlashIndex);
-        if (holder == null) {
-            return;
-        }
-        CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
-        view.pause();
-    }
-
-    public void continuePlayVideo() {
-        if (getActivity() == null || getActivity().isFinishing() || mRecyclerView == null
-                || mCurrentFlashIndex == -1 || model.isEmpty()) {
-            return;
-        }
-        RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForLayoutPosition(mCurrentFlashIndex);
-        if (holder == null) {
-            return;
-        }
-        CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
-        if (view.isStopVideo()) {
-            view.showCallFlashView(model.get(mCurrentFlashIndex));
-        } else {
-            if (view.isPauseVideo()) {
-                view.continuePlay();
-            } else {
-                view.showCallFlashView(model.get(mCurrentFlashIndex));
+        int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
+        int lastItemPosition = mLayoutManager.findLastVisibleItemPosition();
+        if (mCurrentFlashIndex >= firstItemPosition && mCurrentFlashIndex <= lastItemPosition) {
+            RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForLayoutPosition(mCurrentFlashIndex);
+            if (holder == null) {
+                return;
             }
+            CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
+            if (isContinuePlay) {
+                if (view.isStopVideo() || mLastCurrentFlashIndex != mCurrentFlashIndex) {
+                    view.showCallFlashView(model.get(mCurrentFlashIndex));
+                } else {
+                    if (view.isPause()) {
+                        view.continuePlay();
+                    } else {
+                        view.showCallFlashView(model.get(mCurrentFlashIndex));
+                    }
+                }
+            } else {
+                if (view.isPlaying()) {
+                    view.pause();
+                }
+            }
+
+            mLastCurrentFlashIndex = mCurrentFlashIndex;
         }
     }
 
@@ -401,45 +407,11 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (getActivity() == null || getActivity().isFinishing()) {
                     return;
                 }
-
-                if (mDataType == CallFlashDataType.CALL_FLASH_DATA_HOME) {
-                    int index = mCurrentFlashIndex;
-                    //获取当前recycleView屏幕可见的第一项和最后一项的Position
-                    int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
-                    int lastItemPosition = mLayoutManager.findLastVisibleItemPosition();
-                    if (index != -1 && index >= firstItemPosition && index <= lastItemPosition) {
-                        RecyclerView.ViewHolder holder = recyclerView.findViewHolderForLayoutPosition(index);
-                        if (holder != null) {
-                            holder.itemView.findViewById(R.id.iv_select).setVisibility(View.VISIBLE);
-                            CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
-                            View gvBackground = holder.itemView.findViewById(R.id.gv_bg);
-                            gvBackground.setVisibility(View.GONE);
-                            view.setVisibility(View.VISIBLE);
-                            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                                if (view.isStopVideo()) {
-                                    view.showCallFlashView(model.get(index));
-                                } else {
-                                    if (view.isPauseVideo()) {
-                                        view.continuePlay();
-                                    } else {
-                                        view.showCallFlashView(model.get(index));
-                                    }
-                                }
-                            } else if (newState == RecyclerView.SCROLL_STATE_DRAGGING || newState == RecyclerView.SCROLL_STATE_SETTLING) {
-                                if (!view.isPauseVideo()) {
-                                    view.pause();
-                                }
-                            }
-                        }
-                    }
-                }
-
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
                         Glide.with(CallFlashListFragment.this).resumeRequests();
@@ -449,13 +421,56 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                         Glide.with(CallFlashListFragment.this).pauseRequests();
                         break;
                 }
-
+                mAdapter.setScrollState(newState);
+                //滑动过程中控制设置的callflash的播放和暂停
+                setCallFlashViewPlay(recyclerView, newState);
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             }
         });
+    }
+
+    private void setCallFlashViewPlay(RecyclerView recyclerView, int newState) {
+        if (mDataType == CallFlashDataType.CALL_FLASH_DATA_HOME) {
+            int index = mCurrentFlashIndex;
+            //获取当前recycleView屏幕可见的第一项和最后一项的Position
+            int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
+            int lastItemPosition = mLayoutManager.findLastVisibleItemPosition();
+            if (index != -1) {
+                CallFlashInfo callFlashInfo = model.get(index);
+                if (callFlashInfo == null) return;
+                RecyclerView.ViewHolder holder = recyclerView.findViewHolderForLayoutPosition(index);
+                if (holder != null) {
+                    mCurrentFlashHolder = holder;
+                }
+                if (mCurrentFlashHolder != null) {
+                    mCurrentFlashHolder.itemView.findViewById(R.id.iv_select).setVisibility(View.VISIBLE);
+                    CallFlashView view = mCurrentFlashHolder.itemView.findViewById(R.id.layout_call_flash_view);
+                    View gvBackground = mCurrentFlashHolder.itemView.findViewById(R.id.gv_bg);
+                    if (!view.isPlaying() && (newState == RecyclerView.SCROLL_STATE_IDLE || newState == RecyclerView.SCROLL_STATE_DRAGGING) && index >= firstItemPosition && index <= lastItemPosition) {
+                        LogUtil.d(TAG, "setCallFlashViewPlay isStopVideo:" + view.isStopVideo() + ",isPause:" + view.isPause());
+                        if (view.isStopVideo()) {
+                            view.showCallFlashView(model.get(index));
+                        } else {
+                            if (view.isPause()) {
+                                view.continuePlay();
+                            } else {
+                                view.showCallFlashView(model.get(index));
+                            }
+                        }
+                        gvBackground.setVisibility(View.GONE);
+                        view.setVisibility(View.VISIBLE);
+                    } else if (newState == RecyclerView.SCROLL_STATE_SETTLING && view.isPlaying() && (index < firstItemPosition || index > lastItemPosition)) {
+                        LogUtil.d(TAG, "setCallFlashViewPlay pause");
+                        view.pause();
+                        gvBackground.setVisibility(View.VISIBLE);
+                        view.setVisibility(View.GONE);
+                    }
+                }
+            }
+        }
     }
 
     public void onEventMainThread(EventCallFlashOnlineAdLoaded event) {

@@ -57,6 +57,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private List<OnOnlineDownloadListener> mDownloadListenerList = null;
 
     private int childViewWidth, childViewHeight;
+    private int mScrollState;
 
     public void setFragmentTag(int fragmentTag) {
         this.fragmentTag = fragmentTag;
@@ -89,7 +90,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         videoMap = new ConcurrentHashMap<>();
         mDownloadListenerList = new ArrayList<>();
-
         if (context != null) {
             int dp8 = context.getResources().getDimensionPixelOffset(R.dimen.dp8);
             childViewWidth = (DeviceUtil.getScreenWidth() - dp8 * 3) / 2;
@@ -165,18 +165,21 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             holder.root.setTag(pos);
             holder.layoutCallFlash.setTag(pos);
             holder.iv_download.setTag(pos);
-            if (mCurrentFlash != null && mCurrentFlash.equals(info)) {
-                holder.gv_bg.setVisibility(View.INVISIBLE);
-                holder.callFlashView.setVisibility(View.VISIBLE);
-                if (holder.callFlashView.isStopVideo()) {
-                    holder.callFlashView.showCallFlashView(info);
-                } else {
-                    if (holder.callFlashView.isPauseVideo()) {
-                        holder.callFlashView.continuePlay();
-                    } else {
+            if (mCurrentFlash != null && mCurrentFlash.equals(info) && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING)) {
+                LogUtil.d(TAG, "setItem isPlaying:" + holder.callFlashView.isPlaying() + ",isStopVideo:" + holder.callFlashView.isStopVideo() + ",isPause:" + holder.callFlashView.isPause());
+                if (!holder.callFlashView.isPlaying()) {
+                    if (holder.callFlashView.isStopVideo()) {
                         holder.callFlashView.showCallFlashView(info);
+                    } else {
+                        if (holder.callFlashView.isPause()) {
+                            holder.callFlashView.continuePlay();
+                        } else {
+                            holder.callFlashView.showCallFlashView(info);
+                        }
                     }
                 }
+                holder.gv_bg.setVisibility(View.INVISIBLE);
+                holder.callFlashView.setVisibility(View.VISIBLE);
             } else {
                 holder.gv_bg.setVisibility(View.VISIBLE);
                 holder.callFlashView.setVisibility(View.INVISIBLE);
@@ -255,6 +258,10 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
 
         return info;
+    }
+
+    public void setScrollState(int scrollState) {
+        mScrollState = scrollState;
     }
 
     class NormalViewHolder extends RecyclerView.ViewHolder {
