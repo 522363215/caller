@@ -192,8 +192,8 @@
     <string name="block_list_request_permission_tip">%1$s needs the necessary permissions for block.</string>
 
     <string name="side_slip_permission_check">Permission Check</string>
-    <string name="permission_skip">Skip</string>
-    <string name="permission_set">Set</string>
+    <string name="permission_skip">SKIP</string>
+    <string name="permission_set">SET</string>
     <string name="permission_set_auto_start">Allow apps to auto start to works for every calls</string>
     <string name="permission_sett_lock_screen">Allow apps to show on lock screen for call flash screens</string>
     <string name="permission_xiao_mi_tip">(滑动到屏幕最底部)</string>

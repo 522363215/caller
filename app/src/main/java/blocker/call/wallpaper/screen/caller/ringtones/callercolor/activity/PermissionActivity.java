@@ -19,6 +19,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.Permissio
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SystemInfoUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 
 public class PermissionActivity extends BaseActivity implements View.OnClickListener, PermissionShowAdapter.SetClickListener {
     private RecyclerView mRvPermission;
@@ -28,6 +29,9 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
     private TextView mTvButton;
     private View mTvSkip;
     private boolean mIsLetsStart;
+    private ActionBar mActionBar;
+    private View mLayoutStart;
+    private View mLayoutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +71,13 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initView() {
+        mActionBar = findViewById(R.id.actionbar);
+
+        mLayoutStart = findViewById(R.id.layout_start);
         mTvTitle = findViewById(R.id.tv_title);
         mRvPermission = findViewById(R.id.rv_permission);
+
+        mLayoutBtn = findViewById(R.id.layout_btn);
         mTvButton = findViewById(R.id.tv_button);
         mTvSkip = findViewById(R.id.tv_skip);
 
@@ -76,16 +85,26 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
         mTvSkip.setOnClickListener(this);
 
         if (mIsLetsStart) {
+            mActionBar.setVisibility(View.GONE);
+            mLayoutStart.setVisibility(View.VISIBLE);
+            mLayoutBtn.setVisibility(View.VISIBLE);
             mTvTitle.setText(R.string.permission_title);
-            mTvSkip.setVisibility(View.VISIBLE);
         } else {
-            mTvTitle.setText(R.string.side_slip_permission_check);
-            mTvSkip.setVisibility(View.GONE);
+            mActionBar.setVisibility(View.VISIBLE);
+            mLayoutStart.setVisibility(View.GONE);
+            mLayoutBtn.setVisibility(View.GONE);
+            mActionBar.setTitle(R.string.side_slip_permission_check);
+            mActionBar.setOnBackClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
         }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRvPermission.setLayoutManager(layoutManager);
-        mRvPermission.setAdapter(mPermissionShowAdapter = new PermissionShowAdapter(this, mPermissionInfos));
+        mRvPermission.setAdapter(mPermissionShowAdapter = new PermissionShowAdapter(this, mPermissionInfos, mIsLetsStart));
         mPermissionShowAdapter.setOnItemClickListener(this);
     }
 
