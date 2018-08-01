@@ -144,7 +144,7 @@ public class AddBlockContactDialog extends Dialog {
                 Async.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtils.showToast(mContext, "No Permission!");
+                        ToastUtils.showToast(mContext, mContext.getString(R.string.permission_denied_txt));
                     }
                 });
                 dismiss();

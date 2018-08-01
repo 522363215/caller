@@ -177,6 +177,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     public void onAddBlockContact(boolean isSuccess, String blockNumber) {
                         if (isSuccess) {
+                            BlockManager.getInstance().setBlockSwitchState(true);
                             BlockListFragment fragment = (BlockListFragment) fragmentList.get(0);
                             fragment.updateData();
                         }

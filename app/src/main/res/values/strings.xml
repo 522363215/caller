@@ -222,4 +222,5 @@
 
     <string name="click_like_tip">下载后才可以收藏</string>
     <string name="permission_grand_title_desc">We will not upload and store any of your data, like contacts, call logs, photos etc.</string>
+    <string name="notification_new_flash_title">Try a new Call Flash Show theme!</string>
 </resources>

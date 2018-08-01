@@ -58,6 +58,16 @@ public class CallFlashPreferenceHelper {
      */
     public static final String PREF_CALL_FLASH_SET_RECORD_LIST = "android_call_flash_set_record_list";
 
+    /**
+     * 最新的来电秀实例;
+     */
+    public static final String PREF_CALL_FLASH_NEWEST_INSTANCE = "android_call_flash_newest_instance";
+
+    /**
+     * 最后一次发送通知的来电秀实例;
+     */
+    public static final String PREF_CALL_FLASH_LAST_SEND_NOTIFY_NEWEST_INSTANCE = "android_call_flash_last_send_notify_newest_instance";
+
     private static Context mContext;
 
     private CallFlashPreferenceHelper() {

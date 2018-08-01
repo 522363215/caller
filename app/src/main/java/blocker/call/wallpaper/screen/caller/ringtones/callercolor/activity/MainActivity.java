@@ -31,6 +31,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.MainPagerAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.NotifyInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventLanguageChange;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashEnable;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
@@ -38,6 +39,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.Categ
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.MineFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.NotifyManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
@@ -180,11 +182,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.iv_upload:
                 toImageUpload();
 
-                /*NotifyInfo info = new NotifyInfo();
-                info.setNotifyId(NotifyInfo.NotifyId.NOTIFY_NEW_FLASH);
-                info.setTitle("There are new flash.");
-                info.setContent("new flash don't show with you.");
-                NotifyManager.getInstance(this).showNotify(info);*/
+//                NotifyInfo info = new NotifyInfo();
+//                info.setNotifyId(NotifyInfo.NotifyId.NOTIFY_NEW_FLASH);
+//                info.setTitle("There are new flash.");
+//                info.setContent("new flash don't show with you.");
+//                info.arg1 = "https://djwtigu7b03af.cloudfront.net/material_manager/201807/05182947599.png";
+//                info.arg2 = "https://djwtigu7b03af.cloudfront.net/material_manager/201807/05182947599.png";
+//
+//                NotifyManager.getInstance(this).showNewFlashWithBigStyle(info);
                 break;
         }
     }

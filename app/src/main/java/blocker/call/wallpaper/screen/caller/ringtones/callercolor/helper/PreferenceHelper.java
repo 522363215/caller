@@ -127,6 +127,11 @@ final public class PreferenceHelper {
      */
     public static final String PREF_KEY_LAST_TO_XIAO_MI_AUTO_START_BOOT_PERMISSION_ACTIVITY = "caller_pref_key_last_to_xiao_mi_auto_start_boot_permission_activity";
 
+    /**
+     * 最近一次进入App的时间
+     */
+    public static final String PREF_KEY_LAST_ENTER_APP_TIME = "caller_pref_key_last_enter_app_time";
+
 
     private PreferenceHelper() {
     }
