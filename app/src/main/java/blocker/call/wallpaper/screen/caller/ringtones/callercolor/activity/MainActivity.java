@@ -382,10 +382,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ((FontIconView) findViewById(R.id.fiv_mine)).setAlpha(currentPage == ActivityBuilder.FRAGMENT_MINE ? 1f : 0.4f);
 
                 if (mCallFlashListFragment != null) {
-                    if (arg0 == CallFlashDataType.CALL_FLASH_DATA_HOME)
-                        mCallFlashListFragment.continuePlayVideo();
+                    if (arg0 == ActivityBuilder.FRAGMENT_HOME)
+                        mCallFlashListFragment.pauseOrContinuePlayVideo(true);
                     else
-                        mCallFlashListFragment.pauseVideoPlay();
+                        mCallFlashListFragment.pauseOrContinuePlayVideo(false);
                 }
 
                 setTvTitle(arg0);

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -13,28 +14,72 @@ import java.util.List;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.PermissionInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 
 public class PermissionShowAdapter extends RecyclerView.Adapter<PermissionShowAdapter.ViewHolder> {
+    private static final int DEFAULT_VIEW_TYPE = 0;
+    private static final int LAST_POSITION_VIEW_TYPE = 1;
+    private boolean mIsLetsStart;
     private List<PermissionInfo> mPermissionInfos;
     private Context mContext;
     private SetClickListener mSetClickListener;
 
-    public PermissionShowAdapter(Context context, List<PermissionInfo> permissionInfos) {
+    public PermissionShowAdapter(Context context, List<PermissionInfo> permissionInfos, boolean isLetsStart) {
         mContext = context;
         mPermissionInfos = permissionInfos;
+        mIsLetsStart = isLetsStart;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_item_permssion, null);
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        if (layoutParams == null) {
-            layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        } else {
-            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        }
-        view.setLayoutParams(layoutParams);
+        setViewLayout(view, viewType);
         return new ViewHolder(view);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == mPermissionInfos.size() - 1) {
+            return LAST_POSITION_VIEW_TYPE;
+        }
+        return DEFAULT_VIEW_TYPE;
+    }
+
+    private void setViewLayout(View view, int viewType) {
+        //每个item 的宽度
+        RelativeLayout.LayoutParams itemParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+        if (itemParams == null) {
+            itemParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } else {
+            itemParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        }
+
+        if (mIsLetsStart) {
+            //线的高度，根据总数在变
+            RelativeLayout layoutLine = view.findViewById(R.id.layout_line);
+            ViewGroup.LayoutParams layoutLineParams = layoutLine.getLayoutParams();
+            if (mPermissionInfos != null && mPermissionInfos.size() > 3) {
+                layoutLineParams.height = Stringutil.dpToPx(mContext, 30);
+            } else {
+                layoutLineParams.height = Stringutil.dpToPx(mContext, 50);
+            }
+            layoutLine.setLayoutParams(layoutLineParams);
+
+
+            //每个item
+            itemParams.topMargin = Stringutil.dpToPx(mContext, 10);
+            if (viewType != LAST_POSITION_VIEW_TYPE) {
+                itemParams.bottomMargin = Stringutil.dpToPx(mContext, 0);
+            } else {
+                itemParams.bottomMargin = Stringutil.dpToPx(mContext, 10);
+            }
+        } else {
+            //每个item
+            itemParams.topMargin = Stringutil.dpToPx(mContext, 20);
+            itemParams.bottomMargin = Stringutil.dpToPx(mContext, 20);
+        }
+
+        view.setLayoutParams(itemParams);
     }
 
     @Override
@@ -62,7 +107,7 @@ public class PermissionShowAdapter extends RecyclerView.Adapter<PermissionShowAd
             holder.tvSet.setVisibility(View.VISIBLE);
         }
 
-        if (position == mPermissionInfos.size() - 1) {
+        if (!mIsLetsStart || position == mPermissionInfos.size() - 1) {
             holder.layoutLine.setVisibility(View.GONE);
         } else {
             holder.layoutLine.setVisibility(View.VISIBLE);

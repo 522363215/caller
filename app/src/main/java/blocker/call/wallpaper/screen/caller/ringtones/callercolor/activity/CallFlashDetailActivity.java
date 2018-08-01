@@ -16,7 +16,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
@@ -1079,7 +1078,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 AudioManager am = mVolumeChangeObserver.getAudioManager();
                 switch (keyCode) {
                     case KeyEvent.KEYCODE_VOLUME_UP:
-                        if (ringMode == AudioManager.RINGER_MODE_SILENT && !SpecialPermissionsUtil.isHaveNotificationPolicyAccess(this)) {
+                        if (ringMode == AudioManager.RINGER_MODE_SILENT && !SpecialPermissionsUtil.isNotificationServiceRunning()) {
                             ToastUtils.showToast(this, R.string.mute_no_permission_tip2);
                         } else {
                             am.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
