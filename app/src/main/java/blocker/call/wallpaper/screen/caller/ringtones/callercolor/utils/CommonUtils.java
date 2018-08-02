@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -26,6 +27,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 
@@ -50,9 +52,29 @@ public final class CommonUtils {
         translucentStatusBar(context, false);
     }
 
-    //设置状态栏融合，5.0以上
     public static void translucentStatusBar(Activity context, boolean isFullScreen) {
-        translucentStatusBar(context, isFullScreen, Color.TRANSPARENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            setTranslucentStatusForLowVersion(context);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            translucentStatusBar(context, isFullScreen, Color.TRANSPARENT);
+        }
+    }
+
+    private static void setTranslucentStatusForLowVersion(Activity activity) {
+        if (activity != null) {
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            View statusView = createStatusView(activity);
+            ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+            decorView.addView(statusView);
+        }
+    }
+
+    private static View createStatusView(Activity activity) {
+        View view = new View(activity);
+        int statusBarHeight = DeviceUtil.getStatusBarHeight();
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight));
+        view.setBackgroundColor(activity.getResources().getColor(R.color.color_transparent));
+        return view;
     }
 
     //设置状态栏融合，5.0以上

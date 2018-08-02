@@ -2,10 +2,12 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogIn
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DateUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
@@ -56,13 +59,30 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call_after);
-//        CommonUtils.translucentStatusBar(this, true);
         initView();
 
         onNewIntent(getIntent());
         initData();
         listener();
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this, true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // 全屏时增加StatusBar站位的留白
+            ViewGroup group = findViewById(R.id.rootview);
+            View view = new View(this);
+            view.setBackgroundColor(getResources().getColor(R.color.color_FF0A2134));
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtil.getStatusBarHeight());
+            view.setLayoutParams(params);
+            group.addView(view, 0);
+        }
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_call_after;
     }
 
     @Override

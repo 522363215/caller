@@ -126,13 +126,12 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        enter_time = System.currentTimeMillis();
-        //定义全屏参数
         int flag = WindowManager.LayoutParams.FLAG_FULLSCREEN;
         //设置当前窗体为全屏显示
         getWindow().setFlags(flag, flag);
-        setContentView(R.layout.activity_call_flash_detail);
+        super.onCreate(savedInstanceState);
+        enter_time = System.currentTimeMillis();
+        //定义全屏参数
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
@@ -146,6 +145,14 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         initSaveFlash();
         updateUI();
         loadInterstitialAd();
+    }
+
+    @Override
+    protected void translucentStatusBar() {}
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_call_flash_detail;
     }
 
     private void updateUI() {

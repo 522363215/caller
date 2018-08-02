@@ -83,7 +83,6 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call_flash_preview);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
@@ -96,6 +95,16 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         }
         onNewIntent(getIntent());
         FlurryAgent.logEvent("CallFlashPreviewActivity-start");
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this);
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_call_flash_preview;
     }
 
     @Override

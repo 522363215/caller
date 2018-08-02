@@ -51,13 +51,6 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            setTranslucentStatus();
-        } else {
-            CommonUtils.translucentStatusBar(this, true);
-        }
-        setContentView(R.layout.activity_splash);
         //离上次显示Splash ad 的时间小于15分钟则自己跳过splash 进入MainActivity
         long lastShowAdTime = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_SHOW_SPLASH_AD_TIME, 0);
         if (System.currentTimeMillis() - lastShowAdTime <= SPLASH_AD_SHOW_INTERVAL_TIME) {
@@ -67,6 +60,16 @@ public class SplashActivity extends BaseActivity {
         SwitchLang();
         initData();
         initView();
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this, true);
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_splash;
     }
 
     private void initData() {

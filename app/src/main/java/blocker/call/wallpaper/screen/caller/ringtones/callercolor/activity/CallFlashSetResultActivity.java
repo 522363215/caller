@@ -31,6 +31,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Interstitia
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventShowPemisssionTip;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.FullScreenAdManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
@@ -103,7 +104,6 @@ public class CallFlashSetResultActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call_flash_set_result);
         mStartTime = 0;
         mIsFromDesktop = getIntent().getBooleanExtra(ActivityBuilder.IS_COME_FROM_DESKTOP, false);
         mCallFlashInfo = (CallFlashInfo) getIntent().getSerializableExtra(ActivityBuilder.CALL_FLASH_INFO);
@@ -111,6 +111,16 @@ public class CallFlashSetResultActivity extends BaseActivity {
         init();
         listener();
         EventBus.getDefault().post(new EventShowPemisssionTip());
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this);
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_call_flash_set_result;
     }
 
     private void callFlashStatistics() {

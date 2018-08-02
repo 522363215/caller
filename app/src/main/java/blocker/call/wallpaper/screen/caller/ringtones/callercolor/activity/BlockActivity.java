@@ -21,6 +21,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.BlockP
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.AddBlockContactDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.BlockListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.popup.BlockOptionWindow;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager;
@@ -45,8 +46,6 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_block);
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG)
@@ -56,6 +55,16 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
             initView();
             listener();
         }
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this);
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_block;
     }
 
     public void showRequestPermission() {

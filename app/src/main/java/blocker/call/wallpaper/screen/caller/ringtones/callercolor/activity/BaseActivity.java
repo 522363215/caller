@@ -15,6 +15,11 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.flurry.android.FlurryAgent;
@@ -27,13 +32,15 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobSchedulerService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.RomUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 
-public class BaseActivity extends AppCompatActivity implements PermissionUtils.PermissionGrant {
+public abstract class BaseActivity extends AppCompatActivity implements PermissionUtils.PermissionGrant {
 
     protected LanguageSettingUtil languageSetting;
     protected ApplicationEx app;
@@ -64,9 +71,18 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
     protected void onCreate(Bundle savedInstanceState) {
         // Log.d("ACT", this.getClass().getSimpleName() + "(onCreate)");
         super.onCreate(savedInstanceState);
+        setContentView(getLayoutRootId());
+        translucentStatusBar();
+
         bindService();
         SwitchLang();
     }
+
+    // 设置沉浸式状态栏, 并且设置状态栏占位留白;
+    protected abstract void translucentStatusBar();
+
+    //
+    protected abstract int getLayoutRootId ();
 
     private void bindService() {
         Intent intent = null;
