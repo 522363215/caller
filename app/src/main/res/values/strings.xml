@@ -167,7 +167,7 @@
     <string name="permission_read_call_log_des">to enable block unwanted calls</string>
     <string name="permission_for_show_call_flash">show call flash</string>
     <string name="permission_for_answer_call">answering calls</string>
-    <string name="setting_call_after">Caller ID</string>
+    <string name="setting_call_after">Call Assistant</string>
     <string name="setting_caller_show">Caller Show</string>
     <string name="permission_denied_txt">Permission denied, please try again</string>
     <string name="permission_next">NEXT</string>
@@ -223,4 +223,7 @@
     <string name="click_like_tip">下载后才可以收藏</string>
     <string name="permission_grand_title_desc">We will not upload and store any of your data, like contacts, call logs, photos etc.</string>
     <string name="notification_new_flash_title">Try a new Call Flash Show theme!</string>
+    <string name="setting_call_after_desc">Call Assistant will remind you of missed calls (May contain ads).</string>
+    <string name="setting_block_desc">to block your unwanted calls.</string>
+    <string name="setting_caller_show_desc">to show call flash screen for incoming calls.</string>
 </resources>

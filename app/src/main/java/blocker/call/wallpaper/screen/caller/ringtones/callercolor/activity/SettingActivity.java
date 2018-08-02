@@ -23,7 +23,6 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
     private SwitchButton sbCallFlash;
     private boolean enableBlock, enableCallerId, enableMessage, enableCallFlash;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,7 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
         sbMessage = findViewById(R.id.sb_message);
         sbCallFlash = findViewById(R.id.sb_caller_show);
 
-        enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
+        enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
         enableBlock = BlockManager.getInstance().getBlockSwitchState();
         enableCallerId = PreferenceHelper.getBoolean(PreferenceHelper.PREF_KEY_ENABLE_SHOW_CALL_AFTER, PreferenceHelper.DEFAULT_VALUE_FOR_CALLER_ID);
         enableMessage = PreferenceHelper.getBoolean(PreferenceHelper.SHOW_MESSAGE_COME, PreferenceHelper.DEFAULT_VALUE_FOR_MESSAGE);
