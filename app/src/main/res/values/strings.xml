@@ -125,7 +125,7 @@
     <string name="download_failed_for_no_sd_permission">Grant the permission to download and save themes</string>
     <string name="about_send_apk">Share the App with friends</string>
     <string name="device_time_just">Right now</string>
-    <string name="splash_content">Smart Identifying &amp; Blocking Calls </string>
+    <string name="splash_content">来电从未如此特别</string>
     <string name="call_flash_gif_show_connecte">Connecting...</string>
     <string name="call_flash_gif_show_setting_des">It needs to enable system alert window permission.</string>
     <string name="notification_listener_setting_tip">Allow notification for answering calls, it will not be used for any other purpose.</string>

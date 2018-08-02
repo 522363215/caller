@@ -90,6 +90,14 @@
     <color name="color_FFFFB708">#FFFFB708</color>
     <color name="color_FF02D577">#FF02D577</color>
 
+    <color name="color_FF0000">#FF0000</color>
+    <color name="color_FFA200">#FFA200</color>
+    <color name="color_FEFF00">#FEFF00</color>
+    <color name="color_02D577">#02D577</color>
+    <color name="color_22FF9D">#22FF9D</color>
+    <color name="color_00AFFF">#00AFFF</color>
+    <color name="color_7E23FF">#7E23FF</color>
+
     <color name="color_bg_black_top">#FF212121</color>
     <color name="color_bg_black_main">#FF111111</color>
 </resources>

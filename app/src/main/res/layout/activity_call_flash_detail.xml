@@ -11,7 +11,7 @@
         android:id="@+id/gv_call_flash_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:scaleType="centerCrop" />
 
     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView
         android:id="@+id/call_flash_view"

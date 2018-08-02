@@ -77,7 +77,6 @@ public class GlideHelper {
         return Glide.with(mContext)
                 .load(urlOrPath)
                 .dontAnimate()
-                .centerCrop()
                 // 设置高斯模糊
                 .bitmapTransform(new BlurTransformation(mContext, 14, 3));
     }
@@ -86,7 +85,6 @@ public class GlideHelper {
         return Glide.with(mContext)
                 .load(resourceId)
                 .dontAnimate()
-                .centerCrop()
                 // 设置高斯模糊
                 .bitmapTransform(new BlurTransformation(mContext, 14, 3));
     }

@@ -22,11 +22,14 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1167,35 +1170,6 @@ public class Stringutil {
         return false;
     }
 
-    public static int getDrawableResID(int position) {
-        int resId = R.drawable.shape_shadow_circle_avatar_bg_1;
-        int i = position % 7;
-        switch (i) {
-            case 0:
-                resId = R.drawable.shape_shadow_circle_avatar_bg_1;
-                break;
-            case 1:
-                resId = R.drawable.shape_shadow_circle_avatar_bg_2;
-                break;
-            case 2:
-                resId = R.drawable.shape_shadow_circle_avatar_bg_3;
-                break;
-            case 3:
-                resId = R.drawable.shape_shadow_circle_avatar_bg_4;
-                break;
-            case 4:
-                resId = R.drawable.shape_shadow_circle_avatar_bg_5;
-                break;
-            case 5:
-                resId = R.drawable.shape_shadow_circle_avatar_bg_6;
-                break;
-            case 6:
-                resId = R.drawable.shape_shadow_circle_avatar_bg_7;
-                break;
-        }
-        return resId;
-    }
-
     /**
      * 判断是否是纯数字
      */
@@ -1234,5 +1208,42 @@ public class Stringutil {
             offset += array.length;
         }
         return result;
+    }
+
+    /**
+     * @param paramArray :被抽取数组
+     * @param count      :抽取元素的个数
+     * @function:从数组中随机抽取若干不重复元素
+     * @return:由抽取元素组成的新数组
+     */
+    public static int[] getRandomArray(int[] paramArray, int count) {
+        if (paramArray.length < count) {
+            return paramArray;
+        }
+        int[] newArray = new int[count];
+        Random random = new Random();
+        int temp = 0;//接收产生的随机数
+        List<Integer> list = new ArrayList<Integer>();
+        for (int i = 1; i <= count; i++) {
+            temp = random.nextInt(paramArray.length);//将产生的随机数作为被抽数组的索引
+            if (!(list.contains(temp))) {
+                newArray[i - 1] = paramArray[temp];
+                list.add(temp);
+            } else {
+                i--;
+            }
+        }
+
+        List<Integer> newList = new ArrayList<>();
+        for (int a : newArray) {
+            newList.add(a);
+        }
+        Collections.shuffle(newList);
+        int[] newArray2 = new int[newList.size()];
+        for (int i = 0; i < newList.size(); i++) {
+            newArray2[i] = newList.get(i);
+        }
+
+        return newArray2;
     }
 }
