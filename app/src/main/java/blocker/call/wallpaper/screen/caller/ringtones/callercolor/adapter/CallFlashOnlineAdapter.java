@@ -183,6 +183,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 holder.gv_bg.setVisibility(View.VISIBLE);
                 holder.callFlashView.setVisibility(View.INVISIBLE);
+                holder.callFlashView.pause();
                 holder.callFlashView.stop();
             }
 

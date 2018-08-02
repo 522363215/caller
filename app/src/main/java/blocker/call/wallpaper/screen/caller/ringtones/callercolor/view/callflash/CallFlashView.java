@@ -119,20 +119,20 @@ public class CallFlashView extends RelativeLayout {
             mVideoView.stopPlayback();
             mVideoView.setVisibility(INVISIBLE);
             isStop.set(true);
+            mIsPlaying = false;
         }
     }
 
     public void pause() {
+        mIsPlaying = false;
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
-            mIsPlaying = false;
-            isPause.set(true);
             //记录播放的progress,避免黑屏
             mVideoView.pause();
             mVideoPlayProgress = mVideoView.getCurrentPosition();
+            isPause.set(true);
         } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null) {
             mCustomAnimView.update(true, mCallFlashInfo.flashType);
             isPause.set(true);
-            mIsPlaying = false;
         }
     }
 
@@ -162,6 +162,8 @@ public class CallFlashView extends RelativeLayout {
             mCustomAnimView.setVisibility(VISIBLE);
             int flashType = info.flashType;
             mCustomAnimView.startAnim(flashType);
+            mIsPlaying = true;
+            isPause.set(false);
         }
     }
 
@@ -202,6 +204,7 @@ public class CallFlashView extends RelativeLayout {
         if (mGlideView != null && !TextUtils.isEmpty(path) && new File(info.path).exists()) {
             mGlideView.setVisibility(VISIBLE);
             mGlideView.showGif(path);
+            mIsPlaying = true;
         } else {
             showPreview(info);
         }
