@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp8"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dp6"
@@ -24,17 +24,27 @@
         android:paddingStart="@dimen/dp16"
         android:paddingTop="@dimen/dp6">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_caller_show"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-        <View
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_caller_show"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_caller_show_desc"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
         <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
             android:id="@+id/sb_caller_show"
@@ -52,7 +62,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp8"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dp6"
@@ -62,17 +72,27 @@
         android:paddingStart="@dimen/dp16"
         android:paddingTop="@dimen/dp6">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/call_after_block"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-        <View
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/block_setting_name"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_block_desc"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
         <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
             android:id="@+id/sb_block"
@@ -90,7 +110,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp8"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dp6"
@@ -100,17 +120,27 @@
         android:paddingStart="@dimen/dp16"
         android:paddingTop="@dimen/dp6">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_call_after"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-        <View
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_call_after"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_call_after_desc"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
         <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
             android:id="@+id/sb_caller_id"
