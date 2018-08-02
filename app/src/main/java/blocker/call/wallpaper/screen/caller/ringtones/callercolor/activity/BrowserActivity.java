@@ -10,25 +10,20 @@ import android.webkit.WebViewClient;
 
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.FunctionUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.LJWebView;
 
 public class BrowserActivity extends BaseActivity {
-    
-
-
     private LJWebView mLJWebView = null;
     private String mUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_PROGRESS);// 让进度条显示在标题栏上
-
-        setContentView(R.layout.activity_browser);
-
+        super.onCreate(savedInstanceState);
 
         ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
         mUrl = ConstantUtils.URL_PRIVACY;
@@ -70,6 +65,16 @@ public class BrowserActivity extends BaseActivity {
         });
 
         mLJWebView.loadUrl(mUrl);
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this);
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_browser;
     }
 
 }

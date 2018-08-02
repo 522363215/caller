@@ -19,6 +19,7 @@ import java.util.List;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.SmsComeAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.Message;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
@@ -39,11 +40,20 @@ public class SmsComeActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sms_come);
         isAlive = true;
         mClassName = getClass().getName();
         initView();
         onNewIntent(getIntent());
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this);
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_sms_come;
     }
 
     private void initData(Intent intent) {

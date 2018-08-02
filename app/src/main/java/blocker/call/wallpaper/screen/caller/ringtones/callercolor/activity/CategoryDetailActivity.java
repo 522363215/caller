@@ -11,14 +11,24 @@ import com.md.serverflash.beans.Category;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashLocalListFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 
 public class CategoryDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_category);
         onNewIntent(getIntent());
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this);
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_detail_category;
     }
 
     @Override

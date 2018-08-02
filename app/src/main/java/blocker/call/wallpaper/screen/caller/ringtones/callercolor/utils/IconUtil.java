@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -14,6 +13,8 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.text.TextUtils;
 import android.util.LruCache;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 
 
@@ -106,5 +107,21 @@ public class IconUtil {
         renderScript.destroy();
 
         return inputBmp;
+    }
+
+    public static Bitmap getBitmap(Context context, int layoutId) {
+        //加载xml布局文件
+        LayoutInflater factory = LayoutInflater.from(context);
+        View view = factory.inflate(layoutId, null);
+        //启用绘图缓存
+        view.setDrawingCacheEnabled(true);
+        //调用下面这个方法非常重要，如果没有调用这个方法，得到的bitmap为null
+        view.measure(View.MeasureSpec.makeMeasureSpec(256, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(256, View.MeasureSpec.EXACTLY));
+        //这个方法也非常重要，设置布局的尺寸和位置
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        //获得绘图缓存中的Bitmap
+        view.buildDrawingCache();
+        return view.getDrawingCache();
     }
 }

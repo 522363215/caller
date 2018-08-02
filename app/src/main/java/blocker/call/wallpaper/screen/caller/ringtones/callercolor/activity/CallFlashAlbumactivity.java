@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +22,8 @@ import com.md.flashset.manager.CallFlashManager;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.FileUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import event.EventBus;
@@ -41,13 +44,31 @@ public class CallFlashAlbumactivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().addFlags(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call_flash_album);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
 //        initAds();
         init();
         listener();
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this, true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // 全屏时增加StatusBar站位的留白
+            ViewGroup group = findViewById(R.id.layout_root);
+            View view = new View(this);
+            view.setBackgroundColor(getResources().getColor(R.color.color_bg_black_main));
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtil.getStatusBarHeight());
+            view.setLayoutParams(params);
+            group.addView(view, 0);
+        }
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_call_flash_album;
     }
 
     @Override

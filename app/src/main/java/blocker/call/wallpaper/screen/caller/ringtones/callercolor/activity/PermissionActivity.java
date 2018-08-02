@@ -16,6 +16,7 @@ import java.util.List;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.PermissionShowAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.PermissionInfo;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SystemInfoUtil;
@@ -36,10 +37,19 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_permission);
         onNewIntent(getIntent());
         initView();
         initData();
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this);
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_permission;
     }
 
     @Override

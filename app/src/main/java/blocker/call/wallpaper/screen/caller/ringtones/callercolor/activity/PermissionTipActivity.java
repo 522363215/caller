@@ -36,10 +36,9 @@ public class PermissionTipActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         this.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         this.getWindow().setWindowAnimations(R.style.dialog_animation);
-        setContentView(R.layout.activity_notification_listener_setting_tip);
+        super.onCreate(savedInstanceState);
         mPremissionFor = getIntent().getStringExtra("permission_for");
         boolean isAutostartboot = getIntent().getBooleanExtra("is_auto_start_boot", false);
         boolean isShowOnLock = getIntent().getBooleanExtra("is_show_on_lock", false);
@@ -110,6 +109,16 @@ public class PermissionTipActivity extends BaseActivity implements View.OnClickL
                 }
             }, 1000);
         }
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_notification_listener_setting_tip;
     }
 
     private void startXiaoMiAnim() {
