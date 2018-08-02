@@ -161,8 +161,8 @@
     <string name="permission_call_permission_des">to enable answer the calls</string>
     <string name="permission_show_on_lock_title">Show on lock screen</string>
     <string name="permission_show_on_lock_des">to shown on the lock screen</string>
-    <string name="permission_auto_start_title">自启动显示来电秀</string>
-    <string name="permission_auto_start_des">重启手机后能够显示来电秀</string>
+    <string name="permission_auto_start_title">Allow to autoStart</string>
+    <string name="permission_auto_start_des">to works for every calls</string>
     <string name="permission_read_call_log_title">Read call logs</string>
     <string name="permission_read_call_log_des">to enable block unwanted calls</string>
     <string name="permission_for_show_call_flash">show call flash</string>
@@ -196,7 +196,7 @@
     <string name="permission_set">SET</string>
     <string name="permission_set_auto_start">Allow apps to auto start to works for every calls</string>
     <string name="permission_sett_lock_screen">Allow apps to show on lock screen for call flash screens</string>
-    <string name="permission_xiao_mi_tip">(滑动到屏幕最底部)</string>
+    <string name="permission_xiao_mi_tip">(slide down to bottom)</string>
 
     <!--这几个权限描述为小米手机中的描述，不能修改,多语言也需要与小米手机中的描述一致-->
     <string name="permission_xiao_mi_overlay_title">Display pop_up window</string>
