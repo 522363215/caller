@@ -30,6 +30,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
@@ -199,8 +200,9 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
             if (videoFile != null) {
                 if (videoFile.exists()) {
+                    boolean enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
                     holder.iv_download.setVisibility(View.GONE);
-                    holder.iv_call_select.setVisibility((mCurrentFlash != null && mCurrentFlash.equals(info))
+                    holder.iv_call_select.setVisibility((mCurrentFlash != null && mCurrentFlash.equals(info) && enableCallFlash)
                             ? View.VISIBLE : View.GONE);
                 } else {
                     holder.iv_download.setVisibility(View.VISIBLE);
@@ -213,6 +215,8 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void setCallFlashShow(NormalViewHolder holder, int pos) {
+        boolean enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
+        if (!enableCallFlash) return;
         CallFlashInfo info = getItem(pos);
         if (mCurrentFlash == null || info == null || !mCurrentFlash.equals(info)) return;
         float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);

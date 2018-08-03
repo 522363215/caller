@@ -214,6 +214,7 @@
 
 
     <string name="mine_current_call_flash">Current Call Flash</string>
+    <string name="mine_current_call_flash_is_close">Call Flash Closed</string>
     <string name="mine_set_before">设置记录</string>
     <string name="mine_downloaded">已下载</string>
     <string name="mine_collect">@string/side_slip_collection</string>
@@ -226,4 +227,8 @@
     <string name="setting_call_after_desc">to remind you of missed calls (May contain ads).</string>
     <string name="setting_block_desc">to block your unwanted calls.</string>
     <string name="setting_caller_show_desc">to show call flash screen for incoming calls.</string>
+
+    <string name="setting_close_call_assistant_tip">关闭之后将不会显示重要的来电信息，是否关闭？</string>
+    <string name="setting_close_block_tip">关闭之后将不会再拦截垃圾电话，是否关闭？</string>
+    <string name="setting_close_caller_show_tip">关闭之后将不会再显示炫酷的来电秀，是否关闭？</string>
 </resources>

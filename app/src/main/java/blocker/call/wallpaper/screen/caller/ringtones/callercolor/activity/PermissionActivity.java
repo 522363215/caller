@@ -157,13 +157,15 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
 
 
         if (SystemInfoUtil.isMiui()) {
-            PermissionInfo showOnLockPermission = new PermissionInfo();
-            showOnLockPermission.title = getString(R.string.permission_show_on_lock_title);
-            showOnLockPermission.permissionDes = getString(R.string.permission_show_on_lock_des);
-            showOnLockPermission.permission = PermissionUtils.PERMISSION_SHOW_ON_LOCK;
-            showOnLockPermission.requestCode = PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK;
-            showOnLockPermission.isSpecialPermission = true;
-            mPermissionInfos.add(showOnLockPermission);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                PermissionInfo showOnLockPermission = new PermissionInfo();
+                showOnLockPermission.title = getString(R.string.permission_show_on_lock_title);
+                showOnLockPermission.permissionDes = getString(R.string.permission_show_on_lock_des);
+                showOnLockPermission.permission = PermissionUtils.PERMISSION_SHOW_ON_LOCK;
+                showOnLockPermission.requestCode = PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK;
+                showOnLockPermission.isSpecialPermission = true;
+                mPermissionInfos.add(showOnLockPermission);
+            }
 
             PermissionInfo autoStartPermission = new PermissionInfo();
             autoStartPermission.title = getString(R.string.permission_auto_start_title);

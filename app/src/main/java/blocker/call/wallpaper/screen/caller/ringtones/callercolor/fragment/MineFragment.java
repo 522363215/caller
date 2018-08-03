@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.md.flashset.bean.CallFlashDataType;
 import com.md.flashset.bean.CallFlashInfo;
@@ -30,7 +31,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
  * @author zhq
  */
 public class MineFragment extends Fragment implements View.OnClickListener {
-
     private static final String TAG = "MineFragment";
     private GlideView mGvBgCurrent;
     private RecyclerView mRvSetRecord;
@@ -51,6 +51,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private View mLayoutCollectAllBtn;
     private View mLayoutSetRecordAllBtn;
     private View mLayoutDownloadedAllBtn;
+    private TextView mTvCurrentCallFlashTitle;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,8 +92,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         //当前设置
         mGvBgCurrent = view.findViewById(R.id.gv_bg_current);
         mLayoutNoCallFlash = view.findViewById(R.id.layout_no_call_flash);
+        mTvCurrentCallFlashTitle = view.findViewById(R.id.tv_current_call_flash_title);
         mTvView = view.findViewById(R.id.tv_view);
         mGvBgCurrent.setOnClickListener(this);
+        mTvView.setOnClickListener(this);
 
         //设置记录
         mLayoutSetRecord = view.findViewById(R.id.layout_set_record);
@@ -147,7 +150,14 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             } else {
                 mGvBgCurrent.showImage(mCurrentCallFlashInfo.imgResId);
             }
-
+            boolean isCallFlashOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
+            if (isCallFlashOn) {
+                mTvCurrentCallFlashTitle.setText(R.string.mine_current_call_flash);
+                mTvCurrentCallFlashTitle.setTextColor(getResources().getColor(R.color.white));
+            } else {
+                mTvCurrentCallFlashTitle.setText(R.string.mine_current_call_flash_is_close);
+                mTvCurrentCallFlashTitle.setTextColor(getResources().getColor(R.color.color_FFE54646));
+            }
         } else {
             mGvBgCurrent.setVisibility(View.GONE);
             mLayoutNoCallFlash.setVisibility(View.VISIBLE);
@@ -228,6 +238,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 if (mCurrentCallFlashInfo != null) {
                     ActivityBuilder.toCallFlashDetail(getActivity(), mCurrentCallFlashInfo, false);
                 }
+                break;
+            case R.id.tv_view:
+                ActivityBuilder.toMain(getActivity(), ActivityBuilder.FRAGMENT_HOME);
                 break;
             case R.id.layout_collect_all_btn:
                 ActivityBuilder.toCallFlashList(getActivity(), CallFlashDataType.CALL_FLASH_DATA_COLLECTION);

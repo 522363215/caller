@@ -17,9 +17,9 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
  */
 public class ActivityBuilder {
     /**
-     * 表示从callFlash 结果页返回时回到MainActivity 不需要改变page
+     * 跳转到mainActivity 不需要改变page
      */
-    public static final int BACK_FROM_CALL_FLASH_RESULT = -1024;
+    public static final int NO_CHANGE_FRAGMENT = -1024;
     public static final String MAIN_FRAGMENT_INDEX = "main_fragment_index";
     public static final String IS_COME_FROM_DESKTOP = "is_come_from_desktop";
     public static final String IS_COME_FROM_CALL_AFTER = "is_come_from_call_after";

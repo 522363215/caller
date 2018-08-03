@@ -11,7 +11,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,7 +31,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.MainPagerAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.NotifyInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventLanguageChange;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashEnable;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
@@ -40,7 +38,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.Categ
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.MineFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.NotifyManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -271,7 +268,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void initIndex(Intent intent) {
         currentPage = intent.getIntExtra("fragment_index", 0xff);
         //此值表示从callFlash 结果页返回时回到MainActivity 不需要改变page
-        if (currentPage == ActivityBuilder.BACK_FROM_CALL_FLASH_RESULT) {
+        if (currentPage == ActivityBuilder.NO_CHANGE_FRAGMENT) {
             return;
         }
         if (currentPage >= ActivityBuilder.MAX_FRAGEMNTS) {

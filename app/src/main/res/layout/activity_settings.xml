@@ -46,16 +46,27 @@
 
         </LinearLayout>
 
-        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
-            android:id="@+id/sb_caller_show"
+        <RelativeLayout
             android:layout_width="@dimen/dp48"
-            android:layout_height="@dimen/dp26"
-            app:sb_button_color="@color/color_FFBABECB"
-            app:sb_checked="false"
-            app:sb_checked_color="@color/color_FF27BB56"
-            app:sb_shadow_effect="true"
-            app:sb_show_indicator="false"
-            app:sb_uncheck_color="@color/color_FF22222D" />
+            android:layout_height="@dimen/dp26">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
+                android:id="@+id/sb_caller_show"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="@dimen/dp26"
+                android:layout_centerInParent="true"
+                app:sb_button_color="@color/color_FFBABECB"
+                app:sb_checked="false"
+                app:sb_checked_color="@color/color_FF27BB56"
+                app:sb_shadow_effect="true"
+                app:sb_show_indicator="false"
+                app:sb_uncheck_color="@color/color_FF22222D" />
+
+            <TextView
+                android:id="@+id/tv_switch_caller_show"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
 
     </LinearLayout>
 
@@ -94,16 +105,27 @@
 
         </LinearLayout>
 
-        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
-            android:id="@+id/sb_block"
+        <RelativeLayout
             android:layout_width="@dimen/dp48"
-            android:layout_height="@dimen/dp26"
-            app:sb_button_color="@color/color_FFBABECB"
-            app:sb_checked="false"
-            app:sb_checked_color="@color/color_FF27BB56"
-            app:sb_shadow_effect="true"
-            app:sb_show_indicator="false"
-            app:sb_uncheck_color="@color/color_FF22222D" />
+            android:layout_height="@dimen/dp26">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
+                android:id="@+id/sb_block"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="@dimen/dp26"
+                app:sb_button_color="@color/color_FFBABECB"
+                app:sb_checked="false"
+                app:sb_checked_color="@color/color_FF27BB56"
+                app:sb_shadow_effect="true"
+                app:sb_show_indicator="false"
+                app:sb_uncheck_color="@color/color_FF22222D" />
+
+            <TextView
+                android:id="@+id/tv_switch_block"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
 
     </LinearLayout>
 
@@ -142,16 +164,27 @@
 
         </LinearLayout>
 
-        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
-            android:id="@+id/sb_caller_id"
+        <RelativeLayout
             android:layout_width="@dimen/dp48"
-            android:layout_height="@dimen/dp26"
-            app:sb_button_color="@color/color_FFBABECB"
-            app:sb_checked="false"
-            app:sb_checked_color="@color/color_FF27BB56"
-            app:sb_shadow_effect="true"
-            app:sb_show_indicator="false"
-            app:sb_uncheck_color="@color/color_FF22222D" />
+            android:layout_height="@dimen/dp26">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
+                android:id="@+id/sb_caller_id"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="@dimen/dp26"
+                app:sb_button_color="@color/color_FFBABECB"
+                app:sb_checked="false"
+                app:sb_checked_color="@color/color_FF27BB56"
+                app:sb_shadow_effect="true"
+                app:sb_show_indicator="false"
+                app:sb_uncheck_color="@color/color_FF22222D" />
+
+            <TextView
+                android:id="@+id/tv_switch_caller_id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
 
     </LinearLayout>
 
@@ -181,16 +214,27 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
-            android:id="@+id/sb_message"
+        <RelativeLayout
             android:layout_width="@dimen/dp48"
-            android:layout_height="@dimen/dp26"
-            app:sb_button_color="@color/color_FFBABECB"
-            app:sb_checked="false"
-            app:sb_checked_color="@color/color_FF27BB56"
-            app:sb_shadow_effect="true"
-            app:sb_show_indicator="false"
-            app:sb_uncheck_color="@color/color_FF22222D" />
+            android:layout_height="@dimen/dp26">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
+                android:id="@+id/sb_message"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="@dimen/dp26"
+                app:sb_button_color="@color/color_FFBABECB"
+                app:sb_checked="false"
+                app:sb_checked_color="@color/color_FF27BB56"
+                app:sb_shadow_effect="true"
+                app:sb_show_indicator="false"
+                app:sb_uncheck_color="@color/color_FF22222D" />
+
+            <TextView
+                android:id="@+id/tv_switch_message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
 
     </LinearLayout>
 
