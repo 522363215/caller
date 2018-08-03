@@ -139,6 +139,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_click"
                     android:gravity="center_vertical"
+                    android:visibility="gone"
                     android:padding="@dimen/dp16">
 
                     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView

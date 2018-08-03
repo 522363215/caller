@@ -134,15 +134,15 @@
     <string name="no_app_to_share">"Sorry, you don't have apps available to share."</string>
     <string name="no_online_call_flash_list_tip">no call flash</string>
     <string name="no_collection_call_flash_list_tip">暂无记录</string>
-    <string name="add_block_contact_title">"Call Log"</string>
-    <string name="block_option_open_switch">"Open Block"</string>
-    <string name="block_option_toast_open_success">"Open block switch success!"</string>
-    <string name="block_option_close_switch">"Close Block"</string>
-    <string name="block_option_toast_close_success">"Close block switch success!"</string>
-    <string name="block_option_clear_all_contacts">"Clear All Contacts"</string>
-    <string name="block_option_toast_clear_all_contacts_success">"Clear all contacts success!"</string>
+    <string name="add_block_contact_title">"Call Logs"</string>
+    <string name="block_option_open_switch">"Enable Block"</string>
+    <string name="block_option_toast_open_success">"Enable block success!"</string>
+    <string name="block_option_close_switch">"Disable Block"</string>
+    <string name="block_option_toast_close_success">"Disable block success!"</string>
+    <string name="block_option_clear_all_contacts">"Remove all block list"</string>
+    <string name="block_option_toast_clear_all_contacts_success">"Remove all block list success!"</string>
     <string name="block_option_clear_all_history">"Clear All Block Logs"</string>
-    <string name="block_option_toast_clear_all_history_success">"Clear all history success!"</string>
+    <string name="block_option_toast_clear_all_history_success">"Clear all block logs success!"</string>
     <string name="block_list_empty">No records</string>
     <string name="block_contacts_added_failed">Added Failed!</string>
     <string name="block_contacts_remove_success">Remove Success!</string>
@@ -221,9 +221,9 @@
     <string name="mine_no_current_call_flash">没有设置，点击查看去设置</string>
 
     <string name="click_like_tip">下载后才可以收藏</string>
-    <string name="permission_grand_title_desc">We will not upload and store any of your data, like contacts, call logs, photos etc.</string>
+    <string name="permission_grand_title_desc">We will not upload or store any of your data, like contacts, call logs, photos etc.</string>
     <string name="notification_new_flash_title">Try a new Call Flash Show theme!</string>
-    <string name="setting_call_after_desc">Call Assistant will remind you of missed calls (May contain ads).</string>
+    <string name="setting_call_after_desc">to remind you of missed calls (May contain ads).</string>
     <string name="setting_block_desc">to block your unwanted calls.</string>
     <string name="setting_caller_show_desc">to show call flash screen for incoming calls.</string>
 </resources>
