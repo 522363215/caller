@@ -295,7 +295,11 @@ public class PermissionUtils {
         }
 
         if (PERMISSION_SHOW_ON_LOCK.equals(permission)) {
-            return PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_LAST_TO_XIAO_MI_SHOW_ON_LOCK_PERMISSION_ACTIVITY, 0) > 0;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                return PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_LAST_TO_XIAO_MI_SHOW_ON_LOCK_PERMISSION_ACTIVITY, 0) > 0;
+            } else {
+                return true;
+            }
         }
 
         if (Manifest.permission_group.PHONE.equals(permission)) {
