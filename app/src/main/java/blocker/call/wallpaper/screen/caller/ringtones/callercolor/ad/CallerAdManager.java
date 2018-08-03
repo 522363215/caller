@@ -39,7 +39,7 @@ public class CallerAdManager {
     public static final String ADMOB_ID_ADV_RESULT_FIRST = "ca-app-pub-5980661201422605/6144638504";//结果页首次colorphone-3
     public static final String ADMOB_ID_ADV_RESULT_NORMAL = "ca-app-pub-5980661201422605/2125610249";//结果页普通colorphone-4
     public static final String ADMOB_ID_ADV_MINE_NORMAL = "ca-app-pub-5980661201422605/6560922541";//mine页普通colorphone-7
-    public static final String ADMOB_ID_ADV_END_CALL_NORMAL = "ca-app-pub-5980661201422605/1776419593";//mine页普通colorphone-8
+    public static final String ADMOB_ID_ADV_END_CALL_NORMAL = "ca-app-pub-5980661201422605/1776419593";//通话结束页colorphone-8
 
 
     //插屏
