@@ -8,8 +8,13 @@ import android.content.IntentFilter;
 
 import com.md.block.core.BlockManager;
 import com.md.flashset.CallFlashSet;
+import com.md.serverflash.ThemeSyncManager;
+import com.md.serverflash.beans.Theme;
+import com.md.serverflash.callback.TopicThemeCallback;
 
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PhoneStateListenImpl;
@@ -17,6 +22,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.CallerCommonReceiver;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.MessageReceiver;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.NetworkConnectChangedReceiver;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 /**
@@ -55,6 +61,20 @@ public class ServiceProcessingManager {
 
         startWaketask2(); //long task
 
+        //缓存首页数据
+        cacheHomeData();
+    }
+
+    public void cacheHomeData() {
+        ThemeSyncManager.getInstance().syncTopicData(new String[]{ConstantUtils.HOME_DATA_TYPE}, 150, new TopicThemeCallback() {
+            @Override
+            public void onSuccess(int code, Map<String, List<Theme>> data) {
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+            }
+        });
     }
 
     private void registerReceivers(Context context) {
@@ -91,7 +111,7 @@ public class ServiceProcessingManager {
             context.unregisterReceiver(mNetworkChangeListener);
             context.unregisterReceiver(mCallerCommonReceiver);
             context.unregisterReceiver(mMessageReceiver);
-        }catch (Exception e){
+        } catch (Exception e) {
             LogUtil.e(TAG, " unregisterReceivers: " + e.getMessage());
         }
 

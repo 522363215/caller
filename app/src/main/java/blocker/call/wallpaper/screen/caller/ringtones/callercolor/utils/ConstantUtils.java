@@ -1,5 +1,7 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils;
 
+import com.md.flashset.manager.CallFlashManager;
+
 /**
  * Created by cattom on 11/25/2015.
  */
@@ -20,5 +22,8 @@ public class ConstantUtils {
     public final static String AD_PREF_FILE = "ad_com_colorphone_pref";
 
     public static final String PREF_KEY_UPDATE_PARAM_TIME = "update_server_param_time";
+
+    //首页中数据 类型
+    public static final String HOME_DATA_TYPE = CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED;
 
 }
