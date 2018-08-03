@@ -67,7 +67,11 @@ public class BlockListFragment extends Fragment {
     public void updateData() {
         model.clear();
         initData();
-        mAdapter.notifyDataSetChanged();
+        lvBlockContact.setVisibility(model.isEmpty() ? View.GONE : View.VISIBLE);
+        layoutEmpty.setVisibility(model.isEmpty() ? View.VISIBLE : View.GONE);
+        if (!model.isEmpty()) {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Nullable

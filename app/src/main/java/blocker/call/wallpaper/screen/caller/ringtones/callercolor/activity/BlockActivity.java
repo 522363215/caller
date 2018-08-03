@@ -196,7 +196,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
             break;
             case R.id.fiv_option: {
                 BlockOptionWindow window = new BlockOptionWindow(BlockActivity.this, mCurrentIndex);
-                window.setWidth(DeviceUtil.dp2Px(140));
+                window.setWidth(DeviceUtil.dp2Px(180));
 
                 window.setClearCallback(new BlockOptionWindow.OnClearDataCallback() {
                     @Override

@@ -6,7 +6,10 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.md.block.beans.BlockInfo;
 import com.md.block.core.BlockManager;
+
+import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.BlockListFragment;
@@ -44,10 +47,28 @@ public class BlockOptionWindow extends PopupWindow implements View.OnClickListen
         tvBlockSwitch = root.findViewById(R.id.tv_block_switch);
         tvClearAll = root.findViewById(R.id.tv_clear_all);
 
+        View blockClear = root.findViewById(R.id.layout_block_clear);
+
         tvBlockSwitch.setText(BlockManager.getInstance().getBlockSwitchState() ?
                 R.string.block_option_close_switch : R.string.block_option_open_switch);
-        tvClearAll.setText(mCurrentFragmentIndex == BlockListFragment.BLOCK_LIST_SHOW_CONTACT ?
-                R.string.block_option_clear_all_contacts : R.string.block_option_clear_all_history);
+
+        if (mCurrentFragmentIndex == BlockListFragment.BLOCK_LIST_SHOW_CONTACT) {
+            List<BlockInfo> list = BlockManager.getInstance().getBlockContacts();
+            if (list != null && list.size() > 0) {
+                blockClear.setVisibility(View.VISIBLE);
+                tvClearAll.setText(R.string.block_option_clear_all_contacts);
+            } else {
+                blockClear.setVisibility(View.GONE);
+            }
+        } else if (mCurrentFragmentIndex == BlockListFragment.BLOCK_LIST_SHOW_HISTORY) {
+            List<BlockInfo> list = BlockManager.getInstance().getBlockHistory();
+            if (list != null && list.size() > 0) {
+                blockClear.setVisibility(View.VISIBLE);
+                tvClearAll.setText(R.string.block_option_clear_all_history);
+            } else {
+                blockClear.setVisibility(View.GONE);
+            }
+        }
 
         tvBlockSwitch.setOnClickListener(this);
         tvClearAll.setOnClickListener(this);
