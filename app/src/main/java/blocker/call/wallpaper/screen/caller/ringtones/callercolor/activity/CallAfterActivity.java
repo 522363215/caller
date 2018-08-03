@@ -71,7 +71,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
         CommonUtils.translucentStatusBar(this, true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // 全屏时增加StatusBar站位的留白
-            ViewGroup group = findViewById(R.id.rootview);
+            ViewGroup group = findViewById(R.id.rl_caller);
             View view = new View(this);
             view.setBackgroundColor(getResources().getColor(R.color.color_FF0A2134));
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtil.getStatusBarHeight());
@@ -93,7 +93,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
         statistic();
         if (mInfo != null) {
             layout_number_infos.setVisibility(View.VISIBLE);
-            findViewById(R.id.rootview).setBackgroundColor(getResources().getColor(R.color.color_FF0A2134));
+            findViewById(R.id.root_view).setBackgroundColor(getResources().getColor(R.color.color_FF0A2134));
         } else {
             finish();
         }

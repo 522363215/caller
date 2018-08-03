@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallAfterActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DateUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -33,6 +34,7 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
         if (enableCallerId) {
             CallLogInfo info = new CallLogInfo();
             info.callNumber = number;
+            info.callName = ContactManager.getInstance().getContactNameForNumber(number);
             info.callLoction = NumberUtil.getNumberLocationForCallLog(number);
             info.date = System.currentTimeMillis();
             info.callDate = DateUtils.getHmForTime(info.date, Locale.getDefault());
