@@ -73,7 +73,7 @@ public class StatisticsUtil {
             object.put("aid", androidId);
 
             SharedPreferences setting = ApplicationEx.getInstance().getGlobalSettingPreference();
-            String channel = getChannel(context);
+            String channel = getChannel();
             LogUtil.d("postData channel", channel);
             String from = setting.getString("from", "");
             String sub_ch = setting.getString("sub_ch", "");
@@ -166,7 +166,7 @@ public class StatisticsUtil {
             isPostingBaseData = false;
     }
 
-    public static String getChannel(Context context) {
+    public static String getChannel() {
         String channel = "";
         if (ApplicationEx.getInstance() != null) {
             // get from 'channel'
@@ -179,7 +179,7 @@ public class StatisticsUtil {
         // get from Manifest
         if (TextUtils.isEmpty(channel)) {
             try {
-                ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), 128);
+                ApplicationInfo info = ApplicationEx.getInstance().getPackageManager().getApplicationInfo(ApplicationEx.getInstance().getPackageName(), 128);
                 channel = info.metaData.getString("channel");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -193,7 +193,7 @@ public class StatisticsUtil {
         return channel;
     }
 
-    public static String getSubChannel(Context context) {
+    public static String getSubChannel() {
         String sub_ch = "";
         if (ApplicationEx.getInstance() != null) {
             sub_ch = PreferenceHelper.getString("sub_ch", "");

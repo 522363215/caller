@@ -5,7 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import com.lionmobi.sdk.adpriority.AdPriorityManager;
-import com.md.serverflash.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +14,7 @@ import java.util.Map;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 /**
  * Created by luowp on 2016/12/13.
@@ -33,15 +33,18 @@ public class AdvertisementSwitcher {
 
     private static final int AD_TYPE_OUNT = 2;//change this when update ad type
     public static final String AD_DISABLE_FLAG = "none";
-    public static final String SERVER_KEY_QUICK_CHARGING = "QUICK_CHARGING";
     public static final String SERVER_KEY_QUICK_DEFAULT = "DEFAULT";
     public static final String SERVER_KEY_END_CALL = "END_CALL";  //电话结束页
     public static final String SERVER_KEY_START_UP = "START_UP";  //启动页
+    public static final String SERVER_KEY_FLASH_MINE = "FLASH_MINE";  //来电秀MINE
+    public static final String SERVER_KEY_SET_RESULT = "SET_RESULT";           //来电秀设置结果结果
+    public static final String SERVER_KEY_IN_RESULT = "IN_RESULT";           //结果页插页广告
+    public static final String SERVER_KEY_FIRST_SHOW_ADMOB = "FIRST_SHOW_ADMOB";
+    //old
     public static final String SERVER_KEY_CALL_FLASH_SETTING = "CALL_FLASH_SETTING";  //来电秀设置, fakecall首页, calllog adapter, block2
     public static final String SERVER_KEY_COMMON_RESULT = "COMMON_RESULT";           //扫描结果，号码升级结果, 短信详情， 短信编辑
     public static final String SERVER_KEY_CLEAN_RESULT = "CLEAN_RESULT";           //短信清理结果
-    public static final String SERVER_KEY_SET_RESULT = "SET_RESULT";           //来电秀设置结果结果
-    public static final String SERVER_KEY_IN_RESULT = "IN_RESULT";           //结果页插页广告
+
     public static final String SERVER_KEY_CHARGING_ASSISTANT = "CHARGING_ASSISTANT";
     public static final String SERVER_KEY_CONTACT_BIG = "CONTACT_BIG";           //联系人大头像
     public static final String SERVER_KEY_CONTACT_BIG_NEW = "CONTACT_NEW_BIG";           //联系人大头像 新大图
@@ -49,14 +52,14 @@ public class AdvertisementSwitcher {
     public static final String SERVER_KEY_SMS_FLASH_SET_RESULT = "SMS_FLASH_SET_RESULT";           //短信秀设置结果页
     public static final String SERVER_KEY_SMS_FLASH_SHOW = "SMS_FLASH_SHOW";           //短信秀收到
     public static final String SERVER_KEY_CALL_FLASH_GROUP = "CALL_FLASH_GROUP";
-    public static final String SERVER_KEY_FLASH_PREVIEW = "FLASH_PREVIEW";  //来电秀预览
+
 
     public static final String SERVER_KEY_MISSED_CALL = "MISSED_CALL";  //电话结束页 - missed call
 
     public static final String SERVER_KEY_SCREEN_ON_TIPS = "SCREEN_ON_TIPS"; //解锁弹新的来电秀提示
 
     public static final String SERVER_KEY_CALL_FLASH_DOWN_GROUP = "CALL_FLASH_DOWN_GROUP";
-    public static final String SERVER_KEY_FIRST_SHOW_ADMOB = "FIRST_SHOW_ADMOB";
+
     public static final String SERVER_KEY_QUICK_SWIPE = "QUICK_SWIPE";  //左右下角快划
 
     private static AdvertisementSwitcher sInstance = null;
@@ -64,8 +67,8 @@ public class AdvertisementSwitcher {
 
     private ArrayList<String> mAdPriority = new ArrayList<String>() {
         {
-            add(AD_FACEBOOK);
             add(AD_ADMOB);
+            add(AD_FACEBOOK);
         }
     };
 
@@ -121,7 +124,7 @@ public class AdvertisementSwitcher {
             put(SERVER_KEY_CALL_FLASH_DOWN_GROUP, (ArrayList<String>) mAdGroupPriority.clone());
             put(SERVER_KEY_MISSED_CALL, (ArrayList<String>) mAdPriority.clone());
             put(SERVER_KEY_FIRST_SHOW_ADMOB, (ArrayList<String>) mFirstShowAdMobPriority.clone());
-            put(SERVER_KEY_FLASH_PREVIEW, (ArrayList<String>) mFirstShowAdMobPriority.clone());
+            put(SERVER_KEY_FLASH_MINE, (ArrayList<String>) mFirstShowAdMobPriority.clone());
             put(SERVER_KEY_QUICK_SWIPE, (ArrayList<String>) mAdPriority.clone());
         }
     };
@@ -160,22 +163,23 @@ public class AdvertisementSwitcher {
                 key = iterator.next();
                 priorityList = mgr.getPriorityList(key);
 
+
                 if (priorityList == null || priorityList.size() == 0) {
                     continue;
                 }
 
                 value = mPriorityInfo.get(key);
                 value.clear();
-                value.add(AD_DISABLE_FLAG);
-//                if (priorityList.contains(AD_DISABLE_FLAG)) {
-//                    value.add(AD_DISABLE_FLAG);
-//                } else {
-//                    if (isDebugTest) {
-//                        value.addAll(DebugPriority);
-//                    } else {
-//                        value.addAll(priorityList);
-//                    }
-//                }
+                if (priorityList.contains(AD_DISABLE_FLAG)) {
+                    value.add(AD_DISABLE_FLAG);
+                    LogUtil.d(LOG_TAG,  "contains none : " );
+                } else {
+                    if (isDebugTest) {
+                        value.addAll(DebugPriority);
+                    } else {
+                        value.addAll(priorityList);
+                    }
+                }
 
                 if (BuildConfig.DEBUG) {
                     String temp = "";

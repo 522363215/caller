@@ -15,14 +15,10 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.flurry.android.FlurryAgent;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.Locale;
 
@@ -32,8 +28,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobSchedulerService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.RomUtils;
@@ -45,6 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
     protected LanguageSettingUtil languageSetting;
     protected ApplicationEx app;
     //protected AppEventsLogger logger;
+    private final static String APP_ADMOB_ID = "ca-app-pub-5980661201422605~1016951821";
 
     protected ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
@@ -76,6 +71,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
 
         bindService();
         SwitchLang();
+
+        //init admob
+        MobileAds.initialize(this, APP_ADMOB_ID);
     }
 
     // 设置沉浸式状态栏, 并且设置状态栏占位留白;

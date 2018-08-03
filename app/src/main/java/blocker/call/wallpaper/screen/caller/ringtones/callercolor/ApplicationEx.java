@@ -13,6 +13,7 @@ import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
 import com.flurry.android.FlurryAgent;
+import com.lionmobi.sdk.adpriority.AdPriorityListener;
 import com.lionmobi.sdk.adpriority.AdPriorityManager;
 import com.md.serverflash.ThemeSyncManager;
 
@@ -20,6 +21,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobLocalService;
@@ -123,13 +125,14 @@ public class ApplicationEx extends Application {
         initCallFlashBase();
         // TODO: 2018/7/5 广告暂时屏蔽
 //        intiAdManager();
-//        initPriorityAds();
+        initPriorityAds();
+
     }
 
     private void initCallFlashBase() {
         int clientId = ConstantUtils.CALLER_STATISTICS_CHANNEL;
-        String channel = StatisticsUtil.getChannel(this);
-        String subChannel = StatisticsUtil.getSubChannel(this);
+        String channel = StatisticsUtil.getChannel();
+        String subChannel = StatisticsUtil.getSubChannel();
         long expireTime = 2 * android.text.format.DateUtils.HOUR_IN_MILLIS;
         // TODO: 2018/2/9 should modify params(testMode) to false;
         boolean testMode = false;
@@ -158,7 +161,7 @@ public class ApplicationEx extends Application {
         int versionCode = HttpUtil.pkgVersion(this);
         if (PreferenceHelper.getBoolean("is_first_start", true)) {
             PreferenceHelper.putBoolean("is_first_start", false);
-            PreferenceHelper.putLong("cid_inStall_time", currentTimeMillis);
+            PreferenceHelper.putLong("colorphone_inStall_time", currentTimeMillis);
             // 记录第一次安装的版本号
             PreferenceHelper.putInt(AppUtils.KEY_INIT_VERCODE, versionCode);
         }
@@ -195,6 +198,50 @@ public class ApplicationEx extends Application {
     public static boolean isReleaseHUAWEI() {
         boolean is = false; // 华为渠道包， 手动改为true
         return is;
+    }
+
+    private void initPriorityAds() {
+        try {
+            mAdPriorityMgr = AdPriorityManager.getInstance(MainInstance.getApplicationContext());
+            mAdPriorityMgr.setChannel(StatisticsUtil.getChannel());
+            mAdPriorityMgr.setSubChannel(StatisticsUtil.getSubChannel());
+            mAdPriorityMgr.setClientId(ConstantUtils.CALLER_STATISTICS_CHANNEL);
+            mAdPriorityMgr.setDomain(ConstantUtils.AD_PRIORITY_SERVER);
+            mAdPriorityMgr.setFirstSynServerConfigTime(getInstance().getGlobalSettingPreference().getLong("key_cid_first_sync_server_time", 0));
+
+            long firstLaunchTime = getInstance().getGlobalSettingPreference().getLong("colorphone_inStall_time", 0);
+            if (firstLaunchTime == 0) {
+                firstLaunchTime = System.currentTimeMillis();
+            }
+            mAdPriorityMgr.setFirstLaunch(firstLaunchTime);
+            AdvertisementSwitcher.getInstance().initFromConfigCache(mAdPriorityMgr);//do this init job sync in main thread
+
+            LogUtil.d("advertise", "initPriorityAds get channel: " + StatisticsUtil.getChannel());
+
+            mAdPriorityMgr.setAdPriorityListener(new AdPriorityListener() {
+                @Override
+                public void onPriorityLoaded() {
+                    if (System.currentTimeMillis() - mLastUpdateAdConfigTime < 5 * 60 * 1000) {
+                        return;
+                    }
+//
+                    LogUtil.d("advertise", "init ad priority onPriorityLoaded.");
+                    mLastUpdateAdConfigTime = System.currentTimeMillis();
+                    AdvertisementSwitcher.getInstance().updateConfig(mAdPriorityMgr);
+//                    LionLocalStorageManager.setLong(SharePrefConstant.LAST_REFRESH_AD_PRIORITY_CONFIG_TIME, System.currentTimeMillis());
+                }
+
+                @Override
+                public void onPriorityError(int i) {
+                    LogUtil.d("advertise", "init error.");
+                }
+            });
+
+            mAdPriorityMgr.getAdPriorityData();
+
+        } catch (Exception e) {
+            LogUtil.e("advertise", "initPriorityAds exception: " + e.getMessage());
+        }
     }
 
 }

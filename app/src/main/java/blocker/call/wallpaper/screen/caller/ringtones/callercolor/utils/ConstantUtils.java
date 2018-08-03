@@ -13,6 +13,7 @@ public class ConstantUtils {
     public final static int CALLER_STATISTICS_CHANNEL = 75; //
 
     public final static String SERVER_API_PARAM = "http://parameter.topsearchdomain.info/api.php";
+    public final static String AD_PRIORITY_SERVER = "ad.topsearchdomain.info";
     public final static String KEY_HTTP = "*2od2S!#";
 
     public final static String PREF_FILE = "com_colorphone_pref";
