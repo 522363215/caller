@@ -37,6 +37,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashOnlineAdLoaded;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
@@ -176,7 +177,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                 ActivityBuilder.toPermissionActivity(getActivity(), false);
                 break;
             case R.id.tv_view:
-                getActivity().finish();
+                ActivityBuilder.toMain(getActivity(), ActivityBuilder.FRAGMENT_HOME);
                 break;
         }
     }
@@ -368,28 +369,34 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             }
             CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
             View gvBackground = holder.itemView.findViewById(R.id.gv_bg);
-            float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);
-            if (isContinuePlay && viewShowPercent >= 1) {
-                if (view.isStopVideo() || mLastCurrentFlashIndex != mCurrentFlashIndex) {
-                    view.showCallFlashView(model.get(mCurrentFlashIndex));
-                } else {
-                    if (view.isPause()) {
-                        view.continuePlay();
-                    } else {
+            View iv_call_select = holder.itemView.findViewById(R.id.iv_select);
+            boolean enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
+            if (!enableCallFlash) {
+                iv_call_select.setVisibility(View.GONE);
+            } else {
+                iv_call_select.setVisibility(View.VISIBLE);
+                float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);
+                if (isContinuePlay && viewShowPercent >= 1) {
+                    if (view.isStopVideo() || mLastCurrentFlashIndex != mCurrentFlashIndex) {
                         view.showCallFlashView(model.get(mCurrentFlashIndex));
+                    } else {
+                        if (view.isPause()) {
+                            view.continuePlay();
+                        } else {
+                            view.showCallFlashView(model.get(mCurrentFlashIndex));
+                        }
+                    }
+                    gvBackground.setVisibility(View.GONE);
+                    view.setVisibility(View.VISIBLE);
+                } else {
+                    gvBackground.setVisibility(View.VISIBLE);
+                    view.setVisibility(View.GONE);
+                    if (view.isPlaying()) {
+                        view.pause();
                     }
                 }
-                gvBackground.setVisibility(View.GONE);
-                view.setVisibility(View.VISIBLE);
-            } else {
-                gvBackground.setVisibility(View.VISIBLE);
-                view.setVisibility(View.GONE);
-                if (view.isPlaying()) {
-                    view.pause();
-                }
+                mLastCurrentFlashIndex = mCurrentFlashIndex;
             }
-
-            mLastCurrentFlashIndex = mCurrentFlashIndex;
         }
     }
 
@@ -445,6 +452,8 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
     }
 
     private void setCallFlashViewPlay(RecyclerView recyclerView, int newState) {
+        boolean enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
+        if (!enableCallFlash) return;
         if (mDataType == CallFlashDataType.CALL_FLASH_DATA_HOME || mDataType == CallFlashDataType.CALL_FLASH_DATA_COLLECTION
                 || mDataType == CallFlashDataType.CALL_FLASH_DATA_DOWNLOADED || mDataType == CallFlashDataType.CALL_FLASH_DATA_SET_RECORD) {
             int index = mCurrentFlashIndex;

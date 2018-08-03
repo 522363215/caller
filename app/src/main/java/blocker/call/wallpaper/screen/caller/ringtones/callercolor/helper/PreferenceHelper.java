@@ -23,7 +23,7 @@ final public class PreferenceHelper {
     private static final String TAG = "PreferenceHelper";
     private static final String PREF_FILE_NAME = "com_callercolor_pref";
 
-    public static final boolean DEFAULT_VALUE_FOR_CALL_FLASH = true;
+    public static final boolean DEFAULT_VALUE_FOR_CALL_FLASH = false;
     public static final boolean DEFAULT_VALUE_FOR_CALLER_ID = true;
     public static final boolean DEFAULT_VALUE_FOR_MESSAGE = false;
 

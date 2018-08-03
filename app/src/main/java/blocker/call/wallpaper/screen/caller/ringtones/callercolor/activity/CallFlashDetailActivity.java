@@ -44,7 +44,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdMan
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.PreloadAdvertisement;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.SavingDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashDetailGroupAdShow;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventInterstitialAdLoadSuccess;
@@ -148,7 +147,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     @Override
-    protected void translucentStatusBar() {}
+    protected void translucentStatusBar() {
+    }
 
     @Override
     protected int getLayoutRootId() {
@@ -163,16 +163,15 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         startAnswerAnim();
         showDownloadProgress();
         setLikeAndDownload();
-//        setLike();
 
-        //test 模拟广告加载成功
-        Async.scheduleTaskOnUiThread(5000, new Runnable() {
-            @Override
-            public void run() {
-                setCallFlashLayout(148);
-                mLayourAd.setVisibility(View.VISIBLE);
-            }
-        });
+//        //test 模拟广告加载成功
+//        Async.scheduleTaskOnUiThread(5000, new Runnable() {
+//            @Override
+//            public void run() {
+//                setCallFlashLayout(148);
+//                mLayourAd.setVisibility(View.VISIBLE);
+//            }
+//        });
     }
 
     private void initView() {
@@ -399,7 +398,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     private void setActionButtonText(TextView textView) {
         if (textView != null) {
-            if (isCurrentFlashUsing) {
+            if (isCurrentFlashUsing && isFlashSwitchOn) {
                 textView.setText(R.string.call_flash_detail_setting_action_to_cancel);
             } else {
                 textView.setText(R.string.call_flash_detail_setting_action_to_set);
@@ -823,7 +822,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     private void setOrCancelFlash() {
         if (!isFinishing()) {
-            if (!isCurrentFlashUsing) {
+            if (!isCurrentFlashUsing || !isFlashSwitchOn) {
                 //单个权限请求，一个权限成功之后继续续请求下一个
                 requestSpecialPermission(PermissionUtils.PERMISSION_OVERLAY);
             } else {

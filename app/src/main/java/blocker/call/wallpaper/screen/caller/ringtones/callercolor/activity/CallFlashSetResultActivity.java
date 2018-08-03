@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
-import com.md.flashset.View.FlashLed;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 
@@ -420,8 +419,7 @@ public class CallFlashSetResultActivity extends BaseActivity {
     private void onFinish() {
         isShowResult = getIntent().getBooleanExtra("is_show_result", true);
         if (isShowResult && !mIsFromDesktop) {
-            //BACK_FROM_CALL_FLASH_RESULT表示不改变mainactiivty的page 页面
-            ActivityBuilder.toMain(this, ActivityBuilder.BACK_FROM_CALL_FLASH_RESULT);
+            ActivityBuilder.toMain(this, ActivityBuilder.FRAGMENT_HOME);
         } else {
             finish();
         }

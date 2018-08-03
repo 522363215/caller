@@ -50,9 +50,9 @@
                 android:layout_weight="1" />
 
             <LinearLayout
-                android:layout_marginRight="@dimen/dp8"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/dp8"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -109,7 +109,6 @@
 
         </LinearLayout>
     </RelativeLayout>
-
 
     <LinearLayout
         android:id="@+id/layout_btn"
