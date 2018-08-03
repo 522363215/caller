@@ -171,7 +171,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             holder.callFlashView.stop();
             setCallFlashShow(holder, pos);
 
-
             if (info.isOnlionCallFlash) {
                 String imgUrl = info.img_vUrl;
                 if (childViewHeight != 0 && childViewWidth != 0) {

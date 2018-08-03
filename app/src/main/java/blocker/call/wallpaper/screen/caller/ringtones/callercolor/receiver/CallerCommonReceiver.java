@@ -20,6 +20,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.NotifyInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.NotifyManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServiceProcessingManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
@@ -37,6 +38,7 @@ public class CallerCommonReceiver extends BroadcastReceiver {
             if (COMMON_CHECK_24.equals(intent.getAction())) {
                 LogUtil.d(TAG, "backgroundDownloadOnlionCallFlash COMMON_CHECK_24");
                 updateNewFlash(context);
+                ServiceProcessingManager.getInstance().cacheHomeData();
             }
 
             if (RANDOM_NOTIFY_TASK_24.equals(intent.getAction())) {
@@ -98,7 +100,7 @@ public class CallerCommonReceiver extends BroadcastReceiver {
         }
     }
 
-    private boolean isShowNewestFlashNotify (Theme newest) {
+    private boolean isShowNewestFlashNotify(Theme newest) {
         boolean bool = false;
 
         Calendar calendar = Calendar.getInstance();
