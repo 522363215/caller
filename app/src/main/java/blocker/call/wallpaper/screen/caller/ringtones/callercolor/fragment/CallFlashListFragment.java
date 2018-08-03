@@ -38,7 +38,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashList;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
@@ -71,7 +71,6 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
 
     private int mCurrentFlashIndex = -1;
     private GridLayoutManager mLayoutManager;
-    private RecyclerView.ViewHolder mCurrentFlashHolder;
     private int mLastCurrentFlashIndex;
 
     public static CallFlashListFragment newInstance(int dataType) {
@@ -367,7 +366,9 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                 return;
             }
             CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
-            if (isContinuePlay) {
+            View gvBackground = holder.itemView.findViewById(R.id.gv_bg);
+            float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);
+            if (isContinuePlay && viewShowPercent >= 1) {
                 if (view.isStopVideo() || mLastCurrentFlashIndex != mCurrentFlashIndex) {
                     view.showCallFlashView(model.get(mCurrentFlashIndex));
                 } else {
@@ -377,7 +378,11 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                         view.showCallFlashView(model.get(mCurrentFlashIndex));
                     }
                 }
+                gvBackground.setVisibility(View.GONE);
+                view.setVisibility(View.VISIBLE);
             } else {
+                gvBackground.setVisibility(View.VISIBLE);
+                view.setVisibility(View.GONE);
                 if (view.isPlaying()) {
                     view.pause();
                 }
@@ -407,11 +412,16 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            public int newState;
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (getActivity() == null || getActivity().isFinishing()) {
                     return;
                 }
+//                LogUtil.d(TAG, "onScrollStateChanged newState:" + newState);
+                this.newState = newState;
+                mAdapter.setScrollState(newState);
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
                         Glide.with(CallFlashListFragment.this).resumeRequests();
@@ -421,53 +431,55 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                         Glide.with(CallFlashListFragment.this).pauseRequests();
                         break;
                 }
-                mAdapter.setScrollState(newState);
                 //滑动过程中控制设置的callflash的播放和暂停
                 setCallFlashViewPlay(recyclerView, newState);
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                //滑动过程中控制设置的callflash的播放和暂停
+                setCallFlashViewPlay(recyclerView, newState);
             }
         });
     }
 
     private void setCallFlashViewPlay(RecyclerView recyclerView, int newState) {
-        if (mDataType == CallFlashDataType.CALL_FLASH_DATA_HOME) {
+        if (mDataType == CallFlashDataType.CALL_FLASH_DATA_HOME || mDataType == CallFlashDataType.CALL_FLASH_DATA_COLLECTION
+                || mDataType == CallFlashDataType.CALL_FLASH_DATA_DOWNLOADED || mDataType == CallFlashDataType.CALL_FLASH_DATA_SET_RECORD) {
             int index = mCurrentFlashIndex;
             //获取当前recycleView屏幕可见的第一项和最后一项的Position
             int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
             int lastItemPosition = mLayoutManager.findLastVisibleItemPosition();
-            if (index != -1) {
+            if (index != -1 && index >= firstItemPosition && index <= lastItemPosition) {
                 CallFlashInfo callFlashInfo = model.get(index);
                 if (callFlashInfo == null) return;
                 RecyclerView.ViewHolder holder = recyclerView.findViewHolderForLayoutPosition(index);
-                if (holder != null) {
-                    mCurrentFlashHolder = holder;
-                }
-                if (mCurrentFlashHolder != null) {
-                    mCurrentFlashHolder.itemView.findViewById(R.id.iv_select).setVisibility(View.VISIBLE);
-                    CallFlashView view = mCurrentFlashHolder.itemView.findViewById(R.id.layout_call_flash_view);
-                    View gvBackground = mCurrentFlashHolder.itemView.findViewById(R.id.gv_bg);
-                    if (!view.isPlaying() && (newState == RecyclerView.SCROLL_STATE_IDLE || newState == RecyclerView.SCROLL_STATE_DRAGGING) && index >= firstItemPosition && index <= lastItemPosition) {
-                        LogUtil.d(TAG, "setCallFlashViewPlay isStopVideo:" + view.isStopVideo() + ",isPause:" + view.isPause());
-                        if (view.isStopVideo()) {
-                            view.showCallFlashView(model.get(index));
+                if (holder == null) return;
+                holder.itemView.findViewById(R.id.iv_select).setVisibility(View.VISIBLE);
+                CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
+                View gvBackground = holder.itemView.findViewById(R.id.gv_bg);
+
+                float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);
+//                LogUtil.d(TAG, "setCallFlashViewPlay viewShowPercent:" + viewShowPercent);
+                if (viewShowPercent >= 1 && (newState == RecyclerView.SCROLL_STATE_IDLE || newState == RecyclerView.SCROLL_STATE_DRAGGING) && !view.isPlaying()) {
+//                    LogUtil.d(TAG, "setCallFlashViewPlay isStopVideo:" + view.isStopVideo() + ",isPause:" + view.isPause());
+                    if (view.isStopVideo()) {
+                        view.showCallFlashView(model.get(index));
+                    } else {
+                        if (view.isPause()) {
+                            view.continuePlay();
                         } else {
-                            if (view.isPause()) {
-                                view.continuePlay();
-                            } else {
-                                view.showCallFlashView(model.get(index));
-                            }
+                            view.showCallFlashView(model.get(index));
                         }
-                        gvBackground.setVisibility(View.GONE);
-                        view.setVisibility(View.VISIBLE);
-                    } else if (newState == RecyclerView.SCROLL_STATE_SETTLING && view.isPlaying() && (index < firstItemPosition || index > lastItemPosition)) {
-                        LogUtil.d(TAG, "setCallFlashViewPlay pause");
-                        view.pause();
-                        gvBackground.setVisibility(View.VISIBLE);
-                        view.setVisibility(View.GONE);
                     }
+                    view.setVisibility(View.VISIBLE);
+                    gvBackground.setVisibility(View.GONE);
+                } else if (viewShowPercent <= 0.1 && view.isPlaying()) {
+//                    LogUtil.d(TAG, "setCallFlashViewPlay pause");
+                    gvBackground.setVisibility(View.VISIBLE);
+                    view.setVisibility(View.GONE);
+                    view.pause();
+                    view.stop();
                 }
             }
         }

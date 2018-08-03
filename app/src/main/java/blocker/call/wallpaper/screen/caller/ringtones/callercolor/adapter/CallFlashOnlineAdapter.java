@@ -165,27 +165,12 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             holder.root.setTag(pos);
             holder.layoutCallFlash.setTag(pos);
             holder.iv_download.setTag(pos);
-            if (mCurrentFlash != null && mCurrentFlash.equals(info) && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING)) {
-                LogUtil.d(TAG, "setItem isPlaying:" + holder.callFlashView.isPlaying() + ",isStopVideo:" + holder.callFlashView.isStopVideo() + ",isPause:" + holder.callFlashView.isPause());
-                if (!holder.callFlashView.isPlaying()) {
-                    if (holder.callFlashView.isStopVideo()) {
-                        holder.callFlashView.showCallFlashView(info);
-                    } else {
-                        if (holder.callFlashView.isPause()) {
-                            holder.callFlashView.continuePlay();
-                        } else {
-                            holder.callFlashView.showCallFlashView(info);
-                        }
-                    }
-                }
-                holder.gv_bg.setVisibility(View.INVISIBLE);
-                holder.callFlashView.setVisibility(View.VISIBLE);
-            } else {
-                holder.gv_bg.setVisibility(View.VISIBLE);
-                holder.callFlashView.setVisibility(View.INVISIBLE);
-                holder.callFlashView.pause();
-                holder.callFlashView.stop();
-            }
+            holder.gv_bg.setVisibility(View.VISIBLE);
+            holder.callFlashView.setVisibility(View.GONE);
+            holder.callFlashView.pause();
+            holder.callFlashView.stop();
+            setCallFlashShow(holder, pos);
+
 
             if (info.isOnlionCallFlash) {
                 String imgUrl = info.img_vUrl;
@@ -225,6 +210,30 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
 
             holder.mOnDownloadListener.setDownloadParams(holder, info);
+        }
+    }
+
+    private void setCallFlashShow(NormalViewHolder holder, int pos) {
+        CallFlashInfo info = getItem(pos);
+        if (mCurrentFlash == null || info == null || !mCurrentFlash.equals(info)) return;
+        float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);
+        if (viewShowPercent >= 1 && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING) && !holder.callFlashView.isPlaying()) {
+            if (holder.callFlashView.isStopVideo()) {
+                holder.callFlashView.showCallFlashView(info);
+            } else {
+                if (holder.callFlashView.isPause()) {
+                    holder.callFlashView.continuePlay();
+                } else {
+                    holder.callFlashView.showCallFlashView(info);
+                }
+            }
+            holder.callFlashView.setVisibility(View.VISIBLE);
+            holder.gv_bg.setVisibility(View.GONE);
+        } else if (viewShowPercent <= 0.1 && holder.callFlashView.isPlaying()) {
+            holder.gv_bg.setVisibility(View.VISIBLE);
+            holder.callFlashView.setVisibility(View.GONE);
+            holder.callFlashView.pause();
+            holder.callFlashView.stop();
         }
     }
 

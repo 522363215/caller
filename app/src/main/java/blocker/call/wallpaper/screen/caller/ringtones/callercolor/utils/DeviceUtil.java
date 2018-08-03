@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -624,6 +625,19 @@ public class DeviceUtil {
         } else {
             return !pm.isScreenOn() || flag || isDayDream;
         }
+    }
+
+    public static float getViewShowPercent(View view) {
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
+        Rect localRect = new Rect();
+        view.getLocalVisibleRect(localRect);
+        if (localRect.bottom < 0) return 0;
+        float showHeight = localRect.bottom - localRect.top;
+        float viewHeight = view.getHeight();
+//        LogUtil.d(TAG, "getViewShowPercent bottom:" + localRect.bottom + ",top:" + localRect.top + ",showHeight:" + showHeight + ",viewHeight:" + viewHeight);
+        if (viewHeight == 0) return 0;
+        return showHeight / viewHeight;
     }
 
 }
