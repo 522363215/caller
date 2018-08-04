@@ -92,15 +92,23 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         videoMap = new ConcurrentHashMap<>();
         mDownloadListenerList = new ArrayList<>();
         if (context != null) {
-            int dp8 = context.getResources().getDimensionPixelOffset(R.dimen.dp8);
-            childViewWidth = (DeviceUtil.getScreenWidth() - dp8 * 3) / 2;
-            childViewHeight = Stringutil.dpToPx(context, 252);
+            int dp4 = context.getResources().getDimensionPixelOffset(R.dimen.dp4);
+            childViewWidth = (DeviceUtil.getScreenWidth() - dp4 * 3) / 2;
+            childViewHeight = 4 * childViewWidth / 3;
         }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View item = View.inflate(context, R.layout.item_call_flash_online, null);
+        ViewGroup.LayoutParams layoutParams = item.getLayoutParams();
+        if (layoutParams == null) {
+            layoutParams = new ViewGroup.LayoutParams(childViewWidth, childViewHeight);
+        } else {
+            layoutParams.width = childViewWidth;
+            layoutParams.height = childViewHeight;
+        }
+        item.setLayoutParams(layoutParams);
         return new NormalViewHolder(item);
     }
 

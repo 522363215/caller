@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     app:cardBackgroundColor="@color/color_transparent"
     card_view:cardCornerRadius="2dp">
 
     <RelativeLayout
         android:id="@+id/layout_call_flash"
         android:layout_width="match_parent"
-        android:layout_height="252dp"
+        android:layout_height="match_parent"
         android:gravity="center"
         tools:visibility="visible">
 
@@ -134,7 +134,7 @@
     <LinearLayout
         android:id="@+id/layout_ad_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/color_4E92CF"
         android:visibility="gone">
 
