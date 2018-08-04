@@ -9,11 +9,11 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BasePreloadAdvertisementAdapter;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.FirstShowAdmobUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.PreloadAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.FullScreenAdDialog;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 public class FullScreenAdManager {
@@ -67,7 +67,7 @@ public class FullScreenAdManager {
 
                     mPreloadAdvertisement.loadAd();
                 }
-                LogUtil.d(TAG, "load ad id: "+adId);
+                LogUtil.d(TAG, "load ad id: " + adId);
             }
         } catch (Exception e) {
             LogUtil.e(TAG, "loadAd exception:" + e.getMessage());
@@ -77,7 +77,7 @@ public class FullScreenAdManager {
     private String getAdId(int position) {
         String adId = "";
         switch (position) {
-            case CallerAdManager.IN_ADS_CALL_FLASH:
+            case InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL:
                 adId = FirstShowAdmobUtil.getAdmobIdForFirst(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL);
                 break;
         }
@@ -142,14 +142,14 @@ public class FullScreenAdManager {
         }
 
         private void saveFirstShowAdmobTime() {
-            HashMap<String, Long> data = PreferenceHelper.getHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, Long.class);
+            HashMap<String, Long> data = AdPreferenceHelper.getHashMapData(AdPreferenceHelper.PREF_LAST_SHOW_FIRST_ADMOB_TIME_MAP, Long.class);
             switch (mPosition) {
-                case CallerAdManager.IN_ADS_CALL_FLASH:
+                case InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL:
                     if (data == null) {
                         data = new HashMap<>();
                     }
                     data.put(String.valueOf(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL), System.currentTimeMillis());
-                    PreferenceHelper.putHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, data);
+                    AdPreferenceHelper.putHashMapData(AdPreferenceHelper.PREF_LAST_SHOW_FIRST_ADMOB_TIME_MAP, data);
                     break;
             }
         }
@@ -161,7 +161,7 @@ public class FullScreenAdManager {
 
         @Override
         public int getFbViewRes() {
-            return isBanner() ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_native_ads_number_scan_result;
+            return isBanner() ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_native_ads_flash_set_result;
         }
 
         @Override

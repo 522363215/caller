@@ -22,6 +22,10 @@ import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.HorizontalCallFlashAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.HorizontalCallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -52,6 +56,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private View mLayoutSetRecordAllBtn;
     private View mLayoutDownloadedAllBtn;
     private TextView mTvCurrentCallFlashTitle;
+    private Advertisement mAdvertisement;
+    private View mLayoutAd;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +73,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initAds();
         initView(view);
         listener();
     }
@@ -89,6 +96,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(View view) {
+        //ad
+        mLayoutAd = view.findViewById(R.id.layout_ad_view);
+
         //当前设置
         mGvBgCurrent = view.findViewById(R.id.gv_bg_current);
         mLayoutNoCallFlash = view.findViewById(R.id.layout_no_call_flash);
@@ -253,4 +263,54 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
+
+    //******************************************AD******************************************//
+    private void initAds() {
+        MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getActivity().getWindow().getDecorView(),
+                "",//ConstantUtils.FB_AFTER_CALL_ID
+                CallerAdManager.ADMOB_ID_ADV_MINE_NORMAL,//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
+                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
+                "",
+                Advertisement.MOPUB_TYPE_NATIVE,
+                -1,
+                "",
+                false);
+        mAdvertisement = new Advertisement(adapter);
+        mAdvertisement.setRefreshWhenClicked(false);
+        mAdvertisement.refreshAD(true);
+        mAdvertisement.enableFullClickable();
+    }
+
+    private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String eventKey, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, AdvertisementSwitcher.SERVER_KEY_FLASH_MINE);
+        }
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, AdvertisementSwitcher.SERVER_KEY_FLASH_MINE, isBanner);
+        }
+
+        @Override
+        public void onAdLoaded() {
+            mLayoutAd.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public int getFbViewRes() {
+            return mIsBanner ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_no_icon_native_ads_call_after_big;
+        }
+
+        @Override
+        public int getAdmobViewRes(int type, boolean isAppInstall) {
+            return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_mine : R.layout.layout_admob_advanced_content_ad_mine;
+        }
+
+        @Override
+        public int getAdmobHeight() {
+            return 180;
+        }
+    }
+    //******************************************AD******************************************//
 }

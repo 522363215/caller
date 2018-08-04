@@ -13,9 +13,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 public class CallerAdManager {
     public final static String PARAM_ALL_COUNTRIES = "all_countries";
 
-    public final static int IN_ADS_CALL_FLASH = 0;
-
-
     public static final int POSITION_FB_ADS_CALLLOG = 1;
     public static final int POSITION_FB_ADS_SMSLIST = 2;
     public static final int POSITION_FB_ADS_BLOCKHOME = 3;
@@ -43,8 +40,8 @@ public class CallerAdManager {
 
 
     //插屏
-    public static final String ADMOB_ID_ADV_FLASH_SET_FIRST = "ca-app-pub-5980661201422605/4911447885"; //自定义插屏, 来电秀设置首次colorphone-5
-    public static final String ADMOB_ID_IN_SPLASH_FIRST = "ca-app-pub-5980661201422605/5685581308";//来电秀设置插屏colorphone-6
+    public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_FIRST = "ca-app-pub-5980661201422605/4911447885"; //自定义插屏, 来电秀设置首次colorphone-5
+    public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL = "ca-app-pub-5980661201422605/5685581308";//来电秀设置插屏colorphone-6
 
     //admob id end
 

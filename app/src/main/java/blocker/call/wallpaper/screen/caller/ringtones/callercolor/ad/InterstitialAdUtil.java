@@ -2,16 +2,17 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad;
 
 import android.content.Context;
 
-import com.md.serverflash.util.LogUtil;
-
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventInterstitialAdLoadSuccess;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.FullScreenAdManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import event.EventBus;
 
 public class InterstitialAdUtil {
-    private static final String TAG = "InterstitialAdUtil";
+    private static final String TAG = "InterstitialAdvertisement";
+
+    public final static int POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL = 0;
 
     //来电秀相关插屏
     public static final String KEY_FLASH_IN_GROUP_FACEBOOK_HIGH = "pref_flash_in_ads_group_facebook_high";
@@ -45,19 +46,19 @@ public class InterstitialAdUtil {
             } else {
                 LogUtil.d(TAG, "loadInterstitialAd load start.");
                 InterstitialAdvertisement.FbAdId fbAdId = new InterstitialAdvertisement.FbAdId();
-                fbAdId.highId = getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.HIGH, InterstitialAdvertisement.AdType.FACEBOOK);
-                fbAdId.mediumId = getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.MEDIUM, InterstitialAdvertisement.AdType.FACEBOOK);
-                fbAdId.normalId = getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.FACEBOOK);
+                fbAdId.highId = "";// getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.HIGH, InterstitialAdvertisement.AdType.FACEBOOK);
+                fbAdId.mediumId = "";//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.MEDIUM, InterstitialAdvertisement.AdType.FACEBOOK);
+                fbAdId.normalId = "";//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.FACEBOOK);
 
                 InterstitialAdvertisement.AdmobAdId admobAdId = new InterstitialAdvertisement.AdmobAdId();
-                admobAdId.highId = getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.HIGH, InterstitialAdvertisement.AdType.ADMOB);
-                admobAdId.mediumId = getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.MEDIUM, InterstitialAdvertisement.AdType.ADMOB);
-                admobAdId.normalId = getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.ADMOB);
+                admobAdId.highId = "";// getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.HIGH, InterstitialAdvertisement.AdType.ADMOB);
+                admobAdId.mediumId = "";// getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.MEDIUM, InterstitialAdvertisement.AdType.ADMOB);
+                admobAdId.normalId = CallerAdManager.INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL;//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.ADMOB);
 
                 InterstitialAdvertisement.AdmobAdxId admobAdxId = new InterstitialAdvertisement.AdmobAdxId();
-                admobAdxId.highId = getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.HIGH, InterstitialAdvertisement.AdType.ADMOB_ADX);
-                admobAdxId.mediumId = getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.MEDIUM, InterstitialAdvertisement.AdType.ADMOB_ADX);
-                admobAdxId.normalId = getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.ADMOB_ADX);
+                admobAdxId.highId = "";//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.HIGH, InterstitialAdvertisement.AdType.ADMOB_ADX);
+                admobAdxId.mediumId = "";//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.MEDIUM, InterstitialAdvertisement.AdType.ADMOB_ADX);
+                admobAdxId.normalId = "";// getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.ADMOB_ADX);
 
 
                 InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(position);
@@ -85,7 +86,7 @@ public class InterstitialAdUtil {
     public static boolean isShowInterstitial(int position) {
         boolean show = false;
         switch (position) {
-            case CallerAdManager.IN_ADS_CALL_FLASH:
+            case POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL:
                 int show_call_flash = AdPreferenceHelper.getInt("pref_show_interstitial_call_flash", 1); //0 not show, 1 show
                 if (show_call_flash == 1) {
                     LogUtil.d("isShowInterstitial", "loadInterstitial IN_ADS_CALL_FLASH true: ");
@@ -102,8 +103,8 @@ public class InterstitialAdUtil {
     public static boolean isShowFullScreenAd(int position) {
         boolean isShow = false;
         switch (position) {
-            case CallerAdManager.IN_ADS_CALL_FLASH:
-                isShow = FirstShowAdmobUtil.isShowFirstAdMob(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL, false);
+            case POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL:
+                isShow = FirstShowAdmobUtil.isShowFirstAdMob(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL);
                 break;
         }
         return isShow;
@@ -128,7 +129,7 @@ public class InterstitialAdUtil {
         String adid = "";
         String key = "";
         switch (position) {
-            case CallerAdManager.IN_ADS_CALL_FLASH:
+            case POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL:
                 key = "pref_flash_in_ads_group_" + adType + "_" + interstitialAdPriority.toLowerCase();
                 adid = getInGroupAdIdFlashByKey(key);
                 break;

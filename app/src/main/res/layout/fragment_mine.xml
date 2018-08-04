@@ -24,9 +24,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp8"
-                tools:text="@string/mine_current_call_flash"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:text="@string/mine_current_call_flash" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,6 +84,22 @@
                 </LinearLayout>
             </LinearLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_ad_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp8"
+            android:layout_marginEnd="@dimen/dp8"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp8"
+            android:layout_marginStart="@dimen/dp8"
+            android:background="@drawable/bg_background_round_4dp"
+            android:padding="@dimen/dp8"
+            android:visibility="gone">
+
+            <include layout="@layout/layout_advertisement" />
         </LinearLayout>
 
         <LinearLayout

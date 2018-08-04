@@ -356,8 +356,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
      * @param isContinuePlay true:继续播放，false：暂停播放
      */
     public void pauseOrContinuePlayVideo(boolean isContinuePlay) {
-        if (getActivity() == null || getActivity().isFinishing() || mRecyclerView == null
-                || mCurrentFlashIndex == -1) {
+        if (getActivity() == null || getActivity().isFinishing() || mRecyclerView == null) {
             return;
         }
         int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
@@ -397,6 +396,21 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                 }
                 mLastCurrentFlashIndex = mCurrentFlashIndex;
             }
+        } else if (mCurrentFlashIndex == -1 && mLastCurrentFlashIndex >= firstItemPosition && mLastCurrentFlashIndex <= lastItemPosition) {
+            //该种情况代表设置了该列表中没有的call flash,此时应该将上次显示的call flash 刷新
+            RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForLayoutPosition(mLastCurrentFlashIndex);
+            if (holder == null) {
+                return;
+            }
+            CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
+            View gvBackground = holder.itemView.findViewById(R.id.gv_bg);
+            View iv_call_select = holder.itemView.findViewById(R.id.iv_select);
+            iv_call_select.setVisibility(View.GONE);
+            view.setVisibility(View.GONE);
+            gvBackground.setVisibility(View.VISIBLE);
+            if (view.isPlaying()) {
+                view.pause();
+            }
         }
     }
 
@@ -432,9 +446,9 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                 mAdapter.setScrollState(newState);
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
+                    case RecyclerView.SCROLL_STATE_DRAGGING:
                         Glide.with(CallFlashListFragment.this).resumeRequests();
                         break;
-                    case RecyclerView.SCROLL_STATE_DRAGGING:
                     case RecyclerView.SCROLL_STATE_SETTLING:
                         Glide.with(CallFlashListFragment.this).pauseRequests();
                         break;

@@ -20,13 +20,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DateUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -37,7 +40,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconV
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.OKCancelDialog;
 
 public class CallAfterActivity extends BaseActivity implements View.OnClickListener {
-
     private static final String TAG = "CallAfterActivity";
     private TextView tv_number;
     private TextView tv_location;
@@ -55,12 +57,13 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
     private long mStartTime;
     private RelativeLayout layout_number_infos;
     private boolean isAddedInBlockContacts;
+    private Advertisement mAdvertisement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initAds();
         initView();
-
         onNewIntent(getIntent());
         initData();
         listener();
@@ -384,4 +387,53 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
         eventParams.put("param_user_stay_end_call_show", strStaySec);
         FlurryAgent.logEvent("user_stay_end_call_show", eventParams);
     }
+
+    //******************************************AD******************************************//
+    private void initAds() {
+        MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
+                "",//ConstantUtils.FB_AFTER_CALL_ID
+                CallerAdManager.ADMOB_ID_ADV_END_CALL_NORMAL,//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
+                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
+                "",
+                Advertisement.MOPUB_TYPE_NATIVE,
+                -1,
+                "",
+                false);
+        mAdvertisement = new Advertisement(adapter);
+        mAdvertisement.setRefreshWhenClicked(false);
+        mAdvertisement.refreshAD(true);
+        mAdvertisement.enableFullClickable();
+    }
+
+    private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String eventKey, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, AdvertisementSwitcher.SERVER_KEY_END_CALL);
+        }
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, AdvertisementSwitcher.SERVER_KEY_END_CALL, isBanner);
+        }
+
+        @Override
+        public void onAdLoaded() {
+        }
+
+        @Override
+        public int getFbViewRes() {
+            return mIsBanner ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_no_icon_native_ads_call_after_big;
+        }
+
+        @Override
+        public int getAdmobViewRes(int type, boolean isAppInstall) {
+            return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_callafter : R.layout.layout_admob_advanced_content_ad_callafter;
+        }
+
+        @Override
+        public int getAdmobHeight() {
+            return 180;
+        }
+    }
+    //******************************************AD******************************************//
+
 }

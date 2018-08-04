@@ -40,10 +40,10 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallFlashDetailGroupAdHelper;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.PreloadAdvertisement;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.SavingDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashDetailGroupAdShow;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventInterstitialAdLoadSuccess;
@@ -370,7 +370,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void loadInterstitialAd() {
-        InterstitialAdUtil.loadInterstitialAd(this, CallerAdManager.IN_ADS_CALL_FLASH);
+        InterstitialAdUtil.loadInterstitialAd(this, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
 //        LogUtil.d(TAG, "call_flash_detail loadInterstitialAd:" + CallerAdManager.getResultInFbId());
     }
 
@@ -473,11 +473,11 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
-        final boolean isShowInterstitialAd = InterstitialAdUtil.isShowInterstitial(CallerAdManager.IN_ADS_CALL_FLASH);
+        final boolean isShowInterstitialAd = InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
         File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
         boolean fileExist = file != null && file.exists();
 //        boolean isDownloadComplete = mInfo != null && (!mInfo.isOnlionCallFlash || fileExist || (!TextUtils.isEmpty(mInfo.path) && new File(mInfo.path).exists()));
-        if (InterstitialAdUtil.isShowFullScreenAd(CallerAdManager.IN_ADS_CALL_FLASH) /*&& isDownloadComplete*/) {
+        if (InterstitialAdUtil.isShowFullScreenAd(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL) /*&& isDownloadComplete*/) {
             showFullScreenAd(true);
         } else if (isShowInterstitialAd /*&& isDownloadComplete*/) {
             showInterstitialAd(true);
@@ -786,13 +786,13 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private void showSaveDialog() {
         mSavingDialog = new SavingDialog(this);
         mSavingDialog.show();
-        layout_progress_below_ad.postDelayed(new Runnable() {
+        Async.scheduleTaskOnUiThread(SAVING_DIALOG_MIN_TIME, new Runnable() {
             @Override
             public void run() {
-                final boolean isShowInterstitialAd = InterstitialAdUtil.isShowInterstitial(CallerAdManager.IN_ADS_CALL_FLASH);
-                if (InterstitialAdUtil.isShowFullScreenAd(CallerAdManager.IN_ADS_CALL_FLASH)) {
+                final boolean isShowInterstitialAd = InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
+                if (InterstitialAdUtil.isShowFullScreenAd(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL)) {
                     showFullScreenAd(false);
-                    layout_progress_below_ad.postDelayed(new Runnable() {
+                    Async.scheduleTaskOnUiThread(SAVING_DIALOG_MAX_TIME, new Runnable() {
                         @Override
                         public void run() {
                             if (!mIsShowFullScreenAd) {
@@ -800,10 +800,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                                 toResultOkAction();
                             }
                         }
-                    }, SAVING_DIALOG_MAX_TIME);
+                    });
                 } else if (isShowInterstitialAd) {
                     showInterstitialAd(false);
-                    layout_progress_below_ad.postDelayed(new Runnable() {
+                    Async.scheduleTaskOnUiThread(SAVING_DIALOG_MAX_TIME, new Runnable() {
                         @Override
                         public void run() {
                             if (!mIsShowInterstitialAd) {
@@ -811,13 +811,13 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                                 toResultOkAction();
                             }
                         }
-                    }, SAVING_DIALOG_MAX_TIME);
+                    });
                 } else {
                     LogUtil.d(TAG, "toResultOkAction 2");
                     toResultOkAction();
                 }
             }
-        }, SAVING_DIALOG_MIN_TIME);
+        });
     }
 
     private void setOrCancelFlash() {
@@ -883,6 +883,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 //        intent.putStringArrayListExtra(ConstantUtils.NUMBER_FOR_CALL_FLASH, mNumbersForCallFlash);
         intent.putExtra("is_show_result", true);
         intent.putExtra("result_des", resultDes);
+        intent.putExtra("is_show_interstitial_ad", mIsShowFullScreenAd || mIsShowInterstitialAd);
         startActivity(intent);
         onFinish();
         mIsToResult = true;
@@ -892,7 +893,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private void showInterstitialAd(final boolean isBack) {
         try {
             mIsBack = isBack;
-            InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(CallerAdManager.IN_ADS_CALL_FLASH);
+            InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
             if (interstitialAdvertisement == null) {
                 if (isBack) {
                     onFinish();
@@ -902,9 +903,9 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                     @Override
                     public void onAdClosed() {
                         LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdClosed");
-                        ApplicationEx.getInstance().setInterstitialAdvertisement(null, CallerAdManager.IN_ADS_CALL_FLASH);
+                        ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
                         if (isBack) {
-                            onFinish();
+                            finish();
                         } else {
                             LogUtil.d(TAG, "toResultOkAction 4");
                             toResultOkAction();
@@ -914,21 +915,23 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                     @Override
                     public void onAdShow() {
                         LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdShow");
+                        if (mCallFlashView != null)
+                            mCallFlashView.pause();//显示admob 插屏广告时不会调用onPause,需要手动调用
                         mIsShowInterstitialAd = true;
-                        tv_download_action_above_ad.postDelayed(new Runnable() {
+                        Async.scheduleTaskOnUiThread(200, new Runnable() {
                             @Override
                             public void run() {
                                 if (mSavingDialog != null) {
                                     mSavingDialog.dismiss();
                                 }
                             }
-                        }, 200);
+                        });
                     }
 
                     @Override
                     public void onAdError() {
                         LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdError");
-                        ApplicationEx.getInstance().setInterstitialAdvertisement(null, CallerAdManager.IN_ADS_CALL_FLASH);
+                        ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
                         if (isBack) {
                             onFinish();
                         } else {
@@ -937,7 +940,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                         }
                     }
                 });
-
                 if (isBack) {
                     onFinish();
                 }
@@ -954,19 +956,22 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private void showFullScreenAd(final boolean isBack) {
         mIsBack = isBack;
         if (FullScreenAdManager.getInstance().isAdLoaded()) {
-            FullScreenAdManager.getInstance().showAd(this, CallerAdManager.IN_ADS_CALL_FLASH, new FullScreenAdManager.AdListener() {
+            FullScreenAdManager.getInstance().showAd(this, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL, new FullScreenAdManager.AdListener() {
                 @Override
                 public void onAdShow() {
                     LogUtil.d(TAG, "showFullScreenAd  onAdShow");
                     mIsShowFullScreenAd = true;
-                    tv_download_action_above_ad.postDelayed(new Runnable() {
+                    if (mCallFlashView != null) {
+                        mCallFlashView.pause();
+                    }
+                    Async.scheduleTaskOnUiThread(200, new Runnable() {
                         @Override
                         public void run() {
                             if (mSavingDialog != null) {
                                 mSavingDialog.dismiss();
                             }
                         }
-                    }, 200);
+                    });
                 }
 
                 @Override
@@ -994,7 +999,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     public void onEventMainThread(EventInterstitialAdLoadSuccess event) {
-        if (!mIsShowInterstitialAd && mIsShow) {
+        if (!mIsShowInterstitialAd && mIsShow && !isFinishing()) {
             LogUtil.d(TAG, "InterstitialAdvertisement EventInterstitialAdLoadSuccess showInterstitialAd");
             showInterstitialAd(mIsBack);
         }

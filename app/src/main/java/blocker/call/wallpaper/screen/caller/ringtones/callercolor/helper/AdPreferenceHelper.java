@@ -24,6 +24,11 @@ final public class AdPreferenceHelper {
     private static final String PREF_FILE_NAME = "ad_com_callercolor_pref";
 
 
+    /**
+     * 上一次加载第一次显示admob的时间的map
+     */
+    public static final String PREF_LAST_SHOW_FIRST_ADMOB_TIME_MAP = "android_last_show_first_admob_time_map";
+
     private AdPreferenceHelper() {
     }
 

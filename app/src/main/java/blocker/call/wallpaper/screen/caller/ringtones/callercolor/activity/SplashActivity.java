@@ -5,33 +5,30 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import java.util.HashMap;
-
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.FirstShowAdmobUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleProgressBar;
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "SplashActivity";
     protected static long AD_FIRST_INSTALL_LOAD_TIME = 6500;//6500
     protected static long AD_FIRST_INSTALL_LOAD_TIME_ADMOB = 10000;//10sec
@@ -62,7 +59,6 @@ public class SplashActivity extends BaseActivity {
     private ImageView mCircleImageView2Blur;
     private ImageView mCircleImageView3Blur;
     private ImageView mCircleImageView4Blur;
-    private int[] mSplashAnimColorResIds;
     private RelativeLayout mLayoutCircle1;
     private RelativeLayout mLayoutCircle2;
     private RelativeLayout mLayoutCircle3;
@@ -75,6 +71,11 @@ public class SplashActivity extends BaseActivity {
     private RelativeLayout mLayoutCircle6;
     private int[] mSplashAnimIconResIds;
     private int[] mSplashAnimIconBlurResIds;
+    private boolean mIsShowInitialization;
+    private ValueAnimator mAdCountDownAnim;
+    private ObjectAnimator mAlphAnimator1;
+    private AnimatorSet mTranslationAnimatorSet;
+    private ObjectAnimator mAlphAnimator2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class SplashActivity extends BaseActivity {
             toMain();
             return;
         }
+        initAds();
         SwitchLang();
         initData();
         initView();
@@ -105,14 +107,10 @@ public class SplashActivity extends BaseActivity {
         AD_MAX_LOAD_TIME = AdPreferenceHelper.getLong("pref_splash_ad_load", 4500);
         AD_SHOW_TIME = AdPreferenceHelper.getLong("pref_splash_ad_show", 4000);
 
-        mIsShowFristAdMob = FirstShowAdmobUtil.isShowFirstAdMob(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_SPLASH, false);
+        mIsShowFristAdMob = FirstShowAdmobUtil.isShowFirstAdMob(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_SPLASH);
         if (mIsShowFristAdMob) {
-            HashMap<String, Long> data = PreferenceHelper.getHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, Long.class);
-            if (data == null) {
-                data = new HashMap<>();
-            }
-            data.put(String.valueOf(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_SPLASH), System.currentTimeMillis());
-            PreferenceHelper.putHashMapData(PreferenceHelper.PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP, data);
+            //不管首次广告是否加载出来下次都不显示首次admob
+            FirstShowAdmobUtil.saveFirstShowAdmobTime(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_SPLASH);
         }
     }
 
@@ -145,28 +143,25 @@ public class SplashActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.layout_skip_root:
+                if (mAdCountDownAnim != null) {
+                    mAdCountDownAnim.end();
+                    mAdCountDownAnim.cancel();
+                }
+                toMain();
+                break;
+        }
+    }
+
     private void SwitchLang() {
         //加载语言
         languageSetting = LanguageSettingUtil.getInstance(getApplicationContext());
         if (languageSetting != null)
             languageSetting.refreshLanguage(this);
-    }
-
-    private void setTranslucentStatus() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            View statusView = createStatusView();
-            ViewGroup decorView = (ViewGroup) getWindow().getDecorView();
-            decorView.addView(statusView);
-        }
-    }
-
-    private View createStatusView() {
-        View view = new View(this);
-        int statusBarHeight = DeviceUtil.getStatusBarHeight();
-        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight));
-        view.setBackgroundColor(getResources().getColor(R.color.color_transparent));
-        return view;
     }
 
     private void initView() {
@@ -183,12 +178,13 @@ public class SplashActivity extends BaseActivity {
         mLayoutLoadCompleted = findViewById(R.id.rl_load_completed);
         mLayoutSkipRoot = findViewById(R.id.layout_skip_root);
         mPbSkip = findViewById(R.id.pb_skip);
+        mLayoutSkipRoot.setOnClickListener(this);
 
         mLayoutLoading.setVisibility(View.VISIBLE);
         mLayoutLoadCompleted.setVisibility(View.GONE);
 
-        long lastShowInitTime = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_SHOW_SPLASH_INIT_TIME, 0);
-        if (lastShowInitTime <= 0) {
+        mIsShowInitialization = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_SHOW_SPLASH_INIT_TIME, 0) <= 0;
+        if (mIsShowInitialization) {
             showInitialization();
         } else {
             showNoInitialization();
@@ -200,26 +196,19 @@ public class SplashActivity extends BaseActivity {
         mLayoutNoInit.setVisibility(View.VISIBLE);
         setAnimColors();
         startSplashAnim();
-
-//        Async.scheduleTaskOnUiThread(AD_MAX_LOAD_TIME, new Runnable() {
-//            @Override
-//            public void run() {
-//                toMain();
-//            }
-//        });
     }
 
     private void startSplashAnim() {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(mLayoutAnim, "alpha", 0f, 1.0f);
-        animator.setDuration(1500);
-        animator.addListener(new AnimatorListenerAdapter() {
+        mAlphAnimator1 = ObjectAnimator.ofFloat(mLayoutAnim, "alpha", 0f, 1.0f);
+        mAlphAnimator1.setDuration(1000);
+        mAlphAnimator1.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 startTranslationAnim();
             }
         });
-        animator.start();
+        mAlphAnimator1.start();
     }
 
     private void startTranslationAnim() {
@@ -252,24 +241,28 @@ public class SplashActivity extends BaseActivity {
 
             }
         });
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(2000);
-        animatorSet.addListener(new AnimatorListenerAdapter() {
+        mTranslationAnimatorSet = new AnimatorSet();
+        mTranslationAnimatorSet.setDuration(2000);
+        mTranslationAnimatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 mLayoutAnim.setVisibility(View.GONE);
-                startAlphaAnim();
+                if (mIsAdLoaded) {
+                    showAd();
+                } else {
+                    startAlphaAnim();
+                }
             }
         });
-        animatorSet.play(animator1).with(animator2).with(animator3).with(animator4).with(animator5).with(animator6);
-        animatorSet.start();
+        mTranslationAnimatorSet.play(animator1).with(animator2).with(animator3).with(animator4).with(animator5).with(animator6);
+        mTranslationAnimatorSet.start();
     }
 
     private void startAlphaAnim() {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(mLayoutAppInfo, "alpha", 0f, 1.0f);
-        animator.setDuration(1500);
-        animator.addListener(new AnimatorListenerAdapter() {
+        mAlphAnimator2 = ObjectAnimator.ofFloat(mLayoutAppInfo, "alpha", 0f, 1.0f);
+        mAlphAnimator2.setDuration(1500);
+        mAlphAnimator2.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
@@ -282,12 +275,14 @@ public class SplashActivity extends BaseActivity {
                 Async.scheduleTaskOnUiThread(500, new Runnable() {
                     @Override
                     public void run() {
-                        toMain();
+                        if (!mIsAdLoaded) {
+                            toMain();
+                        }
                     }
                 });
             }
         });
-        animator.start();
+        mAlphAnimator2.start();
     }
 
     private void setAnimColors() {
@@ -383,4 +378,132 @@ public class SplashActivity extends BaseActivity {
         });
         mInitAnimator.start();
     }
+
+    //****************************************AD********************************************//
+    private void initAds() {
+        String admob_id = CallerAdManager.ADMOB_ID_ADV_SPLASH_NORMAL;
+        String placementId = AdvertisementSwitcher.SERVER_KEY_START_UP;
+        if (mIsShowFristAdMob) {
+            admob_id = FirstShowAdmobUtil.getAdmobIdForFirst(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_SPLASH);
+            placementId = AdvertisementSwitcher.SERVER_KEY_FIRST_SHOW_ADMOB;
+        }
+        MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
+                "", //FB_SPLASH_ID,
+                admob_id,
+                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,
+                "",
+                Advertisement.ADMOB_TYPE_NATIVE,
+                -1,
+                "",
+                placementId,
+                false);
+
+        mAdvertisement = new Advertisement(adapter);
+        mAdvertisement.setRefreshWhenClicked(false);
+        mAdvertisement.refreshAD(true);
+
+        mAdvertisement.enableFullClickable();
+        if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_ADS_SPLASH_BIG)) {
+            mAdvertisement.enableOnlyBtnClickable();
+        }
+    }
+
+    private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String eventKey, String placementId, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, placementId); //SERVER_KEY_START_UP
+        }
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, String placementId, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, placementId, isBanner);
+        }
+
+        @Override
+        public void onAdLoaded() {
+            super.onAdLoaded();
+            mIsAdLoaded = true;
+            showAd();
+        }
+
+        @Override
+        public void onAdError(boolean isLastRequestIndex) {
+            super.onAdError(isLastRequestIndex);
+        }
+
+        @Override
+        public void onAdShow() {
+            super.onAdShow();
+            mIsShowAd = true;
+            PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_SHOW_SPLASH_AD_TIME, System.currentTimeMillis());
+        }
+
+        @Override
+        public void onAdClicked(boolean isAdmob) {
+            super.onAdClicked(isAdmob);
+            toMain();
+        }
+
+        @Override
+        public int getFbViewRes() {
+            return mIsBanner ? R.layout.layout_facebook_ad_splash : R.layout.layout_facebook_ad_splash;
+        }
+
+        @Override
+        public int getAdmobViewRes(int type, boolean isAppInstall) {
+            return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_splash : R.layout.layout_admob_advanced_content_ad_splash;
+        }
+    }
+
+    private void showAd() {
+        mLayoutLoading.setVisibility(View.GONE);
+        mLayoutLoadCompleted.setVisibility(View.VISIBLE);
+        if (mIsShowInitialization) {
+            mPbInit.setProgress(100);
+            if (mInitAnimator != null) {
+                mInitAnimator.end();
+                mInitAnimator.cancel();
+            }
+        } else {
+            if (mAlphAnimator1 != null && mAlphAnimator1.isRunning()) {
+                mAlphAnimator1.end();
+                mAlphAnimator1.cancel();
+            }
+            if (mAlphAnimator2 != null && mAlphAnimator2.isRunning()) {
+                mAlphAnimator2.end();
+                mAlphAnimator2.cancel();
+            }
+            if (mTranslationAnimatorSet != null && mTranslationAnimatorSet.isRunning()) {
+                mTranslationAnimatorSet.end();
+                mTranslationAnimatorSet.cancel();
+            }
+        }
+
+        // TODO: 2018/8/4  广告自动跳转倒计时 此处控制是否自动跳转
+        boolean isAutoSkipAd = true;
+        if (isAutoSkipAd) {
+            mPbSkip.setVisibility(View.VISIBLE);
+            showAdCountDown();
+        } else {
+            mPbSkip.setVisibility(View.GONE);
+        }
+    }
+
+    private void showAdCountDown() {
+        mAdCountDownAnim = ValueAnimator.ofInt(0, 100);
+        mAdCountDownAnim.setDuration(AD_SHOW_TIME);
+        mAdCountDownAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int animatedValue = (int) animation.getAnimatedValue();
+                mPbSkip.setProgress(animatedValue);
+            }
+        });
+        mAdCountDownAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                toMain();
+            }
+        });
+        mAdCountDownAnim.start();
+    }
+    //****************************************AD********************************************//
 }

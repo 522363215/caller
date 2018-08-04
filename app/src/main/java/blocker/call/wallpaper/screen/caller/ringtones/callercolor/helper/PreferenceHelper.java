@@ -33,11 +33,6 @@ final public class PreferenceHelper {
     public static final String PREF_KEY_IS_RETURN_FROM_SETTING_ACTIIVTY = "android_is_return_from_setting_activity";
 
     /**
-     * 上一次加载第一次显示admob的时间的map
-     */
-    public static final String PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP = "android_last_show_first_admob_time_map";
-
-    /**
      * 上一次CALL FLASh SHOW 2 显示GROUP banner 广告的时间
      */
     public static final String PREF_LAST_CALL_FLASH_SHOW_GROUP_BANNER_AD_TIME = "last_call_flash_show_group_banner_ad_time";

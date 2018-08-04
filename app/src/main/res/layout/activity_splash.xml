@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/icon_splash_bg"
             android:visibility="visible"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/layout_no_initialization"
@@ -383,10 +383,10 @@
                         android:clickable="false"
                         android:visibility="visible"
                         app:CircleInsideBgColor="@color/color_half_transparent"
-                        app:CirclePaintColor="#24C3E1"
+                        app:CirclePaintColor="@color/color_02D577"
                         app:CircleProgressBgColor="@color/color_transparent"
                         app:drawCircleInsideBG="true"
-                        app:progressStrokeWidth="0dp"
+                        app:progressStrokeWidth="2dp"
                         app:sweepAngle="360" />
 
                     <TextView
@@ -395,7 +395,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:background="@color/color_transparent"
-                        android:text="Skip"
+                        android:text="@string/permission_skip"
                         android:textColor="@color/white"
                         android:textSize="8sp"
                         android:visibility="gone" />

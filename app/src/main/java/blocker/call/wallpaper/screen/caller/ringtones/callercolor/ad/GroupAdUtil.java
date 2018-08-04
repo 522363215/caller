@@ -1,11 +1,7 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad;
 
-import android.content.SharedPreferences;
-
-import com.md.serverflash.util.LogUtil;
-
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 public class GroupAdUtil {
     private static final String TAG = "GroupAdUtil";
