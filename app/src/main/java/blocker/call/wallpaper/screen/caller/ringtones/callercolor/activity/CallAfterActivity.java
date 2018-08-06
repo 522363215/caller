@@ -295,6 +295,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                         info.setName(ContactManager.getInstance().getContactNameForNumber(mInfo.callNumber));
                         if (isAddedInBlockContacts) {
                             final boolean isSuc = BlockManager.getInstance().removeBlockContact(info);
+                            isAddedInBlockContacts = !isSuc;
                             Async.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -307,6 +308,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                             });
                         } else {
                             final boolean isSuc = BlockManager.getInstance().setBlockContact(info);
+                            isAddedInBlockContacts = isSuc;
                             if (isSuc) {
                                 BlockManager.getInstance().setBlockSwitchState(true);
                             }
