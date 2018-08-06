@@ -18,11 +18,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 
 public class RingActivity extends BaseActivity {
 
-    private Button setting;
-
-    private MediaPlayer mPlayer;
-    private int playing = 1;
-
     /**
      * Called when the activity is first created.
      */
@@ -33,8 +28,6 @@ public class RingActivity extends BaseActivity {
 
         final List<LocalSong> localSongs = getSongList();
         RecyclerView rvSetting = findViewById(R.id.rv_setting);
-//        int space = 8;
-//        rvSetting.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         rvSetting.setLayoutManager(new GridLayoutManager(this,2));
         LocalAdapter localAdapter = new LocalAdapter(RingActivity.this,localSongs);
         rvSetting.setAdapter(localAdapter);
@@ -43,7 +36,7 @@ public class RingActivity extends BaseActivity {
             public void normalClick(View view,int p) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constant.MUSIC_BUNDLE,localSongs.get(p));
-                openActivity(MusicActivity.class,0,0,false);
+                openActivity(MusicActivity.class,bundle,0,0,true);
             }
 
             @Override

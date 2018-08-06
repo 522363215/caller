@@ -59,6 +59,8 @@
     <string name="call_coming_back">"Call back"</string> <!--回拨-->
     <string name="call_coming_detail">"Details"</string>
     <string name="about_title">"About us"</string>
+    <string name="music">Setting Ring</string>
+    <string name="ring">Ring list</string>
     <string name="about_product_intro">"Real Phone Call Dialer&#160;&#038;&#160;Blocker."</string>
     <string name="about_product_version">%s Version:"</string>
     <string name="about_rote_gp">"Rate app"</string>
