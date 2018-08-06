@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.md.flashset.bean.CallFlashDataType;
@@ -27,8 +28,10 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertiseme
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.HorizontalCallFlashAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.HorizontalCallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 
 /**
@@ -58,6 +61,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private TextView mTvCurrentCallFlashTitle;
     private Advertisement mAdvertisement;
     private View mLayoutAd;
+    private LinearLayout mLayoutCurrentFlash;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +104,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mLayoutAd = view.findViewById(R.id.layout_ad_view);
 
         //当前设置
+        mLayoutCurrentFlash = view.findViewById(R.id.layout_current_call_flash);
         mGvBgCurrent = view.findViewById(R.id.gv_bg_current);
         mLayoutNoCallFlash = view.findViewById(R.id.layout_no_call_flash);
         mTvCurrentCallFlashTitle = view.findViewById(R.id.tv_current_call_flash_title);
@@ -142,6 +147,17 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mRvDownload.setHasFixedSize(true);
         mRvDownload.setNestedScrollingEnabled(false);
         mRvDownload.setAdapter(mDownloadAdapter);
+
+        setCurrentCallFlashHeight();
+    }
+
+    private void setCurrentCallFlashHeight() {
+        if (DeviceUtil.getStatusBarHeight() + Stringutil.dpToPx(getActivity(), 2 * 56 + 3 * 4 + 250 + 32 + 252) > DeviceUtil.getScreenHeight()) {
+            ViewGroup.LayoutParams layoutParams = mLayoutCurrentFlash.getLayoutParams();
+            //250 为广告的高度
+            layoutParams.height = DeviceUtil.getScreenHeight() - Stringutil.dpToPx(getActivity(), 2 * 56 + 3 * 4 + 250 + 32) - DeviceUtil.getStatusBarHeight();
+            mLayoutCurrentFlash.setLayoutParams(layoutParams);
+        }
     }
 
     private void listener() {
@@ -305,11 +321,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         @Override
         public int getAdmobViewRes(int type, boolean isAppInstall) {
             return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_mine : R.layout.layout_admob_advanced_content_ad_mine;
-        }
-
-        @Override
-        public int getAdmobHeight() {
-            return 180;
         }
     }
     //******************************************AD******************************************//
