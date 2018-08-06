@@ -152,10 +152,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setCurrentCallFlashHeight() {
-        if (DeviceUtil.getStatusBarHeight() + DeviceUtil.getNavigationBarHeight(getActivity()) + Stringutil.dpToPx(getActivity(), 2 * 56 + 3 * 4 + 180 + 32 + 252) > DeviceUtil.getScreenHeight()) {
+        if (DeviceUtil.getStatusBarHeight() + Stringutil.dpToPx(getActivity(), 2 * 56 + 3 * 4 + 250 + 32 + 252) > DeviceUtil.getScreenHeight()) {
             ViewGroup.LayoutParams layoutParams = mLayoutCurrentFlash.getLayoutParams();
-            //180 为广告的高度
-            layoutParams.height = DeviceUtil.getScreenHeight() - Stringutil.dpToPx(getActivity(), 2 * 56 + 3 * 4 + 180 + 32) - DeviceUtil.getStatusBarHeight() - DeviceUtil.getNavigationBarHeight(getActivity());
+            //250 为广告的高度
+            layoutParams.height = DeviceUtil.getScreenHeight() - Stringutil.dpToPx(getActivity(), 2 * 56 + 3 * 4 + 250 + 32) - DeviceUtil.getStatusBarHeight();
             mLayoutCurrentFlash.setLayoutParams(layoutParams);
         }
     }
@@ -321,11 +321,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         @Override
         public int getAdmobViewRes(int type, boolean isAppInstall) {
             return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_mine : R.layout.layout_admob_advanced_content_ad_mine;
-        }
-
-        @Override
-        public int getAdmobHeight() {
-            return 180;
         }
     }
     //******************************************AD******************************************//
