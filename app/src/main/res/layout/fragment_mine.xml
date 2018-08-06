@@ -14,8 +14,8 @@
         <LinearLayout
             android:id="@+id/layout_current_call_flash"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp8"
+            android:layout_height="252dp"
+            android:layout_margin="@dimen/dp4"
             android:background="@drawable/bg_background_round_4dp"
             android:orientation="vertical">
 
@@ -23,14 +23,14 @@
                 android:id="@+id/tv_current_call_flash_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dp8"
+                android:padding="@dimen/dp4"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 tools:text="@string/mine_current_call_flash" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="252dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -38,11 +38,11 @@
                     android:id="@+id/gv_bg_current"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/dp8"
-                    android:layout_marginEnd="@dimen/dp8"
-                    android:layout_marginLeft="@dimen/dp8"
-                    android:layout_marginRight="@dimen/dp8"
-                    android:layout_marginStart="@dimen/dp8"
+                    android:layout_marginBottom="@dimen/dp4"
+                    android:layout_marginEnd="@dimen/dp4"
+                    android:layout_marginLeft="@dimen/dp4"
+                    android:layout_marginRight="@dimen/dp4"
+                    android:layout_marginStart="@dimen/dp4"
                     android:visibility="visible"
                     app:ScaleType="CENTER_CROP" />
 
@@ -90,13 +90,13 @@
             android:id="@+id/layout_ad_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp8"
-            android:layout_marginEnd="@dimen/dp8"
-            android:layout_marginLeft="@dimen/dp8"
-            android:layout_marginRight="@dimen/dp8"
-            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginBottom="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp4"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_marginStart="@dimen/dp4"
+            android:padding="@dimen/dp4"
             android:background="@drawable/bg_background_round_4dp"
-            android:padding="@dimen/dp8"
             android:visibility="gone">
 
             <include layout="@layout/layout_advertisement" />
@@ -106,14 +106,14 @@
             android:id="@+id/layout_collect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp8"
-            android:layout_marginEnd="@dimen/dp8"
-            android:layout_marginLeft="@dimen/dp8"
-            android:layout_marginRight="@dimen/dp8"
-            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginBottom="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp4"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_marginStart="@dimen/dp4"
             android:background="@drawable/bg_background_round_4dp"
             android:orientation="vertical"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -123,8 +123,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:gravity="center_vertical"
-                    android:padding="@dimen/dp8"
+                    android:padding="@dimen/dp4"
                     android:text="@string/mine_collect"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -158,9 +159,9 @@
                 android:id="@+id/rv_collect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp8"
-                android:layout_marginLeft="@dimen/dp8"
-                android:layout_marginRight="@dimen/dp8" />
+                android:layout_marginBottom="@dimen/dp4"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginRight="@dimen/dp4" />
 
         </LinearLayout>
 
@@ -168,14 +169,14 @@
             android:id="@+id/layout_set_record"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp8"
-            android:layout_marginEnd="@dimen/dp8"
-            android:layout_marginLeft="@dimen/dp8"
-            android:layout_marginRight="@dimen/dp8"
-            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginBottom="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp4"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_marginStart="@dimen/dp4"
             android:background="@drawable/bg_background_round_4dp"
             android:orientation="vertical"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -185,7 +186,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp8"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/dp4"
                     android:text="@string/mine_set_before"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -219,9 +221,9 @@
                 android:id="@+id/rv_set_record"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp8"
-                android:layout_marginLeft="@dimen/dp8"
-                android:layout_marginRight="@dimen/dp8" />
+                android:layout_marginBottom="@dimen/dp4"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginRight="@dimen/dp4" />
 
         </LinearLayout>
 
@@ -229,13 +231,14 @@
             android:id="@+id/layout_download"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp8"
-            android:layout_marginEnd="@dimen/dp8"
-            android:layout_marginLeft="@dimen/dp8"
-            android:layout_marginRight="@dimen/dp8"
-            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginBottom="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp4"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_marginStart="@dimen/dp4"
             android:background="@drawable/bg_background_round_4dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -245,7 +248,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp8"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/dp4"
                     android:text="@string/mine_downloaded"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -279,9 +283,9 @@
                 android:id="@+id/rv_download"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp8"
-                android:layout_marginLeft="@dimen/dp8"
-                android:layout_marginRight="@dimen/dp8" />
+                android:layout_marginBottom="@dimen/dp4"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginRight="@dimen/dp4" />
 
         </LinearLayout>
     </LinearLayout>

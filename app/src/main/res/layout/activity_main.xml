@@ -72,13 +72,18 @@
                     android:id="@+id/iv_upload"
                     android:layout_width="@dimen/dp24"
                     android:layout_height="@dimen/dp24"
-                    android:src="@drawable/icon_upload"/>
+                    android:src="@drawable/icon_upload" />
 
                 <View
                     android:layout_width="@dimen/dp16"
-                    android:layout_height="0dp"/>
+                    android:layout_height="0dp" />
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/background" />
         </LinearLayout>
 
         <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager
@@ -93,56 +98,67 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp56"
-            android:layout_gravity="bottom"
-            android:layoutDirection="ltr"
-            android:background="@color/color_bg_black_top"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/layout_home"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_height="1dp"
+                android:background="@color/background" />
 
-                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                    android:id="@+id/fiv_home"
-                    style="@style/main_check_button_text"
-                    android:layout_centerInParent="true"
-                    android:text="@string/icon_phone"
-                    android:textColor="@color/fb_ad_green_button" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:visibility="gone"
-                android:id="@+id/layout_category"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_height="@dimen/dp56"
+                android:layout_gravity="bottom"
+                android:background="@color/color_bg_black_top"
+                android:layoutDirection="ltr"
+                android:orientation="horizontal">
 
-                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                    android:id="@+id/fiv_category"
-                    style="@style/main_check_button_text"
-                    android:layout_centerInParent="true"
-                    android:text="@string/icon_block_tab"
-                    android:textColor="@color/fb_ad_white_title" />
+                <RelativeLayout
+                    android:id="@+id/layout_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
-            </RelativeLayout>
+                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                        android:id="@+id/fiv_home"
+                        style="@style/main_check_button_text"
+                        android:layout_centerInParent="true"
+                        android:text="@string/icon_phone"
+                        android:textColor="@color/fb_ad_green_button" />
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/layout_mine"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                <RelativeLayout
+                    android:id="@+id/layout_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:visibility="gone">
 
-                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                    android:id="@+id/fiv_mine"
-                    style="@style/main_check_button_text"
-                    android:layout_centerInParent="true"
-                    android:text="@string/icon_user"
-                    android:textColor="@color/fb_ad_white_title" />
+                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                        android:id="@+id/fiv_category"
+                        style="@style/main_check_button_text"
+                        android:layout_centerInParent="true"
+                        android:text="@string/icon_block_tab"
+                        android:textColor="@color/fb_ad_white_title" />
 
-            </RelativeLayout>
+                </RelativeLayout>
 
+                <RelativeLayout
+                    android:id="@+id/layout_mine"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                        android:id="@+id/fiv_mine"
+                        style="@style/main_check_button_text"
+                        android:layout_centerInParent="true"
+                        android:text="@string/icon_user"
+                        android:textColor="@color/fb_ad_white_title" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
