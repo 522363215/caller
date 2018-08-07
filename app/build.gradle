@@ -13,10 +13,10 @@ android {
             storePassword '000000'
         }
         release {
-            keyAlias 'callerkey'
-            keyPassword '12__4cca'
-            storeFile file('../key/callerkey.jks')
-            storePassword '12__4cca'
+            keyAlias 'colorkey'
+            keyPassword '123__color'
+            storeFile file('../../key/colorkey.jks')
+            storePassword '123__color'
         }
     }
 
@@ -35,6 +35,9 @@ android {
         release {
             buildConfigField "String", "FLURRY_KEY", "\"PKKRTY7YV3W94DSMV2HV\""
             minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //将release版本的包名重命名，加上版本及日期
@@ -125,7 +128,7 @@ dependencies {
 task cpccdebug(type: Copy) {
 //    delete '../blockcalldemo/libs/blockcallsdk.aar'
     from('build/outputs/apk/')
-    into('../debugapk/')
+    into('../../debugapk/')
     include('app-googleplay-debug.apk')
     rename('app-googleplay-debug.apk', 'colorphone-debug.apk')
 }
@@ -136,7 +139,7 @@ cpccdebug.dependsOn('assembleDebug')
 task cpccrelease(type: Copy) {
 //    delete '../blockcalldemo/libs/blockcallsdk.aar'
     from('build/outputs/apk/')
-    into('../releaseapk/')
+    into('../../releaseapk/')
     include('color_phone-googleplay-release.apk')
     rename('color_phone-googleplay-release.apk', 'color_phone-release.apk')
 }
@@ -146,7 +149,7 @@ task cpccchannel(type: Copy) {
     from('build/outputs/apk/') {
         include '*.apk'
     }
-    into('../channelpkg/')
+    into('../../channelpkg/')
 //    rename('app-googleplay-release.apk', 'callerId-release.apk')
 }
 cpccchannel.dependsOn('assembleRelease')
