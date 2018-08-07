@@ -44,7 +44,6 @@
 -verbose
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
 
--keepnames class * blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideModelConfig
 
 #-keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
@@ -204,6 +203,13 @@
 -keepattributes *Annotations*
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
+
+-keep class blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideModelConfig
+#-keepclassmembers class blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideModelConfig {<fields>;}
+#-keepnames public class blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideModelConfig* {
+#     <fields>;
+#     <methods>;
+#}
 
 # callflashset
 -keep class com.md.flashset.CallFlashSet
