@@ -3,9 +3,11 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -33,6 +35,7 @@ import com.md.serverflash.download.ThemeResourceHelper;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
@@ -44,6 +47,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Interstitia
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.PreloadAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.PermissionInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.SavingDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashDetailGroupAdShow;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventInterstitialAdLoadSuccess;
@@ -122,6 +126,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private TextView mTvLikeCount;
     private FontIconView mFivDownload;
     private TextView mTvDownloadCount;
+    private List<PermissionInfo> mPermissions;
+    private boolean mIsComeGuide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +140,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-
+        mIsComeGuide = getIntent().getBooleanExtra(ActivityBuilder.IS_COME_GUIDE, false);
         mInfo = (CallFlashInfo) getIntent().getSerializableExtra(ActivityBuilder.CALL_FLASH_INFO);
         initView();
         initVolumeChangeObserver(true);
@@ -163,15 +169,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         startAnswerAnim();
         showDownloadProgress();
         setLikeAndDownload();
-
-//        //test 模拟广告加载成功
-//        Async.scheduleTaskOnUiThread(5000, new Runnable() {
-//            @Override
-//            public void run() {
-//                setCallFlashLayout(148);
-//                mLayourAd.setVisibility(View.VISIBLE);
-//            }
-//        });
     }
 
     private void initView() {
@@ -210,6 +207,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         tv_downloading_below_ad.setText(getString(R.string.call_flash_gif_show_connecte));
 
         ((FontIconView) findViewById(R.id.fiv_back)).setShadowLayer(10f, 0, 0, 0xff000000);
+
+        if (mIsComeGuide) {
+            ((FontIconView) findViewById(R.id.fiv_back)).setVisibility(View.GONE);
+        }
 
         mIsShowAboveAdBtn = isShowAboveAdBtn();
         if (mIsShowAboveAdBtn) {
@@ -370,6 +371,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void loadInterstitialAd() {
+        if (mIsComeGuide) return;
         InterstitialAdUtil.loadInterstitialAd(this, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
 //        LogUtil.d(TAG, "call_flash_detail loadInterstitialAd:" + CallerAdManager.getResultInFbId());
     }
@@ -409,6 +411,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        mIsComeGuide = getIntent().getBooleanExtra(ActivityBuilder.IS_COME_GUIDE, false);
         mInfo = (CallFlashInfo) intent.getSerializableExtra(ActivityBuilder.CALL_FLASH_INFO);
         showCallFlash();
         setFlashBackground();
@@ -790,7 +793,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             @Override
             public void run() {
                 final boolean isShowInterstitialAd = InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
-                if (InterstitialAdUtil.isShowFullScreenAd(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL)) {
+                if (InterstitialAdUtil.isShowFullScreenAd(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL) && !mIsComeGuide) {
                     showFullScreenAd(false);
                     Async.scheduleTaskOnUiThread(SAVING_DIALOG_MAX_TIME, new Runnable() {
                         @Override
@@ -801,7 +804,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                             }
                         }
                     });
-                } else if (isShowInterstitialAd) {
+                } else if (isShowInterstitialAd && !mIsComeGuide) {
                     showInterstitialAd(false);
                     Async.scheduleTaskOnUiThread(SAVING_DIALOG_MAX_TIME, new Runnable() {
                         @Override
@@ -824,7 +827,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         if (!isFinishing()) {
             if (!isCurrentFlashUsing || !isFlashSwitchOn) {
                 //单个权限请求，一个权限成功之后继续续请求下一个
-                requestSpecialPermission(PermissionUtils.PERMISSION_OVERLAY);
+                mPermissions = PermissionUtils.getRequestPermissions();
+                requestPermissions();
             } else {
                 toResult(getString(R.string.call_flash_gif_show_setting_suc_reset));
                 CallFlashPreferenceHelper.putBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
@@ -844,6 +848,39 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 }
             }
         }
+    }
+
+    private void requestPermissions() {
+        if (mPermissions != null) {
+            for (PermissionInfo permission : mPermissions) {
+                if (!PermissionUtils.hasPermission(this, permission.permission)) {
+                    if (permission.isSpecialPermission) {
+                        if (!TextUtils.isEmpty(permission.permission) && !permission.isRequested) {
+                            requestSpecialPermission(permission.permission);
+                            permission.isRequested = true;
+                            return;
+                        }
+                    } else {
+                        if (permission.permissions != null && permission.permissions.length > 0 && !permission.isRequested) {
+                            requestPermission(permission.permissions, permission.requestCode);
+                            permission.isRequested = true;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        if (isShowSuccessResult(this)) {
+            showSaveDialog();
+        } else {
+            toResult(getString(R.string.permission_denied_txt));
+        }
+    }
+
+    public static boolean isShowSuccessResult(Context context) {
+        boolean canDrawOverlays = SpecialPermissionsUtil.canDrawOverlays(context);
+        boolean isHavePhoneAndContact = PermissionUtils.hasPermissions(context, PermissionUtils.PERMISSION_GROUP_PHONE_AND_CONTACT);
+        return canDrawOverlays && isHavePhoneAndContact;
     }
 
     private void toResultOkAction() {
@@ -1041,9 +1078,9 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onPermissionGranted(int requestCode) {
+        LogUtil.d(TAG, "MyPermissionGrant onPermissionGranted requestCode：" + requestCode);
         switch (requestCode) {
             case PermissionUtils.REQUEST_CODE_STORAGE_PERMISSION:
-                LogUtil.d(TAG, "MyPermissionGrant onPermissionGranted CODE_EXTERNAL_STORAGE_PERMISSION");
                 if (mIsShowAboveAdBtn) {
                     layout_progress_above_ad.setVisibility(View.VISIBLE);
                     tv_setting_action_above_ad.setVisibility(View.GONE);
@@ -1057,11 +1094,12 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                     downloadFlashResourceFile();
                 }
                 break;
+            case PermissionUtils.REQUEST_CODE_PHONE_AND_CONTACT_PERMISSION:
             case PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION:
-                requestSpecialPermission(PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS);
-                break;
             case PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS:
-                showSaveDialog();
+            case PermissionUtils.REQUEST_CODE_AUTO_START:
+            case PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK:
+                requestPermissions();
                 break;
         }
     }
@@ -1069,11 +1107,18 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     @Override
     public void onPermissionNotGranted(int requestCode) {
         switch (requestCode) {
+            case PermissionUtils.REQUEST_CODE_PHONE_AND_CONTACT_PERMISSION:
             case PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION:
-                ToastUtils.showToast(this, getString(R.string.permission_denied_txt));
+                if (mIsComeGuide) {
+                    requestPermissions();
+                } else {
+                    ToastUtils.showToast(this, getString(R.string.permission_denied_txt));
+                }
                 break;
             case PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS:
-                showSaveDialog();
+            case PermissionUtils.REQUEST_CODE_AUTO_START:
+            case PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK:
+                requestPermissions();
                 break;
         }
     }
@@ -1083,6 +1128,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     //*********************************音量设置*********************************************
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mIsComeGuide) {
+            return true;
+        }
+
         try {
             if (mInfo != null && mInfo.isHaveSound && mIsResume) {
                 int ringMode = mVolumeChangeObserver.getRingerMode();

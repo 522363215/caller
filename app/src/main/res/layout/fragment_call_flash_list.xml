@@ -54,7 +54,7 @@
                     android:layout_marginLeft="@dimen/dp16"
                     android:layout_marginStart="@dimen/dp16"
                     android:layout_weight="1"
-                    android:text="@string/permission_tip_des"
+                    android:text="@string/notification_listener_setting_tip"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 

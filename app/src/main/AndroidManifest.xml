@@ -189,6 +189,9 @@
         <activity
             android:name=".activity.MediaUploadActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CallFlashSetGuideActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".service.JobSchedulerService"

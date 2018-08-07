@@ -9,4 +9,6 @@ public class PermissionInfo {
     public boolean isGet;
     public boolean isSpecialPermission;
     public int requestCode;
+    public boolean isRequested;//是否请求过，不代表已经请求成功
+
 }

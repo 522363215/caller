@@ -1,7 +1,6 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +18,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.Permissio
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SystemInfoUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 
 public class PermissionActivity extends BaseActivity implements View.OnClickListener, PermissionShowAdapter.SetClickListener {
@@ -119,72 +117,13 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initData() {
-        getPermissions();
-    }
-
-    private void getPermissions() {
+        List<PermissionInfo> requestPermissions = PermissionUtils.getRequestPermissions();
         if (mPermissionInfos == null) {
             mPermissionInfos = new ArrayList<>();
         } else {
             mPermissionInfos.clear();
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            PermissionInfo phoneAndContactPermission = new PermissionInfo();
-            phoneAndContactPermission.title = getString(R.string.permission_phone_and_contact_title);
-            phoneAndContactPermission.permissionDes = getString(R.string.permission_phone_and_contact_des);
-            phoneAndContactPermission.permission = PermissionUtils.PERMISSION_PHONE_AND_CONTACT;
-            phoneAndContactPermission.permissions = PermissionUtils.PERMISSION_GROUP_PHONE_AND_CONTACT;
-            phoneAndContactPermission.isSpecialPermission = false;
-            phoneAndContactPermission.requestCode = PermissionUtils.REQUEST_CODE_PHONE_AND_CONTACT_PERMISSION;
-            mPermissionInfos.add(phoneAndContactPermission);
-        }
-
-        PermissionInfo screenPermission = new PermissionInfo();
-        screenPermission.title = getString(R.string.permission_screen_permission_title);
-        screenPermission.permissionDes = getString(R.string.permission_screen_permission_des);
-        screenPermission.permission = PermissionUtils.PERMISSION_OVERLAY;
-        screenPermission.isSpecialPermission = true;
-        screenPermission.requestCode = PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION;
-        mPermissionInfos.add(screenPermission);
-
-        PermissionInfo callPermission = new PermissionInfo();
-        callPermission.title = getString(R.string.permission_call_permission_title);
-        callPermission.permissionDes = getString(R.string.permission_call_permission_des);
-        callPermission.permission = PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS;
-        callPermission.requestCode = PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS;
-        callPermission.isSpecialPermission = true;
-        mPermissionInfos.add(callPermission);
-
-
-        if (SystemInfoUtil.isMiui()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                PermissionInfo showOnLockPermission = new PermissionInfo();
-                showOnLockPermission.title = getString(R.string.permission_show_on_lock_title);
-                showOnLockPermission.permissionDes = getString(R.string.permission_show_on_lock_des);
-                showOnLockPermission.permission = PermissionUtils.PERMISSION_SHOW_ON_LOCK;
-                showOnLockPermission.requestCode = PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK;
-                showOnLockPermission.isSpecialPermission = true;
-                mPermissionInfos.add(showOnLockPermission);
-            }
-
-            PermissionInfo autoStartPermission = new PermissionInfo();
-            autoStartPermission.title = getString(R.string.permission_auto_start_title);
-            autoStartPermission.permissionDes = getString(R.string.permission_auto_start_des);
-            autoStartPermission.permission = PermissionUtils.PERMISSION_AUTO_START;
-            autoStartPermission.requestCode = PermissionUtils.REQUEST_CODE_AUTO_START;
-            autoStartPermission.isSpecialPermission = true;
-            mPermissionInfos.add(autoStartPermission);
-
-//            PermissionInfo readCallLogPermission = new PermissionInfo();
-//            readCallLogPermission.title = getString(R.string.permission_read_call_log_title);
-//            readCallLogPermission.permissionDes = getString(R.string.permission_read_call_log_des);
-//            readCallLogPermission.permission = Manifest.permission.READ_CALL_LOG;
-//            readCallLogPermission.permissions = new String[]{Manifest.permission.READ_CALL_LOG};
-//            readCallLogPermission.isSpecialPermission = false;
-//            showOnLockPermission.requestCode = PermissionUtils.REQUEST_CODE_READ_CALL_LOG_PERMISSION;
-//            mPermissionInfos.add(readCallLogPermission);
-        }
-
+        mPermissionInfos.addAll(requestPermissions);
         mPermissionShowAdapter.notifyDataSetChanged();
     }
 
@@ -263,9 +202,9 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
         if (PermissionUtils.PERMISSION_AUTO_START.equals(info.permission) || PermissionUtils.PERMISSION_SHOW_ON_LOCK.equals(info.permission)) {
             //小米专用权限
             if (PermissionUtils.PERMISSION_AUTO_START.equals(info.permission)) {
-                SpecialPermissionsUtil.toXiaomiAutoStartPermission(this);
+                SpecialPermissionsUtil.toXiaomiAutoStartPermission(this, PermissionUtils.REQUEST_CODE_AUTO_START);
             } else if (PermissionUtils.PERMISSION_SHOW_ON_LOCK.equals(info.permission)) {
-                SpecialPermissionsUtil.toXiaomiShowOnLockPermssion(this);
+                SpecialPermissionsUtil.toXiaomiShowOnLockPermssion(this, PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK);
             }
         } else if (!info.isGet) {
             if (info.isSpecialPermission) {

@@ -27,6 +27,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainA
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.SettingActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -234,7 +235,7 @@ public class SideslipContraller implements View.OnClickListener {
         FlurryAgent.logEvent("about_Email_us");
         try {
 
-            String mailto = "contact@lionmobi.com";
+            String mailto = ConstantUtils.EAMAIL_ADDR;
             String[] tos = {mailto};
 
             Intent emailintent = new Intent(

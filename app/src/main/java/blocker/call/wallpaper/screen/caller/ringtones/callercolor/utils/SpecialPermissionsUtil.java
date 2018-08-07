@@ -172,7 +172,7 @@ public class SpecialPermissionsUtil {
     /**
      * 跳转到小米请求show on lock permission 界面
      */
-    public static void toXiaomiShowOnLockPermssion(Context context) {
+    public static void toXiaomiShowOnLockPermssion(Activity activity, int requestCode) {
         try {
             String miuiVersion = SystemInfoUtil.getMiuiVersion();
             LogUtil.d("miui_setting", "miuiVersion: " + miuiVersion);
@@ -180,13 +180,13 @@ public class SpecialPermissionsUtil {
             if ("V8".equals(miuiVersion) || "V9".equals(miuiVersion)) {
                 intent = new Intent("miui.intent.action.APP_PERM_EDITOR");
                 intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.PermissionsEditorActivity");
-                intent.putExtra("extra_pkgname", context.getPackageName());
+                intent.putExtra("extra_pkgname", activity.getPackageName());
             } else if ("V6".equals(miuiVersion) || "V7".equals(miuiVersion)) {
                 intent = new Intent("miui.intent.action.APP_PERM_EDITOR");
                 intent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
-                intent.putExtra("extra_pkgname", context.getPackageName());
+                intent.putExtra("extra_pkgname", activity.getPackageName());
             } else if ("V5".equals(miuiVersion)) {
-                Uri packageURI = Uri.parse("package:" + context.getApplicationInfo().packageName);
+                Uri packageURI = Uri.parse("package:" + activity.getApplicationInfo().packageName);
                 intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
             } else {
                 intent = new Intent();
@@ -194,10 +194,10 @@ public class SpecialPermissionsUtil {
                 intent.addCategory(Intent.CATEGORY_DEFAULT);
 //                    ComponentName componentName = new ComponentName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
 //                    intent.setComponent(componentName);
-                intent.putExtra("extra_pkgname", context.getPackageName());
+                intent.putExtra("extra_pkgname", activity.getPackageName());
             }
-            context.startActivity(intent);
-            showXiaoMiPermissionTipDialog(context, "is_show_on_lock");
+            activity.startActivityForResult(intent, requestCode);
+            showXiaoMiPermissionTipDialog(activity, "is_show_on_lock");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -207,26 +207,26 @@ public class SpecialPermissionsUtil {
     /**
      * 跳转到小米请求自启动的权限界面
      */
-    public static void toXiaomiAutoStartPermission(Context context) {
+    public static void toXiaomiAutoStartPermission(Activity activity, int requestCode) {
         try {
 
             if (SystemInfoUtil.isMiui()) {//小米, autostart
                 Intent intent = new Intent();
                 ComponentName componentName = new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity");
                 intent.setComponent(componentName);
-                context.startActivity(intent);
-                showXiaoMiPermissionTipDialog(context, "is_auto_start_boot");
+                activity.startActivityForResult(intent, requestCode);
+                showXiaoMiPermissionTipDialog(activity, "is_auto_start_boot");
             }
         } catch (Exception e) {
             e.printStackTrace();
             try {
                 Intent intent = new Intent();
                 intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                LogUtil.d(TAG, "getPackageName(): " + context.getPackageName());
-                Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+                LogUtil.d(TAG, "getPackageName(): " + activity.getPackageName());
+                Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
                 intent.setData(uri);
-                context.startActivity(intent);
-                showXiaoMiPermissionTipDialog(context, "is_auto_start_boot");
+                activity.startActivityForResult(intent, requestCode);
+                showXiaoMiPermissionTipDialog(activity, "is_auto_start_boot");
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
