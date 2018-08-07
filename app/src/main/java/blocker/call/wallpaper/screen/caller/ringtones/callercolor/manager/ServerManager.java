@@ -224,6 +224,9 @@ public class ServerManager {
 
                     LogUtil.d("cpservice", "splash_fb_id:"+dataBean.splash_fb_id);
 
+                    ad_pref.edit().putInt("pref_is_auto_go_main", dataBean.is_auto_go_main).apply();
+                    ad_pref.edit().putInt("pref_is_show_ad_end_call", dataBean.is_show_ad_end_call).apply();
+
                     //first sync time
                     if (pref.getLong("key_cid_first_sync_server_time", 0) <= 0) {
                         pref.edit().putLong("key_cid_first_sync_server_time", Long.valueOf(tm_ms)).apply();

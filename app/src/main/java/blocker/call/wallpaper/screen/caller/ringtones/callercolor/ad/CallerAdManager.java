@@ -1,5 +1,6 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad;
 
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import java.util.HashSet;
@@ -191,5 +192,25 @@ public class CallerAdManager {
                 break;
         }
         return click;
+    }
+
+    public static boolean isAutoGoMain() {
+        boolean autoGoMain = true; //默认自动跳转到main
+        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+        int is = ad_pref.getInt("pref_is_auto_go_main", 0);//欧美发达国家 渠道量，不自动跳过is=1
+        if (is == 1) {
+            autoGoMain = false;
+        }
+        return autoGoMain;
+    }
+
+    public static boolean isShowAdOnEndCall(){
+        boolean show = false;
+        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+        int is = ad_pref.getInt("pref_is_show_ad_end_call", 0);//1-渠道量才显示，默认不显示
+        if (is == 1) {
+            show = true;
+        }
+        return show;
     }
 }
