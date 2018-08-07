@@ -79,6 +79,7 @@ public class CallFlashSetResultActivity extends BaseActivity {
     private boolean mIsFirstShowAdmob;
     private MyAdvertisementAdapter mMyAdvertisementAdapter;
     private boolean mIsShowInterstitialAd;
+    private boolean mIsSetFailed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +161,20 @@ public class CallFlashSetResultActivity extends BaseActivity {
                 }
                 try {
                     mDrawHookView.setVisibility(View.VISIBLE);
+                    if (mIsSetFailed) {
+                        mDrawHookView.setDrawType(DrawHookView.TYPE_DRAW_CROSS);
+                    } else {
+                        mDrawHookView.setDrawType(DrawHookView.TYPE_DRAW_HOOK);
+                    }
+                    mDrawHookView.setAnimListener(new DrawHookView.AnimListener() {
+                        @Override
+                        public void onAnimFinish() {
+                            mIsEndAnimWhenLoadingAd = true;
+                            if (mIsAdLoaded && !mIsPlayAnimAfterAdLoaded) startAnimAfterAdLoaded();
+                            //显示插屏
+//                showInterstitialAd(true);
+                        }
+                    });
                     mDrawHookView.Start();
                 } catch (Exception e) {
 
@@ -195,10 +210,6 @@ public class CallFlashSetResultActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mIsEndAnimWhenLoadingAd = true;
-                if (mIsAdLoaded && !mIsPlayAnimAfterAdLoaded) startAnimAfterAdLoaded();
-                //显示插屏
-//                showInterstitialAd(true);
             }
 
             @Override
@@ -238,6 +249,14 @@ public class CallFlashSetResultActivity extends BaseActivity {
         String showContent = getIntent().getStringExtra("result_des");
         mTvCenterResultDes.setText(showContent);
         mTvTopResultDes.setText(showContent);
+
+        if (getString(R.string.permission_denied_txt).equals(showContent)) {
+            mIsSetFailed = true;
+            mTvTopResultTitle.setText(R.string.set_failed);
+            mTvCenterResultTitle.setText(R.string.set_failed);
+            mFivSuccessBig.setTextColor(getResources().getColor(R.color.color_FD5B5B));
+            mIvSuccessSmall.setBackgroundResource(R.drawable.icon_fail);
+        }
 
         showResult();
         callFlashStatistics();

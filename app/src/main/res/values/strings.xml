@@ -229,4 +229,7 @@
     <string name="setting_close_call_assistant_tip">Missed and important calls information will not be displayed, are you sure to turn it off?</string>
     <string name="setting_close_block_tip">It will not block calls, are you sure to turn it off?</string>
     <string name="setting_close_caller_show_tip">Color call screen will not be displayed, are you sure to turn it off?</string>
+
+    <string name="set_default">Default</string>
+    <string name="set_failed">设置失败</string>
 </resources>

@@ -457,11 +457,11 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         mLayoutLoading.setVisibility(View.GONE);
         mLayoutLoadCompleted.setVisibility(View.VISIBLE);
         if (mIsShowInitialization) {
-            mPbInit.setProgress(100);
             if (mInitAnimator != null) {
                 mInitAnimator.end();
                 mInitAnimator.cancel();
             }
+            mPbInit.setProgress(100);
         } else {
             if (mAlphAnimator1 != null && mAlphAnimator1.isRunning()) {
                 mAlphAnimator1.end();
@@ -478,13 +478,18 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         }
 
         // TODO: 2018/8/4  广告自动跳转倒计时 此处控制是否自动跳转
-        boolean isAutoSkipAd = true;
-        if (isAutoSkipAd) {
-            mPbSkip.setVisibility(View.VISIBLE);
-            showAdCountDown();
-        } else {
-            mPbSkip.setVisibility(View.GONE);
-        }
+        Async.scheduleTaskOnUiThread(500, new Runnable() {
+            @Override
+            public void run() {
+                boolean isAutoSkipAd = true;
+                if (isAutoSkipAd) {
+                    mPbSkip.setVisibility(View.VISIBLE);
+                    showAdCountDown();
+                } else {
+                    mPbSkip.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void showAdCountDown() {

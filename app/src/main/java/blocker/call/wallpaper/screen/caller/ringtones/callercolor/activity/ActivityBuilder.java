@@ -25,6 +25,7 @@ public class ActivityBuilder {
     public static final String IS_COME_FROM_CALL_AFTER = "is_come_from_call_after";
     public static final String CALL_FLASH_INFO = "call_flash_info";
     public static final String CALL_FLASH_DATA_TYPE = "call_flash_data_type";
+    public static final String IS_COME_GUIDE = "is_first_boot_guide_in_call_flash_detail";
 
     public static final int FRAGMENT_HOME = 0;
     public static final int FRAGMENT_MINE = 1;
@@ -79,14 +80,19 @@ public class ActivityBuilder {
         toCallFlashPreview(context, info, glideView, false);
     }
 
-    public static void toCallFlashDetail(Context context, CallFlashInfo info, boolean isComeDesktop) {
+    public static void toCallFlashDetail(Context context, CallFlashInfo info, boolean isComeDesktop, boolean isComeGuide) {
         Intent intent = new Intent();
         intent.setClass(context, CallFlashDetailActivity.class);
 //        intent.putExtra(ConstantUtils.COME_FROM_CALLAFTER, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_CALLAFTER, false));
 //        intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
         intent.putExtra(IS_COME_FROM_DESKTOP, isComeDesktop);
         intent.putExtra(CALL_FLASH_INFO, info);
+        intent.putExtra(IS_COME_GUIDE, isComeGuide);
         context.startActivity(intent);
+    }
+
+    public static void toCallFlashDetail(Context context, CallFlashInfo info, boolean isComeDesktop) {
+        toCallFlashDetail(context, info, isComeDesktop, false);
     }
 
     /**
@@ -105,6 +111,11 @@ public class ActivityBuilder {
     public static void toPermissionActivity(Context context, boolean isLetsStart) {
         Intent intent = new Intent(context, PermissionActivity.class);
         intent.putExtra(ActivityBuilder.IS_LETS_START, isLetsStart);
+        context.startActivity(intent);
+    }
+
+    public static void toCallFlashSetGuideActivity(Context context) {
+        Intent intent = new Intent(context, CallFlashSetGuideActivity.class);
         context.startActivity(intent);
     }
 }
