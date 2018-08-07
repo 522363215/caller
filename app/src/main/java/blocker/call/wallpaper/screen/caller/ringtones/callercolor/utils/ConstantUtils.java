@@ -22,6 +22,7 @@ public class ConstantUtils {
     public final static String AD_PREF_FILE = "ad_com_colorphone_pref";
 
     public static final String PREF_KEY_UPDATE_PARAM_TIME = "update_server_param_time";
+    public static final String PACKAGE_CID = "com.hiblock.caller";
 
     //首页中数据 类型
     public static final String HOME_DATA_TYPE = CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED;

@@ -205,7 +205,8 @@ public class SideslipContraller implements View.OnClickListener {
                 onAbout();
                 break;
             case R.id.menu_feedback:
-                sendEmail();
+//                sendEmail();
+                onRate();
                 break;
             case R.id.menu_collection:
                 onCollection();
