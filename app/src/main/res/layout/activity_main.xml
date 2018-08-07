@@ -119,12 +119,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                        android:id="@+id/fiv_home"
-                        style="@style/main_check_button_text"
+                    <ImageView
+                        android:id="@+id/iv_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="@string/icon_phone"
-                        android:textColor="@color/fb_ad_green_button" />
+                        android:src="@drawable/icon_call_flash_selected" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -149,13 +149,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-                        android:id="@+id/fiv_mine"
-                        style="@style/main_check_button_text"
+                    <ImageView
+                        android:id="@+id/iv_mine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="@string/icon_user"
-                        android:textColor="@color/fb_ad_white_title" />
-
+                        android:src="@drawable/icon_mine" />
                 </RelativeLayout>
 
             </LinearLayout>

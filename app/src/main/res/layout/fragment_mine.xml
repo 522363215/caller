@@ -24,9 +24,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp4"
+                android:text="@string/mine_current_call_flash"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                tools:text="@string/mine_current_call_flash" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,15 +44,17 @@
                     android:layout_marginRight="@dimen/dp4"
                     android:layout_marginStart="@dimen/dp4"
                     android:visibility="visible"
-                    app:ScaleType="CENTER_CROP" />
+                    app:ScaleType="CENTER_CROP"
+                    tools:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/layout_no_call_flash"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <ImageView
                         android:layout_width="@dimen/dp72"
@@ -63,7 +65,7 @@
                         android:id="@+id/tv_refresh_failed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp16"
+                        android:layout_marginTop="@dimen/dp12"
                         android:gravity="center"
                         android:text="@string/mine_no_current_call_flash"
                         android:textColor="@color/color_FF464654"
@@ -73,7 +75,7 @@
                         android:id="@+id/tv_view"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dp36"
-                        android:layout_marginTop="@dimen/dp24"
+                        android:layout_marginTop="@dimen/dp12"
                         android:background="@drawable/shape_shadow_round30_green"
                         android:gravity="center"
                         android:paddingLeft="@dimen/dp48"
@@ -95,8 +97,8 @@
             android:layout_marginLeft="@dimen/dp4"
             android:layout_marginRight="@dimen/dp4"
             android:layout_marginStart="@dimen/dp4"
-            android:padding="@dimen/dp4"
             android:background="@drawable/bg_background_round_4dp"
+            android:padding="@dimen/dp4"
             android:visibility="gone">
 
             <include layout="@layout/layout_advertisement" />

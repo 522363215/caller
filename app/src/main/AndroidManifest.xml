@@ -197,10 +197,6 @@
             android:screenOrientation="portrait" />
 
         <service
-            android:name=".service.JobSchedulerService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <service
             android:name=".service.JobLocalService"
             android:label="job_local_service"
             android:permission="android.permission.BIND_JOB_SERVICE" />
