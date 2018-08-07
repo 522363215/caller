@@ -1,6 +1,25 @@
 apply plugin: 'com.android.application'
 
+def appName() {
+    return "color_phone"
+}
+
 android {
+    signingConfigs {
+        debug {
+            keyAlias 'debug'
+            keyPassword '000000'
+            storeFile file('debug.key')
+            storePassword '000000'
+        }
+        release {
+            keyAlias 'callerkey'
+            keyPassword '12__4cca'
+            storeFile file('../key/callerkey.jks')
+            storePassword '12__4cca'
+        }
+    }
+
     buildToolsVersion '26.0.2'
     compileSdkVersion 26
     useLibrary 'org.apache.http.legacy'
@@ -18,6 +37,20 @@ android {
             minifyEnabled true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //将release版本的包名重命名，加上版本及日期
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('release.apk')) {
+                        //def fileName = "${variant.productFlavors[0].name}_V${defaultConfig.versionName}_${releaseTime()}.apk"
+                        def productFlavorsName = variant.productFlavors[0].name;
+//                        def fileName = "${appName()}.V${defaultConfig.versionName}.${releaseTime()}.release."+productFlavorsName+".apk"//with date and version
+                        def fileName = "${appName()}-" + productFlavorsName + "-release" + ".apk"
+//without date and version
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
         }
         debug {
 //            buildConfigField "String", "FLURRY_KEY", "\"PKKRTY7YV3W94DSMV2HV\""
@@ -88,3 +121,32 @@ dependencies {
 
 // firebase
 //apply plugin: 'com.google.gms.google-services'
+//cp debug apk to debugapk folder
+task cpccdebug(type: Copy) {
+//    delete '../blockcalldemo/libs/blockcallsdk.aar'
+    from('build/outputs/apk/')
+    into('../debugapk/')
+    include('app-googleplay-debug.apk')
+    rename('app-googleplay-debug.apk', 'colorphone-debug.apk')
+}
+cpccdebug.dependsOn('assembleDebug')
+//
+//
+////cp release apk to releaseapk folder
+task cpccrelease(type: Copy) {
+//    delete '../blockcalldemo/libs/blockcallsdk.aar'
+    from('build/outputs/apk/')
+    into('../releaseapk/')
+    include('color_phone-googleplay-release.apk')
+    rename('color_phone-googleplay-release.apk', 'color_phone-release.apk')
+}
+cpccrelease.dependsOn('assembleRelease')
+
+task cpccchannel(type: Copy) {
+    from('build/outputs/apk/') {
+        include '*.apk'
+    }
+    into('../channelpkg/')
+//    rename('app-googleplay-release.apk', 'callerId-release.apk')
+}
+cpccchannel.dependsOn('assembleRelease')
