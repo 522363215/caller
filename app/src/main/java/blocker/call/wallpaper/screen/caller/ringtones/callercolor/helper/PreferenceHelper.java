@@ -109,6 +109,11 @@ final public class PreferenceHelper {
     public static final String PREF_LAST_REQUEST_PERMISSION_TIME = "android_last_request_permission_time";
 
     /**
+     * 上一次显示新手引导的时间
+     */
+    public static final String PREF_LAST_SHOW_FIRST_GUIDE_TIME = "android_last_show_first_guide_time";
+
+    /**
      * 上传文件是否同意隐私政策;
      */
     public static final String PREF_KEY_MEDIA_UPLOAD_IS_AGREE_PRIVACY_POLICY = "caller_pref_key_call_flash_upload_is_agree_privacy_policy";
@@ -127,6 +132,11 @@ final public class PreferenceHelper {
      * 最近一次进入App的时间
      */
     public static final String PREF_KEY_LAST_ENTER_APP_TIME = "caller_pref_key_last_enter_app_time";
+
+    /**
+     * 是否显示新手 来电秀设置 引导
+     */
+    public static final String PREF_KEY_IS_SHOW_CALL_FLASH_SET_GUIDE = "caller_pref_key_is_show_call_flash_set_guide";
 
 
     private PreferenceHelper() {

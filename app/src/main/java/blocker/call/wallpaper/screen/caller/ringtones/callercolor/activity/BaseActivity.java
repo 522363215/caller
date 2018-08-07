@@ -26,13 +26,14 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobSchedulerService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.RomUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SystemInfoUtil;
 
 public abstract class BaseActivity extends AppCompatActivity implements PermissionUtils.PermissionGrant {
 
@@ -80,7 +81,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
     protected abstract void translucentStatusBar();
 
     //
-    protected abstract int getLayoutRootId ();
+    protected abstract int getLayoutRootId();
 
     private void bindService() {
         Intent intent = null;
@@ -154,9 +155,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
         } else if (PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS.equals(permission)) {
             requestSpecialPermission(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS, false);
         } else if (PermissionUtils.PERMISSION_SHOW_ON_LOCK.equals(permission)) {
-            SpecialPermissionsUtil.toXiaomiShowOnLockPermssion(this);
+            requestSpecialPermission(PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK, false);
         } else if (PermissionUtils.PERMISSION_AUTO_START.equals(permission)) {
-            SpecialPermissionsUtil.toXiaomiAutoStartPermission(this);
+            requestSpecialPermission(PermissionUtils.REQUEST_CODE_AUTO_START, false);
         }
     }
 
@@ -218,6 +219,38 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
                     onPermissionGranted(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
                 }
                 break;
+            case PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK://小米专用
+                boolean isRequestedShowOnLock = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_LAST_TO_XIAO_MI_SHOW_ON_LOCK_PERMISSION_ACTIVITY, 0) > 0;
+                if (isOnActivityResult) {
+                    if (!isRequestedShowOnLock && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && SystemInfoUtil.isMiui()) {
+                        onPermissionNotGranted(PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK);
+                    } else {
+                        onPermissionGranted(PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK);
+                    }
+                } else {
+                    if (!isRequestedShowOnLock && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && SystemInfoUtil.isMiui()) {
+                        SpecialPermissionsUtil.toXiaomiShowOnLockPermssion(this, PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK);
+                    } else {
+                        onPermissionGranted(PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK);
+                    }
+                }
+                break;
+            case PermissionUtils.REQUEST_CODE_AUTO_START://小米专用
+                boolean isRequestedAutoStart = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_LAST_TO_XIAO_MI_AUTO_START_BOOT_PERMISSION_ACTIVITY, 0) > 0;
+                if (isOnActivityResult) {
+                    if (!isRequestedAutoStart && SystemInfoUtil.isMiui()) {
+                        onPermissionNotGranted(PermissionUtils.REQUEST_CODE_AUTO_START);
+                    } else {
+                        onPermissionGranted(PermissionUtils.REQUEST_CODE_AUTO_START);
+                    }
+                } else {
+                    if (!isRequestedAutoStart && SystemInfoUtil.isMiui()) {
+                        SpecialPermissionsUtil.toXiaomiAutoStartPermission(this, PermissionUtils.REQUEST_CODE_AUTO_START);
+                    } else {
+                        onPermissionGranted(PermissionUtils.REQUEST_CODE_AUTO_START);
+                    }
+                }
+                break;
         }
     }
 
@@ -226,7 +259,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
         super.onActivityResult(requestCode, resultCode, data);
         //特殊权限结果返回
         if (requestCode == PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION || requestCode == PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS
-                || requestCode == PermissionUtils.REQUEST_CODE_WRITE_SETTINGS) {
+                || requestCode == PermissionUtils.REQUEST_CODE_WRITE_SETTINGS || requestCode == PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK
+                || requestCode == PermissionUtils.REQUEST_CODE_AUTO_START) {
             requestSpecialPermission(requestCode, true);
         }
 
@@ -234,7 +268,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
         if (requestCode == SpecialPermissionsUtil.REQUEST_CODE_FLOAT_WINDAOW_PERMISSION) {
             if (RomUtils.checkIsHuaweiRom()) {
                 if (!SpecialPermissionsUtil.checkFloatWindowPermission(this)) {
-                    ToastUtils.showToast(this, getString(R.string.permission_denied_txt));
+                    onPermissionNotGranted(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION);
                     return;
                 }
             }
@@ -244,7 +278,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
         //跳转app details settings 返回
         if (requestCode == PermissionUtils.REQUEST_CODE_APP_DETAILS_SETTINGS) {
             if (!SpecialPermissionsUtil.checkFloatWindowPermission(this)) {
-                ToastUtils.showToast(this, getString(R.string.permission_denied_txt));
+                onPermissionNotGranted(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION);
                 return;
             }
             requestSpecialPermission(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION, true);

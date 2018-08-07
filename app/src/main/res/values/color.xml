@@ -36,6 +36,8 @@
     <color name="color_half_transparent">#7f000000</color>
     <color name="whiteSmoke">#F5F5F5</color>
 
+    <color name="color_FF3B86CA">#FF3B86CA</color>
+    <color name="color_8FFFFFFF">#8FFFFFFF</color>
     <color name="progress_bg_default_color">#E5E5E5</color>
     <color name="progress_default_color">#3CB428</color>
     <color name="color_FF008BFB">#FF008BFB</color>
@@ -97,7 +99,8 @@
     <color name="color_22FF9D">#22FF9D</color>
     <color name="color_00AFFF">#00AFFF</color>
     <color name="color_7E23FF">#7E23FF</color>
-
+    <color name="color_FD5B5B">#FD5B5B</color>
+    <color name="color_FF44517A">#FF44517A</color>
     <color name="color_bg_black_top">#FF212121</color>
     <color name="color_bg_black_main">#FF111111</color>
 </resources>

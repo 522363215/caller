@@ -40,6 +40,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.GuideUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.StatisticsUtil;
@@ -80,7 +81,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().registerSticky(this);
         }
-        toPermissionActivity();
+        //新手引导
+        GuideUtil.toFirstBootGuide(this);
         initView();
         //初始化page
         initViewPager();
@@ -123,14 +125,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected int getLayoutRootId() {
         return R.layout.activity_main;
-    }
-
-    private void toPermissionActivity() {
-        boolean isShowPermissionActivity = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_REQUEST_PERMISSION_TIME, 0) <= 0;
-        if (isShowPermissionActivity && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_REQUEST_PERMISSION_TIME, System.currentTimeMillis());
-            ActivityBuilder.toPermissionActivity(this, true);
-        }
     }
 
     @Override
