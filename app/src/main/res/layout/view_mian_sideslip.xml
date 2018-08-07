@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp4"
             android:alpha="0.3"
-            android:text="@string/side_slip_title_des"
+            android:text="@string/splash_content"
             android:textColor="@color/white"
             android:textSize="12sp" />
 

@@ -280,7 +280,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         FlurryAgent.logEvent("about_Email_us");
         try {
 
-            String mailto = "contact@lionmobi.com";
+            String mailto = ConstantUtils.EAMAIL_ADDR;
             String[] tos = {mailto};
 
             Intent emailintent = new Intent(
