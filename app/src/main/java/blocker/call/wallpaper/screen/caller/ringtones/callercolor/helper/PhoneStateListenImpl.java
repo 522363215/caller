@@ -9,9 +9,11 @@ import com.md.flashset.helper.CallFlashPreferenceHelper;
 import java.util.Locale;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallAfterActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DateUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.CallFlashDialog;
@@ -31,7 +33,8 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
     @Override
     public void onPhoneIdle(String number) {
         boolean enableCallerId = PreferenceHelper.getBoolean(PreferenceHelper.PREF_KEY_ENABLE_SHOW_CALL_AFTER, PreferenceHelper.DEFAULT_VALUE_FOR_CALLER_ID);
-        if (enableCallerId) {
+        boolean installCID = AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID);
+        if (!installCID && enableCallerId) {
             CallLogInfo info = new CallLogInfo();
             info.callNumber = number;
             info.callName = ContactManager.getInstance().getContactNameForNumber(number);
