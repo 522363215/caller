@@ -12,9 +12,9 @@ import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
+import com.common.sdk.adpriority.AdPriorityListener;
+import com.common.sdk.adpriority.AdPriorityManager;
 import com.flurry.android.FlurryAgent;
-import com.lionmobi.sdk.adpriority.AdPriorityListener;
-import com.lionmobi.sdk.adpriority.AdPriorityManager;
 import com.md.serverflash.ThemeSyncManager;
 
 import java.util.Locale;
@@ -205,8 +205,8 @@ public class ApplicationEx extends Application {
             mAdPriorityMgr = AdPriorityManager.getInstance(MainInstance.getApplicationContext());
             mAdPriorityMgr.setChannel(StatisticsUtil.getChannel());
             mAdPriorityMgr.setSubChannel(StatisticsUtil.getSubChannel());
-            mAdPriorityMgr.setClientId(ConstantUtils.CALLER_STATISTICS_CHANNEL);
-            mAdPriorityMgr.setDomain(ConstantUtils.AD_PRIORITY_SERVER);
+//            mAdPriorityMgr.setClientId(ConstantUtils.CALLER_STATISTICS_CHANNEL);
+//            mAdPriorityMgr.setDomain(ConstantUtils.AD_PRIORITY_SERVER);
             mAdPriorityMgr.setFirstSynServerConfigTime(getInstance().getGlobalSettingPreference().getLong("key_cid_first_sync_server_time", 0));
 
             long firstLaunchTime = getInstance().getGlobalSettingPreference().getLong("colorphone_inStall_time", 0);

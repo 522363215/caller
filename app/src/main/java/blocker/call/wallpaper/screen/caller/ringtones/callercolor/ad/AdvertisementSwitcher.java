@@ -4,7 +4,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.lionmobi.sdk.adpriority.AdPriorityManager;
+import com.common.sdk.adpriority.AdPriorityManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
