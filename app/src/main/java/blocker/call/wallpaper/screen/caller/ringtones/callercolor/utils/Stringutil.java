@@ -687,98 +687,9 @@ public class Stringutil {
         return packageInfo != null;
     }
 
-    public static boolean isPBRunning(Context context) {
-        boolean result = false;
-        try {
-            ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-            if (am != null) {
-                List<RunningAppProcessInfo> list = am.getRunningAppProcesses();
-                if (list != null) {
-                    for (RunningAppProcessInfo info : list) {
-                        if (info.processName.equals("com.lionmobi.battery")) {
-                            result = true;
-                            //find it, break
-                            break;
-                        }
-                    }
-                }
-                if (!result) {
-                    List<RunningServiceInfo> list1 = am.getRunningServices(500);
-                    if (list1 != null) {
-                        for (RunningServiceInfo info : list1) {
-                            ComponentName comp = info.service;
-                            if ("com.lionmobi.battery".equals(comp.getPackageName())) {
-                                result = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
 
-        }
 
-        return result;
-    }
 
-    public static boolean isPCRunning(Context context) {
-        boolean result = false;
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<RunningAppProcessInfo> list = am.getRunningAppProcesses();
-        if (list != null) {
-            for (RunningAppProcessInfo info : list) {
-                if (info.processName.equals("com.lionmobi.powerclean")
-                        || info.processName.equals("com.quick.cleaner")) {
-                    result = true;
-                    //find it, break
-                    break;
-                }
-            }
-        }
-        if (!result) {
-            List<RunningServiceInfo> list1 = am.getRunningServices(500);
-            for (RunningServiceInfo info : list1) {
-                ComponentName comp = info.service;
-                if ("com.lionmobi.powerclean".equals(comp.getPackageName())
-                        || "com.quick.cleaner".equals(comp.getPackageName())) {
-                    result = true;
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
-    public static boolean isPCorPBRunning(Context context) {
-        boolean result = false;
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<RunningAppProcessInfo> list = am.getRunningAppProcesses();
-        if (list != null) {
-            for (RunningAppProcessInfo info : list) {
-                if (info.processName.equals("com.lionmobi.powerclean")
-                        || info.processName.equals("com.quick.cleaner")
-                        || info.processName.equals("com.lionmobi.battery")) {
-                    result = true;
-                    //find it, break
-                    break;
-                }
-            }
-        }
-        if (!result) {
-            List<RunningServiceInfo> list1 = am.getRunningServices(500);
-            for (RunningServiceInfo info : list1) {
-                ComponentName comp = info.service;
-                if ("com.lionmobi.powerclean".equals(comp.getPackageName())
-                        || "com.quick.cleaner".equals(comp.getPackageName())
-                        || "com.lionmobi.battery".equals(comp.getPackageName())) {
-                    result = true;
-                    break;
-                }
-            }
-        }
-        return result;
-    }
 
     public static boolean isAppRunning(Context context, String packagename) {
         boolean result = false;
@@ -801,9 +712,10 @@ public class Stringutil {
                 }
             }
         }
-        if (packagename.equals("com.lionmobi.powerclean")) {
-            result = false;
-        }
+        //pc
+//        if (packagename.equals("")) {
+//            result = false;
+//        }
         return result;
     }
 

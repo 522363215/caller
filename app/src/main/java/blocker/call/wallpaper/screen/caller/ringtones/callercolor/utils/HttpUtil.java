@@ -24,7 +24,7 @@ public class HttpUtil {
     public final static String NOTIFICATION_TYPE_SHOW = "notification_show";
     public final static String NOTIFICATION_TYPE_CLICK = "notification_click";
     public final static String NOTIFICATION_ACTION = "notification_static";
-    public final static String NOTIFICATION_API_INTERFACE = "http://notification.lionmobi.com/viewSelected/portal/api.php";
+    public final static String NOTIFICATION_API_INTERFACE = "";
 
 
     public static void postNofityData(final Context context, final int actionType, final String notificationType, final AjaxCallback<JSONObject> ajaxCallback) {
@@ -44,7 +44,7 @@ public class HttpUtil {
                 Map<String, Object> params = new HashMap<>();
                 params.put("data", object.toString());
                 params.put("v", sig);
-                aq.ajax(NOTIFICATION_API_INTERFACE, params, JSONObject.class, ajaxCallback);
+                aq.ajax("", params, JSONObject.class, ajaxCallback);
             }
         } catch (Exception e) {
             LogUtil.e("liontools", "postNofityData exception: " + e.getMessage());

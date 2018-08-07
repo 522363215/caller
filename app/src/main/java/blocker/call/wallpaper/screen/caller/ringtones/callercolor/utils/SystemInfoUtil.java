@@ -132,7 +132,7 @@ public class SystemInfoUtil {
             ApplicationInfo localApplicationInfo1 = null;
             ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
-            if (!"com.lionmobi.battery".equalsIgnoreCase(cn.getPackageName())) {
+            if (!"blocker.call.wallpaper.screen.caller.ringtones.callercolor".equalsIgnoreCase(cn.getPackageName())) {
                 try {
                     ApplicationInfo localApplicationInfo2 = context.getPackageManager()
                             .getApplicationInfo(context.getPackageName(), 0);
