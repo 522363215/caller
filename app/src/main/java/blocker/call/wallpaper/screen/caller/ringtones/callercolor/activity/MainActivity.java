@@ -8,10 +8,10 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,7 +45,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.StatisticsUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager;
 import event.EventBus;
 
@@ -348,11 +347,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void initViewPager() {
-        final int selectColor = getResources().getColor(R.color.fb_ad_green_button);
-        final int unSelectColor = getResources().getColor(R.color.fb_ad_white_title);
-        final int selectSize = 32;
-        final int unSelectSize = 24;
-
         mCallFlashListFragment = CallFlashListFragment.newInstance(CallFlashDataType.CALL_FLASH_DATA_HOME);
 //        mCategoryFragment = new CategoryFragment();
         mMineFragment = new MineFragment();
@@ -380,17 +374,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             public void onPageSelected(int arg0) {
                 mIsOnPageSelected = true;
                 currentPage = arg0;
-                ((FontIconView) findViewById(R.id.fiv_home)).setTextColor(currentPage == ActivityBuilder.FRAGMENT_HOME ? selectColor : unSelectColor);
-                ((FontIconView) findViewById(R.id.fiv_home)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ActivityBuilder.FRAGMENT_HOME ? selectSize : unSelectSize);
-                ((FontIconView) findViewById(R.id.fiv_home)).setAlpha(currentPage == ActivityBuilder.FRAGMENT_HOME ? 1f : 0.4f);
-
-                ((FontIconView) findViewById(R.id.fiv_category)).setTextColor(currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? selectColor : unSelectColor);
-                ((FontIconView) findViewById(R.id.fiv_category)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? selectSize : unSelectSize);
-                ((FontIconView) findViewById(R.id.fiv_category)).setAlpha(currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? 1f : 0.4f);
-
-                ((FontIconView) findViewById(R.id.fiv_mine)).setTextColor(currentPage == ActivityBuilder.FRAGMENT_MINE ? selectColor : unSelectColor);
-                ((FontIconView) findViewById(R.id.fiv_mine)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ActivityBuilder.FRAGMENT_MINE ? selectSize : unSelectSize);
-                ((FontIconView) findViewById(R.id.fiv_mine)).setAlpha(currentPage == ActivityBuilder.FRAGMENT_MINE ? 1f : 0.4f);
+                ((ImageView) findViewById(R.id.iv_home)).setImageDrawable(getResources().getDrawable(currentPage == ActivityBuilder.FRAGMENT_HOME ? R.drawable.icon_call_flash_selected : R.drawable.icon_call_flash));
+                ((ImageView) findViewById(R.id.iv_mine)).setImageDrawable(getResources().getDrawable(currentPage == ActivityBuilder.FRAGMENT_MINE ? R.drawable.icon_mine_selected : R.drawable.icon_mine));
 
                 if (mCallFlashListFragment != null) {
                     if (arg0 == ActivityBuilder.FRAGMENT_HOME)
