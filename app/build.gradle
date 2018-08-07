@@ -20,10 +20,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField "String", "FLURRY_KEY", "\"PKKRTY7YV3W94DSMV2HV\""
-//            buildConfigField "String", "FLURRY_KEY", "\"color_phone_test\""
+//            buildConfigField "String", "FLURRY_KEY", "\"PKKRTY7YV3W94DSMV2HV\""
+            buildConfigField "String", "FLURRY_KEY", "\"color_phone_test\""
             //_test
             signingConfig signingConfigs.debug
+        }
+    }
+    lintOptions {
+        abortOnError false
+        disable 'MissingTranslation'
+    }
+    productFlavors {
+        googleplay {
+            manifestPlaceholders = [CHANNEL_VALUE: "gp_new"]
         }
     }
 }
@@ -51,6 +60,7 @@ dependencies {
     compile files('libs/update.jar')
     compile files('libs/android-query.jar')
     compile files('libs/adpriority_1.23_cp.jar')
+    compile files('libs/analytics-1.0-cp.jar')
     compile(name: 'AudienceNetwork', ext: 'aar')
     compile(name: 'DuappsAd-HW-v1.1.1.5', ext: 'aar')
     compile(name: 'mopub-sdk-base_3.1.0', ext: 'aar')

@@ -109,6 +109,9 @@
         <meta-data
             android:name="ClientID"
             android:value="75" />
+        <meta-data
+            android:name="channel"
+            android:value="${CHANNEL_VALUE}" />
 
         <activity
             android:name=".activity.SplashActivity"
@@ -214,6 +217,10 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <provider
+            android:name="com.common.sdk.analytics.data.MyContentProvider"
+            android:authorities="com.analytics.data.75"/>
 
 
     </application>

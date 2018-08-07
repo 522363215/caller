@@ -14,6 +14,7 @@ import android.text.TextUtils;
 
 import com.common.sdk.adpriority.AdPriorityListener;
 import com.common.sdk.adpriority.AdPriorityManager;
+import com.common.sdk.analytics.AnalyticsManager;
 import com.flurry.android.FlurryAgent;
 import com.md.serverflash.ThemeSyncManager;
 
@@ -126,6 +127,7 @@ public class ApplicationEx extends Application {
         // TODO: 2018/7/5 广告暂时屏蔽
 //        intiAdManager();
         initPriorityAds();
+        AnalyticsManager.init(getInstance());
 
     }
 
