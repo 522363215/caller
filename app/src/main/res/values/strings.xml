@@ -130,7 +130,7 @@
     <string name="call_flash_gif_show_setting_des">It needs to enable system alert window permission.</string>
     <string name="notification_listener_setting_tip">Enable Notification Access to Answer Calls</string>
     <string name="call_flash_saving">Saving...</string>
-    <string name="call_flash_grant_permission_tip">This permission is only used to set %1$s, it will not be used for any other purpose.</string>
+    <string name="call_flash_grant_permission_tip">This permission is only used to %1$s, it will not be used for any other purpose.</string>
     <string name="no_app_to_share">"Sorry, you don't have apps available to share."</string>
     <string name="no_online_call_flash_list_tip">no call flash</string>
     <string name="no_collection_call_flash_list_tip">No data</string>
@@ -157,7 +157,7 @@
     <string name="permission_screen_permission_title">Screen permission</string>
     <string name="permission_screen_permission_des">to show call screen</string>
     <string name="permission_call_permission_title">Call permission</string>
-    <string name="permission_call_permission_des">to enable answer the calls</string>
+    <string name="permission_call_permission_des">to enable answering the calls</string>
     <string name="permission_show_on_lock_title">Show on lock screen</string>
     <string name="permission_show_on_lock_des">to shown on the lock screen</string>
     <string name="permission_auto_start_title">Allow to autoStart</string>
@@ -165,7 +165,7 @@
     <string name="permission_read_call_log_title">Read call logs</string>
     <string name="permission_read_call_log_des">to enable block unwanted calls</string>
     <string name="permission_for_show_call_flash">show call flash</string>
-    <string name="permission_for_answer_call">answering calls</string>
+    <string name="permission_for_answer_call">answer calls</string>
     <string name="setting_call_after">Call Assistant</string>
     <string name="setting_caller_show">Caller Show</string>
     <string name="permission_denied_txt">Permission denied, please try again</string>
