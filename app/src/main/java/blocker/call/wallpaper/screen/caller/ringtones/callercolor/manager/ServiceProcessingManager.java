@@ -104,6 +104,7 @@ public class ServiceProcessingManager {
         commonFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
         mCallerCommonReceiver = new CallerCommonReceiver();
         context.registerReceiver(mCallerCommonReceiver, commonFilter);
+
     }
 
     private void unregisterReceivers(Context context) {

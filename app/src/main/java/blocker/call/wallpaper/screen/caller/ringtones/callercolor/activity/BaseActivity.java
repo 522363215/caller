@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
+import com.common.sdk.analytics.AnalyticsManager;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.ads.MobileAds;
 
@@ -102,6 +103,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
     @Override
     protected void onResume() {
         super.onResume();
+        AnalyticsManager.onUserActive();
         FlurryAgent.onPageView();
     }
 
