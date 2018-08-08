@@ -2,6 +2,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment;
 
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,14 +17,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.ModelLoader;
 import com.md.flashset.bean.CallFlashDataType;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
-import com.md.serverflash.callback.SingleTopicThemeCallback;
 import com.md.serverflash.callback.ThemeSyncCallback;
 import com.md.serverflash.callback.TopicThemeCallback;
 
@@ -32,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.CallFlashOnlineAdapter;
@@ -588,10 +588,19 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
     }
 
     private boolean isOlderUser() {
-        boolean old = false;
-        long install = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_INSTALL_TIME, 0);
-        if (install != 0 && !Stringutil.isTodayNew(install)) {
-            old = true;
+
+        SharedPreferences pref = ApplicationEx.getInstance().getGlobalSettingPreference();
+        boolean old = pref.getBoolean("cid_is_old_user_flash", false);
+        if(!old) {
+            //first sync time
+            long first_sync = pref.getLong("key_cid_first_sync_server_time", 0);
+//        int today = Stringutil.getTodayDayByServer();//real time
+            int today = Stringutil.getTodayDayInYearLocal();//not real for test
+
+            if (first_sync != 0 && (today - Stringutil.getDayByTime(first_sync)) >= 2) {
+                old = true;
+                pref.edit().putBoolean("cid_is_old_user_flash", true).apply();
+            }
         }
         return old;
     }
