@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.BatteryManager;
 
 import com.bumptech.glide.Glide;
+import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
 import com.md.serverflash.callback.SingleTopicThemeCallback;
 
+import java.util.Calendar;
 import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
@@ -23,6 +25,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.Server
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServiceProcessingManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 
 public class CallerCommonReceiver extends BroadcastReceiver {
     private static final String TAG = "cpservice";
@@ -125,28 +128,28 @@ public class CallerCommonReceiver extends BroadcastReceiver {
     }
 
     private boolean isShowNewestFlashNotify(Theme newest) {
-        return true;
-//        boolean bool = false;
-//
-//        Calendar calendar = Calendar.getInstance();
-//        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-//        if (hourOfDay >= 15 && hourOfDay <= 22) {
-//            long installTime = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_INSTALL_TIME, System.currentTimeMillis());
-//            boolean isTodayInstall = Stringutil.isToday(installTime);
-//
-//            long lastEnterAppTime = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_LAST_ENTER_APP_TIME, 0);
-//            boolean isTodayEnter = Stringutil.isToday(lastEnterAppTime);
-//
-//            Theme lastSend = CallFlashPreferenceHelper.getObject(CallFlashPreferenceHelper.PREF_CALL_FLASH_LAST_SEND_NOTIFY_NEWEST_INSTANCE, Theme.class);
-//            boolean isSend = lastSend != null && newest.equals(lastSend);
-//
-//            CallFlashInfo current = CallFlashPreferenceHelper.getObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
-//            boolean isCurrent = current != null && current.id.equals(String.valueOf(newest.getId()));
-//
-//            // 不是当天安装, 并且当天没有进入过App, 并且没有发送过当前最新来电秀通知;
-//            bool = !isTodayInstall && !isTodayEnter && !isCurrent && !isSend;
-//        }
-//        return bool;
+//        return true;
+        boolean bool = false;
+
+        Calendar calendar = Calendar.getInstance();
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        if (hourOfDay >= 15 && hourOfDay <= 22) {
+            long installTime = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_INSTALL_TIME, System.currentTimeMillis());
+            boolean isTodayInstall = Stringutil.isToday(installTime);
+
+            long lastEnterAppTime = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_LAST_ENTER_APP_TIME, 0);
+            boolean isTodayEnter = Stringutil.isToday(lastEnterAppTime);
+
+            Theme lastSend = CallFlashPreferenceHelper.getObject(CallFlashPreferenceHelper.PREF_CALL_FLASH_LAST_SEND_NOTIFY_NEWEST_INSTANCE, Theme.class);
+            boolean isSend = lastSend != null && newest.equals(lastSend);
+
+            CallFlashInfo current = CallFlashPreferenceHelper.getObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
+            boolean isCurrent = current != null && current.id.equals(String.valueOf(newest.getId()));
+
+            // 不是当天安装, 并且当天没有进入过App, 并且没有发送过当前最新来电秀通知;
+            bool = !isTodayInstall && !isTodayEnter && !isCurrent && !isSend;
+        }
+        return bool;
     }
 
     private void updateNewFlash(final Context context) {
