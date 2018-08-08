@@ -41,8 +41,10 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
@@ -300,54 +302,50 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         topic = ConstantUtils.HOME_DATA_TYPE;
 //        }
         List<Theme> cacheTopicDataList = ThemeSyncManager.getInstance().getCacheTopicDataList(topic);
+        if (isOlderUser()) {
+            List<Theme> cacheNewFlash = ThemeSyncManager.getInstance().getCacheTopicData(
+                    CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH, 1, 6);
+            cacheTopicDataList.addAll(0, cacheNewFlash);
+            LogUtil.d("chenr", "old user load cache list.");
+        }
         if (isGetCacheData && cacheTopicDataList != null && cacheTopicDataList.size() > 0) {
             //缓存数据存在的时候相当于每次进来优先显示缓存然后再下拉刷新
             updateUI(CallFlashManager.getInstance().themeToCallFlashInfo(cacheTopicDataList), true);
             mSwipeRefreshLayout.setRefreshing(true);
             initData(false);
         } else {
+
+            String [] themeTopic = null;
             if (isOlderUser()) {
-                ThemeSyncManager.getInstance().syncTopicData(new String[]{CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH}, 6, new TopicThemeCallback() {
-                    @Override
-                    public void onSuccess(int code, Map<String, List<Theme>> data) {
-                        if (data != null && data.size() > 0) {
-                            List<Theme> themes = data.get(CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH);
-                            List<CallFlashInfo> newFeature = CallFlashManager.getInstance().themeToCallFlashInfo(themes);
-                            if (newFeature != null) {
-                                List<CallFlashInfo> infos = new ArrayList<>();
-                                infos.addAll(newFeature);
-                                if (model.size() > 0) {
-                                    infos.addAll(model);
-                                }
-                                updateUI(infos, true);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int code, String msg) {
-
-                    }
-                });
+                themeTopic = new String[2];
+                themeTopic[0] = CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH;
+                themeTopic[1] = ConstantUtils.HOME_DATA_TYPE;
+            } else {
+                themeTopic = new String[1];
+                themeTopic[0] = ConstantUtils.HOME_DATA_TYPE;
             }
 
-            ThemeSyncManager.getInstance().syncTopicData(new String[]{topic}, PAGE_NUMBER_MAX_COUNT, new TopicThemeCallback() {
+            ThemeSyncManager.getInstance().syncTopicData(themeTopic, PAGE_NUMBER_MAX_COUNT, new TopicThemeCallback() {
                 @Override
                 public void onSuccess(int code, Map<String, List<Theme>> data) {
                     if (data == null || data.isEmpty()) {
                         return;
                     }
-                    List<Theme> allHomeTopicList = new ArrayList<>();
-                    List<Theme> singleThemeList = data.get(topic);
-                    allHomeTopicList.addAll(singleThemeList);
-                    List<CallFlashInfo> list = CallFlashManager.getInstance().themeToCallFlashInfo(allHomeTopicList);
-                    if (list != null) {
-                        List<CallFlashInfo> infolist = new ArrayList<>();
-                        infolist.addAll(model);
-                        infolist.addAll(list);
-                        updateUI(infolist, true);
-                    }
+                    List<Theme> list = new ArrayList<>();
+                    if (isOlderUser()) {
+                        List<Theme> newFlash = data.get(CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH);
 
+                        if (newFlash.size() > 6) {
+                            list.addAll(0, newFlash.subList(0, 6));
+                        } else
+                            list.addAll(0, newFlash);
+                        LogUtil.d("chenr", "old user loaded new_flash data.");
+                    }
+                    List<Theme> feature = data.get(topic);
+                    list.addAll(feature);
+
+                    List<CallFlashInfo> infos = CallFlashManager.getInstance().themeToCallFlashInfo(list);
+                    updateUI(infos, true);
                 }
 
                 @Override
