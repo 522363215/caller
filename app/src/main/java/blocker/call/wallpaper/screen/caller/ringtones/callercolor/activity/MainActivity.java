@@ -30,7 +30,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.MainPagerAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventLanguageChange;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashEnable;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CategoryFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.MineFragment;
@@ -410,11 +409,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         Glide.get(this).clearMemory();
     }
 
-    public void onEventMainThread(EventRefreshCallFlashEnable event) {
-        boolean isEnable = event.isEnable();
-        if (sideslipContraller != null) {
-            sideslipContraller.setSwitchButton(isEnable);
-        }
-    }
+//    public void onEventMainThread(EventRefreshCallFlashEnable event) {
+//        if(isFinishing()){
+//           return;
+//        }
+//        boolean isEnable = event.isEnable();
+//        if (sideslipContraller != null) {
+//            sideslipContraller.setSwitchButton(isEnable);
+//        }
+//    }
 }
 

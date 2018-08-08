@@ -45,7 +45,7 @@ public class LocalService extends Service {
         super.onCreate();
         LogUtil.d(TAG, "LocalService onCreate");
         sInstance = this;
-        ServiceProcessingManager.getInstance().create(getApplicationContext());
+        ServiceProcessingManager.getInstance().create(ApplicationEx.getInstance());
 
 //        sendData(); //Statistics, move to new sdk
         ServerManager.getInstance().getParamFromServer();
@@ -130,6 +130,6 @@ public class LocalService extends Service {
     public void onDestroy() {
         super.onDestroy();
         LogUtil.d(TAG, "LocalService onDestroy");
-        ServiceProcessingManager.getInstance().destroy(getApplicationContext());
+//        ServiceProcessingManager.getInstance().destroy(getApplicationContext());
     }
 }

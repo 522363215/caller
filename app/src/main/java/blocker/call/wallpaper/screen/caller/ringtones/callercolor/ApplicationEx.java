@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.multidex.MultiDex;
-import android.text.TextUtils;
 
 import com.common.sdk.adpriority.AdPriorityListener;
 import com.common.sdk.adpriority.AdPriorityManager;
@@ -28,7 +27,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobLocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.HttpUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
@@ -54,23 +52,25 @@ public class ApplicationEx extends Application {
         return MainInstance;
     }
 
-    public static ApplicationEx getCommonInstance() {
-        return instance;
-    }
+//    public static ApplicationEx getCommonInstance() {
+//        return instance;
+//    }
 
     private String processName;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
-        processName = CommonUtils.getProcessName(this, android.os.Process.myPid());//pkgname
-        LogUtil.d("app_ex", "processName: " + processName);
-        if (!TextUtils.isEmpty(processName) && processName.equals(getPackageName())) {
-            LogUtil.d("app_ex", "init app data: ");
-            MainInstance = this;
-            initAppData();
-        }
+        MainInstance = this;
+        initAppData();
+//        instance = this;
+//        processName = CommonUtils.getProcessName(this, android.os.Process.myPid());//pkgname
+//        LogUtil.d("app_ex", "processName: " + processName);
+//        if (!TextUtils.isEmpty(processName) && processName.equals(getPackageName())) {
+//            LogUtil.d("app_ex", "init app data: ");
+//            MainInstance = this;
+//            initAppData();
+//        }
     }
 
     @Override
@@ -111,6 +111,7 @@ public class ApplicationEx extends Application {
     }
 
     private void initAppData() {
+        LogUtil.d("app_ex", "init app data: ");
         country = NumberUtil.getDefaultCountry();
         mInterstitialAdvertisementMap = new ConcurrentHashMap<>();
         // 加载语言
