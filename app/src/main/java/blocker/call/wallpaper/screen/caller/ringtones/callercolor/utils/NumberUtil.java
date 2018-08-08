@@ -340,35 +340,6 @@ public class NumberUtil {
         }
     }
 
-    public static String getNumberTypeMultLanguage(Context context, String type) {
-        if ("FIXED_LINE".equals(type)) {
-            return context.getResources().getString(R.string.FIXED_LINE);
-        } else if ("MOBILE".equals(type)) {
-            return context.getResources().getString(R.string.MOBILE);
-        } else if ("FIXED_LINE_OR_MOBILE".equals(type)) {
-            return context.getResources().getString(R.string.FIXED_LINE_OR_MOBILE);
-        } else if ("TOLL_FREE".equals(type)) {
-            return context.getResources().getString(R.string.TOLL_FREE);
-        } else if ("PREMIUM_RATE".equals(type)) {
-            return context.getResources().getString(R.string.PREMIUM_RATE);
-        } else if ("SHARED_COST".equals(type)) {
-            return context.getResources().getString(R.string.SHARED_COST);
-        } else if ("VOIP".equals(type)) {
-            return context.getResources().getString(R.string.phone_detail_unknown);
-        } else if ("PERSONAL_NUMBER".equals(type)) {
-            return context.getResources().getString(R.string.PERSONAL_NUMBER);
-        } else if ("PAGER".equals(type)) {
-            return context.getResources().getString(R.string.phone_detail_unknown);
-        } else if ("UAN".equals(type)) {
-            return context.getResources().getString(R.string.phone_detail_unknown);
-        } else if ("VOICEMAIL".equals(type)) {
-            return context.getResources().getString(R.string.phone_detail_unknown);
-        } else if ("UNKNOWN".equals(type)) {
-            return context.getResources().getString(R.string.phone_detail_unknown);
-        }
-        return context.getResources().getString(R.string.phone_detail_unknown);
-    }
-
     // 获取号码归属地;
     public static String getNumberLocation(String number) {
         try {

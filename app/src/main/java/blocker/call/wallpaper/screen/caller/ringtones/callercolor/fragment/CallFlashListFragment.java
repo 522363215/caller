@@ -306,7 +306,6 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             List<Theme> cacheNewFlash = ThemeSyncManager.getInstance().getCacheTopicData(
                     CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH, 1, 6);
             cacheTopicDataList.addAll(0, cacheNewFlash);
-            LogUtil.d("chenr", "old user load cache list.");
         }
         if (isGetCacheData && cacheTopicDataList != null && cacheTopicDataList.size() > 0) {
             //缓存数据存在的时候相当于每次进来优先显示缓存然后再下拉刷新
@@ -339,7 +338,6 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                             list.addAll(0, newFlash.subList(0, 6));
                         } else
                             list.addAll(0, newFlash);
-                        LogUtil.d("chenr", "old user loaded new_flash data.");
                     }
                     List<Theme> feature = data.get(topic);
                     list.addAll(feature);

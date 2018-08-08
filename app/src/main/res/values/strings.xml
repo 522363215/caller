@@ -22,7 +22,7 @@
     <string name="call_coming_back">"Call back"</string> <!--回拨-->
     <string name="call_coming_detail">"Details"</string>
     <string name="about_title">"About us"</string>
-    <string name="about_product_intro">"Real Phone Call Dialer&#160;&#038;&#160;Blocker."</string>
+    <string name="about_product_intro">"Make your calls colorful"</string>
     <string name="about_product_version">%s Version:"</string>
     <string name="about_rote_gp">"Rate app"</string>
     <string name="about_like_facebook">"Like us on Facebook"</string>
@@ -125,7 +125,7 @@
     <string name="download_failed_for_no_sd_permission">Grant the permission to download and save themes</string>
     <string name="about_send_apk">Share the App with friends</string>
     <string name="device_time_just">Right now</string>
-    <string name="splash_content">Make your calls colorful</string>
+    <string name="splash_content">@string/about_product_intro</string>
     <string name="call_flash_gif_show_connecte">Connecting...</string>
     <string name="call_flash_gif_show_setting_des">It needs to enable system alert window permission.</string>
     <string name="notification_listener_setting_tip">Enable Notification Access to Answer Calls</string>
