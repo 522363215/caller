@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
 
+import com.flurry.android.FlurryAgent;
 import com.md.flashset.View.FlashLed;
 import com.md.flashset.bean.CallFlashClassification;
 import com.md.flashset.bean.CallFlashFormat;
@@ -71,6 +72,12 @@ public class CallFlashSetGuideActivity extends BaseActivity implements View.OnCl
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        FlurryAgent.logEvent("CallFlashSetGuideActivity-----show_main");
+    }
+
+    @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
@@ -79,6 +86,7 @@ public class CallFlashSetGuideActivity extends BaseActivity implements View.OnCl
                 finish();
                 break;
             case R.id.tv_button:
+                FlurryAgent.logEvent("CallFlashSetGuideActivity-----click----to_call_flash_detail");
                 ActivityBuilder.toCallFlashDetail(this, mCallFlashInfo, false, true);
                 break;
         }

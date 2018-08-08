@@ -16,12 +16,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.ModelLoader;
 import com.md.flashset.bean.CallFlashDataType;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
+import com.md.serverflash.callback.SingleTopicThemeCallback;
 import com.md.serverflash.callback.ThemeSyncCallback;
 import com.md.serverflash.callback.TopicThemeCallback;
 
@@ -42,6 +44,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlas
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
 import event.EventBus;
@@ -303,10 +306,48 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             mSwipeRefreshLayout.setRefreshing(true);
             initData(false);
         } else {
+            if (isOlderUser()) {
+                ThemeSyncManager.getInstance().syncTopicData(new String[]{CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH}, 6, new TopicThemeCallback() {
+                    @Override
+                    public void onSuccess(int code, Map<String, List<Theme>> data) {
+                        if (data != null && data.size() > 0) {
+                            List<Theme> themes = data.get(CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH);
+                            List<CallFlashInfo> newFeature = CallFlashManager.getInstance().themeToCallFlashInfo(themes);
+                            if (newFeature != null) {
+                                List<CallFlashInfo> infos = new ArrayList<>();
+                                infos.addAll(newFeature);
+                                if (model.size() > 0) {
+                                    infos.addAll(model);
+                                }
+                                updateUI(infos, true);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+
+                    }
+                });
+            }
+
             ThemeSyncManager.getInstance().syncTopicData(new String[]{topic}, PAGE_NUMBER_MAX_COUNT, new TopicThemeCallback() {
                 @Override
                 public void onSuccess(int code, Map<String, List<Theme>> data) {
-                    updateUI(CallFlashManager.getInstance().themeToCallFlashInfo(data.get(topic)), true);
+                    if (data == null || data.isEmpty()) {
+                        return;
+                    }
+                    List<Theme> allHomeTopicList = new ArrayList<>();
+                    List<Theme> singleThemeList = data.get(topic);
+                    allHomeTopicList.addAll(singleThemeList);
+                    List<CallFlashInfo> list = CallFlashManager.getInstance().themeToCallFlashInfo(allHomeTopicList);
+                    if (list != null) {
+                        List<CallFlashInfo> infolist = new ArrayList<>();
+                        infolist.addAll(model);
+                        infolist.addAll(list);
+                        updateUI(infolist, true);
+                    }
+
                 }
 
                 @Override
@@ -429,6 +470,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                         }
                     }
                 });
+                model.clear();
                 initData(false);
             }
         });
@@ -543,5 +585,14 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                 mLayoutPermissionTip.setVisibility(View.GONE);
             }
         }
+    }
+
+    private boolean isOlderUser() {
+        boolean old = false;
+        long install = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_INSTALL_TIME, 0);
+        if (install != 0 && !Stringutil.isTodayNew(install)) {
+            old = true;
+        }
+        return old;
     }
 }

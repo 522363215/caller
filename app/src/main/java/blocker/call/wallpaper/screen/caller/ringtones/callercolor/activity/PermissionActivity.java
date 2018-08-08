@@ -9,6 +9,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +69,7 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
+        FlurryAgent.logEvent("PermissionAcitivty-----show_main");
         if (mPermissionShowAdapter != null) {
             mPermissionShowAdapter.notifyDataSetChanged();
         }
@@ -135,6 +138,7 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
                 onNext();
                 break;
             case R.id.tv_skip:
+                FlurryAgent.logEvent("PermissionActivity-----click----next_request_permission");
                 finish();
                 break;
         }

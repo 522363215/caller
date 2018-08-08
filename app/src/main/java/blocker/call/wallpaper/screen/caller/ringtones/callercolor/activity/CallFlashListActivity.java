@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.flurry.android.FlurryAgent;
 import com.md.flashset.bean.CallFlashDataType;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
@@ -46,6 +47,12 @@ public class CallFlashListActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         mDataType = intent.getIntExtra(ActivityBuilder.CALL_FLASH_DATA_TYPE, -1);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FlurryAgent.logEvent("CallFlashListActivity-----show_main");
     }
 
     @Override

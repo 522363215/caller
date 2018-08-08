@@ -2,6 +2,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 
+import com.flurry.android.FlurryAgent;
 import com.md.block.core.BlockManager;
 
 import java.util.ArrayList;
@@ -68,6 +70,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
     }
 
     public void showRequestPermission() {
+        FlurryAgent.logEvent("BlockActivity-----show_request_permission_dialog");
         OKCancelDialog dialog = new OKCancelDialog(this, true);
         dialog.show();
         dialog.setOKCancel(R.string.ok_string, R.string.no_string);
@@ -100,6 +103,12 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         if (requestCode == REQUEST_PERMISSION_CODE) {
             finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FlurryAgent.logEvent("BlockActivity-show");
     }
 
     private void initView() {
@@ -179,6 +188,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fiv_add: {
+                FlurryAgent.logEvent("BlockActivity-----click-----show_add_block_contacts_dialog");
                 AddBlockContactDialog dialog = new AddBlockContactDialog(BlockActivity.this);
                 dialog.show();
 
@@ -195,6 +205,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
             }
             break;
             case R.id.fiv_option: {
+                FlurryAgent.logEvent("BlockActivity----click-----show_block_option_dialog");
                 BlockOptionWindow window = new BlockOptionWindow(BlockActivity.this, mCurrentIndex);
                 window.setWidth(DeviceUtil.dp2Px(180));
 
@@ -210,5 +221,4 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
             break;
         }
     }
-
 }

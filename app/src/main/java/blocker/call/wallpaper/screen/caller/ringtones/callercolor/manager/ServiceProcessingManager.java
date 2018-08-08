@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 
 import com.md.block.core.BlockManager;
 import com.md.flashset.CallFlashSet;
+import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
 import com.md.serverflash.callback.TopicThemeCallback;
@@ -66,15 +67,9 @@ public class ServiceProcessingManager {
     }
 
     public void cacheHomeData() {
-        ThemeSyncManager.getInstance().syncTopicData(new String[]{ConstantUtils.HOME_DATA_TYPE}, 150, new TopicThemeCallback() {
-            @Override
-            public void onSuccess(int code, Map<String, List<Theme>> data) {
-            }
+        ThemeSyncManager.getInstance().syncTopicData(new String[]{CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH}, 6, null);
 
-            @Override
-            public void onFailure(int code, String msg) {
-            }
-        });
+        ThemeSyncManager.getInstance().syncTopicData(new String[]{ConstantUtils.HOME_DATA_TYPE}, 150, null);
     }
 
     private void registerReceivers(Context context) {

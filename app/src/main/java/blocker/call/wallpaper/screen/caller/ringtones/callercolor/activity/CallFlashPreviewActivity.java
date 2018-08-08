@@ -86,7 +86,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-        setTranslucentStatusBar();
+//        setTranslucentStatusBar();
         mIsShowFirstAdMob = FirstShowAdmobUtil.isShowFirstAdMob(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_CALL_FLASH_PREVIEW);
 //        initAds();
         initView();

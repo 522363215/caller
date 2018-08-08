@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.flurry.android.FlurryAgent;
 import com.md.flashset.bean.CallFlashDataType;
 import com.md.serverflash.beans.Category;
 
@@ -50,6 +51,12 @@ public class CategoryDetailActivity extends BaseActivity {
 
             setActionBarTitle(category.getTitle());
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FlurryAgent.logEvent("CategoryDetailActivity-----show_main");
     }
 
     private void setActionBarTitle(String title) {

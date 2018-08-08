@@ -216,16 +216,15 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
         int id = v.getId();
         switch (id) {
             case R.id.fiv_back:
-                FlurryAgent.logEvent("CallAfterActivity----toMain");
                 toMain();
                 break;
             case R.id.fiv_menu:
                 // do nothing;
-                FlurryAgent.logEvent("CallAfterActivity----menu");
+                FlurryAgent.logEvent("CallAfterActivity----click----menu");
                 rl_menu_root.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_close:
-                FlurryAgent.logEvent("CallAfterActivity----close");
+                FlurryAgent.logEvent("CallAfterActivity----click----close");
                 rl_menu_root.setVisibility(View.GONE);
                 onBackPressed();
                 break;
@@ -240,7 +239,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.tv_disable:
                 try {
-                    FlurryAgent.logEvent("CallAfterActivity----disable");
+                    FlurryAgent.logEvent("CallAfterActivity----click----disable");
                     rl_menu_root.setVisibility(View.GONE);
                     onBackPressed();
                     startActivity(new Intent(this, SettingActivity.class));
@@ -250,7 +249,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
 
                 break;
             case R.id.rl_call_back:
-                FlurryAgent.logEvent("CallAfterActivity----CallBack");
+                FlurryAgent.logEvent("CallAfterActivityCallAfterActivity----click----CallBack");
                 if (TextUtils.isEmpty(mInfo.callNumber)) {
                     ToastUtils.showToast(this, getResources().getString(R.string.call_after_click_toast));
                     break;
@@ -259,7 +258,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
 //                finish();
                 break;
             case R.id.rl_call_sms:
-                FlurryAgent.logEvent("CallAfterActivity----toSms");
+                FlurryAgent.logEvent("CallAfterActivity----click----toSms");
                 if (TextUtils.isEmpty(mInfo.callNumber)) {
                     ToastUtils.showToast(this, getResources().getString(R.string.call_after_click_toast));
                     break;
@@ -300,6 +299,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                                 @Override
                                 public void run() {
                                     if (isSuc) {
+                                        FlurryAgent.logEvent("CallAfterActivity----click----unblock");
                                         tvBlock.setText(R.string.phone_detail_block);
                                     }
                                     int content = isSuc ? R.string.block_contacts_remove_success : R.string.block_contacts_remove_failed;
@@ -310,6 +310,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                             final boolean isSuc = BlockManager.getInstance().setBlockContact(info);
                             isAddedInBlockContacts = isSuc;
                             if (isSuc) {
+                                FlurryAgent.logEvent("CallAfterActivity----click----add_block");
                                 BlockManager.getInstance().setBlockSwitchState(true);
                             }
                             Async.runOnUiThread(new Runnable() {
@@ -317,6 +318,10 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                                 public void run() {
                                     if (isSuc) {
                                         tvBlock.setText(R.string.phone_detail_unblock);
+                                        Intent toBlock = new Intent();
+                                        toBlock.setClass(CallAfterActivity.this, BlockActivity.class);
+                                        toBlock.putExtra("from_call_after", true);
+                                        startActivity(toBlock);
                                     }
                                     int content = isSuc ? R.string.phone_detail_have_no_tag : R.string.block_contacts_added_failed;
                                     ToastUtils.showToast(CallAfterActivity.this, getString(content));
@@ -332,6 +337,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
 
     private void toMain() {
         ActivityBuilder.toMain(this, ActivityBuilder.FRAGMENT_HOME);
+        FlurryAgent.logEvent("CallAfterActivity----toMain");
         if (!isFinishing()) {
             finish();
         }

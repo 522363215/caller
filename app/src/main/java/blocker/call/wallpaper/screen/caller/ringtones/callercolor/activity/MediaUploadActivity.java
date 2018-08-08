@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
 import com.md.serverflash.download.ThemeResourceHelper;
 
 import java.io.File;
@@ -66,6 +67,12 @@ public class MediaUploadActivity extends BaseActivity implements View.OnClickLis
         return R.layout.activity_media_upload;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FlurryAgent.logEvent("MediaUploadActivity----show_main");
+    }
+
     private void initView() {
         ivUpload = (ImageView) findViewById(R.id.iv_upload);
         tvUpload = (TextView) findViewById(R.id.tv_upload);
@@ -113,6 +120,7 @@ public class MediaUploadActivity extends BaseActivity implements View.OnClickLis
                     ToastUtils.showToast(this, getString(R.string.media_upload_tip_privacy_policy));
                     return;
                 }
+                FlurryAgent.logEvent("MediaUploadActivity-----click----upload");
                 try {
                     if (!TextUtils.isEmpty(imagePath)) {
                         File file = new File(imagePath);
@@ -138,6 +146,7 @@ public class MediaUploadActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.iv_upload:
+                FlurryAgent.logEvent("MediaUploadActivity-----click----choice_upload_img");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ActivityCompat.checkSelfPermission(MediaUploadActivity.this,
                         Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(MediaUploadActivity.this, new String[]
@@ -149,6 +158,7 @@ public class MediaUploadActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.tv_privacy_policy:
+                FlurryAgent.logEvent("MediaUploadActivity-----click----privacy_policy");
                 try {
                     Intent intent = new Intent(this, BrowserActivity.class);
                     startActivity(intent);
@@ -159,6 +169,7 @@ public class MediaUploadActivity extends BaseActivity implements View.OnClickLis
             case R.id.layout_privacy_policy:
                 isAgreePrivacyPolicy = !isAgreePrivacyPolicy;
                 setActionUploadState();
+                FlurryAgent.logEvent("MediaUploadActivity-----click----set_privacy_policy_state");
 
                 PreferenceHelper.putBoolean(PreferenceHelper.PREF_KEY_MEDIA_UPLOAD_IS_AGREE_PRIVACY_POLICY, isAgreePrivacyPolicy);
                 break;

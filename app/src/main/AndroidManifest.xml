@@ -137,7 +137,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.CallFlashAlbumactivity"
+            android:name=".activity.CallFlashAlbumActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CallFlashSetResultActivity"

@@ -120,7 +120,7 @@ public class CallFlashSetResultActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        FlurryAgent.logEvent("GifShowActivity-----ShowMain");
+        FlurryAgent.logEvent("CallFlashSetResultActivity-----show_main");
     }
 
     @Override

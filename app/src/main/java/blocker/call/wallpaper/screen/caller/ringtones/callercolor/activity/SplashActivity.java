@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.flurry.android.FlurryAgent;
+
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
@@ -117,6 +119,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
+        FlurryAgent.logEvent("SplashActivity-----show_main");
     }
 
     @Override

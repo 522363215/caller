@@ -33,7 +33,7 @@ import okhttp3.Call;
  * Created by ChenR on 2017/9/19.
  */
 
-public class CallFlashAlbumactivity extends BaseActivity {
+public class CallFlashAlbumActivity extends BaseActivity {
     private final int AlbumRequestCode = 1077;
     private final int PERMISSION_REQUEST_CODE = 1711;
     private Thread downloadThread = null;
@@ -88,9 +88,9 @@ public class CallFlashAlbumactivity extends BaseActivity {
         findViewById(R.id.ll_local_album).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ActivityCompat.checkSelfPermission(CallFlashAlbumactivity.this,
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ActivityCompat.checkSelfPermission(CallFlashAlbumActivity.this,
                         Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(CallFlashAlbumactivity.this, new String[]
+                    ActivityCompat.requestPermissions(CallFlashAlbumActivity.this, new String[]
                             {Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
                 } else {
                     Intent toAlbum = new Intent();
@@ -115,9 +115,9 @@ public class CallFlashAlbumactivity extends BaseActivity {
     }
 
     private void initLocal() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ActivityCompat.checkSelfPermission(CallFlashAlbumactivity.this,
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ActivityCompat.checkSelfPermission(CallFlashAlbumActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(CallFlashAlbumactivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(CallFlashAlbumActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
         } else {
             setLocalGallery();
         }

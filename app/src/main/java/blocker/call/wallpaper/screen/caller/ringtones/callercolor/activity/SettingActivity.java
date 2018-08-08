@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
 import com.md.block.core.BlockManager;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 
@@ -46,6 +47,12 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
     @Override
     protected int getLayoutRootId() {
         return R.layout.activity_settings;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FlurryAgent.logEvent("SettingActivity-----show_main");
     }
 
     private void listener() {
@@ -95,18 +102,38 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
             case R.id.sb_block:
                 enableBlock = isChecked;
                 BlockManager.getInstance().setBlockSwitchState(isChecked);
+                if (enableBlock) {
+                    FlurryAgent.logEvent("SettingActivity----click----enable_block");
+                } else {
+                    FlurryAgent.logEvent("SettingActivity----click----disable_block");
+                }
                 break;
             case R.id.sb_caller_id:
                 enableCallerId = isChecked;
                 PreferenceHelper.putBoolean(PreferenceHelper.PREF_KEY_ENABLE_SHOW_CALL_AFTER, isChecked);
+                if (isChecked) {
+                    FlurryAgent.logEvent("SettingActivity----click----enable_call_assistant");
+                } else {
+                    FlurryAgent.logEvent("SettingActivity----click----disable_call_assistant");
+                }
                 break;
             case R.id.sb_message:
                 enableMessage = isChecked;
                 PreferenceHelper.putBoolean(PreferenceHelper.SHOW_MESSAGE_COME, isChecked);
+                if (isChecked) {
+                    FlurryAgent.logEvent("SettingActivity----click----enable_message");
+                } else {
+                    FlurryAgent.logEvent("SettingActivity----click----disable_message");
+                }
                 break;
             case R.id.sb_caller_show:
                 enableCallFlash = isChecked;
                 CallFlashPreferenceHelper.putBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, isChecked);
+                if (isChecked) {
+                    FlurryAgent.logEvent("SettingActivity----click----enable_call_flash");
+                } else {
+                    FlurryAgent.logEvent("SettingActivity----click----disable_call_flash");
+                }
                 break;
         }
     }

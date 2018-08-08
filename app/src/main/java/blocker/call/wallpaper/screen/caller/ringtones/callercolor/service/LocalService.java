@@ -43,7 +43,6 @@ public class LocalService extends Service {
         super.onCreate();
         LogUtil.d(TAG, "LocalService onCreate");
         sInstance = this;
-        //服务中所有的初始化工作都要写在这里里面，8.0以上是在另一个服务中进行，防止漏写
         ServiceProcessingManager.getInstance().create(getApplicationContext());
 
         sendData(); //Statistics

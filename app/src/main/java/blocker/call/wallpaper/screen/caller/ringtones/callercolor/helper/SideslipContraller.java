@@ -26,6 +26,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.Block
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.SettingActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingDialog;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingOneDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
@@ -207,7 +208,7 @@ public class SideslipContraller implements View.OnClickListener {
                 break;
             case R.id.menu_feedback:
 //                sendEmail();
-                onRate();
+                sendFeedback();
                 break;
             case R.id.menu_collection:
                 onCollection();
@@ -229,6 +230,10 @@ public class SideslipContraller implements View.OnClickListener {
         FlurryAgent.logEvent("left_collection_click");
         if (mAct == null) return;
         ActivityBuilder.toCallFlashList(mAct, CallFlashDataType.CALL_FLASH_DATA_COLLECTION);
+    }
+
+    private void sendFeedback() {
+        new RatingOneDialog(mAct).show();
     }
 
     private void sendEmail() {
