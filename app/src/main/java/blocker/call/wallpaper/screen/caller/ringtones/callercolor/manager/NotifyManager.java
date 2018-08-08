@@ -134,11 +134,11 @@ public class NotifyManager {
 
     public void showNewFlashWithBigStyle (final NotifyInfo info) {
         if (info == null) {
-            LogUtil.e(TAG, "NotifyInfo is null.");
+            LogUtil.d(TAG, "NotifyInfo is null.");
             return;
         } else {
             if (info.getNotifyId() == 0) {
-                LogUtil.e(TAG, "notify id must be set.");
+                LogUtil.d(TAG, "notify id must be set.");
                 return;
             }
         }
@@ -166,9 +166,11 @@ public class NotifyManager {
 
                     if (!TextUtils.isEmpty(info.arg1)) {
                         imgH = Glide.with(mContext).load(info.arg1).asBitmap().into(width, height).get();
+                        LogUtil.d(TAG, "imgH: "+imgH+", info.arg1: "+info.arg1);
                     }
                     if (!TextUtils.isEmpty(info.arg2)) {
                         imgV = Glide.with(mContext).load(info.arg2).asBitmap().into(width, height).get();
+                        LogUtil.d(TAG, "imgV: "+imgV+", info.arg2: "+info.arg2);
                     }
 
                     if (imgH != null) {

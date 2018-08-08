@@ -15,12 +15,13 @@ import com.md.serverflash.callback.SingleTopicThemeCallback;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.NotifyInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.NotifyManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServerManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServiceProcessingManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -33,13 +34,20 @@ public class CallerCommonReceiver extends BroadcastReceiver {
     public final static String COMMON_CHECK_24 = "android.intent.action.COMMON_CHECK_24";
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
         // 接收通知广播
         try {
             if (COMMON_CHECK_24.equals(intent.getAction())) {
-                LogUtil.d(TAG, "backgroundDownloadOnlionCallFlash COMMON_CHECK_24");
-                updateNewFlash(context);
-                ServiceProcessingManager.getInstance().cacheHomeData();
+
+                Async.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        LogUtil.d(TAG, "backgroundDownloadOnlionCallFlash COMMON_CHECK_24");
+                        ServiceProcessingManager.getInstance().cacheHomeData();
+                        ServerManager.getInstance().getParamFromServer();
+                        updateNewFlash(context);
+                    }
+                });
             }
 
             if (RANDOM_NOTIFY_TASK_24.equals(intent.getAction())) {
@@ -49,7 +57,6 @@ public class CallerCommonReceiver extends BroadcastReceiver {
             if (Intent.ACTION_DREAMING_STARTED.equals(intent.getAction())) {
                 LogUtil.d(TAG, "daydream started.");
                 setDaydreamStatus(true);
-                showNewFlashNotification(context);
             }
             //day dream
             if (Intent.ACTION_DREAMING_STOPPED.equals(intent.getAction())) {
@@ -74,8 +81,25 @@ public class CallerCommonReceiver extends BroadcastReceiver {
 
             //解锁
             if (Intent.ACTION_USER_PRESENT.equals(intent.getAction())) {
-                LogUtil.d("CommonReceiver", "Unlocked Screen");
+                LogUtil.d(TAG, "Unlocked Screen");
                 setDaydreamStatus(false);
+
+                try {
+
+                    Async.schedule(2800, new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                showNewFlashNotification(context);
+                            }catch (Exception e){
+                                LogUtil.e(TAG, "showCallFlashNotify exception: " + e.getMessage());
+                            }
+
+                        }
+                    });
+                } catch (Exception e) {
+                    LogUtil.e(TAG, "scheduleTaskOnUiThread exception: " + e.getMessage());
+                }
             }
         } catch (Exception e) {
             LogUtil.e(TAG, "CommonReceiver execption: " + e.getMessage());
@@ -83,6 +107,7 @@ public class CallerCommonReceiver extends BroadcastReceiver {
     }
 
     private void showNewFlashNotification(Context context) {
+        LogUtil.d(TAG, "showNewFlashNotification start");
         if (context == null)
             return;
         Theme theme = CallFlashPreferenceHelper.getObject(CallFlashPreferenceHelper.PREF_CALL_FLASH_NEWEST_INSTANCE, Theme.class);
@@ -90,11 +115,12 @@ public class CallerCommonReceiver extends BroadcastReceiver {
             return;
 
         if (isShowNewestFlashNotify(theme)) {
+            LogUtil.d(TAG, "showNewFlashNotification show true: "+theme.getId());
             NotifyInfo info = new NotifyInfo();
             info.setNotifyId(NotifyInfo.NotifyId.NOTIFY_NEW_FLASH);
             info.setTitle(context.getString(R.string.notification_new_flash_title));
-            info.arg1 = theme.getImg_v();
-            info.arg2 = theme.getImg_h();
+            info.arg1 = theme.getImg_h();
+            info.arg2 = theme.getImg_v();
 
             CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.PREF_CALL_FLASH_LAST_SEND_NOTIFY_NEWEST_INSTANCE, info);
             NotifyManager.getInstance(context).showNewFlashWithBigStyle(info);
@@ -102,6 +128,7 @@ public class CallerCommonReceiver extends BroadcastReceiver {
     }
 
     private boolean isShowNewestFlashNotify(Theme newest) {
+//        return true;
         boolean bool = false;
 
         Calendar calendar = Calendar.getInstance();
@@ -129,23 +156,36 @@ public class CallerCommonReceiver extends BroadcastReceiver {
         ThemeSyncManager.getInstance().syncTopicData(CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH, 12, new SingleTopicThemeCallback() {
             @Override
             public void onSuccess(int code, List<Theme> data) {
+                LogUtil.d(TAG, "updateNewFlash finish.");
                 if (data == null || data.isEmpty()) {
+                    LogUtil.d(TAG, "updateNewFlash finish empty.");
                     return;
                 }
 
-                Theme newest = data.get(0);
+                final Theme newest = data.get(0);
+                LogUtil.d(TAG, "updateNewFlash newest: "+newest.getId());
                 Theme savedNewest = CallFlashPreferenceHelper.getObject(CallFlashPreferenceHelper.PREF_CALL_FLASH_NEWEST_INSTANCE, Theme.class);
-                if (savedNewest != null && newest != null && !savedNewest.equals(newest)) {
-                    try {
-                        int width = DeviceUtil.getScreenWidth();
-                        int height = DeviceUtil.dp2Px(200);
-                        Glide.with(context).load(newest.getImg_h()).downloadOnly(width, height).get();
-                        Glide.with(context).load(newest.getImg_v()).downloadOnly(width, height).get();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    }
+//                LogUtil.d(TAG, "updateNewFlash savedNewest: "+savedNewest.getId());
+                if (savedNewest == null || (savedNewest != null && newest != null && !savedNewest.equals(newest))) {
+
+
+                        Async.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    LogUtil.d(TAG, "updateNewFlash newest 1: " + newest.getId());
+                                    final int width = DeviceUtil.getScreenWidth();
+                                    final int height = DeviceUtil.dp2Px(200);
+                                    Glide.with(context).load(newest.getImg_h()).downloadOnly(width, height).get();
+                                    Glide.with(context).load(newest.getImg_v()).downloadOnly(width, height).get();
+                                    LogUtil.d(TAG, "updateNewFlash newest 2: " + newest.getId());
+                                }catch (Exception e){
+                                    LogUtil.e(TAG, "Async updateNewFlash Exception: "+e.getMessage());
+                                }
+                            }
+                        });
+
+//                    LogUtil.d(TAG, "updateNewFlash save: "+newest.getId());
                     CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.PREF_CALL_FLASH_NEWEST_INSTANCE, newest);
                 }
             }
