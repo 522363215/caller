@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
+import com.common.sdk.analytics.AnalyticsManager;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.ads.MobileAds;
 
@@ -27,7 +28,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobSchedulerService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
@@ -84,12 +84,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
     protected abstract int getLayoutRootId();
 
     private void bindService() {
-        Intent intent = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            intent = new Intent(this, JobSchedulerService.class);
-        } else {
-            intent = new Intent(this, LocalService.class);
-        }
+        Intent intent = new Intent(this, LocalService.class);
         bindService(intent, mServiceConnection, Service.BIND_AUTO_CREATE);
     }
 
@@ -108,6 +103,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
     @Override
     protected void onResume() {
         super.onResume();
+        AnalyticsManager.onUserActive();
         FlurryAgent.onPageView();
     }
 

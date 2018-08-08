@@ -37,7 +37,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     protected static long AD_MAX_LOAD_TIME = 4500;
     protected static long AD_SHOW_TIME = 4000;
     protected static long FIRST_AD_SHOW_TIME = 4000;
-    private static final long SPLASH_AD_SHOW_INTERVAL_TIME = 15 * 60 * 1000;
+    private static final long SPLASH_AD_SHOW_INTERVAL_TIME = 10 * 60 * 1000;
     private LanguageSettingUtil languageSetting;
     Advertisement mAdvertisement;
     private boolean mIsShowFristAdMob;
@@ -457,14 +457,11 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void showAd() {
-        mLayoutLoading.setVisibility(View.GONE);
-        mLayoutLoadCompleted.setVisibility(View.VISIBLE);
         if (mIsShowInitialization) {
             if (mInitAnimator != null) {
                 mInitAnimator.end();
                 mInitAnimator.cancel();
             }
-            mPbInit.setProgress(100);
         } else {
             if (mAlphAnimator1 != null && mAlphAnimator1.isRunning()) {
                 mAlphAnimator1.end();
@@ -479,13 +476,14 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                 mTranslationAnimatorSet.cancel();
             }
         }
-
-        // TODO: 2018/8/4  广告自动跳转倒计时 此处控制是否自动跳转
-        Async.scheduleTaskOnUiThread(500, new Runnable() {
+        Async.scheduleTaskOnUiThread(200, new Runnable() {
             @Override
             public void run() {
-                boolean isAutoSkipAd = true;
-                if (isAutoSkipAd) {
+                mLayoutLoading.setVisibility(View.GONE);
+                mLayoutLoadCompleted.setVisibility(View.VISIBLE);
+
+                // TODO: 2018/8/4  广告自动跳转倒计时 此处控制是否自动跳转
+                if (CallerAdManager.isAutoGoMain() && !mIsShowFristAdMob) {
                     mPbSkip.setVisibility(View.VISIBLE);
                     showAdCountDown();
                 } else {

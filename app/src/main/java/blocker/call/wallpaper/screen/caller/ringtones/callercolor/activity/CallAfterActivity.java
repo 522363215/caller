@@ -398,19 +398,21 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
 
     //******************************************AD******************************************//
     private void initAds() {
-        MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
-                "",//ConstantUtils.FB_AFTER_CALL_ID
-                CallerAdManager.ADMOB_ID_ADV_END_CALL_NORMAL,//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
-                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
-                "",
-                Advertisement.MOPUB_TYPE_NATIVE,
-                -1,
-                "",
-                false);
-        mAdvertisement = new Advertisement(adapter);
-        mAdvertisement.setRefreshWhenClicked(false);
-        mAdvertisement.refreshAD(true);
-        mAdvertisement.enableFullClickable();
+        if(CallerAdManager.isShowAdOnEndCall()) {
+            MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
+                    "",//ConstantUtils.FB_AFTER_CALL_ID
+                    CallerAdManager.ADMOB_ID_ADV_END_CALL_NORMAL,//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
+                    Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
+                    "",
+                    Advertisement.MOPUB_TYPE_NATIVE,
+                    -1,
+                    "",
+                    false);
+            mAdvertisement = new Advertisement(adapter);
+            mAdvertisement.setRefreshWhenClicked(false);
+            mAdvertisement.refreshAD(true);
+            mAdvertisement.enableFullClickable();
+        }
     }
 
     private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {

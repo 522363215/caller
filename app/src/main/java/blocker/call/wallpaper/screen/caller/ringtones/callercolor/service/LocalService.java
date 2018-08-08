@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.IBinder;
 
+import com.common.sdk.analytics.AnalyticsManager;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.ExecutorService;
@@ -45,7 +47,7 @@ public class LocalService extends Service {
         sInstance = this;
         ServiceProcessingManager.getInstance().create(getApplicationContext());
 
-        sendData(); //Statistics
+//        sendData(); //Statistics, move to new sdk
         ServerManager.getInstance().getParamFromServer();
     }
 
@@ -57,6 +59,7 @@ public class LocalService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        AnalyticsManager.onServiceRestart();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             return super.onStartCommand(intent, flags, startId);
         } else {

@@ -109,6 +109,9 @@
         <meta-data
             android:name="ClientID"
             android:value="75" />
+        <meta-data
+            android:name="channel"
+            android:value="${CHANNEL_VALUE}" />
 
         <activity
             android:name=".activity.SplashActivity"
@@ -194,10 +197,6 @@
             android:screenOrientation="portrait" />
 
         <service
-            android:name=".service.JobSchedulerService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <service
             android:name=".service.JobLocalService"
             android:label="job_local_service"
             android:permission="android.permission.BIND_JOB_SERVICE" />
@@ -208,12 +207,22 @@
             android:priority="900" />
 
 
-
+        <receiver
+            android:name=".receiver.InstallRefererReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
         <receiver android:name=".receiver.BootStartServiceReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <provider
+            android:name="com.common.sdk.analytics.data.MyContentProvider"
+            android:authorities="com.analytics.data.75"/>
 
 
     </application>
