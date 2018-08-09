@@ -130,6 +130,6 @@ public class LocalService extends Service {
     public void onDestroy() {
         super.onDestroy();
         LogUtil.d(TAG, "LocalService onDestroy");
-        ServiceProcessingManager.getInstance().destroy(getApplicationContext());
+//        ServiceProcessingManager.getInstance().destroy(getApplicationContext());
     }
 }
