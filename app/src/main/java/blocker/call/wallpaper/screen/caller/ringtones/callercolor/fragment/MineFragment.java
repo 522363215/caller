@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
 import com.md.flashset.bean.CallFlashDataType;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
@@ -78,6 +79,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FlurryAgent.logEvent("MineFragment-----show_main");
         initAds();
         initView(view);
         listener();
@@ -271,19 +273,24 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         switch (id) {
             case R.id.gv_bg_current:
                 if (mCurrentCallFlashInfo != null) {
+                    FlurryAgent.logEvent("MineFragment-----click---to_flash_detail--show_current_flash_detail");
                     ActivityBuilder.toCallFlashDetail(getActivity(), mCurrentCallFlashInfo, false);
                 }
                 break;
             case R.id.tv_view:
+                FlurryAgent.logEvent("MineFragment------click---to_main---show_all_flash");
                 ActivityBuilder.toMain(getActivity(), ActivityBuilder.FRAGMENT_HOME);
                 break;
             case R.id.layout_collect_all_btn:
+                FlurryAgent.logEvent("MineFragment------click---to_flash_list---show_all_collected_flash");
                 ActivityBuilder.toCallFlashList(getActivity(), CallFlashDataType.CALL_FLASH_DATA_COLLECTION);
                 break;
             case R.id.layout_downloaded_all_btn:
+                FlurryAgent.logEvent("MineFragment------click---to_flash_list---show_all_downloaded_flash");
                 ActivityBuilder.toCallFlashList(getActivity(), CallFlashDataType.CALL_FLASH_DATA_DOWNLOADED);
                 break;
             case R.id.layout_set_record_all_btn:
+                FlurryAgent.logEvent("MineFragment------click---to_flash_list---show_all_set_flash");
                 ActivityBuilder.toCallFlashList(getActivity(), CallFlashDataType.CALL_FLASH_DATA_SET_RECORD);
                 break;
         }

@@ -19,6 +19,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.flurry.android.FlurryAgent;
 import com.md.block.beans.BlockInfo;
 import com.md.block.core.BlockManager;
 
@@ -72,6 +73,12 @@ public class AddBlockContactDialog extends Dialog {
         Async.run(new LoadCallLogRunn());
     }
 
+    @Override
+    public void show() {
+        super.show();
+        FlurryAgent.logEvent("AddBlockContactDialog-----show");
+    }
+
     private void initView() {
         lvCallLog = findViewById(R.id.lv_call_log);
         pbLoading = findViewById(R.id.pb_loading);
@@ -97,6 +104,8 @@ public class AddBlockContactDialog extends Dialog {
                 block.setNumber(saveNumber);
                 block.setBlockTime(System.currentTimeMillis());
                 boolean isSuc = BlockManager.getInstance().setBlockContact(block);
+
+                FlurryAgent.logEvent("AddBlockContactDialog-----item_click------add_block_contact");
 
                 if (listener != null) {
                     listener.onAddBlockContact(isSuc, logInfo.callNumber);

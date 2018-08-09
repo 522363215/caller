@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.flurry.android.FlurryAgent;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.manager.CallFlashManager;
 
@@ -33,6 +34,7 @@ public class CallFlashLocalListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FlurryAgent.logEvent("CallFlashLocalListFragment------show_main");
         initFlashData();
         initField();
     }

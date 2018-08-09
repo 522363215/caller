@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
 import com.md.block.beans.BlockInfo;
 import com.md.block.core.BlockManager;
 
@@ -82,6 +83,7 @@ public class BlockListFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        FlurryAgent.logEvent("BlockListFragment-------show_main");
         if (view != null) {
             layoutEmpty = view.findViewById(R.id.layout_empty);
             lvBlockContact = view.findViewById(R.id.lv_block_contact);
