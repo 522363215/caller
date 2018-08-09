@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 public class BootStartServiceReceiver extends BroadcastReceiver {
@@ -23,7 +24,10 @@ public class BootStartServiceReceiver extends BroadcastReceiver {
     }
 
     private void startService(Context context) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LogUtil.d(TAG, "BootStartServiceReceiver service start above 8:");
+            CommonUtils.scheduleJob(context.getApplicationContext());
+        }else{
             LogUtil.d(TAG, "BootStartServiceReceiver service start under 8:");
             Intent intent = new Intent(context, LocalService.class);
             context.startService(intent);

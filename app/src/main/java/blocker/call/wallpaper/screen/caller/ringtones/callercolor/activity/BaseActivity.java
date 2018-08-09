@@ -29,7 +29,9 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.RomUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
@@ -60,7 +62,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
         // Log.d("ACT", this.getClass().getSimpleName() + "(onDestroy)");
 //        setContentView(R.layout.view_null);
         super.onDestroy();
-        unbindService(mServiceConnection);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    unbindService(mServiceConnection);
+        }
+
     }
 
     @Override
@@ -70,7 +75,12 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
         setContentView(getLayoutRootId());
         translucentStatusBar();
 
-        bindService();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CommonUtils.scheduleJob(this.getApplicationContext());
+            LogUtil.d("JobLocalService", "base_activity scheduleJob startService: ");
+        }else {
+            bindService();
+        }
         SwitchLang();
 
         //init admob
