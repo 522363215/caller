@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.FullScreenVideoView
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.TextureVideoView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,7 +26,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/background_gradient"
         android:visibility="gone" />
 
     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashCustomAnimView

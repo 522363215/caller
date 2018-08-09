@@ -261,7 +261,6 @@ public class CallFlashView extends RelativeLayout {
                     public boolean onInfo(MediaPlayer mp, int what, int extra) {
                         LogUtil.d(TAG, "setOnInfoListener mp:" + mp + ",what:" + what);
                         if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                            mVideoView.setBackgroundColor(Color.TRANSPARENT);
                             return true;
                         }
                         return false;
