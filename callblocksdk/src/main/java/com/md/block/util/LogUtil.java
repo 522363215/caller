@@ -2,32 +2,32 @@ package com.md.block.util;
 
 import android.util.Log;
 
-import com.md.block.BuildConfig;
-
 
 public class LogUtil {
 
+    public static final boolean IS_SHOW_LOG = true;
+
     public static void d(String TAG, String msg) {
-//        if (BuildConfig.DEBUG)
+        if (IS_SHOW_LOG)
             Log.d(TAG, msg);
     }
 
     public static void e(String TAG, String msg) {
-        if (BuildConfig.DEBUG)
+        if (IS_SHOW_LOG)
             Log.e(TAG, msg);
     }
 
     public static void i(String TAG, String msg) {
-        if (BuildConfig.DEBUG)
+        if (IS_SHOW_LOG)
             Log.i(TAG, msg);
     }
 
     public static void v(String TAG, String msg) {
-        if (BuildConfig.DEBUG)
+        if (IS_SHOW_LOG)
             Log.v(TAG, msg);
     }
     public static void js(String msg) {
-        if (BuildConfig.DEBUG)
+        if (IS_SHOW_LOG)
             Log.i("info---", msg);
     }
 
