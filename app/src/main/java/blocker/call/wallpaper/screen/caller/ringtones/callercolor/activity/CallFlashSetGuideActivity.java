@@ -5,11 +5,8 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 
 import com.flurry.android.FlurryAgent;
-import com.md.flashset.View.FlashLed;
-import com.md.flashset.bean.CallFlashClassification;
-import com.md.flashset.bean.CallFlashFormat;
 import com.md.flashset.bean.CallFlashInfo;
-import com.md.flashset.download.DownloadState;
+import com.md.flashset.manager.CallFlashManager;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
@@ -42,19 +39,7 @@ public class CallFlashSetGuideActivity extends BaseActivity implements View.OnCl
     }
 
     private void initData() {
-        mCallFlashInfo = new CallFlashInfo();
-        mCallFlashInfo.id = String.valueOf(FlashLed.FLASH_TYPE_LOVE);
-        mCallFlashInfo.title = getString(com.md.flashset.R.string.call_flash_led_love);
-        mCallFlashInfo.imgResId = com.md.flashset.R.drawable.icon_flash_love_small;
-        mCallFlashInfo.format = CallFlashFormat.FORMAT_CUSTOM_ANIM;
-        mCallFlashInfo.path = "";
-        mCallFlashInfo.url = "";
-        mCallFlashInfo.isDownloadSuccess = true;
-        mCallFlashInfo.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        mCallFlashInfo.flashType = FlashLed.FLASH_TYPE_LOVE;
-        mCallFlashInfo.position = 6;
-        mCallFlashInfo.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
-        mCallFlashInfo.downloadSuccessTime = -3;
+        mCallFlashInfo = CallFlashManager.getInstance().getLocalFlash();
     }
 
     private void initView() {
@@ -66,7 +51,7 @@ public class CallFlashSetGuideActivity extends BaseActivity implements View.OnCl
         cardView.setCardElevation(0);
         cardView.setPreventCornerOverlap(false);
         cardView.setUseCompatPadding(false);
-
+        mCallFlashView.setVideoMute(true);
         mFivClose.setOnClickListener(this);
         mTvButton.setOnClickListener(this);
     }
@@ -88,6 +73,7 @@ public class CallFlashSetGuideActivity extends BaseActivity implements View.OnCl
             case R.id.tv_button:
                 FlurryAgent.logEvent("CallFlashSetGuideActivity-----click----to_call_flash_detail");
                 ActivityBuilder.toCallFlashDetail(this, mCallFlashInfo, false, true);
+                CallFlashManager.getInstance().saveDownloadedCallFlash(mCallFlashInfo);
                 break;
         }
     }

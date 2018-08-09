@@ -2,6 +2,9 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -18,18 +21,15 @@ import android.view.WindowManager;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobLocalService;
 
 /**
  * Created by John on 2015/12/17.
@@ -215,5 +215,22 @@ public final class CommonUtils {
         }
 
         return integers.toArray(new Integer[length]);
+    }
+
+    // schedule the start of the service every 10 - 30 seconds
+    public static void scheduleJob(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ComponentName serviceComponent = new ComponentName(context, JobLocalService.class);
+            JobScheduler jobScheduler = (JobScheduler) context.getSystemService(context.JOB_SCHEDULER_SERVICE);
+            JobInfo jobInfo = new JobInfo.Builder(1001, new ComponentName(context.getPackageName(), JobLocalService.class.getName()))
+//                    .setPeriodic(5000)//2mins-120000, test 5000
+                    .setMinimumLatency(1 * 1000) // wait at least
+                    .setOverrideDeadline(3 * 1000) // maximum delay
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setPersisted(true)
+                    .build();
+            jobScheduler.schedule(jobInfo);
+            LogUtil.d("JobLocalService", "scheduleJob startService: ");
+        }
     }
 }

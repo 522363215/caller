@@ -88,7 +88,7 @@ public class FlashLedView extends View {
         mFlashLed.initLedLights(mContentWidth, mContentHeight, mHorizonCount, mVerticalCount);
 
         if (flashType == FlashLed.FLASH_TYPE_FESTIVAL) {
-            setBackgroundResource(R.drawable.ic_bg_festival);
+//            setBackgroundResource(R.drawable.ic_bg_festival);
         }/* else if (flashType == FlashLed.FLASH_TYPE_CUSTOM) {
             String path = ApplicationEx.getInstance().getGlobalSettingPreference()
                     .getString(ConstantUtils.CALL_FLASH_CUSTOM_BG_PATH, "");

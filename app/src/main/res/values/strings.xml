@@ -222,9 +222,9 @@
     <string name="click_like_tip">Need download first.</string>
     <string name="permission_grand_title_desc">We will not upload or store any of your data, like contacts, call logs, photos etc.</string>
     <string name="notification_new_flash_title">Try a new Call Flash Show theme!</string>
-    <string name="setting_call_after_desc">to remind you of missed calls (May contain ads).</string>
-    <string name="setting_block_desc">to block your unwanted calls.</string>
-    <string name="setting_caller_show_desc">to show call flash screen for incoming calls.</string>
+    <string name="setting_call_after_desc">Show missed calls and caller information (May contain ads).</string>
+    <string name="setting_block_desc">Block your unwanted calls.</string>
+    <string name="setting_caller_show_desc">Show call flash screen for incoming calls.</string>
 
     <string name="setting_close_call_assistant_tip">Missed and important calls information will not be displayed, are you sure to turn it off?</string>
     <string name="setting_close_block_tip">It will not block calls, are you sure to turn it off?</string>

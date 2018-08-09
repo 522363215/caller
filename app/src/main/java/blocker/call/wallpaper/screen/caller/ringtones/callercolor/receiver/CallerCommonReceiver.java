@@ -43,9 +43,17 @@ public class CallerCommonReceiver extends BroadcastReceiver {
                     @Override
                     public void run() {
                         LogUtil.d(TAG, "backgroundDownloadOnlionCallFlash COMMON_CHECK_24");
-                        ServiceProcessingManager.getInstance().cacheHomeData();
-                        ServerManager.getInstance().getParamFromServer();
-                        updateNewFlash(context);
+                        try {
+                            ServiceProcessingManager.getInstance().cacheHomeData();
+                            if((System.currentTimeMillis() - PreferenceHelper.getLong("colorphone_inStall_time", System.currentTimeMillis())) >= 4 * 60 * 1000){
+                                ServerManager.getInstance().getParamFromServer();
+                            }
+
+                            updateNewFlash(context);
+                        }catch (Exception e){
+                            LogUtil.e(TAG, "backgroundDownloadOnlionCallFlash COMMON_CHECK_24 exception: "+e.getMessage());
+                        }
+
                     }
                 });
             }
