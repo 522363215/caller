@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -33,7 +32,6 @@ import com.md.serverflash.callback.ThemeNormalCallback;
 import com.md.serverflash.download.ThemeResourceHelper;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -452,6 +450,9 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         if (mOnDownloadListener != null) {
             ThemeResourceHelper.getInstance().removeGeneralListener(mOnDownloadListener);
         }
+        if (mCallFlashView != null && !mCallFlashView.isStopVideo()) {
+            mCallFlashView.stop();
+        }
     }
 
     private void userStayStatics() {
@@ -491,7 +492,9 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     public void onFinish() {
         finish();
-        mCallFlashView.stop();
+        if (!mIsShowInterstitialAd && !mIsShowFullScreenAd) {
+            mCallFlashView.stop();
+        }
     }
 
     private void listener() {

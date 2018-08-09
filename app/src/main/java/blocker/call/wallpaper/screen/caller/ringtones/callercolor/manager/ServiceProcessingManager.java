@@ -58,34 +58,11 @@ public class ServiceProcessingManager {
         }
         registerReceivers(context);
         initBlock();
-        CallFlashSet.init(context);
 
         startWaketask2(); //long task
 
-        //将raw中的视频复制到sd卡中
-        copyRawToPath();
-
         //缓存首页数据
         cacheHomeData();
-    }
-
-    private void copyRawToPath() {
-        Async.run(new Runnable() {
-            @Override
-            public void run() {
-                CallFlashInfo localFlash = CallFlashManager.getInstance().getLocalFlash();
-
-                //缓存背景图
-                if (localFlash != null) {
-                    try {
-                        Glide.with(mContext).load(localFlash.img_hUrl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
-                        Glide.with(mContext).load(localFlash.img_vUrl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
     }
 
     public void cacheHomeData() {
