@@ -135,10 +135,11 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
         int id = v.getId();
         switch (id) {
             case R.id.tv_button:
+                FlurryAgent.logEvent("PermissionActivity-----click----next_request_permission");
                 onNext();
                 break;
             case R.id.tv_skip:
-                FlurryAgent.logEvent("PermissionActivity-----click----next_request_permission");
+                FlurryAgent.logEvent("PermissionActivity-----click----skip");
                 finish();
                 break;
         }

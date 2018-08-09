@@ -67,6 +67,7 @@ public class CallFlashSetGuideActivity extends BaseActivity implements View.OnCl
         int id = v.getId();
         switch (id) {
             case R.id.fiv_close:
+                FlurryAgent.logEvent("CallFlashSetGuideActivity-----click----skip");
                 GuideUtil.toPermissionGuide(this);
                 finish();
                 break;
