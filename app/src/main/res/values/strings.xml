@@ -30,7 +30,7 @@
     <string name="share_to_facebook">"Share on Facebook"</string>
     <string name="about_privacy">"Privacy Policy"</string>
     <string name="about_term">"Terms of Use"</string>
-    <string name="share_text">"%1$s can block unwanted calls and know who is calling. Have a try! Get it on: %2$s"</string>
+    <string name="share_text">"%1$s make your calls colorful and block unwanted calls. Have a try! Get it on: %2$s"</string>
     <string name="rate_dialog_title">@string/app_name</string>
     <string name="rate_dialog_message">"Do you like Caller ID? \nWould you please leave us your rating?"</string>
     <string name="rate_dialog_cancel">"Later"</string>

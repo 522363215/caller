@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" translatable="false">Color Phone</string>
 
     <string name="push_tools_missed">"Missed calls."</string>
@@ -18,7 +18,7 @@
     <string name="main_menu_settings">@string/setting_title</string>
     <string name="setting_title">"设置"</string>
     <string name="block_setting_name">"拦截"</string>
-    <string name="call_coming_back">"回拨"</string> <!--回拨-->
+    <string name="call_coming_back">"拨打"</string> <!--回拨-->
     <string name="call_coming_detail">@string/dail</string>
     <string name="about_title">"关于我们"</string>
     <string name="about_product_intro">@string/splash_content</string>
@@ -29,7 +29,7 @@
     <string name="share_to_facebook">"分享到"</string>
     <string name="about_privacy">"隐私政策"</string>
     <string name="about_term">"使用条款"</string>
-    <string name="share_text">"%1$s能够屏蔽所有的黑名单与未知号码来电。马上试试！下载：%2$s"</string>
+    <string name="share_text">"%1$s 多彩的来电秀和电话拦截功能, 马上试试！下载：%2$s"</string>
     <string name="rate_dialog_title">@string/app_name</string>
     <string name="rate_dialog_message">"你喜欢我们的应用吗？\n你愿意给我们留下你的评价吗？"</string>
     <string name="rate_dialog_cancel">"稍后"</string>
@@ -69,7 +69,7 @@
     <string name="call_after_block">@string/block_setting_name</string>
     <string name="call_after_message">"短信"</string>
     <string name="call_after_click_toast">"这是一个未知号码！"</string>
-    <string name="permission_tip">为了来电秀和号码拦截能够正常使用，请启用一下权限。</string>
+    <string name="permission_tip">为了来电秀和号码拦截能够正常使用，需要启用相关权限</string>
     <string name="permission_sysytem_permission">权限管理</string>
     <string name="permission_to_get_permsiion">启用</string>
     <string name="permission_phone">"电话"</string>
@@ -99,7 +99,7 @@
     <string name="call_flash_gif_show_setting_suc_reset">来电秀已重置！</string>
     <string name="page_title_caller_theme">来电秀主题</string>
     <string name="page_title_category">分类</string>
-    <string name="page_title_mine">我的</string>
+    <string name="page_title_mine">我的来电秀</string>
     <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
     <string name="about_email_us">"发送邮件给我们"</string>
     <string name="email_choose_one">"请选择其中的一个向我们发送邮件。"</string>
@@ -108,7 +108,7 @@
     <string name="call_flash_detail_setting_action_to_set">@string/call_flash_gif_show_save</string>
     <string name="call_flash_detail_setting_action_to_cancel">"取消设置当前来电秀"</string>
     <string name="call_flash_more_refresh_online_themes_failed_tip">"在线主题刷新失败！"</string>
-    <string name="call_flash_more_refresh_online_themes_load_failed">"糟糕的网络，请稍后再试！"</string>
+    <string name="call_flash_more_refresh_online_themes_load_failed">"网络无连接，请稍后再试！"</string>
     <string name="call_flash_preview_now">立即预览</string>
     <string name="splash_init">正在初始化...</string>
     <string name="download_failed_for_no_sd_permission">同意权限以下载并设置来电秀</string>
@@ -155,11 +155,11 @@
     <string name="permission_read_call_log_des">更好的拦截不想接的来电</string>
     <string name="permission_for_show_call_flash">显示来电秀</string>
     <string name="permission_for_answer_call">接听电话</string>
-    <string name="setting_call_after">呼叫助理</string>
+    <string name="setting_call_after">来电助理</string>
     <string name="setting_caller_show">来电秀</string>
     <string name="permission_denied_txt">权限申请被拒绝，请重试！</string>
     <string name="permission_next">下一步</string>
-    <string name="permission_all_set">可以了，好了！</string>
+    <string name="permission_all_set">设置完成！</string>
 
     <string name="media_upload_author">作者</string>
     <string name="media_upload_action_upload">上传</string>
@@ -208,12 +208,12 @@
     <string name="mine_all">所有</string>
     <string name="mine_no_current_call_flash">尚未设置来电秀，立即设置</string>
 
-    <string name="click_like_tip">首次设置需要下载。</string>
+    <string name="click_like_tip">需要先下载</string>
     <string name="permission_grand_title_desc">我们不会上传或存储您的任何隐私数据，如联系人，通话记录，照片等。</string>
     <string name="notification_new_flash_title">尝试设置新的来电主题</string>
-    <string name="setting_call_after_desc">提醒您有未接来电（可能有广告）。</string>
-    <string name="setting_block_desc">拦截位置来电。</string>
-    <string name="setting_caller_show_desc">来电时展示个性主题</string>
+    <string name="setting_call_after_desc">显示未接来电和来电者的信息（可能有广告）。</string>
+    <string name="setting_block_desc">拦截不想接听的来电</string>
+    <string name="setting_caller_show_desc">在屏幕上显示来电秀</string>
 
     <string name="setting_close_call_assistant_tip">错过或重要的通话记录将不会再显示，确认关闭？</string>
     <string name="setting_close_block_tip">应用将不会再保护您的通话，确认关闭？</string>
