@@ -103,7 +103,7 @@
     <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
     <string name="about_email_us">"发送邮件给我们"</string>
     <string name="email_choose_one">"请选择其中的一个向我们发送邮件。"</string>
-    <string name="call_flash_gif_show_setting_des2">@string/set_failed</string>
+    <string name="call_flash_gif_show_setting_des2">设置失败</string>
     <string name="call_answer_string">接听</string>
     <string name="call_flash_detail_setting_action_to_set">@string/call_flash_gif_show_save</string>
     <string name="call_flash_detail_setting_action_to_cancel">"取消设置当前来电秀"</string>
@@ -220,5 +220,4 @@
     <string name="setting_close_caller_show_tip">酷炫的来电秀将不会再显示，确认关闭？</string>
 
     <string name="set_default">默认</string>
-    <string name="set_failed">设置失败</string>
 </resources>
