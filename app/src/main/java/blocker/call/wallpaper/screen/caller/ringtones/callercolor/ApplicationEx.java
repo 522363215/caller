@@ -24,7 +24,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Interstitia
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.HttpUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
@@ -93,11 +92,7 @@ public class ApplicationEx extends Application {
     }
 
     private void startService() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            CommonUtils.scheduleJob(getInstance().getApplicationContext());
-            LogUtil.d("JobLocalService", "appex scheduleJob startService: ");
-        } else {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             Intent intent = new Intent(this, LocalService.class);
             startService(intent);
         }
