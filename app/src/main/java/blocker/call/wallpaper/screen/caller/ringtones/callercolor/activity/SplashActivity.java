@@ -96,7 +96,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void translucentStatusBar() {
-        CommonUtils.translucentStatusBar(this, true);
+        CommonUtils.translucentStatusBar(this, false);
     }
 
     @Override
