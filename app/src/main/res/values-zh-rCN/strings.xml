@@ -102,13 +102,13 @@
     <string name="page_title_mine">我的</string>
     <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
     <string name="about_email_us">"发送邮件给我们"</string>
-    <string name="email_choose_one">"请选择其中的一个向我们发送邮件。"</string>
+    <string name="email_choose_one">"请选择适合的程序发送邮件。"</string>
     <string name="call_flash_gif_show_setting_des2">@string/set_failed</string>
     <string name="call_answer_string">接听</string>
     <string name="call_flash_detail_setting_action_to_set">@string/call_flash_gif_show_save</string>
-    <string name="call_flash_detail_setting_action_to_cancel">"取消设置当前来电秀"</string>
+    <string name="call_flash_detail_setting_action_to_cancel">"取消当前来电秀设置"</string>
     <string name="call_flash_more_refresh_online_themes_failed_tip">"在线主题刷新失败！"</string>
-    <string name="call_flash_more_refresh_online_themes_load_failed">"糟糕的网络，请稍后再试！"</string>
+    <string name="call_flash_more_refresh_online_themes_load_failed">"网络很糟糕，请稍后再试！"</string>
     <string name="call_flash_preview_now">立即预览</string>
     <string name="splash_init">正在初始化...</string>
     <string name="download_failed_for_no_sd_permission">同意权限以下载并设置来电秀</string>
@@ -186,17 +186,17 @@
     <string name="permission_xiao_mi_tip">（滑动到底部）</string>
 
     <!--这几个权限描述为小米手机中的描述，不能修改,多语言也需要与小米手机中的描述一致-->
-    <string name="permission_xiao_mi_overlay_title">Display pop_up window</string>
-    <string name="permission_xiao_mi_overlay_des">display pop_up window</string>
-    <string name="permission_xiao_mi_show_on_lock_title">Show on Lock screen</string>
-    <string name="permission_xiao_mi_show_on_lock_des">be Shown on Lock screen</string>
+    <string name="permission_xiao_mi_overlay_title">显示悬浮窗</string>
+    <string name="permission_xiao_mi_overlay_des">显示悬浮窗</string>
+    <string name="permission_xiao_mi_show_on_lock_title">锁屏显示</string>
+    <string name="permission_xiao_mi_show_on_lock_des">允许应用在锁屏上显示</string>
 
-    <string name="permission_xiao_mi_make_phone_calls">Make phone calls</string>
-    <string name="permission_xiao_mi_modify_and_delete_contacts">Modify and delete contacts</string>
-    <string name="permission_xiao_mi_read_your_contacts">Read your contacts</string>
-    <string name="permission_xiao_mi_write_and_delete_call_history">Write and delete call history</string>
-    <string name="permission_xiao_mi_read_call_history">Read call history</string>
-    <string name="permission_xiao_mi_get_device_info">Get device info</string>
+    <string name="permission_xiao_mi_make_phone_calls">拨打电话</string>
+    <string name="permission_xiao_mi_modify_and_delete_contacts">修改联系人</string>
+    <string name="permission_xiao_mi_read_your_contacts">读取联系人</string>
+    <string name="permission_xiao_mi_write_and_delete_call_history">修改通话记录</string>
+    <string name="permission_xiao_mi_read_call_history">读取通话记录</string>
+    <string name="permission_xiao_mi_get_device_info">获取手机信息</string>
     <!--这几个权限描述为小米手机中的描述，不能修改，多语言也需要与小米手机中的描述一致-->
 
 
