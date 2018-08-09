@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -33,7 +34,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleProgressBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
@@ -179,30 +179,39 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             holder.callFlashView.pause();
             holder.callFlashView.stop();
             setCallFlashShow(holder, pos);
+            setBg(holder, info);
+            setSelectOrDownloadState(holder, info);
+            holder.mOnDownloadListener.setDownloadParams(holder, info);
+        }
+    }
 
-            if (info.isOnlionCallFlash) {
-                String imgUrl = info.img_vUrl;
-                if (childViewHeight != 0 && childViewWidth != 0) {
-                    imgUrl += "_" + childViewWidth + "x" + childViewHeight;
-                }
-                info.thumbnail_imgUrl = imgUrl;
-                holder.gv_bg.showImage(imgUrl);
-            } else {
-                if (info.imgResId > 0) {
-                    int imgId = info.imgResId;
-                    if (info.flashType == FlashLed.FLASH_TYPE_FESTIVAL) {
-                        imgId = R.drawable.icon_flash_festival_small;
-                    }
-                    holder.gv_bg.showImage(imgId);
-                } else {
-                    holder.gv_bg.showImage(R.drawable.loaded_failed);
-                }
+    private void setBg(NormalViewHolder holder, CallFlashInfo info) {
+        if (info.isOnlionCallFlash) {
+            String imgUrl = info.img_vUrl;
+            if (childViewHeight != 0 && childViewWidth != 0) {
+                imgUrl += "_" + childViewWidth + "x" + childViewHeight;
             }
+            info.thumbnail_imgUrl = imgUrl;
+            holder.gv_bg.showImage(imgUrl);
+        } else {
+            if (info.imgResId > 0) {
+                int imgId = info.imgResId;
+                if (info.flashType == FlashLed.FLASH_TYPE_FESTIVAL) {
+                    imgId = R.drawable.icon_flash_festival_small;
+                }
+                holder.gv_bg.showImage(imgId);
+            } else {
+                holder.gv_bg.showImage(R.drawable.loaded_failed);
+            }
+        }
+    }
 
+    private void setSelectOrDownloadState(NormalViewHolder holder, CallFlashInfo info) {
+        if (info.isOnlionCallFlash) {
             File videoFile = videoMap.get(info.url);
             if (videoFile == null) {
                 videoFile = CallFlashManager.getInstance().getOnlineThemeSourcePath(info.url);
-                if (videoMap != null) {
+                if (videoMap != null && videoFile != null) {
                     videoMap.put(info.url, videoFile);
                 }
             }
@@ -217,8 +226,16 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     holder.iv_call_select.setVisibility(View.GONE);
                 }
             }
-
-            holder.mOnDownloadListener.setDownloadParams(holder, info);
+        } else {
+            if (!TextUtils.isEmpty(info.path)) {
+                boolean enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
+                holder.iv_download.setVisibility(View.GONE);
+                holder.iv_call_select.setVisibility((mCurrentFlash != null && mCurrentFlash.equals(info) && enableCallFlash)
+                        ? View.VISIBLE : View.GONE);
+            } else {
+                holder.iv_download.setVisibility(View.VISIBLE);
+                holder.iv_call_select.setVisibility(View.GONE);
+            }
         }
     }
 

@@ -8,9 +8,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
-import com.md.flashset.View.FlashLed;
 import com.md.flashset.bean.CallFlashFormat;
 import com.md.flashset.bean.CallFlashInfo;
+import com.md.flashset.manager.CallFlashManager;
 
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -170,12 +170,16 @@ public class CallFlashView extends RelativeLayout {
     private void setVideo(CallFlashInfo info) {
         if (info == null) return;
         final String path = info.path;
-        int flashType = info.flashType;
-        if (mVideoView != null && !TextUtils.isEmpty(path) && (flashType == FlashLed.FLASH_TYPE_MONKEY || new File(path).exists())) {
+        String flashID = info.id;
+        if (mVideoView != null && !TextUtils.isEmpty(path) && (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(flashID) || new File(path).exists())) {
             if (mGlideView != null) {
                 //显示视频第一帧防止黑屏
                 mGlideView.setVisibility(VISIBLE);
-                mGlideView.showVideoFirstFrame(path);
+                if (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(flashID)) {
+                    mGlideView.showImage(info.imgResId);
+                } else {
+                    mGlideView.showVideoFirstFrame(path);
+                }
             }
             mVideoView.setVisibility(VISIBLE);
             mVideoView.setVideoPath(path);

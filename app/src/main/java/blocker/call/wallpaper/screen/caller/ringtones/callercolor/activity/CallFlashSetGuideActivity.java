@@ -73,7 +73,7 @@ public class CallFlashSetGuideActivity extends BaseActivity implements View.OnCl
             case R.id.tv_button:
                 FlurryAgent.logEvent("CallFlashSetGuideActivity-----click----to_call_flash_detail");
                 ActivityBuilder.toCallFlashDetail(this, mCallFlashInfo, false, true);
-                CallFlashManager.getInstance().saveDownloadedCallFlash(mCallFlashInfo);
+                finish();
                 break;
         }
     }
