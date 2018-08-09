@@ -209,7 +209,7 @@ public class NotifyManager {
                             .setContentText(content)
                             .setAutoCancel(true)
                             .setPriority(Notification.PRIORITY_DEFAULT)
-                            .setSmallIcon(R.drawable.ic_launcher)
+                            .setSmallIcon(R.drawable.icon_small_launcher)
                             .setContentIntent(pendingIntent);
 
                     Notification notify = builder.build();
