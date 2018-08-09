@@ -23,7 +23,7 @@
     <string name="about_title">"关于我们"</string>
     <string name="about_product_intro">@string/splash_content</string>
     <string name="about_product_version">%s当前版本："</string>
-    <string name="about_rote_gp">"分享"</string>
+    <string name="about_rote_gp">"在Google上为我们评分"</string>
     <string name="about_like_facebook">"关注我们的Facebook首页"</string>
     <string name="failed_backup">"备份失败"</string>
     <string name="share_to_facebook">"分享到"</string>
@@ -93,7 +93,7 @@
     <string name="call_flash_album_gallery_desc_2">%1$d张图片</string>
     <string name="call_flash_result_title">设置成功</string>
     <string name="call_flash_gif_show_save">设置为来电秀</string>
-    <string name="call_flash_gif_show_load">正在下载：%1$d%%</string>
+    <string name="call_flash_gif_show_load">正在下载%1$d%%</string>
     <string name="call_flash_gif_show_load_failed">下载失败。</string>
     <string name="call_flash_gif_show_setting_suc">来电秀设置成功！</string>
     <string name="call_flash_gif_show_setting_suc_reset">来电秀已重置！</string>
@@ -141,7 +141,7 @@
 
 
     <string name="permission_title">"让我们开始吧！"</string>
-    <string name="permission_phone_and_contact_title">"电话&amp;联系人"</string>
+    <string name="permission_phone_and_contact_title">"电话&amp;联系人权限"</string>
     <string name="permission_phone_and_contact_des">管理通话记录和联系人显示</string>
     <string name="permission_screen_permission_title">显示在其他应用上层权限</string>
     <string name="permission_screen_permission_des">展示来电秀</string>
@@ -172,7 +172,7 @@
     <!--Android 8.0及以上通知渠道名称-->
     <string name="notify_channel_subscribe">已订阅</string>
 
-    <string name="call_flash_view">视图</string>
+    <string name="call_flash_view">@string/setting_title</string>
 
     <string name="block_list_tab_contact">拦截列表</string>
     <string name="block_list_tab_logs">拦截记录</string>
@@ -205,7 +205,7 @@
     <string name="mine_set_before">痕迹</string>
     <string name="mine_downloaded">已下载的</string>
     <string name="mine_collect">@string/side_slip_collection</string>
-    <string name="mine_all">所有</string>
+    <string name="mine_all">全部</string>
     <string name="mine_no_current_call_flash">尚未设置来电秀，立即设置</string>
 
     <string name="click_like_tip">首次设置需要下载。</string>
