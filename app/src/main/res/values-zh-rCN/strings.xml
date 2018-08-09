@@ -155,7 +155,7 @@
     <string name="permission_read_call_log_des">更好的拦截不想接的来电</string>
     <string name="permission_for_show_call_flash">显示来电秀</string>
     <string name="permission_for_answer_call">接听电话</string>
-    <string name="setting_call_after">呼叫助理</string>
+    <string name="setting_call_after">来电助理</string>
     <string name="setting_caller_show">来电秀</string>
     <string name="permission_denied_txt">权限申请被拒绝，请重试！</string>
     <string name="permission_next">下一步</string>

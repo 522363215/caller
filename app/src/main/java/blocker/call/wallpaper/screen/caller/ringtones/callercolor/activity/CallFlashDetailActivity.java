@@ -579,6 +579,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void downloadFlashResourceFile() {
+        FlurryAgent.logEvent("CallFlashDetailActivity-----download");
         ThemeResourceHelper.getInstance().isCanWriteInStorage(PermissionUtils.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE));
         ThemeResourceHelper.getInstance().downloadThemeResources(mInfo.id, mInfo.url, new OnDownloadListener() {
             @Override
