@@ -34,7 +34,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CategoryFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.MineFragment;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.NotifyManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
@@ -219,7 +218,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        killMe();
     }
 
     @Override
@@ -297,17 +295,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mTabMine.setOnClickListener(this);
         mSideslipMenu.setOnClickListener(this);
         findViewById(R.id.iv_upload).setOnClickListener(this);
-    }
-
-    private void killMe() {
-        if (PreferenceHelper.getInt("pref_is_kill_to_release", 0) == 1) {
-            try {
-                android.os.Process.killProcess(android.os.Process.myPid());
-                LogUtil.d("killMe", "killMe end: ");
-            } catch (Exception e) {
-                LogUtil.e("killMe", "killMe exception: " + e.getMessage());
-            }
-        }
     }
 
     private void onCategory() {

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.md.flashset.R;
-import com.md.flashset.Utils.FileUtil;
 import com.md.flashset.View.FlashLed;
 import com.md.flashset.bean.CallFlashFormat;
 import com.md.flashset.bean.CallFlashInfo;
@@ -27,6 +26,8 @@ public class CallFlashManager {
     public static final String ONLINE_THEME_TOPIC_NAME_NON_FEATURED = "Non-Featured";
     public static final String ONLINE_THEME_TOPIC_NAME_LOCAL_HOME = "Localhome";
     public static final String ONLINE_THEME_TOPIC_NAME_NEW_FLASH = "Newflash";
+
+    public static final String CALL_FLASH_START_SKY_ID = "7242";
 
     private static CallFlashManager instance;
     private ArrayList<CallFlashInfo> mAllLocalFlashList = new ArrayList<>();
@@ -60,42 +61,35 @@ public class CallFlashManager {
 
     public CallFlashInfo getLocalFlash() {
         CallFlashInfo info = new CallFlashInfo();
-        info.id = "7242";
+        info.id = CALL_FLASH_START_SKY_ID;
         info.title = "star_sky2";
         info.format = CallFlashFormat.FORMAT_VIDEO;
-        info.img_vUrl = "https://djwtigu7b03af.cloudfront.net/material_manager/201808/08110414958.png";
-        info.img_hUrl = "https://djwtigu7b03af.cloudfront.net/material_manager/201808/08110420998.png";
-        info.url = "https://djwtigu7b03af.cloudfront.net/material_manager/201808/08110446210.mp4";
-        info.path = "/storage/emulated/0/Android/data/blocker.call.wallpaper.screen.caller.ringtones.callercolor/files/Movies/08110446210.mp4";
-        info.imgPath = "/storage/emulated/0/Android/data/blocker.call.wallpaper.screen.caller.ringtones.callercolor/files/Movies/08110414958.png";
+        info.path = "android.resource://" + mContext.getPackageName() + "/" + R.raw.starsky;
         info.flashType = 65537;
         info.isHaveSound = true;
         info.imgResId = R.drawable.img_star_sky_v;
         info.img_hResId = R.drawable.img_star_sky_h;
-        if (info.imgResId <= 0) {
-            info.isOnlionCallFlash = true;
-        } else {
-            info.isOnlionCallFlash = false;
-        }
-        info.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
+        info.isOnlionCallFlash = false;
         info.downloadSuccessTime = -1;
-        File file = new File(info.path);
-        if (!file.exists()) {
-            FileUtil.copyFilesFromRaw(mContext, R.raw.starsky, "08110446210.mp4", "/storage/emulated/0/Android/data/blocker.call.wallpaper.screen.caller.ringtones.callercolor/files/Movies");
-        } else {
-            info.isDownloadSuccess = true;
-        }
+        info.isDownloadSuccess = true;
+        info.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
         return info;
     }
 
 
     public List<CallFlashInfo> themeToCallFlashInfo(List<Theme> res) {
         List<CallFlashInfo> dot = null;
-
+        CallFlashInfo localFlash = getLocalFlash();
         if (res != null && res.size() > 0) {
             dot = new ArrayList<CallFlashInfo>(res.size());
             for (Theme item : res) {
                 if (item == null) {
+                    continue;
+                }
+
+                //如果和本地的callFlahId相同则直接用本地的
+                if (localFlash.id.equals(String.valueOf(item.getId()))) {
+                    dot.add(localFlash);
                     continue;
                 }
 
@@ -317,8 +311,12 @@ public class CallFlashManager {
 
     public List<CallFlashInfo> getDownloadedCallFlash() {
         List<CallFlashInfo> list = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_DOWNLOADED_CALL_FLASH_LIST, CallFlashInfo[].class);
+        CallFlashInfo localFlash = CallFlashManager.getInstance().getLocalFlash();
         if (list == null) {
             list = new ArrayList<>();
+        }
+        if (!list.contains(localFlash)) {
+            list.add(localFlash);
         }
         if (list.size() > 0) {
             //排序(按下载时间排序)

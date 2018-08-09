@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" translatable="false">Color Phone</string>
 
     <string name="push_tools_missed">"Missed calls."</string>
@@ -30,7 +30,7 @@
     <string name="share_to_facebook">"Share on Facebook"</string>
     <string name="about_privacy">"Privacy Policy"</string>
     <string name="about_term">"Terms of Use"</string>
-    <string name="share_text">"%1$s can block unwanted calls and know who is calling. Have a try! Get it on: %2$s"</string>
+    <string name="share_text">"%1$s make your calls colorful and block unwanted calls. Have a try! Get it on: %2$s"</string>
     <string name="rate_dialog_title">@string/app_name</string>
     <string name="rate_dialog_message">"Do you like Caller ID? \nWould you please leave us your rating?"</string>
     <string name="rate_dialog_cancel">"Later"</string>
@@ -70,18 +70,11 @@
     <string name="call_after_block">@string/block_setting_name</string>
     <string name="call_after_message">"Message"</string>
     <string name="call_after_click_toast">"The number is hidden!"</string>
-    <string name="permission_tip">为了来电秀和号码拦截能够正常使用, please enable the following permissions.</string>
+    <string name="permission_tip">Call Flash show need the following permissions.</string>
     <string name="permission_sysytem_permission">Permission Manager</string>
     <string name="permission_to_get_permsiion">Enable</string>
     <string name="permission_phone">"Phone Call"</string>
     <string name="permission_SMS">"SMS"</string>
-    <string name="FIXED_LINE">"FIXED_LINE"</string>
-    <string name="MOBILE">"MOBILE"</string>
-    <string name="FIXED_LINE_OR_MOBILE">"FIXED_LINE_OR_MOBILE"</string>
-    <string name="TOLL_FREE">"TOLL_FREE"</string>
-    <string name="PREMIUM_RATE">"PREMIUM_RATE"</string>
-    <string name="SHARED_COST">"SHARED_COST"</string>
-    <string name="PERSONAL_NUMBER">"PERSONAL_NUMBER"</string>
     <string name="call_flash_led_festival">"Festival"</string>
     <string name="call_flash_led_love">"Love"</string>
     <string name="call_flash_led_kiss">"Kiss"</string>
@@ -231,5 +224,4 @@
     <string name="setting_close_caller_show_tip">Color call screen will not be displayed, are you sure to turn it off?</string>
 
     <string name="set_default">Default</string>
-    <string name="set_failed">设置失败</string>
 </resources>

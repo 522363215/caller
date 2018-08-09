@@ -12,6 +12,7 @@ import com.common.sdk.adpriority.AdPriorityListener;
 import com.common.sdk.adpriority.AdPriorityManager;
 import com.common.sdk.analytics.AnalyticsManager;
 import com.flurry.android.FlurryAgent;
+import com.md.flashset.CallFlashSet;
 import com.md.serverflash.ThemeSyncManager;
 
 import java.util.Locale;
@@ -113,6 +114,7 @@ public class ApplicationEx extends Application {
         saveVersioncode();
         startService();
         initCallFlashBase();
+        CallFlashSet.init(this);
         // TODO: 2018/7/5 广告暂时屏蔽
 //        intiAdManager();
         initPriorityAds();
