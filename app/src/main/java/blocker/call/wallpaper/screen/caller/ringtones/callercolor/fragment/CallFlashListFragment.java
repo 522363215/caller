@@ -41,10 +41,8 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
@@ -314,7 +312,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             initData(false);
         } else {
 
-            String [] themeTopic = null;
+            String[] themeTopic = null;
             if (isOlderUser()) {
                 themeTopic = new String[2];
                 themeTopic[0] = CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH;
@@ -587,7 +585,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
 
         SharedPreferences pref = ApplicationEx.getInstance().getGlobalSettingPreference();
         boolean old = pref.getBoolean("cid_is_old_user_flash", false);
-        if(!old) {
+        if (!old) {
             //first sync time
             long first_sync = pref.getLong("key_cid_first_sync_server_time", 0);
 //        int today = Stringutil.getTodayDayByServer();//real time

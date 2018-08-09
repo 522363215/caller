@@ -6,18 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.md.block.core.BlockManager;
 import com.md.flashset.CallFlashSet;
+import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
-import com.md.serverflash.beans.Theme;
-import com.md.serverflash.callback.TopicThemeCallback;
 
 import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PhoneStateListenImpl;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.CallerCommonReceiver;
@@ -62,8 +62,30 @@ public class ServiceProcessingManager {
 
         startWaketask2(); //long task
 
+        //将raw中的视频复制到sd卡中
+        copyRawToPath();
+
         //缓存首页数据
         cacheHomeData();
+    }
+
+    private void copyRawToPath() {
+        Async.run(new Runnable() {
+            @Override
+            public void run() {
+                CallFlashInfo localFlash = CallFlashManager.getInstance().getLocalFlash();
+
+                //缓存背景图
+                if (localFlash != null) {
+                    try {
+                        Glide.with(mContext).load(localFlash.img_hUrl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
+                        Glide.with(mContext).load(localFlash.img_vUrl).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     public void cacheHomeData() {
