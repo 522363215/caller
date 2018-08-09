@@ -252,8 +252,8 @@ public class CallFlashSetResultActivity extends BaseActivity {
 
         if (getString(R.string.permission_denied_txt).equals(showContent)) {
             mIsSetFailed = true;
-            mTvTopResultTitle.setText(R.string.set_failed);
-            mTvCenterResultTitle.setText(R.string.set_failed);
+            mTvTopResultTitle.setText(R.string.call_flash_gif_show_setting_des2);
+            mTvCenterResultTitle.setText(R.string.call_flash_gif_show_setting_des2);
             mFivSuccessBig.setTextColor(getResources().getColor(R.color.color_FD5B5B));
             mIvSuccessSmall.setBackgroundResource(R.drawable.icon_fail);
         }
