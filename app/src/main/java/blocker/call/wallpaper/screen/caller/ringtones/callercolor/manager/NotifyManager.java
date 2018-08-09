@@ -222,9 +222,12 @@ public class NotifyManager {
     }
 
     private void sendNewestFlashNotifyException(String img_v) {
+        if(TextUtils.isEmpty(img_v)){
+            return;
+        }
         Theme theme = CallFlashPreferenceHelper.getObject(
                 CallFlashPreferenceHelper.PREF_CALL_FLASH_LAST_SEND_NOTIFY_NEWEST_INSTANCE, Theme.class);
-        if (theme != null && theme.getImg_v().equals(img_v)) {
+        if (theme != null && theme.getImg_v() != null && theme.getImg_v().equals(img_v)) {
             CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.PREF_CALL_FLASH_LAST_SEND_NOTIFY_NEWEST_INSTANCE, new Theme());
         }
     }
