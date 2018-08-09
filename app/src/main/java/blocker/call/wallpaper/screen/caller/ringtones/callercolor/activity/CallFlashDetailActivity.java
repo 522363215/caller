@@ -869,7 +869,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         if (isShowSuccessResult(this)) {
             showSaveDialog();
         } else {
-            toResult(getString(R.string.permission_denied_txt));
+            toResult(getString(R.string.permission_denied_txt2));
         }
     }
 
@@ -916,6 +916,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 //        intent.putStringArrayListExtra(ConstantUtils.NUMBER_FOR_CALL_FLASH, mNumbersForCallFlash);
         intent.putExtra("is_show_result", true);
         intent.putExtra("result_des", resultDes);
+        intent.putExtra(ActivityBuilder.IS_COME_GUIDE, mIsComeGuide);
         intent.putExtra("is_show_interstitial_ad", mIsShowFullScreenAd || mIsShowInterstitialAd);
         startActivity(intent);
         onFinish();

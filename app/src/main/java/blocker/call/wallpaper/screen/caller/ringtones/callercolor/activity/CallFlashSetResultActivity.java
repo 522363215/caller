@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -42,7 +43,7 @@ import event.EventBus;
  * Created by ChenR on 2017/9/20.
  */
 
-public class CallFlashSetResultActivity extends BaseActivity {
+public class CallFlashSetResultActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "CallFlashGifShowActivity";
 
     // setting result
@@ -80,11 +81,13 @@ public class CallFlashSetResultActivity extends BaseActivity {
     private MyAdvertisementAdapter mMyAdvertisementAdapter;
     private boolean mIsShowInterstitialAd;
     private boolean mIsSetFailed;
+    private boolean mIsComeGuide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mStartTime = 0;
+        mIsComeGuide = getIntent().getBooleanExtra(ActivityBuilder.IS_COME_GUIDE, false);
         mIsFromDesktop = getIntent().getBooleanExtra(ActivityBuilder.IS_COME_FROM_DESKTOP, false);
         mIsShowInterstitialAd = getIntent().getBooleanExtra("is_show_interstitial_ad", false);
         mCallFlashInfo = (CallFlashInfo) getIntent().getSerializableExtra(ActivityBuilder.CALL_FLASH_INFO);
@@ -120,7 +123,11 @@ public class CallFlashSetResultActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        FlurryAgent.logEvent("CallFlashSetResultActivity-----show_main");
+        if (mIsComeGuide) {
+            FlurryAgent.logEvent("CallFlashSetResultActivity---comeGuide--show_main");
+        } else {
+            FlurryAgent.logEvent("CallFlashSetResultActivity---Normal--show_main");
+        }
     }
 
     @Override
@@ -133,6 +140,21 @@ public class CallFlashSetResultActivity extends BaseActivity {
         super.onDestroy();
         if (mAdvertisement != null) {
             mAdvertisement.close();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.tv_scan_result_des:
+            case R.id.tv_scan_result_des2:
+                if (mIsComeGuide && mIsSetFailed) {
+                    FlurryAgent.logEvent("CallFlashSetResultActivity---comeGuide--click_set_permission");
+                    ActivityBuilder.toPermissionActivity(this, false);
+                    finish();
+                }
+                break;
         }
     }
 
@@ -246,16 +268,27 @@ public class CallFlashSetResultActivity extends BaseActivity {
 
         mLayoutAd = findViewById(R.id.layout_ad_view);
 
+        mTvCenterResultDes.setOnClickListener(this);
+        mTvTopResultDes.setOnClickListener(this);
+
         String showContent = getIntent().getStringExtra("result_des");
         mTvCenterResultDes.setText(showContent);
         mTvTopResultDes.setText(showContent);
 
-        if (getString(R.string.permission_denied_txt).equals(showContent)) {
+        if (getString(R.string.permission_denied_txt2).equals(showContent)) {
             mIsSetFailed = true;
             mTvTopResultTitle.setText(R.string.call_flash_gif_show_setting_des2);
             mTvCenterResultTitle.setText(R.string.call_flash_gif_show_setting_des2);
             mFivSuccessBig.setTextColor(getResources().getColor(R.color.color_FD5B5B));
             mIvSuccessSmall.setBackgroundResource(R.drawable.icon_fail);
+
+            mTvTopResultDes.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+            mTvTopResultDes.getPaint().setAntiAlias(true);//抗锯齿
+            mTvCenterResultDes.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+            mTvCenterResultDes.getPaint().setAntiAlias(true);//抗锯齿
+            if (mIsComeGuide) {
+                FlurryAgent.logEvent("CallFlashSetResultActivity---comeGuide--setFailed");
+            }
         }
 
         showResult();

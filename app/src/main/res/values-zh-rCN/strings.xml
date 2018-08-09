@@ -157,7 +157,7 @@
     <string name="permission_for_answer_call">接听电话</string>
     <string name="setting_call_after">来电助理</string>
     <string name="setting_caller_show">来电秀</string>
-    <string name="permission_denied_txt">权限申请被拒绝，请重试！</string>
+    <string name="permission_denied_txt">权限申请失败，请重试！</string>
     <string name="permission_next">下一步</string>
     <string name="permission_all_set">设置完成！</string>
 
@@ -220,4 +220,6 @@
     <string name="setting_close_caller_show_tip">酷炫的来电秀将不会再显示，确认关闭？</string>
 
     <string name="set_default">默认</string>
+
+    <string name="permission_denied_txt2">权限申请失败，点击此处授权</string>
 </resources>
