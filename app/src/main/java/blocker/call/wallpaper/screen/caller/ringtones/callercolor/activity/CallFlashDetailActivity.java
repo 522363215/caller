@@ -836,16 +836,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 CallFlashPreferenceHelper.putString(CallFlashPreferenceHelper.CALL_FLASH_TYPE_DYNAMIC_PATH, "");
                 CallFlashPreferenceHelper.putString(CallFlashPreferenceHelper.CALL_FLASH_CUSTOM_BG_PATH, "");
 
-                ArrayList<CallFlashInfo> list = CallFlashManager.getInstance().getAllLocalFlashList();
-
-                if (list != null && !list.isEmpty()) {
-                    for (CallFlashInfo info : list) {
-                        if (info.flashType == FlashLed.FLASH_TYPE_DEFAULT) {
-                            CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, info);
-                            break;
-                        }
-                    }
-                }
+                CallFlashInfo localFlash = CallFlashManager.getInstance().getLocalFlash();
+                CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, localFlash);
             }
         }
     }

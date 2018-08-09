@@ -4,9 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.md.flashset.R;
-import com.md.flashset.Utils.CallFlashConstansUtil;
+import com.md.flashset.Utils.FileUtil;
 import com.md.flashset.View.FlashLed;
-import com.md.flashset.bean.CallFlashClassification;
 import com.md.flashset.bean.CallFlashFormat;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.download.DownloadState;
@@ -51,107 +50,44 @@ public class CallFlashManager {
         return ThemeSyncManager.getInstance().getFileByUrl(mContext, sourceUrl);
     }
 
-    // 仅仅初始化保存固定的来电秀;
-    private void initFlashDataAndSave() {
-        List<CallFlashInfo> classicList = new ArrayList<>();
-        CallFlashInfo monkey = new CallFlashInfo();
-        monkey.id = String.valueOf(FlashLed.FLASH_TYPE_MONKEY);
-        monkey.title = CallFlashConstansUtil.CALL_FLASH_THEME_GIF_NAME_MONKEY;
-        monkey.imgResId = R.drawable.icon_call_flash_monkey_bg;
-        monkey.format = CallFlashFormat.FORMAT_VIDEO;
-        monkey.path = "android.resource://" + mContext.getPackageName() + "/" + R.raw.monkey;
-        monkey.url = "";
-        monkey.isDownloadSuccess = true;
-        monkey.isHaveSound = true;
-        monkey.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        monkey.flashType = FlashLed.FLASH_TYPE_MONKEY;
-        monkey.position = 3;
-        monkey.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
-        monkey.downloadSuccessTime = -1;
-
-        CallFlashInfo festival = new CallFlashInfo();
-        festival.id = String.valueOf(FlashLed.FLASH_TYPE_FESTIVAL);
-        festival.title = mContext.getString(R.string.call_flash_led_festival);
-        festival.imgResId = R.drawable.icon_flash_festival_small;
-        festival.format = CallFlashFormat.FORMAT_CUSTOM_ANIM;
-        festival.path = "";
-        festival.url = "";
-        festival.isDownloadSuccess = true;
-        festival.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        festival.flashType = FlashLed.FLASH_TYPE_FESTIVAL;
-        festival.position = 5;
-        festival.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
-        festival.downloadSuccessTime = -2;
-
-        CallFlashInfo love = new CallFlashInfo();
-        love.id = String.valueOf(FlashLed.FLASH_TYPE_LOVE);
-        love.title = mContext.getString(R.string.call_flash_led_love);
-        love.imgResId = R.drawable.icon_flash_love_small;
-        love.format = CallFlashFormat.FORMAT_CUSTOM_ANIM;
-        love.path = "";
-        love.url = "";
-        love.isDownloadSuccess = true;
-        love.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        love.flashType = FlashLed.FLASH_TYPE_LOVE;
-        love.position = 6;
-        love.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
-        love.downloadSuccessTime = -3;
-
-        CallFlashInfo kiss = new CallFlashInfo();
-        kiss.id = String.valueOf(FlashLed.FLASH_TYPE_KISS);
-        kiss.title = mContext.getString(R.string.call_flash_led_kiss);
-        kiss.imgResId = R.drawable.icon_flash_kiss_small;
-        kiss.format = CallFlashFormat.FORMAT_CUSTOM_ANIM;
-        kiss.path = "";
-        kiss.url = "";
-        kiss.isDownloadSuccess = true;
-        kiss.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        kiss.flashType = FlashLed.FLASH_TYPE_KISS;
-        kiss.position = 7;
-        kiss.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
-        kiss.downloadSuccessTime = -4;
-
-        CallFlashInfo rose = new CallFlashInfo();
-        rose.id = String.valueOf(FlashLed.FLASH_TYPE_ROSE);
-        rose.title = mContext.getString(R.string.call_flash_led_rose);
-        rose.imgResId = R.drawable.icon_flash_flower_small;
-        rose.format = CallFlashFormat.FORMAT_CUSTOM_ANIM;
-        rose.path = "";
-        rose.url = "";
-        rose.isDownloadSuccess = true;
-        rose.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        rose.flashType = FlashLed.FLASH_TYPE_ROSE;
-        rose.position = 7;
-        rose.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
-        rose.downloadSuccessTime = -5;
-
-        CallFlashInfo streamer = new CallFlashInfo();
-        streamer.id = String.valueOf(FlashLed.FLASH_TYPE_STREAMER);
-        streamer.title = mContext.getString(R.string.call_falsh_led_streamer);
-        streamer.imgResId = R.drawable.icon_flash_streamer_small;
-        streamer.format = CallFlashFormat.FORMAT_CUSTOM_ANIM;
-        streamer.path = "";
-        streamer.url = "";
-        streamer.isDownloadSuccess = true;
-        streamer.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        streamer.flashType = FlashLed.FLASH_TYPE_STREAMER;
-        streamer.downloadSuccessTime = -6;
-
-        classicList.add(love);
-        classicList.add(monkey);
-        classicList.add(kiss);
-        classicList.add(festival);
-        classicList.add(rose);
-        classicList.add(streamer);
-        mAllLocalFlashList.addAll(classicList);
-    }
-
     public ArrayList<CallFlashInfo> getAllLocalFlashList() {
         if (mAllLocalFlashList.size() == 0) {
-            initFlashDataAndSave();
+            CallFlashInfo info = getLocalFlash();
+            mAllLocalFlashList.add(info);
         }
         return mAllLocalFlashList;
     }
+
+    public CallFlashInfo getLocalFlash() {
+        CallFlashInfo info = new CallFlashInfo();
+        info.id = "7242";
+        info.title = "star_sky2";
+        info.format = CallFlashFormat.FORMAT_VIDEO;
+        info.img_vUrl = "https://djwtigu7b03af.cloudfront.net/material_manager/201808/08110414958.png";
+        info.img_hUrl = "https://djwtigu7b03af.cloudfront.net/material_manager/201808/08110420998.png";
+        info.url = "https://djwtigu7b03af.cloudfront.net/material_manager/201808/08110446210.mp4";
+        info.path = "/storage/emulated/0/Android/data/blocker.call.wallpaper.screen.caller.ringtones.callercolor/files/Movies/08110446210.mp4";
+        info.imgPath = "/storage/emulated/0/Android/data/blocker.call.wallpaper.screen.caller.ringtones.callercolor/files/Movies/08110414958.png";
+        info.flashType = 65537;
+        info.isHaveSound = true;
+        info.imgResId = R.drawable.img_star_sky_v;
+        info.img_hResId = R.drawable.img_star_sky_h;
+        if (info.imgResId <= 0) {
+            info.isOnlionCallFlash = true;
+        } else {
+            info.isOnlionCallFlash = false;
+        }
+        info.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
+        info.downloadSuccessTime = -1;
+        File file = new File(info.path);
+        if (!file.exists()) {
+            FileUtil.copyFilesFromRaw(mContext, R.raw.starsky, "08110446210.mp4", "/storage/emulated/0/Android/data/blocker.call.wallpaper.screen.caller.ringtones.callercolor/files/Movies");
+        } else {
+            info.isDownloadSuccess = true;
+        }
+        return info;
+    }
+
 
     public List<CallFlashInfo> themeToCallFlashInfo(List<Theme> res) {
         List<CallFlashInfo> dot = null;
@@ -381,13 +317,8 @@ public class CallFlashManager {
 
     public List<CallFlashInfo> getDownloadedCallFlash() {
         List<CallFlashInfo> list = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_DOWNLOADED_CALL_FLASH_LIST, CallFlashInfo[].class);
-        ArrayList<CallFlashInfo> allLocalFlashList = CallFlashManager.getInstance().getAllLocalFlashList();
         if (list == null) {
             list = new ArrayList<>();
-        }
-
-        if (allLocalFlashList != null && allLocalFlashList.size() > 0) {
-            list.addAll(allLocalFlashList);
         }
         if (list.size() > 0) {
             //排序(按下载时间排序)

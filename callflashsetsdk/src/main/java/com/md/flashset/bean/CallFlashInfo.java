@@ -44,7 +44,7 @@ public class CallFlashInfo implements Serializable {
     public String logoPath;//logo路径
     public String logoPressPath;//logoPress路径
     public int imgResId;
-
+    public int img_hResId;
     public int progress;
     public int downloadState = 4;//默认为等待中
     public boolean isAutoDownload = true;//是否为自动下载,默认为自动下载
