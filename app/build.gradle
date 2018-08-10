@@ -38,7 +38,7 @@ android {
             shrinkResources true
             zipAlignEnabled true
             signingConfig signingConfigs.release
-            debuggable true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //将release版本的包名重命名，加上版本及日期
             applicationVariants.all { variant ->

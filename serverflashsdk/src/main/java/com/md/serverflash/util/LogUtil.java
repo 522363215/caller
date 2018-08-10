@@ -15,7 +15,7 @@ import java.io.OutputStreamWriter;
 
 public class LogUtil {
 
-    public static final boolean IS_SHOW_LOG = true;
+    public static final boolean IS_SHOW_LOG = false;
     public static final String TAG = "flash_show_sdk";
 
     public static void d(String TAG, String msg) {
