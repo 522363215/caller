@@ -37,6 +37,7 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
 
     @Override
     public void onPhoneIdle(String number) {
+        CallFlashDialog.getInstance().hideFloatView();
         if (isShowCallAfter(number)) {
             CallLogInfo info = new CallLogInfo();
             info.callNumber = number;
@@ -50,32 +51,34 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
             Intent intent = new Intent();
             intent.putExtra("lm_call_after_info", info);
             intent.setClass(mContext, CallAfterActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
             mContext.startActivity(intent);
         }
-
-        CallFlashDialog.getInstance().hideFloatView();
     }
 
     private boolean isShowCallAfter(String number) {
+        boolean isOpenBlock = BlockManager.getInstance().getBlockSwitchState();
         boolean isBlockNumber = BlockManager.getInstance().isBlockNumber(number);
         boolean enableCallerId = PreferenceHelper.getBoolean(PreferenceHelper.PREF_KEY_ENABLE_SHOW_CALL_AFTER, PreferenceHelper.DEFAULT_VALUE_FOR_CALLER_ID);
         boolean installCID = AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID);
-        LogUtil.d("chenr", "is block: " + isBlockNumber);
-        return !isBlockNumber && !installCID && enableCallerId;
+        return isOpenBlock ? (!isBlockNumber && !installCID && enableCallerId) : (!installCID && enableCallerId);
     }
 
     @Override
     public void onPhoneRinging(String number) {
+        boolean isOpenBlock = BlockManager.getInstance().getBlockSwitchState();
         boolean isShowCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
         boolean isBlockNumber = BlockManager.getInstance().isBlockNumber(number);
 
-        if (!TextUtils.isEmpty(number) && !isBlockNumber && isShowCallFlash) {
+
+        if (!TextUtils.isEmpty(number) && !(isOpenBlock && isBlockNumber) && isShowCallFlash) {
             CallFlashDialog.getInstance().showFloatView(number);
         }
     }
 
     @Override
     public void onPhoneOffHook(String number) {
+        CallFlashDialog.getInstance().hideFloatView();
     }
 
     @Override

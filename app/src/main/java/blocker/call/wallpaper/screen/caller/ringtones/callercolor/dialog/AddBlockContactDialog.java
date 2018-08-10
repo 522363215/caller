@@ -185,16 +185,19 @@ public class AddBlockContactDialog extends Dialog {
             String [] selectionArgs = new String[1];
             selectionArgs[0] = String.valueOf(System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 30 * 3);
 
-            Cursor query = mContext.getContentResolver().query(uri, project, selection, selectionArgs, CallLog.Calls.DEFAULT_SORT_ORDER);
+            final Cursor query = mContext.getContentResolver().query(uri, project, selection, selectionArgs, CallLog.Calls.DEFAULT_SORT_ORDER);
             if (query != null) {
                 if (query.getCount() <= 0) {
-                    Async.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtils.showToast(getContext(), getContext().getString(R.string.add_block_empty_call_log));
-                            dismiss();
-                        }
-                    });
+                    if (root != null) {
+                        root.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtils.showToast(getContext(), getContext().getString(R.string.add_block_empty_call_log));
+                                query.close();
+                                dismiss();
+                            }
+                        }, 1500);
+                    }
                     return;
                 }
 
@@ -228,6 +231,16 @@ public class AddBlockContactDialog extends Dialog {
                 if (tempCallLog.size() > 0) {
                     model.addAll(tempCallLog);
                     invalidView();
+                } else {
+                    if (root != null) {
+                        root.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtils.showToast(getContext(), getContext().getString(R.string.add_block_no_added_call_log));
+                                dismiss();
+                            }
+                        }, 1500);
+                    }
                 }
                 query.close();
             }
