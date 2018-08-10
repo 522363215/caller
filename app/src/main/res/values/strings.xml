@@ -32,7 +32,7 @@
     <string name="about_term">"Terms of Use"</string>
     <string name="share_text">"%1$s make your calls colorful and block unwanted calls. Have a try! Get it on: %2$s"</string>
     <string name="rate_dialog_title">@string/app_name</string>
-    <string name="rate_dialog_message">"Do you like Caller ID? \nWould you please leave us your rating?"</string>
+    <string name="rate_dialog_message">"Do you like Color Phone? \nWould you please leave us your rating?"</string>
     <string name="rate_dialog_cancel">"Later"</string>
     <string name="rate_dialog_negative_title">"Feedback"</string>
     <string name="rate_dialog_nagative_desc">"Report your issues/suggestions here, 200 words at most."</string>
@@ -213,7 +213,7 @@
     <string name="mine_no_current_call_flash">Not set yet，Set it Now</string>
 
     <string name="click_like_tip">Need download first.</string>
-    <string name="permission_grand_title_desc">We will not upload or store any of your data, like contacts, call logs, photos etc.</string>
+    <string name="permission_grand_title_desc">We will not upload or store any of your personal data, like contacts, call logs, photos etc.</string>
     <string name="notification_new_flash_title">Try a new Call Flash Show theme!</string>
     <string name="setting_call_after_desc">Show missed calls and caller information (May contain ads).</string>
     <string name="setting_block_desc">Block your unwanted calls.</string>

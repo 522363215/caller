@@ -55,7 +55,7 @@
             android:id="@+id/iv_photo"
             android:layout_width="@dimen/dp44"
             android:layout_height="@dimen/dp44"
-            android:src="@drawable/icon_fake_photo_trump"
+            android:src="@drawable/icon_woman"
             app:border_color="@color/color_4E92CF"
             app:border_width="5dp" />
     </LinearLayout>
