@@ -14,6 +14,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallA
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.CallFlashDialog;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshBlockHistory;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.NotifyManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallUtils;
@@ -21,6 +22,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Constant
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DateUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
+import event.EventBus;
 
 /**
  * Created by ChenR on 2018/7/5.
@@ -96,6 +98,7 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
 
     @Override
     public void onPhoneBlock(String number) {
+        EventBus.getDefault().post(new EventRefreshBlockHistory());
         NotifyManager.getInstance().showBlockCallNotify();
     }
 }

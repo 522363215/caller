@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
 import com.md.block.beans.BlockInfo;
@@ -18,6 +17,8 @@ import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.BlockAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshBlockHistory;
+import event.EventBus;
 
 public class BlockListFragment extends Fragment {
     public static final int BLOCK_LIST_SHOW_CONTACT = 0;
@@ -31,7 +32,7 @@ public class BlockListFragment extends Fragment {
 
     private int mCurrentShowType = BLOCK_LIST_SHOW_CONTACT;
 
-    public static BlockListFragment newInstance (int showType) {
+    public static BlockListFragment newInstance(int showType) {
         BlockListFragment fragment = new BlockListFragment();
 
         Bundle bundle = new Bundle();
@@ -44,6 +45,9 @@ public class BlockListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
 
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -51,6 +55,14 @@ public class BlockListFragment extends Fragment {
         }
 
         initData();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     private void initData() {
@@ -95,7 +107,9 @@ public class BlockListFragment extends Fragment {
             lvBlockContact.setVisibility(model.isEmpty() ? View.GONE : View.VISIBLE);
             layoutEmpty.setVisibility(model.isEmpty() ? View.VISIBLE : View.GONE);
         }
-
     }
 
+    public void onEventMainThread(EventRefreshBlockHistory event) {
+        updateData();
+    }
 }

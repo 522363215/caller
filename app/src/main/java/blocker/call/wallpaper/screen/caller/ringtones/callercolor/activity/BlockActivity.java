@@ -90,7 +90,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         dialog.setOkClickListener(new OKCancelDialog.OKClickListener() {
             @Override
             public void Ok() {
-                requestPermission(new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG}, REQUEST_PERMISSION_CODE);
+                requestPermission(new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CALL_LOG}, REQUEST_PERMISSION_CODE);
             }
         });
         dialog.setOnCancelClickListener(new OKCancelDialog.OnCancelClickListener() {
