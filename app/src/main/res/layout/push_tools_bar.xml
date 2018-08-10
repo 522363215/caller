@@ -9,8 +9,8 @@
     android:padding="@dimen/dp8">
 
     <ImageView
-        android:layout_width="@dimen/dp48"
-        android:layout_height="@dimen/dp48"
+        android:layout_width="@dimen/dp40"
+        android:layout_height="@dimen/dp40"
         android:src="@drawable/ic_launcher" />
 
     <LinearLayout
@@ -31,17 +31,16 @@
             android:layout_height="wrap_content"
             android:text="title"
             android:textColor="@color/background"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_notify_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp2"
             android:alpha="0.6"
             android:text="content"
             android:textColor="@color/background"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 
