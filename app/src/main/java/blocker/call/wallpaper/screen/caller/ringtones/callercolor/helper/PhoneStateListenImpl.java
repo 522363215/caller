@@ -2,8 +2,11 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.md.block.callback.PhoneStateChangeCallback;
+import com.md.block.core.BlockManager;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 
 import java.util.Locale;
@@ -32,9 +35,7 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
 
     @Override
     public void onPhoneIdle(String number) {
-        boolean enableCallerId = PreferenceHelper.getBoolean(PreferenceHelper.PREF_KEY_ENABLE_SHOW_CALL_AFTER, PreferenceHelper.DEFAULT_VALUE_FOR_CALLER_ID);
-        boolean installCID = AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID);
-        if (!installCID && enableCallerId) {
+        if (isShowCallAfter(number)) {
             CallLogInfo info = new CallLogInfo();
             info.callNumber = number;
             info.callName = ContactManager.getInstance().getContactNameForNumber(number);
@@ -42,6 +43,7 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
             info.date = System.currentTimeMillis();
             info.callDate = DateUtils.getHmForTime(info.date, Locale.getDefault());
             info.callType = CallUtils.getCallLogType(number);
+            info.callIconId = ContactManager.getInstance().getContactPhotoId(number);
 
             Intent intent = new Intent();
             intent.putExtra("lm_call_after_info", info);
@@ -52,10 +54,20 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
         CallFlashDialog.getInstance().hideFloatView();
     }
 
+    private boolean isShowCallAfter (String number) {
+        boolean isBlockNumber = BlockManager.getInstance().isBlockNumber(number);
+        boolean enableCallerId = PreferenceHelper.getBoolean(PreferenceHelper.PREF_KEY_ENABLE_SHOW_CALL_AFTER, PreferenceHelper.DEFAULT_VALUE_FOR_CALLER_ID);
+        boolean installCID = AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID);
+        LogUtil.d("chenr", "is block: " + isBlockNumber);
+        return !isBlockNumber && !installCID && enableCallerId;
+    }
+
     @Override
     public void onPhoneRinging(String number) {
         boolean isShowCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
-        if (isShowCallFlash) {
+        boolean isBlockNumber = BlockManager.getInstance().isBlockNumber(number);
+
+        if (!TextUtils.isEmpty(number) && !isBlockNumber && isShowCallFlash) {
             CallFlashDialog.getInstance().showFloatView(number);
         }
     }

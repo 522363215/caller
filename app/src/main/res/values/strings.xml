@@ -226,4 +226,5 @@
     <string name="set_default">Default</string>
 
     <string name="permission_denied_txt2">Permission denied, click here to set permission.</string>
+    <string name="add_block_empty_call_log">The call log is empty! It can not add block contact!</string>
 </resources>

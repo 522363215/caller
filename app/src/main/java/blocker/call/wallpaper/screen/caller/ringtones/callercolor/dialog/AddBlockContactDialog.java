@@ -154,9 +154,9 @@ public class AddBlockContactDialog extends Dialog {
                     @Override
                     public void run() {
                         ToastUtils.showToast(mContext, mContext.getString(R.string.permission_denied_txt));
+                        dismiss();
                     }
                 });
-                dismiss();
                 return;
             }
 
@@ -187,6 +187,17 @@ public class AddBlockContactDialog extends Dialog {
 
             Cursor query = mContext.getContentResolver().query(uri, project, selection, selectionArgs, CallLog.Calls.DEFAULT_SORT_ORDER);
             if (query != null) {
+                if (query.getCount() <= 0) {
+                    Async.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtils.showToast(getContext(), getContext().getString(R.string.add_block_empty_call_log));
+                            dismiss();
+                        }
+                    });
+                    return;
+                }
+
                 tempCallLog = new ArrayList<>();
                 addedNumberCache = new ArrayList<>();
                 while (query.moveToNext()) {
