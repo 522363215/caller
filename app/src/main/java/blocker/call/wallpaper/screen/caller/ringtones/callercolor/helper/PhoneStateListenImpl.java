@@ -3,7 +3,6 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.md.block.callback.PhoneStateChangeCallback;
 import com.md.block.core.BlockManager;
@@ -14,12 +13,13 @@ import java.util.Locale;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallAfterActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.CallFlashDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.NotifyManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DateUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.CallFlashDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
 
 /**
@@ -54,7 +54,7 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
         CallFlashDialog.getInstance().hideFloatView();
     }
 
-    private boolean isShowCallAfter (String number) {
+    private boolean isShowCallAfter(String number) {
         boolean isBlockNumber = BlockManager.getInstance().isBlockNumber(number);
         boolean enableCallerId = PreferenceHelper.getBoolean(PreferenceHelper.PREF_KEY_ENABLE_SHOW_CALL_AFTER, PreferenceHelper.DEFAULT_VALUE_FOR_CALLER_ID);
         boolean installCID = AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID);
@@ -96,5 +96,6 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
 
     @Override
     public void onPhoneBlock(String number) {
+        NotifyManager.getInstance().showBlockCallNotify();
     }
 }

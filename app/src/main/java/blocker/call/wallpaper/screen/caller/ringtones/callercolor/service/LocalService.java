@@ -79,7 +79,7 @@ public class LocalService extends Service {
                 // Use new API
                 Notification.Builder builder = new Notification.Builder(this)
                         .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0))
-                        .setSmallIcon(R.drawable.notification_small_icon)
+                        .setSmallIcon(R.drawable.icon_small_launcher)
                         .setAutoCancel(true)
                         .setContentTitle(getString(R.string.app_name));
                 notification = builder.build();

@@ -2,8 +2,8 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -44,6 +44,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
     private int mCurrentIndex = 0;
 
     private List<Fragment> fragmentList = new ArrayList<>();
+    private boolean mIsComeBlockNotify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,16 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         } else {
             initView();
             listener();
+            onNewIntent(getIntent());
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mIsComeBlockNotify = intent.getBooleanExtra("is_come_block_notify", false);
+        if (mIsComeBlockNotify) {
+            viewPager.setCurrentItem(BlockListFragment.BLOCK_LIST_SHOW_HISTORY);
         }
     }
 
@@ -95,6 +106,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         if (requestCode == REQUEST_PERMISSION_CODE) {
             initView();
             listener();
+            onNewIntent(getIntent());
         }
     }
 

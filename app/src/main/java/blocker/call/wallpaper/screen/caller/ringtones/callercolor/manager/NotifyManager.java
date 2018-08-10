@@ -41,23 +41,23 @@ public class NotifyManager {
 
     private static NotifyManager instance;
 
-    public static NotifyManager getInstance(Context context) {
+    public static NotifyManager getInstance() {
         if (instance == null) {
             synchronized (NotifyManager.class) {
                 if (instance == null) {
-                    instance = new NotifyManager(context);
+                    instance = new NotifyManager();
                 }
             }
         }
         return instance;
     }
 
-    private NotifyManager(Context context) {
-        if (context == null) {
+    private NotifyManager() {
+        mContext = ApplicationEx.getInstance().getBaseContext();
+        if (mContext == null) {
             LogUtil.e(TAG, "NotifyManager context parameter is null.");
         }
-        mContext = context;
-        mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String notifyChannelName = mContext.getString(R.string.notify_channel_subscribe);
             NotificationChannel channel = new NotificationChannel(ANDROID_O_CHANNEL_ID, notifyChannelName, NotificationManager.IMPORTANCE_DEFAULT);
@@ -79,9 +79,6 @@ public class NotifyManager {
             LogUtil.e(TAG, "NotifyInfo is null.");
             return;
         }
-
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext);
-
         String title = info.getTitle();
         String content = info.getContent();
         RemoteViews views = createRemoteViews();
@@ -98,41 +95,50 @@ public class NotifyManager {
 
                 jumpIntent = new Intent();
                 jumpIntent.setClass(mContext, BlockActivity.class);
-
+                jumpIntent.putExtra("is_come_block_notify", true);
                 pendingIntent = PendingIntent.getActivity(mContext, NotifyInfo.NotifyId.NOTIFY_BLOCK_CALL,
                         jumpIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 FlurryAgent.logEvent("notification_show_block");
                 break;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            builder.setCustomContentView(views);
-        } else {
-            builder.setContent(views);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            builder.setChannelId(ANDROID_O_CHANNEL_ID);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            builder.setGroup(GROUP_ID);
-        }
+        Notification notify = null;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            final NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                builder.setCustomContentView(views);
+            } else {
+                builder.setContent(views);
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+                builder.setGroup(GROUP_ID);
+            }
 //        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
 //            builder.setSmallIcon(R.drawable.notification_small_icon);
 //        } else {
 //            builder.setSmallIcon(R.drawable.notification_icon);
 //        }
 
-        builder.setAutoCancel(true)
-                .setPriority(Notification.PRIORITY_DEFAULT)
-                .setSmallIcon(R.drawable.ic_launcher)
-                .setContentIntent(pendingIntent);
+            builder.setAutoCancel(true)
+                    .setPriority(Notification.PRIORITY_DEFAULT)
+                    .setSmallIcon(R.drawable.ic_launcher)
+                    .setContentIntent(pendingIntent);
 
-        Notification notify = builder.build();
+            notify = builder.build();
+        } else {
+            Notification.Builder builder = new Notification.Builder(mContext, ANDROID_O_CHANNEL_ID)
+                    .setCustomContentView(views)
+                    .setAutoCancel(true)
+                    .setSmallIcon(R.drawable.icon_small_launcher)
+                    .setGroup(GROUP_ID)
+                    .setContentIntent(pendingIntent);
+            notify = builder.build();
+        }
         mNotificationManager.notify(info.getNotifyId(), notify);
 
     }
 
-    public void showNewFlashWithBigStyle (final NotifyInfo info) {
+    public void showNewFlashWithBigStyle(final NotifyInfo info) {
         if (info == null) {
             LogUtil.d(TAG, "NotifyInfo is null.");
             return;
@@ -166,11 +172,11 @@ public class NotifyManager {
 
                     if (!TextUtils.isEmpty(info.arg1)) {
                         imgH = Glide.with(mContext).load(info.arg1).asBitmap().into(width, height).get();
-                        LogUtil.d(TAG, "imgH: "+imgH+", info.arg1: "+info.arg1);
+                        LogUtil.d(TAG, "imgH: " + imgH + ", info.arg1: " + info.arg1);
                     }
                     if (!TextUtils.isEmpty(info.arg2)) {
                         imgV = Glide.with(mContext).load(info.arg2).asBitmap().into(width, height).get();
-                        LogUtil.d(TAG, "imgV: "+imgV+", info.arg2: "+info.arg2);
+                        LogUtil.d(TAG, "imgV: " + imgV + ", info.arg2: " + info.arg2);
                     }
 
                     if (imgH != null) {
@@ -222,7 +228,7 @@ public class NotifyManager {
     }
 
     private void sendNewestFlashNotifyException(String img_v) {
-        if(TextUtils.isEmpty(img_v)){
+        if (TextUtils.isEmpty(img_v)) {
             return;
         }
         Theme theme = CallFlashPreferenceHelper.getObject(
@@ -230,6 +236,14 @@ public class NotifyManager {
         if (theme != null && theme.getImg_v() != null && theme.getImg_v().equals(img_v)) {
             CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.PREF_CALL_FLASH_LAST_SEND_NOTIFY_NEWEST_INSTANCE, new Theme());
         }
+    }
+
+    public void showBlockCallNotify() {
+        NotifyInfo info = new NotifyInfo();
+        info.setNotifyId(NotifyInfo.NotifyId.NOTIFY_BLOCK_CALL);
+        info.setTitle(mContext.getString(R.string.push_tools_block_call));
+        info.setContent(mContext.getString(R.string.push_tools_content));
+        showNotify(info);
     }
 
 }
