@@ -2,7 +2,6 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment;
 
 
 import android.app.Fragment;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -32,7 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.CallFlashOnlineAdapter;
@@ -42,10 +40,10 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
 import event.EventBus;
@@ -302,7 +300,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         topic = ConstantUtils.HOME_DATA_TYPE;
 //        }
         List<Theme> cacheTopicDataList = ThemeSyncManager.getInstance().getCacheTopicDataList(topic);
-        if (isOlderUser()) {
+        if (CommonUtils.isOldForFlash()) {
             List<Theme> cacheNewFlash = ThemeSyncManager.getInstance().getCacheTopicData(
                     CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH, 1, 6);
             cacheTopicDataList.addAll(0, cacheNewFlash);
@@ -315,7 +313,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         } else {
 
             String[] themeTopic = null;
-            if (isOlderUser()) {
+            if (CommonUtils.isOldForFlash()) {
                 themeTopic = new String[2];
                 themeTopic[0] = CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH;
                 themeTopic[1] = ConstantUtils.HOME_DATA_TYPE;
@@ -331,7 +329,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                         return;
                     }
                     List<Theme> list = new ArrayList<>();
-                    if (isOlderUser()) {
+                    if (CommonUtils.isOldForFlash()) {
                         List<Theme> newFlash = data.get(CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH);
 
                         if (newFlash.size() > 6) {
@@ -581,23 +579,5 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                 mLayoutPermissionTip.setVisibility(View.GONE);
             }
         }
-    }
-
-    private boolean isOlderUser() {
-
-        SharedPreferences pref = ApplicationEx.getInstance().getGlobalSettingPreference();
-        boolean old = pref.getBoolean("cid_is_old_user_flash", false);
-        if (!old) {
-            //first sync time
-            long first_sync = pref.getLong("key_cid_first_sync_server_time", 0);
-//        int today = Stringutil.getTodayDayByServer();//real time
-            int today = Stringutil.getTodayDayInYearLocal();//not real for test
-
-            if (first_sync != 0 && (today - Stringutil.getDayByTime(first_sync)) >= 2) {
-                old = true;
-                pref.edit().putBoolean("cid_is_old_user_flash", true).apply();
-            }
-        }
-        return old;
     }
 }

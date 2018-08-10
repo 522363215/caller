@@ -6,6 +6,7 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -28,6 +29,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobLocalService;
 
@@ -232,5 +234,22 @@ public final class CommonUtils {
             jobScheduler.schedule(jobInfo);
             LogUtil.d("JobLocalService", "scheduleJob startService: ");
         }
+    }
+
+    public static boolean isOldForFlash(){
+        SharedPreferences pref = ApplicationEx.getInstance().getGlobalSettingPreference();
+        boolean old = pref.getBoolean("cid_is_old_user_flash", false);
+        if (!old) {
+            //first sync time
+            long first_sync = pref.getLong("key_cid_first_sync_server_time", 0);
+//        int today = Stringutil.getTodayDayByServer();//real time
+            int today = Stringutil.getTodayDayInYearLocal();//not real for test
+
+            if (first_sync != 0 && (today - Stringutil.getDayByTime(first_sync)) >= 2) {
+                old = true;
+                pref.edit().putBoolean("cid_is_old_user_flash", true).apply();
+            }
+        }
+        return old;
     }
 }

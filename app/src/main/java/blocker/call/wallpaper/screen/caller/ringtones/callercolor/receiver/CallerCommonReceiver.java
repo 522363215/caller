@@ -23,6 +23,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.NotifyManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServerManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServiceProcessingManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
@@ -161,6 +162,9 @@ public class CallerCommonReceiver extends BroadcastReceiver {
     }
 
     private void updateNewFlash(final Context context) {
+        if(!CommonUtils.isOldForFlash()){
+            return;
+        }
         ThemeSyncManager.getInstance().syncTopicData(CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH, 12, new SingleTopicThemeCallback() {
             @Override
             public void onSuccess(int code, List<Theme> data) {
