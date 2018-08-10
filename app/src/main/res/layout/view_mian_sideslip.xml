@@ -11,6 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp184"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -62,13 +64,13 @@
                 tools:visibility="visible">
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:id="@+id/menu_close"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_click"
                     android:gravity="center_vertical"
-                    android:padding="@dimen/dp16">
+                    android:padding="@dimen/dp16"
+                    android:visibility="gone">
 
                     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
                         android:layout_width="wrap_content"
@@ -139,8 +141,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_click"
                     android:gravity="center_vertical"
-                    android:visibility="gone"
-                    android:padding="@dimen/dp16">
+                    android:padding="@dimen/dp16"
+                    android:visibility="gone">
 
                     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
                         android:layout_width="wrap_content"

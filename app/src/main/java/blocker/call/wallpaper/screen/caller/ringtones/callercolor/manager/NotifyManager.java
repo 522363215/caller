@@ -96,6 +96,7 @@ public class NotifyManager {
                 jumpIntent = new Intent();
                 jumpIntent.setClass(mContext, BlockActivity.class);
                 jumpIntent.putExtra("is_come_block_notify", true);
+                jumpIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 pendingIntent = PendingIntent.getActivity(mContext, NotifyInfo.NotifyId.NOTIFY_BLOCK_CALL,
                         jumpIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 FlurryAgent.logEvent("notification_show_block");
@@ -199,7 +200,7 @@ public class NotifyManager {
 
                     Intent jumpIntent = new Intent();
                     jumpIntent.setClass(mContext, MainActivity.class);
-
+                    jumpIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     PendingIntent pendingIntent = PendingIntent.getActivity(mContext, NotifyInfo.NotifyId.NOTIFY_BLOCK_CALL,
                             jumpIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 

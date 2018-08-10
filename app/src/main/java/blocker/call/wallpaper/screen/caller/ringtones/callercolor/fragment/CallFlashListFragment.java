@@ -286,6 +286,11 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         if (model == null || model.size() <= 0) {
             if (mLayoutNoCallFlash != null) {
                 mLayoutNoCallFlash.setVisibility(View.VISIBLE);
+                if (mDataType == CallFlashDataType.CALL_FLASH_DATA_HOME) {
+                    mTvView.setVisibility(View.GONE);
+                } else {
+                    mTvView.setVisibility(View.VISIBLE);
+                }
             }
             if (mRecyclerView != null) {
                 mRecyclerView.setVisibility(View.GONE);
