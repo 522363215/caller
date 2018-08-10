@@ -242,8 +242,8 @@ public final class CommonUtils {
         if (!old) {
             //first sync time
             long first_sync = pref.getLong("key_cid_first_sync_server_time", 0);
-//        int today = Stringutil.getTodayDayByServer();//real time
-            int today = Stringutil.getTodayDayInYearLocal();//not real for test
+            int today = Stringutil.getTodayDayByServer();//real time
+//            int today = Stringutil.getTodayDayInYearLocal();//not real for test
 
             if (first_sync != 0 && (today - Stringutil.getDayByTime(first_sync)) >= 2) {
                 old = true;
