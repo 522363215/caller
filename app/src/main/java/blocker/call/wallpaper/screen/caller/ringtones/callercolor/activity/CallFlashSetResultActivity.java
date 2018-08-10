@@ -36,7 +36,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUt
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.DrawHookView;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 import event.EventBus;
 
 /**
@@ -56,7 +55,7 @@ public class CallFlashSetResultActivity extends BaseActivity implements View.OnC
     private TextView mTvCenterResultTitle;
     private TextView mTvCenterResultDes;
     private ImageView mIvSuccessSmall;
-    private FontIconView mFivSuccessBig;
+    private ImageView mIvSuccessBig;
     private DrawHookView mDrawHookView;
 
     private View mLayoutAd;
@@ -261,7 +260,7 @@ public class CallFlashSetResultActivity extends BaseActivity implements View.OnC
         mTvCenterResultTitle = (TextView) findViewById(R.id.tv_scan_result_title2);
         mTvCenterResultDes = (TextView) findViewById(R.id.tv_scan_result_des2);
 
-        mFivSuccessBig = (FontIconView) findViewById(R.id.fiv_success_big);
+        mIvSuccessBig = (ImageView) findViewById(R.id.iv_success_big_bg);
         mDrawHookView = (DrawHookView) findViewById(R.id.drawHookView);
         mDrawHookView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         mLayoutSuccessBig = findViewById(R.id.layout_success_big);
@@ -279,8 +278,8 @@ public class CallFlashSetResultActivity extends BaseActivity implements View.OnC
             mIsSetFailed = true;
             mTvTopResultTitle.setText(R.string.call_flash_gif_show_setting_des2);
             mTvCenterResultTitle.setText(R.string.call_flash_gif_show_setting_des2);
-            mFivSuccessBig.setTextColor(getResources().getColor(R.color.color_FD5B5B));
-            mIvSuccessSmall.setBackgroundResource(R.drawable.icon_fail);
+            mIvSuccessBig.setBackgroundResource(R.drawable.shape_circle_red);
+            mIvSuccessSmall.setBackgroundResource(R.drawable.call_flash_set_failed_bg);
 
             mTvTopResultDes.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
             mTvTopResultDes.getPaint().setAntiAlias(true);//抗锯齿
