@@ -45,19 +45,20 @@
         android:layout_height="wrap_content"
         android:scrollbars="none" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/layout_btn"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/dp24"
+            android:layout_marginBottom="@dimen/dp4"
             android:layout_marginTop="@dimen/dp16"
             android:background="@drawable/shape_shadow_round30_ff00ed4b"
             android:paddingBottom="@dimen/dp12"
@@ -66,6 +67,21 @@
             android:paddingTop="@dimen/dp12"
             android:text="@string/permission_next"
             android:textColor="@color/background" />
-    </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp16"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp4"
+            android:alpha="0.6"
+            android:gravity="center"
+            android:text="@string/permission_grand_title_desc"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="visible" />
+    </LinearLayout>
 
 </LinearLayout>

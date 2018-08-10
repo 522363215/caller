@@ -90,6 +90,7 @@ public class CallFlashManager {
                 //如果和本地的callFlahId相同则直接用本地的
                 if (localFlash.id.equals(String.valueOf(item.getId()))) {
                     localFlash = setLocalFlash(item, localFlash);
+                    saveDownloadedCallFlash(localFlash);
                     dot.add(localFlash);
                     continue;
                 }

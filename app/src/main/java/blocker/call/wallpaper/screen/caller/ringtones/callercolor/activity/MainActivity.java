@@ -29,13 +29,11 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.MainPagerAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.NotifyInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventLanguageChange;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CategoryFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.MineFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.NotifyManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.GuideUtil;
@@ -137,6 +135,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         super.onResume();
         sIsAlive = true;
         FlurryAgent.logEvent("MainActivity-Main-showMain");
+        if (currentPage == ActivityBuilder.FRAGMENT_MINE && mMineFragment != null) {
+            mMineFragment.onResume();
+        }
     }
 
     @Override

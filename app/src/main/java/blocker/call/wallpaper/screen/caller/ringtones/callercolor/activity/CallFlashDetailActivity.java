@@ -56,6 +56,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.FullScreenAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.GuideUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
@@ -208,6 +209,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
         if (mIsComeGuide) {
             ((FontIconView) findViewById(R.id.fiv_back)).setVisibility(View.GONE);
+            ((FontIconView) findViewById(R.id.fiv_close)).setVisibility(View.VISIBLE);
+        } else {
+            ((FontIconView) findViewById(R.id.fiv_back)).setVisibility(View.VISIBLE);
+            ((FontIconView) findViewById(R.id.fiv_close)).setVisibility(View.GONE);
         }
 
         mIsShowAboveAdBtn = isShowAboveAdBtn();
@@ -503,6 +508,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         tv_setting_action_above_ad.setOnClickListener(this);
         tv_download_action_above_ad.setOnClickListener(this);
         findViewById(R.id.fiv_back).setOnClickListener(this);
+        findViewById(R.id.fiv_close).setOnClickListener(this);
         mFivLike.setOnClickListener(this);
     }
 
@@ -519,12 +525,25 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             mInfo.downloadCount = cacheCallFlashInfo.downloadCount;
             mInfo.isLike = cacheCallFlashInfo.isLike;
         }
+        setLocalFlashLikeCount();
+
         mTvLikeCount.setText("" + mInfo.likeCount);
         mTvDownloadCount.setText("" + mInfo.downloadCount);
         if (mInfo.isLike) {
             mFivLike.setTextColor(getResources().getColor(R.color.color_FFE05A52));
         } else {
             mFivLike.setTextColor(getResources().getColor(R.color.whiteSmoke));
+        }
+    }
+
+    private void setLocalFlashLikeCount() {
+        if (mInfo.likeCount <= 0 && CallFlashManager.CALL_FLASH_START_SKY_ID.equals(mInfo.id)) {
+            List<CallFlashInfo> downloadedCallFlash = CallFlashManager.getInstance().getDownloadedCallFlash();
+            if (downloadedCallFlash != null && downloadedCallFlash.contains(mInfo)) {
+                mInfo = downloadedCallFlash.get(downloadedCallFlash.indexOf(mInfo));
+                CallFlashManager.getInstance().saveCallFlashDownloadCount(mInfo);
+                CallFlashManager.saveFlashJustLike(mInfo);
+            }
         }
     }
 
@@ -703,6 +722,13 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.fiv_back:
                 onBackPressed();
+                break;
+            case R.id.fiv_close:
+                if (mIsComeGuide){
+                    FlurryAgent.logEvent("CallFlashDetailActivity-----click----skip");
+                    GuideUtil.toPermissionGuide(this);
+                    finish();
+                }
                 break;
             case R.id.tv_download_action_above_ad:
                 layout_progress_above_ad.setVisibility(View.VISIBLE);

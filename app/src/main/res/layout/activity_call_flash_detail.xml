@@ -252,7 +252,7 @@
 
     </LinearLayout>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp48"
         android:visibility="visible">
@@ -267,5 +267,21 @@
             android:textSize="@dimen/dp28"
             android:visibility="visible" />
 
-    </FrameLayout>
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+            android:layout_centerVertical="true"
+            android:id="@+id/fiv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp8"
+            android:layout_marginEnd="@dimen/dp8"
+            android:visibility="gone"
+            android:alpha="0.5"
+            android:padding="@dimen/dp8"
+            android:text="@string/icon_close"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp24" />
+
+    </RelativeLayout>
 </RelativeLayout>

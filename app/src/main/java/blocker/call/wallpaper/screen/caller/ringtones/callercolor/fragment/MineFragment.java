@@ -206,12 +206,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         if (mDownloadData == null) {
             mDownloadData = new ArrayList<>();
         }
+
+        mDownloadData.clear();
         if (dataList != null && dataList.size() > 0) {
             LogUtil.d(TAG, "setDownload dataList:" + dataList.size());
-//            if (mCurrentCallFlashInfo != null && dataList.contains(mCurrentCallFlashInfo)) {
-//                dataList.remove(mCurrentCallFlashInfo);
-//            }
-            mDownloadData.clear();
             mDownloadData.addAll(dataList);
         }
 
@@ -228,12 +226,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         if (mCollectData == null) {
             mCollectData = new ArrayList<>();
         }
+        mCollectData.clear();
         if (dataList != null && dataList.size() > 0) {
             LogUtil.d(TAG, "setCollect dataList:" + dataList.size());
-//            if (mCurrentCallFlashInfo != null && dataList.contains(mCurrentCallFlashInfo)) {
-//                dataList.remove(mCurrentCallFlashInfo);
-//            }
-            mCollectData.clear();
             mCollectData.addAll(dataList);
         }
 
@@ -250,12 +245,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         if (mSetRecordData == null) {
             mSetRecordData = new ArrayList<>();
         }
+
+        mSetRecordData.clear();
         if (dataList != null && dataList.size() > 0) {
             LogUtil.d(TAG, "setCallFlashRecord dataList:" + dataList.size());
-//            if (mCurrentCallFlashInfo != null && dataList.contains(mCurrentCallFlashInfo)) {
-//                dataList.remove(mCurrentCallFlashInfo);
-//            }
-            mSetRecordData.clear();
             mSetRecordData.addAll(dataList);
         }
 
@@ -295,7 +288,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
-
 
     //******************************************AD******************************************//
     private void initAds() {
