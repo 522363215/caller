@@ -223,4 +223,7 @@
 
     <string name="permission_denied_txt2">权限申请失败，点击此处授权</string>
     <string name="add_block_empty_call_log">通话记录为空，添加拦截名单失败！</string>
+
+    <string name="push_tools_content">详情</string>
+    <string name="push_tools_block_call">来电已拦截</string>
 </resources>
