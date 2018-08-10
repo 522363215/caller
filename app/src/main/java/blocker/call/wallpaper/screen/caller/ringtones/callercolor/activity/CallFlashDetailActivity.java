@@ -509,7 +509,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private void setLikeAndDownload() {
         //点赞
         if (mInfo == null) return;
-        if (!mInfo.isOnlionCallFlash) {
+        if (!mInfo.isOnlionCallFlash && (!CallFlashManager.CALL_FLASH_START_SKY_ID.equals(mInfo.id) || mIsComeGuide)) {
             mLavoutLikeAndDownload.setVisibility(View.GONE);
             return;
         }

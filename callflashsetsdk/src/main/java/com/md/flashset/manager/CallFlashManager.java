@@ -89,6 +89,7 @@ public class CallFlashManager {
 
                 //如果和本地的callFlahId相同则直接用本地的
                 if (localFlash.id.equals(String.valueOf(item.getId()))) {
+                    localFlash = setLocalFlash(item, localFlash);
                     dot.add(localFlash);
                     continue;
                 }
@@ -153,6 +154,45 @@ public class CallFlashManager {
         }
 
         return dot;
+    }
+
+    private CallFlashInfo setLocalFlash(Theme item, CallFlashInfo localFlash) {
+        CallFlashInfo info = new CallFlashInfo();
+        info.id = localFlash.id;
+        info.title = localFlash.title;
+        info.format = localFlash.format;
+        info.path = localFlash.path;
+        info.flashType = localFlash.flashType;
+        info.isHaveSound = localFlash.isHaveSound;
+        info.imgResId = localFlash.imgResId;
+        info.img_hResId = localFlash.img_hResId;
+        info.isOnlionCallFlash = localFlash.isOnlionCallFlash;
+        info.downloadSuccessTime = localFlash.downloadSuccessTime;
+        info.isDownloadSuccess = localFlash.isDownloadSuccess;
+        info.downloadState = localFlash.downloadState;
+
+
+        info.collection = (int) item.getCollection();
+        info.downloadCount = (int) item.getDownload();
+        info.commentCount = (int) item.getComment();
+        info.img_hUrl = "";
+        info.url = "";
+        info.img_vUrl = "";
+        info.logoUrl = "";
+        info.logoPressUrl = "";
+        info.intro = item.getIntro();
+
+        CallFlashInfo cacheCallFlashInfo = getCacheJustLikeFlashList(info.id);
+        if (cacheCallFlashInfo != null) {
+            info.likeCount = item.getNum_of_likes() >= cacheCallFlashInfo.likeCount ? item.getNum_of_likes() : cacheCallFlashInfo.likeCount;
+            info.isLike = cacheCallFlashInfo.isLike;
+        } else {
+            info.likeCount = item.getNum_of_likes();
+            info.isLike = false;
+        }
+
+        info.imgPath = "";
+        return info;
     }
 
     public CallFlashInfo getCustomCallFlash(String sourcePath) {
