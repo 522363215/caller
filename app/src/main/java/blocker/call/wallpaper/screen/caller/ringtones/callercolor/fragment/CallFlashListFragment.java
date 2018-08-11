@@ -42,10 +42,8 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
 import event.EventBus;
 
 /**
@@ -396,61 +394,20 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
      * @param isContinuePlay true:继续播放，false：暂停播放
      */
     public void pauseOrContinuePlayVideo(boolean isContinuePlay) {
-        if (getActivity() == null || getActivity().isFinishing() || mRecyclerView == null) {
+        boolean enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
+        if (getActivity() == null || getActivity().isFinishing() || mAdapter == null || !enableCallFlash) {
             return;
         }
         int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
         int lastItemPosition = mLayoutManager.findLastVisibleItemPosition();
+        if (mLastCurrentFlashIndex != mCurrentFlashIndex && mLastCurrentFlashIndex >= firstItemPosition && mLastCurrentFlashIndex <= lastItemPosition) {
+            //第二参数可以为任意对象，在adapter中payloads.get(0)可获得此值，此处写为false表示暂停，true 表示播放
+            mAdapter.notifyItemChanged(mLastCurrentFlashIndex, false);
+        }
+
         if (mCurrentFlashIndex >= firstItemPosition && mCurrentFlashIndex <= lastItemPosition) {
-            RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForLayoutPosition(mCurrentFlashIndex);
-            if (holder == null) {
-                return;
-            }
-            CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
-            View gvBackground = holder.itemView.findViewById(R.id.gv_bg);
-            View iv_call_select = holder.itemView.findViewById(R.id.iv_select);
-            boolean enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
-            if (!enableCallFlash) {
-                iv_call_select.setVisibility(View.GONE);
-            } else {
-                iv_call_select.setVisibility(View.VISIBLE);
-                float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);
-                if (isContinuePlay && viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT) {
-                    if (view.isStopVideo() || mLastCurrentFlashIndex != mCurrentFlashIndex) {
-                        view.showCallFlashView(model.get(mCurrentFlashIndex));
-                    } else {
-                        if (view.isPause()) {
-                            view.continuePlay();
-                        } else {
-                            view.showCallFlashView(model.get(mCurrentFlashIndex));
-                        }
-                    }
-                    gvBackground.setVisibility(View.GONE);
-                    view.setVisibility(View.VISIBLE);
-                } else {
-                    gvBackground.setVisibility(View.VISIBLE);
-                    view.setVisibility(View.GONE);
-                    if (view.isPlaying()) {
-                        view.pause();
-                    }
-                }
-                mLastCurrentFlashIndex = mCurrentFlashIndex;
-            }
-        } else if (mCurrentFlashIndex == -1 && mLastCurrentFlashIndex >= firstItemPosition && mLastCurrentFlashIndex <= lastItemPosition) {
-            //该种情况代表设置了该列表中没有的call flash,此时应该将上次显示的call flash 刷新
-            RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForLayoutPosition(mLastCurrentFlashIndex);
-            if (holder == null) {
-                return;
-            }
-            CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
-            View gvBackground = holder.itemView.findViewById(R.id.gv_bg);
-            View iv_call_select = holder.itemView.findViewById(R.id.iv_select);
-            iv_call_select.setVisibility(View.GONE);
-            view.setVisibility(View.GONE);
-            gvBackground.setVisibility(View.VISIBLE);
-            if (view.isPlaying()) {
-                view.pause();
-            }
+            mAdapter.notifyItemChanged(mCurrentFlashIndex, isContinuePlay);
+            mLastCurrentFlashIndex = mCurrentFlashIndex;
         }
     }
 
@@ -495,48 +452,30 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                         break;
                 }
                 //滑动过程中控制设置的callflash的播放和暂停
-                setCallFlashViewPlay(recyclerView, newState);
+                setCallFlashViewPlay();
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (getActivity() == null || getActivity().isFinishing()) {
+                    return;
+                }
                 //滑动过程中控制设置的callflash的播放和暂停
-                setCallFlashViewPlay(recyclerView, newState);
+                setCallFlashViewPlay();
             }
         });
     }
 
-    private void setCallFlashViewPlay(RecyclerView recyclerView, int newState) {
+    private void setCallFlashViewPlay() {
         boolean enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
-        if (!enableCallFlash) return;
+        if (!enableCallFlash || mLayoutManager == null || mAdapter == null) return;
         if (mDataType == CallFlashDataType.CALL_FLASH_DATA_HOME || mDataType == CallFlashDataType.CALL_FLASH_DATA_COLLECTION
                 || mDataType == CallFlashDataType.CALL_FLASH_DATA_DOWNLOADED || mDataType == CallFlashDataType.CALL_FLASH_DATA_SET_RECORD) {
-            int index = mCurrentFlashIndex;
             //获取当前recycleView屏幕可见的第一项和最后一项的Position
             int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
             int lastItemPosition = mLayoutManager.findLastVisibleItemPosition();
-            if (index != -1 && index >= firstItemPosition && index <= lastItemPosition) {
-                CallFlashInfo callFlashInfo = model.get(index);
-                if (callFlashInfo == null) return;
-                RecyclerView.ViewHolder holder = recyclerView.findViewHolderForLayoutPosition(index);
-                if (holder == null) return;
-                holder.itemView.findViewById(R.id.iv_select).setVisibility(View.VISIBLE);
-                CallFlashView view = holder.itemView.findViewById(R.id.layout_call_flash_view);
-                View gvBackground = holder.itemView.findViewById(R.id.gv_bg);
-
-                float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);
-//                LogUtil.d(TAG, "setCallFlashViewPlay viewShowPercent:" + viewShowPercent);
-                if (viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT && (newState == RecyclerView.SCROLL_STATE_IDLE || newState == RecyclerView.SCROLL_STATE_DRAGGING) && !view.isPlaying()) {
-//                    LogUtil.d(TAG, "setCallFlashViewPlay isStopVideo:" + view.isStopVideo() + ",isPause:" + view.isPause());
-                    view.showCallFlashView(model.get(index));
-                    view.setVisibility(View.VISIBLE);
-                    gvBackground.setVisibility(View.GONE);
-                } else if (viewShowPercent <= ConstantUtils.CALL_FLASH_LIST_STOP_VIDEO_PERCENT && view.isPlaying()) {
-//                    LogUtil.d(TAG, "setCallFlashViewPlay pause");
-                    gvBackground.setVisibility(View.VISIBLE);
-                    view.setVisibility(View.GONE);
-                    view.pause();
-                }
+            if (mCurrentFlashIndex != -1 && mCurrentFlashIndex >= firstItemPosition && mCurrentFlashIndex <= lastItemPosition) {
+                mAdapter.notifyItemChanged(mCurrentFlashIndex, null);
             }
         }
     }

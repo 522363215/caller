@@ -123,7 +123,6 @@ public class CallFlashView extends RelativeLayout {
     public void stop() {
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
             mVideoView.stopPlayback();
-            mVideoView.setVisibility(INVISIBLE);
             isStop.set(true);
         }
     }

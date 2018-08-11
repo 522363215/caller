@@ -417,4 +417,29 @@ public class CallFlashManager {
         return list;
     }
 
+    public boolean isCallFlashDownloaded(CallFlashInfo info) {
+        if (info == null) {
+            return false;
+        }
+
+        //本地的
+        if (CALL_FLASH_START_SKY_ID.equals(info.id)) {
+            return true;
+        }
+
+        //根据URl获取文件
+        File fileByUrl = ThemeSyncManager.getInstance().getFileByUrl(mContext, info.url);
+        if (fileByUrl != null && fileByUrl.exists()) {
+            return true;
+        }
+
+        String path = info.path;
+        if (TextUtils.isEmpty(path)) {
+            return false;
+        }
+        //根据路径获取文件
+        File file = new File(path);
+        return file.exists();
+    }
+
 }

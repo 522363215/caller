@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.md.flashset.View.FlashLed;
+import com.md.flashset.bean.CallFlashFormat;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
@@ -60,6 +61,9 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private int childViewWidth, childViewHeight;
     private int mScrollState;
+    private RecyclerView.ViewHolder holder;
+    private int position;
+    private List<Boolean> payloads;
 
     public void setFragmentTag(int fragmentTag) {
         this.fragmentTag = fragmentTag;
@@ -114,18 +118,20 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        //为空 不使用 ,使用public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads)，方便局部刷新
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+        super.onBindViewHolder(holder, position, payloads);
         if (context == null) return;
         isFlashSwitchOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
         mCurrentFlash = CallFlashPreferenceHelper.getObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
-        setNormalHolder((NormalViewHolder) holder, position);
-    }
-
-    private void setNormalHolder(NormalViewHolder holder, int pos) {
-        if (fragmentTag == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode() && pos == mAdShowPosition) {
-            setAdItem(holder);
+        if (fragmentTag == CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED.hashCode() && position == mAdShowPosition) {
+            setAdItem((NormalViewHolder) holder);
         } else {
-            setItem(holder, pos);
+            setItem((NormalViewHolder) holder, position, payloads);
         }
     }
 
@@ -166,7 +172,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    private void setItem(NormalViewHolder holder, int pos) {
+    private void setItem(NormalViewHolder holder, int pos, List<Object> payloads) {
         CallFlashInfo info = getItem(pos);
         holder.itemView.setVisibility(View.VISIBLE);
         holder.layoutCallFlash.setVisibility(View.VISIBLE);
@@ -175,33 +181,36 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             holder.root.setTag(pos);
             holder.layoutCallFlash.setTag(pos);
             holder.iv_download.setTag(pos);
-            holder.gv_bg.setVisibility(View.VISIBLE);
-            holder.callFlashView.setVisibility(View.GONE);
-            holder.callFlashView.pause();
-            setCallFlashShow(holder, pos);
-            setBg(holder, info);
-            setSelectOrDownloadState(holder, info);
             holder.mOnDownloadListener.setDownloadParams(holder, info);
+            setSelectOrDownloadState(holder, info);
+            setBg(holder, info);
+            setCallFlashShow(holder, pos, payloads);
         }
     }
 
     private void setBg(NormalViewHolder holder, CallFlashInfo info) {
-        if (info.isOnlionCallFlash) {
-            String imgUrl = info.img_vUrl;
-            if (childViewHeight != 0 && childViewWidth != 0) {
-                imgUrl += "_" + childViewWidth + "x" + childViewHeight;
-            }
-            info.thumbnail_imgUrl = imgUrl;
-            holder.gv_bg.showImage(imgUrl);
+        holder.gv_bg.setVisibility(View.VISIBLE);
+        holder.callFlashView.setVisibility(View.GONE);
+        if (holder.iv_call_select.getVisibility() == View.VISIBLE && info.format == CallFlashFormat.FORMAT_VIDEO && CallFlashManager.getInstance().isCallFlashDownloaded(info)) {
+            holder.gv_bg.showVideoFirstFrame(info.path);
         } else {
-            if (info.imgResId > 0) {
-                int imgId = info.imgResId;
-                if (info.flashType == FlashLed.FLASH_TYPE_FESTIVAL) {
-                    imgId = R.drawable.icon_flash_festival_small;
+            if (info.isOnlionCallFlash) {
+                String imgUrl = info.img_vUrl;
+                if (childViewHeight != 0 && childViewWidth != 0) {
+                    imgUrl += "_" + childViewWidth + "x" + childViewHeight;
                 }
-                holder.gv_bg.showImage(imgId);
+                info.thumbnail_imgUrl = imgUrl;
+                holder.gv_bg.showImage(imgUrl);
             } else {
-                holder.gv_bg.showImage(R.drawable.loaded_failed);
+                if (info.imgResId > 0) {
+                    int imgId = info.imgResId;
+                    if (info.flashType == FlashLed.FLASH_TYPE_FESTIVAL) {
+                        imgId = R.drawable.icon_flash_festival_small;
+                    }
+                    holder.gv_bg.showImage(imgId);
+                } else {
+                    holder.gv_bg.showImage(R.drawable.loaded_failed);
+                }
             }
         }
     }
@@ -239,20 +248,40 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    private void setCallFlashShow(NormalViewHolder holder, int pos) {
-        boolean enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
-        if (!enableCallFlash) return;
+    private void setCallFlashShow(NormalViewHolder holder, int pos, List<Object> payloads) {
+        if (holder.iv_call_select.getVisibility() != View.VISIBLE) return;
         CallFlashInfo info = getItem(pos);
         if (mCurrentFlash == null || info == null || !mCurrentFlash.equals(info)) return;
+        holder.gv_bg.setVisibility(View.GONE);
+        holder.callFlashView.setVisibility(View.VISIBLE);
         float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);
-        if (viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING) && !holder.callFlashView.isPlaying()) {
-            holder.callFlashView.showCallFlashView(info);
-            holder.callFlashView.setVisibility(View.VISIBLE);
-            holder.gv_bg.setVisibility(View.GONE);
-        } else if (viewShowPercent <= ConstantUtils.CALL_FLASH_LIST_STOP_VIDEO_PERCENT && holder.callFlashView.isPlaying()) {
-            holder.gv_bg.setVisibility(View.VISIBLE);
-            holder.callFlashView.setVisibility(View.GONE);
-            holder.callFlashView.pause();
+        if (payloads.isEmpty()) {//payloads为空 即为正常情况下的执行或者调用notifyItemChanged(position,payloads)方法时payloads==null执行的,
+            LogUtil.d(TAG, "setCallFlashShow 正常刷新");
+            if (viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING) && !holder.callFlashView.isPlaying()) {
+                holder.callFlashView.showCallFlashView(info);
+            } else if (viewShowPercent <= ConstantUtils.CALL_FLASH_LIST_STOP_VIDEO_PERCENT && holder.callFlashView.isPlaying()) {
+                holder.callFlashView.pause();
+            }
+        } else {//payloads不为空 即调用notifyItemChanged(position,payloads)方法payloads!=null执行的
+            boolean isContinuePlay = payloads.get(0) != null && (boolean) payloads.get(0);
+            LogUtil.d(TAG, "setCallFlashShow 局部刷新 isContinuePlay:" + isContinuePlay);
+            if (isContinuePlay) {
+                if (viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING) && !holder.callFlashView.isPlaying()) {
+                    if (holder.callFlashView.isStopVideo()) {
+                        holder.callFlashView.showCallFlashView(info);
+                    } else {
+                        if (holder.callFlashView.isPause()) {
+                            holder.callFlashView.continuePlay();
+                        } else {
+                            holder.callFlashView.showCallFlashView(info);
+                        }
+                    }
+                }
+            } else {
+                if (holder.callFlashView.isPlaying()) {
+                    holder.callFlashView.pause();
+                }
+            }
         }
     }
 

@@ -39,7 +39,7 @@
                 android:id="@+id/iv_call_photo"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/icon_woman"
+                tools:src="@drawable/icon_woman"
                 android:visibility="gone"
                 app:border_width="0dp" />
 
