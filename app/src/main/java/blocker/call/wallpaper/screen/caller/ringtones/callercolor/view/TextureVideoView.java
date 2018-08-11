@@ -22,20 +22,23 @@ import android.widget.MediaController;
 import java.io.IOException;
 import java.util.Map;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+
 public class TextureVideoView extends TextureView
-    implements MediaController.MediaPlayerControl {
+        implements MediaController.MediaPlayerControl {
     private String TAG = "TextureVideoView";
     // settable by the client
     private Uri mUri;
     private Map<String, String> mHeaders;
 
     // all possible internal states
-    private static final int STATE_ERROR              = -1;
-    private static final int STATE_IDLE               = 0;
-    private static final int STATE_PREPARING          = 1;
-    private static final int STATE_PREPARED           = 2;
-    private static final int STATE_PLAYING            = 3;
-    private static final int STATE_PAUSED             = 4;
+    private static final int STATE_ERROR = -1;
+    private static final int STATE_IDLE = 0;
+    private static final int STATE_PREPARING = 1;
+    private static final int STATE_PREPARED = 2;
+    private static final int STATE_PLAYING = 3;
+    private static final int STATE_PAUSED = 4;
     private static final int STATE_PLAYBACK_COMPLETED = 5;
 
     // mCurrentState is a TextureVideoView object's current state.
@@ -44,24 +47,24 @@ public class TextureVideoView extends TextureView
     // calling pause() intends to bring the object to a target state
     // of STATE_PAUSED.
     private int mCurrentState = STATE_IDLE;
-    private int mTargetState  = STATE_IDLE;
+    private int mTargetState = STATE_IDLE;
 
     // All the stuff we need for playing and showing a video
     private Surface mSurface = null;
     private MediaPlayer mMediaPlayer = null;
-    private int         mAudioSession;
-    private int         mVideoWidth;
-    private int         mVideoHeight;
+    private int mAudioSession;
+    private int mVideoWidth;
+    private int mVideoHeight;
     private MediaController mMediaController;
     private MediaPlayer.OnCompletionListener mOnCompletionListener;
     private MediaPlayer.OnPreparedListener mOnPreparedListener;
-    private int         mCurrentBufferPercentage;
+    private int mCurrentBufferPercentage;
     private MediaPlayer.OnErrorListener mOnErrorListener;
     private MediaPlayer.OnInfoListener mOnInfoListener;
-    private int         mSeekWhenPrepared;  // recording the seek position while preparing
-    private boolean     mCanPause;
-    private boolean     mCanSeekBack;
-    private boolean     mCanSeekForward;
+    private int mSeekWhenPrepared;  // recording the seek position while preparing
+    private boolean mCanPause;
+    private boolean mCanSeekBack;
+    private boolean mCanSeekForward;
 
     public TextureVideoView(Context context) {
         super(context);
@@ -85,60 +88,60 @@ public class TextureVideoView extends TextureView
 
         int width = getDefaultSize(mVideoWidth, widthMeasureSpec);
         int height = getDefaultSize(mVideoHeight, heightMeasureSpec);
-        if (mVideoWidth > 0 && mVideoHeight > 0) {
-
-            int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
-            int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
-            int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
-            int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
-
-            if (widthSpecMode == MeasureSpec.EXACTLY && heightSpecMode == MeasureSpec.EXACTLY) {
-                // the size is fixed
-                width = widthSpecSize;
-                height = heightSpecSize;
-
-                // for compatibility, we adjust size based on aspect ratio
-                if ( mVideoWidth * height  < width * mVideoHeight ) {
-                    //Log.i("@@@", "image too wide, correcting");
-                    width = height * mVideoWidth / mVideoHeight;
-                } else if ( mVideoWidth * height  > width * mVideoHeight ) {
-                    //Log.i("@@@", "image too tall, correcting");
-                    height = width * mVideoHeight / mVideoWidth;
-                }
-            } else if (widthSpecMode == MeasureSpec.EXACTLY) {
-                // only the width is fixed, adjust the height to match aspect ratio if possible
-                width = widthSpecSize;
-                height = width * mVideoHeight / mVideoWidth;
-                if (heightSpecMode == MeasureSpec.AT_MOST && height > heightSpecSize) {
-                    // couldn't match aspect ratio within the constraints
-                    height = heightSpecSize;
-                }
-            } else if (heightSpecMode == MeasureSpec.EXACTLY) {
-                // only the height is fixed, adjust the width to match aspect ratio if possible
-                height = heightSpecSize;
-                width = height * mVideoWidth / mVideoHeight;
-                if (widthSpecMode == MeasureSpec.AT_MOST && width > widthSpecSize) {
-                    // couldn't match aspect ratio within the constraints
-                    width = widthSpecSize;
-                }
-            } else {
-                // neither the width nor the height are fixed, try to use actual video size
-                width = mVideoWidth;
-                height = mVideoHeight;
-                if (heightSpecMode == MeasureSpec.AT_MOST && height > heightSpecSize) {
-                    // too tall, decrease both width and height
-                    height = heightSpecSize;
-                    width = height * mVideoWidth / mVideoHeight;
-                }
-                if (widthSpecMode == MeasureSpec.AT_MOST && width > widthSpecSize) {
-                    // too wide, decrease both width and height
-                    width = widthSpecSize;
-                    height = width * mVideoHeight / mVideoWidth;
-                }
-            }
-        } else {
-            // no size yet, just adopt the given spec sizes
-        }
+//        if (mVideoWidth > 0 && mVideoHeight > 0) {
+//
+//            int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
+//            int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
+//            int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
+//            int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
+//
+//            if (widthSpecMode == MeasureSpec.EXACTLY && heightSpecMode == MeasureSpec.EXACTLY) {
+//                // the size is fixed
+//                width = widthSpecSize;
+//                height = heightSpecSize;
+//
+//                // for compatibility, we adjust size based on aspect ratio
+//                if ( mVideoWidth * height  < width * mVideoHeight ) {
+//                    //Log.i("@@@", "image too wide, correcting");
+//                    width = height * mVideoWidth / mVideoHeight;
+//                } else if ( mVideoWidth * height  > width * mVideoHeight ) {
+//                    //Log.i("@@@", "image too tall, correcting");
+//                    height = width * mVideoHeight / mVideoWidth;
+//                }
+//            } else if (widthSpecMode == MeasureSpec.EXACTLY) {
+//                // only the width is fixed, adjust the height to match aspect ratio if possible
+//                width = widthSpecSize;
+//                height = width * mVideoHeight / mVideoWidth;
+//                if (heightSpecMode == MeasureSpec.AT_MOST && height > heightSpecSize) {
+//                    // couldn't match aspect ratio within the constraints
+//                    height = heightSpecSize;
+//                }
+//            } else if (heightSpecMode == MeasureSpec.EXACTLY) {
+//                // only the height is fixed, adjust the width to match aspect ratio if possible
+//                height = heightSpecSize;
+//                width = height * mVideoWidth / mVideoHeight;
+//                if (widthSpecMode == MeasureSpec.AT_MOST && width > widthSpecSize) {
+//                    // couldn't match aspect ratio within the constraints
+//                    width = widthSpecSize;
+//                }
+//            } else {
+//                // neither the width nor the height are fixed, try to use actual video size
+//                width = mVideoWidth;
+//                height = mVideoHeight;
+//                if (heightSpecMode == MeasureSpec.AT_MOST && height > heightSpecSize) {
+//                    // too tall, decrease both width and height
+//                    height = heightSpecSize;
+//                    width = height * mVideoWidth / mVideoHeight;
+//                }
+//                if (widthSpecMode == MeasureSpec.AT_MOST && width > widthSpecSize) {
+//                    // too wide, decrease both width and height
+//                    width = widthSpecSize;
+//                    height = width * mVideoHeight / mVideoWidth;
+//                }
+//            }
+//        } else {
+//            // no size yet, just adopt the given spec sizes
+//        }
         setMeasuredDimension(width, height);
     }
 
@@ -166,7 +169,7 @@ public class TextureVideoView extends TextureView
         setFocusableInTouchMode(true);
         requestFocus();
         mCurrentState = STATE_IDLE;
-        mTargetState  = STATE_IDLE;
+        mTargetState = STATE_IDLE;
     }
 
     /**
@@ -212,7 +215,7 @@ public class TextureVideoView extends TextureView
             mMediaPlayer.release();
             mMediaPlayer = null;
             mCurrentState = STATE_IDLE;
-            mTargetState  = STATE_IDLE;
+            mTargetState = STATE_IDLE;
             AudioManager am = (AudioManager) getContext().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
             am.abandonAudioFocus(null);
         }
@@ -282,7 +285,7 @@ public class TextureVideoView extends TextureView
         if (mMediaPlayer != null && mMediaController != null) {
             mMediaController.setMediaPlayer(this);
             View anchorView = this.getParent() instanceof View ?
-                    (View)this.getParent() : this;
+                    (View) this.getParent() : this;
             mMediaController.setAnchorView(anchorView);
             mMediaController.setEnabled(isInPlaybackState());
         }
@@ -293,7 +296,7 @@ public class TextureVideoView extends TextureView
                 public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
                     mVideoWidth = mp.getVideoWidth();
                     mVideoHeight = mp.getVideoHeight();
-                    if (mVideoWidth != 0 && mVideoHeight != 0) {
+                    if (mVideoWidth != 0 && mVideoHeight != 0 && getSurfaceTexture() != null) {
                         getSurfaceTexture().setDefaultBufferSize(mVideoWidth, mVideoHeight);
                         requestLayout();
                     }
@@ -362,7 +365,7 @@ public class TextureVideoView extends TextureView
 
     private MediaPlayer.OnInfoListener mInfoListener =
             new MediaPlayer.OnInfoListener() {
-                public  boolean onInfo(MediaPlayer mp, int arg1, int arg2) {
+                public boolean onInfo(MediaPlayer mp, int arg1, int arg2) {
                     if (mOnInfoListener != null) {
                         mOnInfoListener.onInfo(mp, arg1, arg2);
                     }
@@ -380,18 +383,18 @@ public class TextureVideoView extends TextureView
                         mMediaController.hide();
                     }
 
-            /* If an error handler has been supplied, use it and finish. */
+                    /* If an error handler has been supplied, use it and finish. */
                     if (mOnErrorListener != null) {
                         if (mOnErrorListener.onError(mMediaPlayer, framework_err, impl_err)) {
                             return true;
                         }
                     }
 
-            /* Otherwise, pop up an error dialog so the user knows that
-             * something bad has happened. Only try and pop up the dialog
-             * if we're attached to a window. When we're going away and no
-             * longer have a window, don't bother showing the user an error.
-             */
+                    /* Otherwise, pop up an error dialog so the user knows that
+                     * something bad has happened. Only try and pop up the dialog
+                     * if we're attached to a window. When we're going away and no
+                     * longer have a window, don't bother showing the user an error.
+                     */
                     if (getWindowToken() != null) {
                         Resources r = getContext().getResources();
                         int messageId;
@@ -407,9 +410,9 @@ public class TextureVideoView extends TextureView
                                 .setPositiveButton(android.R.string.VideoView_error_button,
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
-                                        /* If we get here, there is no onError listener, so
-                                         * at least inform them that the video is over.
-                                         */
+                                                /* If we get here, there is no onError listener, so
+                                                 * at least inform them that the video is over.
+                                                 */
                                                 if (mOnCompletionListener != null) {
                                                     mOnCompletionListener.onCompletion(mMediaPlayer);
                                                 }
@@ -435,8 +438,7 @@ public class TextureVideoView extends TextureView
      *
      * @param l The callback that will be run
      */
-    public void setOnPreparedListener(MediaPlayer.OnPreparedListener l)
-    {
+    public void setOnPreparedListener(MediaPlayer.OnPreparedListener l) {
         mOnPreparedListener = l;
     }
 
@@ -446,8 +448,7 @@ public class TextureVideoView extends TextureView
      *
      * @param l The callback that will be run
      */
-    public void setOnCompletionListener(MediaPlayer.OnCompletionListener l)
-    {
+    public void setOnCompletionListener(MediaPlayer.OnCompletionListener l) {
         mOnCompletionListener = l;
     }
 
@@ -459,8 +460,7 @@ public class TextureVideoView extends TextureView
      *
      * @param l The callback that will be run
      */
-    public void setOnErrorListener(MediaPlayer.OnErrorListener l)
-    {
+    public void setOnErrorListener(MediaPlayer.OnErrorListener l) {
         mOnErrorListener = l;
     }
 
@@ -474,11 +474,11 @@ public class TextureVideoView extends TextureView
         mOnInfoListener = l;
     }
 
-    TextureView.SurfaceTextureListener mSurfaceTextureListener = new SurfaceTextureListener()
-    {
+    TextureView.SurfaceTextureListener mSurfaceTextureListener = new SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureSizeChanged(final SurfaceTexture surface, final int width, final int height) {
-            boolean isValidState =  (mTargetState == STATE_PLAYING);
+            LogUtil.d(TAG, "mSurfaceTextureListener onSurfaceTextureSizeChanged");
+            boolean isValidState = (mTargetState == STATE_PLAYING);
             boolean hasValidSize = (width > 0 && height > 0);
             if (mMediaPlayer != null && isValidState && hasValidSize) {
                 if (mSeekWhenPrepared != 0) {
@@ -490,23 +490,35 @@ public class TextureVideoView extends TextureView
 
         @Override
         public void onSurfaceTextureAvailable(final SurfaceTexture surface, final int width, final int height) {
+            LogUtil.d(TAG, "mSurfaceTextureListener onSurfaceTextureAvailable");
             mSurface = new Surface(surface);
             openVideo();
         }
 
         @Override
         public boolean onSurfaceTextureDestroyed(final SurfaceTexture surface) {
-            // after we return from this we can't use the surface any more
-            if (mSurface != null) {
-                mSurface.release();
-                mSurface = null;
-            }
-            if (mMediaController != null) mMediaController.hide();
-            release(true);
+            LogUtil.d(TAG, "mSurfaceTextureListener onSurfaceTextureDestroyed");
+            Async.run(new Runnable() {
+                @Override
+                public void run() {
+                    // after we return from this we can't use the surface any more
+                    if (mMediaPlayer != null) {
+                        mMediaPlayer.stop();
+                    }
+                    if (mSurface != null) {
+                        mSurface.release();
+                        mSurface = null;
+                    }
+                    if (mMediaController != null) mMediaController.hide();
+                    release(true);
+                }
+            });
             return true;
         }
+
         @Override
         public void onSurfaceTextureUpdated(final SurfaceTexture surface) {
+//            LogUtil.d(TAG, "mSurfaceTextureListener onSurfaceTextureUpdated");
             // do nothing
         }
     };
@@ -521,7 +533,7 @@ public class TextureVideoView extends TextureView
             mMediaPlayer = null;
             mCurrentState = STATE_IDLE;
             if (cleartargetstate) {
-                mTargetState  = STATE_IDLE;
+                mTargetState = STATE_IDLE;
             }
             AudioManager am = (AudioManager) getContext().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
             am.abandonAudioFocus(null);
@@ -545,8 +557,7 @@ public class TextureVideoView extends TextureView
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         boolean isKeyCodeSupported = keyCode != KeyEvent.KEYCODE_BACK &&
                 keyCode != KeyEvent.KEYCODE_VOLUME_UP &&
                 keyCode != KeyEvent.KEYCODE_VOLUME_DOWN &&

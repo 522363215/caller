@@ -415,7 +415,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             } else {
                 iv_call_select.setVisibility(View.VISIBLE);
                 float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);
-                if (isContinuePlay && viewShowPercent >= 1) {
+                if (isContinuePlay && viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT) {
                     if (view.isStopVideo() || mLastCurrentFlashIndex != mCurrentFlashIndex) {
                         view.showCallFlashView(model.get(mCurrentFlashIndex));
                     } else {
@@ -526,25 +526,16 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
 
                 float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);
 //                LogUtil.d(TAG, "setCallFlashViewPlay viewShowPercent:" + viewShowPercent);
-                if (viewShowPercent >= 1 && (newState == RecyclerView.SCROLL_STATE_IDLE || newState == RecyclerView.SCROLL_STATE_DRAGGING) && !view.isPlaying()) {
+                if (viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT && (newState == RecyclerView.SCROLL_STATE_IDLE || newState == RecyclerView.SCROLL_STATE_DRAGGING) && !view.isPlaying()) {
 //                    LogUtil.d(TAG, "setCallFlashViewPlay isStopVideo:" + view.isStopVideo() + ",isPause:" + view.isPause());
-                    if (view.isStopVideo()) {
-                        view.showCallFlashView(model.get(index));
-                    } else {
-                        if (view.isPause()) {
-                            view.continuePlay();
-                        } else {
-                            view.showCallFlashView(model.get(index));
-                        }
-                    }
+                    view.showCallFlashView(model.get(index));
                     view.setVisibility(View.VISIBLE);
                     gvBackground.setVisibility(View.GONE);
-                } else if (viewShowPercent <= 0.1 && view.isPlaying()) {
+                } else if (viewShowPercent <= ConstantUtils.CALL_FLASH_LIST_STOP_VIDEO_PERCENT && view.isPlaying()) {
 //                    LogUtil.d(TAG, "setCallFlashViewPlay pause");
                     gvBackground.setVisibility(View.VISIBLE);
                     view.setVisibility(View.GONE);
                     view.pause();
-                    view.stop();
                 }
             }
         }

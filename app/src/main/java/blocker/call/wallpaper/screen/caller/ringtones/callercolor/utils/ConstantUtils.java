@@ -28,4 +28,7 @@ public class ConstantUtils {
     //首页中数据 类型
     public static final String HOME_DATA_TYPE = CallFlashManager.ONLINE_THEME_TOPIC_NAME_FEATURED;
 
+    public static final float CALL_FLASH_LIST_SHOW_VIDEO_PERCENT = 1f;
+    public static final float CALL_FLASH_LIST_STOP_VIDEO_PERCENT = 0.1f;
+
 }

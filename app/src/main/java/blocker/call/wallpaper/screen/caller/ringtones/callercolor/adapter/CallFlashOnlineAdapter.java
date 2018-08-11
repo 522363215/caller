@@ -32,6 +32,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.Activ
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleProgressBar;
@@ -177,7 +178,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             holder.gv_bg.setVisibility(View.VISIBLE);
             holder.callFlashView.setVisibility(View.GONE);
             holder.callFlashView.pause();
-            holder.callFlashView.stop();
             setCallFlashShow(holder, pos);
             setBg(holder, info);
             setSelectOrDownloadState(holder, info);
@@ -245,23 +245,14 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         CallFlashInfo info = getItem(pos);
         if (mCurrentFlash == null || info == null || !mCurrentFlash.equals(info)) return;
         float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);
-        if (viewShowPercent >= 1 && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING) && !holder.callFlashView.isPlaying()) {
-            if (holder.callFlashView.isStopVideo()) {
-                holder.callFlashView.showCallFlashView(info);
-            } else {
-                if (holder.callFlashView.isPause()) {
-                    holder.callFlashView.continuePlay();
-                } else {
-                    holder.callFlashView.showCallFlashView(info);
-                }
-            }
+        if (viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING) && !holder.callFlashView.isPlaying()) {
+            holder.callFlashView.showCallFlashView(info);
             holder.callFlashView.setVisibility(View.VISIBLE);
             holder.gv_bg.setVisibility(View.GONE);
-        } else if (viewShowPercent <= 0.1 && holder.callFlashView.isPlaying()) {
+        } else if (viewShowPercent <= ConstantUtils.CALL_FLASH_LIST_STOP_VIDEO_PERCENT && holder.callFlashView.isPlaying()) {
             holder.gv_bg.setVisibility(View.VISIBLE);
             holder.callFlashView.setVisibility(View.GONE);
             holder.callFlashView.pause();
-            holder.callFlashView.stop();
         }
     }
 

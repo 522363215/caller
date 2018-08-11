@@ -1,7 +1,6 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
@@ -20,17 +19,17 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.TextureVideoView;
 
 public class CallFlashView extends RelativeLayout {
     private static final String TAG = "CallFlashView";
     private Context mContext;
     private GlideView mGlideView;
-    private FullScreenVideoView mVideoView;
+    private TextureVideoView mVideoView;
     private CallFlashInfo mCallFlashInfo;
     private int mCallFlashFormat;
     private CallFlashCustomAnimView mCustomAnimView;
     private int mVideoPlayProgress;
-    private boolean mIsPlaying;
     private GlideView mGlideViewPreview;
     private boolean isVideoMute;
 
@@ -74,7 +73,12 @@ public class CallFlashView extends RelativeLayout {
     }
 
     public boolean isPlaying() {
-        return mIsPlaying;
+        if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
+            return mVideoView.isPlaying();
+        } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null) {
+            return mCustomAnimView.isPlaying();
+        }
+        return false;
     }
 
     public boolean isPause() {
@@ -121,12 +125,10 @@ public class CallFlashView extends RelativeLayout {
             mVideoView.stopPlayback();
             mVideoView.setVisibility(INVISIBLE);
             isStop.set(true);
-            mIsPlaying = false;
         }
     }
 
     public void pause() {
-        mIsPlaying = false;
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
             //记录播放的progress,避免黑屏
             mVideoView.pause();
@@ -139,8 +141,7 @@ public class CallFlashView extends RelativeLayout {
     }
 
     public void continuePlay() {
-        if (mIsPlaying) return;
-        if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
+        if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null && !mVideoView.isPlaying()) {
             LogUtil.d(TAG, "continuePlay mVideoPlayProgress:" + mVideoPlayProgress);
 //            if (mGlideView != null && mCallFlashInfo != null) {
 //                //显示视频第一帧防止黑屏
@@ -149,11 +150,9 @@ public class CallFlashView extends RelativeLayout {
 //            }
             mVideoView.seekTo(mVideoPlayProgress);
             mVideoView.start();
-            mIsPlaying = true;
             isPause.set(false);
-        } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null) {
+        } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null && !mCustomAnimView.isPlaying()) {
             mCustomAnimView.update(false, mCallFlashInfo.flashType);
-            mIsPlaying = true;
             isPause.set(false);
         }
     }
@@ -164,7 +163,6 @@ public class CallFlashView extends RelativeLayout {
             mCustomAnimView.setVisibility(VISIBLE);
             int flashType = info.flashType;
             mCustomAnimView.startAnim(flashType);
-            mIsPlaying = true;
             isPause.set(false);
         }
     }
@@ -186,7 +184,6 @@ public class CallFlashView extends RelativeLayout {
             mVideoView.setVisibility(VISIBLE);
             mVideoView.setVideoPath(path);
             mVideoView.start();
-            mIsPlaying = true;
             isStop.set(false);
         } else {
             showPreview(info);
@@ -210,7 +207,6 @@ public class CallFlashView extends RelativeLayout {
         if (mGlideView != null && !TextUtils.isEmpty(path) && new File(info.path).exists()) {
             mGlideView.setVisibility(VISIBLE);
             mGlideView.showGif(path);
-            mIsPlaying = true;
         } else {
             showPreview(info);
         }
@@ -232,7 +228,6 @@ public class CallFlashView extends RelativeLayout {
                 if (mCallFlashInfo != null) {
                     LogUtil.e("chenr", "video play error, what: " + what + ", extra: " + extra + ", flashType: " + mCallFlashInfo.flashType);
                 }
-                mIsPlaying = false;
                 isStop.set(true);
                 return true;
             }

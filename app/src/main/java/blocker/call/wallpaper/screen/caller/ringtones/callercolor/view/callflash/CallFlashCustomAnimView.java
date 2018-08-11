@@ -17,6 +17,7 @@ public class CallFlashCustomAnimView extends RelativeLayout {
     private FlashLedView mFlashLedView;
     private InCallHeartAnimLayout mHeartView;
     private int mFlashType;
+    private boolean mIsPlaying;
 
     public CallFlashCustomAnimView(Context context) {
         super(context);
@@ -41,6 +42,10 @@ public class CallFlashCustomAnimView extends RelativeLayout {
         mHeartView = (InCallHeartAnimLayout) findViewById(R.id.flash_heart_view);
     }
 
+    public boolean isPlaying() {
+        return mIsPlaying;
+    }
+
     public void startAnim(int flashType) {
         mFlashType = flashType;
         if (mFlashLedView == null || mHeartView == null) {
@@ -50,27 +55,32 @@ public class CallFlashCustomAnimView extends RelativeLayout {
         mHeartView.setVisibility(View.GONE);
         mFlashLedView.stopAnim();
         mHeartView.stopAnim();
+        mIsPlaying = false;
         switch (mFlashType) {
             case FlashLed.FLASH_TYPE_STREAMER:
             case FlashLed.FLASH_TYPE_FESTIVAL:
                 mFlashLedView.setFlashType(mFlashType);
                 mFlashLedView.setVisibility(View.VISIBLE);
                 mFlashLedView.startAnim();
+                mIsPlaying = true;
                 break;
             case FlashLed.FLASH_TYPE_LOVE:
                 mHeartView.setAnimView(R.drawable.ico_anim_heart);
                 mHeartView.setVisibility(View.VISIBLE);
                 mHeartView.startAnim();
+                mIsPlaying = true;
                 break;
             case FlashLed.FLASH_TYPE_KISS:
                 mHeartView.setAnimView(R.drawable.ic_anim_kiss);
                 mHeartView.setVisibility(View.VISIBLE);
                 mHeartView.startAnim();
+                mIsPlaying = true;
                 break;
             case FlashLed.FLASH_TYPE_ROSE:
                 mHeartView.setAnimView(R.drawable.ic_anim_rose);
                 mHeartView.setVisibility(View.VISIBLE);
                 mHeartView.startAnim();
+                mIsPlaying = true;
                 break;
         }
     }
@@ -82,10 +92,12 @@ public class CallFlashCustomAnimView extends RelativeLayout {
                 if (isStop) {
                     if (mFlashLedView != null) {
                         mFlashLedView.stopAnim();
+                        mIsPlaying = false;
                     }
                 } else {
                     if (mFlashLedView != null) {
                         mFlashLedView.startAnim();
+                        mIsPlaying = true;
                     }
                 }
                 break;
@@ -95,10 +107,12 @@ public class CallFlashCustomAnimView extends RelativeLayout {
                 if (isStop) {
                     if (mHeartView != null) {
                         mHeartView.stopAnim();
+                        mIsPlaying = false;
                     }
                 } else {
                     if (mHeartView != null) {
                         mHeartView.startAnim();
+                        mIsPlaying = true;
                     }
                 }
                 break;
