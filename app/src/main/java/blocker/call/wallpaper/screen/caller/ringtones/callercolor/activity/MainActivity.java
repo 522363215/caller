@@ -33,6 +33,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CategoryFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.MineFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
@@ -76,6 +77,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
         //新手引导
         GuideUtil.toFirstBootGuide(this);
+
+        PreferenceHelper.putLong(PreferenceHelper.PREF_KEY_LAST_ENTER_APP_TIME, System.currentTimeMillis());
+
         initView();
         //初始化page
         initViewPager();

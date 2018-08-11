@@ -131,7 +131,7 @@ public class CallerCommonReceiver extends BroadcastReceiver {
             info.arg1 = theme.getImg_h();
             info.arg2 = theme.getImg_v();
 
-            CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.PREF_CALL_FLASH_LAST_SEND_NOTIFY_NEWEST_INSTANCE, info);
+            CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.PREF_CALL_FLASH_LAST_SEND_NOTIFY_NEWEST_INSTANCE, theme);
             NotifyManager.getInstance().showNewFlashWithBigStyle(info);
         }
     }
