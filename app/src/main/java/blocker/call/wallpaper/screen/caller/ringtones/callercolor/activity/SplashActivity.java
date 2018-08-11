@@ -88,9 +88,9 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
             toMain();
             return;
         }
-        initAds();
         SwitchLang();
         initData();
+        initAds();
         initView();
     }
 
