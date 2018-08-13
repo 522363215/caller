@@ -18,6 +18,8 @@ import android.util.DisplayMetrics;
 import android.widget.Toast;
 
 import com.common.sdk.analytics.AnalyticsManager;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.ads.MobileAds;
 
@@ -83,6 +85,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
         }
         SwitchLang();
 
+        //init tuiguang fb
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         //init admob
         MobileAds.initialize(this, APP_ADMOB_ID);
     }
@@ -113,6 +118,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
     @Override
     protected void onResume() {
         super.onResume();
+        AppEventsLogger.activateApp(this);
         AnalyticsManager.onUserActive();
         FlurryAgent.onPageView();
     }
