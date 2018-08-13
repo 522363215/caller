@@ -16,16 +16,16 @@
         android:gravity="center"
         tools:visibility="visible">
 
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView
+            android:id="@+id/layout_call_flash_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
             android:id="@+id/gv_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY" />
-
-        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView
-            android:id="@+id/layout_call_flash_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,9 +39,9 @@
                 android:id="@+id/iv_call_photo"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                tools:src="@drawable/icon_woman"
                 android:visibility="gone"
-                app:border_width="0dp" />
+                app:border_width="0dp"
+                tools:src="@drawable/icon_woman" />
 
             <TextView
                 android:id="@+id/tv_call_name"

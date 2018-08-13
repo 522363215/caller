@@ -635,7 +635,7 @@ public class DeviceUtil {
         if (localRect.bottom < 0) return 0;
         float showHeight = localRect.bottom - localRect.top;
         float viewHeight = view.getHeight();
-//        LogUtil.d(TAG, "getViewShowPercent bottom:" + localRect.bottom + ",top:" + localRect.top + ",showHeight:" + showHeight + ",viewHeight:" + viewHeight);
+        LogUtil.d(TAG, "getViewShowPercent bottom:" + localRect.bottom + ",top:" + localRect.top + ",showHeight:" + showHeight + ",viewHeight:" + viewHeight);
         if (viewHeight == 0) return 0;
         return showHeight / viewHeight;
     }

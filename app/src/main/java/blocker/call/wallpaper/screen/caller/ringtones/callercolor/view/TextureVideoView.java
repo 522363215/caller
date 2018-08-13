@@ -210,14 +210,18 @@ public class TextureVideoView extends TextureView
     }
 
     public void stopPlayback() {
-        if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
-            mMediaPlayer.release();
-            mMediaPlayer = null;
-            mCurrentState = STATE_IDLE;
-            mTargetState = STATE_IDLE;
-            AudioManager am = (AudioManager) getContext().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-            am.abandonAudioFocus(null);
+        try {
+            if (mMediaPlayer != null) {
+                mMediaPlayer.stop();
+                mMediaPlayer.release();
+                mMediaPlayer = null;
+                mCurrentState = STATE_IDLE;
+                mTargetState = STATE_IDLE;
+                AudioManager am = (AudioManager) getContext().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                am.abandonAudioFocus(null);
+            }
+        } catch (Exception e) {
+            LogUtil.e(TAG, "stopPlayback e:" + e.getMessage());
         }
     }
 
@@ -259,17 +263,21 @@ public class TextureVideoView extends TextureView
             mCurrentState = STATE_PREPARING;
             attachMediaController();
         } catch (IOException ex) {
-            Log.w(TAG, "Unable to open content: " + mUri, ex);
+            LogUtil.e(TAG, "Unable to open content mUri:" + mUri + ",ex:" + ex.getMessage());
             mCurrentState = STATE_ERROR;
             mTargetState = STATE_ERROR;
             mErrorListener.onError(mMediaPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
             return;
         } catch (IllegalArgumentException ex) {
-            Log.w(TAG, "Unable to open content: " + mUri, ex);
+            LogUtil.e(TAG, "Unable to open content mUri:" + mUri + ",ex:" + ex.getMessage());
             mCurrentState = STATE_ERROR;
             mTargetState = STATE_ERROR;
             mErrorListener.onError(mMediaPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
             return;
+        } catch (Exception e) {
+            mCurrentState = STATE_ERROR;
+            mTargetState = STATE_ERROR;
+            mErrorListener.onError(mMediaPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
         }
     }
 
@@ -294,11 +302,15 @@ public class TextureVideoView extends TextureView
     MediaPlayer.OnVideoSizeChangedListener mSizeChangedListener =
             new MediaPlayer.OnVideoSizeChangedListener() {
                 public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-                    mVideoWidth = mp.getVideoWidth();
-                    mVideoHeight = mp.getVideoHeight();
-                    if (mVideoWidth != 0 && mVideoHeight != 0 && getSurfaceTexture() != null) {
-                        getSurfaceTexture().setDefaultBufferSize(mVideoWidth, mVideoHeight);
-                        requestLayout();
+                    try {
+                        mVideoWidth = mp.getVideoWidth();
+                        mVideoHeight = mp.getVideoHeight();
+                        if (mVideoWidth != 0 && mVideoHeight != 0 && getSurfaceTexture() != null) {
+                            getSurfaceTexture().setDefaultBufferSize(mVideoWidth, mVideoHeight);
+                            requestLayout();
+                        }
+                    } catch (Exception e) {
+                        LogUtil.e("TextureVideoView", "onVideoSizeChanged e:" + e.getMessage());
                     }
                 }
             };
@@ -502,15 +514,19 @@ public class TextureVideoView extends TextureView
                 @Override
                 public void run() {
                     // after we return from this we can't use the surface any more
-                    if (mMediaPlayer != null) {
-                        mMediaPlayer.stop();
+                    try {
+                        if (mMediaPlayer != null) {
+                            mMediaPlayer.stop();
+                        }
+                        if (mSurface != null) {
+                            mSurface.release();
+                            mSurface = null;
+                        }
+                        if (mMediaController != null) mMediaController.hide();
+                        release(true);
+                    } catch (Exception e) {
+                        LogUtil.e(TAG, "onSurfaceTextureDestroyed e:" + e.getMessage());
                     }
-                    if (mSurface != null) {
-                        mSurface.release();
-                        mSurface = null;
-                    }
-                    if (mMediaController != null) mMediaController.hide();
-                    release(true);
                 }
             });
             return true;
@@ -527,16 +543,20 @@ public class TextureVideoView extends TextureView
      * release the media player in any state
      */
     private void release(boolean cleartargetstate) {
-        if (mMediaPlayer != null) {
-            mMediaPlayer.reset();
-            mMediaPlayer.release();
-            mMediaPlayer = null;
-            mCurrentState = STATE_IDLE;
-            if (cleartargetstate) {
-                mTargetState = STATE_IDLE;
+        try {
+            if (mMediaPlayer != null) {
+                mMediaPlayer.reset();
+                mMediaPlayer.release();
+                mMediaPlayer = null;
+                mCurrentState = STATE_IDLE;
+                if (cleartargetstate) {
+                    mTargetState = STATE_IDLE;
+                }
+                AudioManager am = (AudioManager) getContext().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                am.abandonAudioFocus(null);
             }
-            AudioManager am = (AudioManager) getContext().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-            am.abandonAudioFocus(null);
+        } catch (Exception e) {
+            LogUtil.e(TAG, "release e:" + e.getMessage());
         }
     }
 
@@ -566,31 +586,35 @@ public class TextureVideoView extends TextureView
                 keyCode != KeyEvent.KEYCODE_CALL &&
                 keyCode != KeyEvent.KEYCODE_ENDCALL;
         if (isInPlaybackState() && isKeyCodeSupported && mMediaController != null) {
-            if (keyCode == KeyEvent.KEYCODE_HEADSETHOOK ||
-                    keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
-                if (mMediaPlayer.isPlaying()) {
-                    pause();
-                    mMediaController.show();
+            try {
+                if (keyCode == KeyEvent.KEYCODE_HEADSETHOOK ||
+                        keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
+                    if (mMediaPlayer.isPlaying()) {
+                        pause();
+                        mMediaController.show();
+                    } else {
+                        start();
+                        mMediaController.hide();
+                    }
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY) {
+                    if (!mMediaPlayer.isPlaying()) {
+                        start();
+                        mMediaController.hide();
+                    }
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_MEDIA_STOP
+                        || keyCode == KeyEvent.KEYCODE_MEDIA_PAUSE) {
+                    if (mMediaPlayer.isPlaying()) {
+                        pause();
+                        mMediaController.show();
+                    }
+                    return true;
                 } else {
-                    start();
-                    mMediaController.hide();
+                    toggleMediaControlsVisiblity();
                 }
-                return true;
-            } else if (keyCode == KeyEvent.KEYCODE_MEDIA_PLAY) {
-                if (!mMediaPlayer.isPlaying()) {
-                    start();
-                    mMediaController.hide();
-                }
-                return true;
-            } else if (keyCode == KeyEvent.KEYCODE_MEDIA_STOP
-                    || keyCode == KeyEvent.KEYCODE_MEDIA_PAUSE) {
-                if (mMediaPlayer.isPlaying()) {
-                    pause();
-                    mMediaController.show();
-                }
-                return true;
-            } else {
-                toggleMediaControlsVisiblity();
+            } catch (Exception e) {
+                LogUtil.e(TAG, "onKeyDown e:" + e.getMessage());
             }
         }
 
@@ -607,22 +631,30 @@ public class TextureVideoView extends TextureView
 
     @Override
     public void start() {
-        if (isInPlaybackState()) {
-            mMediaPlayer.start();
-            mCurrentState = STATE_PLAYING;
+        try {
+            if (isInPlaybackState()) {
+                mMediaPlayer.start();
+                mCurrentState = STATE_PLAYING;
+            }
+            mTargetState = STATE_PLAYING;
+        } catch (Exception e) {
+            LogUtil.e(TAG, "start e:" + e.getMessage());
         }
-        mTargetState = STATE_PLAYING;
     }
 
     @Override
     public void pause() {
-        if (isInPlaybackState()) {
-            if (mMediaPlayer.isPlaying()) {
-                mMediaPlayer.pause();
-                mCurrentState = STATE_PAUSED;
+        try {
+            if (isInPlaybackState()) {
+                if (mMediaPlayer.isPlaying()) {
+                    mMediaPlayer.pause();
+                    mCurrentState = STATE_PAUSED;
+                }
             }
+            mTargetState = STATE_PAUSED;
+        } catch (Exception e) {
+            LogUtil.e(TAG, "pause e:" + e.getMessage());
         }
-        mTargetState = STATE_PAUSED;
     }
 
     public void suspend() {
@@ -635,34 +667,53 @@ public class TextureVideoView extends TextureView
 
     @Override
     public int getDuration() {
-        if (isInPlaybackState()) {
-            return mMediaPlayer.getDuration();
+        try {
+            if (isInPlaybackState()) {
+                return mMediaPlayer.getDuration();
+            }
+        } catch (Exception e) {
+            LogUtil.e(TAG, "getDuration e:" + e.getMessage());
         }
-
         return -1;
     }
 
     @Override
     public int getCurrentPosition() {
-        if (isInPlaybackState()) {
-            return mMediaPlayer.getCurrentPosition();
+        try {
+            if (isInPlaybackState()) {
+                return mMediaPlayer.getCurrentPosition();
+            }
+        } catch (Exception e) {
+            LogUtil.e(TAG, "getCurrentPosition e:" + e.getMessage());
         }
         return 0;
     }
 
     @Override
     public void seekTo(int msec) {
-        if (isInPlaybackState()) {
-            mMediaPlayer.seekTo(msec);
-            mSeekWhenPrepared = 0;
-        } else {
-            mSeekWhenPrepared = msec;
+        try {
+            if (isInPlaybackState()) {
+                mMediaPlayer.seekTo(msec);
+                mSeekWhenPrepared = 0;
+            } else {
+                mSeekWhenPrepared = msec;
+            }
+        } catch (Exception e) {
+            LogUtil.e(TAG, "seekTo e:" + e.getMessage());
         }
     }
 
     @Override
     public boolean isPlaying() {
-        return isInPlaybackState() && mMediaPlayer.isPlaying();
+        try {
+            if (mMediaPlayer != null) {
+                return isInPlaybackState() && mMediaPlayer.isPlaying();
+            }
+        } catch (Exception e) {
+            LogUtil.e(TAG, "isPlaying e:" + e.getMessage());
+        }
+        return false;
+
     }
 
     @Override

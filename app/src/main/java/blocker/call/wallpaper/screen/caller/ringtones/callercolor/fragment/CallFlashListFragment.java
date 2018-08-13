@@ -401,12 +401,16 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
         int lastItemPosition = mLayoutManager.findLastVisibleItemPosition();
         if (mLastCurrentFlashIndex != mCurrentFlashIndex && mLastCurrentFlashIndex >= firstItemPosition && mLastCurrentFlashIndex <= lastItemPosition) {
-            //第二参数可以为任意对象，在adapter中payloads.get(0)可获得此值，此处写为false表示暂停，true 表示播放
-            mAdapter.notifyItemChanged(mLastCurrentFlashIndex, false);
+            //第二参数可以为任意对象，在adapter中payloads.get(0)可获得此值，此处写为int
+            mAdapter.notifyItemChanged(mLastCurrentFlashIndex, CallFlashOnlineAdapter.ITEM_REFRESH_TYPE_PAUSE);
         }
 
         if (mCurrentFlashIndex >= firstItemPosition && mCurrentFlashIndex <= lastItemPosition) {
-            mAdapter.notifyItemChanged(mCurrentFlashIndex, isContinuePlay);
+            if (isContinuePlay) {
+                mAdapter.notifyItemChanged(mCurrentFlashIndex, CallFlashOnlineAdapter.ITEM_REFRESH_TYPE_PLAY);
+            } else {
+                mAdapter.notifyItemChanged(mCurrentFlashIndex, CallFlashOnlineAdapter.ITEM_REFRESH_TYPE_PAUSE);
+            }
             mLastCurrentFlashIndex = mCurrentFlashIndex;
         }
     }
@@ -475,7 +479,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
             int lastItemPosition = mLayoutManager.findLastVisibleItemPosition();
             if (mCurrentFlashIndex != -1 && mCurrentFlashIndex >= firstItemPosition && mCurrentFlashIndex <= lastItemPosition) {
-                mAdapter.notifyItemChanged(mCurrentFlashIndex, null);
+                mAdapter.notifyItemChanged(mCurrentFlashIndex, CallFlashOnlineAdapter.ITEM_REFRESH_TYPE_SCROLL);
             }
         }
     }

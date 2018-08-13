@@ -31,6 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
@@ -47,6 +48,11 @@ import event.EventBus;
 
 public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "CallFlashOnlineAdapter";
+
+    public static final int ITEM_REFRESH_TYPE_PLAY = 0;
+    public static final int ITEM_REFRESH_TYPE_PAUSE = 1;
+    public static final int ITEM_REFRESH_TYPE_SCROLL = 2;
+
     private Context context = null;
     private List<CallFlashInfo> model = null;
 
@@ -174,16 +180,20 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private void setItem(NormalViewHolder holder, int pos, List<Object> payloads) {
         CallFlashInfo info = getItem(pos);
-        holder.itemView.setVisibility(View.VISIBLE);
-        holder.layoutCallFlash.setVisibility(View.VISIBLE);
-        holder.layout_ad_view.setVisibility(View.GONE);
-        if (info != null) {
+        if (info == null) return;
+        if (payloads.isEmpty()) {//payloads为空 即为正常情况下的执行或者调用notifyItemChanged(position,payloads)方法时payloads==null执行的,
+            holder.itemView.setVisibility(View.VISIBLE);
+            holder.layoutCallFlash.setVisibility(View.VISIBLE);
+            holder.layout_ad_view.setVisibility(View.GONE);
             holder.root.setTag(pos);
             holder.layoutCallFlash.setTag(pos);
             holder.iv_download.setTag(pos);
             holder.mOnDownloadListener.setDownloadParams(holder, info);
             setSelectOrDownloadState(holder, info);
             setBg(holder, info);
+            setCallFlashShow(holder, pos, payloads);
+        } else {//payloads不为空 即调用notifyItemChanged(position,payloads)方法payloads!=null执行的
+            setSelectOrDownloadState(holder, info);
             setCallFlashShow(holder, pos, payloads);
         }
     }
@@ -248,39 +258,85 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    private void setCallFlashShow(NormalViewHolder holder, int pos, List<Object> payloads) {
-        if (holder.iv_call_select.getVisibility() != View.VISIBLE) return;
+    private void setCallFlashShow(final NormalViewHolder holder, int pos, List<Object> payloads) {
+        if (holder.iv_call_select.getVisibility() != View.VISIBLE) {
+            holder.gv_bg.setVisibility(View.VISIBLE);
+            holder.callFlashView.setVisibility(View.GONE);
+            return;
+        }
         CallFlashInfo info = getItem(pos);
         if (mCurrentFlash == null || info == null || !mCurrentFlash.equals(info)) return;
-        holder.gv_bg.setVisibility(View.GONE);
-        holder.callFlashView.setVisibility(View.VISIBLE);
         float viewShowPercent = DeviceUtil.getViewShowPercent(holder.itemView);
         if (payloads.isEmpty()) {//payloads为空 即为正常情况下的执行或者调用notifyItemChanged(position,payloads)方法时payloads==null执行的,
             LogUtil.d(TAG, "setCallFlashShow 正常刷新");
             if (viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING) && !holder.callFlashView.isPlaying()) {
                 holder.callFlashView.showCallFlashView(info);
+                if (holder.gv_bg.getVisibility() == View.VISIBLE) {
+                    Async.scheduleTaskOnUiThread(200, new Runnable() {
+                        @Override
+                        public void run() {
+                            holder.gv_bg.setVisibility(View.GONE);
+                        }
+                    });
+                }
+                holder.callFlashView.setVisibility(View.VISIBLE);
             } else if (viewShowPercent <= ConstantUtils.CALL_FLASH_LIST_STOP_VIDEO_PERCENT && holder.callFlashView.isPlaying()) {
                 holder.callFlashView.pause();
+                holder.gv_bg.setVisibility(View.VISIBLE);
+                holder.callFlashView.setVisibility(View.GONE);
             }
         } else {//payloads不为空 即调用notifyItemChanged(position,payloads)方法payloads!=null执行的
-            boolean isContinuePlay = payloads.get(0) != null && (boolean) payloads.get(0);
-            LogUtil.d(TAG, "setCallFlashShow 局部刷新 isContinuePlay:" + isContinuePlay);
-            if (isContinuePlay) {
-                if (viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING) && !holder.callFlashView.isPlaying()) {
-                    if (holder.callFlashView.isStopVideo()) {
-                        holder.callFlashView.showCallFlashView(info);
-                    } else {
-                        if (holder.callFlashView.isPause()) {
-                            holder.callFlashView.continuePlay();
-                        } else {
+            int refreshType = payloads.get(0) != null ? (int) payloads.get(0) : -1;
+            switch (refreshType) {
+                case ITEM_REFRESH_TYPE_PLAY:
+                    LogUtil.d(TAG, "setCallFlashShow 局部刷新 继续播放 viewShowPercent:" + viewShowPercent + "position:" + position);
+                    if (viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING) && !holder.callFlashView.isPlaying()) {
+                        if (holder.callFlashView.isStopVideo()) {
                             holder.callFlashView.showCallFlashView(info);
+                        } else {
+                            if (holder.callFlashView.isPause()) {
+                                holder.callFlashView.continuePlay();
+                            } else {
+                                holder.callFlashView.showCallFlashView(info);
+                            }
+                        }
+                        if (holder.gv_bg.getVisibility() == View.VISIBLE) {
+                            holder.gv_bg.setVisibility(View.GONE);
+                        }
+                        if (holder.callFlashView.getVisibility() == View.GONE) {
+                            holder.gv_bg.setVisibility(View.VISIBLE);
                         }
                     }
-                }
-            } else {
-                if (holder.callFlashView.isPlaying()) {
-                    holder.callFlashView.pause();
-                }
+                    break;
+                case ITEM_REFRESH_TYPE_PAUSE:
+                    LogUtil.d(TAG, "setCallFlashShow 局部刷新 暂停" + "position:" + position);
+                    if (holder.callFlashView.isPlaying()) {
+                        holder.callFlashView.pause();
+                        //此处无需隐藏callFlashView
+                    }
+                    break;
+                case ITEM_REFRESH_TYPE_SCROLL:
+                    LogUtil.d(TAG, "setCallFlashShow 局部刷新 滚动 viewShowPercent:" + viewShowPercent + "position:" + position);
+                    if (viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING) && !holder.callFlashView.isPlaying()) {
+                        holder.callFlashView.showCallFlashView(info);
+                        if (holder.gv_bg.getVisibility() == View.VISIBLE) {
+                            Async.scheduleTaskOnUiThread(200, new Runnable() {
+                                @Override
+                                public void run() {
+                                    holder.gv_bg.setVisibility(View.GONE);
+                                }
+                            });
+                        }
+                        holder.callFlashView.setVisibility(View.VISIBLE);
+                    } else if (viewShowPercent <= ConstantUtils.CALL_FLASH_LIST_STOP_VIDEO_PERCENT && holder.callFlashView.isPlaying()) {
+                        holder.callFlashView.pause();
+                        holder.gv_bg.setVisibility(View.VISIBLE);
+                        holder.callFlashView.setVisibility(View.GONE);
+                    }
+                    break;
+                default:
+                    holder.gv_bg.setVisibility(View.VISIBLE);
+                    holder.callFlashView.setVisibility(View.GONE);
             }
         }
     }
