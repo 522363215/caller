@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import com.common.sdk.analytics.AnalyticsManager;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -21,7 +22,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.ServerPar
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.StatisticsUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -161,9 +161,9 @@ public class ServerManager {
 
             object.put("model_code", DeviceUtil.getDeviceModel());
             object.put("os_ver", DeviceUtil.getOSVersion());
-            object.put("ch", StatisticsUtil.getChannel());
+            object.put("ch", AnalyticsManager.getCh());
             String sub_ch = setting.getString("sub_ch", "");
-            object.put("sub_ch", sub_ch);
+            object.put("sub_ch", AnalyticsManager.getSubCh());
 
 
         } catch (Exception e) {

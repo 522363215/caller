@@ -29,7 +29,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.HttpUtil
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.StatisticsUtil;
 
 
 public class ApplicationEx extends Application {
@@ -119,8 +118,8 @@ public class ApplicationEx extends Application {
 
     private void initCallFlashBase() {
         int clientId = ConstantUtils.CALLER_STATISTICS_CHANNEL;
-        String channel = StatisticsUtil.getChannel();
-        String subChannel = StatisticsUtil.getSubChannel();
+        String channel = AnalyticsManager.getCh();
+        String subChannel = AnalyticsManager.getSubCh();
         long expireTime = 2 * android.text.format.DateUtils.HOUR_IN_MILLIS;
         // TODO: 2018/2/9 should modify params(testMode) to false;
         boolean testMode = false;
@@ -191,8 +190,8 @@ public class ApplicationEx extends Application {
     private void initPriorityAds() {
         try {
             mAdPriorityMgr = AdPriorityManager.getInstance(MainInstance.getApplicationContext());
-            mAdPriorityMgr.setChannel(StatisticsUtil.getChannel());
-            mAdPriorityMgr.setSubChannel(StatisticsUtil.getSubChannel());
+            mAdPriorityMgr.setChannel(AnalyticsManager.getCh());
+            mAdPriorityMgr.setSubChannel(AnalyticsManager.getSubCh());
 //            mAdPriorityMgr.setClientId(ConstantUtils.CALLER_STATISTICS_CHANNEL);
 //            mAdPriorityMgr.setDomain(ConstantUtils.AD_PRIORITY_SERVER);
             mAdPriorityMgr.setFirstSynServerConfigTime(getInstance().getGlobalSettingPreference().getLong("key_cid_first_sync_server_time", 0));
@@ -204,7 +203,7 @@ public class ApplicationEx extends Application {
             mAdPriorityMgr.setFirstLaunch(firstLaunchTime);
             AdvertisementSwitcher.getInstance().initFromConfigCache(mAdPriorityMgr);//do this init job sync in main thread
 
-            LogUtil.d("advertise", "initPriorityAds get channel: " + StatisticsUtil.getChannel());
+            LogUtil.d("advertise", "initPriorityAds get channel: " + AnalyticsManager.getCh());
 
             mAdPriorityMgr.setAdPriorityListener(new AdPriorityListener() {
                 @Override
