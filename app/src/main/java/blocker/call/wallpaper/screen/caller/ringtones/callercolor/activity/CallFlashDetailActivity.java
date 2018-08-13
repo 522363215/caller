@@ -130,6 +130,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private boolean mIsComeGuide;
     private ImageView mIvSound;
     private boolean mIsMute;
+    private View mLayoutLike;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,14 +168,21 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         setFlashBackground();
         setLanguageBack();
         setCallFlashLayout(48);
+        showDownloadProgress();
         setSound();
         showCallFlash();
         startAnswerAnim();
-        showDownloadProgress();
         setLikeAndDownload();
     }
 
     private void setSound() {
+        if (mInfo == null) return;
+        File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
+        if ((file != null && file.exists()) || (!TextUtils.isEmpty(mInfo.path) && new File(mInfo.path).exists()) || CallFlashManager.CALL_FLASH_START_SKY_ID.equals(mInfo.id)) {
+            mIvSound.setVisibility(View.VISIBLE);
+        } else {
+            mIvSound.setVisibility(View.GONE);
+        }
         mIsMute = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.PREF_CALL_FLASH_IS_MUTE_WHEN_PREVIEW, true);
         if (mIsMute) {
             mIvSound.setImageDrawable(getResources().getDrawable(R.drawable.icon_mute));
@@ -197,6 +205,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
         //点赞数和下载数
         mLavoutLikeAndDownload = (LinearLayout) findViewById(R.id.layout_like_and_download);
+        mLayoutLike = findViewById(R.id.layout_like);
         mFivLike = (FontIconView) findViewById(R.id.fiv_like);
         mTvLikeCount = (TextView) findViewById(R.id.tv_like_count);
         mFivDownload = (FontIconView) findViewById(R.id.fiv_download);
@@ -320,6 +329,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                         mInfo.isDownloadSuccess = true;
                         mInfo.isDownloaded = false;
                         mInfo.path = file.getAbsolutePath();
+
+                        mIvSound.setVisibility(View.VISIBLE);
 
                         showCallFlash();
 
@@ -534,9 +545,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         //点赞
         if (mInfo == null) return;
         if (!mInfo.isOnlionCallFlash && (!CallFlashManager.CALL_FLASH_START_SKY_ID.equals(mInfo.id) || mIsComeGuide)) {
-            mLavoutLikeAndDownload.setVisibility(View.GONE);
+            mLayoutLike.setVisibility(View.GONE);
             return;
         }
+        mLayoutLike.setVisibility(View.VISIBLE);
         CallFlashInfo cacheCallFlashInfo = CallFlashManager.getInstance().getCacheJustLikeFlashList(mInfo.id);
         if (cacheCallFlashInfo != null) {
             mInfo.likeCount = cacheCallFlashInfo.likeCount;
