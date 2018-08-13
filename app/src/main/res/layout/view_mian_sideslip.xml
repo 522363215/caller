@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp4"
             android:alpha="0.3"
-            android:text="@string/splash_content"
+            android:text="@string/about_product_intro"
             android:textColor="@color/white"
             android:textSize="12sp" />
 
@@ -129,7 +129,7 @@
                         android:layout_marginLeft="@dimen/dp16"
                         android:layout_marginStart="@dimen/dp16"
                         android:gravity="center_vertical"
-                        android:text="@string/main_menu_block"
+                        android:text="@string/phone_detail_block"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 
@@ -211,7 +211,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:gravity="center_vertical"
-                        android:text="@string/main_menu_settings"
+                        android:text="@string/setting_title"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 

@@ -14,14 +14,11 @@
     <string name="no_string">"取消"</string>
     <string name="quithint">"再按一次退出"</string>
 
-    <string name="main_menu_block">@string/phone_detail_block</string>
-    <string name="main_menu_settings">@string/setting_title</string>
     <string name="setting_title">"设置"</string>
     <string name="block_setting_name">"拦截"</string>
     <string name="call_coming_back">"拨打"</string> <!--回拨-->
-    <string name="call_coming_detail">@string/dail</string>
+    <string name="call_coming_detail">详情</string>
     <string name="about_title">"关于我们"</string>
-    <string name="about_product_intro">@string/splash_content</string>
     <string name="about_product_version">%s当前版本："</string>
     <string name="about_rote_gp">"在Google上为我们评分"</string>
     <string name="about_like_facebook">"关注我们的Facebook首页"</string>
@@ -30,7 +27,6 @@
     <string name="about_privacy">"隐私政策"</string>
     <string name="about_term">"使用条款"</string>
     <string name="share_text">"%1$s 多彩的来电秀和电话拦截功能, 马上试试！下载：%2$s"</string>
-    <string name="rate_dialog_title">@string/app_name</string>
     <string name="rate_dialog_message">"你喜欢我们的应用吗？\n你愿意给我们留下你的评价吗？"</string>
     <string name="rate_dialog_cancel">"稍后"</string>
     <string name="rate_dialog_negative_title">"反馈"</string>
@@ -65,8 +61,6 @@
     <string name="phone_detail_cancel_block">号码已经从拦截名单移除。</string>
     <string name="phone_detail_unknown">未知号码</string>
     <string name="contact_search_hint">检索电话号码</string>
-    <string name="call_after_phone">@string/call_coming_back</string>
-    <string name="call_after_block">@string/block_setting_name</string>
     <string name="call_after_message">"短信"</string>
     <string name="call_after_click_toast">"这是一个未知号码！"</string>
     <string name="permission_tip">为了来电秀和号码拦截能够正常使用，需要启用相关权限</string>
@@ -100,12 +94,10 @@
     <string name="page_title_caller_theme">来电秀主题</string>
     <string name="page_title_category">分类</string>
     <string name="page_title_mine">我的来电秀</string>
-    <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
     <string name="about_email_us">"发送邮件给我们"</string>
     <string name="email_choose_one">"请选择适合的程序发送邮件。"</string>
     <string name="call_flash_gif_show_setting_des2">设置失败</string>
     <string name="call_answer_string">接听</string>
-    <string name="call_flash_detail_setting_action_to_set">@string/call_flash_gif_show_save</string>
     <string name="call_flash_detail_setting_action_to_cancel">"取消当前来电秀设置"</string>
     <string name="call_flash_more_refresh_online_themes_failed_tip">"在线主题刷新失败！"</string>
     <string name="call_flash_more_refresh_online_themes_load_failed">"网络无连接，请稍后再试！"</string>
@@ -172,7 +164,7 @@
     <!--Android 8.0及以上通知渠道名称-->
     <string name="notify_channel_subscribe">已订阅</string>
 
-    <string name="call_flash_view">@string/setting_title</string>
+    <string name="call_flash_view">设置</string>
 
     <string name="block_list_tab_contact">拦截列表</string>
     <string name="block_list_tab_logs">拦截记录</string>
@@ -180,7 +172,7 @@
 
     <string name="side_slip_permission_check">权限检查</string>
     <string name="permission_skip">跳过</string>
-    <string name="permission_set">@string/setting_title</string>
+    <string name="permission_set">设置</string>
     <string name="permission_set_auto_start">允许应用自启动是来电秀适用于所有的来电</string>
     <string name="permission_sett_lock_screen">允许应用显示在锁屏界面上以展示来电秀</string>
     <string name="permission_xiao_mi_tip">（滑动到底部）</string>
@@ -204,7 +196,6 @@
     <string name="mine_current_call_flash_is_close">来电秀已关闭</string>
     <string name="mine_set_before">痕迹</string>
     <string name="mine_downloaded">已下载的</string>
-    <string name="mine_collect">@string/side_slip_collection</string>
     <string name="mine_all">全部</string>
     <string name="mine_no_current_call_flash">尚未设置来电秀，立即设置</string>
 

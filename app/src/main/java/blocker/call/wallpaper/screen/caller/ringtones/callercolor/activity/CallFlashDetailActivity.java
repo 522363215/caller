@@ -406,7 +406,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             if (isCurrentFlashUsing && isFlashSwitchOn) {
                 textView.setText(R.string.call_flash_detail_setting_action_to_cancel);
             } else {
-                textView.setText(R.string.call_flash_detail_setting_action_to_set);
+                textView.setText(R.string.call_flash_gif_show_save);
             }
         }
     }

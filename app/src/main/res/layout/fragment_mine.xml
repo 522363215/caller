@@ -128,7 +128,7 @@
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
                     android:padding="@dimen/dp4"
-                    android:text="@string/mine_collect"
+                    android:text="@string/side_slip_collection"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 

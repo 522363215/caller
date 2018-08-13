@@ -14,8 +14,6 @@
     <string name="no_string">"Cancel"</string>
     <string name="quithint">"Press back again to quit"</string>
 
-    <string name="main_menu_block">@string/phone_detail_block</string>
-    <string name="main_menu_settings">@string/setting_title</string>
     <string name="setting_title">"Settings"</string>
     <string name="block_setting_name">"Block"</string>
     <string name="add_number_as_spam">"Report a spam"</string>
@@ -31,7 +29,6 @@
     <string name="about_privacy">"Privacy Policy"</string>
     <string name="about_term">"Terms of Use"</string>
     <string name="share_text">"%1$s make your calls colorful and block unwanted calls. Have a try! Get it on: %2$s"</string>
-    <string name="rate_dialog_title">@string/app_name</string>
     <string name="rate_dialog_message">"Do you like Color Phone? \nWould you please leave us your rating?"</string>
     <string name="rate_dialog_cancel">"Later"</string>
     <string name="rate_dialog_negative_title">"Feedback"</string>
@@ -66,8 +63,6 @@
     <string name="phone_detail_cancel_block">This number has been removed from your blocklist.</string>
     <string name="phone_detail_unknown">Unknown</string>
     <string name="contact_search_hint">Search phone number</string>
-    <string name="call_after_phone">@string/call_coming_back</string>
-    <string name="call_after_block">@string/block_setting_name</string>
     <string name="call_after_message">"Message"</string>
     <string name="call_after_click_toast">"The number is hidden!"</string>
     <string name="permission_tip">Call Flash show need the following permissions.</string>
@@ -102,14 +97,12 @@
     <string name="page_title_caller_theme">Caller Theme</string>
     <string name="page_title_category">Category</string>
     <string name="page_title_mine">Mine</string>
-    <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
     <string name="about_email_us">"Email us"</string>
     <string name="email_choose_one">"Please choose one to send Email."</string>
     <string name="call_flash_gif_show_setting_des2">Set failed!</string>
     <string name="call_answer_string">Answer</string>
     <string name="call_answer_string_HW">"Reply"</string>
     <string name="call_flash_example_name">Frank</string>
-    <string name="call_flash_detail_setting_action_to_set">@string/call_flash_gif_show_save</string>
     <string name="call_flash_detail_setting_action_to_cancel">"Cancel This Incoming Call Theme"</string>
     <string name="call_flash_more_refresh_online_themes_failed_tip">"Refresh online themes Failed."</string>
     <string name="call_flash_more_refresh_online_themes_load_failed">"Network not optimal, try this later!"</string>
@@ -118,7 +111,6 @@
     <string name="download_failed_for_no_sd_permission">Grant the permission to download and save themes</string>
     <string name="about_send_apk">Share the App with friends</string>
     <string name="device_time_just">Right now</string>
-    <string name="splash_content">@string/about_product_intro</string>
     <string name="call_flash_gif_show_connecte">Connecting...</string>
     <string name="call_flash_gif_show_setting_des">It needs to enable system alert window permission.</string>
     <string name="notification_listener_setting_tip">Enable Notification Access to Answer Calls</string>
@@ -208,7 +200,6 @@
     <string name="mine_current_call_flash_is_close">Call Flash Closed</string>
     <string name="mine_set_before">History</string>
     <string name="mine_downloaded">Downloaded</string>
-    <string name="mine_collect">@string/side_slip_collection</string>
     <string name="mine_all">All</string>
     <string name="mine_no_current_call_flash">Not set yet，Set it Now</string>
 

@@ -223,7 +223,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/dp4"
                         android:alpha="0.6"
-                        android:text="@string/splash_content"
+                        android:text="@string/about_product_intro"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -322,7 +322,7 @@
                         android:layout_marginTop="@dimen/dp4"
                         android:alpha="0.8"
                         android:fontFamily="sans-serif-light"
-                        android:text="@string/splash_content"
+                        android:text="@string/about_product_intro"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:visibility="visible" />
