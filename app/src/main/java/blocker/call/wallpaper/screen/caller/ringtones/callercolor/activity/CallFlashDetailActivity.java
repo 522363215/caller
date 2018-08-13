@@ -186,8 +186,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         mIsMute = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.PREF_CALL_FLASH_IS_MUTE_WHEN_PREVIEW, true);
         if (mIsMute) {
             mIvSound.setImageDrawable(getResources().getDrawable(R.drawable.icon_mute));
+            FlurryAgent.logEvent("CallFlashDetailActivity-click_mute");
         } else {
             mIvSound.setImageDrawable(getResources().getDrawable(R.drawable.icon_sound));
+            FlurryAgent.logEvent("CallFlashDetailActivity-click_sound");
         }
         mCallFlashView.setVideoMute(mIsMute);
     }
