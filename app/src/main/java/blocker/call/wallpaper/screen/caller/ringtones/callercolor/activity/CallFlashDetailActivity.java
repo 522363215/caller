@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -127,6 +128,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private TextView mTvDownloadCount;
     private List<PermissionInfo> mPermissions;
     private boolean mIsComeGuide;
+    private ImageView mIvSound;
+    private boolean mIsMute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,10 +167,21 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         setFlashBackground();
         setLanguageBack();
         setCallFlashLayout(48);
+        setSound();
         showCallFlash();
         startAnswerAnim();
         showDownloadProgress();
         setLikeAndDownload();
+    }
+
+    private void setSound() {
+        mIsMute = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.PREF_CALL_FLASH_IS_MUTE_WHEN_PREVIEW, true);
+        if (mIsMute) {
+            mIvSound.setImageDrawable(getResources().getDrawable(R.drawable.icon_mute));
+        } else {
+            mIvSound.setImageDrawable(getResources().getDrawable(R.drawable.icon_sound));
+        }
+        mCallFlashView.setVideoMute(mIsMute);
     }
 
     private void initView() {
@@ -177,6 +191,9 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         mLayoutCallFlashOthers = findViewById(R.id.layout_call_flash_others);
 
         mLayourAd = findViewById(R.id.layout_ad_view);
+
+        //声音按钮
+        mIvSound = (ImageView) findViewById(R.id.iv_sound);
 
         //点赞数和下载数
         mLavoutLikeAndDownload = (LinearLayout) findViewById(R.id.layout_like_and_download);
@@ -406,7 +423,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             if (isCurrentFlashUsing && isFlashSwitchOn) {
                 textView.setText(R.string.call_flash_detail_setting_action_to_cancel);
             } else {
-                textView.setText(R.string.call_flash_detail_setting_action_to_set);
+                textView.setText(R.string.call_flash_gif_show_save);
             }
         }
     }
@@ -510,6 +527,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         findViewById(R.id.fiv_back).setOnClickListener(this);
         findViewById(R.id.fiv_close).setOnClickListener(this);
         mFivLike.setOnClickListener(this);
+        mIvSound.setOnClickListener(this);
     }
 
     private void setLikeAndDownload() {
@@ -724,7 +742,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 onBackPressed();
                 break;
             case R.id.fiv_close:
-                if (mIsComeGuide){
+                if (mIsComeGuide) {
                     FlurryAgent.logEvent("CallFlashDetailActivity-----click----skip");
                     GuideUtil.toPermissionGuide(this);
                     finish();
@@ -767,6 +785,11 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                         ToastUtils.showToast(this, R.string.click_like_tip);
                     }
                 }
+                break;
+            case R.id.iv_sound:
+                CallFlashPreferenceHelper.putBoolean(CallFlashPreferenceHelper.PREF_CALL_FLASH_IS_MUTE_WHEN_PREVIEW, !mIsMute);
+                setSound();
+
                 break;
         }
     }

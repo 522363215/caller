@@ -2,6 +2,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflas
 
 import android.content.Context;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -35,6 +36,7 @@ public class CallFlashView extends RelativeLayout {
 
     private AtomicBoolean isStop = new AtomicBoolean(false);
     private AtomicBoolean isPause = new AtomicBoolean(false);
+    private MediaPlayer mMediaPlayer;
 
     public CallFlashView(Context context) {
         super(context);
@@ -239,6 +241,7 @@ public class CallFlashView extends RelativeLayout {
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
+                mMediaPlayer = mp;
                 //设置videoView 静音
                 if (isVideoMute) {
                     mp.setVolume(0f, 0f);
@@ -279,5 +282,12 @@ public class CallFlashView extends RelativeLayout {
 
     public void setVideoMute(boolean mVideoMute) {
         this.isVideoMute = mVideoMute;
+        if (mMediaPlayer != null) {
+            if (isVideoMute) {
+                mMediaPlayer.setVolume(0f, 0f);
+            } else {
+                mMediaPlayer.setVolume(1.0f, 1.0f);
+            }
+        }
     }
 }
