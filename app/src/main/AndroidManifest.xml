@@ -112,6 +112,12 @@
         <meta-data
             android:name="channel"
             android:value="${CHANNEL_VALUE}" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/fbapp_id" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationName"
+            android:value="@string/app_name" />
 
         <activity
             android:name=".activity.SplashActivity"

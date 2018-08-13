@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Color Phone</string>
+    <string name="fbapp_id" translatable="false">"2165737933682467"</string>
 
     <string name="push_tools_missed">"Missed calls."</string>
 
