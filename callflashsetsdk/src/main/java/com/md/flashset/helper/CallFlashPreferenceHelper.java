@@ -68,6 +68,11 @@ public class CallFlashPreferenceHelper {
      */
     public static final String PREF_CALL_FLASH_LAST_SEND_NOTIFY_NEWEST_INSTANCE = "android_call_flash_last_send_notify_newest_instance";
 
+    /**
+     * 预览时call flash 是否静音;
+     */
+    public static final String PREF_CALL_FLASH_IS_MUTE_WHEN_PREVIEW = "android_call_flash_is_mute_when_preview";
+
     private static Context mContext;
 
     private CallFlashPreferenceHelper() {

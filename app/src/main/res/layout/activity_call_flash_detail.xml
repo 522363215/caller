@@ -44,6 +44,16 @@
             android:orientation="horizontal"
             android:visibility="visible">
 
+            <ImageView
+                android:id="@+id/iv_sound"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp8"
+                android:layout_marginStart="@dimen/dp8"
+                android:padding="@dimen/dp8"
+                android:src="@drawable/icon_mute" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -268,20 +278,20 @@
             android:visibility="visible" />
 
         <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
-            android:layout_centerVertical="true"
             android:id="@+id/fiv_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp8"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp8"
-            android:visibility="gone"
+            android:layout_marginRight="@dimen/dp8"
             android:alpha="0.5"
             android:padding="@dimen/dp8"
             android:text="@string/icon_close"
             android:textColor="@color/white"
-            android:textSize="@dimen/dp24" />
+            android:textSize="@dimen/dp24"
+            android:visibility="gone" />
 
     </RelativeLayout>
 </RelativeLayout>
