@@ -1,6 +1,7 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
@@ -62,7 +64,6 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initAds();
         initView();
         onNewIntent(getIntent());
         initData();
@@ -91,6 +92,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        initAds();
         FlurryAgent.logEvent("CallAfterActivity----ShowCallAfter");
         mStartTime = System.currentTimeMillis();
         statistic();
@@ -398,7 +400,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
 
     //******************************************AD******************************************//
     private void initAds() {
-        if(CallerAdManager.isShowAdOnEndCall()) {
+        if(CallerAdManager.isShowAdOnEndCall() && isShouldReq()) {
             MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
                     "",//ConstantUtils.FB_AFTER_CALL_ID
                     CallerAdManager.ADMOB_ID_ADV_END_CALL_NORMAL,//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
@@ -446,4 +448,15 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
     }
     //******************************************AD******************************************//
 
+    private boolean isShouldReq(){
+        boolean is = false;
+        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+        long last_req = ad_pref.getLong("fb_ad_last_req_end_call", 0);
+        if(System.currentTimeMillis() - last_req >= 60 * 1000){
+            is = true;
+            ad_pref.edit().putLong("fb_ad_last_req_end_call", System.currentTimeMillis()).apply();
+        }
+
+        return is;
+    }
 }
