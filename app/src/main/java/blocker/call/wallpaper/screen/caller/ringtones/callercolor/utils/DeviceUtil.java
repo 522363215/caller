@@ -628,16 +628,26 @@ public class DeviceUtil {
     }
 
     public static float getViewShowPercent(View view) {
+        if (view == null) return 0;
         int[] location = new int[2];
         view.getLocationOnScreen(location);
         Rect localRect = new Rect();
-        view.getLocalVisibleRect(localRect);
-        if (localRect.bottom < 0) return 0;
-        float showHeight = localRect.bottom - localRect.top;
-        float viewHeight = view.getHeight();
-        LogUtil.d(TAG, "getViewShowPercent bottom:" + localRect.bottom + ",top:" + localRect.top + ",showHeight:" + showHeight + ",viewHeight:" + viewHeight);
-        if (viewHeight == 0) return 0;
-        return showHeight / viewHeight;
+        boolean isVisible = view.getLocalVisibleRect(localRect);
+        if (isVisible) {
+            if (localRect.bottom < 0) return 0;
+            float showHeight = localRect.bottom - localRect.top;
+            float viewHeight = view.getHeight();
+            LogUtil.d(TAG, "getViewShowPercent bottom:" + localRect.bottom + ",top:" + localRect.top + ",showHeight:" + showHeight + ",viewHeight:" + viewHeight);
+            if (viewHeight == 0) return 0;
+            return showHeight / viewHeight;
+        } else {
+            return 0;
+        }
+    }
+
+    public static void getViewShowPercentInListView(int parentHeight, View view) {
+        int top = view.getTop();
+        LogUtil.d(TAG, "getViewShowPercentInListView parentHeight:" + parentHeight + ",top:" + top);
     }
 
 }

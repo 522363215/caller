@@ -317,6 +317,7 @@ public class TextureVideoView extends TextureView
 
     MediaPlayer.OnPreparedListener mPreparedListener = new MediaPlayer.OnPreparedListener() {
         public void onPrepared(MediaPlayer mp) {
+            LogUtil.d(TAG, "mPreparedListener onPrepared");
             mCurrentState = STATE_PREPARED;
 
             mCanPause = mCanSeekBack = mCanSeekForward = true;
@@ -725,6 +726,7 @@ public class TextureVideoView extends TextureView
     }
 
     private boolean isInPlaybackState() {
+        LogUtil.d(TAG, "isInPlaybackState mMediaPlayer:" + mMediaPlayer + ",mCurrentState:" + mCurrentState);
         return (mMediaPlayer != null &&
                 mCurrentState != STATE_ERROR &&
                 mCurrentState != STATE_IDLE &&
