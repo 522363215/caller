@@ -117,7 +117,7 @@
             android:value="@string/fbapp_id" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationName"
-            android:value="@string/app_name" />
+            android:value="@string/fbapp_name" />
 
         <activity
             android:name=".activity.SplashActivity"

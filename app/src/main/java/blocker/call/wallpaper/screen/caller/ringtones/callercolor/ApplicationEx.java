@@ -107,13 +107,13 @@ public class ApplicationEx extends Application {
         //upgrade setting
         new FlurryAgent.Builder().withLogEnabled(BuildConfig.DEBUG).build(getInstance(), BuildConfig.FLURRY_KEY);
         saveVersioncode();
+        AnalyticsManager.init(getInstance());
         startService();
         initCallFlashBase();
         CallFlashSet.init(this);
         // TODO: 2018/7/5 广告暂时屏蔽
 //        intiAdManager();
         initPriorityAds();
-        AnalyticsManager.init(getInstance());
 
     }
 
