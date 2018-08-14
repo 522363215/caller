@@ -433,7 +433,6 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                         }
                     }
                 });
-                model.clear();
                 initData(false);
             }
         });
