@@ -141,6 +141,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         FlurryAgent.logEvent("MainActivity-Main-showMain");
         if (currentPage == ActivityBuilder.FRAGMENT_MINE && mMineFragment != null) {
             mMineFragment.onResume();
+        } else if (currentPage == ActivityBuilder.FRAGMENT_HOME && mCallFlashListFragment != null) {
+            mCallFlashListFragment.onResume();
         }
     }
 

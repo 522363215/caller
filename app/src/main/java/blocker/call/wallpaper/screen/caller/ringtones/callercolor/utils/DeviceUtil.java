@@ -22,6 +22,7 @@ import android.os.Vibrator;
 import android.provider.Settings;
 import android.provider.Telephony;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.RecyclerView;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -645,9 +646,30 @@ public class DeviceUtil {
         }
     }
 
-    public static void getViewShowPercentInListView(int parentHeight, View view) {
-        int top = view.getTop();
-        LogUtil.d(TAG, "getViewShowPercentInListView parentHeight:" + parentHeight + ",top:" + top);
+    public static float getItemShowPercentInRecycleView(RecyclerView recyclerView, View item) {
+        float showPercent = 0;
+        float itemShowHeight = 0;
+        float recyclerViewHeight = recyclerView.getHeight();
+        float itemTop = item.getTop();
+        float itemHeight = item.getHeight();
+        if (itemTop < 0) {
+            if (itemHeight > 0) {
+                itemShowHeight = itemHeight + itemTop;
+                if (itemShowHeight > 0) {
+                    showPercent = itemShowHeight / itemHeight;
+                }
+            }
+        } else {
+            if (recyclerViewHeight > 0 && itemHeight > 0) {
+                itemShowHeight = recyclerViewHeight - itemTop;
+                if (itemShowHeight > itemHeight) {
+                    showPercent = 1.0f;
+                } else {
+                    showPercent = itemShowHeight / itemHeight;
+                }
+            }
+        }
+//        LogUtil.d(TAG, "getItemShowPercentInRecycleView recyclerViewHeight:" + recyclerViewHeight + ",itemHeight:" + itemHeight + ",itemTop:" + itemTop + ",showPercent:" + showPercent);
+        return showPercent;
     }
-
 }

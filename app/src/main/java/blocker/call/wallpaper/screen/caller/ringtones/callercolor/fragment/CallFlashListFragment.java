@@ -42,7 +42,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import event.EventBus;
@@ -142,7 +142,6 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
     public void onResume() {
         super.onResume();
         showPermissionTip();
-
         CallFlashInfo info = CallFlashPreferenceHelper.getObject(
                 CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
         if (info != null) {
@@ -206,6 +205,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
 //                mAdapter.setAdShowPosition(RECYCLER_ONLINE_CALL_FLASH_AD_SHOW_POSITION);
 //            }
         mAdapter.setDataType(mDataType);
+        mAdapter.setRecycleView(mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -401,6 +401,8 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         }
         int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
         int lastItemPosition = mLayoutManager.findLastVisibleItemPosition();
+//        LogUtil.d(TAG, "pauseOrContinuePlayVideo firstItemPosition:" + firstItemPosition + ",lastItemPosition:" + lastItemPosition + ",mCurrentFlashIndex:" + mCurrentFlashIndex
+//                + ",mLastCurrentFlashIndex:" + mLastCurrentFlashIndex + ",isContinuePlay:" + isContinuePlay);
         if (mLastCurrentFlashIndex != mCurrentFlashIndex && mLastCurrentFlashIndex >= firstItemPosition && mLastCurrentFlashIndex <= lastItemPosition) {
             //第二参数可以为任意对象，在adapter中payloads.get(0)可获得此值，此处写为int
             mAdapter.notifyItemChanged(mLastCurrentFlashIndex, CallFlashOnlineAdapter.ITEM_REFRESH_TYPE_PAUSE);
@@ -408,11 +410,6 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
 
         if (mCurrentFlashIndex >= firstItemPosition && mCurrentFlashIndex <= lastItemPosition) {
             if (isContinuePlay) {
-                if (mLayoutManager != null) {
-                    View view = mLayoutManager.getChildAt(mCurrentFlashIndex - firstItemPosition);
-                    float viewShowPercent = DeviceUtil.getViewShowPercent(view);
-                    mAdapter.setVideoItemShowPercent(viewShowPercent);
-                }
                 mAdapter.notifyItemChanged(mCurrentFlashIndex, CallFlashOnlineAdapter.ITEM_REFRESH_TYPE_PLAY);
             } else {
                 mAdapter.notifyItemChanged(mCurrentFlashIndex, CallFlashOnlineAdapter.ITEM_REFRESH_TYPE_PAUSE);
@@ -485,11 +482,6 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
             int lastItemPosition = mLayoutManager.findLastVisibleItemPosition();
             if (mCurrentFlashIndex != -1 && mCurrentFlashIndex >= firstItemPosition && mCurrentFlashIndex <= lastItemPosition) {
-                if (mLayoutManager != null) {
-                    View view = mLayoutManager.getChildAt(mCurrentFlashIndex - firstItemPosition);
-                    float viewShowPercent = DeviceUtil.getViewShowPercent(view);
-                    mAdapter.setVideoItemShowPercent(viewShowPercent);
-                }
                 mAdapter.notifyItemChanged(mCurrentFlashIndex, CallFlashOnlineAdapter.ITEM_REFRESH_TYPE_SCROLL);
             }
         }

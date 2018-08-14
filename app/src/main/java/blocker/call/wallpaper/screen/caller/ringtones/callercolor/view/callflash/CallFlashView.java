@@ -132,6 +132,7 @@ public class CallFlashView extends RelativeLayout {
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
             //记录播放的progress,避免黑屏
             mVideoView.pause();
+            mVideoView.setFocusable(false);
             mVideoPlayProgress = mVideoView.getCurrentPosition();
             isPause.set(true);
         } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null) {
@@ -150,6 +151,7 @@ public class CallFlashView extends RelativeLayout {
 //            }
             mVideoView.seekTo(mVideoPlayProgress);
             mVideoView.start();
+            mVideoView.setFocusable(true);
             isPause.set(false);
         } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null && !mCustomAnimView.isPlaying()) {
             mCustomAnimView.update(false, mCallFlashInfo.flashType);
@@ -184,6 +186,7 @@ public class CallFlashView extends RelativeLayout {
             mVideoView.setVisibility(VISIBLE);
             mVideoView.setVideoPath(path);
             mVideoView.start();
+            mVideoView.setFocusable(true);
             isStop.set(false);
         } else {
             showPreview(info);
