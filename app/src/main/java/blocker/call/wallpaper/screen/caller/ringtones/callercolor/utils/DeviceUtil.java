@@ -662,10 +662,12 @@ public class DeviceUtil {
         } else {
             if (recyclerViewHeight > 0 && itemHeight > 0) {
                 itemShowHeight = recyclerViewHeight - itemTop;
-                if (itemShowHeight > itemHeight) {
-                    showPercent = 1.0f;
-                } else {
-                    showPercent = itemShowHeight / itemHeight;
+                if (itemShowHeight > 0) {
+                    if (itemShowHeight > itemHeight) {
+                        showPercent = 1.0f;
+                    } else {
+                        showPercent = itemShowHeight / itemHeight;
+                    }
                 }
             }
         }

@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.util.List;
+
 public class Utils {
 
     private Utils() {
@@ -63,5 +65,12 @@ public class Utils {
             }
             return null;
         }
+    }
+
+    public static <T> boolean isSameList(List<T> list1, List<T> list2) {
+        if (list1 == null || list2 == null) {
+            return list1 == null && list2 == null;
+        }
+        return list1.size() == list2.size() && list1.containsAll(list2);
     }
 }
