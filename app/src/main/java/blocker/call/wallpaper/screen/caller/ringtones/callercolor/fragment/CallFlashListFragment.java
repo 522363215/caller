@@ -44,6 +44,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUt
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Utils;
 import event.EventBus;
 
 /**
@@ -241,16 +242,18 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             return;
         }
         if (isSuccess && data != null && data.size() > 0 && mAdapter != null) {
-            model.clear();
-            model.addAll(data);
-            mAdapter.notifyDataSetChanged();
-            if (mLayoutNoCallFlash != null) {
-                mLayoutNoCallFlash.setVisibility(View.GONE);
+            //数据不同的时才更新界面
+            if (!Utils.isSameList(data, model)) {
+                model.clear();
+                model.addAll(data);
+                mAdapter.notifyDataSetChanged();
+                if (mLayoutNoCallFlash != null) {
+                    mLayoutNoCallFlash.setVisibility(View.GONE);
+                }
+                if (mRecyclerView != null) {
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                }
             }
-            if (mRecyclerView != null) {
-                mRecyclerView.setVisibility(View.VISIBLE);
-            }
-
         } else {
             //当数据为0时只有收藏界面才刷新，其他界面保持不变
             if (mDataType == CallFlashDataType.CALL_FLASH_DATA_COLLECTION && data != null && data.size() == 0) {
@@ -306,7 +309,9 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         if (CommonUtils.isOldForFlash()) {
             List<Theme> cacheNewFlash = ThemeSyncManager.getInstance().getCacheTopicData(
                     CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH, 1, 6);
-            cacheTopicDataList.addAll(0, cacheNewFlash);
+            if (cacheNewFlash != null) {
+                cacheTopicDataList.addAll(0, cacheNewFlash);
+            }
         }
         if (isGetCacheData && cacheTopicDataList != null && cacheTopicDataList.size() > 0) {
             //缓存数据存在的时候相当于每次进来优先显示缓存然后再下拉刷新
@@ -314,7 +319,6 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             mSwipeRefreshLayout.setRefreshing(true);
             initData(false);
         } else {
-
             String[] themeTopic = null;
             if (CommonUtils.isOldForFlash()) {
                 themeTopic = new String[2];
