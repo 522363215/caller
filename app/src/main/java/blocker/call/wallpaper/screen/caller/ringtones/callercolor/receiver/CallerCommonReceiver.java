@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.BatteryManager;
 
 import com.bumptech.glide.Glide;
+import com.common.sdk.analytics.AnalyticsManager;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
@@ -51,6 +52,7 @@ public class CallerCommonReceiver extends BroadcastReceiver {
                             }
 
                             updateNewFlash(context);
+                            AnalyticsManager.onServiceRestart();
                         } catch (Exception e) {
                             LogUtil.e(TAG, "backgroundDownloadOnlionCallFlash COMMON_CHECK_24 exception: " + e.getMessage());
                         }
