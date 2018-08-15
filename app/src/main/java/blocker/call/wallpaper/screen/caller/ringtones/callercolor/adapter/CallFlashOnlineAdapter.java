@@ -262,21 +262,21 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void setCallFlashShow(final NormalViewHolder holder, int pos, List<Object> payloads) {
-        if (holder.iv_call_select.getVisibility() != View.VISIBLE) {
+        CallFlashInfo info = getItem(pos);
+        boolean enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
+        if (!enableCallFlash || mCurrentFlash == null || info == null || !mCurrentFlash.equals(info)) {
             holder.gv_bg.setVisibility(View.VISIBLE);
             holder.callFlashView.setVisibility(View.GONE);
             return;
         }
-        CallFlashInfo info = getItem(pos);
-        if (mCurrentFlash == null || info == null || !mCurrentFlash.equals(info)) return;
         float viewShowPercent = DeviceUtil.getItemShowPercentInRecycleView(mRecyclerView, holder.itemView);
         boolean canPlay = viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING) && !holder.callFlashView.isPlaying();
         if (payloads.isEmpty()) {//payloads为空 即为正常情况下的执行或者调用notifyItemChanged(position,payloads)方法时payloads==null执行的,
             LogUtil.d(TAG, "setCallFlashShow 正常刷新 canPlay:" + canPlay);
             if (canPlay) {
-                playOrPause(holder, info, true, 100);
+                playOrPause(holder, info, true, 300);
             } else if (viewShowPercent <= ConstantUtils.CALL_FLASH_LIST_STOP_VIDEO_PERCENT && holder.callFlashView.isPlaying()) {
-                playOrPause(holder, info, false, 100);
+                playOrPause(holder, info, false, 300);
             }
         } else {//payloads不为空 即调用notifyItemChanged(position,payloads)方法payloads!=null执行的
             int refreshType = payloads.get(0) != null ? (int) payloads.get(0) : -1;
@@ -303,9 +303,9 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 case ITEM_REFRESH_TYPE_SCROLL:
 //                    LogUtil.d(TAG, "setCallFlashShow 局部刷新 滚动 viewShowPercent:" + viewShowPercent + ",position:" + pos + "canPlay:" + canPlay);
                     if (canPlay) {
-                        playOrPause(holder, info, true, 100);
+                        playOrPause(holder, info, true, 300);
                     } else if (viewShowPercent <= ConstantUtils.CALL_FLASH_LIST_STOP_VIDEO_PERCENT && holder.callFlashView.isPlaying()) {
-                        playOrPause(holder, info, false, 100);
+                        playOrPause(holder, info, false, 300);
                     }
                     break;
             }

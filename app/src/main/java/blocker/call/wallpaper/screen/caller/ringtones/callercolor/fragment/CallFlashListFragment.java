@@ -42,7 +42,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import event.EventBus;
@@ -481,7 +480,12 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
             int firstItemPosition = mLayoutManager.findFirstVisibleItemPosition();
             int lastItemPosition = mLayoutManager.findLastVisibleItemPosition();
             if (mCurrentFlashIndex != -1 && mCurrentFlashIndex >= firstItemPosition && mCurrentFlashIndex <= lastItemPosition) {
-                mAdapter.notifyItemChanged(mCurrentFlashIndex, CallFlashOnlineAdapter.ITEM_REFRESH_TYPE_SCROLL);
+                mRecyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyItemChanged(mCurrentFlashIndex, CallFlashOnlineAdapter.ITEM_REFRESH_TYPE_SCROLL);
+                    }
+                });
             }
         }
     }
