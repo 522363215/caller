@@ -711,7 +711,12 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                     mInfo.isDownloaded = false;
                     mInfo.path = file.getAbsolutePath();
 
-                    showCallFlash();
+                    Async.scheduleTaskOnUiThread(300, new Runnable() {
+                        @Override
+                        public void run() {
+                            showCallFlash();
+                        }
+                    });
 
                     layout_progress_above_ad.post(new Runnable() {
                         @Override

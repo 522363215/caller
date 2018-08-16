@@ -1,9 +1,6 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash;
 
 import android.content.Context;
-import android.media.AudioManager;
-import android.media.AudioManager;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -260,6 +257,9 @@ public class CallFlashView extends RelativeLayout {
                     public boolean onInfo(MediaPlayer mp, int what, int extra) {
                         LogUtil.d(TAG, "setOnInfoListener mp:" + mp + ",what:" + what);
                         if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+                            if (mGlideView != null) {
+                                mGlideView.setVisibility(GONE);
+                            }
                             return true;
                         }
                         return false;

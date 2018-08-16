@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -72,5 +74,14 @@ public class Utils {
             return list1 == null && list2 == null;
         }
         return list1.size() == list2.size() && list1.containsAll(list2);
+    }
+
+    public static Bitmap getVideoFirstFrame(Context context, final String videoPath) {
+        Uri videoURI = Uri.parse(videoPath);
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(context, videoURI);
+        Bitmap bitmap = mmr.getFrameAtTime();//获取第一帧图片
+        mmr.release();//释放资源
+        return bitmap;
     }
 }
