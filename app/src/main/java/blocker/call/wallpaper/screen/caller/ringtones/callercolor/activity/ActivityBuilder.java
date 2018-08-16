@@ -120,6 +120,12 @@ public class ActivityBuilder {
         context.startActivity(intent);
     }
 
+    public static void toSettingActivity(Context context) {
+        Intent intent = new Intent(context, SettingActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
+    }
+
     public static void toAppointActivity(Context context,Class cls) {
         Intent intent = new Intent(context, cls);
         context.startActivity(intent);

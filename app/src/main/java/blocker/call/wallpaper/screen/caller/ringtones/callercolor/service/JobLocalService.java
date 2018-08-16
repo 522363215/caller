@@ -7,6 +7,8 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 
+import com.quick.easyswipe.EasySwipe;
+
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 /**
@@ -34,6 +36,13 @@ public class JobLocalService extends JobService {
             intent.setComponent(new ComponentName(getPackageName(),
                     "blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService"));
             startService(intent);
+
+            //启动 swipe service
+            try {
+                EasySwipe.tryStartService();
+            } catch (Exception e) {
+                LogUtil.e("JobLocalService", "onStartJob e:" + e.getMessage());
+            }
         }
         return false;
     }

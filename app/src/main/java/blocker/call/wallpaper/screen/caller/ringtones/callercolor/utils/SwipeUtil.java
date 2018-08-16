@@ -1,6 +1,7 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils;
 
 import android.app.Application;
+import android.os.Build;
 import android.widget.FrameLayout;
 
 import com.quick.easyswipe.EasySwipe;
@@ -15,9 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 
 public class SwipeUtil {
-    public static void initEasySwipe(Application application) {
+    public static void initEasySwipe(final Application application) {
         // 1. 全局初始化, 传入Applicatoin
         EasySwipe.init(application);
         // 2. 快划布局的隐藏和显示回调, 用于显示广告
@@ -80,7 +82,7 @@ public class SwipeUtil {
         EasySwipe.setQuickSwitchCallback(new QuickSwitchCallback() {
             @Override
             public void openSettingActivity(QuickSwitchResultCallback quickSwitchResultCallback) {
-//                SwipeSettingActivity.startForFlags(ApplicationEx.getInstance());
+                ActivityBuilder.toSettingActivity(application.getApplicationContext());
                 if (quickSwitchResultCallback != null) {
                     //true-使用了外部打开设置页面的方式
                     quickSwitchResultCallback.isUseExternal(true);
@@ -98,9 +100,11 @@ public class SwipeUtil {
             }
         });
         // 注：如果想自定义菜单替换”最近应用”菜单栏，则使用下面方法
-        initEasySwipeMenu();
+//        initEasySwipeMenu();
         //启动快划服务
-        EasySwipe.tryStartService();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            EasySwipe.tryStartService();
+        }
     }
 
     // EasySwipeItem用来装载用户自定义的item信息

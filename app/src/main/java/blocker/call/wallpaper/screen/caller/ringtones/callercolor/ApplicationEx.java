@@ -101,6 +101,7 @@ public class ApplicationEx extends Application {
 
     private void initAppData() {
         LogUtil.d("app_ex", "init app data: ");
+        SwipeUtil.initEasySwipe(this);
         country = NumberUtil.getDefaultCountry();
         mInterstitialAdvertisementMap = new ConcurrentHashMap<>();
         // 加载语言
@@ -116,7 +117,6 @@ public class ApplicationEx extends Application {
         // TODO: 2018/7/5 广告暂时屏蔽
 //        intiAdManager();
         initPriorityAds();
-        SwipeUtil.initEasySwipe(this);
     }
 
     private void initCallFlashBase() {
