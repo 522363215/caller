@@ -30,6 +30,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.HttpUtil
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SwipeUtil;
 
 
 public class ApplicationEx extends Application {
@@ -115,7 +116,7 @@ public class ApplicationEx extends Application {
         // TODO: 2018/7/5 广告暂时屏蔽
 //        intiAdManager();
         initPriorityAds();
-
+        SwipeUtil.initEasySwipe(this);
     }
 
     private void initCallFlashBase() {
@@ -232,5 +233,4 @@ public class ApplicationEx extends Application {
             LogUtil.e("advertise", "initPriorityAds exception: " + e.getMessage());
         }
     }
-
 }

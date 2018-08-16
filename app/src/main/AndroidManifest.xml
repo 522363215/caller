@@ -97,6 +97,11 @@
         android:name="android.permission.RECORD_AUDIO"
         android:required="false" />
 
+    <permission
+        android:name="blocker.call.wallpaper.screen.caller.ringtones.callercolor.SwipeStateProvider.WRITE_PERMISSION"
+        android:label="Permission for read content provider"
+        android:protectionLevel="signature" />
+
     <application
         android:name=".ApplicationEx"
         android:allowBackup="true"
@@ -120,6 +125,13 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationName"
             android:value="@string/fbapp_name" />
+
+        <provider
+            android:name="com.quick.easyswipe.mutex.provider.SwipeStateProvider"
+            android:authorities="${applicationId}.state_provider"
+            android:exported="true"
+            android:multiprocess="true"
+            android:writePermission="blocker.call.wallpaper.screen.caller.ringtones.callercolor.SwipeStateProvider.WRITE_PERMISSION"/>
 
         <activity
             android:name=".activity.SplashActivity"

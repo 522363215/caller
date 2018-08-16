@@ -224,6 +224,13 @@
 
     <string name="push_tools_content">Check details</string>
     <string name="push_tools_block_call">"Blocked call(s)"</string>
+
+
+    <string name="setting_swipe">Swipe</string>
+    <string name="setting_swipe_des">swipe</string>
+    <string name="setting_close_swipe_tip">关闭之后将无法享受快捷的启动工具，是否确认关闭？</string>
+    <string name="setting_enable_swipe_success_tip">"Enable swipe success!"</string>
+
     <string name="title_activity_message">message</string>
     <string name="title_home">message wallpaper</string>
     <string name="title_dashboard">history</string>
