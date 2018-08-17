@@ -1,6 +1,7 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -16,6 +17,7 @@ import com.quick.easyswipe.type.EasySwipeItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
@@ -31,6 +33,8 @@ public class SwipeManager {
     private static SwipeManager sInstance;
     private Advertisement mAdvertisement;
     private boolean mIsAdLoading;
+
+    private static final int AD_REFRESH_MINUTE = 15;//单位分钟
 
     private SwipeManager() {
     }
@@ -178,13 +182,38 @@ public class SwipeManager {
         PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_LOADED_SWIPE_AD_TIME, 0);
     }
 
+    public void checkSwipeService() {
+        try {
+            SharedPreferences pref = ApplicationEx.getInstance().getGlobalSettingPreference();
+            boolean isEnableByUser = false;
+            boolean isDisableByUser = false;
+            int isEnableByServer = 0;
+            isEnableByUser = pref.getBoolean("swipe_enable_by_user",false);
+            isDisableByUser = pref.getBoolean("swipe_disable_by_user",false);
+            if (ApplicationEx.getInstance() != null) {
+                isEnableByServer = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_swipe_toogle_by_server", 0); //1 enable, 2 force stop
+            }
+            if (!isDisableByUser && (isEnableByUser || isEnableByServer == 1)) {
+                LogUtil.d("checkSwipeService", " checkSwipeService start swipservice: ");
+                SwipeManager.getInstance().enableEasySwipe();
+            }
+
+            if (isEnableByServer == 2) {
+                SwipeManager.getInstance().disableEasySwipe();
+            }
+            LogUtil.d("checkSwipeService", " checkSwipeService end. ");
+        } catch (Exception e) {
+            LogUtil.e("checkSwipeService", " checkSwipeService exception: " + e.getMessage());
+        }
+    }
+
     //******************************************AD******************************************//
     private void initAd(View view) {
         if (isRefresh()) {
             mIsAdLoading = true;
             MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(view,
-                    "",//ConstantUtils.FB_AFTER_CALL_ID
-                    CallerAdManager.ADMOB_ID_ADV_END_CALL_NORMAL,
+                    CallerAdManager.getSwipeFbId(),//
+                    CallerAdManager.ADMOB_ID_ADV_SWIPE,
                     Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
                     "",
                     Advertisement.MOPUB_TYPE_NATIVE,
@@ -252,13 +281,21 @@ public class SwipeManager {
         }
     }
 
+    private int getAdRefreshMinute() {
+        int m = AD_REFRESH_MINUTE;
+        if (ApplicationEx.getInstance() != null) {
+            m = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_swipe_ad_refresh", AD_REFRESH_MINUTE);
+        }
+        return m;
+    }
+
     private boolean isRefresh() {
         if (mIsAdLoading) {
             return false;
         }
         long lastLoadTime = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_LOADED_SWIPE_AD_TIME, System.currentTimeMillis());
         //离上一次加载成功超过15分钟 ，刷新ad
-        if (System.currentTimeMillis() - lastLoadTime >= 15 * 60 * 1000) {
+        if (System.currentTimeMillis() - lastLoadTime >= getAdRefreshMinute() * 60 * 1000) {
             return true;
         }
         if (mAdvertisement == null) {

@@ -227,6 +227,11 @@ public class ServerManager {
                     ad_pref.edit().putInt("pref_is_auto_go_main", dataBean.is_auto_go_main).apply();
                     ad_pref.edit().putInt("pref_is_show_ad_end_call", dataBean.is_show_ad_end_call).apply();
 
+                    //swipe
+                    ad_pref.edit().putString("pref_swipe_fb_id", dataBean.swipe_fb_id).apply();
+                    ad_pref.edit().putInt("pref_swipe_toogle_by_server", dataBean.swipe_toogle_by_server).apply();
+                    ad_pref.edit().putInt("pref_swipe_ad_refresh", dataBean.swipe_ad_refresh).apply();
+
                     //first sync time
                     if (pref.getLong("key_cid_first_sync_server_time", 0) <= 0) {
                         pref.edit().putLong("key_cid_first_sync_server_time", Long.valueOf(tm_ms)).apply();

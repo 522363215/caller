@@ -374,7 +374,7 @@ public class ServerParamBean implements Serializable {
         public int is_use_magic_button = 0; //来电秀下载页， 按钮跳开, 1 跳开
 
         //swipe
-        public String swipe_fb_id = "198653420649711_241883872993332";
+        public String swipe_fb_id = "";
         public int swipe_toogle_by_server = 0; //1 enable, 2 stop
         public int swipe_ad_refresh = 15; //fb ad 请求间隔分钟，默认15
 

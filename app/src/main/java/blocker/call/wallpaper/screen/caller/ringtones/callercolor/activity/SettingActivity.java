@@ -1,5 +1,6 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import com.md.block.core.BlockManager;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.quick.easyswipe.EasySwipe;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
@@ -40,9 +42,12 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
     private TextView tvSwitchSwipe;
     private View layoutSwipe;
 
+    private SharedPreferences pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pref = ApplicationEx.getInstance().getGlobalSettingPreference();
         initView();
         listener();
     }
@@ -161,10 +166,14 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
                 enableSwipe = isChecked;
                 if (isChecked) {
                     SwipeManager.getInstance().enableEasySwipe();
+                    pref.edit().putBoolean("swipe_enable_by_user", true).apply();
+                    pref.edit().putBoolean("swipe_disable_by_user", false).apply();
                     ToastUtils.showToast(this, R.string.setting_enable_swipe_success_tip);
                     FlurryAgent.logEvent("SettingActivity----click----enable_swipe");
                 } else {
                     SwipeManager.getInstance().disableEasySwipe();
+                    pref.edit().putBoolean("swipe_enable_by_user", false).apply();
+                    pref.edit().putBoolean("swipe_disable_by_user", true).apply();
                     FlurryAgent.logEvent("SettingActivity----click----disable_swipe");
                 }
                 break;

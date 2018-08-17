@@ -214,4 +214,10 @@ public class CallerAdManager {
         }
         return show;
     }
+
+    //swipe fb id
+    public static String getSwipeFbId() {
+        String fb_id = ApplicationEx.getInstance().getGlobalADPreference().getString("pref_swipe_fb_id", "");
+        return fb_id;
+    }
 }
