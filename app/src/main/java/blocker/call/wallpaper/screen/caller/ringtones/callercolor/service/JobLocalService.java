@@ -43,7 +43,8 @@ public class JobLocalService extends JobService {
 
                 //没有安装call id 才启动
                 if (!AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID)) {
-                    SwipeManager.getInstance().enableEasySwipe();
+                    SwipeManager.getInstance().checkSwipeService();
+                    LogUtil.d("JobLocalService", "onStartJob enableEasySwipe: ");
                 }
             } catch (Exception e) {
                 LogUtil.e("JobLocalService", "onStartJob e:" + e.getMessage());

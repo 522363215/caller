@@ -28,13 +28,10 @@ import java.util.Locale;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
@@ -93,7 +90,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
 
         //init admob
         MobileAds.initialize(this, APP_ADMOB_ID);
-        checkSwipe();
     }
 
     // 设置沉浸式状态栏, 并且设置状态栏占位留白;
@@ -310,16 +306,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
     @Override
     public void onPermissionNotGranted(int requestCode) {
         Toast.makeText(this, getString(R.string.permission_denied_txt), Toast.LENGTH_SHORT).show();
-    }
-    private void checkSwipe(){
-        Async.run(new Runnable() {
-            @Override
-            public void run() {
-                if (!AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID)) {
-                    SwipeManager.getInstance().checkSwipeService();
-                }
-            }
-        });
     }
 
     //跳转到系统app详情界面
