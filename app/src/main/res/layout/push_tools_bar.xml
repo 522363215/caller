@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp8">
+
+    <ImageView
+        android:layout_width="@dimen/dp40"
+        android:layout_height="@dimen/dp40"
+        android:src="@drawable/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp8"
+        android:layout_marginStart="@dimen/dp8"
+        android:orientation="vertical"
+        android:paddingEnd="0dp"
+        android:paddingLeft="@dimen/dp6"
+        android:paddingRight="0dp"
+        android:paddingStart="@dimen/dp6">
+
+        <TextView
+            android:id="@+id/tv_notify_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="title"
+            android:textColor="@color/background"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_notify_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.6"
+            android:text="content"
+            android:textColor="@color/background"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <FrameLayout
+        android:id="@+id/layout_notify_action"
+        android:layout_width="@dimen/dp64"
+        android:layout_height="@dimen/dp32"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_notify"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:text="button"
+            android:visibility="gone"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_notify_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="14sp"
+            tools:text="12:24" />
+
+    </FrameLayout>
+
+</LinearLayout>

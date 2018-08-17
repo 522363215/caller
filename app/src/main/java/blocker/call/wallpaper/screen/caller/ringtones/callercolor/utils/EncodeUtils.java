@@ -17,7 +17,7 @@ import javax.crypto.spec.SecretKeySpec;
  */
 
 public class EncodeUtils {
-    public static String ENCRYPTION_KEY = "lionmobikey$)!1";
+    public static String ENCRYPTION_KEY = "ccphonekey$)!1";
     public static String ENCRYPTION_IV = "4e5Wa71fYoT7MFEX";
 
     static Key makeKey() {

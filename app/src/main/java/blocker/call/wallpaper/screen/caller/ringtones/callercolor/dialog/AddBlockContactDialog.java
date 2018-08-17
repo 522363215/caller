@@ -19,6 +19,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.flurry.android.FlurryAgent;
 import com.md.block.beans.BlockInfo;
 import com.md.block.core.BlockManager;
 
@@ -72,6 +73,12 @@ public class AddBlockContactDialog extends Dialog {
         Async.run(new LoadCallLogRunn());
     }
 
+    @Override
+    public void show() {
+        super.show();
+        FlurryAgent.logEvent("AddBlockContactDialog-----show");
+    }
+
     private void initView() {
         lvCallLog = findViewById(R.id.lv_call_log);
         pbLoading = findViewById(R.id.pb_loading);
@@ -97,6 +104,8 @@ public class AddBlockContactDialog extends Dialog {
                 block.setNumber(saveNumber);
                 block.setBlockTime(System.currentTimeMillis());
                 boolean isSuc = BlockManager.getInstance().setBlockContact(block);
+
+                FlurryAgent.logEvent("AddBlockContactDialog-----item_click------add_block_contact");
 
                 if (listener != null) {
                     listener.onAddBlockContact(isSuc, logInfo.callNumber);
@@ -144,10 +153,10 @@ public class AddBlockContactDialog extends Dialog {
                 Async.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtils.showToast(mContext, "No Permission!");
+                        ToastUtils.showToast(mContext, mContext.getString(R.string.permission_denied_txt));
+                        dismiss();
                     }
                 });
-                dismiss();
                 return;
             }
 
@@ -176,8 +185,22 @@ public class AddBlockContactDialog extends Dialog {
             String [] selectionArgs = new String[1];
             selectionArgs[0] = String.valueOf(System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 30 * 3);
 
-            Cursor query = mContext.getContentResolver().query(uri, project, selection, selectionArgs, CallLog.Calls.DEFAULT_SORT_ORDER);
+            final Cursor query = mContext.getContentResolver().query(uri, project, selection, selectionArgs, CallLog.Calls.DEFAULT_SORT_ORDER);
             if (query != null) {
+                if (query.getCount() <= 0) {
+                    if (root != null) {
+                        root.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtils.showToast(getContext(), getContext().getString(R.string.add_block_empty_call_log));
+                                query.close();
+                                dismiss();
+                            }
+                        }, 1500);
+                    }
+                    return;
+                }
+
                 tempCallLog = new ArrayList<>();
                 addedNumberCache = new ArrayList<>();
                 while (query.moveToNext()) {
@@ -208,6 +231,16 @@ public class AddBlockContactDialog extends Dialog {
                 if (tempCallLog.size() > 0) {
                     model.addAll(tempCallLog);
                     invalidView();
+                } else {
+                    if (root != null) {
+                        root.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtils.showToast(getContext(), getContext().getString(R.string.add_block_no_added_call_log));
+                                dismiss();
+                            }
+                        }, 1500);
+                    }
                 }
                 query.close();
             }

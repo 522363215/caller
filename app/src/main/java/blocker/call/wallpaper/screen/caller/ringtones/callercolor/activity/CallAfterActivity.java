@@ -1,11 +1,14 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,13 +20,18 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DateUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -34,7 +42,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconV
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.OKCancelDialog;
 
 public class CallAfterActivity extends BaseActivity implements View.OnClickListener {
-
     private static final String TAG = "CallAfterActivity";
     private TextView tv_number;
     private TextView tv_location;
@@ -52,28 +59,46 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
     private long mStartTime;
     private RelativeLayout layout_number_infos;
     private boolean isAddedInBlockContacts;
+    private Advertisement mAdvertisement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call_after);
-//        CommonUtils.translucentStatusBar(this, true);
         initView();
-
         onNewIntent(getIntent());
         initData();
         listener();
     }
 
     @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this, true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // 全屏时增加StatusBar站位的留白
+            ViewGroup group = findViewById(R.id.rl_caller);
+            View view = new View(this);
+            view.setBackgroundColor(getResources().getColor(R.color.color_FF0A2134));
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtil.getStatusBarHeight());
+            view.setLayoutParams(params);
+            group.addView(view, 0);
+        }
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_call_after;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+        initAds();
         FlurryAgent.logEvent("CallAfterActivity----ShowCallAfter");
         mStartTime = System.currentTimeMillis();
         statistic();
         if (mInfo != null) {
             layout_number_infos.setVisibility(View.VISIBLE);
-            findViewById(R.id.rootview).setBackgroundColor(getResources().getColor(R.color.color_FF0A2134));
+            findViewById(R.id.root_view).setBackgroundColor(getResources().getColor(R.color.color_FF0A2134));
         } else {
             finish();
         }
@@ -193,16 +218,15 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
         int id = v.getId();
         switch (id) {
             case R.id.fiv_back:
-                FlurryAgent.logEvent("CallAfterActivity----toMain");
                 toMain();
                 break;
             case R.id.fiv_menu:
                 // do nothing;
-                FlurryAgent.logEvent("CallAfterActivity----menu");
+                FlurryAgent.logEvent("CallAfterActivity----click----menu");
                 rl_menu_root.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_close:
-                FlurryAgent.logEvent("CallAfterActivity----close");
+                FlurryAgent.logEvent("CallAfterActivity----click----close");
                 rl_menu_root.setVisibility(View.GONE);
                 onBackPressed();
                 break;
@@ -217,7 +241,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.tv_disable:
                 try {
-                    FlurryAgent.logEvent("CallAfterActivity----disable");
+                    FlurryAgent.logEvent("CallAfterActivity----click----disable");
                     rl_menu_root.setVisibility(View.GONE);
                     onBackPressed();
                     startActivity(new Intent(this, SettingActivity.class));
@@ -227,7 +251,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
 
                 break;
             case R.id.rl_call_back:
-                FlurryAgent.logEvent("CallAfterActivity----CallBack");
+                FlurryAgent.logEvent("CallAfterActivityCallAfterActivity----click----CallBack");
                 if (TextUtils.isEmpty(mInfo.callNumber)) {
                     ToastUtils.showToast(this, getResources().getString(R.string.call_after_click_toast));
                     break;
@@ -236,12 +260,12 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
 //                finish();
                 break;
             case R.id.rl_call_sms:
-                FlurryAgent.logEvent("CallAfterActivity----toSms");
+                FlurryAgent.logEvent("CallAfterActivity----click----toSms");
                 if (TextUtils.isEmpty(mInfo.callNumber)) {
                     ToastUtils.showToast(this, getResources().getString(R.string.call_after_click_toast));
                     break;
                 } else {
-//                    ActivityBuilder.toMessageActivity(this, mInfo.callNumber, true);
+                    DeviceUtil.toSystemSms(this, mInfo.callNumber);
                 }
 //                finish();
                 break;
@@ -272,10 +296,12 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                         info.setName(ContactManager.getInstance().getContactNameForNumber(mInfo.callNumber));
                         if (isAddedInBlockContacts) {
                             final boolean isSuc = BlockManager.getInstance().removeBlockContact(info);
+                            isAddedInBlockContacts = !isSuc;
                             Async.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     if (isSuc) {
+                                        FlurryAgent.logEvent("CallAfterActivity----click----unblock");
                                         tvBlock.setText(R.string.phone_detail_block);
                                     }
                                     int content = isSuc ? R.string.block_contacts_remove_success : R.string.block_contacts_remove_failed;
@@ -284,11 +310,20 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
                             });
                         } else {
                             final boolean isSuc = BlockManager.getInstance().setBlockContact(info);
+                            isAddedInBlockContacts = isSuc;
+                            if (isSuc) {
+                                FlurryAgent.logEvent("CallAfterActivity----click----add_block");
+                                BlockManager.getInstance().setBlockSwitchState(true);
+                            }
                             Async.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     if (isSuc) {
                                         tvBlock.setText(R.string.phone_detail_unblock);
+                                        Intent toBlock = new Intent();
+                                        toBlock.setClass(CallAfterActivity.this, BlockActivity.class);
+                                        toBlock.putExtra("from_call_after", true);
+                                        startActivity(toBlock);
                                     }
                                     int content = isSuc ? R.string.phone_detail_have_no_tag : R.string.block_contacts_added_failed;
                                     ToastUtils.showToast(CallAfterActivity.this, getString(content));
@@ -304,6 +339,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
 
     private void toMain() {
         ActivityBuilder.toMain(this, ActivityBuilder.FRAGMENT_HOME);
+        FlurryAgent.logEvent("CallAfterActivity----toMain");
         if (!isFinishing()) {
             finish();
         }
@@ -360,5 +396,67 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
             strStaySec = "21-24";
         eventParams.put("param_user_stay_end_call_show", strStaySec);
         FlurryAgent.logEvent("user_stay_end_call_show", eventParams);
+    }
+
+    //******************************************AD******************************************//
+    private void initAds() {
+        if(CallerAdManager.isShowAdOnEndCall() && isShouldReq()) {
+            MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
+                    "",//ConstantUtils.FB_AFTER_CALL_ID
+                    CallerAdManager.ADMOB_ID_ADV_END_CALL_NORMAL,//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
+                    Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
+                    "",
+                    Advertisement.MOPUB_TYPE_NATIVE,
+                    -1,
+                    "",
+                    false);
+            mAdvertisement = new Advertisement(adapter);
+            mAdvertisement.setRefreshWhenClicked(false);
+            mAdvertisement.refreshAD(true);
+            mAdvertisement.enableFullClickable();
+        }
+    }
+
+    private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String eventKey, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, AdvertisementSwitcher.SERVER_KEY_END_CALL);
+        }
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, AdvertisementSwitcher.SERVER_KEY_END_CALL, isBanner);
+        }
+
+        @Override
+        public void onAdLoaded() {
+        }
+
+        @Override
+        public int getFbViewRes() {
+            return mIsBanner ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_no_icon_native_ads_call_after_big;
+        }
+
+        @Override
+        public int getAdmobViewRes(int type, boolean isAppInstall) {
+            return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_callafter : R.layout.layout_admob_advanced_content_ad_callafter;
+        }
+
+        @Override
+        public int getAdmobHeight() {
+            return 180;
+        }
+    }
+    //******************************************AD******************************************//
+
+    private boolean isShouldReq(){
+        boolean is = false;
+        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+        long last_req = ad_pref.getLong("fb_ad_last_req_end_call", 0);
+        if(System.currentTimeMillis() - last_req >= 60 * 1000){
+            is = true;
+            ad_pref.edit().putLong("fb_ad_last_req_end_call", System.currentTimeMillis()).apply();
+        }
+
+        return is;
     }
 }

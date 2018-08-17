@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp56"
+        app:title="@string/app_name" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/dp36"
+        android:paddingStart="@dimen/dp36"
+        android:paddingTop="@dimen/dp24">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp220"
+            android:background="@drawable/btn_gray_7594b2_stroke_bg"
+            android:padding="2dp">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0.3"
+                android:gravity="center"
+                android:text="@string/icon_add"
+                android:textColor="@color/color_DE000000"
+                android:textSize="72sp" />
+
+            <ImageView
+                android:id="@+id/iv_upload"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
+        <EditText
+            android:id="@+id/edt_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp32"
+            android:background="@color/back_white"
+            android:gravity="center_vertical"
+            android:hint="@string/media_upload_author"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/dp6"
+            android:paddingEnd="@dimen/dp4"
+            android:paddingStart="@dimen/dp4"
+            android:paddingTop="@dimen/dp6"
+            android:textColor="@color/color_FF00284D"
+            android:textSize="16sp"
+            tools:text="Yanru Huang dasdasdasdasdasdasdasdasd" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/layout_privacy_policy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp20"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                android:id="@+id/fiv_check"
+                android:layout_width="@dimen/dp20"
+                android:layout_height="@dimen/dp20"
+                android:background="@drawable/ic_unchecked"
+                android:gravity="center"
+                android:textColor="@color/color_FF0084FF"
+                android:textSize="20dp"
+                tools:text="@string/icon_check" />
+
+            <View
+                android:layout_width="@dimen/dp4"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/media_upload_request_option"
+                android:textColor="@color/color_FF00284D"
+                android:textSize="12sp"
+                tools:text="同意" />
+
+            <View
+                android:layout_width="@dimen/dp6"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:id="@+id/tv_privacy_policy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_FF0084FF"
+                android:textSize="12sp"
+                tools:text="@string/media_upload_request_privacy_policy"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_upload"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp48"
+        android:gravity="center"
+        android:text="@string/media_upload_action_upload"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</LinearLayout>

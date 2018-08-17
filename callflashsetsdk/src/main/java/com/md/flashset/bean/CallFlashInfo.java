@@ -44,12 +44,13 @@ public class CallFlashInfo implements Serializable {
     public String logoPath;//logo路径
     public String logoPressPath;//logoPress路径
     public int imgResId;
-
+    public int img_hResId;
     public int progress;
     public int downloadState = 4;//默认为等待中
     public boolean isAutoDownload = true;//是否为自动下载,默认为自动下载
     public int downloadFailedCount;//下载失败的次数
     public boolean isDownloadSuccess;
+
     /**
      * 已经下载过，下载失败或成功都算下载过
      */
@@ -62,6 +63,10 @@ public class CallFlashInfo implements Serializable {
     public boolean isHaveSound; // flash素材是否有声音;
     public String thumbnail_imgUrl;//列表中背景图片的缩略图url
 
+    public long downloadSuccessTime;
+    public long setToCallFlashTime;//设置为来电秀的时间
+    public long collectTime;//收藏的时间
+
     @Override
     public boolean equals(Object obj) {
         if (obj != null && obj instanceof CallFlashInfo) {
@@ -71,6 +76,11 @@ public class CallFlashInfo implements Serializable {
             }
         }
         return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 
     @Override

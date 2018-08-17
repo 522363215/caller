@@ -56,7 +56,6 @@ public class MessageActivity extends BaseActivity implements ViewPager.OnPageCha
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message);
 
         getFragmentArray();
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -71,6 +70,16 @@ public class MessageActivity extends BaseActivity implements ViewPager.OnPageCha
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(),fragments);
         mVpMessage.setAdapter(fragmentAdapter);
         mVpMessage.setOnPageChangeListener(this);
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_message;
     }
 
     private void getFragmentArray(){

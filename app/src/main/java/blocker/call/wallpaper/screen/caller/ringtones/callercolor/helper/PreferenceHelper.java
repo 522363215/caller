@@ -23,16 +23,14 @@ final public class PreferenceHelper {
     private static final String TAG = "PreferenceHelper";
     private static final String PREF_FILE_NAME = "com_callercolor_pref";
 
+    public static final boolean DEFAULT_VALUE_FOR_CALL_FLASH = false;
+    public static final boolean DEFAULT_VALUE_FOR_CALLER_ID = true;
+    public static final boolean DEFAULT_VALUE_FOR_MESSAGE = false;
 
     /**
      * 获取权限是否由设置界面返回
      */
     public static final String PREF_KEY_IS_RETURN_FROM_SETTING_ACTIIVTY = "android_is_return_from_setting_activity";
-
-    /**
-     * 上一次加载第一次显示admob的时间的map
-     */
-    public static final String PREF_LAST_SHOW_FRIST_ADMOB_TIME_MAP = "android_last_show_first_admob_time_map";
 
     /**
      * 上一次CALL FLASh SHOW 2 显示GROUP banner 广告的时间
@@ -83,6 +81,7 @@ final public class PreferenceHelper {
 
     // 是否开启callAfter;
     public static final String PREF_KEY_ENABLE_SHOW_CALL_AFTER = "caller_color_enable_show_call_after";
+
     /**
      * 来短信时是否显示短信界面
      */
@@ -108,6 +107,36 @@ final public class PreferenceHelper {
      * 上一次显示主动申请权限界面的时间
      */
     public static final String PREF_LAST_REQUEST_PERMISSION_TIME = "android_last_request_permission_time";
+
+    /**
+     * 上一次显示新手引导的时间
+     */
+    public static final String PREF_LAST_SHOW_FIRST_GUIDE_TIME = "android_last_show_first_guide_time";
+
+    /**
+     * 上传文件是否同意隐私政策;
+     */
+    public static final String PREF_KEY_MEDIA_UPLOAD_IS_AGREE_PRIVACY_POLICY = "caller_pref_key_call_flash_upload_is_agree_privacy_policy";
+
+    /**
+     * 上一次跳转到小米获取show on lock 权限的时间;
+     */
+    public static final String PREF_KEY_LAST_TO_XIAO_MI_SHOW_ON_LOCK_PERMISSION_ACTIVITY = "caller_pref_key_last_to_xiao_mi_show_on_lock_permission_activity";
+
+    /**
+     * 上一次跳转到小米获取自启动权限的时间;
+     */
+    public static final String PREF_KEY_LAST_TO_XIAO_MI_AUTO_START_BOOT_PERMISSION_ACTIVITY = "caller_pref_key_last_to_xiao_mi_auto_start_boot_permission_activity";
+
+    /**
+     * 最近一次进入App的时间
+     */
+    public static final String PREF_KEY_LAST_ENTER_APP_TIME = "caller_pref_key_last_enter_app_time";
+
+    /**
+     * 是否显示新手 来电秀设置 引导
+     */
+    public static final String PREF_KEY_IS_SHOW_CALL_FLASH_SET_GUIDE = "caller_pref_key_is_show_call_flash_set_guide";
 
 
     private PreferenceHelper() {

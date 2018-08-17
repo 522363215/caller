@@ -3,7 +3,6 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -15,7 +14,6 @@ import com.flurry.android.FlurryAgent;
 
 import org.json.JSONObject;
 
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServerManager;
@@ -60,14 +58,14 @@ public class RatingOneDialog extends BaseDialog {
 //                    intent.putExtra(Intent.EXTRA_SUBJECT, ConstantUtils.EMAIL_TITLE);
 //                    intent.putExtra(Intent.EXTRA_TEXT, text.toString());
 //                    getContext().startActivity(intent);
-                    sendEmail(text);
+                    sendFeedBack(text);
                     dismiss();
                 }
             }
         });
     }
 
-    private void sendEmail(final CharSequence text) {
+    private void sendFeedBack(final CharSequence text) {
         PreferenceHelper.putLong(PreferenceHelper.PREF_KEY_LAST_FEEDBACK_TIME, System.currentTimeMillis());
         final String mail = getMail();
         String msg = resolveMessage(text);

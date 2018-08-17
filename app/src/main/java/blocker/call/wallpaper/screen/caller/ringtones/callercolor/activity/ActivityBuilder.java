@@ -17,20 +17,23 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
  */
 public class ActivityBuilder {
     /**
-     * 表示从callFlash 结果页返回时回到MainActivity 不需要改变page
+     * 跳转到mainActivity 不需要改变page
      */
-    public static final int BACK_FROM_CALL_FLASH_RESULT = -1024;
+    public static final int NO_CHANGE_FRAGMENT = -1024;
     public static final String MAIN_FRAGMENT_INDEX = "main_fragment_index";
     public static final String IS_COME_FROM_DESKTOP = "is_come_from_desktop";
     public static final String IS_COME_FROM_CALL_AFTER = "is_come_from_call_after";
     public static final String CALL_FLASH_INFO = "call_flash_info";
+    public static final String CALL_FLASH_DATA_TYPE = "call_flash_data_type";
+    public static final String IS_COME_GUIDE = "is_first_boot_guide_in_call_flash_detail";
 
     public static final int FRAGMENT_HOME = 0;
-    public static final int FRAGMENT_CATEGORY = 1;
-    public static final int MAX_FRAGEMNTS = 4;
+    public static final int FRAGMENT_MINE = 1;
+    public static final int FRAGMENT_CATEGORY = 2;
+    public static final int MAX_FRAGEMNTS = 2;
 
     public static final String SMS_COME_MESSAGE = "sms_come_message";
-    public static final String IS_SHOW_PERMISSIONS = "is_show_permissions";
+    public static final String IS_LETS_START = "is_lets_start";
 
     public static final String CALL_FLASH_SHARE_PREVIEW = "call_flash_preview";
 
@@ -77,22 +80,42 @@ public class ActivityBuilder {
         toCallFlashPreview(context, info, glideView, false);
     }
 
-    public static void toCallFlashDetail(Context context, CallFlashInfo info, boolean isComeDesktop) {
+    public static void toCallFlashDetail(Context context, CallFlashInfo info, boolean isComeDesktop, boolean isComeGuide) {
         Intent intent = new Intent();
         intent.setClass(context, CallFlashDetailActivity.class);
 //        intent.putExtra(ConstantUtils.COME_FROM_CALLAFTER, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_CALLAFTER, false));
 //        intent.putExtra(ConstantUtils.COME_FROM_PHONEDETAIL, getIntent().getBooleanExtra(ConstantUtils.COME_FROM_PHONEDETAIL, false));
         intent.putExtra(IS_COME_FROM_DESKTOP, isComeDesktop);
         intent.putExtra(CALL_FLASH_INFO, info);
+        intent.putExtra(IS_COME_GUIDE, isComeGuide);
+        context.startActivity(intent);
+    }
+
+    public static void toCallFlashDetail(Context context, CallFlashInfo info, boolean isComeDesktop) {
+        toCallFlashDetail(context, info, isComeDesktop, false);
+    }
+
+    /**
+     * @param dataType CallFlashDataType 中的type
+     */
+    public static void toCallFlashList(Context context, int dataType) {
+        Intent intent = new Intent();
+        intent.setClass(context, CallFlashListActivity.class);
+        intent.putExtra(CALL_FLASH_DATA_TYPE, dataType);
         context.startActivity(intent);
     }
 
     /**
-     * @param isShowPermission true:显示当前已经获取的权限信息，false:请求权限
+     * @param isLetsStart true:显示title为check，false:请求权限
      */
-    public static void toPermissionActivity(Context context, boolean isShowPermission) {
+    public static void toPermissionActivity(Context context, boolean isLetsStart) {
         Intent intent = new Intent(context, PermissionActivity.class);
-        intent.putExtra(ActivityBuilder.IS_SHOW_PERMISSIONS, isShowPermission);
+        intent.putExtra(ActivityBuilder.IS_LETS_START, isLetsStart);
+        context.startActivity(intent);
+    }
+
+    public static void toCallFlashSetGuideActivity(Context context) {
+        Intent intent = new Intent(context, CallFlashSetGuideActivity.class);
         context.startActivity(intent);
     }
 }

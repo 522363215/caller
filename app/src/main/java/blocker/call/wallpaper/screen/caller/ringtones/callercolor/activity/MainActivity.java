@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,20 +22,24 @@ import com.md.flashset.bean.CallFlashDataType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.MainPagerAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventLanguageChange;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashEnable;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CategoryFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.MineFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.GuideUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager;
 import event.EventBus;
 
@@ -60,15 +64,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private boolean mIsOnPageSelected;
     private TextView mTvPageTitle;
 
+    private boolean isPostingMainData = false;
+    private static ExecutorService mainFixedThreadPool = Executors.newFixedThreadPool(1);
+    private RelativeLayout mTabMine;
+    private MineFragment mMineFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().registerSticky(this);
         }
-        toPermissionActivity();
+        //新手引导
+        GuideUtil.toFirstBootGuide(this);
+
+        PreferenceHelper.putLong(PreferenceHelper.PREF_KEY_LAST_ENTER_APP_TIME, System.currentTimeMillis());
+
         initView();
         //初始化page
         initViewPager();
@@ -76,14 +87,41 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         initSideSlip();
         listener();
         initIndex(getIntent());
+
+        //发送统计 move to new sdk
+//        SharedPreferences setting = ApplicationEx.getInstance().getGlobalSettingPreference();
+//        int used_day = setting.getInt("used_day", 0);
+//        if (used_day != Stringutil.getTodayDayInYearGMT8()) {
+//            if (!isPostingMainData) {
+//                isPostingMainData = true;
+//                CommonUtils.wrappedSubmit(mainFixedThreadPool, new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        StatisticsUtil.sendMainData(MainActivity.this);
+//                    }
+//                });
+//            }
+//        }
     }
 
-    private void toPermissionActivity() {
-        boolean isShowPermissionActivity = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_REQUEST_PERMISSION_TIME, 0) <= 0;
-        if (isShowPermissionActivity && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_REQUEST_PERMISSION_TIME, System.currentTimeMillis());
-            ActivityBuilder.toPermissionActivity(this, false);
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this, true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // 全屏时增加StatusBar站位的留白
+
+            ViewGroup group = findViewById(R.id.layout_root);
+            View view = new View(this);
+            view.setBackgroundColor(getResources().getColor(R.color.color_bg_black_top));
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtil.getStatusBarHeight());
+            view.setLayoutParams(params);
+            group.addView(view, 0);
         }
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_main;
     }
 
     @Override
@@ -101,6 +139,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         super.onResume();
         sIsAlive = true;
         FlurryAgent.logEvent("MainActivity-Main-showMain");
+        if (currentPage == ActivityBuilder.FRAGMENT_MINE && mMineFragment != null) {
+            mMineFragment.onResume();
+        } else if (currentPage == ActivityBuilder.FRAGMENT_HOME && mCallFlashListFragment != null) {
+            mCallFlashListFragment.onResume();
+        }
     }
 
     @Override
@@ -143,10 +186,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.layout_category:
                 onCategory();
                 break;
+            case R.id.layout_mine:
+                onMine();
+                break;
             case R.id.sideslip_menu:
                 openSideslip(v);
                 break;
+            case R.id.iv_upload:
+                toImageUpload();
+
+//                NotifyInfo info = new NotifyInfo();
+//                info.setNotifyId(NotifyInfo.NotifyId.NOTIFY_NEW_FLASH);
+//                info.setTitle("There are new flash.");
+//                info.setContent("new flash don't show with you.");
+//                info.arg1 = "https://djwtigu7b03af.cloudfront.net/material_manager/201807/05182947599.png";
+//                info.arg2 = "https://djwtigu7b03af.cloudfront.net/material_manager/201807/05182947599.png";
+//
+//                NotifyManager.getInstance(this).showNewFlashWithBigStyle(info);
+                break;
         }
+    }
+
+    private void toImageUpload() {
+        Intent intent = new Intent();
+        intent.setClass(this, MediaUploadActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -161,7 +225,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        killMe();
     }
 
     @Override
@@ -200,7 +263,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void initIndex(Intent intent) {
         currentPage = intent.getIntExtra("fragment_index", 0xff);
         //此值表示从callFlash 结果页返回时回到MainActivity 不需要改变page
-        if (currentPage == ActivityBuilder.BACK_FROM_CALL_FLASH_RESULT) {
+        if (currentPage == ActivityBuilder.NO_CHANGE_FRAGMENT) {
             return;
         }
         if (currentPage >= ActivityBuilder.MAX_FRAGEMNTS) {
@@ -230,27 +293,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         //底部tab按钮
         mTabHome = (RelativeLayout) findViewById(R.id.layout_home);
         mTabCategory = (RelativeLayout) findViewById(R.id.layout_category);
+        mTabMine = (RelativeLayout) findViewById(R.id.layout_mine);
+
+
     }
 
     public void listener() {
         mTabHome.setOnClickListener(this);
         mTabCategory.setOnClickListener(this);
+        mTabMine.setOnClickListener(this);
         mSideslipMenu.setOnClickListener(this);
-    }
-
-    private void killMe() {
-        if (PreferenceHelper.getInt("pref_is_kill_to_release", 0) == 1) {
-            try {
-                android.os.Process.killProcess(android.os.Process.myPid());
-                LogUtil.d("killMe", "killMe end: ");
-            } catch (Exception e) {
-                LogUtil.e("killMe", "killMe exception: " + e.getMessage());
-            }
-        }
+        findViewById(R.id.iv_upload).setOnClickListener(this);
     }
 
     private void onCategory() {
         mViewPager.setCurrentItem(ActivityBuilder.FRAGMENT_CATEGORY);
+    }
+
+    private void onMine() {
+        mViewPager.setCurrentItem(ActivityBuilder.FRAGMENT_MINE);
     }
 
     private void onHome() {
@@ -279,17 +340,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void initViewPager() {
-        final int selectColor = getResources().getColor(R.color.fb_ad_green_button);
-        final int unSelectColor = getResources().getColor(R.color.fb_ad_white_title);
-        final int selectSize = 32;
-        final int unSelectSize = 24;
-
         mCallFlashListFragment = CallFlashListFragment.newInstance(CallFlashDataType.CALL_FLASH_DATA_HOME);
-        mCategoryFragment = new CategoryFragment();
+//        mCategoryFragment = new CategoryFragment();
+        mMineFragment = new MineFragment();
 
         mFragmentList = new ArrayList<>();
         mFragmentList.add(mCallFlashListFragment);
-        mFragmentList.add(mCategoryFragment);
+//        mFragmentList.add(mCategoryFragment);
+        mFragmentList.add(mMineFragment);
 
         mMainPagerAdapter = new MainPagerAdapter(getFragmentManager(), mFragmentList, this);
         mViewPager.setAdapter(mMainPagerAdapter);
@@ -307,16 +365,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             @Override
             public void onPageSelected(int arg0) {
-                LogUtil.d(TAG, "addOnPageChangeListener onPageSelected position:" + arg0);
                 mIsOnPageSelected = true;
                 currentPage = arg0;
-                ((FontIconView) findViewById(R.id.fiv_home)).setTextColor(currentPage == ActivityBuilder.FRAGMENT_HOME ? selectColor : unSelectColor);
-                ((FontIconView) findViewById(R.id.fiv_home)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ActivityBuilder.FRAGMENT_HOME ? selectSize : unSelectSize);
-                ((FontIconView) findViewById(R.id.fiv_home)).setAlpha(currentPage == ActivityBuilder.FRAGMENT_HOME ? 1f : 0.4f);
+                ((ImageView) findViewById(R.id.iv_home)).setImageDrawable(getResources().getDrawable(currentPage == ActivityBuilder.FRAGMENT_HOME ? R.drawable.icon_call_flash_selected : R.drawable.icon_call_flash));
+                ((ImageView) findViewById(R.id.iv_mine)).setImageDrawable(getResources().getDrawable(currentPage == ActivityBuilder.FRAGMENT_MINE ? R.drawable.icon_mine_selected : R.drawable.icon_mine));
 
-                ((FontIconView) findViewById(R.id.fiv_category)).setTextColor(currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? selectColor : unSelectColor);
-                ((FontIconView) findViewById(R.id.fiv_category)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? selectSize : unSelectSize);
-                ((FontIconView) findViewById(R.id.fiv_category)).setAlpha(currentPage == ActivityBuilder.FRAGMENT_CATEGORY ? 1f : 0.4f);
+                if (mCallFlashListFragment != null) {
+                    if (arg0 == ActivityBuilder.FRAGMENT_HOME)
+                        mCallFlashListFragment.pauseOrContinuePlayVideo(true);
+                    else
+                        mCallFlashListFragment.pauseOrContinuePlayVideo(false);
+                }
 
                 setTvTitle(arg0);
             }
@@ -332,6 +391,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case ActivityBuilder.FRAGMENT_CATEGORY:
                 mTvPageTitle.setText(R.string.page_title_category);
                 break;
+            case ActivityBuilder.FRAGMENT_MINE:
+                mTvPageTitle.setText(R.string.page_title_mine);
+                break;
         }
     }
 
@@ -345,11 +407,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         Glide.get(this).clearMemory();
     }
 
-    public void onEventMainThread(EventRefreshCallFlashEnable event) {
-        boolean isEnable = event.isEnable();
-        if (sideslipContraller != null) {
-            sideslipContraller.setSwitchButton(isEnable);
-        }
-    }
+//    public void onEventMainThread(EventRefreshCallFlashEnable event) {
+//        if(isFinishing()){
+//           return;
+//        }
+//        boolean isEnable = event.isEnable();
+//        if (sideslipContraller != null) {
+//            sideslipContraller.setSwitchButton(isEnable);
+//        }
+//    }
 }
 

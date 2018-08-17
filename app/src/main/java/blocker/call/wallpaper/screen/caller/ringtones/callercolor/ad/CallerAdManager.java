@@ -1,5 +1,6 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad;
 
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import java.util.HashSet;
@@ -12,9 +13,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 public class CallerAdManager {
     public final static String PARAM_ALL_COUNTRIES = "all_countries";
-
-    public final static int IN_ADS_CALL_FLASH = 0;
-
 
     public static final int POSITION_FB_ADS_CALLLOG = 1;
     public static final int POSITION_FB_ADS_SMSLIST = 2;
@@ -32,6 +30,21 @@ public class CallerAdManager {
     public static final int POSITION_FB_ADS_SPLASH_BIG = 7;
     public static final int POSITION_FB_ADS_SCAN_RESULT_BIG = 8;
     public static final int POSITION_FB_ADS_ENDCALL_BIG = 9;
+
+    //admob id
+    public static final String ADMOB_ID_ADV_SPLASH_FIRST = "ca-app-pub-5980661201422605/3475594207";//启动页首次colorphone-1
+    public static final String ADMOB_ID_ADV_SPLASH_NORMAL = "ca-app-pub-5980661201422605/5797261947";//启动页普通colorphone-2
+    public static final String ADMOB_ID_ADV_RESULT_FIRST = "ca-app-pub-5980661201422605/6144638504";//结果页首次colorphone-3
+    public static final String ADMOB_ID_ADV_RESULT_NORMAL = "ca-app-pub-5980661201422605/2125610249";//结果页普通colorphone-4
+    public static final String ADMOB_ID_ADV_MINE_NORMAL = "ca-app-pub-5980661201422605/6560922541";//mine页普通colorphone-7
+    public static final String ADMOB_ID_ADV_END_CALL_NORMAL = "ca-app-pub-5980661201422605/1776419593";//通话结束页colorphone-8
+
+
+    //插屏
+    public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_FIRST = "ca-app-pub-5980661201422605/4911447885"; //自定义插屏, 来电秀设置首次colorphone-5
+    public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL = "ca-app-pub-5980661201422605/5685581308";//来电秀设置插屏colorphone-6
+
+    //admob id end
 
     public static boolean isMopubAll() {
         boolean is = false; //false not show, 默认关, test is true
@@ -179,5 +192,25 @@ public class CallerAdManager {
                 break;
         }
         return click;
+    }
+
+    public static boolean isAutoGoMain() {
+        boolean autoGoMain = true; //默认自动跳转到main
+        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+        int is = ad_pref.getInt("pref_is_auto_go_main", 0);//欧美发达国家 渠道量，不自动跳过is=1
+        if (is == 1) {
+            autoGoMain = false;
+        }
+        return autoGoMain;
+    }
+
+    public static boolean isShowAdOnEndCall(){
+        boolean show = false;
+        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+        int is = ad_pref.getInt("pref_is_show_ad_end_call", 0);//1-渠道量才显示，默认不显示
+        if (is == 1) {
+            show = true;
+        }
+        return show;
     }
 }

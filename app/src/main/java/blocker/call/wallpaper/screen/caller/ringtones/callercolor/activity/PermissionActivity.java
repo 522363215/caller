@@ -1,13 +1,15 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,127 +17,116 @@ import java.util.List;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.PermissionShowAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.PermissionInfo;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 
-public class PermissionActivity extends BaseActivity implements View.OnClickListener, PermissionShowAdapter.ItemClickListener {
-    private boolean mIsShowPermission;
-    private LinearLayout mLayoutRequestPermission;
-    private TextView mTvPermissionPermission;
-    private View mLayoutShowPermission;
-    private ActionBar mActionBar;
+public class PermissionActivity extends BaseActivity implements View.OnClickListener, PermissionShowAdapter.SetClickListener {
     private RecyclerView mRvPermission;
     private List<PermissionInfo> mPermissionInfos = new ArrayList<>();
     private PermissionShowAdapter mPermissionShowAdapter;
+    private TextView mTvTitle;
+    private TextView mTvButton;
+    private View mTvSkip;
+    private boolean mIsLetsStart;
+    private ActionBar mActionBar;
+    private View mLayoutStart;
+    private View mLayoutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_permission);
         onNewIntent(getIntent());
         initView();
         initData();
     }
 
     @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this);
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_permission;
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mIsShowPermission = intent.getBooleanExtra(ActivityBuilder.IS_SHOW_PERMISSIONS, false);
+        mIsLetsStart = intent.getBooleanExtra(ActivityBuilder.IS_LETS_START, false);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mIsLetsStart) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        FlurryAgent.logEvent("PermissionAcitivty-----show_main");
         if (mPermissionShowAdapter != null) {
             mPermissionShowAdapter.notifyDataSetChanged();
+        }
+
+        if (PermissionUtils.isHaveAllPermission(this)) {
+            mTvButton.setText(R.string.permission_all_set);
+        } else {
+            mTvButton.setText(R.string.permission_next);
         }
     }
 
     private void initView() {
-        //请求权限
-        mLayoutRequestPermission = findViewById(R.id.layout_request_permission);
-        mTvPermissionPermission = findViewById(R.id.tv_request_permission);
-        mTvPermissionPermission.setOnClickListener(this);
-
-        //显示权限
-        mLayoutShowPermission = findViewById(R.id.layout_show_permission);
         mActionBar = findViewById(R.id.actionbar);
+
+        mLayoutStart = findViewById(R.id.layout_start);
+        mTvTitle = findViewById(R.id.tv_title);
         mRvPermission = findViewById(R.id.rv_permission);
+
+        mLayoutBtn = findViewById(R.id.layout_btn);
+        mTvButton = findViewById(R.id.tv_button);
+        mTvSkip = findViewById(R.id.tv_skip);
+
+        mTvButton.setOnClickListener(this);
+        mTvSkip.setOnClickListener(this);
+
+        if (mIsLetsStart) {
+            mActionBar.setVisibility(View.GONE);
+            mLayoutStart.setVisibility(View.VISIBLE);
+            mLayoutBtn.setVisibility(View.VISIBLE);
+            mTvTitle.setText(R.string.permission_title);
+        } else {
+            mActionBar.setVisibility(View.VISIBLE);
+            mLayoutStart.setVisibility(View.GONE);
+            mLayoutBtn.setVisibility(View.GONE);
+            mActionBar.setTitle(R.string.side_slip_permission_check);
+            mActionBar.setOnBackClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRvPermission.setLayoutManager(layoutManager);
-        mRvPermission.setAdapter(mPermissionShowAdapter = new PermissionShowAdapter(this, mPermissionInfos));
+        mRvPermission.setAdapter(mPermissionShowAdapter = new PermissionShowAdapter(this, mPermissionInfos, mIsLetsStart));
         mPermissionShowAdapter.setOnItemClickListener(this);
-
-        mActionBar.setOnBackClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        if (mIsShowPermission) {
-            mLayoutShowPermission.setVisibility(View.VISIBLE);
-            mLayoutRequestPermission.setVisibility(View.GONE);
-        } else {
-            mLayoutShowPermission.setVisibility(View.GONE);
-            mLayoutRequestPermission.setVisibility(View.VISIBLE);
-        }
     }
 
     private void initData() {
-        if (!mIsShowPermission) return;
-        getPermissions();
-    }
-
-    private void getPermissions() {
+        List<PermissionInfo> requestPermissions = PermissionUtils.getRequestPermissions();
         if (mPermissionInfos == null) {
             mPermissionInfos = new ArrayList<>();
         } else {
             mPermissionInfos.clear();
         }
-        PermissionInfo floatWindowPermission = new PermissionInfo();
-        floatWindowPermission.iconResId = R.drawable.ic_launcher;
-        floatWindowPermission.title = getString(R.string.permission_float_window_title);
-        floatWindowPermission.permissionDes = getString(R.string.permission_float_window_des);
-        floatWindowPermission.permission = PermissionUtils.PERMISSION_OVERLAY;
-        mPermissionInfos.add(floatWindowPermission);
-
-        PermissionInfo notificationPermission = new PermissionInfo();
-        notificationPermission.iconResId = R.drawable.ic_launcher;
-        notificationPermission.title = getString(R.string.permission_notification_title);
-        notificationPermission.permissionDes = getString(R.string.permission_notification_des);
-        notificationPermission.permission = PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS;
-        mPermissionInfos.add(notificationPermission);
-
-        PermissionInfo storagePermission = new PermissionInfo();
-        storagePermission.iconResId = R.drawable.ic_launcher;
-        storagePermission.title = getString(R.string.permission_storage_title);
-        storagePermission.permissionDes = getString(R.string.permission_storage_des);
-        storagePermission.permission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-        mPermissionInfos.add(storagePermission);
-
-        PermissionInfo phonePermission = new PermissionInfo();
-        phonePermission.iconResId = R.drawable.ic_launcher;
-        phonePermission.title = getString(R.string.permission_phone_title);
-        phonePermission.permissionDes = getString(R.string.permission_phone_des);
-        phonePermission.permission = Manifest.permission.READ_PHONE_STATE;
-        mPermissionInfos.add(phonePermission);
-
-        PermissionInfo smsPermission = new PermissionInfo();
-        smsPermission.iconResId = R.drawable.ic_launcher;
-        smsPermission.title = getString(R.string.permission_sms_title);
-        smsPermission.permissionDes = getString(R.string.permission_sms_des);
-        smsPermission.permission = Manifest.permission.RECEIVE_SMS;
-        mPermissionInfos.add(smsPermission);
-
-        PermissionInfo contactPermission = new PermissionInfo();
-        contactPermission.iconResId = R.drawable.ic_launcher;
-        contactPermission.title = getString(R.string.permission_contact_title);
-        contactPermission.permissionDes = getString(R.string.permission_contact_des);
-        contactPermission.permission = Manifest.permission.READ_CONTACTS;
-        mPermissionInfos.add(contactPermission);
+        mPermissionInfos.addAll(requestPermissions);
         mPermissionShowAdapter.notifyDataSetChanged();
     }
 
@@ -143,25 +134,51 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.tv_request_permission:
-                requestPermission(new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_CONTACTS}, PermissionUtils.REQUEST_CODE_ALL_PERMISSION_);
+            case R.id.tv_button:
+                FlurryAgent.logEvent("PermissionActivity-----click----next_request_permission");
+                onNext();
+                break;
+            case R.id.tv_skip:
+                FlurryAgent.logEvent("PermissionActivity-----click----skip");
+                finish();
                 break;
         }
+    }
+
+    private void onNext() {
+        if (mPermissionInfos != null) {
+            for (PermissionInfo permission : mPermissionInfos) {
+                if (!PermissionUtils.hasPermission(this, permission.permission)) {
+                    if (permission.isSpecialPermission) {
+                        if (!TextUtils.isEmpty(permission.permission)) {
+                            requestSpecialPermission(permission.permission);
+                            return;
+                        }
+                    } else {
+                        if (permission.permissions != null && permission.permissions.length > 0) {
+                            requestPermission(permission.permissions, permission.requestCode);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        finish();
     }
 
     @Override
     public void onPermissionNotGranted(int requestCode) {
         super.onPermissionNotGranted(requestCode);
         switch (requestCode) {
-            case PermissionUtils.REQUEST_CODE_ALL_PERMISSION_:
-                finish();
-                break;
             case PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION:
+                break;
             case PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS:
-            case PermissionUtils.REQUEST_CODE_PHONE_STATE_PERMISSION:
-            case PermissionUtils.REQUEST_CODE_EXTERNAL_STORAGE_PERMISSION:
-            case PermissionUtils.REQUEST_CODE_RECEIVE_SMS_PERMISSION:
-            case PermissionUtils.REQUEST_CODE_READ_CONTACT_PERMISSION:
+                break;
+            case PermissionUtils.REQUEST_CODE_PHONE_AND_CONTACT_PERMISSION:
+                break;
+            case PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK:
+                break;
+            case PermissionUtils.REQUEST_CODE_READ_CALL_LOG_PERMISSION:
                 break;
         }
     }
@@ -170,39 +187,36 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
     public void onPermissionGranted(int requestCode) {
         super.onPermissionGranted(requestCode);
         switch (requestCode) {
-            case PermissionUtils.REQUEST_CODE_ALL_PERMISSION_:
-                finish();
-                break;
             case PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION:
+                break;
             case PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS:
-            case PermissionUtils.REQUEST_CODE_PHONE_STATE_PERMISSION:
-            case PermissionUtils.REQUEST_CODE_EXTERNAL_STORAGE_PERMISSION:
-            case PermissionUtils.REQUEST_CODE_RECEIVE_SMS_PERMISSION:
-            case PermissionUtils.REQUEST_CODE_READ_CONTACT_PERMISSION:
-//                if (mPermissionShowAdapter != null) {
-//                    mPermissionShowAdapter.notifyDataSetChanged();
-//                }
+                break;
+            case PermissionUtils.REQUEST_CODE_PHONE_AND_CONTACT_PERMISSION:
+                break;
+            case PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK:
+                break;
+            case PermissionUtils.REQUEST_CODE_READ_CALL_LOG_PERMISSION:
                 break;
         }
     }
 
     @Override
-    public void onItemClickListener(int position) {
+    public void onSetClickListener(int position) {
         PermissionInfo info = mPermissionInfos.get(position);
-        if (info == null || info.isGet) return;
-        String permission = info.permission;
-        if (PermissionUtils.PERMISSION_OVERLAY.equals(permission)) {
-            requestSpecialPermission(PermissionUtils.PERMISSION_OVERLAY);
-        } else if (PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS.equals(permission)) {
-            requestSpecialPermission(PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS);
-        } else if (Manifest.permission.READ_PHONE_STATE.equals(permission)) {
-            requestPermission(new String[]{Manifest.permission.READ_PHONE_STATE}, PermissionUtils.REQUEST_CODE_PHONE_STATE_PERMISSION);
-        } else if (Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permission)) {
-            requestPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionUtils.REQUEST_CODE_EXTERNAL_STORAGE_PERMISSION);
-        } else if (Manifest.permission.RECEIVE_SMS.equals(permission)) {
-            requestPermission(new String[]{Manifest.permission.RECEIVE_SMS}, PermissionUtils.REQUEST_CODE_RECEIVE_SMS_PERMISSION);
-        } else if (Manifest.permission.READ_CONTACTS.equals(permission)) {
-            requestPermission(new String[]{Manifest.permission.READ_CONTACTS}, PermissionUtils.REQUEST_CODE_READ_CONTACT_PERMISSION);
+        if (info == null) return;
+        if (PermissionUtils.PERMISSION_AUTO_START.equals(info.permission) || PermissionUtils.PERMISSION_SHOW_ON_LOCK.equals(info.permission)) {
+            //小米专用权限
+            if (PermissionUtils.PERMISSION_AUTO_START.equals(info.permission)) {
+                SpecialPermissionsUtil.toXiaomiAutoStartPermission(this, PermissionUtils.REQUEST_CODE_AUTO_START);
+            } else if (PermissionUtils.PERMISSION_SHOW_ON_LOCK.equals(info.permission)) {
+                SpecialPermissionsUtil.toXiaomiShowOnLockPermssion(this, PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK);
+            }
+        } else if (!info.isGet) {
+            if (info.isSpecialPermission) {
+                requestSpecialPermission(info.permission);
+            } else {
+                requestPermission(info.permissions, info.requestCode);
+            }
         }
     }
 }

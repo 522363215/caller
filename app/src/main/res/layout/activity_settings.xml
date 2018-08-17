@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar
+        android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp56"
         app:title="@string/setting_title" />
@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp8"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dp6"
@@ -24,28 +24,167 @@
         android:paddingStart="@dimen/dp16"
         android:paddingTop="@dimen/dp6">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:text="@string/call_after_block" />
-
-        <View
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
-            android:id="@+id/sb_block"
-            android:layout_width="@dimen/dp64"
-            android:layout_height="@dimen/dp32"
-            app:sb_button_color="@color/color_FFBABECB"
-            app:sb_checked="false"
-            app:sb_checked_color="@color/color_FF27BB56"
-            app:sb_shadow_effect="true"
-            app:sb_show_indicator="false"
-            app:sb_uncheck_color="@color/color_FF22222D" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_caller_show"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_caller_show_desc"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp48"
+            android:layout_height="@dimen/dp26">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
+                android:id="@+id/sb_caller_show"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="@dimen/dp26"
+                android:layout_centerInParent="true"
+                app:sb_button_color="@color/color_FFBABECB"
+                app:sb_checked="false"
+                app:sb_checked_color="@color/color_FF27BB56"
+                app:sb_shadow_effect="true"
+                app:sb_show_indicator="false"
+                app:sb_uncheck_color="@color/color_FF22222D" />
+
+            <TextView
+                android:id="@+id/tv_switch_caller_show"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp8"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp6"
+        android:paddingEnd="@dimen/dp16"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        android:paddingStart="@dimen/dp16"
+        android:paddingTop="@dimen/dp6">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/block_setting_name"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_block_desc"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp48"
+            android:layout_height="@dimen/dp26">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
+                android:id="@+id/sb_block"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="@dimen/dp26"
+                app:sb_button_color="@color/color_FFBABECB"
+                app:sb_checked="false"
+                app:sb_checked_color="@color/color_FF27BB56"
+                app:sb_shadow_effect="true"
+                app:sb_show_indicator="false"
+                app:sb_uncheck_color="@color/color_FF22222D" />
+
+            <TextView
+                android:id="@+id/tv_switch_block"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp8"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp6"
+        android:paddingEnd="@dimen/dp16"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        android:paddingStart="@dimen/dp16"
+        android:paddingTop="@dimen/dp6">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_call_after"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_call_after_desc"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp48"
+            android:layout_height="@dimen/dp26">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
+                android:id="@+id/sb_caller_id"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="@dimen/dp26"
+                app:sb_button_color="@color/color_FFBABECB"
+                app:sb_checked="false"
+                app:sb_checked_color="@color/color_FF27BB56"
+                app:sb_shadow_effect="true"
+                app:sb_show_indicator="false"
+                app:sb_uncheck_color="@color/color_FF22222D" />
+
+            <TextView
+                android:id="@+id/tv_switch_caller_id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
 
     </LinearLayout>
 
@@ -60,68 +199,42 @@
         android:paddingLeft="@dimen/dp16"
         android:paddingRight="@dimen/dp16"
         android:paddingStart="@dimen/dp16"
-        android:paddingTop="@dimen/dp6">
+        android:paddingTop="@dimen/dp6"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/call_after_message"
             android:textColor="@color/white"
-            android:textSize="16sp"
-            android:text="@string/setting_call_after"/>
+            android:textSize="16sp" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
-            android:id="@+id/sb_caller_id"
-            android:layout_width="@dimen/dp64"
-            android:layout_height="@dimen/dp32"
-            app:sb_button_color="@color/color_FFBABECB"
-            app:sb_checked="false"
-            app:sb_checked_color="@color/color_FF27BB56"
-            app:sb_shadow_effect="true"
-            app:sb_show_indicator="false"
-            app:sb_uncheck_color="@color/color_FF22222D" />
+        <RelativeLayout
+            android:layout_width="@dimen/dp48"
+            android:layout_height="@dimen/dp26">
 
-    </LinearLayout>
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
+                android:id="@+id/sb_message"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="@dimen/dp26"
+                app:sb_button_color="@color/color_FFBABECB"
+                app:sb_checked="false"
+                app:sb_checked_color="@color/color_FF27BB56"
+                app:sb_shadow_effect="true"
+                app:sb_show_indicator="false"
+                app:sb_uncheck_color="@color/color_FF22222D" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp16"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/dp6"
-        android:paddingEnd="@dimen/dp16"
-        android:paddingLeft="@dimen/dp16"
-        android:paddingRight="@dimen/dp16"
-        android:paddingStart="@dimen/dp16"
-        android:paddingTop="@dimen/dp6">
+            <TextView
+                android:id="@+id/tv_switch_message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:text="@string/call_after_message"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.SwitchButton
-            android:id="@+id/sb_message"
-            android:layout_width="@dimen/dp64"
-            android:layout_height="@dimen/dp32"
-            app:sb_button_color="@color/color_FFBABECB"
-            app:sb_checked="false"
-            app:sb_checked_color="@color/color_FF27BB56"
-            app:sb_shadow_effect="true"
-            app:sb_show_indicator="false"
-            app:sb_uncheck_color="@color/color_FF22222D" />
 
     </LinearLayout>
 

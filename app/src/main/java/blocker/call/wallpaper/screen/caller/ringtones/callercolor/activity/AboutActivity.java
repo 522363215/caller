@@ -47,12 +47,20 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-        CommonUtils.translucentStatusBar(this);
         initView();
         initData();
         listener();
         FlurryAgent.logEvent("AboutActivity--showMain");
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this);
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_about;
     }
 
     @Override
@@ -272,7 +280,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         FlurryAgent.logEvent("about_Email_us");
         try {
 
-            String mailto = "contact@lionmobi.com";
+            String mailto = ConstantUtils.EAMAIL_ADDR;
             String[] tos = {mailto};
 
             Intent emailintent = new Intent(

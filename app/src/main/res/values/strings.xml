@@ -1,5 +1,7 @@
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name" translatable="false">Caller Color</string>
+<resources>
+    <string name="app_name" translatable="false">Color Phone</string>
+    <string name="fbapp_name" translatable="false">Color Phone</string>
+    <string name="fbapp_id" translatable="false">"2165737933682467"</string>
 
     <string name="push_tools_missed">"Missed calls."</string>
 
@@ -14,54 +16,13 @@
     <string name="no_string">"Cancel"</string>
     <string name="quithint">"Press back again to quit"</string>
 
-    <string name="main_menu_block">@string/phone_detail_block</string>
-    <string name="main_menu_ring">@string/phone_detail_ring</string>
-    <string name="main_menu_settings">@string/setting_title</string>
     <string name="setting_title">"Settings"</string>
-    <string name="setting_language">"Language"</string>
-    <string name="setting_lauage_dialog_title">"Choose Language"</string>
-    <!-- 设置页面 结束-->
-
-    <!--拦截记录页面 开始-->
-    <string name="block_log_query_log_failed">"Query Failed"</string>
-    <!--拦截记录页面 结束-->
-
-    <!--黑名单管理页面 开始-->
-    <string name="block_list_title">"View Spam&#160;&#038;&#160;Block list"</string>
-    <string name="block_list_mine">"Call Block list"</string>
-    <string name="block_list_common">"Common Spammers"</string>
-    <string name="block_list_empty">"Nothing in the Blocklist"</string>
-    <!--黑名单管理页面 结束-->
-
-    <!--拦截设置页面 开始-->
-    <string name="block_setting_title">"Block Settings"</string>
     <string name="block_setting_name">"Block"</string>
     <string name="add_number_as_spam">"Report a spam"</string>
-    <!--手动添加黑名单弹窗 结束-->
-
-    <!--从联系人添加黑名单 开始-->
-    <string name="from_contacts_title">"From contacts"</string>
-    <string name="from_contacts_quick_filtering">"Quick search"</string>
-    <string name="from_contacts_read_failed">"Failed to read the contacts!"</string>
-    <!--从联系人添加黑名单 结束-->
-
-    <!--从通话记录添加黑名单 开始-->
-    <string name="from_call_log_title">"From call history"</string>
-    <string name="from_call_log_read_failed">"Failed to read the call history!"</string>
-    <!--从通话记录添加黑名单 结束-->
-
-    <!--选择国家弹窗 开始-->
-    <string name="country_list_title">"Please select your country"</string>
-    <string name="country_list_name_hint">"Country name or code&#8230;"</string>
-    <!--选择国家弹窗 结束-->
-
-    <!--未接、拒绝来电悬浮窗 开始-->
     <string name="call_coming_back">"Call back"</string> <!--回拨-->
     <string name="call_coming_detail">"Details"</string>
     <string name="about_title">"About us"</string>
-    <string name="music">Setting Ring</string>
-    <string name="ring">Ring list</string>
-    <string name="about_product_intro">"Real Phone Call Dialer&#160;&#038;&#160;Blocker."</string>
+    <string name="about_product_intro">"Enjoy your every call"</string>
     <string name="about_product_version">%s Version:"</string>
     <string name="about_rote_gp">"Rate app"</string>
     <string name="about_like_facebook">"Like us on Facebook"</string>
@@ -69,9 +30,8 @@
     <string name="share_to_facebook">"Share on Facebook"</string>
     <string name="about_privacy">"Privacy Policy"</string>
     <string name="about_term">"Terms of Use"</string>
-    <string name="share_text">"%1$s can block unwanted calls and know who is calling. Have a try! Get it on: %2$s"</string>
-    <string name="rate_dialog_title">@string/app_name</string>
-    <string name="rate_dialog_message">"Do you like Caller ID? \nWould you please leave us your rating?"</string>
+    <string name="share_text">"%1$s make your calls colorful and block unwanted calls. Have a try! Get it on: %2$s"</string>
+    <string name="rate_dialog_message">"Do you like Color Phone? \nWould you please leave us your rating?"</string>
     <string name="rate_dialog_cancel">"Later"</string>
     <string name="rate_dialog_negative_title">"Feedback"</string>
     <string name="rate_dialog_nagative_desc">"Report your issues/suggestions here, 200 words at most."</string>
@@ -100,28 +60,18 @@
     <string name="call_log_enable">"Enable"</string>
     <string name="phone_detail_unblock">Unblock</string>
     <string name="phone_detail_block">Block</string>
-    <string name="phone_detail_ring">Ring</string>
     <string name="phone_detail_block_dialog_title">"Are you sure to block this number?"</string>
     <string name="phone_detail_have_no_tag">"This number has been added to the blocklist"</string>
     <string name="phone_detail_cancel_block">This number has been removed from your blocklist.</string>
     <string name="phone_detail_unknown">Unknown</string>
     <string name="contact_search_hint">Search phone number</string>
-    <string name="call_after_phone">@string/call_coming_back</string>
-    <string name="call_after_block">@string/block_setting_name</string>
     <string name="call_after_message">"Message"</string>
     <string name="call_after_click_toast">"The number is hidden!"</string>
-    <string name="permission_tip">To identify unknown calls and block harassments properly, please enable the following permissions.</string>
+    <string name="permission_tip">Call Flash show need the following permissions.</string>
     <string name="permission_sysytem_permission">Permission Manager</string>
     <string name="permission_to_get_permsiion">Enable</string>
     <string name="permission_phone">"Phone Call"</string>
     <string name="permission_SMS">"SMS"</string>
-    <string name="FIXED_LINE">"FIXED_LINE"</string>
-    <string name="MOBILE">"MOBILE"</string>
-    <string name="FIXED_LINE_OR_MOBILE">"FIXED_LINE_OR_MOBILE"</string>
-    <string name="TOLL_FREE">"TOLL_FREE"</string>
-    <string name="PREMIUM_RATE">"PREMIUM_RATE"</string>
-    <string name="SHARED_COST">"SHARED_COST"</string>
-    <string name="PERSONAL_NUMBER">"PERSONAL_NUMBER"</string>
     <string name="call_flash_led_festival">"Festival"</string>
     <string name="call_flash_led_love">"Love"</string>
     <string name="call_flash_led_kiss">"Kiss"</string>
@@ -148,14 +98,13 @@
     <string name="call_flash_gif_show_setting_suc_reset">Your call screen has been reset.</string>
     <string name="page_title_caller_theme">Caller Theme</string>
     <string name="page_title_category">Category</string>
-    <string name="phone_detail_set_call_flash_call_show">@string/call_flash_intro_set</string>
+    <string name="page_title_mine">Mine</string>
     <string name="about_email_us">"Email us"</string>
     <string name="email_choose_one">"Please choose one to send Email."</string>
     <string name="call_flash_gif_show_setting_des2">Set failed!</string>
     <string name="call_answer_string">Answer</string>
     <string name="call_answer_string_HW">"Reply"</string>
     <string name="call_flash_example_name">Frank</string>
-    <string name="call_flash_detail_setting_action_to_set">@string/call_flash_gif_show_save</string>
     <string name="call_flash_detail_setting_action_to_cancel">"Cancel This Incoming Call Theme"</string>
     <string name="call_flash_more_refresh_online_themes_failed_tip">"Refresh online themes Failed."</string>
     <string name="call_flash_more_refresh_online_themes_load_failed">"Network not optimal, try this later!"</string>
@@ -164,52 +113,117 @@
     <string name="download_failed_for_no_sd_permission">Grant the permission to download and save themes</string>
     <string name="about_send_apk">Share the App with friends</string>
     <string name="device_time_just">Right now</string>
-    <string name="splash_content">Smart Identifying &amp; Blocking Calls </string>
     <string name="call_flash_gif_show_connecte">Connecting...</string>
     <string name="call_flash_gif_show_setting_des">It needs to enable system alert window permission.</string>
-    <string name="notification_listener_setting_tip">Allow notification for answering calls, it will not be used for any other purpose.</string>
+    <string name="notification_listener_setting_tip">Enable Notification Access to Answer Calls</string>
     <string name="call_flash_saving">Saving...</string>
-    <string name="call_flash_grant_permission_tip">This permission is only used to set %1$s, it will not be used for any other purpose.</string>
+    <string name="call_flash_grant_permission_tip">This permission is only used to %1$s, it will not be used for any other purpose.</string>
     <string name="no_app_to_share">"Sorry, you don't have apps available to share."</string>
-
     <string name="no_online_call_flash_list_tip">no call flash</string>
-    <string name="no_collection_call_flash_list_tip">no collection call flash</string>
-    <string name="add_block_contact_title">"Call Log"</string>
-    <string name="block_option_open_switch">"Open Block"</string>
-    <string name="block_option_toast_open_success">"Open block switch success!"</string>
-    <string name="block_option_close_switch">"Close Block"</string>
-    <string name="block_option_toast_close_success">"Close block switch success!"</string>
-    <string name="block_option_clear_all_contacts">"Clear All Contacts"</string>
-    <string name="block_option_toast_clear_all_contacts_success">"Clear all contacts success!"</string>
+    <string name="no_collection_call_flash_list_tip">No data</string>
+    <string name="add_block_contact_title">"Call Logs"</string>
+    <string name="block_option_open_switch">"Enable Block"</string>
+    <string name="block_option_toast_open_success">"Enable block success!"</string>
+    <string name="block_option_close_switch">"Disable Block"</string>
+    <string name="block_option_toast_close_success">"Disable block success!"</string>
+    <string name="block_option_clear_all_contacts">"Remove all block list"</string>
+    <string name="block_option_toast_clear_all_contacts_success">"Remove all block list success!"</string>
     <string name="block_option_clear_all_history">"Clear All Block Logs"</string>
-    <string name="block_option_toast_clear_all_history_success">"Clear all history success!"</string>
+    <string name="block_option_toast_clear_all_history_success">"Clear all block logs success!"</string>
+    <string name="block_list_empty">No records</string>
     <string name="block_contacts_added_failed">Added Failed!</string>
     <string name="block_contacts_remove_success">Remove Success!</string>
     <string name="block_contacts_remove_failed">Remove Failed!</string>
-    <string name="side_slip_title_des">"别出心裁，秀随我变"</string>
     <string name="side_slip_close_call_flash">Close Caller Show</string>
-    <string name="side_slip_collection">Collection</string>
-    <string name="permission_welcome">"欢迎"</string>
-    <string name="permission_des">第一次启动需要先进行一些设置，点击下方按钮开始设置</string>
-    <string name="permission_get_permission">授予权限</string>
-    <string name="permission_float_window_title">悬浮窗介绍</string>
-    <string name="permission_float_window_des">允许CallerColor出现在系统顶部，才能让CallerColor发挥强大功能，点击授权按钮，让CallerColor更好的服务</string>
-    <string name="permission_notification_title">获取通知权限</string>
-    <string name="permission_notification_des">授予应用程序通知权限，可解决来电秀接听失败的问题</string>
-    <string name="permission_storage_title">存储访问</string>
-    <string name="permission_storage_des">授予应用程序存储权限用来保存下载的来电秀，使CallerColor正常工作</string>
-    <string name="permission_phone_title">电话访问</string>
-    <string name="permission_phone_des">授予应用程序通话状态权限，使来电秀能够正常显示</string>
-    <string name="permission_sms_title">短信权限</string>
-    <string name="permission_sms_des">授予应用程序接收短信权限，使来电秀能够正常显示</string>
-    <string name="permission_contact_title">联系人权限</string>
-    <string name="permission_contact_des">授予应用程序联系人权限，使来电秀能够正常显示</string>
-    <string name="permission_tip_des">若要体验全部功能，请前往授权</string>
-    <string name="permission_enabled">已经授权</string>
+    <string name="side_slip_collection">Favorite</string>
+
+
+    <string name="permission_title">"LET'S START"</string>
+    <string name="permission_phone_and_contact_title">"Phone &amp; Contacts"</string>
+    <string name="permission_phone_and_contact_des">to manage phone calls and show contacts</string>
+    <string name="permission_screen_permission_title">Screen permission</string>
+    <string name="permission_screen_permission_des">to show call screen</string>
+    <string name="permission_call_permission_title">Call permission</string>
+    <string name="permission_call_permission_des">to enable answering the calls</string>
+    <string name="permission_show_on_lock_title">Show on lock screen</string>
+    <string name="permission_show_on_lock_des">to shown on the lock screen</string>
+    <string name="permission_auto_start_title">Allow to autoStart</string>
+    <string name="permission_auto_start_des">to works for every calls</string>
+    <string name="permission_read_call_log_title">Read call logs</string>
+    <string name="permission_read_call_log_des">to enable block unwanted calls</string>
     <string name="permission_for_show_call_flash">show call flash</string>
-    <string name="permission_for_answer_call">answering calls</string>
-    <string name="setting_call_after">Caller ID</string>
+    <string name="permission_for_answer_call">answer calls</string>
+    <string name="setting_call_after">Call Assistant</string>
+    <string name="setting_caller_show">Caller Show</string>
     <string name="permission_denied_txt">Permission denied, please try again</string>
+    <string name="permission_next">NEXT</string>
+    <string name="permission_all_set">All Set!</string>
+
+    <string name="media_upload_author">Author</string>
+    <string name="media_upload_action_upload">Upload</string>
+    <string name="media_upload_request_option">I agree with the</string>
+    <string name="media_upload_request_privacy_policy">&lt;u &gt;Privacy Policy&lt;/u&gt;</string>
+    <string name="media_upload_tip_privacy_policy">Must agree to the privacy policy to upload the file!</string>
+    <string name="media_upload_uploading">Uploaded</string>
+    <string name="media_upload_tip_no_file">Please choose the file to upload</string>
+    <string name="mute_no_permission_tip2">Please turn off silent mode manually</string>
+    <!--Android 8.0及以上通知渠道名称-->
+    <string name="notify_channel_subscribe">Subscribed</string>
+
+    <string name="call_flash_view">View</string>
+
+    <string name="block_list_tab_contact">Block list</string>
+    <string name="block_list_tab_logs">Block logs</string>
+    <string name="block_list_request_permission_tip">%1$s needs the necessary permissions for block.</string>
+
+    <string name="side_slip_permission_check">Permission Check</string>
+    <string name="permission_skip">SKIP</string>
+    <string name="permission_set">SET</string>
+    <string name="permission_set_auto_start">Allow apps to auto start to works for every calls</string>
+    <string name="permission_sett_lock_screen">Allow apps to show on lock screen for call flash screens</string>
+    <string name="permission_xiao_mi_tip">(slide down to bottom)</string>
+
+    <!--这几个权限描述为小米手机中的描述，不能修改,多语言也需要与小米手机中的描述一致-->
+    <string name="permission_xiao_mi_overlay_title">Display pop_up window</string>
+    <string name="permission_xiao_mi_overlay_des">display pop_up window</string>
+    <string name="permission_xiao_mi_show_on_lock_title">Show on Lock screen</string>
+    <string name="permission_xiao_mi_show_on_lock_des">be Shown on Lock screen</string>
+
+    <string name="permission_xiao_mi_make_phone_calls">Make phone calls</string>
+    <string name="permission_xiao_mi_modify_and_delete_contacts">Modify and delete contacts</string>
+    <string name="permission_xiao_mi_read_your_contacts">Read your contacts</string>
+    <string name="permission_xiao_mi_write_and_delete_call_history">Write and delete call history</string>
+    <string name="permission_xiao_mi_read_call_history">Read call history</string>
+    <string name="permission_xiao_mi_get_device_info">Get device info</string>
+    <!--这几个权限描述为小米手机中的描述，不能修改，多语言也需要与小米手机中的描述一致-->
+
+
+    <string name="mine_current_call_flash">Current Call Flash</string>
+    <string name="mine_current_call_flash_is_close">Call Flash Closed</string>
+    <string name="mine_set_before">History</string>
+    <string name="mine_downloaded">Downloaded</string>
+    <string name="mine_all">All</string>
+    <string name="mine_no_current_call_flash">Not set yet，Set it Now</string>
+
+    <string name="click_like_tip">Need download first.</string>
+    <string name="permission_grand_title_desc">We will not upload or store any of your personal data, like contacts, call logs, photos etc.</string>
+    <string name="notification_new_flash_title">Try a new Call Flash Show theme!</string>
+    <string name="setting_call_after_desc">Show missed calls and caller information (May contain ads).</string>
+    <string name="setting_block_desc">Block your unwanted calls.</string>
+    <string name="setting_caller_show_desc">Show call flash screen for incoming calls.</string>
+
+    <string name="setting_close_call_assistant_tip">Missed and important calls information will not be displayed, are you sure to turn it off?</string>
+    <string name="setting_close_block_tip">It will not block calls, are you sure to turn it off?</string>
+    <string name="setting_close_caller_show_tip">Color call screen will not be displayed, are you sure to turn it off?</string>
+
+    <string name="set_default">Default</string>
+
+    <string name="permission_denied_txt2">Permission denied, click here to set permission.</string>
+    <string name="add_block_empty_call_log">The call log is empty! It can not add block contact!</string>
+    <string name="add_block_no_added_call_log">No call logs can be added.</string>
+
+    <string name="push_tools_content">Check details</string>
+    <string name="push_tools_block_call">"Blocked call(s)"</string>
     <string name="title_activity_message">message</string>
     <string name="title_home">message picture</string>
     <string name="title_dashboard">history</string>

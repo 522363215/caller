@@ -83,12 +83,11 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call_flash_preview);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-        setTranslucentStatusBar();
-        mIsShowFirstAdMob = FirstShowAdmobUtil.isShowFirstAdMob(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_CALL_FLASH_PREVIEW, true);
+//        setTranslucentStatusBar();
+        mIsShowFirstAdMob = FirstShowAdmobUtil.isShowFirstAdMob(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_CALL_FLASH_PREVIEW);
 //        initAds();
         initView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -96,6 +95,16 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         }
         onNewIntent(getIntent());
         FlurryAgent.logEvent("CallFlashPreviewActivity-start");
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this);
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_call_flash_preview;
     }
 
     @Override
@@ -208,7 +217,9 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             public void onSuccess(String url, File file) {
                 if (mInfo != null && !TextUtils.isEmpty(url) && url.equals(mInfo.url)) {
                     mIsDownloading = false;
+
                     CallFlashManager.getInstance().saveCallFlashDownloadCount(mInfo);
+                    CallFlashManager.getInstance().saveDownloadedCallFlash(mInfo);
                     EventBus.getDefault().post(new EventRefreshCallFlashDownloadCount());
                     if (mIsShowFirstAdMob) {
                         mLayoutDownloadingBelowAd.setVisibility(View.GONE);
@@ -352,7 +363,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
 
                 @Override
                 public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    LogUtil.d(TAG,"setBackground onResourceReady");
+                    LogUtil.d(TAG, "setBackground onResourceReady");
                     startEnterAnim();
                     return false;
                 }
@@ -369,7 +380,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             Async.scheduleTaskOnUiThread(200, new Runnable() {
                 @Override
                 public void run() {
-                    LogUtil.d(TAG,"setBackground scheduleTaskOnUiThread");
+                    LogUtil.d(TAG, "setBackground scheduleTaskOnUiThread");
                     startEnterAnim();
                 }
             });
@@ -440,15 +451,6 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
      */
     private void uploadLike(boolean isLike) {
         if (mInfo == null) return;
-//        JSONObject callFlashLikeJson = JsonUtil.createCallFlashLikeJson(mInfo.id, isLike);
-//        LogUtil.d(TAG, "uploadCLike callFlashLikeJson:" + callFlashLikeJson);
-//        ServerManager.getInstance().requestData(callFlashLikeJson, ConstantUtils.SERVER_API_CALLER_SHOW_LIKE, new ServerManager.UploadNumberInfoCallBack() {
-//            @Override
-//            public void onRequest(boolean hasSuccess, String data) {
-//                LogUtil.d(TAG, "uploadLike data:" + data + ",hasSuccess:" + hasSuccess);
-//            }
-//        });
-
         ThemeSyncManager.getInstance().syncJustLike(Long.parseLong(mInfo.id), isLike, new ThemeNormalCallback() {
             @Override
             public void onSuccess(int code, String msg) {

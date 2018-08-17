@@ -2,7 +2,11 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -11,16 +15,15 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -28,6 +31,9 @@ import java.util.concurrent.TimeUnit;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobLocalService;
 
 /**
  * Created by John on 2015/12/17.
@@ -50,9 +56,29 @@ public final class CommonUtils {
         translucentStatusBar(context, false);
     }
 
-    //设置状态栏融合，5.0以上
     public static void translucentStatusBar(Activity context, boolean isFullScreen) {
-        translucentStatusBar(context, isFullScreen, Color.TRANSPARENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            setTranslucentStatusForLowVersion(context);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            translucentStatusBar(context, isFullScreen, Color.TRANSPARENT);
+        }
+    }
+
+    private static void setTranslucentStatusForLowVersion(Activity activity) {
+        if (activity != null) {
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            View statusView = createStatusView(activity);
+            ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+            decorView.addView(statusView);
+        }
+    }
+
+    private static View createStatusView(Activity activity) {
+        View view = new View(activity);
+        int statusBarHeight = DeviceUtil.getStatusBarHeight();
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight));
+        view.setBackgroundColor(activity.getResources().getColor(R.color.color_transparent));
+        return view;
     }
 
     //设置状态栏融合，5.0以上
@@ -193,5 +219,39 @@ public final class CommonUtils {
         }
 
         return integers.toArray(new Integer[length]);
+    }
+
+    // schedule the start of the service every 10 - 30 seconds
+    public static void scheduleJob(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ComponentName serviceComponent = new ComponentName(context, JobLocalService.class);
+            JobScheduler jobScheduler = (JobScheduler) context.getSystemService(context.JOB_SCHEDULER_SERVICE);
+            JobInfo jobInfo = new JobInfo.Builder(1001, new ComponentName(context.getPackageName(), JobLocalService.class.getName()))
+//                    .setPeriodic(5000)//2mins-120000, test 5000
+                    .setMinimumLatency(1 * 1000) // wait at least
+                    .setOverrideDeadline(3 * 1000) // maximum delay
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setPersisted(true)
+                    .build();
+            jobScheduler.schedule(jobInfo);
+            LogUtil.d("JobLocalService", "scheduleJob startService: ");
+        }
+    }
+
+    public static boolean isOldForFlash(){
+        SharedPreferences pref = ApplicationEx.getInstance().getGlobalSettingPreference();
+        boolean old = pref.getBoolean("cid_is_old_user_flash", false);
+        if (!old) {
+            //first sync time
+            long first_sync = pref.getLong("key_cid_first_sync_server_time", 0);
+            int today = Stringutil.getTodayDayByServer();//real time
+//            int today = Stringutil.getTodayDayInYearLocal();//not real for test
+
+            if (first_sync != 0 && (today - Stringutil.getDayByTime(first_sync)) >= 2) {
+                old = true;
+                pref.edit().putBoolean("cid_is_old_user_flash", true).apply();
+            }
+        }
+        return old;
     }
 }

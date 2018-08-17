@@ -59,7 +59,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                 int callState = mTele.getCallState();
                 switch (callState) {
                     case TelephonyManager.CALL_STATE_IDLE:
-                        String currentNumber = BlockLocal.getPreferencesData("", "");
+                        String currentNumber = BlockLocal.getPreferencesData("current_in_coming_call_number", "");
                         currentNumber = currentNumber == null ? "" : currentNumber;
                         if (!TextUtils.isEmpty(currentNumber)) {
                             BlockLocal.setPreferencesData("last_phone_number", currentNumber);
@@ -79,7 +79,6 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                         BlockLocal.setPreferencesData("current_in_coming_call_number", mCurrentNumber);
 
                         executeBlock(mCurrentNumber);
-
                         if (mPhoneStateChangeCallbackList != null) {
                             for (PhoneStateChangeCallback callback : mPhoneStateChangeCallbackList) {
                                 if (callback != null) {

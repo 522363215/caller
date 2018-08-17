@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import android.os.Vibrator;
 import android.provider.Settings;
 import android.provider.Telephony;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.RecyclerView;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -626,4 +628,50 @@ public class DeviceUtil {
         }
     }
 
+    public static float getViewShowPercent(View view) {
+        if (view == null) return 0;
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
+        Rect localRect = new Rect();
+        boolean isVisible = view.getLocalVisibleRect(localRect);
+        if (isVisible) {
+            if (localRect.bottom < 0) return 0;
+            float showHeight = localRect.bottom - localRect.top;
+            float viewHeight = view.getHeight();
+            LogUtil.d(TAG, "getViewShowPercent bottom:" + localRect.bottom + ",top:" + localRect.top + ",showHeight:" + showHeight + ",viewHeight:" + viewHeight);
+            if (viewHeight == 0) return 0;
+            return showHeight / viewHeight;
+        } else {
+            return 0;
+        }
+    }
+
+    public static float getItemShowPercentInRecycleView(RecyclerView recyclerView, View item) {
+        float showPercent = 0;
+        float itemShowHeight = 0;
+        float recyclerViewHeight = recyclerView.getHeight();
+        float itemTop = item.getTop();
+        float itemHeight = item.getHeight();
+        if (itemTop < 0) {
+            if (itemHeight > 0) {
+                itemShowHeight = itemHeight + itemTop;
+                if (itemShowHeight > 0) {
+                    showPercent = itemShowHeight / itemHeight;
+                }
+            }
+        } else {
+            if (recyclerViewHeight > 0 && itemHeight > 0) {
+                itemShowHeight = recyclerViewHeight - itemTop;
+                if (itemShowHeight > 0) {
+                    if (itemShowHeight > itemHeight) {
+                        showPercent = 1.0f;
+                    } else {
+                        showPercent = itemShowHeight / itemHeight;
+                    }
+                }
+            }
+        }
+//        LogUtil.d(TAG, "getItemShowPercentInRecycleView recyclerViewHeight:" + recyclerViewHeight + ",itemHeight:" + itemHeight + ",itemTop:" + itemTop + ",showPercent:" + showPercent);
+        return showPercent;
+    }
 }

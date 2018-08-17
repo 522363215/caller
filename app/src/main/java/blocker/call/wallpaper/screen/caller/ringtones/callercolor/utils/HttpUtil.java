@@ -44,7 +44,7 @@ public class HttpUtil {
                 Map<String, Object> params = new HashMap<>();
                 params.put("data", object.toString());
                 params.put("v", sig);
-                aq.ajax(NOTIFICATION_API_INTERFACE, params, JSONObject.class, ajaxCallback);
+                aq.ajax("", params, JSONObject.class, ajaxCallback);
             }
         } catch (Exception e) {
             LogUtil.e("liontools", "postNofityData exception: " + e.getMessage());

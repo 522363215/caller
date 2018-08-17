@@ -11,7 +11,7 @@
         android:id="@+id/gv_call_flash_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:scaleType="centerCrop" />
 
     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView
         android:id="@+id/call_flash_view"
@@ -20,8 +20,7 @@
         android:layout_above="@+id/layout_btn"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp2"
-        android:layout_marginTop="@dimen/dp48"
-        android:background="@drawable/shape_shadow_floating_bg" />
+        android:layout_marginTop="@dimen/dp48" />
 
     <RelativeLayout
         android:id="@+id/layout_call_flash_others"
@@ -29,8 +28,98 @@
         android:layout_height="match_parent">
 
         <include layout="@layout/layout_call_flash_others" />
-    </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/layout_like_and_download"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp60"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginEnd="@dimen/dp6"
+            android:layout_marginLeft="@dimen/dp6"
+            android:layout_marginRight="@dimen/dp6"
+            android:layout_marginStart="@dimen/dp6"
+            android:background="@drawable/background_trans_black"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_sound"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp8"
+                android:layout_marginStart="@dimen/dp8"
+                android:padding="@dimen/dp8"
+                android:src="@drawable/icon_mute" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:id="@+id/layout_like"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/dp8"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                    android:id="@+id/fiv_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp12"
+                    android:layout_marginStart="@dimen/dp12"
+                    android:text="@string/icon_is_like"
+                    android:textColor="@color/whiteSmoke"
+                    android:textSize="@dimen/dp40" />
+
+                <TextView
+                    android:id="@+id/tv_like_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp12"
+                    android:layout_marginLeft="@dimen/dp8"
+                    android:layout_marginRight="@dimen/dp12"
+                    android:layout_marginStart="@dimen/dp8"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    tools:text="45545" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                    android:id="@+id/fiv_download"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/icon_down_arrow"
+                    android:textColor="@color/whiteSmoke"
+                    android:textSize="@dimen/dp30" />
+
+                <TextView
+                    android:id="@+id/tv_download_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:layout_marginLeft="@dimen/dp8"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:layout_marginStart="@dimen/dp8"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    tools:text="45545" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/layout_btn"
@@ -78,7 +167,7 @@
                 android:background="@color/color_FF27BB56"
                 android:gravity="center"
                 android:padding="@dimen/dp10"
-                android:text="@string/call_flash_detail_setting_action_to_set"
+                android:text="@string/call_flash_gif_show_save"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
@@ -150,7 +239,7 @@
                 android:background="@color/color_FF27BB56"
                 android:gravity="center"
                 android:padding="@dimen/dp10"
-                android:text="@string/call_flash_detail_setting_action_to_set"
+                android:text="@string/call_flash_gif_show_save"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
@@ -174,7 +263,7 @@
 
     </LinearLayout>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp48"
         android:visibility="visible">
@@ -189,5 +278,21 @@
             android:textSize="@dimen/dp28"
             android:visibility="visible" />
 
-    </FrameLayout>
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+            android:id="@+id/fiv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp8"
+            android:alpha="0.5"
+            android:padding="@dimen/dp8"
+            android:text="@string/icon_close"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp24"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 </RelativeLayout>

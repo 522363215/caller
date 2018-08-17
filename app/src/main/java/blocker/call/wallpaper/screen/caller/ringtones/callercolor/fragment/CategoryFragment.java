@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.flurry.android.FlurryAgent;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Category;
 import com.md.serverflash.callback.CategoryCallback;
@@ -53,6 +54,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FlurryAgent.logEvent("CategroyFragment-------show_main");
         if (view != null) {
             initView(view);
             initData();

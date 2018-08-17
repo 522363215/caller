@@ -1219,6 +1219,35 @@ public class HttpUtil {
         mClient.newCall(request).enqueue(callback);
     }
 
+    /**
+     * MD5加密
+     *
+     * @param originalStr ---- 需要加密的字符串
+     * @return ---- 加密后的字符串
+     */
+    public static String MD5EncodeFromStr(String originalStr) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            byte[] result = messageDigest.digest(originalStr.getBytes()); // 得到加密后的字符组数
+            StringBuffer sb = new StringBuffer();
+            for (byte b : result) {
+                int num = b & 0xff; // 这里的是为了将原本是byte型的数向上提升为int型，从而使得原本的负数转为了正数
+                String hex = Integer.toHexString(num); // 这里将int型的数直接转换成16进制表
+                // 16进制可能是为1的长度，这种情况下，需要在前面补0，
+                if (hex.length() == 1) {
+                    sb.append(0);
+                }
+                sb.append(hex);
+            }
+
+            return sb.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String MD5Encode(String originalStr) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");

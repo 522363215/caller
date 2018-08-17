@@ -37,7 +37,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.update.HttpUti
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.update.Util;
 
 public class AppUtils {
-    public static final String NOTIFICATION_URL = "http://battery-analysis.lionmobi.com/viewSelected/portal/api.php";
+    public static final String NOTIFICATION_URL = "";
     public static final String NOTIFICATION_ACTION = "notification_static";
     public static final int INVALID_PID = -1;
     public static final int PID_COLUNM_INDEX = 1;
@@ -178,7 +178,7 @@ public class AppUtils {
             param.put("time_zone", timeZone);
             param.put("action_type", actionType);
 
-            HttpUtilUpdate.doPost(NOTIFICATION_URL, param);
+            HttpUtilUpdate.doPost("", param);
         } catch (Exception e) {
             e.printStackTrace();
         }

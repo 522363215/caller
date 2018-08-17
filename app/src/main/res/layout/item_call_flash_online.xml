@@ -5,16 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     app:cardBackgroundColor="@color/color_transparent"
     card_view:cardCornerRadius="2dp">
 
     <RelativeLayout
         android:id="@+id/layout_call_flash"
         android:layout_width="match_parent"
-        android:layout_height="252dp"
+        android:layout_height="match_parent"
         android:gravity="center"
         tools:visibility="visible">
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView
+            android:id="@+id/layout_call_flash_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
             android:id="@+id/gv_bg"
@@ -27,15 +32,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleImageView
                 android:id="@+id/iv_call_photo"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/icon_fake_photo_trump"
                 android:visibility="gone"
-                app:border_width="0dp" />
+                app:border_width="0dp"
+                tools:src="@drawable/icon_woman" />
 
             <TextView
                 android:id="@+id/tv_call_name"
@@ -128,7 +134,7 @@
     <LinearLayout
         android:id="@+id/layout_ad_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/color_4E92CF"
         android:visibility="gone">
 

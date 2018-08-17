@@ -23,7 +23,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_music);
 
         Bundle bundle = getIntent().getExtras();
         localSong = (LocalSong) bundle.getSerializable(Constant.MUSIC_BUNDLE);
@@ -39,6 +38,16 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         mediaPlayer.start();
 
         findViewById(R.id.tv_music).setOnClickListener(this);
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_music;
     }
 
     @Override

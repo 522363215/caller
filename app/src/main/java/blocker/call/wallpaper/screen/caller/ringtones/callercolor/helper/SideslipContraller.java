@@ -13,6 +13,8 @@ import android.view.ViewStub;
 import android.widget.LinearLayout;
 
 import com.flurry.android.FlurryAgent;
+import com.md.flashset.bean.CallFlashDataType;
+import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 
 import java.lang.reflect.Method;
@@ -20,14 +22,20 @@ import java.util.Locale;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.AboutActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.AboutActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.BlockActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CollectionActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.SettingActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingDialog;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingOneDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MessageActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.RingActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.SettingActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -40,7 +48,6 @@ public class SideslipContraller implements View.OnClickListener {
     private MainActivity mAct;
     private View root;
     private View mMenuBlock;
-    private View mMenuRing;
     private View mMenuSettings;
     private View mMenuRate;
     private View mMenuAbout;
@@ -50,6 +57,9 @@ public class SideslipContraller implements View.OnClickListener {
     private View mMenuCollection;
     private View mMenuFeedback;
     private SwitchButton mSwitchButton;
+    private View mMenuPermission;
+    private View mMenuRing;
+    private View mMenuMessage;
 
     public SideslipContraller(MainActivity mAct) {
         this.mAct = mAct;
@@ -74,7 +84,9 @@ public class SideslipContraller implements View.OnClickListener {
             mMenuFeedback = root.findViewById(R.id.menu_feedback);
             mMenuAbout = root.findViewById(R.id.menu_about);
             mMenuTest = root.findViewById(R.id.menu_test);
+            mMenuPermission = root.findViewById(R.id.menu_permission);
             mMenuRing = root.findViewById(R.id.menu_ring);
+            mMenuMessage = root.findViewById(R.id.menu_message);
 
             mMenuBlock.setOnClickListener(this);
             mMenuCollection.setOnClickListener(this);
@@ -83,8 +95,9 @@ public class SideslipContraller implements View.OnClickListener {
             mMenuFeedback.setOnClickListener(this);
             mMenuAbout.setOnClickListener(this);
             mMenuTest.setOnClickListener(this);
+            mMenuPermission.setOnClickListener(this);
             mMenuRing.setOnClickListener(this);
-            root.findViewById(R.id.menu_message).setOnClickListener(this);
+            mMenuMessage.setOnClickListener(this);
 
             boolean isCallFlashOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
             setSwitchButton(isCallFlashOn);
@@ -180,7 +193,6 @@ public class SideslipContraller implements View.OnClickListener {
 
         }
 
-
         resolution = height + "*" + width;
         return resolution;
 
@@ -208,16 +220,20 @@ public class SideslipContraller implements View.OnClickListener {
                 onAbout();
                 break;
             case R.id.menu_feedback:
-                sendEmail();
+//                sendEmail();
+                sendFeedback();
                 break;
             case R.id.menu_collection:
                 onCollection();
                 break;
-            case R.id.menu_ring:
-                onRing();
+            case R.id.menu_permission:
+                onPermission();
                 break;
             case R.id.menu_message:
                 onMessage();
+                break;
+            case R.id.menu_ring:
+                ring();
                 break;
         }
         if (callBack != null) {
@@ -225,20 +241,26 @@ public class SideslipContraller implements View.OnClickListener {
         }
     }
 
-    private void onCollection() {
-        FlurryAgent.logEvent("left_collection_click");
-        if (mAct == null) return;
-        Intent intent = new Intent();
-        intent.setClass(mAct, CollectionActivity.class);
-        mAct.startActivity(intent);
-    }
-
-    private void onRing() {
+    private void ring() {
         FlurryAgent.logEvent("left_collection_click");
         if (mAct == null) return;
         Intent intent = new Intent();
         intent.setClass(mAct, RingActivity.class);
         mAct.startActivity(intent);
+    }
+
+    private void onPermission() {
+        ActivityBuilder.toPermissionActivity(mAct, false);
+    }
+
+    private void onCollection() {
+        FlurryAgent.logEvent("left_collection_click");
+        if (mAct == null) return;
+        ActivityBuilder.toCallFlashList(mAct, CallFlashDataType.CALL_FLASH_DATA_COLLECTION);
+    }
+
+    private void sendFeedback() {
+        new RatingOneDialog(mAct).show();
     }
 
     private void onMessage(){
@@ -253,7 +275,7 @@ public class SideslipContraller implements View.OnClickListener {
         FlurryAgent.logEvent("about_Email_us");
         try {
 
-            String mailto = "contact@lionmobi.com";
+            String mailto = ConstantUtils.EAMAIL_ADDR;
             String[] tos = {mailto};
 
             Intent emailintent = new Intent(

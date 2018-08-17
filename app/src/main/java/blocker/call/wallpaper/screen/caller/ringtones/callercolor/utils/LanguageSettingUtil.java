@@ -25,8 +25,8 @@ public class LanguageSettingUtil {
     private Locale refreshLocale;
 
     public final static String ENGLISH = "en";
-    public final static String CHINESE = "zh_rCN";
-    public final static String CHINESE_TW = "zh_rTW";
+    public final static String CHINESE = "zh"; // 台中与港中;
+    public final static String CHINESE_CN = "zh_land";
     public final static String ESPANISH = "es";
     public final static String PORTUGUESE = "pt";
     public final static String FRENCH = "fr";
@@ -52,9 +52,6 @@ public class LanguageSettingUtil {
         //得到系统语言-
         Locale localLocale = Locale.getDefault();
         this.defaultLocale = localLocale;
-        if (localLocale.getLanguage().contains(CHINESE)) {
-            this.defaultLocale = new Locale(CHINESE);
-        }
         LogUtil.d("LanguageSettin", "reloadDefautLocale:" + defaultLocale);
 
         //保存系统语言到defaultLanguage
@@ -87,11 +84,9 @@ public class LanguageSettingUtil {
 
     //得到APP配置文件目前的语言设置-
     public String getLanguage() {
-        SharedPreferences localSharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this.context);
+        SharedPreferences localSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
         //如果当前程序没有设置language属性就返回系统语言，如果有，就返回以前的-
-        return localSharedPreferences.getString("language",
-                AUTO);
+        return localSharedPreferences.getString("language", AUTO);
     }
 
 //    //如果配置文件中没有语言设置-
@@ -137,10 +132,10 @@ public class LanguageSettingUtil {
                 locale = new Locale(ENGLISH, "US");
                 break;
             case CHINESE:
-                locale = Locale.CHINA;
+                locale = new Locale(CHINESE, "TW");
                 break;
-            case CHINESE_TW:
-                locale = Locale.TAIWAN;
+            case CHINESE_CN:
+                locale = new Locale(CHINESE, "CN");
                 break;
             case ESPANISH:
                 locale = new Locale(ESPANISH, "US");
@@ -185,7 +180,18 @@ public class LanguageSettingUtil {
                 locale = new Locale(HINDI, "IN");
                 break;
             case AUTO:
-                locale = this.defaultLocale;
+                if (defaultLocale != null && CHINESE.equals(defaultLocale.getLanguage())) {
+                    LogUtil.d("refreshLanguage", "default country: " + defaultLocale.getCountry() + ",  language: " + defaultLocale.getLanguage());
+                    if ("CN".equals(defaultLocale.getCountry())) {
+                        locale = new Locale(CHINESE, "CN");
+                        LogUtil.d("refreshLanguage", "simple chinese");
+                    } else {
+                        LogUtil.d("refreshLanguage", "chinese taiwan");
+                        locale = new Locale(CHINESE, "TW");
+                    }
+                } else {
+                    locale = this.defaultLocale;
+                }
                 break;
             default:
                 locale = new Locale(ENGLISH, "US");

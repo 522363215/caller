@@ -276,24 +276,27 @@ public class BlockManager {
     }
 
     public boolean blockCall(String phoneNumber) {
-        boolean suc = false;
-        if (TextUtils.isEmpty(phoneNumber)) {
-            return suc;
+        return isBlockNumber(phoneNumber) && endCall();
+    }
+
+    public boolean isBlockNumber (String number) {
+        boolean is = false;
+        if (TextUtils.isEmpty(number)) {
+            return is;
         }
 
         List<BlockInfo> blockContacts = getBlockContacts();
         if (blockContacts == null) {
-            return suc;
+            return is;
         }
 
         for (BlockInfo contact : blockContacts) {
-            if (PhoneNumberUtils.compare(contact.getNumber(), phoneNumber)) {
-                suc = endCall();
+            if (PhoneNumberUtils.compare(contact.getNumber(), number)) {
+                is = true;
                 break;
             }
         }
-
-        return suc;
+        return is;
     }
 
     public boolean endCall() {

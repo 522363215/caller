@@ -1,107 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/dp4"
-    android:paddingEnd="@dimen/dp16"
-    android:paddingLeft="@dimen/dp16"
-    android:paddingRight="@dimen/dp16"
-    android:paddingStart="@dimen/dp16"
-    android:paddingTop="@dimen/dp4">
+    android:paddingEnd="@dimen/dp24"
+    android:paddingLeft="@dimen/dp24"
+    android:paddingRight="@dimen/dp24"
+    android:paddingStart="@dimen/dp24">
 
-    <ImageView
-        android:id="@+id/iv_icon"
-        android:layout_width="@dimen/dp36"
-        android:layout_height="@dimen/dp36"
-        tools:src="@drawable/ic_launcher" />
-
-    <android.support.v7.widget.CardView
-        android:layout_width="0dp"
+    <RelativeLayout
+        android:id="@+id/layout_set"
+        android:layout_width="@dimen/dp72"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp16"
-        android:layout_marginStart="@dimen/dp16"
-        android:layout_weight="1"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="@dimen/dp4">
+        android:layout_alignBottom="@+id/layout_permission_des"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/layout_permission_des"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp8"
+        android:layout_marginStart="@dimen/dp8"
+        android:gravity="center">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/dp8"
-            android:paddingEnd="@dimen/dp16"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp32"
+            android:background="@drawable/shape_shadow_stroke_round30_green"
+            android:minWidth="@dimen/dp64"
             android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            android:paddingTop="@dimen/dp8">
+            android:paddingRight="@dimen/dp16">
+
+            <ImageView
+                android:id="@+id/iv_get"
+                android:layout_width="@dimen/dp18"
+                android:layout_height="@dimen/dp18"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_right"
+                android:visibility="gone" />
 
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tv_set"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/background"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/permission_set"
+                android:textColor="@color/color_FF02D577"
                 android:textSize="16sp"
-                tools:text="dadadadadada" />
+                android:visibility="visible" />
+        </RelativeLayout>
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_des"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp4"
-                android:alpha="0.5"
-                android:textColor="@color/background"
-                android:textSize="12sp"
-                tools:text="dadadadadadadaaaaaaaaaaaaaaaaaaaaaaaaaaaaadda" />
+    <LinearLayout
+        android:id="@+id/layout_permission_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_toLeftOf="@id/layout_set"
+        android:layout_toStartOf="@id/layout_set"
+        android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|end"
-                android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            tools:text="dadadadadada" />
 
-                <TextView
-                    android:id="@+id/tv_enable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/dp4"
-                    android:paddingTop="@dimen/dp4"
-                    android:text="@string/call_log_enable"
-                    android:textColor="@color/color_FF008BFB"
-                    android:textSize="14sp"
-                    android:visibility="visible" />
+        <TextView
+            android:id="@+id/tv_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp4"
+            android:alpha="0.5"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            tools:text="dadadadadadadaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+    </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/layout_enabled"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/dp4"
-                    android:paddingTop="@dimen/dp4"
-                    android:visibility="gone">
+    <RelativeLayout
+        android:id="@+id/layout_line"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp50"
+        android:layout_alignEnd="@+id/layout_set"
+        android:layout_alignLeft="@+id/layout_set"
+        android:layout_alignRight="@+id/layout_set"
+        android:layout_alignStart="@+id/layout_set"
+        android:layout_below="@+id/layout_set"
+        android:layout_marginTop="@dimen/dp10"
+        android:visibility="visible"
+        tools:visibility="visible">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/permission_enabled"
-                        android:textColor="@color/background"
-                        android:textSize="14sp" />
+        <ImageView
+            android:layerType="software"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@drawable/shape_shadow_xu_line" />
+    </RelativeLayout>
 
-                    <ImageView
-                        android:layout_width="@dimen/dp18"
-                        android:layout_height="@dimen/dp18"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/dp4"
-                        android:layout_marginStart="@dimen/dp4"
-                        android:src="@drawable/ic_choice" />
-                </LinearLayout>
-
-            </LinearLayout>
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+</RelativeLayout>

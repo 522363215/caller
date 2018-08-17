@@ -17,9 +17,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
+import com.common.sdk.analytics.AnalyticsManager;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.flurry.android.FlurryAgent;
-
-import org.jsoup.select.Evaluator;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.Locale;
 
@@ -27,19 +29,22 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.JobSchedulerService;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.RomUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SystemInfoUtil;
 
-public class BaseActivity extends AppCompatActivity implements PermissionUtils.PermissionGrant {
+public abstract class BaseActivity extends AppCompatActivity implements PermissionUtils.PermissionGrant {
 
     protected LanguageSettingUtil languageSetting;
     protected ApplicationEx app;
     //protected AppEventsLogger logger;
+    private final static String APP_ADMOB_ID = "ca-app-pub-5980661201422605~1016951821";
 
     protected ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
@@ -59,24 +64,42 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
         // Log.d("ACT", this.getClass().getSimpleName() + "(onDestroy)");
 //        setContentView(R.layout.view_null);
         super.onDestroy();
-        unbindService(mServiceConnection);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    unbindService(mServiceConnection);
+        }
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Log.d("ACT", this.getClass().getSimpleName() + "(onCreate)");
         super.onCreate(savedInstanceState);
-        bindService();
+        setContentView(getLayoutRootId());
+        translucentStatusBar();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CommonUtils.scheduleJob(this.getApplicationContext());
+            LogUtil.d("JobLocalService", "base_activity scheduleJob startService: ");
+        }else {
+            bindService();
+        }
         SwitchLang();
+
+        //init tuiguang fb
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
+        //init admob
+        MobileAds.initialize(this, APP_ADMOB_ID);
     }
 
+    // 设置沉浸式状态栏, 并且设置状态栏占位留白;
+    protected abstract void translucentStatusBar();
+
+    //
+    protected abstract int getLayoutRootId();
+
     private void bindService() {
-        Intent intent = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            intent = new Intent(this, JobSchedulerService.class);
-        } else {
-            intent = new Intent(this, LocalService.class);
-        }
+        Intent intent = new Intent(this, LocalService.class);
         bindService(intent, mServiceConnection, Service.BIND_AUTO_CREATE);
     }
 
@@ -95,6 +118,8 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
     @Override
     protected void onResume() {
         super.onResume();
+        AppEventsLogger.activateApp(this);
+        AnalyticsManager.onUserActive();
         FlurryAgent.onPageView();
     }
 
@@ -141,6 +166,10 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
             requestSpecialPermission(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION, false);
         } else if (PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS.equals(permission)) {
             requestSpecialPermission(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS, false);
+        } else if (PermissionUtils.PERMISSION_SHOW_ON_LOCK.equals(permission)) {
+            requestSpecialPermission(PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK, false);
+        } else if (PermissionUtils.PERMISSION_AUTO_START.equals(permission)) {
+            requestSpecialPermission(PermissionUtils.REQUEST_CODE_AUTO_START, false);
         }
     }
 
@@ -182,14 +211,14 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
             case PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS://通知管理,7.0以上用于接听电话
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                     if (isOnActivityResult) {
-                        if (!SpecialPermissionsUtil.isNotificationServiceRunning()) {
+                        if (!SpecialPermissionsUtil.isHaveNotificationPolicyAccessForAnswerCall(this)) {
                             onPermissionNotGranted(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
                         } else {
                             onPermissionGranted(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
                             PermissionUtils.toggleNotificationListenerService(ApplicationEx.getInstance());
                         }
                     } else {
-                        if (!SpecialPermissionsUtil.isNotificationServiceRunning()) {
+                        if (!SpecialPermissionsUtil.isHaveNotificationPolicyAccessForAnswerCall(this)) {
                             // 检查通知使用权
                             Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
                             startActivityForResult(intent, PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
@@ -197,6 +226,40 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
                         } else {
                             onPermissionGranted(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
                         }
+                    }
+                } else {
+                    onPermissionGranted(PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS);
+                }
+                break;
+            case PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK://小米专用
+                boolean isRequestedShowOnLock = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_LAST_TO_XIAO_MI_SHOW_ON_LOCK_PERMISSION_ACTIVITY, 0) > 0;
+                if (isOnActivityResult) {
+                    if (!isRequestedShowOnLock && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && SystemInfoUtil.isMiui()) {
+                        onPermissionNotGranted(PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK);
+                    } else {
+                        onPermissionGranted(PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK);
+                    }
+                } else {
+                    if (!isRequestedShowOnLock && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && SystemInfoUtil.isMiui()) {
+                        SpecialPermissionsUtil.toXiaomiShowOnLockPermssion(this, PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK);
+                    } else {
+                        onPermissionGranted(PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK);
+                    }
+                }
+                break;
+            case PermissionUtils.REQUEST_CODE_AUTO_START://小米专用
+                boolean isRequestedAutoStart = PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_LAST_TO_XIAO_MI_AUTO_START_BOOT_PERMISSION_ACTIVITY, 0) > 0;
+                if (isOnActivityResult) {
+                    if (!isRequestedAutoStart && SystemInfoUtil.isMiui()) {
+                        onPermissionNotGranted(PermissionUtils.REQUEST_CODE_AUTO_START);
+                    } else {
+                        onPermissionGranted(PermissionUtils.REQUEST_CODE_AUTO_START);
+                    }
+                } else {
+                    if (!isRequestedAutoStart && SystemInfoUtil.isMiui()) {
+                        SpecialPermissionsUtil.toXiaomiAutoStartPermission(this, PermissionUtils.REQUEST_CODE_AUTO_START);
+                    } else {
+                        onPermissionGranted(PermissionUtils.REQUEST_CODE_AUTO_START);
                     }
                 }
                 break;
@@ -208,7 +271,8 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
         super.onActivityResult(requestCode, resultCode, data);
         //特殊权限结果返回
         if (requestCode == PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION || requestCode == PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS
-                || requestCode == PermissionUtils.REQUEST_CODE_WRITE_SETTINGS) {
+                || requestCode == PermissionUtils.REQUEST_CODE_WRITE_SETTINGS || requestCode == PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK
+                || requestCode == PermissionUtils.REQUEST_CODE_AUTO_START) {
             requestSpecialPermission(requestCode, true);
         }
 
@@ -216,7 +280,7 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
         if (requestCode == SpecialPermissionsUtil.REQUEST_CODE_FLOAT_WINDAOW_PERMISSION) {
             if (RomUtils.checkIsHuaweiRom()) {
                 if (!SpecialPermissionsUtil.checkFloatWindowPermission(this)) {
-                    ToastUtils.showToast(this, getString(R.string.permission_denied_txt));
+                    onPermissionNotGranted(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION);
                     return;
                 }
             }
@@ -226,7 +290,7 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
         //跳转app details settings 返回
         if (requestCode == PermissionUtils.REQUEST_CODE_APP_DETAILS_SETTINGS) {
             if (!SpecialPermissionsUtil.checkFloatWindowPermission(this)) {
-                ToastUtils.showToast(this, getString(R.string.permission_denied_txt));
+                onPermissionNotGranted(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION);
                 return;
             }
             requestSpecialPermission(PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION, true);
@@ -263,24 +327,24 @@ public class BaseActivity extends AppCompatActivity implements PermissionUtils.P
             }
         });
     }
+    //**************************************请求权限 end**************************//
 
-    protected void openActivity(Class cls,int startAnim, int endAnim,boolean finsh){
-        Intent intent = new Intent(this,cls);
+    protected void openActivity(Class c,int startAnim,int endAnim,boolean cancelOrNo){
+        Intent intent = new Intent(this,c);
         startActivity(intent);
         overridePendingTransition(startAnim,endAnim);
-        if (finsh){
+        if (cancelOrNo){
             finish();
         }
     }
 
-    protected void openActivity(Class cls,Bundle bundle,int startAnim, int endAnim,boolean finsh){
-        Intent intent = new Intent(this,cls);
+    protected void openActivity(Class c,Bundle bundle,int startAnim,int endAnim,boolean cancelOrNo){
+        Intent intent = new Intent(this,c);
         intent.putExtras(bundle);
         startActivity(intent);
         overridePendingTransition(startAnim,endAnim);
-        if (finsh){
+        if (cancelOrNo){
             finish();
         }
     }
-    //**************************************请求权限 end**************************//
 }

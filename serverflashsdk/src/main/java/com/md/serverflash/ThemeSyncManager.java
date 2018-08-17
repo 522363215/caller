@@ -89,6 +89,7 @@ public class ThemeSyncManager {
     }
 
     private String getFileNameFromUrl(String url) {
+        if (TextUtils.isEmpty(url)) return "";
         return url.substring(url.lastIndexOf("/") + 1);
     }
 
@@ -417,8 +418,8 @@ public class ThemeSyncManager {
     }
 
     /**
-     *获取每一类缓存的数据
-     * */
+     * 获取每一类缓存的数据
+     */
     public List<Theme> getCacheCategoryDataList(int categoryListId) {
         return ThemeSyncLocal.getInstance().getPageData(categoryListId);
     }

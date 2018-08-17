@@ -72,7 +72,6 @@ public class AddBlockContactAdapter extends BaseAdapter {
         private TextView tvNumber;
 
         public ViewHolder(View itemRoot) {
-
             tvName = itemRoot.findViewById(R.id.tv_name);
             tvNumber = itemRoot.findViewById(R.id.tv_number);
         }

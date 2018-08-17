@@ -1,2 +1,224 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name" translatable="false">Color Phone</string>
+
+    <string name="push_tools_missed">"Missed calls."</string>
+
+    <!-- font begin-->
+    <string name="Roboto_Light" translatable="false">sans-serif-light</string>
+    <string name="Roboto_Regular" translatable="false">sans-serif</string>
+    <string name="Roboto_Medium" translatable="false">sans-serif-medium</string>
+    <!-- font end-->
+
+    <string name="call_flash_intro_set">"来电秀"</string>
+    <string name="ok_string">"确定"</string>
+    <string name="no_string">"取消"</string>
+    <string name="quithint">"再按一次退出"</string>
+
+    <string name="setting_title">"设置"</string>
+    <string name="block_setting_name">"拦截"</string>
+    <string name="call_coming_back">"拨打"</string> <!--回拨-->
+    <string name="call_coming_detail">详情</string>
+    <string name="about_title">"关于我们"</string>
+    <string name="about_product_version">%s当前版本："</string>
+    <string name="about_rote_gp">"在Google上为我们评分"</string>
+    <string name="about_like_facebook">"关注我们的Facebook首页"</string>
+    <string name="failed_backup">"备份失败"</string>
+    <string name="share_to_facebook">"分享到"</string>
+    <string name="about_privacy">"隐私政策"</string>
+    <string name="about_term">"使用条款"</string>
+    <string name="share_text">"%1$s 多彩的来电秀和电话拦截功能, 马上试试！下载：%2$s"</string>
+    <string name="rate_dialog_message">"你喜欢我们的应用吗？\n你愿意给我们留下你的评价吗？"</string>
+    <string name="rate_dialog_cancel">"稍后"</string>
+    <string name="rate_dialog_negative_title">"反馈"</string>
+    <string name="rate_dialog_nagative_desc">"在这里编辑你的问题/建议，最多200字。"</string>
+    <string name="rate_dialog_nagative_send">"发送"</string>
+    <string name="rate_dialog_nagative_toast">"请输入你的问题/建议！"</string>
+    <string name="rate_dialog_send_success_toast">"反馈信息已发送，感谢您对我们应用的支持！"</string>
+    <string name="rate_dialog_msg_illegal">"你输入的单词包含非法字符！"</string>
+    <string name="device_time_minutes">"%1$d分钟之前"</string>
+    <string name="device_time_hour">"%1$d小时前"</string>
+    <string name="device_time_one_hour">"一小时前"</string>
+    <string name="device_time_day">"%1$d天前"</string>
+    <string name="device_time_one_day">"昨天"</string>
+    <string name="time_s">"%1$ds"</string>
+    <string name="time_m">"%1$dm:%2$ds"</string>
+    <string name="time_h">"%1$dh:%2$dm:%3$ds"</string>
+    <string name="splash_more">更多</string>
+    <string name="call_log_contact">"联系人"</string>
+    <string name="call_log_date_sunday">"星期日"</string>
+    <string name="call_log_date_saturday">"星期六"</string>
+    <string name="call_log_date_friday">"星期五"</string>
+    <string name="call_log_date_thursday">"星期四"</string>
+    <string name="call_log_date_wednesday">"星期三"</string>
+    <string name="call_log_date_tuesday">"星期二"</string>
+    <string name="call_log_date_monday">"星期一"</string>
+    <string name="call_log_date_today">"今天"</string>
+    <string name="call_log_enable">"启用"</string>
+    <string name="phone_detail_unblock">取消拦截</string>
+    <string name="phone_detail_block">拦截</string>
+    <string name="phone_detail_block_dialog_title">"是否确定将该号码添加到拦截名单？"</string>
+    <string name="phone_detail_have_no_tag">"号码已添加到拦截名单。"</string>
+    <string name="phone_detail_cancel_block">号码已经从拦截名单移除。</string>
+    <string name="phone_detail_unknown">未知号码</string>
+    <string name="contact_search_hint">检索电话号码</string>
+    <string name="call_after_message">"短信"</string>
+    <string name="call_after_click_toast">"这是一个未知号码！"</string>
+    <string name="permission_tip">为了来电秀和号码拦截能够正常使用，需要启用相关权限</string>
+    <string name="permission_sysytem_permission">权限管理</string>
+    <string name="permission_to_get_permsiion">启用</string>
+    <string name="permission_phone">"电话"</string>
+    <string name="permission_SMS">"短信"</string>
+    <string name="call_flash_led_festival">"节日"</string>
+    <string name="call_flash_led_love">"爱心"</string>
+    <string name="call_flash_led_kiss">"吻"</string>
+    <string name="call_flash_led_rose">"玫瑰"</string>
+    <string name="call_falsh_led_streamer">"流水灯"</string>
+    <string name="delete">删除</string>
+    <string name="dail">详情</string>
+    <string name="reply">回复</string>
+    <string name="call_after_close">关闭</string>
+    <string name="call_after_disable">禁用</string>
+    <string name="lion_family_active_download">下载</string>
+    <string name="call_flash_album_title">选择图片或者GIF</string>
+    <string name="call_flash_album_online">在线</string>
+    <string name="call_flash_album_local">本地</string>
+    <string name="call_flash_album_gallery">图库</string>
+    <string name="call_flash_album_gallery_desc_1">选择图片</string>
+    <string name="call_flash_album_gallery_desc_2">%1$d张图片</string>
+    <string name="call_flash_result_title">设置成功</string>
+    <string name="call_flash_gif_show_save">设置为来电秀</string>
+    <string name="call_flash_gif_show_load">正在下载%1$d%%</string>
+    <string name="call_flash_gif_show_load_failed">下载失败。</string>
+    <string name="call_flash_gif_show_setting_suc">来电秀设置成功！</string>
+    <string name="call_flash_gif_show_setting_suc_reset">来电秀已重置！</string>
+    <string name="page_title_caller_theme">来电秀主题</string>
+    <string name="page_title_category">分类</string>
+    <string name="page_title_mine">我的来电秀</string>
+    <string name="about_email_us">"发送邮件给我们"</string>
+    <string name="email_choose_one">"请选择适合的程序发送邮件。"</string>
+    <string name="call_flash_gif_show_setting_des2">设置失败</string>
+    <string name="call_answer_string">接听</string>
+    <string name="call_flash_detail_setting_action_to_cancel">"取消当前来电秀设置"</string>
+    <string name="call_flash_more_refresh_online_themes_failed_tip">"在线主题刷新失败！"</string>
+    <string name="call_flash_more_refresh_online_themes_load_failed">"网络无连接，请稍后再试！"</string>
+    <string name="call_flash_preview_now">立即预览</string>
+    <string name="splash_init">正在初始化...</string>
+    <string name="download_failed_for_no_sd_permission">同意权限以下载并设置来电秀</string>
+    <string name="about_send_apk">分享应用</string>
+    <string name="device_time_just">Right now</string>
+    <string name="splash_content">别出心裁，秀随我变</string>
+    <string name="call_flash_gif_show_connecte">正在连接...</string>
+    <string name="call_flash_gif_show_setting_des">来电秀设置需要能够显示在其他应用上层权限</string>
+    <string name="notification_listener_setting_tip">开启通知栏使用权限以接听电话</string>
+    <string name="call_flash_saving">正在保存...</string>
+    <string name="call_flash_grant_permission_tip">该权限仅用于%1$s，不会被用于其他目的。</string>
+    <string name="no_app_to_share">"应用分享失败。"</string>
+    <string name="no_online_call_flash_list_tip">没有来电秀</string>
+    <string name="no_collection_call_flash_list_tip">没有数据</string>
+    <string name="add_block_contact_title">"通话记录"</string>
+    <string name="block_option_open_switch">"开启拦截"</string>
+    <string name="block_option_toast_open_success">"开启拦截成功！"</string>
+    <string name="block_option_close_switch">"禁用拦截"</string>
+    <string name="block_option_toast_close_success">"禁用拦截成功！"</string>
+    <string name="block_option_clear_all_contacts">"清空拦截名单"</string>
+    <string name="block_option_toast_clear_all_contacts_success">"成功清除拦截名单！"</string>
+    <string name="block_option_clear_all_history">"删除所有拦截记录"</string>
+    <string name="block_option_toast_clear_all_history_success">"拦截记录清理成功！"</string>
+    <string name="block_list_empty">无记录</string>
+    <string name="block_contacts_added_failed">添加失败！</string>
+    <string name="block_contacts_remove_success">清除成功！</string>
+    <string name="block_contacts_remove_failed">清除失败！</string>
+    <string name="side_slip_close_call_flash">关闭来电秀</string>
+    <string name="side_slip_collection">收藏</string>
+
+
+    <string name="permission_title">"让我们开始吧！"</string>
+    <string name="permission_phone_and_contact_title">"电话&amp;联系人权限"</string>
+    <string name="permission_phone_and_contact_des">管理通话记录和联系人显示</string>
+    <string name="permission_screen_permission_title">显示在其他应用上层权限</string>
+    <string name="permission_screen_permission_des">展示来电秀</string>
+    <string name="permission_call_permission_title">电话权限</string>
+    <string name="permission_call_permission_des">允许接听电话</string>
+    <string name="permission_show_on_lock_title">锁屏显示</string>
+    <string name="permission_show_on_lock_des">显示在锁屏界面上</string>
+    <string name="permission_auto_start_title">允许自启动</string>
+    <string name="permission_auto_start_des">使来电秀适用于所有通话</string>
+    <string name="permission_read_call_log_title">读取通话记录权限</string>
+    <string name="permission_read_call_log_des">更好的拦截不想接的来电</string>
+    <string name="permission_for_show_call_flash">显示来电秀</string>
+    <string name="permission_for_answer_call">接听电话</string>
+    <string name="setting_call_after">来电助理</string>
+    <string name="setting_caller_show">来电秀</string>
+    <string name="permission_denied_txt">权限申请失败，请重试！</string>
+    <string name="permission_next">下一步</string>
+    <string name="permission_all_set">设置完成！</string>
+
+    <string name="media_upload_author">作者</string>
+    <string name="media_upload_action_upload">上传</string>
+    <string name="media_upload_request_option">我同意</string>
+    <string name="media_upload_request_privacy_policy">&lt;u &gt;隐私政策&lt;/u&gt;</string>
+    <string name="media_upload_tip_privacy_policy">同意隐私政策才能上传资源！</string>
+    <string name="media_upload_uploading">已上传</string>
+    <string name="media_upload_tip_no_file">请选择需要上传的资源</string>
+    <string name="mute_no_permission_tip2">请手动关闭静音模式</string>
+    <!--Android 8.0及以上通知渠道名称-->
+    <string name="notify_channel_subscribe">已订阅</string>
+
+    <string name="call_flash_view">设置</string>
+
+    <string name="block_list_tab_contact">拦截列表</string>
+    <string name="block_list_tab_logs">拦截记录</string>
+    <string name="block_list_request_permission_tip">%1$s需要电话权限才能拦截</string>
+
+    <string name="side_slip_permission_check">权限检查</string>
+    <string name="permission_skip">跳过</string>
+    <string name="permission_set">设置</string>
+    <string name="permission_set_auto_start">允许应用自启动是来电秀适用于所有的来电</string>
+    <string name="permission_sett_lock_screen">允许应用显示在锁屏界面上以展示来电秀</string>
+    <string name="permission_xiao_mi_tip">（滑动到底部）</string>
+
+    <!--这几个权限描述为小米手机中的描述，不能修改,多语言也需要与小米手机中的描述一致-->
+    <string name="permission_xiao_mi_overlay_title">显示悬浮窗</string>
+    <string name="permission_xiao_mi_overlay_des">显示悬浮窗</string>
+    <string name="permission_xiao_mi_show_on_lock_title">锁屏显示</string>
+    <string name="permission_xiao_mi_show_on_lock_des">允许应用在锁屏上显示</string>
+
+    <string name="permission_xiao_mi_make_phone_calls">拨打电话</string>
+    <string name="permission_xiao_mi_modify_and_delete_contacts">修改联系人</string>
+    <string name="permission_xiao_mi_read_your_contacts">读取联系人</string>
+    <string name="permission_xiao_mi_write_and_delete_call_history">修改通话记录</string>
+    <string name="permission_xiao_mi_read_call_history">读取通话记录</string>
+    <string name="permission_xiao_mi_get_device_info">获取手机信息</string>
+    <!--这几个权限描述为小米手机中的描述，不能修改，多语言也需要与小米手机中的描述一致-->
+
+
+    <string name="mine_current_call_flash">当前来电秀</string>
+    <string name="mine_current_call_flash_is_close">来电秀已关闭</string>
+    <string name="mine_set_before">痕迹</string>
+    <string name="mine_downloaded">已下载的</string>
+    <string name="mine_all">全部</string>
+    <string name="mine_no_current_call_flash">尚未设置来电秀，立即设置</string>
+
+    <string name="click_like_tip">需要先下载</string>
+    <string name="permission_grand_title_desc">我们不会上传或存储您的任何隐私数据，如联系人，通话记录，照片等。</string>
+    <string name="notification_new_flash_title">尝试设置新的来电主题</string>
+    <string name="setting_call_after_desc">显示未接来电和来电者的信息（可能有广告）。</string>
+    <string name="setting_block_desc">拦截不想接听的来电</string>
+    <string name="setting_caller_show_desc">在屏幕上显示来电秀</string>
+
+    <string name="setting_close_call_assistant_tip">错过或重要的通话记录将不会再显示，确认关闭？</string>
+    <string name="setting_close_block_tip">应用将不会再保护您的通话，确认关闭？</string>
+    <string name="setting_close_caller_show_tip">酷炫的来电秀将不会再显示，确认关闭？</string>
+
+    <string name="set_default">默认</string>
+
+    <string name="permission_denied_txt2">权限申请失败，点击此处授权</string>
+    <string name="add_block_empty_call_log">通话记录为空，添加拦截名单失败！</string>
+    <string name="add_block_no_added_call_log">能够被添加到拦截列表的通话记录为空！</string>
+
+    <string name="push_tools_content">详情</string>
+    <string name="push_tools_block_call">来电已拦截</string>
+    <string name="about_product_intro">"别出心裁，秀随我变"</string>
+    <string name="rate_ring">"铃声"</string>
+    <string name="title_activity_message">"短信"</string>
 </resources>

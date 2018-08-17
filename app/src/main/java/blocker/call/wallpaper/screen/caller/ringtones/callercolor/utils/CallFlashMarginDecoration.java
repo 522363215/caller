@@ -28,27 +28,27 @@ public class CallFlashMarginDecoration extends RecyclerView.ItemDecoration {
         Resources res = ApplicationEx.getInstance().getApplicationContext().getResources();
         int position = parent.getChildAdapterPosition(view);
         if (position == 0 || position == 1) {
-            outRect.top = res.getDimensionPixelOffset(R.dimen.dp8);
+            outRect.top = res.getDimensionPixelOffset(R.dimen.dp4);
         }
 
         if (!mIsHaveAd) {
-            outRect.bottom = res.getDimensionPixelOffset(R.dimen.dp8);
+            outRect.bottom = res.getDimensionPixelOffset(R.dimen.dp4);
             int pos = position % 2;
             if (pos != 0) {
                 // right cul
-                outRect.right = res.getDimensionPixelOffset(R.dimen.dp8);
-                outRect.left = res.getDimensionPixelOffset(R.dimen.dp4);
-            } else {
                 outRect.right = res.getDimensionPixelOffset(R.dimen.dp4);
-                outRect.left = res.getDimensionPixelOffset(R.dimen.dp8);
+                outRect.left = res.getDimensionPixelOffset(R.dimen.dp2);
+            } else {
+                outRect.right = res.getDimensionPixelOffset(R.dimen.dp2);
+                outRect.left = res.getDimensionPixelOffset(R.dimen.dp4);
             }
         } else {
             if (position != mAdShowPosition) {
-                outRect.bottom = res.getDimensionPixelOffset(R.dimen.dp8);
+                outRect.bottom = res.getDimensionPixelOffset(R.dimen.dp4);
             } else {
                 LogUtil.d(TAG, "position :" + position + ",mIsAdLoaded:" + mIsAdLoaded);
                 if (mIsAdLoaded) {
-                    outRect.bottom = res.getDimensionPixelOffset(R.dimen.dp8);
+                    outRect.bottom = res.getDimensionPixelOffset(R.dimen.dp4);
                 } else {
                     outRect.bottom = 0;
                 }
@@ -57,25 +57,25 @@ public class CallFlashMarginDecoration extends RecyclerView.ItemDecoration {
                 int pos = position % 2;
                 if (pos != 0) {
                     // right cul
-                    outRect.right = res.getDimensionPixelOffset(R.dimen.dp8);
-                    outRect.left = res.getDimensionPixelOffset(R.dimen.dp4);
-                } else {
                     outRect.right = res.getDimensionPixelOffset(R.dimen.dp4);
-                    outRect.left = res.getDimensionPixelOffset(R.dimen.dp8);
+                    outRect.left = res.getDimensionPixelOffset(R.dimen.dp2);
+                } else {
+                    outRect.right = res.getDimensionPixelOffset(R.dimen.dp2);
+                    outRect.left = res.getDimensionPixelOffset(R.dimen.dp4);
                 }
             } else if (position > mAdShowPosition) {
                 int pos = position % 2;
                 if (pos != 1) {
                     // right cul
-                    outRect.right = res.getDimensionPixelOffset(R.dimen.dp8);
-                    outRect.left = res.getDimensionPixelOffset(R.dimen.dp4);
-                } else {
                     outRect.right = res.getDimensionPixelOffset(R.dimen.dp4);
-                    outRect.left = res.getDimensionPixelOffset(R.dimen.dp8);
+                    outRect.left = res.getDimensionPixelOffset(R.dimen.dp2);
+                } else {
+                    outRect.right = res.getDimensionPixelOffset(R.dimen.dp2);
+                    outRect.left = res.getDimensionPixelOffset(R.dimen.dp4);
                 }
             } else {
-                outRect.right = res.getDimensionPixelOffset(R.dimen.dp8);
-                outRect.left = res.getDimensionPixelOffset(R.dimen.dp8);
+                outRect.right = res.getDimensionPixelOffset(R.dimen.dp4);
+                outRect.left = res.getDimensionPixelOffset(R.dimen.dp4);
             }
         }
     }

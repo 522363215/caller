@@ -494,9 +494,9 @@ public class InterstitialAdvertisement {
     }
 
     private boolean isAllAdLoadFailedForPriority(String priority) {
-        if (mAdLoadStateMap == null) return false;
+        if (mAdLoadStateMap == null || mAdKeyPriority == null) return false;
         Map<String, Boolean> adLoadStateMap = mAdLoadStateMap.get(priority);
-        if (adLoadStateMap != null && adLoadStateMap.size() >= 3) {
+        if (adLoadStateMap != null && adLoadStateMap.size() >= mAdKeyPriority.size()) {
             for (Boolean boo : adLoadStateMap.values()) {
                 if (boo != null && boo) {
                     return false;
@@ -509,9 +509,9 @@ public class InterstitialAdvertisement {
     }
 
     private boolean isAllAdRequestCompleteForPriority(String priority) {
-        if (mAdLoadStateMap == null) return false;
+        if (mAdLoadStateMap == null || mAdKeyPriority == null) return false;
         Map<String, Boolean> adLoadStateMap = mAdLoadStateMap.get(priority);
-        if (adLoadStateMap != null && adLoadStateMap.size() >= 3) {
+        if (adLoadStateMap != null && adLoadStateMap.size() >= mAdKeyPriority.size()) {
             return true;
         }
         return false;
@@ -521,13 +521,13 @@ public class InterstitialAdvertisement {
      * 判断所有广告是否请求完毕，包括加载失败和加载成功的
      */
     private boolean isAllAdRequsetComplete() {
-        if (mAdLoadStateMap != null) {
+        if (mAdLoadStateMap != null && mAdKeyPriority != null) {
             Map<String, Boolean> adLoadStateHighMap = mAdLoadStateMap.get(InterstitialAdPriority.HIGH);
             Map<String, Boolean> adLoadStateMediumMap = mAdLoadStateMap.get(InterstitialAdPriority.MEDIUM);
             Map<String, Boolean> adLoadStateNormalMap = mAdLoadStateMap.get(InterstitialAdPriority.NORMAL);
-            if (adLoadStateHighMap != null && adLoadStateHighMap.size() >= 3
-                    && adLoadStateMediumMap != null && adLoadStateMediumMap.size() >= 3
-                    && adLoadStateNormalMap != null && adLoadStateNormalMap.size() >= 3) {
+            if (adLoadStateHighMap != null && adLoadStateHighMap.size() >= mAdKeyPriority.size()
+                    && adLoadStateMediumMap != null && adLoadStateMediumMap.size() >= mAdKeyPriority.size()
+                    && adLoadStateNormalMap != null && adLoadStateNormalMap.size() >= mAdKeyPriority.size()) {
                 return true;
             }
         }

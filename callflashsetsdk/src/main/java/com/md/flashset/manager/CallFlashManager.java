@@ -4,9 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.md.flashset.R;
-import com.md.flashset.Utils.CallFlashConstansUtil;
 import com.md.flashset.View.FlashLed;
-import com.md.flashset.bean.CallFlashClassification;
 import com.md.flashset.bean.CallFlashFormat;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.download.DownloadState;
@@ -16,6 +14,8 @@ import com.md.serverflash.beans.Theme;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -26,6 +26,8 @@ public class CallFlashManager {
     public static final String ONLINE_THEME_TOPIC_NAME_NON_FEATURED = "Non-Featured";
     public static final String ONLINE_THEME_TOPIC_NAME_LOCAL_HOME = "Localhome";
     public static final String ONLINE_THEME_TOPIC_NAME_NEW_FLASH = "Newflash";
+
+    public static final String CALL_FLASH_START_SKY_ID = "7242";
 
     private static CallFlashManager instance;
     private ArrayList<CallFlashInfo> mAllLocalFlashList = new ArrayList<>();
@@ -49,109 +51,47 @@ public class CallFlashManager {
         return ThemeSyncManager.getInstance().getFileByUrl(mContext, sourceUrl);
     }
 
-    // 仅仅初始化保存固定的来电秀;
-    private void initFlashDataAndSave() {
-        List<CallFlashInfo> classicList = new ArrayList<>();
-        CallFlashInfo monkey = new CallFlashInfo();
-        monkey.id = String.valueOf(FlashLed.FLASH_TYPE_MONKEY);
-        monkey.title = CallFlashConstansUtil.CALL_FLASH_THEME_GIF_NAME_MONKEY;
-        monkey.imgResId = R.drawable.icon_call_flash_monkey_bg;
-        monkey.format = CallFlashFormat.FORMAT_VIDEO;
-        monkey.path = "android.resource://" + mContext.getPackageName() + "/" + R.raw.monkey;
-        monkey.url = "";
-        monkey.isDownloadSuccess = true;
-        monkey.isHaveSound = true;
-        monkey.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        monkey.flashType = FlashLed.FLASH_TYPE_MONKEY;
-        monkey.position = 3;
-        monkey.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
-
-        CallFlashInfo festival = new CallFlashInfo();
-        festival.id = String.valueOf(FlashLed.FLASH_TYPE_FESTIVAL);
-        festival.title = mContext.getString(R.string.call_flash_led_festival);
-        festival.imgResId = R.drawable.icon_flash_festival_small;
-        festival.format = CallFlashFormat.FORMAT_CUSTOM_ANIM;
-        festival.path = "";
-        festival.url = "";
-        festival.isDownloadSuccess = true;
-        festival.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        festival.flashType = FlashLed.FLASH_TYPE_FESTIVAL;
-        festival.position = 5;
-        festival.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
-
-        CallFlashInfo love = new CallFlashInfo();
-        love.id = String.valueOf(FlashLed.FLASH_TYPE_LOVE);
-        love.title = mContext.getString(R.string.call_flash_led_love);
-        love.imgResId = R.drawable.icon_flash_love_small;
-        love.format = CallFlashFormat.FORMAT_CUSTOM_ANIM;
-        love.path = "";
-        love.url = "";
-        love.isDownloadSuccess = true;
-        love.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        love.flashType = FlashLed.FLASH_TYPE_LOVE;
-        love.position = 6;
-        love.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
-
-        CallFlashInfo kiss = new CallFlashInfo();
-        kiss.id = String.valueOf(FlashLed.FLASH_TYPE_KISS);
-        kiss.title = mContext.getString(R.string.call_flash_led_kiss);
-        kiss.imgResId = R.drawable.icon_flash_kiss_small;
-        kiss.format = CallFlashFormat.FORMAT_CUSTOM_ANIM;
-        kiss.path = "";
-        kiss.url = "";
-        kiss.isDownloadSuccess = true;
-        kiss.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        kiss.flashType = FlashLed.FLASH_TYPE_KISS;
-        kiss.position = 7;
-        kiss.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
-
-        CallFlashInfo rose = new CallFlashInfo();
-        rose.id = String.valueOf(FlashLed.FLASH_TYPE_ROSE);
-        rose.title = mContext.getString(R.string.call_flash_led_rose);
-        rose.imgResId = R.drawable.icon_flash_flower_small;
-        rose.format = CallFlashFormat.FORMAT_CUSTOM_ANIM;
-        rose.path = "";
-        rose.url = "";
-        rose.isDownloadSuccess = true;
-        rose.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        rose.flashType = FlashLed.FLASH_TYPE_ROSE;
-        rose.position = 7;
-        rose.flashClassification = CallFlashClassification.CLASSIFICATION_CLASSIC;
-
-        CallFlashInfo streamer = new CallFlashInfo();
-        streamer.id = String.valueOf(FlashLed.FLASH_TYPE_STREAMER);
-        streamer.title = mContext.getString(R.string.call_falsh_led_streamer);
-        streamer.imgResId = R.drawable.icon_flash_streamer_small;
-        streamer.format = CallFlashFormat.FORMAT_CUSTOM_ANIM;
-        streamer.path = "";
-        streamer.url = "";
-        streamer.isDownloadSuccess = true;
-        streamer.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-        streamer.flashType = FlashLed.FLASH_TYPE_STREAMER;
-        classicList.add(love);
-        classicList.add(monkey);
-        classicList.add(kiss);
-        classicList.add(festival);
-        classicList.add(rose);
-        classicList.add(streamer);
-        mAllLocalFlashList.addAll(classicList);
-    }
-
     public ArrayList<CallFlashInfo> getAllLocalFlashList() {
         if (mAllLocalFlashList.size() == 0) {
-            initFlashDataAndSave();
+            CallFlashInfo info = getLocalFlash();
+            mAllLocalFlashList.add(info);
         }
         return mAllLocalFlashList;
+    }
+
+    public CallFlashInfo getLocalFlash() {
+        CallFlashInfo info = new CallFlashInfo();
+        info.id = CALL_FLASH_START_SKY_ID;
+        info.title = "star_sky2";
+        info.format = CallFlashFormat.FORMAT_VIDEO;
+        info.path = "android.resource://" + mContext.getPackageName() + "/" + R.raw.starsky;
+        info.flashType = 65537;
+        info.isHaveSound = true;
+        info.imgResId = R.drawable.img_star_sky_v;
+        info.img_hResId = R.drawable.img_star_sky_h;
+        info.isOnlionCallFlash = false;
+        info.downloadSuccessTime = -1;
+        info.isDownloadSuccess = true;
+        info.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
+        return info;
     }
 
 
     public List<CallFlashInfo> themeToCallFlashInfo(List<Theme> res) {
         List<CallFlashInfo> dot = null;
-
+        CallFlashInfo localFlash = getLocalFlash();
         if (res != null && res.size() > 0) {
             dot = new ArrayList<CallFlashInfo>(res.size());
             for (Theme item : res) {
                 if (item == null) {
+                    continue;
+                }
+
+                //如果和本地的callFlahId相同则直接用本地的
+                if (localFlash.id.equals(String.valueOf(item.getId()))) {
+                    localFlash = setLocalFlash(item, localFlash);
+                    saveDownloadedCallFlash(localFlash);
+                    dot.add(localFlash);
                     continue;
                 }
 
@@ -217,6 +157,45 @@ public class CallFlashManager {
         return dot;
     }
 
+    private CallFlashInfo setLocalFlash(Theme item, CallFlashInfo localFlash) {
+        CallFlashInfo info = new CallFlashInfo();
+        info.id = localFlash.id;
+        info.title = localFlash.title;
+        info.format = localFlash.format;
+        info.path = localFlash.path;
+        info.flashType = localFlash.flashType;
+        info.isHaveSound = localFlash.isHaveSound;
+        info.imgResId = localFlash.imgResId;
+        info.img_hResId = localFlash.img_hResId;
+        info.isOnlionCallFlash = localFlash.isOnlionCallFlash;
+        info.downloadSuccessTime = localFlash.downloadSuccessTime;
+        info.isDownloadSuccess = localFlash.isDownloadSuccess;
+        info.downloadState = localFlash.downloadState;
+
+
+        info.collection = (int) item.getCollection();
+        info.downloadCount = (int) item.getDownload();
+        info.commentCount = (int) item.getComment();
+        info.img_hUrl = "";
+        info.url = "";
+        info.img_vUrl = "";
+        info.logoUrl = "";
+        info.logoPressUrl = "";
+        info.intro = item.getIntro();
+
+        CallFlashInfo cacheCallFlashInfo = getCacheJustLikeFlashList(info.id);
+        if (cacheCallFlashInfo != null) {
+            info.likeCount = item.getNum_of_likes() >= cacheCallFlashInfo.likeCount ? item.getNum_of_likes() : cacheCallFlashInfo.likeCount;
+            info.isLike = cacheCallFlashInfo.isLike;
+        } else {
+            info.likeCount = item.getNum_of_likes();
+            info.isLike = false;
+        }
+
+        info.imgPath = "";
+        return info;
+    }
+
     public CallFlashInfo getCustomCallFlash(String sourcePath) {
         CallFlashInfo info = null;
         if (!TextUtils.isEmpty(sourcePath)) {
@@ -261,13 +240,21 @@ public class CallFlashManager {
         if (list == null) {
             list = new ArrayList<>();
         }
+
         if (list.contains(info)) {
             CallFlashInfo item = list.get(list.indexOf(info));
+            if (item.isLike) {
+                item.collectTime = System.currentTimeMillis();
+            }
             item.isLike = info.isLike;
             item.likeCount = info.likeCount;
         } else {
+            if (info.isLike) {
+                info.collectTime = System.currentTimeMillis();
+            }
             list.add(info);
         }
+
         CallFlashPreferenceHelper.setDataList(CallFlashPreferenceHelper.PREF_JUST_LIKE_FLASH_LIST, list);
     }
 
@@ -324,7 +311,135 @@ public class CallFlashManager {
                 collectionList.add(info);
             }
         }
+
+        if (collectionList.size() > 0) {
+            //排序(按下载时间排序)
+            Collections.sort(collectionList, new Comparator<CallFlashInfo>() {
+                @Override
+                public int compare(CallFlashInfo o1, CallFlashInfo o2) {
+                    if (o1 == null || o2 == null) return 1;
+                    if (o1.collectTime > o2.collectTime) {
+                        return -1;
+                    } else if (o1.collectTime < o2.collectTime) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            });
+        }
+
         return collectionList;
+    }
+
+    public void saveDownloadedCallFlash(CallFlashInfo info) {
+        if (info == null) return;
+        List<CallFlashInfo> downloadedCallFlashs = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_DOWNLOADED_CALL_FLASH_LIST, CallFlashInfo[].class);
+        if (downloadedCallFlashs == null) {
+            downloadedCallFlashs = new ArrayList<>();
+        }
+
+        //去重，并留下最新的数据
+        if (downloadedCallFlashs.contains(info)) {
+            downloadedCallFlashs.remove(info);
+        }
+
+        info.downloadSuccessTime = System.currentTimeMillis();
+        downloadedCallFlashs.add(info);
+
+        CallFlashPreferenceHelper.setDataList(CallFlashPreferenceHelper.PREF_DOWNLOADED_CALL_FLASH_LIST, downloadedCallFlashs);
+    }
+
+    public List<CallFlashInfo> getDownloadedCallFlash() {
+        List<CallFlashInfo> list = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_DOWNLOADED_CALL_FLASH_LIST, CallFlashInfo[].class);
+        CallFlashInfo localFlash = CallFlashManager.getInstance().getLocalFlash();
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        if (!list.contains(localFlash)) {
+            list.add(localFlash);
+        }
+        if (list.size() > 0) {
+            //排序(按下载时间排序)
+            Collections.sort(list, new Comparator<CallFlashInfo>() {
+                @Override
+                public int compare(CallFlashInfo o1, CallFlashInfo o2) {
+                    if (o1 == null || o2 == null) return 1;
+                    if (o1.downloadSuccessTime > o2.downloadSuccessTime) {
+                        return -1;
+                    } else if (o1.downloadSuccessTime < o2.downloadSuccessTime) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            });
+        }
+        return list;
+    }
+
+    /**
+     * 保存设置过的来电秀
+     */
+    public void saveSetRecordCallFlash(CallFlashInfo info) {
+        if (info == null) return;
+        List<CallFlashInfo> setCallFlashs = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_CALL_FLASH_SET_RECORD_LIST, CallFlashInfo[].class);
+        if (setCallFlashs == null) {
+            setCallFlashs = new ArrayList<>();
+        }
+        //去重，并留下最新的数据
+        if (setCallFlashs.contains(info)) {
+            setCallFlashs.remove(info);
+        }
+        info.setToCallFlashTime = System.currentTimeMillis();
+        setCallFlashs.add(info);
+        CallFlashPreferenceHelper.setDataList(CallFlashPreferenceHelper.PREF_CALL_FLASH_SET_RECORD_LIST, setCallFlashs);
+    }
+
+    public List<CallFlashInfo> getSetRecordCallFlash() {
+        List<CallFlashInfo> list = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_CALL_FLASH_SET_RECORD_LIST, CallFlashInfo[].class);
+        if (list != null && list.size() > 0) {
+            //排序(按设置的时间排序)
+            Collections.sort(list, new Comparator<CallFlashInfo>() {
+                @Override
+                public int compare(CallFlashInfo o1, CallFlashInfo o2) {
+                    if (o1 == null || o2 == null) return 1;
+                    if (o1.setToCallFlashTime > o2.setToCallFlashTime) {
+                        return -1;
+                    } else if (o1.setToCallFlashTime < o2.setToCallFlashTime) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            });
+        }
+        return list;
+    }
+
+    public boolean isCallFlashDownloaded(CallFlashInfo info) {
+        if (info == null) {
+            return false;
+        }
+
+        //本地的
+        if (CALL_FLASH_START_SKY_ID.equals(info.id)) {
+            return true;
+        }
+
+        //根据URl获取文件
+        File fileByUrl = ThemeSyncManager.getInstance().getFileByUrl(mContext, info.url);
+        if (fileByUrl != null && fileByUrl.exists()) {
+            return true;
+        }
+
+        String path = info.path;
+        if (TextUtils.isEmpty(path)) {
+            return false;
+        }
+        //根据路径获取文件
+        File file = new File(path);
+        return file.exists();
     }
 
 }

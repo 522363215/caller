@@ -6,6 +6,7 @@ import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.v7.widget.CardView;
 import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.RingManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.RomUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SystemInfoUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CallFlashAvatarInfoView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
@@ -180,6 +180,11 @@ public class CallFlashDialog implements View.OnClickListener {
                 mAnswerButton = (ImageView) mRootView.findViewById(R.id.iv_call_answer);
                 mEndCallButton = (ImageView) mRootView.findViewById(R.id.iv_call_hang);
 
+                CardView cardView = mCallFlashView.findViewById(R.id.layout_card_view);
+                cardView.setCardElevation(0);
+                cardView.setPreventCornerOverlap(false);
+                cardView.setUseCompatPadding(false);
+
                 //menu
                 mFivMenu = (FontIconView) mRootView.findViewById(R.id.fiv_menu);
                 mLayoutMenuRoot = (RelativeLayout) mRootView.findViewById(R.id.layout_menu_root);
@@ -320,7 +325,7 @@ public class CallFlashDialog implements View.OnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 mOriginalMute = audioManager.isStreamMute(AudioManager.STREAM_RING);
                 audioManager.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_MUTE, FLAG_ALLOW_RINGER_MODES);
-                if (!SystemInfoUtil.isMiui() && !RomUtils.checkIsMiuiRom()) {
+                if (!SystemInfoUtil.isMiui()) {
                     try {
                         mRingOldMode = audioManager.getRingerMode();
                         if (mRingOldMode == AudioManager.RINGER_MODE_NORMAL) {
@@ -339,7 +344,7 @@ public class CallFlashDialog implements View.OnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (!mOriginalMute) {
                     audioManager.adjustStreamVolume(AudioManager.STREAM_RING, AudioManager.ADJUST_UNMUTE, FLAG_ALLOW_RINGER_MODES);
-                    if (!SystemInfoUtil.isMiui() && !RomUtils.checkIsMiuiRom()) {
+                    if (!SystemInfoUtil.isMiui()) {
                         try {
                             if (mRingOldMode == -1) {
                                 mRingOldMode = AudioManager.MODE_NORMAL;

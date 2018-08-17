@@ -9,6 +9,7 @@ import com.md.flashset.bean.CallFlashDataType;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCollection;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import event.EventBus;
 
@@ -18,7 +19,6 @@ public class CollectionActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_collection);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
@@ -28,6 +28,17 @@ public class CollectionActivity extends BaseActivity {
         mCallFlashListFragment = CallFlashListFragment.newInstance(CallFlashDataType.CALL_FLASH_DATA_COLLECTION);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().add(R.id.layout_container, mCallFlashListFragment).commit();
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this, false);
+
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_collection;
     }
 
     @Override

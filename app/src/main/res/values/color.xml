@@ -36,6 +36,9 @@
     <color name="color_half_transparent">#7f000000</color>
     <color name="whiteSmoke">#F5F5F5</color>
 
+
+    <color name="color_FF3B86CA">#FF3B86CA</color>
+    <color name="color_8FFFFFFF">#8FFFFFFF</color>
     <color name="progress_bg_default_color">#E5E5E5</color>
     <color name="progress_default_color">#3CB428</color>
     <color name="color_FF008BFB">#FF008BFB</color>
@@ -49,7 +52,7 @@
     <color name="color_FFB5C6D6">#FFB5C6D6</color>
     <color name="color_F1F7FE">#F1F7FE</color>
     <color name="color_8A000000">#8A000000</color>
-    <color name="color_FF191B1E">#ff191b1e</color>
+    <color name="color_FF191B1E">#FF191B1E</color>
     <color name="color_FFFFB400">#FFFFB400</color>
     <color name="color_CC07142C">#CC07142C</color>
     <color name="color_7A07142C">#7A07142C</color>
@@ -88,4 +91,17 @@
     <color name="color_FFBABECB">#FFBABECB</color>
     <color name="color_FF00ED4B">#FF00ED4B</color>
     <color name="color_FFFFB708">#FFFFB708</color>
+    <color name="color_FF02D577">#FF02D577</color>
+
+    <color name="color_FF0000">#FF0000</color>
+    <color name="color_FFA200">#FFA200</color>
+    <color name="color_FEFF00">#FEFF00</color>
+    <color name="color_02D577">#02D577</color>
+    <color name="color_22FF9D">#22FF9D</color>
+    <color name="color_00AFFF">#00AFFF</color>
+    <color name="color_7E23FF">#7E23FF</color>
+    <color name="color_FD5B5B">#FD5B5B</color>
+    <color name="color_FF44517A">#FF44517A</color>
+    <color name="color_bg_black_top">#FF212121</color>
+    <color name="color_bg_black_main">#FF111111</color>
 </resources>

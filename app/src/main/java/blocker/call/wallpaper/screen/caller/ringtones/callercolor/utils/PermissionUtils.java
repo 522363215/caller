@@ -16,11 +16,16 @@ import android.support.v4.app.ActivityCompat;
 import com.md.block.core.service.CallerNotificationListenerService;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.PermissionInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.PermissionDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventNoPermission;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import event.EventBus;
+
+import static blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ResourceUtil.getString;
 
 /**
  * Created by zhq on 2017/1/3.
@@ -29,23 +34,36 @@ public class PermissionUtils {
     private static final String TAG = PermissionUtils.class.getSimpleName();
     private static PermissionDialog mPermissionDialog;
 
-    //request code
-    public static final int REQUEST_CODE_ALL_PERMISSION_ = 1024;
     private static final int REQUEST_CODE_REQUEST_PERMISSION_SETTING = 201;//带返回结果的跳转到系统权限设置界面的请求码
-    public static final int REQUEST_CODE_EXTERNAL_STORAGE_PERMISSION = 206;
-    public static final int REQUEST_CODE_PHONE_STATE_PERMISSION = 207;
-    public static final int REQUEST_CODE_RECEIVE_SMS_PERMISSION = 208;
-    public static final int REQUEST_CODE_READ_CONTACT_PERMISSION = 209;
+
+    //request code
+    public static final int REQUEST_CODE_STORAGE_PERMISSION = 206;
+    public static final int REQUEST_CODE_PHONE_PERMISSION = 207;
+    public static final int REQUEST_CODE_SMS_PERMISSION = 208;
+    public static final int REQUEST_CODE_CONTACT_PERMISSION = 209;
+    public static final int REQUEST_CODE_PHONE_AND_CONTACT_PERMISSION = 210;
+    public static final int REQUEST_CODE_READ_CALL_LOG_PERMISSION = 211;
 
     //特殊权限code
     public static final int REQUEST_CODE_OVERLAY_PERMISSION = 1712;
     public static final int REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS = 1713;
     public static final int REQUEST_CODE_WRITE_SETTINGS = 1715;
     public static final int REQUEST_CODE_APP_DETAILS_SETTINGS = 1716;
-
+    public static final int REQUEST_CODE_SHOW_ON_LOCK = 1717;
+    public static final int REQUEST_CODE_AUTO_START = 1718;
 
     public static final String PERMISSION_OVERLAY = "permission_overlay";//悬浮窗权限
     public static final String PERMISSION_NOTIFICATION_POLICY_ACCESS = "permission_notification_policy_acCess";//通知服务权限
+    public static final String PERMISSION_SHOW_ON_LOCK = "permission_show_on_lock";//小米专用，显示在锁屏界面上
+    public static final String PERMISSION_AUTO_START = "permission_auto_start";//小米专用，自启动权限，防止重启手机后无法启动应用造成来电秀无法显示
+    public static final String PERMISSION_PHONE_AND_CONTACT = "permission_phone_and_contact";//电话和联系人权限
+
+
+    public static final String[] PERMISSION_GROUP_PHONE = new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CALL_LOG, Manifest.permission.WRITE_CALL_LOG};
+    public static final String[] PERMISSION_GROUP_PHONE_AND_CONTACT = new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CALL_LOG, Manifest.permission.WRITE_CALL_LOG, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS};
+    public static final String[] PERMISSION_GROUP_SMS = new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS};
+    public static final String[] PERMISSION_GROUP_CONTACT = new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS};
+    public static final String[] PERMISSION_GROUP_STORAGE = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
     public interface PermissionGrant {
         void onPermissionGranted(int requestCode);
@@ -96,18 +114,14 @@ public class PermissionUtils {
 
             if (checkSelfPermission || Build.VERSION.SDK_INT < 23) {
                 // TODO: 2017/4/5 授权成功
-                if (SystemInfoUtil.isMiui() || RomUtils.checkIsMiuiRom()) {
-                    boolean isMiAllowed = (PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_CONTACTS)
-                            && PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_SMS)
-                            && PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_CALL_LOG));
-                    LogUtil.d("perm_check", "onPermissionGranted mi: " + isMiAllowed);
-                    if (!isMiAllowed) {
-                        notGrantedPermissionsList.add(requestPermission);
+                if (SystemInfoUtil.isMiui()) {
+                    List<String> xiaoMiNoGrantPermissions = getXiaoMiNoGrantPermission(activity, requestPermissions);
+                    LogUtil.d("perm_check", "getNoGrantedPermission xiaoMiNoGrantPermissions mi: " + xiaoMiNoGrantPermissions.size());
+                    if (xiaoMiNoGrantPermissions.size() > 0) {
+                        notGrantedPermissionsList.addAll(xiaoMiNoGrantPermissions);
                         if (requestPermission == Manifest.permission.READ_CALL_LOG) {
                             PreferenceHelper.putBoolean(PreferenceHelper.PREF_KEY_IS_RETURN_FROM_SETTING_ACTIIVTY, false);
                         }
-                        openSettingActivity(activity);
-                        return null;
                     }
                 }
             } else {
@@ -119,6 +133,37 @@ public class PermissionUtils {
             }
         }
         return notGrantedPermissionsList;
+    }
+
+    private static List<String> getXiaoMiNoGrantPermission(Activity activity, String[] requestPermissions) {
+        List<String> notGrantPermissions = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            for (String permission : requestPermissions) {
+                if (Manifest.permission.READ_CONTACTS.equals(permission)) {
+                    if (!PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_CONTACTS)) {
+                        notGrantPermissions.add(permission);
+                    }
+                } else if (Manifest.permission.READ_SMS.equals(permission)) {
+                    if (!PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_SMS)) {
+                        notGrantPermissions.add(permission);
+                    }
+                } else if (Manifest.permission.READ_CALL_LOG.equals(permission)) {
+                    if (!PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_CALL_LOG)) {
+                        notGrantPermissions.add(permission);
+                    }
+                } else if (Manifest.permission.READ_PHONE_STATE.equals(permission)) {
+                    if (!PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_PHONE_STATE)) {
+                        notGrantPermissions.add(permission);
+                    }
+                } else if (Manifest.permission.CALL_PHONE.equals(permission)) {
+                    if (!PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_CALL_PHONE)) {
+                        notGrantPermissions.add(permission);
+                    }
+                }
+                LogUtil.d(TAG, "getXiaoMiNoGrantPermission notGrantPermissions:" + notGrantPermissions.size());
+            }
+        }
+        return notGrantPermissions;
     }
     //***********************************************请求权限  end***********************************************/
 
@@ -151,39 +196,53 @@ public class PermissionUtils {
         if (grantResults.length > 0) {
             for (int i = 0; i < grantResults.length; i++) {
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {//授权成功
-
-                    if (SystemInfoUtil.isMiui() || RomUtils.checkIsMiuiRom()) {
-                        boolean isMiAllowed = (PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_CONTACTS)
-                                && PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_SMS)
-                                && PermissionUtils.checkOp(activity, AppOpsManager.OPSTR_READ_CALL_LOG));
-                        LogUtil.d("perm_check", "onPermissionGranted mi: " + isMiAllowed);
-                        if (!isMiAllowed) {
-                            notGranted.add(permissions[i]);
-                            openSettingActivity(activity);
-                            return;
+                    if (SystemInfoUtil.isMiui()) {
+                        List<String> xiaoMiNoGrantPermissions = getXiaoMiNoGrantPermission(activity, new String[]{permissions[i]});
+                        LogUtil.d("perm_check", "PERMISSION_GRANTED requestMultiResult xiaoMiNoGrantPermissions mi: " + xiaoMiNoGrantPermissions.size());
+                        if (xiaoMiNoGrantPermissions.size() > 0) {
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permissions[i])) {//点击拒绝，再次弹出
+                                notGranted.add(permissions[i]);
+                            } else { // 选择不再询问，并点击拒绝，弹出提示框
+                                notGranted.add(permissions[i]);
+                                openSettingActivity(activity);
+                                return;
+                            }
                         }
                     }
-
                 } else if (grantResults[i] == PackageManager.PERMISSION_DENIED) {//点击拒绝授权
                     if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permissions[i])) {//点击拒绝，再次弹出
                         notGranted.add(permissions[i]);
                         LogUtil.d(TAG, "neveraskagain  one permission:" + permissions[i]);
                     } else { // 选择不再询问，并点击拒绝，弹出提示框
-                        notGranted.add(permissions[i]);
-                        LogUtil.d(TAG, "neveraskagain permission:" + permissions[i]);
-                        LogUtil.d(TAG, "openSettingActivity");
-                        openSettingActivity(activity);
-                        return;
+                        if (SystemInfoUtil.isMiui()) {
+                            List<String> xiaoMiNoGrantPermissions = getXiaoMiNoGrantPermission(activity, new String[]{permissions[i]});
+                            LogUtil.d("perm_check", "PERMISSION_DENIED requestMultiResult xiaoMiNoGrantPermissions mi: " + xiaoMiNoGrantPermissions.size());
+                            if (xiaoMiNoGrantPermissions.size() > 0) {
+                                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permissions[i])) {//点击拒绝，再次弹出
+                                    notGranted.add(permissions[i]);
+                                } else { // 选择不再询问，并点击拒绝，弹出提示框
+                                    notGranted.add(permissions[i]);
+                                    openSettingActivity(activity);
+                                    return;
+                                }
+                            }
+                        } else {
+                            notGranted.add(permissions[i]);
+                            LogUtil.d(TAG, "neveraskagain permission:" + permissions[i]);
+                            LogUtil.d(TAG, "openSettingActivity");
+                            openSettingActivity(activity);
+                            return;
+                        }
                     }
                 }
             }
         }
 
         if (notGranted.size() == 0) {
-            LogUtil.d(TAG, "所有权限获取成功");
+            LogUtil.d(TAG, "所有权限获取成功 requestCode：" + requestCode);
             permissionGrant.onPermissionGranted(requestCode);
         } else {
-            LogUtil.d(TAG, "权限没有获取成功");
+            LogUtil.d(TAG, "权限没有获取成功 requestCode：" + requestCode);
             permissionGrant.onPermissionNotGranted(requestCode);
 //            ActivityCompat.requestPermissions(
 //                    activity,
@@ -253,7 +312,39 @@ public class PermissionUtils {
         }
 
         if (PERMISSION_NOTIFICATION_POLICY_ACCESS.equals(permission)) {
-            return SpecialPermissionsUtil.isHaveNotificationPolicyAccess(context);
+            return SpecialPermissionsUtil.isHaveNotificationPolicyAccessForAnswerCall(context);
+        }
+
+        if (PERMISSION_PHONE_AND_CONTACT.equals(permission)) {
+            return hasPermissions(context, PermissionUtils.PERMISSION_GROUP_PHONE_AND_CONTACT);
+        }
+
+        if (PERMISSION_AUTO_START.equals(permission)) {
+            return PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_LAST_TO_XIAO_MI_AUTO_START_BOOT_PERMISSION_ACTIVITY, 0) > 0;
+        }
+
+        if (PERMISSION_SHOW_ON_LOCK.equals(permission)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                return PreferenceHelper.getLong(PreferenceHelper.PREF_KEY_LAST_TO_XIAO_MI_SHOW_ON_LOCK_PERMISSION_ACTIVITY, 0) > 0;
+            } else {
+                return true;
+            }
+        }
+
+        if (Manifest.permission_group.PHONE.equals(permission)) {
+            return hasPermissions(context, PermissionUtils.PERMISSION_GROUP_PHONE);
+        }
+
+        if (Manifest.permission_group.CONTACTS.equals(permission)) {
+            return hasPermissions(context, PermissionUtils.PERMISSION_GROUP_CONTACT);
+        }
+
+        if (Manifest.permission_group.SMS.equals(permission)) {
+            return hasPermissions(context, PermissionUtils.PERMISSION_GROUP_SMS);
+        }
+
+        if (Manifest.permission_group.STORAGE.equals(permission)) {
+            return hasPermissions(context, PermissionUtils.PERMISSION_GROUP_STORAGE);
         }
 
         if (ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED) {
@@ -319,11 +410,83 @@ public class PermissionUtils {
 
     public static boolean isHaveAllPermission(Context context) {
         boolean canDrawOverlays = SpecialPermissionsUtil.canDrawOverlays(context);
-        boolean isHaveNotificationPolicyAccess = SpecialPermissionsUtil.isHaveNotificationPolicyAccess(context);
-        boolean isHavePhone = hasPermission(context, Manifest.permission.READ_PHONE_STATE);
-        boolean isHaveSMS = hasPermission(context, Manifest.permission.RECEIVE_SMS);
-        boolean isHaveStorage = hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        boolean isHaveContact = hasPermission(context, Manifest.permission.READ_CONTACTS);
-        return canDrawOverlays && isHaveNotificationPolicyAccess && isHavePhone && isHaveSMS && isHaveStorage && isHaveContact;
+        boolean isHaveNotificationPolicyAccessForAnswerCall = SpecialPermissionsUtil.isHaveNotificationPolicyAccessForAnswerCall(context);
+        boolean isHavePhoneAndContact = hasPermissions(context, PERMISSION_GROUP_PHONE_AND_CONTACT);
+        boolean isHaveShowOnLock = hasPermission(context, PERMISSION_SHOW_ON_LOCK);
+        boolean isHaveAutoStart = hasPermission(context, PERMISSION_AUTO_START);
+        if (SystemInfoUtil.isMiui()) {
+            return canDrawOverlays && isHaveNotificationPolicyAccessForAnswerCall && isHavePhoneAndContact && isHaveShowOnLock && isHaveAutoStart;
+        }
+        return canDrawOverlays && isHaveNotificationPolicyAccessForAnswerCall && isHavePhoneAndContact;
+    }
+
+    public static boolean hasPermissions(Context context, String[] permissions) {
+        for (String permission : permissions) {
+            if (!hasPermission(context, permission)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static List<PermissionInfo> getRequestPermissions() {
+        ArrayList<PermissionInfo> permissionInfos = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PermissionInfo phoneAndContactPermission = new PermissionInfo();
+            phoneAndContactPermission.title = getString(R.string.permission_phone_and_contact_title);
+            phoneAndContactPermission.permissionDes = getString(R.string.permission_phone_and_contact_des);
+            phoneAndContactPermission.permission = PermissionUtils.PERMISSION_PHONE_AND_CONTACT;
+            phoneAndContactPermission.permissions = PermissionUtils.PERMISSION_GROUP_PHONE_AND_CONTACT;
+            phoneAndContactPermission.isSpecialPermission = false;
+            phoneAndContactPermission.requestCode = PermissionUtils.REQUEST_CODE_PHONE_AND_CONTACT_PERMISSION;
+            permissionInfos.add(phoneAndContactPermission);
+        }
+
+        PermissionInfo screenPermission = new PermissionInfo();
+        screenPermission.title = getString(R.string.permission_screen_permission_title);
+        screenPermission.permissionDes = getString(R.string.permission_screen_permission_des);
+        screenPermission.permission = PermissionUtils.PERMISSION_OVERLAY;
+        screenPermission.isSpecialPermission = true;
+        screenPermission.requestCode = PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION;
+        permissionInfos.add(screenPermission);
+
+        PermissionInfo callPermission = new PermissionInfo();
+        callPermission.title = getString(R.string.permission_call_permission_title);
+        callPermission.permissionDes = getString(R.string.permission_call_permission_des);
+        callPermission.permission = PermissionUtils.PERMISSION_NOTIFICATION_POLICY_ACCESS;
+        callPermission.requestCode = PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS;
+        callPermission.isSpecialPermission = true;
+        permissionInfos.add(callPermission);
+
+
+        if (SystemInfoUtil.isMiui()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                PermissionInfo showOnLockPermission = new PermissionInfo();
+                showOnLockPermission.title = getString(R.string.permission_show_on_lock_title);
+                showOnLockPermission.permissionDes = getString(R.string.permission_show_on_lock_des);
+                showOnLockPermission.permission = PermissionUtils.PERMISSION_SHOW_ON_LOCK;
+                showOnLockPermission.requestCode = PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK;
+                showOnLockPermission.isSpecialPermission = true;
+                permissionInfos.add(showOnLockPermission);
+            }
+
+            PermissionInfo autoStartPermission = new PermissionInfo();
+            autoStartPermission.title = getString(R.string.permission_auto_start_title);
+            autoStartPermission.permissionDes = getString(R.string.permission_auto_start_des);
+            autoStartPermission.permission = PermissionUtils.PERMISSION_AUTO_START;
+            autoStartPermission.requestCode = PermissionUtils.REQUEST_CODE_AUTO_START;
+            autoStartPermission.isSpecialPermission = true;
+            permissionInfos.add(autoStartPermission);
+
+//            PermissionInfo readCallLogPermission = new PermissionInfo();
+//            readCallLogPermission.title = getString(R.string.permission_read_call_log_title);
+//            readCallLogPermission.permissionDes = getString(R.string.permission_read_call_log_des);
+//            readCallLogPermission.permission = Manifest.permission.READ_CALL_LOG;
+//            readCallLogPermission.permissions = new String[]{Manifest.permission.READ_CALL_LOG};
+//            readCallLogPermission.isSpecialPermission = false;
+//            showOnLockPermission.requestCode = PermissionUtils.REQUEST_CODE_READ_CALL_LOG_PERMISSION;
+//            mPermissionInfos.add(readCallLogPermission);
+        }
+        return permissionInfos;
     }
 }

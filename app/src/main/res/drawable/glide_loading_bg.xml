@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/color_FF464654" />
+    <item android:drawable="@color/color_bg_black_top" />
     <item android:drawable="@drawable/loading" />
 </layer-list>

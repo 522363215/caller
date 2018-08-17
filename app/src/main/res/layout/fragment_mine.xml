@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_black_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layout_current_call_flash"
+            android:layout_width="match_parent"
+            android:layout_height="252dp"
+            android:layout_margin="@dimen/dp4"
+            android:background="@drawable/bg_background_round_4dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_current_call_flash_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp4"
+                android:text="@string/mine_current_call_flash"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
+                    android:id="@+id/gv_bg_current"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/dp4"
+                    android:layout_marginEnd="@dimen/dp4"
+                    android:layout_marginLeft="@dimen/dp4"
+                    android:layout_marginRight="@dimen/dp4"
+                    android:layout_marginStart="@dimen/dp4"
+                    android:visibility="visible"
+                    app:ScaleType="CENTER_CROP"
+                    tools:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/layout_no_call_flash"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp72"
+                        android:layout_height="@dimen/dp64"
+                        android:src="@drawable/icon_no_records" />
+
+                    <TextView
+                        android:id="@+id/tv_refresh_failed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:gravity="center"
+                        android:text="@string/mine_no_current_call_flash"
+                        android:textColor="@color/color_FF464654"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp36"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:background="@drawable/shape_shadow_round30_green"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/dp48"
+                        android:paddingRight="@dimen/dp48"
+                        android:text="@string/call_flash_view"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_ad_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp4"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_marginStart="@dimen/dp4"
+            android:background="@drawable/bg_background_round_4dp"
+            android:padding="@dimen/dp4"
+            android:visibility="gone">
+
+            <include layout="@layout/layout_advertisement" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_collect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp4"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_marginStart="@dimen/dp4"
+            android:background="@drawable/bg_background_round_4dp"
+            android:orientation="vertical"
+            tools:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp36"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp4"
+                    android:text="@string/side_slip_collection"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:id="@+id/layout_collect_all_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp12"
+                    android:paddingRight="@dimen/dp12">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mine_all"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_right_arrow" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_collect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp4"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginRight="@dimen/dp4" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_set_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp4"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_marginStart="@dimen/dp4"
+            android:background="@drawable/bg_background_round_4dp"
+            android:orientation="vertical"
+            tools:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp36"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/dp4"
+                    android:text="@string/mine_set_before"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:id="@+id/layout_set_record_all_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp12"
+                    android:paddingRight="@dimen/dp12">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mine_all"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_right_arrow" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_set_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp4"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginRight="@dimen/dp4" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_download"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp4"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_marginStart="@dimen/dp4"
+            android:background="@drawable/bg_background_round_4dp"
+            android:orientation="vertical"
+            tools:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp36"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/dp4"
+                    android:text="@string/mine_downloaded"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:id="@+id/layout_downloaded_all_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp12"
+                    android:paddingRight="@dimen/dp12">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mine_all"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_right_arrow" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_download"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp4"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginRight="@dimen/dp4" />
+
+        </LinearLayout>
+    </LinearLayout>
+</blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NestedScrollView>

@@ -47,6 +47,16 @@ public class RingActivity extends BaseActivity {
     }
 
     @Override
+    protected void translucentStatusBar() {
+
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_ring;
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();

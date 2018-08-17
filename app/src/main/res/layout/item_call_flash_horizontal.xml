@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_root"
+    android:layout_width="@dimen/dp120"
+    android:layout_height="@dimen/dp120"
+    app:cardBackgroundColor="@color/color_transparent"
+    card_view:cardCornerRadius="2dp">
+
+    <RelativeLayout
+        android:id="@+id/layout_call_flash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:visibility="visible">
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
+            android:id="@+id/gv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

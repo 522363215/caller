@@ -51,7 +51,6 @@ public class FlashLed {
     public static final int FLASH_TYPE_KISS = 3;
     public static final int FLASH_TYPE_ROSE = 4;
     public static final int FLASH_TYPE_MONKEY = 5;
-
     public static final int FLASH_TYPE_CUSTOM = 6;
     public static final int FLASH_TYPE_DYNAMIC = 0x10001;
 

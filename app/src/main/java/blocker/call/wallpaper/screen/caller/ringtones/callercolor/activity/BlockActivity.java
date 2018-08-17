@@ -1,13 +1,18 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
 import android.app.Fragment;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v13.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 
+import com.flurry.android.FlurryAgent;
 import com.md.block.core.BlockManager;
 
 import java.util.ArrayList;
@@ -18,15 +23,18 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.BlockP
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.AddBlockContactDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.BlockListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.popup.BlockOptionWindow;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.OKCancelDialog;
 
 /**
  * Created by ChenR on 2018/7/5.
  */
 
 public class BlockActivity extends BaseActivity implements View.OnClickListener {
+    private static final int REQUEST_PERMISSION_CODE = 1086;
 
     private NotScrollViewPager viewPager;
     private TabLayout tabBlockCategoryTitle;
@@ -36,16 +44,83 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
     private int mCurrentIndex = 0;
 
     private List<Fragment> fragmentList = new ArrayList<>();
+    private boolean mIsComeBlockNotify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_block);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG)
+                        != PackageManager.PERMISSION_GRANTED) {
+            showRequestPermission();
+        } else {
+            initView();
+            listener();
+            onNewIntent(getIntent());
+        }
+    }
 
-        BlockManager.getInstance().setBlockSwitchState(true);
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mIsComeBlockNotify = intent.getBooleanExtra("is_come_block_notify", false);
+        if (mIsComeBlockNotify) {
+            viewPager.setCurrentItem(BlockListFragment.BLOCK_LIST_SHOW_HISTORY);
+        }
+    }
 
-        initView();
-        listener();
+    @Override
+    protected void translucentStatusBar() {
+        CommonUtils.translucentStatusBar(this);
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_block;
+    }
+
+    public void showRequestPermission() {
+        FlurryAgent.logEvent("BlockActivity-----show_request_permission_dialog");
+        OKCancelDialog dialog = new OKCancelDialog(this, true);
+        dialog.show();
+        dialog.setOKCancel(R.string.ok_string, R.string.no_string);
+        dialog.setContent(getString(R.string.block_list_request_permission_tip, getString(R.string.app_name)), true, false);
+
+        dialog.setOkClickListener(new OKCancelDialog.OKClickListener() {
+            @Override
+            public void Ok() {
+                requestPermission(new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CALL_LOG}, REQUEST_PERMISSION_CODE);
+            }
+        });
+        dialog.setOnCancelClickListener(new OKCancelDialog.OnCancelClickListener() {
+            @Override
+            public void cancel() {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onPermissionGranted(int requestCode) {
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            initView();
+            listener();
+            onNewIntent(getIntent());
+        }
+    }
+
+    @Override
+    public void onPermissionNotGranted(int requestCode) {
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            finish();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FlurryAgent.logEvent("BlockActivity-show");
     }
 
     private void initView() {
@@ -59,13 +134,11 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         fragmentList.add(contactFragment);
         fragmentList.add(historyFragment);
 
-
         viewPager.setCurrentItem(mCurrentIndex);
         viewPager.setOffscreenPageLimit(fragmentList.size());
         viewPager.setAdapter(new BlockPagerAdapter(getFragmentManager(), fragmentList));
         setAddBlockContactState(mCurrentIndex);
         tabBlockCategoryTitle.setupWithViewPager(viewPager);
-
     }
 
     private void listener() {
@@ -127,6 +200,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fiv_add: {
+                FlurryAgent.logEvent("BlockActivity-----click-----show_add_block_contacts_dialog");
                 AddBlockContactDialog dialog = new AddBlockContactDialog(BlockActivity.this);
                 dialog.show();
 
@@ -134,6 +208,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     public void onAddBlockContact(boolean isSuccess, String blockNumber) {
                         if (isSuccess) {
+                            BlockManager.getInstance().setBlockSwitchState(true);
                             BlockListFragment fragment = (BlockListFragment) fragmentList.get(0);
                             fragment.updateData();
                         }
@@ -142,8 +217,9 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
             }
             break;
             case R.id.fiv_option: {
+                FlurryAgent.logEvent("BlockActivity----click-----show_block_option_dialog");
                 BlockOptionWindow window = new BlockOptionWindow(BlockActivity.this, mCurrentIndex);
-                window.setWidth(DeviceUtil.dp2Px(140));
+                window.setWidth(DeviceUtil.dp2Px(180));
 
                 window.setClearCallback(new BlockOptionWindow.OnClearDataCallback() {
                     @Override
@@ -157,5 +233,4 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
             break;
         }
     }
-
 }

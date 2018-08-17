@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_ad_view_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp4"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/layout_fb_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <com.facebook.ads.MediaView
+            android:id="@+id/nativeAdMedia"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="top|left"
+            android:src="@drawable/ic_ad_banner" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="left|start"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:visibility="visible">
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.RoundImageView
+            android:id="@+id/nativeAdIcon"
+            android:layout_width="@dimen/dp48"
+            android:layout_height="@dimen/dp48"
+            android:src="@drawable/ic_launcher"
+            app:cornerRadius="@dimen/dp6" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_marginStart="@dimen/dp8"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nativeAdTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="aaaaa"
+                android:textColor="@color/color_FF00284D"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/nativeAdBody"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.6"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-light"
+                android:gravity="top"
+                android:maxLines="1"
+                android:text="aaaaa"
+                android:textColor="@color/color_FF00284D"
+                android:textSize="12sp"
+                android:visibility="visible" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/color_FF00C858"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/nativeAdCallToActionCopy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/color_transparent"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="Learn more"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/nativeAdCallToDetails"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginStart="2dp"
+                android:src="@drawable/fb_details" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/nativeAdCallToAction"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/color_transparent"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="Learn more"
+            android:textColor="@color/color_transparent"
+            android:textSize="14sp"/>
+
+    </RelativeLayout>-->
+
+    <Button
+        android:id="@+id/nativeAdCallToAction"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="@dimen/dp6"
+        android:layout_marginEnd="@dimen/dp4"
+        android:layout_marginLeft="@dimen/dp4"
+        android:layout_marginRight="@dimen/dp4"
+        android:layout_marginStart="@dimen/dp4"
+        android:background="@color/color_FF00C858"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="Learn more"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:visibility="visible" />
+</LinearLayout>

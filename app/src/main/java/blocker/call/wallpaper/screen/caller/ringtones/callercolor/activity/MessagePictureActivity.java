@@ -99,7 +99,6 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
         //设置当前窗体为全屏显示
         getWindow().setFlags(flag, flag);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message_picture);
 
         messagePictureDBProcess = new MessagePictureDBProcess(this);
 
@@ -137,6 +136,16 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
         mPbDownloadingBelowAd = findViewById(R.id.pb_downloading_below_ad);
         mPbDownloadingBelowAd.setMaxProgress(100);
 
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_message_picture;
     }
 
 

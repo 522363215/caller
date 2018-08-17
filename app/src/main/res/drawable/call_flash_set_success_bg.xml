@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/color_FF00C364" />
+            <size
+                android:width="120dp"
+                android:height="120dp" />
+
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/dp32"
+        android:drawable="@drawable/icon_right_white"
+        android:gravity="center"
+        android:left="@dimen/dp32"
+        android:right="@dimen/dp32"
+        android:top="@dimen/dp32" />
+</layer-list>

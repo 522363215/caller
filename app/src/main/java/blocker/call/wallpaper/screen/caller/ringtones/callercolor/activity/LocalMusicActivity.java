@@ -65,7 +65,6 @@ public class LocalMusicActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_local_music);
 
         root = (LinearLayout) findViewById(R.id.ll_setting) ;
         listview = (ListView) findViewById(R.id.lv_setting) ;
@@ -73,6 +72,16 @@ public class LocalMusicActivity extends BaseActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
         permission();
+    }
+
+    @Override
+    protected void translucentStatusBar() {
+
+    }
+
+    @Override
+    protected int getLayoutRootId() {
+        return R.layout.activity_local_music;
     }
 
     @Override

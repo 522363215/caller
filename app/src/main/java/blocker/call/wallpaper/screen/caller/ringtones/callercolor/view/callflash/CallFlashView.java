@@ -1,35 +1,40 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
-import com.md.flashset.View.FlashLed;
 import com.md.flashset.bean.CallFlashFormat;
 import com.md.flashset.bean.CallFlashInfo;
+import com.md.flashset.manager.CallFlashManager;
 
 import java.io.File;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.TextureVideoView;
 
 public class CallFlashView extends RelativeLayout {
     private static final String TAG = "CallFlashView";
     private Context mContext;
     private GlideView mGlideView;
-    private FullScreenVideoView mVideoView;
+    private TextureVideoView mVideoView;
     private CallFlashInfo mCallFlashInfo;
     private int mCallFlashFormat;
     private CallFlashCustomAnimView mCustomAnimView;
     private int mVideoPlayProgress;
-    private boolean misStart;
     private GlideView mGlideViewPreview;
+    private boolean isVideoMute;
+
+    private AtomicBoolean isStop = new AtomicBoolean(false);
+    private AtomicBoolean isPause = new AtomicBoolean(false);
+    private MediaPlayer mMediaPlayer;
 
     public CallFlashView(Context context) {
         super(context);
@@ -56,6 +61,27 @@ public class CallFlashView extends RelativeLayout {
 
         mGlideViewPreview = findViewById(R.id.glide_view_preview);//在没下载的时候用于显示预览图
         setVideoListener();
+    }
+
+    public CallFlashInfo getCallFlashInfo() {
+        return mCallFlashInfo;
+    }
+
+    public boolean isStopVideo() {
+        return isStop.get();
+    }
+
+    public boolean isPlaying() {
+        if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
+            return mVideoView.isPlaying();
+        } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null) {
+            return mCustomAnimView.isPlaying();
+        }
+        return false;
+    }
+
+    public boolean isPause() {
+        return isPause.get();
     }
 
     public void showCallFlashView(CallFlashInfo info) {
@@ -96,36 +122,38 @@ public class CallFlashView extends RelativeLayout {
     public void stop() {
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
             mVideoView.stopPlayback();
-            mVideoView.setVisibility(INVISIBLE);
+            isStop.set(true);
         }
     }
 
     public void pause() {
-        misStart = false;
         if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
             //记录播放的progress,避免黑屏
             mVideoView.pause();
+            mVideoView.setFocusable(false);
             mVideoPlayProgress = mVideoView.getCurrentPosition();
+            isPause.set(true);
         } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null) {
             mCustomAnimView.update(true, mCallFlashInfo.flashType);
+            isPause.set(true);
         }
     }
 
     public void continuePlay() {
-        if (misStart) return;
-        if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null) {
+        if (mCallFlashFormat == CallFlashFormat.FORMAT_VIDEO && mVideoView != null && !mVideoView.isPlaying()) {
             LogUtil.d(TAG, "continuePlay mVideoPlayProgress:" + mVideoPlayProgress);
-            if (mGlideView != null && mCallFlashInfo != null) {
-                //显示视频第一帧防止黑屏
-                mGlideView.setVisibility(VISIBLE);
-                mGlideView.showVideoFirstFrame(mCallFlashInfo.path);
-            }
+//            if (mGlideView != null && mCallFlashInfo != null) {
+//                //显示视频第一帧防止黑屏
+//                mGlideView.setVisibility(VISIBLE);
+//                mGlideView.showVideoFirstFrame(mCallFlashInfo.path);
+//            }
             mVideoView.seekTo(mVideoPlayProgress);
             mVideoView.start();
-            misStart = true;
-        } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null) {
+            mVideoView.setFocusable(true);
+            isPause.set(false);
+        } else if (mCallFlashFormat == CallFlashFormat.FORMAT_CUSTOM_ANIM && mCustomAnimView != null && mCallFlashInfo != null && !mCustomAnimView.isPlaying()) {
             mCustomAnimView.update(false, mCallFlashInfo.flashType);
-            misStart = true;
+            isPause.set(false);
         }
     }
 
@@ -135,23 +163,29 @@ public class CallFlashView extends RelativeLayout {
             mCustomAnimView.setVisibility(VISIBLE);
             int flashType = info.flashType;
             mCustomAnimView.startAnim(flashType);
+            isPause.set(false);
         }
     }
 
     private void setVideo(CallFlashInfo info) {
         if (info == null) return;
         final String path = info.path;
-        int flashType = info.flashType;
-        if (mVideoView != null && !TextUtils.isEmpty(path) && (flashType == FlashLed.FLASH_TYPE_MONKEY || new File(path).exists())) {
+        String flashID = info.id;
+        if (mVideoView != null && !TextUtils.isEmpty(path) && (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(flashID) || new File(path).exists())) {
             if (mGlideView != null) {
                 //显示视频第一帧防止黑屏
                 mGlideView.setVisibility(VISIBLE);
-                mGlideView.showVideoFirstFrame(path);
+                if (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(flashID)) {
+                    mGlideView.showImage(info.imgResId);
+                } else {
+                    mGlideView.showVideoFirstFrame(path);
+                }
             }
-            misStart = true;
             mVideoView.setVisibility(VISIBLE);
             mVideoView.setVideoPath(path);
             mVideoView.start();
+            mVideoView.setFocusable(true);
+            isStop.set(false);
         } else {
             showPreview(info);
         }
@@ -195,6 +229,7 @@ public class CallFlashView extends RelativeLayout {
                 if (mCallFlashInfo != null) {
                     LogUtil.e("chenr", "video play error, what: " + what + ", extra: " + extra + ", flashType: " + mCallFlashInfo.flashType);
                 }
+                isStop.set(true);
                 return true;
             }
         });
@@ -202,7 +237,13 @@ public class CallFlashView extends RelativeLayout {
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                LogUtil.d(TAG, "setOnPreparedListener mp:" + mp);
+                mMediaPlayer = mp;
+                //设置videoView 静音
+                if (isVideoMute) {
+                    mp.setVolume(0f, 0f);
+                }
+                mp.start();
+
                 Async.scheduleTaskOnUiThread(500, new Runnable() {
                     @Override
                     public void run() {
@@ -215,8 +256,12 @@ public class CallFlashView extends RelativeLayout {
                     @Override
                     public boolean onInfo(MediaPlayer mp, int what, int extra) {
                         LogUtil.d(TAG, "setOnInfoListener mp:" + mp + ",what:" + what);
-                        if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START)
-                            mVideoView.setBackgroundColor(Color.TRANSPARENT);
+                        if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+                            if (mGlideView != null) {
+                                mGlideView.setVisibility(GONE);
+                            }
+                            return true;
+                        }
                         return false;
                     }
                 });
@@ -233,4 +278,14 @@ public class CallFlashView extends RelativeLayout {
         mGlideViewPreview.showImageWithThumbnail(info.img_vUrl, info.thumbnail_imgUrl);
     }
 
+    public void setVideoMute(boolean mVideoMute) {
+        this.isVideoMute = mVideoMute;
+        if (mMediaPlayer != null) {
+            if (isVideoMute) {
+                mMediaPlayer.setVolume(0f, 0f);
+            } else {
+                mMediaPlayer.setVolume(1.0f, 1.0f);
+            }
+        }
+    }
 }

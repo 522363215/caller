@@ -10,48 +10,103 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.Build;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Toast;
-
+import android.os.Environment;
+import android.text.TextUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
-
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import java.util.Properties;
 
 /**
  * Created by cattom on 12/5/2015.
  */
 public class SystemInfoUtil {
+    public static final String SYS_EMUI = "sys_emui";
+    public static final String SYS_MIUI = "sys_miui";
+    public static final String SYS_FLYME = "sys_flyme";
+    private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
+    private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
+    private static final String KEY_MIUI_INTERNAL_STORAGE = "ro.miui.internal.storage";
+    private static final String KEY_EMUI_API_LEVEL = "ro.build.hw_emui_api_level";
+    private static final String KEY_EMUI_VERSION = "ro.build.version.emui";
+    private static final String KEY_EMUI_CONFIG_HW_SYS_VERSION = "ro.confg.hw_systemversion";
+    private static final String MANUFACTURER_XIAOMI = "Xiaomi";//小米
+
     public static boolean isMiui() {
-        File file = new File("/system/build.prop");
-        try {
-            FileReader fis = new FileReader(file);
-            BufferedReader br = new BufferedReader(fis);
-            String tempString = "";
-            while ((tempString = br.readLine()) != null) {
-                if (tempString.toLowerCase().contains("ro.miui.ui.version.name")) {
-                    br.close();
-                    return true;
-                }
-            }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+//        File file = new File("/system/build.prop");
+//        try {
+//            FileReader fis = new FileReader(file);
+//            BufferedReader br = new BufferedReader(fis);
+//            String tempString = "";
+//            while ((tempString = br.readLine()) != null) {
+//                if (tempString.toLowerCase().contains("ro.miui.ui.version.name")) {
+//                    br.close();
+//                    return true;
+//                }
+//            }
+//            br.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        String os_name = getSystem();
+        if (!TextUtils.isEmpty(os_name) && os_name.equals(SYS_MIUI)) {
+            return true;
         }
         return false;
     }
 
+    public static String getSystem() {
+        String SYS = "";
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+            if (!TextUtils.isEmpty(getSystemProperty(KEY_MIUI_VERSION_CODE, ""))
+                    || !TextUtils.isEmpty(getSystemProperty(KEY_MIUI_VERSION_NAME, ""))
+                    || !TextUtils.isEmpty(getSystemProperty(KEY_MIUI_INTERNAL_STORAGE, ""))) {
+                SYS = SYS_MIUI;//小米
+            } else if (!TextUtils.isEmpty(getSystemProperty(KEY_EMUI_API_LEVEL, ""))
+                    || !TextUtils.isEmpty(getSystemProperty(KEY_EMUI_VERSION, ""))
+                    || !TextUtils.isEmpty(getSystemProperty(KEY_EMUI_CONFIG_HW_SYS_VERSION, ""))) {
+                SYS = SYS_EMUI;//华为
+            }
+//            else if (getMeizuFlymeOSFlag().toLowerCase().contains("flyme")) {
+//                SYS = SYS_FLYME;//魅族
+//            }
+            LogUtil.d("miui_setting", "getSystem SYS above 25: " + SYS);
+            return SYS;
+        } else {
+            try {
+                Properties prop = new Properties();
+                prop.load(new FileInputStream(new File(Environment.getRootDirectory(), "build.prop")));
+                if (prop.getProperty(KEY_MIUI_VERSION_CODE, null) != null
+                        || prop.getProperty(KEY_MIUI_VERSION_NAME, null) != null
+                        || prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null) != null) {
+                    SYS = SYS_MIUI;//小米
+                } else if (prop.getProperty(KEY_EMUI_API_LEVEL, null) != null
+                        || prop.getProperty(KEY_EMUI_VERSION, null) != null
+                        || prop.getProperty(KEY_EMUI_CONFIG_HW_SYS_VERSION, null) != null) {
+                    SYS = SYS_EMUI;//华为
+                }
+//                else if (getMeizuFlymeOSFlag().toLowerCase().contains("flyme")) {
+//                    SYS = SYS_FLYME;//魅族
+//                }
+                LogUtil.d("miui_setting", "getSystem SYS under 25: " + SYS);
+            } catch (Exception e) {
+                LogUtil.e("miui_setting", "getSystem exception: " + e.getMessage());
+                return SYS;
+            } finally {
+                return SYS;
+            }
+        }
+    }
+
     private static int op(Context context) {
-        if (Build.VERSION.SDK_INT >= 19){
+        if (Build.VERSION.SDK_INT >= 19) {
             try {
                 Object localObject = context.getSystemService("appops");
                 Class localClass = localObject.getClass();
@@ -73,14 +128,14 @@ public class SystemInfoUtil {
             } catch (Throwable localThrowable2) {
                 return -1;
             }
-        }else{//19以下的版本的特殊处理
+        } else {//19以下的版本的特殊处理
             ApplicationInfo localApplicationInfo1 = null;
             ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
-            if(!"com.lionmobi.battery".equalsIgnoreCase(cn.getPackageName())){
+            if (!"blocker.call.wallpaper.screen.caller.ringtones.callercolor".equalsIgnoreCase(cn.getPackageName())) {
                 try {
                     ApplicationInfo localApplicationInfo2 = context.getPackageManager()
-                            .getApplicationInfo(context.getPackageName(),  0);
+                            .getApplicationInfo(context.getPackageName(), 0);
                     localApplicationInfo1 = localApplicationInfo2;
                     if (localApplicationInfo1 != null) {
                         if ((0x8000000 & localApplicationInfo1.flags) == 0)
@@ -120,7 +175,7 @@ public class SystemInfoUtil {
         }
     }
 
-    public static boolean isMiPad(){
+    public static boolean isMiPad() {
         File file = new File("/system/build.prop");
         try {
             FileReader fis = new FileReader(file);
@@ -145,6 +200,16 @@ public class SystemInfoUtil {
         return context.getPackageManager().queryIntentActivities(intent, PackageManager.GET_ACTIVITIES).size() > 0;
     }
 
+    private static String getSystemProperty(String key, String defaultValue) {
+        try {
+            Class<?> clz = Class.forName("android.os.SystemProperties");
+            Method get = clz.getMethod("get", String.class, String.class);
+            return (String) get.invoke(clz, key, defaultValue);
+        } catch (Exception e) {
+        }
+        return defaultValue;
+    }
+
     public static String getSystemProperty() {
         String line = null;
         BufferedReader reader = null;
@@ -156,7 +221,7 @@ public class SystemInfoUtil {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if(reader!=null){
+            if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
@@ -302,6 +367,27 @@ public class SystemInfoUtil {
             isSecured = false;
         }
         return isSecured;
+    }
+
+    public static String getMiuiVersion() {
+        String line = "";
+        BufferedReader input = null;
+        try {
+            Process p = Runtime.getRuntime().exec("getprop ro.miui.ui.version.name");
+            input = new BufferedReader(new InputStreamReader(p.getInputStream()), 1024);
+            line = input.readLine();
+            input.close();
+        } catch (Exception ex) {
+            return "";
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (Exception e) {
+                }
+            }
+        }
+        return line;
     }
 
 }

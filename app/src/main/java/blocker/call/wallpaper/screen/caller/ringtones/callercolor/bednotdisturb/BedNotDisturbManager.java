@@ -71,7 +71,7 @@ public class BedNotDisturbManager {
         if (!isBedsideEnable()) return false;
         long install = System.currentTimeMillis();
         if (ApplicationEx.getInstance() != null) {
-            install = PreferenceHelper.getLong("cid_inStall_time", System.currentTimeMillis());
+            install = PreferenceHelper.getLong("colorphone_inStall_time", System.currentTimeMillis());
         }
         long limit = getBedsideEnableLimitHour() * 60 * 60 * 1000;
         if (Math.abs(System.currentTimeMillis() - install) >= limit) {
