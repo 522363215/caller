@@ -35,6 +35,7 @@ public class MessagePictureDBProcess {
         contentValues.put("drawable", place.getDrawableRes());
         contentValues.put("path", place.getPath());
         contentValues.put("thumbnail", place.getThumbnail());
+        contentValues.put("type", place.getType());
         database.insert("picture", null, contentValues);
     }
 
@@ -45,7 +46,7 @@ public class MessagePictureDBProcess {
             while (cursor.moveToNext()) {
                 list.add(new Picture(cursor.getString(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("name")),cursor.getString(cursor.getColumnIndex("drawable"))
                         ,cursor.getString(cursor.getColumnIndex("path")),cursor.getString(cursor.getColumnIndex("thumbnail"))
-                        ));
+                        ,cursor.getInt(cursor.getColumnIndex("type"))));
             }
         }
         return list;
@@ -58,7 +59,7 @@ public class MessagePictureDBProcess {
         }
         return new Picture(cursor.getString(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("name")),cursor.getString(cursor.getColumnIndex("drawable"))
                 ,cursor.getString(cursor.getColumnIndex("path")),cursor.getString(cursor.getColumnIndex("thumbnail"))
-                );
+                ,cursor.getInt(cursor.getColumnIndex("type")));
     }
 
     public boolean haveThing(){

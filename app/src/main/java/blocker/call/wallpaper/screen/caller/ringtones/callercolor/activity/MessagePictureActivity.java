@@ -1,6 +1,5 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
-import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -26,8 +24,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.example.message.FileUtil;
 import com.example.message.MessagePictureDBProcess;
 import com.example.message.Picture;
 import com.example.message.SharedUtils;
@@ -35,9 +35,7 @@ import com.md.callring.Constant;
 import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.download.ThemeResourceHelper;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,9 +46,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.VideoWallpaperService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.TextureVideoView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -59,19 +61,20 @@ import okhttp3.Response;
 
 public class MessagePictureActivity extends BaseActivity implements View.OnClickListener {
 
-    private ImageView imageView;
+    private GlideView imageView;
     private TextView tvMessagePic;
     private Picture url;
     private GlideView gdMessage;
     private static final int SUCCESS = 1;
     private static final int FALL = 2;
-    private Bitmap bitmap;
+    private File file;
     private MessagePictureDBProcess messagePictureDBProcess;
     private String fileName ;
     private String dates;
     private SharedUtils sharedUtils;
     private OkHttpClient okHttpClient;
     private BatteryProgressBar mPbDownloadingBelowAd;
+    private int type;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -81,9 +84,7 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
                 //加载网络成功进行UI的更新,处理得到的图片资源
                 case SUCCESS:
                     //通过message，拿到字节数组
-                    bitmap = BitmapFactory.decodeByteArray(picture, 0, picture.length);
-                    SaveBitmapFromBit(bitmap);
-                    tvMessagePic.setText(R.string.set_pic);
+
                     break;
                 //当加载网络失败执行的逻辑代码
                 case FALL:
@@ -100,6 +101,7 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
         getWindow().setFlags(flag, flag);
         super.onCreate(savedInstanceState);
 
+
         messagePictureDBProcess = new MessagePictureDBProcess(this);
 
         sharedUtils =SharedUtils.getSharedUtils(this);
@@ -109,7 +111,19 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
         gdMessage.showImageWithBlur(url.getThumbnail());
 
         imageView = findViewById(R.id.iv_message);
-        Glide.with(this).load(url.getThumbnail()).into(imageView);
+        TextureVideoView videoView = findViewById(R.id.vv_message);
+        if (url.getType() == 1){
+            String A = url.getDrawableRes();
+            LogUtil.e("网址",url.getDrawableRes());
+            videoView.setVisibility(View.VISIBLE);
+            videoView.setVideoURI(Uri.parse(url.getDrawableRes()));
+            imageView.setVisibility(View.INVISIBLE);
+            videoView.start();
+        }else if (url.getType() == 2){
+            imageView.showGif(url.getDrawableRes());
+        }else {
+            imageView.showImage(url.getDrawableRes());
+        }
 
         tvMessagePic = findViewById(R.id.tv_message_pic);
         tvMessagePic.setOnClickListener(this);
@@ -135,6 +149,9 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
 
         mPbDownloadingBelowAd = findViewById(R.id.pb_downloading_below_ad);
         mPbDownloadingBelowAd.setMaxProgress(100);
+
+        FontIconView fiv_back = findViewById(R.id.fiv_back);
+        fiv_back.setOnClickListener(this);
 
     }
 
@@ -173,13 +190,22 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
             @Override
             public void onSuccess(String u, File file) {
                 tvMessagePic.setBackgroundResource(R.color.progress_default_color);
-                messagePictureDBProcess.addPicture(new Picture(url.getId(),url.getName(),url.getDrawableRes(),file.getPath(),url.getThumbnail()));
+                messagePictureDBProcess.addPicture(new Picture(url.getId(),url.getName(),url.getDrawableRes(),file.getPath(),url.getThumbnail(),url.getType()));
                 tvMessagePic.setText(R.string.set_pic);
                 tvMessagePic.setVisibility(View.VISIBLE);
                 mPbDownloadingBelowAd.setVisibility(View.INVISIBLE);
                 //若该文件存在
                 if (file.exists()) {
-                    bitmap=BitmapFactory.decodeFile(file.getAbsolutePath());
+                    if (FileUtil.isVideoFileType(file.getAbsolutePath())){
+                        type = 1;
+                    }else {
+                        if (FileUtil.isGIFFileType(file.getAbsolutePath())){
+                            type = 2;
+                        }else {
+                            type = 3;
+                        }
+                    }
+
                 }
             }
         });
@@ -302,9 +328,6 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
         }
         // 发送广播，通知刷新图库的显示
         this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + fileName)));
-
-        Log.e( "onCreate2: ",fileName );
-        messagePictureDBProcess.addPicture(new Picture(url.getName(),url.getDrawableRes(),fileName,url.getThumbnail()));
     }
 
     @Override
@@ -357,21 +380,31 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
                     }
                 }
                 break;
+            case R.id.fiv_back:
+                finish();
+                break;
         }
     }
 
     private void setWall(){
-        try {
-            WallpaperManager wpm = (WallpaperManager) this.getSystemService(
-                    Context.WALLPAPER_SERVICE);
+        if (type == 1){
+            Intent i = new Intent(MessagePictureActivity.this, VideoWallpaperService.class);
+            i.putExtra(com.example.message.Constant.VIDEO,file.getAbsoluteFile());
+            startService(i);
+        }else if (type == 3){
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());//filePath
+            try {
+                WallpaperManager wpm = (WallpaperManager) this.getSystemService(
+                        Context.WALLPAPER_SERVICE);
 
-            wpm.setBitmap(bitmap);
-            Log.i("xzy", "wallpaper not null");
+                wpm.setBitmap(bitmap);
+                Log.i("xzy", "wallpaper not null");
 
-        } catch (IOException e) {
-            Log.e("tgyhuj", "Failed to set wallpaper: " + e);
+            } catch (IOException e) {
+                Log.e("tgyhuj", "Failed to set wallpaper: " + e);
+            }
+            openActivity(CallFlashSetResultActivity.class, 0, 0, true);
         }
-        openActivity(CallFlashSetResultActivity.class, 0, 0, true);
     }
 
 }

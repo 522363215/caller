@@ -25,6 +25,7 @@ import com.md.callring.Song;
 import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 
 public class LocalMusicActivity extends BaseActivity {
 
@@ -68,6 +69,13 @@ public class LocalMusicActivity extends BaseActivity {
 
         root = (LinearLayout) findViewById(R.id.ll_setting) ;
         listview = (ListView) findViewById(R.id.lv_setting) ;
+        ActionBar actionBar = findViewById(R.id.actionbar);
+        actionBar.setOnBackClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();

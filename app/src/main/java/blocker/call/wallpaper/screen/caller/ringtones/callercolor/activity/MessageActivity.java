@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.message.Picture;
 import com.md.callring.LocalSong;
@@ -70,6 +71,14 @@ public class MessageActivity extends BaseActivity implements ViewPager.OnPageCha
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(),fragments);
         mVpMessage.setAdapter(fragmentAdapter);
         mVpMessage.setOnPageChangeListener(this);
+
+        ActionBar actionBar = findViewById(R.id.ab_message);
+        actionBar.setOnBackClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

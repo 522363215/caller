@@ -5,7 +5,7 @@
     android:layout_margin="5dp"
     android:id="@+id/rl_song">
 
-    <ImageView
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/iv_background"

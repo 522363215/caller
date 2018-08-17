@@ -9,6 +9,32 @@ public class Picture implements Serializable{
     private String drawableRes;
     private String path;
     private String thumbnail;
+    private int type;
+
+    public Picture(String id, String name, String drawableRes, String thumbnail, int type) {
+        Id = id;
+        this.name = name;
+        this.drawableRes = drawableRes;
+        this.thumbnail = thumbnail;
+        this.type = type;
+    }
+
+    public Picture(String id, String name, String drawableRes, String path, String thumbnail, int type) {
+        Id = id;
+        this.name = name;
+        this.drawableRes = drawableRes;
+        this.path = path;
+        this.thumbnail = thumbnail;
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getId() {
         return Id;
@@ -34,21 +60,6 @@ public class Picture implements Serializable{
         this.path = path;
     }
 
-
-    public Picture(String id, String name, String drawableRes, String thumbnail) {
-        Id = id;
-        this.name = name;
-        this.drawableRes = drawableRes;
-        this.thumbnail = thumbnail;
-    }
-
-    public Picture(String id, String name, String drawableRes, String path, String thumbnail) {
-        Id = id;
-        this.name = name;
-        this.drawableRes = drawableRes;
-        this.path = path;
-        this.thumbnail = thumbnail;
-    }
 
     public String getName() {
         return name;

@@ -240,6 +240,18 @@
             android:name="com.common.sdk.analytics.data.MyContentProvider"
             android:authorities="com.analytics.data.75"/>
 
+        <service
+            android:name=".service.VideoWallpaperService"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/video_wallpaper" />
+        </service>
+
 
     </application>
 

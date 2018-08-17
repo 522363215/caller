@@ -12,10 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.message.MessagePictureDB;
+import com.example.message.FileType;
 import com.example.message.Picture;
 import com.md.callring.Constant;
 import com.md.callring.RecyclerClick;
+import com.md.flashset.bean.CallFlashFormat;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
 import com.md.serverflash.callback.TopicThemeCallback;
@@ -76,7 +77,14 @@ public class MessageFragment extends Fragment{
                     List<Theme> wallImg = data.get(topic[0]);
                     if (wallImg!=null) {
                         for (Theme theme:wallImg){
-                            localSongs.add(new Picture(theme.getId()+"",theme.getTitle(),theme.getUrl(),theme.getImg_v()));
+                            if (theme.getUrl().endsWith("mp4") || theme.getUrl().endsWith("MP4")) {
+                                theme.setType(FileType.VIDEO_TYPE);
+                            } else if (theme.getUrl().endsWith("gif") || theme.getUrl().endsWith("GIF")) {
+                                theme.setType(FileType.GIF_TYPE);
+                            } else {
+                                theme.setType(FileType.PICTURE_TYPE);
+                            }
+                            localSongs.add(new Picture(theme.getId()+"",theme.getTitle(),theme.getUrl(),theme.getImg_v(),theme.getType()));
                         }
                         Message message = new Message();
                         message.obj = localSongs;

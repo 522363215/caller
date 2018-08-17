@@ -12,10 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
-    <ImageView
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
         android:layout_width="300dp"
         android:layout_height="500dp"
         android:id="@+id/iv_message"
+        android:layout_centerInParent="true"/>
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.TextureVideoView
+        android:layout_width="300dp"
+        android:layout_height="500dp"
+        android:id="@+id/vv_message"
+        android:visibility="invisible"
         android:layout_centerInParent="true"/>
     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar
         android:id="@+id/pb_downloading_below_ad"

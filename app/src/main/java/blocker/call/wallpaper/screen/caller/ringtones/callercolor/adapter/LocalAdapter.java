@@ -16,6 +16,7 @@ import com.md.callring.RecyclerClick;
 import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 
 public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.ViewHolder> {
     private Context context;
@@ -43,7 +44,8 @@ public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.tvSong.setText(localSongs.get(position).getName());
-        Glide.with(context).load(localSongs.get(position).getDrawableRes()).into(holder.ivBackground);
+
+        holder.ivBackground.showImage(localSongs.get(position).getDrawableRes());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +66,7 @@ public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.ViewHolder> 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvSong;
         RelativeLayout rlSong;
-        ImageView ivBackground;
+        GlideView ivBackground;
         public ViewHolder(View itemView) {
             super(itemView);
 

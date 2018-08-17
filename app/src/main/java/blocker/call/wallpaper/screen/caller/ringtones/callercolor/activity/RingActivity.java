@@ -14,6 +14,7 @@ import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.LocalAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 
 public class RingActivity extends BaseActivity {
 
@@ -27,6 +28,13 @@ public class RingActivity extends BaseActivity {
 
         final List<LocalSong> localSongs = getSongList();
         RecyclerView rvSetting = findViewById(R.id.rv_setting);
+        ActionBar actionBar = findViewById(R.id.actionbar);
+        actionBar.setOnBackClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         rvSetting.setLayoutManager(new GridLayoutManager(this,2));
         LocalAdapter localAdapter = new LocalAdapter(RingActivity.this,localSongs);
         rvSetting.setAdapter(localAdapter);

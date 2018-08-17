@@ -13,7 +13,7 @@ public class MessagePictureDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table picture(id text,name text,drawable text,path text,thumbnail text)");
+        db.execSQL("create table picture(id text,name text,drawable text,path text,thumbnail text,type integer)");
     }
 
     @Override

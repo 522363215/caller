@@ -14,6 +14,7 @@ import com.md.callring.LocalSong;
 import com.md.callring.Setting;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleImageView;
 
 public class MusicActivity extends BaseActivity implements View.OnClickListener {
@@ -33,6 +34,13 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
         animation.setInterpolator(lin);
         circleImageView.startAnimation(animation);
+        ActionBar actionBar = findViewById(R.id.actionbar);
+        actionBar.setOnBackClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mediaPlayer = MediaPlayer.create(this,localSong.getMusic());
         mediaPlayer.start();
