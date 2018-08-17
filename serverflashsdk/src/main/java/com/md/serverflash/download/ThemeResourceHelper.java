@@ -105,6 +105,11 @@ public class ThemeResourceHelper {
 
         // download from server
         final File file = ThemeSyncManager.getInstance().getFileByUrl(ThemeSyncManager.getInstance().getContext(), url);
+        if(file == null){
+            if (listener != null)
+                listener.onFailure(url);
+            return;
+        }
         final File tempFile = new File(file.getAbsoluteFile() + ".temp");
         mDownloadUrl.add(url);
         if (listener != null) mListenerMap.put(url, listener);

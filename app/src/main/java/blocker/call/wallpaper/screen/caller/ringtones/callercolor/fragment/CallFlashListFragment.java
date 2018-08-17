@@ -339,13 +339,17 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                     if (CommonUtils.isOldForFlash()) {
                         List<Theme> newFlash = data.get(CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH);
 
-                        if (newFlash.size() > 6) {
-                            list.addAll(0, newFlash.subList(0, 6));
-                        } else
-                            list.addAll(0, newFlash);
+                        if(newFlash != null) {
+                            if (newFlash.size() > 6) {
+                                list.addAll(0, newFlash.subList(0, 6));
+                            } else
+                                list.addAll(0, newFlash);
+                        }
                     }
                     List<Theme> feature = data.get(topic);
-                    list.addAll(feature);
+                    if(feature != null) {
+                        list.addAll(feature);
+                    }
 
                     List<CallFlashInfo> infos = CallFlashManager.getInstance().themeToCallFlashInfo(list);
                     updateUI(infos, true);

@@ -32,14 +32,15 @@ public class JobLocalService extends JobService {
     public boolean onStartJob(JobParameters params) {
         LogUtil.d("JobLocalService", "onStartJob check: ");
         if (checkMinInterval()) {
-            LogUtil.d("JobLocalService", "onStartJob: ");
-            Intent intent = new Intent();
-            intent.setComponent(new ComponentName(getPackageName(),
-                    "blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService"));
-            startService(intent);
-
-            //启动 swipe service
             try {
+                LogUtil.d("JobLocalService", "onStartJob: ");
+                Intent intent = new Intent();
+                intent.setComponent(new ComponentName(getPackageName(),
+                        "blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService"));
+                startService(intent);
+
+                //启动 swipe service
+
                 //没有安装call id 才启动
                 if (!AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID)) {
                     SwipeManager.getInstance().enableEasySwipe();
