@@ -23,6 +23,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.About
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.BlockActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CollectionActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MessageActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.RingActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.SettingActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingDialog;
@@ -83,6 +84,7 @@ public class SideslipContraller implements View.OnClickListener {
             mMenuAbout.setOnClickListener(this);
             mMenuTest.setOnClickListener(this);
             mMenuRing.setOnClickListener(this);
+            root.findViewById(R.id.menu_message).setOnClickListener(this);
 
             boolean isCallFlashOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);
             setSwitchButton(isCallFlashOn);
@@ -214,6 +216,9 @@ public class SideslipContraller implements View.OnClickListener {
             case R.id.menu_ring:
                 onRing();
                 break;
+            case R.id.menu_message:
+                onMessage();
+                break;
         }
         if (callBack != null) {
             callBack.menuClick();
@@ -233,6 +238,14 @@ public class SideslipContraller implements View.OnClickListener {
         if (mAct == null) return;
         Intent intent = new Intent();
         intent.setClass(mAct, RingActivity.class);
+        mAct.startActivity(intent);
+    }
+
+    private void onMessage(){
+        FlurryAgent.logEvent("left_collection_click");
+        if (mAct == null) return;
+        Intent intent = new Intent();
+        intent.setClass(mAct, MessageActivity.class);
         mAct.startActivity(intent);
     }
 

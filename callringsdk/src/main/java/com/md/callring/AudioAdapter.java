@@ -1,6 +1,8 @@
 package com.md.callring;
 
 import android.content.Context;
+import android.content.MutableContextWrapper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +15,15 @@ import java.util.List;
 
 public class AudioAdapter extends BaseAdapter {
 
-    private Context context ;
+    private Context mContext ;
     private List<Song> data ;
+    private LayoutInflater inflater;
 
 
     public AudioAdapter(Context context, List<Song> data) {
-        this.context = context;
+        this.mContext = context;
         this.data = data;
+        inflater =LayoutInflater.from(mContext);
     }
 
     @Override
@@ -42,14 +46,13 @@ public class AudioAdapter extends BaseAdapter {
         ViewHolder viewHolder ;
         if(convertView == null ) {
             viewHolder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_audio, null) ;
+            convertView = inflater.inflate(R.layout.item_audio, null) ;
             viewHolder.tvAudio = (TextView) convertView.findViewById(R.id.tv_audio) ;
             convertView.setTag(viewHolder);
-
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
+        Log.e( "getView: ","ghjkljjia" );
         viewHolder.tvAudio.setText(data.get(position).getTitle()) ;
         return convertView;
     }

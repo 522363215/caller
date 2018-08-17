@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.MessagePictureActivity">
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
+        android:id="@+id/gd_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="500dp"
+        android:id="@+id/iv_message"
+        android:layout_centerInParent="true"/>
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar
+        android:id="@+id/pb_downloading_below_ad"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        app:progressBgColor="@color/color_half_transparent"
+        app:progressColor="@color/color_FF27BB56" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/tv_message_pic"
+        android:padding="10dp"
+        android:background="@color/fb_ad_green_button"
+        android:gravity="center"
+        tools:text="set wall"
+        android:textSize="15sp"
+        android:textColor="@color/white"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp48"
+        android:visibility="visible">
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+            android:id="@+id/fiv_back"
+            android:layout_width="@dimen/dp56"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/icon_arrow"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp28"
+            android:visibility="visible" />
+
+    </FrameLayout>
+</RelativeLayout>

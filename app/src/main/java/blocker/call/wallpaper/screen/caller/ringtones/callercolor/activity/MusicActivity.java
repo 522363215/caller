@@ -4,12 +4,17 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 
+import com.bumptech.glide.Glide;
 import com.md.callring.Constant;
 import com.md.callring.LocalSong;
 import com.md.callring.Setting;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleImageView;
 
 public class MusicActivity extends BaseActivity implements View.OnClickListener {
 
@@ -22,6 +27,14 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
 
         Bundle bundle = getIntent().getExtras();
         localSong = (LocalSong) bundle.getSerializable(Constant.MUSIC_BUNDLE);
+
+        CircleImageView circleImageView = findViewById(R.id.ci_music);
+        Glide.with(this).load(localSong.getDrawableRes()).into(circleImageView);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.music);
+        LinearInterpolator lin = new LinearInterpolator();//设置动画匀速运动
+        animation.setInterpolator(lin);
+        circleImageView.startAnimation(animation);
+
         mediaPlayer = MediaPlayer.create(this,localSong.getMusic());
         mediaPlayer.start();
 
@@ -38,5 +51,12 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                 openActivity(CallFlashSetResultActivity.class,0,0,true);
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        mediaPlayer.pause();
     }
 }

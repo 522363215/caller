@@ -6,19 +6,19 @@ public class LocalSong implements Serializable{
 
     private String name;
     private int music;
-    private int drawableRes;
+    private String drawableRes;
 
-    public LocalSong(String name, int music, int drawableRes) {
+    public LocalSong(String name, int music, String drawableRes) {
         this.name = name;
         this.music = music;
         this.drawableRes = drawableRes;
     }
 
-    public int getDrawableRes() {
+    public String getDrawableRes() {
         return drawableRes;
     }
 
-    public void setDrawableRes(int drawableRes) {
+    public void setDrawableRes(String drawableRes) {
         this.drawableRes = drawableRes;
     }
 

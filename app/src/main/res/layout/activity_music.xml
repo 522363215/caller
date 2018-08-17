@@ -10,6 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
         app:title="@string/about_title" />
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/ci_music"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

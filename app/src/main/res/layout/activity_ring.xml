@@ -16,13 +16,7 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_setting"/>
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lv_setting"
-        android:visibility="gone"
-        android:listSelector="@android:color/transparent">
-
-    </ListView>
+        android:id="@+id/rv_setting"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"/>
 </LinearLayout>

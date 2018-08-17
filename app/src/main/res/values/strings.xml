@@ -210,4 +210,15 @@
     <string name="permission_for_answer_call">answering calls</string>
     <string name="setting_call_after">Caller ID</string>
     <string name="permission_denied_txt">Permission denied, please try again</string>
+    <string name="title_activity_message">message</string>
+    <string name="title_home">message picture</string>
+    <string name="title_dashboard">history</string>
+    <string name="message_action_one">message</string>
+    <string name="message_action_two">history</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="download">download</string>
+    <string name="set_pic">Set Wallpaper</string>
+    <string name="no_set_pic">No Set Wallpaper</string>
+    <string name="resume">connected..</string>
+    <string name="pause">pause</string>
 </resources>

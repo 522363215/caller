@@ -1,0 +1,109 @@
+package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
+
+import com.example.message.Picture;
+import com.md.callring.LocalSong;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.FragmentAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.MessageFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.UsedPictureFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
+
+public class MessageActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+
+    private List<Fragment> fragments;
+    private int lastShowIndexFragment;
+    private ActionBar mAbMessage;
+    private ViewPager mVpMessage;
+    private BottomNavigationView navigation;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    if (lastShowIndexFragment!=0) {
+                        mVpMessage.setCurrentItem(0);
+                        lastShowIndexFragment = 0;
+                    }
+                    mAbMessage.setTitle(R.string.message_action_one);
+                    return true;
+                case R.id.navigation_dashboard:
+                    if (lastShowIndexFragment!=1) {
+                        mVpMessage.setCurrentItem(1);
+                        lastShowIndexFragment = 1;
+                    }
+                    mAbMessage.setTitle(R.string.message_action_two);
+                    return true;
+            }
+            return false;
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_message);
+
+        getFragmentArray();
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        mVpMessage = findViewById(R.id.vp_message);
+
+        mAbMessage = findViewById(R.id.ab_message);
+
+        mAbMessage.setTitle(R.string.message_action_one);
+
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(),fragments);
+        mVpMessage.setAdapter(fragmentAdapter);
+        mVpMessage.setOnPageChangeListener(this);
+    }
+
+    private void getFragmentArray(){
+        MessageFragment messageFragment = new MessageFragment();
+        UsedPictureFragment usedPictureFragment = new UsedPictureFragment();
+        fragments = new ArrayList<>();
+        fragments.add(messageFragment);
+        fragments.add(usedPictureFragment);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position){
+            case 0:
+                mAbMessage.setTitle(R.string.message_action_one);
+                navigation.setSelectedItemId(R.id.navigation_home);
+                break;
+            case 1:
+                mAbMessage.setTitle(R.string.message_action_two);
+                navigation.setSelectedItemId(R.id.navigation_dashboard);
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+
+}

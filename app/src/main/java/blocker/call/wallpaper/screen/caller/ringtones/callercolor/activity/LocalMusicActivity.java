@@ -1,9 +1,17 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
+import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -24,6 +32,35 @@ public class LocalMusicActivity extends BaseActivity {
     private List<Song> data;
     private AudioAdapter adapter ;
     private LinearLayout root;
+    private Thread run;
+    private ProgressDialog progressDialog;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            progressDialog.cancel();
+            if (data !=null){
+                adapter = new AudioAdapter(LocalMusicActivity.this, data) ;
+                listview.setAdapter(adapter) ;
+                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                            long arg3) {
+                        // 获取专辑图片
+                        Bitmap bmp = data.get(arg2).getAlbumCover() ;
+                        if(null != bmp) {
+                            BitmapDrawable drawable = new BitmapDrawable(getResources(), bmp) ;
+                            root.setBackgroundDrawable(drawable);
+                        }
+                        else {
+                            root.setBackgroundColor(Color.GRAY) ;
+                        }
+                    }
+                }) ;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,31 +68,65 @@ public class LocalMusicActivity extends BaseActivity {
         setContentView(R.layout.activity_local_music);
 
         root = (LinearLayout) findViewById(R.id.ll_setting) ;
+        listview = (ListView) findViewById(R.id.lv_setting) ;
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+        permission();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case 100:
+                Log.e("onRequestPermissionsResult:",grantResults[0]+"" );;
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
+                    run = new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            init();
+                        }
+                    };
+                    run.start();
+                } else {
+                    // 没有获取到权限，做特殊处理
+                }
+                break;
+        }
+    }
+
+    private void permission(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
+        }else{
+            run = new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    init();
+                }
+            };
+            run.start();
+        }
+    }
+
+    private void init(){
         data = AudioUtil.readAudio(this) ;
         if(null == data || data.size() == 0) {
             Toast.makeText(this, "没有扫描到音频文件!", Toast.LENGTH_LONG).show() ;
             return ;
         }
-        listview = (ListView) findViewById(R.id.lv_setting) ;
-        adapter = new AudioAdapter(LocalMusicActivity.this, data) ;
-        listview.setAdapter(adapter) ;
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-                // 获取专辑图片
-                Bitmap bmp = data.get(arg2).getAlbumCover() ;
-                if(null != bmp) {
-                    BitmapDrawable drawable = new BitmapDrawable(getResources(), bmp) ;
-                    root.setBackgroundDrawable(drawable);
-                }
-                else {
-                    root.setBackgroundColor(Color.GRAY) ;
-                }
-            }
-        }) ;
+        Log.e( "init: ", "ghjkl;'"+"\t"+data.size());
 
         AudioUtil.readImage(this) ;
+
+        handler.sendEmptyMessage(0);
     }
 }
