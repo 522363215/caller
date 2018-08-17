@@ -30,7 +30,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.HttpUtil
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SwipeUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 
 
 public class ApplicationEx extends Application {
@@ -101,7 +101,7 @@ public class ApplicationEx extends Application {
 
     private void initAppData() {
         LogUtil.d("app_ex", "init app data: ");
-        SwipeUtil.initEasySwipe(this);
+        SwipeManager.getInstance().initEasySwipe(this);
         country = NumberUtil.getDefaultCountry();
         mInterstitialAdvertisementMap = new ConcurrentHashMap<>();
         // 加载语言

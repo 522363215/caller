@@ -10,9 +10,11 @@ import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.quick.easyswipe.EasySwipe;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
@@ -36,6 +38,7 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
     private TextView tvSwitchMessage;
     private TextView tvSwitchCallerShow;
     private TextView tvSwitchSwipe;
+    private View layoutSwipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,14 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
         tvSwitchCallerShow = findViewById(R.id.tv_switch_caller_show);
         tvSwitchSwipe = findViewById(R.id.tv_switch_swipe);
 
+        //安装了call id 则不显示swipe
+        layoutSwipe = findViewById(R.id.layout_swipe);
+        if (AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID) && !EasySwipe.isEasySwipeOn()) {
+            layoutSwipe.setVisibility(View.GONE);
+        } else {
+            layoutSwipe.setVisibility(View.VISIBLE);
+        }
+
         enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
         enableBlock = BlockManager.getInstance().getBlockSwitchState();
         enableCallerId = PreferenceHelper.getBoolean(PreferenceHelper.PREF_KEY_ENABLE_SHOW_CALL_AFTER, PreferenceHelper.DEFAULT_VALUE_FOR_CALLER_ID);
@@ -149,13 +160,11 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
             case R.id.sb_swipe:
                 enableSwipe = isChecked;
                 if (isChecked) {
-                    EasySwipe.toggleEasySwipe(true);
-                    EasySwipe.tryStartService();
+                    SwipeManager.getInstance().enableEasySwipe();
                     ToastUtils.showToast(this, R.string.setting_enable_swipe_success_tip);
                     FlurryAgent.logEvent("SettingActivity----click----enable_swipe");
                 } else {
-                    EasySwipe.toggleEasySwipe(false);
-                    EasySwipe.stopService();
+                    SwipeManager.getInstance().disableEasySwipe();
                     FlurryAgent.logEvent("SettingActivity----click----disable_swipe");
                 }
                 break;

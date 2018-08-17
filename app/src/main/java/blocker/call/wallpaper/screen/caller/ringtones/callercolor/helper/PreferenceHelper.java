@@ -138,6 +138,11 @@ final public class PreferenceHelper {
      */
     public static final String PREF_KEY_IS_SHOW_CALL_FLASH_SET_GUIDE = "caller_pref_key_is_show_call_flash_set_guide";
 
+    /**
+     * 上一次swipe 界面广告加载成功的时间
+     */
+    public static final String PREF_LAST_LOADED_SWIPE_AD_TIME = "caller_pref_key_last_loaded_swipe_ad_time";
+
 
     private PreferenceHelper() {
     }

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_ad_view_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whitesmoke"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp4"
+        android:paddingRight="@dimen/dp4"
+        android:paddingTop="@dimen/dp4">
+
+        <FrameLayout
+            android:id="@+id/layout_fb_image"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <com.facebook.ads.MediaView
+                android:id="@+id/nativeAdMedia"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/dp160" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="top|left"
+                android:src="@drawable/ic_ad_banner" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/dp4"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="2dp">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.RoundImageView
+                android:id="@+id/nativeAdIcon"
+                android:layout_width="@dimen/dp56"
+                android:layout_height="@dimen/dp56"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/dp4"
+                android:layout_marginRight="@dimen/dp4"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                app:cornerRadius="4dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp4"
+                android:layout_marginRight="@dimen/dp4"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nativeAdTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@string/Roboto_Regular"
+                    android:singleLine="true"
+                    android:text="aaa"
+                    android:textColor="@color/color_E01D1B51"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/nativeAdBody"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:fontFamily="@string/Roboto_Light"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:text="bbb"
+                    android:textColor="@color/color_7B1D1B51"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/nativeAdCallToAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp4"
+                android:layout_marginRight="@dimen/dp4"
+                android:background="@drawable/btn_green_ff00c858_selector_round4dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dp8"
+                android:paddingEnd="@dimen/dp16"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingStart="@dimen/dp16"
+                android:paddingTop="@dimen/dp8"
+                android:text="Get it"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

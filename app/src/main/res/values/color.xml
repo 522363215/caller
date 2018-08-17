@@ -104,4 +104,7 @@
     <color name="color_FF44517A">#FF44517A</color>
     <color name="color_bg_black_top">#FF212121</color>
     <color name="color_bg_black_main">#FF111111</color>
+
+    <color name="color_7F090D12">#7F090D12</color>
+    <color name="white_80">#CCffffff</color>
 </resources>

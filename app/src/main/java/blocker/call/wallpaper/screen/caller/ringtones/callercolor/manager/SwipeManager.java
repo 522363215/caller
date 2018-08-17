@@ -1,7 +1,8 @@
-package blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils;
+package blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager;
 
 import android.app.Application;
 import android.os.Build;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.quick.easyswipe.EasySwipe;
@@ -17,9 +18,34 @@ import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
-public class SwipeUtil {
-    public static void initEasySwipe(final Application application) {
+public class SwipeManager {
+    private static final String TAG = "SwipeManager";
+    private static SwipeManager sInstance;
+    private Advertisement mAdvertisement;
+    private boolean mIsAdLoading;
+
+    private SwipeManager() {
+    }
+
+    public static SwipeManager getInstance() {
+        if (sInstance == null) {
+            synchronized (SwipeManager.class) {
+                sInstance = new SwipeManager();
+                return sInstance;
+            }
+        }
+        return sInstance;
+    }
+
+    public void initEasySwipe(final Application application) {
         // 1. 全局初始化, 传入Applicatoin
         EasySwipe.init(application);
         // 2. 快划布局的隐藏和显示回调, 用于显示广告
@@ -27,6 +53,7 @@ public class SwipeUtil {
             @Override
             public void swipeViewShown(FrameLayout frameLayout) {
                 //frameLayout是侧滑布局中的广告布局
+                initAd(frameLayout);
             }
 
             @Override
@@ -102,13 +129,13 @@ public class SwipeUtil {
         // 注：如果想自定义菜单替换”最近应用”菜单栏，则使用下面方法
 //        initEasySwipeMenu();
         //启动快划服务
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            EasySwipe.tryStartService();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O && !AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID)) {
+            enableEasySwipe();
         }
     }
 
     // EasySwipeItem用来装载用户自定义的item信息
-    private static void initEasySwipeMenu() {
+    private void initEasySwipeMenu() {
         List<EasySwipeItem> list = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             EasySwipeItem item;
@@ -137,4 +164,108 @@ public class SwipeUtil {
             }
         });
     }
+
+    public void enableEasySwipe() {
+        EasySwipe.toggleEasySwipe(true);
+        EasySwipe.tryStartService();
+    }
+
+    public void disableEasySwipe() {
+        EasySwipe.toggleEasySwipe(false);
+        EasySwipe.stopService();
+
+        //关闭服务时，清楚广告加载时间,防止关闭后又打开，需要等一部分时间才出现ad
+        PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_LOADED_SWIPE_AD_TIME, 0);
+    }
+
+    //******************************************AD******************************************//
+    private void initAd(View view) {
+        if (isRefresh()) {
+            mIsAdLoading = true;
+            MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(view,
+                    "",//ConstantUtils.FB_AFTER_CALL_ID
+                    CallerAdManager.ADMOB_ID_ADV_END_CALL_NORMAL,
+                    Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
+                    "",
+                    Advertisement.MOPUB_TYPE_NATIVE,
+                    -1,
+                    "",
+                    false);
+            mAdvertisement = new Advertisement(adapter);
+            mAdvertisement.setRefreshWhenClicked(false);
+            mAdvertisement.refreshAD(true);
+        }
+    }
+
+    private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String eventKey, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, AdvertisementSwitcher.SERVER_KEY_QUICK_SWIPE);
+        }
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, AdvertisementSwitcher.SERVER_KEY_QUICK_SWIPE, isBanner);
+        }
+
+        @Override
+        public void onAdShow() {
+            super.onAdShow();
+            LogUtil.d(TAG, "initAd show");
+        }
+
+        @Override
+        public void onAdLoaded() {
+            mIsAdLoading = false;
+            PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_LOADED_SWIPE_AD_TIME, System.currentTimeMillis());
+        }
+
+        @Override
+        public void onAdClicked(boolean isAdmob) {
+            super.onAdClicked(isAdmob);
+            EasySwipe.hideSwipeView();
+        }
+
+        @Override
+        public void onAdError(boolean isLastRequestIndex) {
+            super.onAdError(isLastRequestIndex);
+            mIsAdLoading = false;
+        }
+
+        @Override
+        public int getFbViewRes() {
+            return mIsBanner ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_ads_swipe;
+        }
+
+        @Override
+        public int getAdmobViewRes(int type, boolean isAppInstall) {
+            return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_swipe : R.layout.layout_admob_advanced_content_ad_swipe;
+        }
+
+        @Override
+        public int getMoPubViewRes() {
+            return mIsBanner ? R.layout.layout_mopub_ad_banner : R.layout.layout_mopub_native_big_swipe;
+        }
+
+        @Override
+        public int getBaiDuViewRes() {
+            return mIsBanner ? R.layout.layout_du_ad_banner : R.layout.layout_du_ad_big_swipe;
+        }
+    }
+
+    private boolean isRefresh() {
+        if (mIsAdLoading) {
+            return false;
+        }
+        long lastLoadTime = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_LOADED_SWIPE_AD_TIME, System.currentTimeMillis());
+        //离上一次加载成功超过15分钟 ，刷新ad
+        if (System.currentTimeMillis() - lastLoadTime >= 15 * 60 * 1000) {
+            return true;
+        }
+        if (mAdvertisement == null) {
+            return true;
+        }
+        return false;
+    }
+    //******************************************AD******************************************//
+
 }

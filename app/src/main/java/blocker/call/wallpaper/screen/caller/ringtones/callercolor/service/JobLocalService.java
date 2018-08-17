@@ -7,8 +7,9 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 
-import com.quick.easyswipe.EasySwipe;
-
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 /**
@@ -39,7 +40,10 @@ public class JobLocalService extends JobService {
 
             //启动 swipe service
             try {
-                EasySwipe.tryStartService();
+                //没有安装call id 才启动
+                if (!AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID)) {
+                    SwipeManager.getInstance().enableEasySwipe();
+                }
             } catch (Exception e) {
                 LogUtil.e("JobLocalService", "onStartJob e:" + e.getMessage());
             }

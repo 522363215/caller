@@ -18,13 +18,16 @@ import java.util.Calendar;
 import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.NotifyInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.NotifyManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServerManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServiceProcessingManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
@@ -53,6 +56,11 @@ public class CallerCommonReceiver extends BroadcastReceiver {
 
                             updateNewFlash(context);
                             AnalyticsManager.onServiceRestart();
+
+                            //判断如果安装了call id  则关闭 swipe
+                            if (AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID)) {
+                                SwipeManager.getInstance().disableEasySwipe();
+                            }
                         } catch (Exception e) {
                             LogUtil.e(TAG, "backgroundDownloadOnlionCallFlash COMMON_CHECK_24 exception: " + e.getMessage());
                         }
@@ -164,7 +172,7 @@ public class CallerCommonReceiver extends BroadcastReceiver {
     }
 
     private void updateNewFlash(final Context context) {
-        if(!CommonUtils.isOldForFlash()){
+        if (!CommonUtils.isOldForFlash()) {
             return;
         }
         ThemeSyncManager.getInstance().syncTopicData(CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH, 12, new SingleTopicThemeCallback() {
