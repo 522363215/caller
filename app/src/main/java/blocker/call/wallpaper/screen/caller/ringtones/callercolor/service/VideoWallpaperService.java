@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Handler;
 import android.service.wallpaper.WallpaperService;
 import android.view.SurfaceHolder;
 
-import com.example.message.Constant;
+import com.md.callring.Constant;
 
 import java.io.File;
 
@@ -50,10 +48,11 @@ public class VideoWallpaperService extends WallpaperService {
 
         /**
          * 初始化MediaPlayer
+         *
          * @param surfaceHolder
          */
         private void initMediaPlayer(SurfaceHolder surfaceHolder) {
-            mediaPlayer = MediaPlayer.create(getApplicationContext(),userPickedUri );
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), userPickedUri);
             mediaPlayer.setSurface(surfaceHolder.getSurface());
             mediaPlayer.setLooping(true);
         }
@@ -61,10 +60,10 @@ public class VideoWallpaperService extends WallpaperService {
         @Override
         public void onVisibilityChanged(boolean visible) {
             super.onVisibilityChanged(visible);
-            if(visible){
+            if (visible) {
                 //可见时播放
                 mediaPlayer.start();
-            }else{
+            } else {
                 //不可见时暂停
                 mediaPlayer.pause();
             }
@@ -74,7 +73,7 @@ public class VideoWallpaperService extends WallpaperService {
         public void onDestroy() {
             super.onDestroy();
             //停止释放MediaPlayer
-            if(mediaPlayer.isPlaying()){
+            if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
             }
             mediaPlayer.release();

@@ -1,4 +1,4 @@
-package com.example.message;
+package com.md.wallpaper;
 
 import android.app.Activity;
 import android.app.WallpaperInfo;

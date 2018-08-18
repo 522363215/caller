@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -17,23 +18,19 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
-import com.bumptech.glide.Glide;
-import com.example.message.FileUtil;
-import com.example.message.MessagePictureDBProcess;
-import com.example.message.Picture;
-import com.example.message.SharedUtils;
 import com.md.callring.Constant;
 import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.download.ThemeResourceHelper;
+import com.md.wallpaper.FileUtil;
+import com.md.wallpaper.MessagePictureDBProcess;
+import com.md.wallpaper.Picture;
+import com.md.wallpaper.SharedUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,7 +43,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.VideoWallpaperService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar;
@@ -59,7 +55,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MessagePictureActivity extends BaseActivity implements View.OnClickListener {
+public class WallpaperDetailActivity extends BaseActivity implements View.OnClickListener {
 
     private GlideView imageView;
     private TextView tvMessagePic;
@@ -69,13 +65,13 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
     private static final int FALL = 2;
     private File file;
     private MessagePictureDBProcess messagePictureDBProcess;
-    private String fileName ;
+    private String fileName;
     private String dates;
     private SharedUtils sharedUtils;
     private OkHttpClient okHttpClient;
     private BatteryProgressBar mPbDownloadingBelowAd;
     private int type;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -94,6 +90,7 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
 
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         int flag = WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -104,7 +101,7 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
 
         messagePictureDBProcess = new MessagePictureDBProcess(this);
 
-        sharedUtils =SharedUtils.getSharedUtils(this);
+        sharedUtils = SharedUtils.getSharedUtils(this);
 
         url = (Picture) getIntent().getSerializableExtra(Constant.MESSAGE_BUNDLE);
         gdMessage = findViewById(R.id.gd_message);
@@ -112,37 +109,37 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
 
         imageView = findViewById(R.id.iv_message);
         TextureVideoView videoView = findViewById(R.id.vv_message);
-        if (url.getType() == 1){
+        if (url.getType() == 1) {
             String A = url.getDrawableRes();
-            LogUtil.e("网址",url.getDrawableRes());
+            LogUtil.e("网址", url.getDrawableRes());
             videoView.setVisibility(View.VISIBLE);
             videoView.setVideoURI(Uri.parse(url.getDrawableRes()));
             imageView.setVisibility(View.INVISIBLE);
             videoView.start();
-        }else if (url.getType() == 2){
+        } else if (url.getType() == 2) {
             imageView.showGif(url.getDrawableRes());
-        }else {
+        } else {
             imageView.showImage(url.getDrawableRes());
         }
 
         tvMessagePic = findViewById(R.id.tv_message_pic);
         tvMessagePic.setOnClickListener(this);
         Picture picture = messagePictureDBProcess.findPicture(url.getDrawableRes());
-        if (picture==null) {
+        if (picture == null) {
             tvMessagePic.setText(R.string.download);
-        }else if (picture!=null){
-            Log.e("onCreate: ",picture.getPath());
+        } else if (picture != null) {
+            Log.e("onCreate: ", picture.getPath());
             File file = new File(picture.getPath());
-            if (file.exists()){
+            if (file.exists()) {
                 if (!sharedUtils.readNews(Constant.PICTURE).equals(picture.getDrawableRes())) {
                     tvMessagePic.setText(R.string.set_pic);
 
-                }else {
+                } else {
                     tvMessagePic.setText(R.string.set_pic);
                     tvMessagePic.setClickable(false);
                     tvMessagePic.setBackgroundResource(R.color.color_66FFFFFF);
                 }
-            }else {
+            } else {
                 tvMessagePic.setText(R.string.download);
             }
         }
@@ -166,7 +163,7 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
     }
 
 
-    private void getPicture(){
+    private void getPicture() {
         ThemeResourceHelper.getInstance().downloadThemeResources(url.getId(), url.getDrawableRes(), new OnDownloadListener() {
             @Override
             public void onFailure(String url) {
@@ -175,33 +172,33 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
 
             @Override
             public void onFailureForIOException(String url) {
-                LogUtil.e("askdjk","文件存储失败");
+                LogUtil.e("askdjk", "文件存储失败");
             }
 
             @Override
             public void onProgress(String url, int progress) {
-                tvMessagePic.setText(progress+"%");
+                tvMessagePic.setText(progress + "%");
                 tvMessagePic.setVisibility(View.VISIBLE);
                 mPbDownloadingBelowAd.setVisibility(View.VISIBLE);
-                Log.e("onProgress: ",progress+"" );
+                Log.e("onProgress: ", progress + "");
                 mPbDownloadingBelowAd.setProgress(progress);
             }
 
             @Override
             public void onSuccess(String u, File file) {
                 tvMessagePic.setBackgroundResource(R.color.progress_default_color);
-                messagePictureDBProcess.addPicture(new Picture(url.getId(),url.getName(),url.getDrawableRes(),file.getPath(),url.getThumbnail(),url.getType()));
+                messagePictureDBProcess.addPicture(new Picture(url.getId(), url.getName(), url.getDrawableRes(), file.getPath(), url.getThumbnail(), url.getType()));
                 tvMessagePic.setText(R.string.set_pic);
                 tvMessagePic.setVisibility(View.VISIBLE);
                 mPbDownloadingBelowAd.setVisibility(View.INVISIBLE);
                 //若该文件存在
                 if (file.exists()) {
-                    if (FileUtil.isVideoFileType(file.getAbsolutePath())){
+                    if (FileUtil.isVideoFileType(file.getAbsolutePath())) {
                         type = 1;
-                    }else {
-                        if (FileUtil.isGIFFileType(file.getAbsolutePath())){
+                    } else {
+                        if (FileUtil.isGIFFileType(file.getAbsolutePath())) {
                             type = 2;
-                        }else {
+                        } else {
                             type = 3;
                         }
                     }
@@ -211,7 +208,7 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
         });
     }
 
-    private void getPic(String path){
+    private void getPic(String path) {
         //1.创建一个okhttpclient对象
         okHttpClient = new OkHttpClient();
         //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
@@ -250,14 +247,14 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
         view.draw(c);
         // 缩小图片
         Matrix matrix = new Matrix();
-        matrix.postScale(0.5f,0.5f); //长和宽放大缩小的比例
-        bmp = Bitmap.createBitmap(bmp,0,0,               bmp.getWidth(),bmp.getHeight(),matrix,true);
+        matrix.postScale(0.5f, 0.5f); //长和宽放大缩小的比例
+        bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
         DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
         String date = String.valueOf(new Date());
         Date dates = null;
         try {
             dates = format.parse(date);
-            saveBitmap(bmp,dates+".JPEG");
+            saveBitmap(bmp, dates + ".JPEG");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -267,13 +264,13 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
     public void SaveBitmapFromBit(Bitmap bmp) {
         // 缩小图片
         Matrix matrix = new Matrix();
-        matrix.postScale(0.5f,0.5f); //长和宽放大缩小的比例
+        matrix.postScale(0.5f, 0.5f); //长和宽放大缩小的比例
         Calendar calendar = Calendar.getInstance();
         //获取系统的日期
         //年
         int year = calendar.get(Calendar.YEAR);
         //月
-        int month = calendar.get(Calendar.MONTH)+1;
+        int month = calendar.get(Calendar.MONTH) + 1;
         //日
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         //获取系统时间
@@ -283,46 +280,41 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
         int minute = calendar.get(Calendar.MINUTE);
         //秒
         int second = calendar.get(Calendar.SECOND);
-        dates = year+""+month+""+day+""+hour+""+minute+""+second;
-        Log.e("onCreate1: ",dates);
-        saveBitmap(bmp,dates+".JPEG");
+        dates = year + "" + month + "" + day + "" + hour + "" + minute + "" + second;
+        Log.e("onCreate1: ", dates);
+        saveBitmap(bmp, dates + ".JPEG");
     }
 
     /*
      * 保存文件，文件名为当前日期
      */
-    public void saveBitmap(Bitmap bitmap, String bitName){
+    public void saveBitmap(Bitmap bitmap, String bitName) {
 
-        File file ;
-        if(Build.BRAND .equals("Xiaomi") ){ // 小米手机
-            fileName = Environment.getExternalStorageDirectory().getPath()+"/DCIM/Camera/"+bitName ;
-        }else{  // Meizu 、Oppo
-            fileName = Environment.getExternalStorageDirectory().getPath()+"/DCIM/"+bitName ;
+        File file;
+        if (Build.BRAND.equals("Xiaomi")) { // 小米手机
+            fileName = Environment.getExternalStorageDirectory().getPath() + "/DCIM/Camera/" + bitName;
+        } else {  // Meizu 、Oppo
+            fileName = Environment.getExternalStorageDirectory().getPath() + "/DCIM/" + bitName;
         }
         file = new File(fileName);
 
-        if(file.exists()){
+        if (file.exists()) {
             file.delete();
         }
         FileOutputStream out;
-        try{
+        try {
             out = new FileOutputStream(file);
             // 格式为 JPEG，照相机拍出的图片为JPEG格式的，PNG格式的不能显示在相册中
-            if(bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out))
-            {
+            if (bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)) {
                 out.flush();
                 out.close();
                 // 插入图库
                 MediaStore.Images.Media.insertImage(this.getContentResolver(), file.getAbsolutePath(), bitName, null);
 
             }
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
 
         }
@@ -333,10 +325,10 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
+        switch (requestCode) {
             case 100:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (sharedUtils.readNews(Constant.PICTURE)!=null||!sharedUtils.readNews(Constant.PICTURE).equals("")){
+                    if (sharedUtils.readNews(Constant.PICTURE) != null || !sharedUtils.readNews(Constant.PICTURE).equals("")) {
                         setWall();
                     }
                 } else {
@@ -349,7 +341,7 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_message_pic:
                 if (tvMessagePic.getText().toString().equals(this.getString(R.string.download))) {
                     String[] PERMISSIONS = {
@@ -367,8 +359,8 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
                         getPicture();
                     }
 
-                }else if (tvMessagePic.getText().toString().equals(this.getString(R.string.set_pic))){
-                    sharedUtils.saveNews(Constant.PICTURE,url.getDrawableRes());
+                } else if (tvMessagePic.getText().toString().equals(this.getString(R.string.set_pic))) {
+                    sharedUtils.saveNews(Constant.PICTURE, url.getDrawableRes());
                     String[] WALL = {
                             "android.permission.SET_WALLPAPER",};
                     int wall = ContextCompat.checkSelfPermission(this,
@@ -386,12 +378,12 @@ public class MessagePictureActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    private void setWall(){
-        if (type == 1){
-            Intent i = new Intent(MessagePictureActivity.this, VideoWallpaperService.class);
-            i.putExtra(com.example.message.Constant.VIDEO,file.getAbsoluteFile());
+    private void setWall() {
+        if (type == 1) {
+            Intent i = new Intent(WallpaperDetailActivity.this, VideoWallpaperService.class);
+            i.putExtra(Constant.VIDEO, file.getAbsoluteFile());
             startService(i);
-        }else if (type == 3){
+        } else if (type == 3) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());//filePath
             try {
                 WallpaperManager wpm = (WallpaperManager) this.getSystemService(

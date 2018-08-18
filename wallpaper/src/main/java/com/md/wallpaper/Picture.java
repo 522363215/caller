@@ -1,8 +1,8 @@
-package com.example.message;
+package com.md.wallpaper;
 
 import java.io.Serializable;
 
-public class Picture implements Serializable{
+public class Picture implements Serializable {
 
     private String Id;
     private String name;

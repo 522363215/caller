@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import com.flurry.android.FlurryAgent;
 import com.md.flashset.bean.CallFlashDataType;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
-import com.md.flashset.helper.CallFlashPreferenceHelper;
 
 import java.lang.reflect.Method;
 import java.util.Locale;
@@ -23,17 +22,13 @@ import java.util.Locale;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.AboutActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.ActivityBuilder;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.AboutActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.BlockActivity;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CollectionActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.SettingActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingOneDialog;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MessageActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.WallpaperListActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.RingActivity;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.SettingActivity;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.RatingDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
@@ -267,7 +262,7 @@ public class SideslipContraller implements View.OnClickListener {
         FlurryAgent.logEvent("left_collection_click");
         if (mAct == null) return;
         Intent intent = new Intent();
-        intent.setClass(mAct, MessageActivity.class);
+        intent.setClass(mAct, WallpaperListActivity.class);
         mAct.startActivity(intent);
     }
 

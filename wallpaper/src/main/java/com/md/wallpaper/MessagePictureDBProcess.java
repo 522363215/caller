@@ -1,4 +1,4 @@
-package com.example.message;
+package com.md.wallpaper;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -19,7 +19,7 @@ public class MessagePictureDBProcess {
     }
 
 
-    public void close(){
+    public void close() {
         database.close();
     }
 
@@ -44,9 +44,9 @@ public class MessagePictureDBProcess {
         Cursor cursor = database.rawQuery("select * from picture where drawable like?", new String[]{"%" + url + "%"});
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                list.add(new Picture(cursor.getString(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("name")),cursor.getString(cursor.getColumnIndex("drawable"))
-                        ,cursor.getString(cursor.getColumnIndex("path")),cursor.getString(cursor.getColumnIndex("thumbnail"))
-                        ,cursor.getInt(cursor.getColumnIndex("type"))));
+                list.add(new Picture(cursor.getString(cursor.getColumnIndex("id")), cursor.getString(cursor.getColumnIndex("name")), cursor.getString(cursor.getColumnIndex("drawable"))
+                        , cursor.getString(cursor.getColumnIndex("path")), cursor.getString(cursor.getColumnIndex("thumbnail"))
+                        , cursor.getInt(cursor.getColumnIndex("type"))));
             }
         }
         return list;
@@ -57,14 +57,14 @@ public class MessagePictureDBProcess {
         if (cursor == null || !cursor.moveToNext()) {
             return null;
         }
-        return new Picture(cursor.getString(cursor.getColumnIndex("id")),cursor.getString(cursor.getColumnIndex("name")),cursor.getString(cursor.getColumnIndex("drawable"))
-                ,cursor.getString(cursor.getColumnIndex("path")),cursor.getString(cursor.getColumnIndex("thumbnail"))
-                ,cursor.getInt(cursor.getColumnIndex("type")));
+        return new Picture(cursor.getString(cursor.getColumnIndex("id")), cursor.getString(cursor.getColumnIndex("name")), cursor.getString(cursor.getColumnIndex("drawable"))
+                , cursor.getString(cursor.getColumnIndex("path")), cursor.getString(cursor.getColumnIndex("thumbnail"))
+                , cursor.getInt(cursor.getColumnIndex("type")));
     }
 
-    public boolean haveThing(){
+    public boolean haveThing() {
         Picture place = findPicture("");
-        return place==null;
+        return place == null;
     }
 
 }

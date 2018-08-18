@@ -1,4 +1,4 @@
-package com.example.message;
+package com.md.wallpaper;
 
 public class FileType {
 

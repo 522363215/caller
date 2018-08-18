@@ -5,14 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.message.Picture;
-import com.md.callring.LocalSong;
 import com.md.callring.RecyclerClick;
+import com.md.wallpaper.Picture;
+
 
 import java.util.List;
 
@@ -40,7 +38,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(com.md.callring.R.layout.item_song,parent,false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(com.md.callring.R.layout.item_song, parent, false));
     }
 
     @Override
@@ -50,7 +48,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRecyclerClick.normalClick(v,position);
+                mRecyclerClick.normalClick(v, position);
             }
         });
     }
@@ -64,6 +62,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         TextView tvSong;
         RelativeLayout rlSong;
         GlideView ivBackground;
+
         public ViewHolder(View itemView) {
             super(itemView);
 

@@ -12,33 +12,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.message.FileType;
-import com.example.message.Picture;
 import com.md.callring.Constant;
 import com.md.callring.RecyclerClick;
-import com.md.flashset.bean.CallFlashFormat;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
 import com.md.serverflash.callback.TopicThemeCallback;
+import com.md.wallpaper.FileType;
+import com.md.wallpaper.Picture;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MessagePictureActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.WallpaperDetailActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.MessageAdapter;
 
-public class MessageFragment extends Fragment{
+public class MessageFragment extends Fragment {
 
     private List<Picture> localSongs;
     private RecyclerView rvMessage;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             List<Picture> list = (List<Picture>) msg.obj;
-            MessageAdapter messageAdapter = new MessageAdapter(getContext(),list);
+            MessageAdapter messageAdapter = new MessageAdapter(getContext(), list);
             rvMessage.setAdapter(messageAdapter);
             messageAdapter.setmRecyclerClick(recyclerClick);
         }
@@ -47,8 +46,8 @@ public class MessageFragment extends Fragment{
         @Override
         public void normalClick(View view, int position) {
             Intent intent = new Intent();
-            intent.setClass(getContext(), MessagePictureActivity.class);
-            intent.putExtra(Constant.MESSAGE_BUNDLE,localSongs.get(position));
+            intent.setClass(getContext(), WallpaperDetailActivity.class);
+            intent.putExtra(Constant.MESSAGE_BUNDLE, localSongs.get(position));
             startActivity(intent);
         }
 
@@ -61,22 +60,22 @@ public class MessageFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_message,container,false);
+        View view = inflater.inflate(R.layout.fragment_message, container, false);
         init(view);
         return view;
     }
 
-    private void getSongList(){
+    private void getSongList() {
         localSongs = new ArrayList<>();
-        final String [] topic = new String[1];
-        topic[0]= "Wall_img";
+        final String[] topic = new String[1];
+        topic[0] = "Wall_img";
         ThemeSyncManager.getInstance().syncTopicData(topic, 150, new TopicThemeCallback() {
             @Override
             public void onSuccess(int code, Map<String, List<Theme>> data) {
                 if (data != null && data.size() > 0) {
                     List<Theme> wallImg = data.get(topic[0]);
-                    if (wallImg!=null) {
-                        for (Theme theme:wallImg){
+                    if (wallImg != null) {
+                        for (Theme theme : wallImg) {
                             if (theme.getUrl().endsWith("mp4") || theme.getUrl().endsWith("MP4")) {
                                 theme.setType(FileType.VIDEO_TYPE);
                             } else if (theme.getUrl().endsWith("gif") || theme.getUrl().endsWith("GIF")) {
@@ -84,7 +83,7 @@ public class MessageFragment extends Fragment{
                             } else {
                                 theme.setType(FileType.PICTURE_TYPE);
                             }
-                            localSongs.add(new Picture(theme.getId()+"",theme.getTitle(),theme.getUrl(),theme.getImg_v(),theme.getType()));
+                            localSongs.add(new Picture(theme.getId() + "", theme.getTitle(), theme.getUrl(), theme.getImg_v(), theme.getType()));
                         }
                         Message message = new Message();
                         message.obj = localSongs;
@@ -100,9 +99,9 @@ public class MessageFragment extends Fragment{
         });
     }
 
-    private void init(View view){
+    private void init(View view) {
         rvMessage = view.findViewById(R.id.rv_message);
-        rvMessage.setLayoutManager(new GridLayoutManager(getContext(),2));
+        rvMessage.setLayoutManager(new GridLayoutManager(getContext(), 2));
         getSongList();
     }
 }

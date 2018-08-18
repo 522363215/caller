@@ -4,13 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.example.message.Picture;
-import com.md.callring.LocalSong;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +17,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.Messa
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.UsedPictureFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 
-public class MessageActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+public class WallpaperListActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     private List<Fragment> fragments;
     private int lastShowIndexFragment;
@@ -36,14 +32,14 @@ public class MessageActivity extends BaseActivity implements ViewPager.OnPageCha
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    if (lastShowIndexFragment!=0) {
+                    if (lastShowIndexFragment != 0) {
                         mVpMessage.setCurrentItem(0);
                         lastShowIndexFragment = 0;
                     }
                     mAbMessage.setTitle(R.string.message_action_one);
                     return true;
                 case R.id.navigation_dashboard:
-                    if (lastShowIndexFragment!=1) {
+                    if (lastShowIndexFragment != 1) {
                         mVpMessage.setCurrentItem(1);
                         lastShowIndexFragment = 1;
                     }
@@ -68,7 +64,7 @@ public class MessageActivity extends BaseActivity implements ViewPager.OnPageCha
 
         mAbMessage.setTitle(R.string.message_action_one);
 
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(),fragments);
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
         mVpMessage.setAdapter(fragmentAdapter);
         mVpMessage.setOnPageChangeListener(this);
 
@@ -91,7 +87,7 @@ public class MessageActivity extends BaseActivity implements ViewPager.OnPageCha
         return R.layout.activity_message;
     }
 
-    private void getFragmentArray(){
+    private void getFragmentArray() {
         MessageFragment messageFragment = new MessageFragment();
         UsedPictureFragment usedPictureFragment = new UsedPictureFragment();
         fragments = new ArrayList<>();
@@ -106,7 +102,7 @@ public class MessageActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     public void onPageSelected(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 mAbMessage.setTitle(R.string.message_action_one);
                 navigation.setSelectedItemId(R.id.navigation_home);

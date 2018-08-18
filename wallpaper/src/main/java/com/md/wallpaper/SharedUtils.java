@@ -1,4 +1,4 @@
-package com.example.message;
+package com.md.wallpaper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -62,7 +62,7 @@ public class SharedUtils {
     //单例,懒汉式
     public static SharedUtils getSharedUtils(Context context) {
         if (mSharedUtils == null) {
-            synchronized(SharedUtils.class) {
+            synchronized (SharedUtils.class) {
                 if (mSharedUtils == null) {
                     mSharedUtils = new SharedUtils(context);
                 }
@@ -77,13 +77,13 @@ public class SharedUtils {
         editor.apply();
     }
 
-    public void savePlace(String key, float set){
+    public void savePlace(String key, float set) {
         SharedPreferences.Editor editor = mContext.getSharedPreferences("info", Context.MODE_PRIVATE).edit();
         editor.putFloat(key, set);
         editor.apply();
     }
 
-    public double readPlace(String key){
+    public double readPlace(String key) {
         return mContext.getSharedPreferences("info", Context.MODE_PRIVATE).getFloat(key, 0);
     }
 

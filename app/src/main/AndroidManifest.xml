@@ -219,8 +219,8 @@
         <activity android:name=".activity.RingActivity"/>
         <activity android:name=".activity.LocalMusicActivity"/>
         <activity android:name=".activity.MusicActivity"/>
-        <activity android:name=".activity.MessageActivity" />
-        <activity android:name=".activity.MessagePictureActivity"></activity>
+        <activity android:name=".activity.WallpaperListActivity" />
+        <activity android:name=".activity.WallpaperDetailActivity"></activity>
 
 
         <receiver

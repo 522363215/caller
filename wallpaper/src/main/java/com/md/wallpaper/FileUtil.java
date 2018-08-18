@@ -1,4 +1,4 @@
-package com.example.message;
+package com.md.wallpaper;
 
 import java.util.HashMap;
 import java.util.Iterator;
