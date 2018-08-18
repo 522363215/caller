@@ -17,6 +17,7 @@ import java.util.List;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.PermissionShowAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.PermissionInfo;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
@@ -188,6 +189,7 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
         super.onPermissionGranted(requestCode);
         switch (requestCode) {
             case PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION:
+                SwipeManager.getInstance().restartEasySwipe();
                 break;
             case PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS:
                 break;
