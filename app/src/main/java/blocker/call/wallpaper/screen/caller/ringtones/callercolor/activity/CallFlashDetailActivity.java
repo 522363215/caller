@@ -158,7 +158,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         loadInterstitialAd();
         isNeedRestartSwipe = false;
         if(!SpecialPermissionsUtil.canDrawOverlays(this)){
-            isNeedRestartSwipe = true;
+            boolean isDisableByUser = ApplicationEx.getInstance().getGlobalSettingPreference().getBoolean("swipe_disable_by_user",false);
+            if(!isDisableByUser){
+                isNeedRestartSwipe = true;
+            }
         }
     }
 
