@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.md.callring.RecyclerClick;
-import com.md.wallpaper.Picture;
+import com.md.wallpaper.Wallpaper;
 
 
 import java.util.List;
@@ -20,7 +20,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
 
     private Context context;
-    private List<Picture> localSongs;
+    private List<Wallpaper> localSongs;
     private RecyclerClick mRecyclerClick;
 
     public RecyclerClick getmRecyclerClick() {
@@ -31,7 +31,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         this.mRecyclerClick = mRecyclerClick;
     }
 
-    public MessageAdapter(Context context, List<Picture> localSongs) {
+    public MessageAdapter(Context context, List<Wallpaper> localSongs) {
         this.context = context;
         this.localSongs = localSongs;
     }

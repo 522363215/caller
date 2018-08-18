@@ -18,7 +18,7 @@ import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
 import com.md.serverflash.callback.TopicThemeCallback;
 import com.md.wallpaper.FileType;
-import com.md.wallpaper.Picture;
+import com.md.wallpaper.Wallpaper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +30,13 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.Messag
 
 public class MessageFragment extends Fragment {
 
-    private List<Picture> localSongs;
+    private List<Wallpaper> localSongs;
     private RecyclerView rvMessage;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            List<Picture> list = (List<Picture>) msg.obj;
+            List<Wallpaper> list = (List<Wallpaper>) msg.obj;
             MessageAdapter messageAdapter = new MessageAdapter(getContext(), list);
             rvMessage.setAdapter(messageAdapter);
             messageAdapter.setmRecyclerClick(recyclerClick);
@@ -83,7 +83,7 @@ public class MessageFragment extends Fragment {
                             } else {
                                 theme.setType(FileType.PICTURE_TYPE);
                             }
-                            localSongs.add(new Picture(theme.getId() + "", theme.getTitle(), theme.getUrl(), theme.getImg_v(), theme.getType()));
+                            localSongs.add(new Wallpaper(theme.getId() + "", theme.getTitle(), theme.getUrl(), theme.getImg_v(), theme.getType()));
                         }
                         Message message = new Message();
                         message.obj = localSongs;

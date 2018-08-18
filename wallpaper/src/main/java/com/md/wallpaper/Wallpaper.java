@@ -2,27 +2,27 @@ package com.md.wallpaper;
 
 import java.io.Serializable;
 
-public class Picture implements Serializable {
+public class Wallpaper implements Serializable {
 
     private String Id;
     private String name;
-    private String drawableRes;
+    private String url;
     private String path;
     private String thumbnail;
     private int type;
 
-    public Picture(String id, String name, String drawableRes, String thumbnail, int type) {
+    public Wallpaper(String id, String name, String url, String thumbnail, int type) {
         Id = id;
         this.name = name;
-        this.drawableRes = drawableRes;
+        this.url = url;
         this.thumbnail = thumbnail;
         this.type = type;
     }
 
-    public Picture(String id, String name, String drawableRes, String path, String thumbnail, int type) {
+    public Wallpaper(String id, String name, String url, String path, String thumbnail, int type) {
         Id = id;
         this.name = name;
-        this.drawableRes = drawableRes;
+        this.url = url;
         this.path = path;
         this.thumbnail = thumbnail;
         this.type = type;
@@ -69,11 +69,11 @@ public class Picture implements Serializable {
         this.name = name;
     }
 
-    public String getDrawableRes() {
-        return drawableRes;
+    public String getUrl() {
+        return url;
     }
 
-    public void setDrawableRes(String drawableRes) {
-        this.drawableRes = drawableRes;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

@@ -88,8 +88,8 @@
     <string name="call_flash_album_online">Online</string>
     <string name="call_flash_album_local">Local</string>
     <string name="call_flash_album_gallery">Gallery</string>
-    <string name="call_flash_album_gallery_desc_1">Choose a picture</string>
-    <string name="call_flash_album_gallery_desc_2">%1$d picture(s)</string>
+    <string name="call_flash_album_gallery_desc_1">Choose a wallpaper</string>
+    <string name="call_flash_album_gallery_desc_2">%1$d wallpaper(s)</string>
     <string name="call_flash_result_title">Set successfully</string>
     <string name="call_flash_gif_show_save">Set as Call Screen</string>
     <string name="call_flash_gif_show_load">Downloading %1$d%%</string>
@@ -225,7 +225,7 @@
     <string name="push_tools_content">Check details</string>
     <string name="push_tools_block_call">"Blocked call(s)"</string>
     <string name="title_activity_message">message</string>
-    <string name="title_home">message picture</string>
+    <string name="title_home">message wallpaper</string>
     <string name="title_dashboard">history</string>
     <string name="message_action_one">message</string>
     <string name="message_action_two">history</string>

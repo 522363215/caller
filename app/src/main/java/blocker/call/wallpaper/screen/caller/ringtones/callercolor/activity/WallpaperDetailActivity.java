@@ -1,6 +1,7 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
-import android.app.WallpaperManager;
+import com.md.serverflash.ThemeSyncManager;
+import com.md.wallpaper.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,9 +29,9 @@ import com.md.callring.Constant;
 import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.download.ThemeResourceHelper;
 import com.md.wallpaper.FileUtil;
-import com.md.wallpaper.MessagePictureDBProcess;
-import com.md.wallpaper.Picture;
+import com.md.wallpaper.Wallpaper;
 import com.md.wallpaper.SharedUtils;
+import com.md.wallpaper.WallpaperPreferenceHelper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,14 +60,13 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
 
     private GlideView imageView;
     private TextView tvMessagePic;
-    private Picture url;
+    private Wallpaper wallpaper;
     private GlideView gdMessage;
     private static final int SUCCESS = 1;
     private static final int FALL = 2;
-    private File file;
-    private MessagePictureDBProcess messagePictureDBProcess;
     private String fileName;
     private String dates;
+    private File wallpaerFile;
     private SharedUtils sharedUtils;
     private OkHttpClient okHttpClient;
     private BatteryProgressBar mPbDownloadingBelowAd;
@@ -99,49 +99,43 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
         super.onCreate(savedInstanceState);
 
 
-        messagePictureDBProcess = new MessagePictureDBProcess(this);
-
         sharedUtils = SharedUtils.getSharedUtils(this);
 
-        url = (Picture) getIntent().getSerializableExtra(Constant.MESSAGE_BUNDLE);
+        wallpaper = (Wallpaper) getIntent().getSerializableExtra(Constant.MESSAGE_BUNDLE);
         gdMessage = findViewById(R.id.gd_message);
-        gdMessage.showImageWithBlur(url.getThumbnail());
+        gdMessage.showImageWithBlur(wallpaper.getThumbnail());
 
         imageView = findViewById(R.id.iv_message);
         TextureVideoView videoView = findViewById(R.id.vv_message);
-        if (url.getType() == 1) {
-            String A = url.getDrawableRes();
-            LogUtil.e("网址", url.getDrawableRes());
+        if (wallpaper.getType() == 1) {
+            String A = wallpaper.getUrl();
+            LogUtil.e("网址", wallpaper.getUrl());
             videoView.setVisibility(View.VISIBLE);
-            videoView.setVideoURI(Uri.parse(url.getDrawableRes()));
+            videoView.setVideoURI(Uri.parse(wallpaper.getUrl()));
             imageView.setVisibility(View.INVISIBLE);
             videoView.start();
-        } else if (url.getType() == 2) {
-            imageView.showGif(url.getDrawableRes());
+        } else if (wallpaper.getType() == 2) {
+            imageView.showGif(wallpaper.getUrl());
         } else {
-            imageView.showImage(url.getDrawableRes());
+            imageView.showImage(wallpaper.getUrl());
         }
 
         tvMessagePic = findViewById(R.id.tv_message_pic);
         tvMessagePic.setOnClickListener(this);
-        Picture picture = messagePictureDBProcess.findPicture(url.getDrawableRes());
-        if (picture == null) {
-            tvMessagePic.setText(R.string.download);
-        } else if (picture != null) {
-            Log.e("onCreate: ", picture.getPath());
-            File file = new File(picture.getPath());
-            if (file.exists()) {
-                if (!sharedUtils.readNews(Constant.PICTURE).equals(picture.getDrawableRes())) {
-                    tvMessagePic.setText(R.string.set_pic);
 
-                } else {
-                    tvMessagePic.setText(R.string.set_pic);
-                    tvMessagePic.setClickable(false);
-                    tvMessagePic.setBackgroundResource(R.color.color_66FFFFFF);
-                }
+
+        File file = ThemeSyncManager.getInstance().getFileByUrl(WallpaperDetailActivity.this, wallpaper.getUrl());
+        if (file != null&&file.exists()) {
+            if (!sharedUtils.readNews(Constant.PICTURE).equals(wallpaper.getUrl())) {
+                tvMessagePic.setText(R.string.set_pic);
+
             } else {
-                tvMessagePic.setText(R.string.download);
+                tvMessagePic.setText(R.string.set_pic);
+                tvMessagePic.setClickable(false);
+                tvMessagePic.setBackgroundResource(R.color.color_66FFFFFF);
             }
+        } else {
+            tvMessagePic.setText(R.string.download);
         }
 
         mPbDownloadingBelowAd = findViewById(R.id.pb_downloading_below_ad);
@@ -164,19 +158,19 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
 
 
     private void getPicture() {
-        ThemeResourceHelper.getInstance().downloadThemeResources(url.getId(), url.getDrawableRes(), new OnDownloadListener() {
+        ThemeResourceHelper.getInstance().downloadThemeResources(wallpaper.getId(), wallpaper.getUrl(), new OnDownloadListener() {
             @Override
-            public void onFailure(String url) {
+            public void onFailure(String wallpaper) {
                 tvMessagePic.setText(R.string.download);
             }
 
             @Override
-            public void onFailureForIOException(String url) {
+            public void onFailureForIOException(String wallpaper) {
                 LogUtil.e("askdjk", "文件存储失败");
             }
 
             @Override
-            public void onProgress(String url, int progress) {
+            public void onProgress(String wallpaper, int progress) {
                 tvMessagePic.setText(progress + "%");
                 tvMessagePic.setVisibility(View.VISIBLE);
                 mPbDownloadingBelowAd.setVisibility(View.VISIBLE);
@@ -187,10 +181,11 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
             @Override
             public void onSuccess(String u, File file) {
                 tvMessagePic.setBackgroundResource(R.color.progress_default_color);
-                messagePictureDBProcess.addPicture(new Picture(url.getId(), url.getName(), url.getDrawableRes(), file.getPath(), url.getThumbnail(), url.getType()));
+                WallpaperManager.saveDownloadedWallPaper(new Wallpaper(wallpaper.getId(), wallpaper.getName(), wallpaper.getUrl(), file.getPath(), wallpaper.getThumbnail(), wallpaper.getType()));
                 tvMessagePic.setText(R.string.set_pic);
                 tvMessagePic.setVisibility(View.VISIBLE);
                 mPbDownloadingBelowAd.setVisibility(View.INVISIBLE);
+                wallpaerFile = file;
                 //若该文件存在
                 if (file.exists()) {
                     if (FileUtil.isVideoFileType(file.getAbsolutePath())) {
@@ -208,34 +203,6 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
         });
     }
 
-    private void getPic(String path) {
-        //1.创建一个okhttpclient对象
-        okHttpClient = new OkHttpClient();
-        //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
-        Request request = new Request.Builder()
-                .url(path)
-                .build();
-        //3.创建一个Call对象，参数是request对象，发送请求
-        Call call = okHttpClient.newCall(request);
-        //4.异步请求，请求加入调度
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                handler.sendEmptyMessage(FALL);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                //得到从网上获取资源，转换成我们想要的类型
-                byte[] Picture_bt = response.body().bytes();
-                //通过handler更新UI
-                Message message = handler.obtainMessage();
-                message.obj = Picture_bt;
-                message.what = SUCCESS;
-                handler.sendMessage(message);
-            }
-        });
-    }
 
     //保存文件的方法：
     public void SaveBitmapFromView(View view) {
@@ -360,7 +327,7 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
                     }
 
                 } else if (tvMessagePic.getText().toString().equals(this.getString(R.string.set_pic))) {
-                    sharedUtils.saveNews(Constant.PICTURE, url.getDrawableRes());
+                    WallpaperPreferenceHelper.putObject(WallpaperPreferenceHelper.SETED_WALLPAPERS,wallpaper);
                     String[] WALL = {
                             "android.permission.SET_WALLPAPER",};
                     int wall = ContextCompat.checkSelfPermission(this,
@@ -381,12 +348,12 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
     private void setWall() {
         if (type == 1) {
             Intent i = new Intent(WallpaperDetailActivity.this, VideoWallpaperService.class);
-            i.putExtra(Constant.VIDEO, file.getAbsoluteFile());
+            i.putExtra(Constant.VIDEO, wallpaerFile.getAbsoluteFile());
             startService(i);
         } else if (type == 3) {
-            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());//filePath
+            Bitmap bitmap = BitmapFactory.decodeFile(wallpaerFile.getAbsolutePath());//filePath
             try {
-                WallpaperManager wpm = (WallpaperManager) this.getSystemService(
+                android.app.WallpaperManager wpm = (android.app.WallpaperManager) this.getSystemService(
                         Context.WALLPAPER_SERVICE);
 
                 wpm.setBitmap(bitmap);
