@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.md.callring.RecyclerClick;
-import com.md.wallpaper.Wallpaper;
+import com.md.wallpaper.bean.WallpaperInfo;
 
 
 import java.util.List;
@@ -20,7 +20,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
 public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdapter.ViewHolder> {
 
     private Context context;
-    private List<Wallpaper> localSongs;
+    private List<WallpaperInfo> wallpaperInfos;
     private RecyclerClick mRecyclerClick;
 
     public RecyclerClick getmRecyclerClick() {
@@ -31,9 +31,9 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
         this.mRecyclerClick = mRecyclerClick;
     }
 
-    public WallpaperListAdapter(Context context, List<Wallpaper> localSongs) {
+    public WallpaperListAdapter(Context context, List<WallpaperInfo> wallpaperInfos) {
         this.context = context;
-        this.localSongs = localSongs;
+        this.wallpaperInfos = wallpaperInfos;
     }
 
     @Override
@@ -43,8 +43,8 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.tvSong.setText(localSongs.get(position).getName());
-        holder.ivBackground.showImage(localSongs.get(position).getThumbnail());
+        holder.tvSong.setText(wallpaperInfos.get(position).title);
+        holder.ivBackground.showImage(wallpaperInfos.get(position).img_vUrl);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +55,7 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
 
     @Override
     public int getItemCount() {
-        return localSongs.size();
+        return wallpaperInfos.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

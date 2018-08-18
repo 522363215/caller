@@ -8,41 +8,44 @@
     tools:context=".activity.WallpaperDetailActivity">
 
     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
-        android:id="@+id/gd_message"
+        android:id="@+id/gv_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
-    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
-        android:layout_width="300dp"
-        android:layout_height="500dp"
-        android:id="@+id/iv_message"
-        android:layout_centerInParent="true"/>
-    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.TextureVideoView
-        android:layout_width="300dp"
-        android:layout_height="500dp"
-        android:id="@+id/vv_message"
-        android:visibility="invisible"
-        android:layout_centerInParent="true"/>
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.WallpaperView
+        android:id="@+id/wall_paper_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/pb_downloading"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="@dimen/dp32"
+        android:layout_marginLeft="@dimen/dp32"
+        android:layout_marginRight="@dimen/dp32"
+        android:layout_marginStart="@dimen/dp32"
+        android:layout_marginTop="@dimen/dp40" />
+
     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar
-        android:id="@+id/pb_downloading_below_ad"
+        android:id="@+id/pb_downloading"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:visibility="invisible"
         android:layout_alignParentBottom="true"
         app:progressBgColor="@color/color_half_transparent"
         app:progressColor="@color/color_FF27BB56" />
+
     <TextView
+        android:id="@+id/tv_download"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
-        android:id="@+id/tv_message_pic"
-        android:padding="10dp"
         android:background="@color/fb_ad_green_button"
         android:gravity="center"
-        tools:text="set wall"
+        android:padding="10dp"
+        android:textColor="@color/white"
         android:textSize="15sp"
-        android:textColor="@color/white"/>
+        tools:text="set wall" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp48"

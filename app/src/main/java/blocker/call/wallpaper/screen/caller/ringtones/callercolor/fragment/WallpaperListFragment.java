@@ -17,8 +17,8 @@ import com.md.callring.RecyclerClick;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
 import com.md.serverflash.callback.TopicThemeCallback;
-import com.md.wallpaper.FileType;
-import com.md.wallpaper.Wallpaper;
+import com.md.wallpaper.bean.WallpaperInfo;
+import com.md.wallpaper.manager.WallpaperManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +30,15 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.Wallpa
 
 public class WallpaperListFragment extends Fragment {
 
-    private List<Wallpaper> localSongs;
-    private RecyclerView rvMessage;
+    private List<WallpaperInfo> wallpaperInfos;
+    private RecyclerView rvWallpaper;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            List<Wallpaper> list = (List<Wallpaper>) msg.obj;
+            List<WallpaperInfo> list = (List<WallpaperInfo>) msg.obj;
             WallpaperListAdapter wallpaperListAdapter = new WallpaperListAdapter(getContext(), list);
-            rvMessage.setAdapter(wallpaperListAdapter);
+            rvWallpaper.setAdapter(wallpaperListAdapter);
             wallpaperListAdapter.setmRecyclerClick(recyclerClick);
         }
     };
@@ -47,7 +47,7 @@ public class WallpaperListFragment extends Fragment {
         public void normalClick(View view, int position) {
             Intent intent = new Intent();
             intent.setClass(getContext(), WallpaperDetailActivity.class);
-            intent.putExtra(Constant.MESSAGE_BUNDLE, localSongs.get(position));
+            intent.putExtra(Constant.WALLPAPER_BUNDLE, wallpaperInfos.get(position));
             startActivity(intent);
         }
 
@@ -60,13 +60,13 @@ public class WallpaperListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_message, container, false);
+        View view = inflater.inflate(R.layout.fragment_wall_paper, container, false);
         init(view);
         return view;
     }
 
-    private void getSongList() {
-        localSongs = new ArrayList<>();
+    private void getWallPaerList() {
+        wallpaperInfos = new ArrayList<>();
         final String[] topic = new String[1];
         topic[0] = "Wall_img";
         ThemeSyncManager.getInstance().syncTopicData(topic, 150, new TopicThemeCallback() {
@@ -74,19 +74,12 @@ public class WallpaperListFragment extends Fragment {
             public void onSuccess(int code, Map<String, List<Theme>> data) {
                 if (data != null && data.size() > 0) {
                     List<Theme> wallImg = data.get(topic[0]);
-                    if (wallImg != null) {
-                        for (Theme theme : wallImg) {
-                            if (theme.getUrl().endsWith("mp4") || theme.getUrl().endsWith("MP4")) {
-                                theme.setType(FileType.VIDEO_TYPE);
-                            } else if (theme.getUrl().endsWith("gif") || theme.getUrl().endsWith("GIF")) {
-                                theme.setType(FileType.GIF_TYPE);
-                            } else {
-                                theme.setType(FileType.PICTURE_TYPE);
-                            }
-                            localSongs.add(new Wallpaper(theme.getId() + "", theme.getTitle(), theme.getUrl(), theme.getImg_v(), theme.getType()));
-                        }
+                    List<WallpaperInfo> infos = WallpaperManager.themeToWallpaprInfo(getActivity(), wallImg);
+                    if (infos != null && infos.size() > 0) {
+                        wallpaperInfos.clear();
+                        wallpaperInfos.addAll(infos);
                         Message message = new Message();
-                        message.obj = localSongs;
+                        message.obj = wallpaperInfos;
                         handler.sendMessage(message);
                     }
                 }
@@ -100,8 +93,8 @@ public class WallpaperListFragment extends Fragment {
     }
 
     private void init(View view) {
-        rvMessage = view.findViewById(R.id.rv_message);
-        rvMessage.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        getSongList();
+        rvWallpaper = view.findViewById(R.id.rv_message);
+        rvWallpaper.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        getWallPaerList();
     }
 }
