@@ -2,10 +2,8 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import com.md.serverflash.ThemeSyncManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LiveWallpaperService;
-import com.md.wallpaper.WallpaperManager;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -45,7 +43,6 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
     private WallpaperInfo wallpaper;
     private GlideView gvBg;
     private BatteryProgressBar mPbDownloading;
-    private int type;
     private WallpaperInfo setWallpaper;
     private WallpaperView mWallpaperView;
 
@@ -135,19 +132,6 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
                 tvDownload.setText(R.string.set_pic);
                 tvDownload.setVisibility(View.VISIBLE);
                 mPbDownloading.setVisibility(View.INVISIBLE);
-                //若该文件存在
-                if (file.exists()) {
-                    if (FileUtil.isVideoFileType(file.getAbsolutePath())) {
-                        type = 1;
-                    } else {
-                        if (FileUtil.isGIFFileType(file.getAbsolutePath())) {
-                            type = 2;
-                        } else {
-                            type = 3;
-                        }
-                    }
-
-                }
             }
         });
     }
@@ -196,7 +180,6 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
                     if (wall != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(this, WALL, 1);
                     } else {
-                        LogUtil.e("daozheli11",type+"");
                         setWall();
                     }
                 }
@@ -208,10 +191,10 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void setWall() {
-        if (type == 1) {
-            LogUtil.e("daozheli",type+"");
+        if (wallpaper.format == WallpaperFormat.FORMAT_VIDEO) {
+            LogUtil.e("daozheli",wallpaper.format+"");
             setVideoToWallPaper();
-        } else if (type == 3) {
+        } else if (wallpaper.format == WallpaperFormat.FORMAT_IMAGE) {
             Bitmap bitmap = BitmapFactory.decodeFile(wallpaper.path);//filePath
             try {
                 android.app.WallpaperManager wpm = (android.app.WallpaperManager) this.getSystemService(
@@ -224,6 +207,8 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
                 Log.e("tgyhuj", "Failed to set wallpaper: " + e);
             }
             openActivity(CallFlashSetResultActivity.class, 0, 0, true);
+        }else {
+            LogUtil.e("暂不支持格式","暂不支持格式");
         }
     }
 
