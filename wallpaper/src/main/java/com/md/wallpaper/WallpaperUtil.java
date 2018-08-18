@@ -29,9 +29,6 @@ public class WallpaperUtil {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {//ICE_CREAM_SANDWICH_MR1  15
                 localIntent.setAction(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);//android.service.wallpaper.CHANGE_LIVE_WALLPAPER
                 //android.service.wallpaper.extra.LIVE_WALLPAPER_COMPONENT
-                localIntent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT
-                        , new ComponentName(context.getApplicationContext().getPackageName()
-                                , LiveWallpaperService.class.getCanonicalName()));
             } else {
                 localIntent.setAction(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER);//android.service.wallpaper.LIVE_WALLPAPER_CHOOSER
             }
@@ -39,18 +36,6 @@ public class WallpaperUtil {
         } catch (Exception localException) {
             localException.printStackTrace();
         }
-    }
-
-    /**
-     * 判断是否是使用我们的壁纸
-     *
-     * @param paramContext
-     * @return
-     */
-    public static boolean wallpaperIsUsed(Context paramContext) {
-        WallpaperInfo localWallpaperInfo = WallpaperManager.getInstance(paramContext).getWallpaperInfo();
-        return ((localWallpaperInfo != null) && (localWallpaperInfo.getPackageName().equals(paramContext.getPackageName())) &&
-                (localWallpaperInfo.getServiceName().equals(LiveWallpaperService.class.getCanonicalName())));
     }
 
     public static Bitmap getDefaultWallpaper(Context paramContext) {

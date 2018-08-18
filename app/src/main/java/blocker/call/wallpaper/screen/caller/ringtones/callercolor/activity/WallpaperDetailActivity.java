@@ -1,7 +1,9 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import com.md.serverflash.ThemeSyncManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LiveWallpaperService;
 import com.md.wallpaper.WallpaperManager;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -44,17 +46,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.VideoWallpaperService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.TextureVideoView;
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class WallpaperDetailActivity extends BaseActivity implements View.OnClickListener {
 
@@ -107,24 +104,45 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
 
         imageView = findViewById(R.id.iv_message);
         TextureVideoView videoView = findViewById(R.id.vv_message);
-        if (wallpaper.getType() == 1) {
-            String A = wallpaper.getUrl();
-            LogUtil.e("网址", wallpaper.getUrl());
-            videoView.setVisibility(View.VISIBLE);
-            videoView.setVideoURI(Uri.parse(wallpaper.getUrl()));
-            imageView.setVisibility(View.INVISIBLE);
-            videoView.start();
-        } else if (wallpaper.getType() == 2) {
-            imageView.showGif(wallpaper.getUrl());
-        } else {
-            imageView.showImage(wallpaper.getUrl());
-        }
 
         tvMessagePic = findViewById(R.id.tv_message_pic);
         tvMessagePic.setOnClickListener(this);
 
 
         File file = ThemeSyncManager.getInstance().getFileByUrl(WallpaperDetailActivity.this, wallpaper.getUrl());
+        if (file!=null&&file.exists()){
+            if (wallpaper.getType() == 1) {
+
+                LogUtil.e("网址", wallpaper.getUrl());
+                videoView.setVisibility(View.VISIBLE);
+                videoView.setVideoPath(file.getAbsolutePath());
+
+                imageView.setVisibility(View.INVISIBLE);
+                videoView.start();
+
+            } else if (wallpaper.getType() == 2) {
+                imageView.showGif(file.getAbsolutePath());
+            } else {
+                imageView.showImage(file.getAbsolutePath());
+            }
+        }else {
+            if (wallpaper.getType() == 1) {
+
+                    LogUtil.e("网址", wallpaper.getUrl());
+                    videoView.setVisibility(View.VISIBLE);
+                    videoView.setVideoURI(Uri.parse(wallpaper.getUrl()));
+
+                    imageView.setVisibility(View.INVISIBLE);
+                    videoView.start();
+
+            } else if (wallpaper.getType() == 2) {
+                imageView.showGif(wallpaper.getUrl());
+            } else {
+                imageView.showImage(wallpaper.getUrl());
+            }
+        }
+
+
         if (file != null&&file.exists()) {
             if (!sharedUtils.readNews(Constant.PICTURE).equals(wallpaper.getUrl())) {
                 tvMessagePic.setText(R.string.set_pic);
@@ -347,9 +365,8 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
 
     private void setWall() {
         if (type == 1) {
-            Intent i = new Intent(WallpaperDetailActivity.this, VideoWallpaperService.class);
-            i.putExtra(Constant.VIDEO, wallpaerFile.getAbsoluteFile());
-            startService(i);
+            LogUtil.e("daozheli",type+"");
+            setVideoToWallPaper();
         } else if (type == 3) {
             Bitmap bitmap = BitmapFactory.decodeFile(wallpaerFile.getAbsolutePath());//filePath
             try {
@@ -364,6 +381,11 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
             }
             openActivity(CallFlashSetResultActivity.class, 0, 0, true);
         }
+    }
+
+    public void setVideoToWallPaper() {
+        LiveWallpaperService.setToWallPaper(this);
+        LiveWallpaperService.voiceNormal(this);
     }
 
 }
