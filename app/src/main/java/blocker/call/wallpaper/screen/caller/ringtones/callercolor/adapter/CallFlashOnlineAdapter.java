@@ -202,7 +202,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         holder.callFlashView.setVisibility(View.GONE);
         if (holder.iv_call_select.getVisibility() == View.VISIBLE && info.format == CallFlashFormat.FORMAT_VIDEO && CallFlashManager.getInstance().isCallFlashDownloaded(info)) {
             if (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(info.id)) {
-                holder.gv_bg.showImage(R.drawable.img_star_sky_h);
+                holder.gv_bg.showImage(R.drawable.img_star_sky_v);
             } else {
                 holder.gv_bg.showVideoFirstFrame(info.path);
             }
@@ -217,7 +217,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 int imgId = info.imgResId;
                 if (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(info.id)) {
-                    imgId = R.drawable.img_star_sky_h;
+                    imgId = R.drawable.img_star_sky_v;
                 }
                 if (info.imgResId > 0) {
                     holder.gv_bg.showImage(imgId);
