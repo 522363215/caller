@@ -17,7 +17,7 @@ import java.util.List;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 
-public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
+public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdapter.ViewHolder> {
 
     private Context context;
     private List<Wallpaper> localSongs;
@@ -31,7 +31,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         this.mRecyclerClick = mRecyclerClick;
     }
 
-    public MessageAdapter(Context context, List<Wallpaper> localSongs) {
+    public WallpaperListAdapter(Context context, List<Wallpaper> localSongs) {
         this.context = context;
         this.localSongs = localSongs;
     }

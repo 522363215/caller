@@ -13,7 +13,7 @@ import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.FragmentAdapter;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.MessageFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.WallpaperListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.UsedPictureFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 
@@ -88,10 +88,10 @@ public class WallpaperListActivity extends BaseActivity implements ViewPager.OnP
     }
 
     private void getFragmentArray() {
-        MessageFragment messageFragment = new MessageFragment();
+        WallpaperListFragment wallpaperListFragment = new WallpaperListFragment();
         UsedPictureFragment usedPictureFragment = new UsedPictureFragment();
         fragments = new ArrayList<>();
-        fragments.add(messageFragment);
+        fragments.add(wallpaperListFragment);
         fragments.add(usedPictureFragment);
     }
 

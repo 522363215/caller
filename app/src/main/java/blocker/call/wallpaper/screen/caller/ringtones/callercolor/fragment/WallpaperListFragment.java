@@ -26,9 +26,9 @@ import java.util.Map;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.WallpaperDetailActivity;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.MessageAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.WallpaperListAdapter;
 
-public class MessageFragment extends Fragment {
+public class WallpaperListFragment extends Fragment {
 
     private List<Wallpaper> localSongs;
     private RecyclerView rvMessage;
@@ -37,9 +37,9 @@ public class MessageFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             List<Wallpaper> list = (List<Wallpaper>) msg.obj;
-            MessageAdapter messageAdapter = new MessageAdapter(getContext(), list);
-            rvMessage.setAdapter(messageAdapter);
-            messageAdapter.setmRecyclerClick(recyclerClick);
+            WallpaperListAdapter wallpaperListAdapter = new WallpaperListAdapter(getContext(), list);
+            rvMessage.setAdapter(wallpaperListAdapter);
+            wallpaperListAdapter.setmRecyclerClick(recyclerClick);
         }
     };
     RecyclerClick recyclerClick = new RecyclerClick() {
