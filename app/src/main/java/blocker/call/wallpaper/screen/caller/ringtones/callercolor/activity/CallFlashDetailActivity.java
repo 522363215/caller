@@ -56,6 +56,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCollection;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.FullScreenAdManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.GuideUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
@@ -132,6 +133,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private boolean mIsMute;
     private View mLayoutLike;
 
+    private boolean isNeedRestartSwipe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         int flag = WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -153,6 +156,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         initSaveFlash();
         updateUI();
         loadInterstitialAd();
+        isNeedRestartSwipe = false;
+        if(!SpecialPermissionsUtil.canDrawOverlays(this)){
+            isNeedRestartSwipe = true;
+        }
     }
 
     @Override
@@ -1159,8 +1166,13 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                     downloadFlashResourceFile();
                 }
                 break;
-            case PermissionUtils.REQUEST_CODE_PHONE_AND_CONTACT_PERMISSION:
             case PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION:
+                requestPermissions();
+                if(isNeedRestartSwipe) {
+                    SwipeManager.getInstance().restartEasySwipe();
+                }
+                break;
+            case PermissionUtils.REQUEST_CODE_PHONE_AND_CONTACT_PERMISSION:
             case PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS:
             case PermissionUtils.REQUEST_CODE_AUTO_START:
             case PermissionUtils.REQUEST_CODE_SHOW_ON_LOCK:

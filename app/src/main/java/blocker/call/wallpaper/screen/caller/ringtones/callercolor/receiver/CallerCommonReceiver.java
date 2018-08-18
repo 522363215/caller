@@ -62,6 +62,7 @@ public class CallerCommonReceiver extends BroadcastReceiver {
                                 SwipeManager.getInstance().disableEasySwipe();
                             }else{
                                 SwipeManager.getInstance().checkSwipeService();
+                                LogUtil.d(TAG, "checkSwipeService: ");
                             }
                         } catch (Exception e) {
                             LogUtil.e(TAG, "backgroundDownloadOnlionCallFlash COMMON_CHECK_24 exception: " + e.getMessage());

@@ -174,6 +174,11 @@ public class SwipeManager {
         EasySwipe.tryStartService();
     }
 
+    public void restartEasySwipe() {
+        EasySwipe.toggleEasySwipe(true);
+        EasySwipe.tryRestartService();
+    }
+
     public void disableEasySwipe() {
         EasySwipe.toggleEasySwipe(false);
         EasySwipe.stopService();
@@ -185,6 +190,17 @@ public class SwipeManager {
     public void checkSwipeService() {
         try {
             SharedPreferences pref = ApplicationEx.getInstance().getGlobalSettingPreference();
+            if(pref.getLong("key_cid_first_sync_server_time", 0) <= 0){
+                return;
+            }
+            if(System.currentTimeMillis() - PreferenceHelper.getLong("colorphone_inStall_time", System.currentTimeMillis()) < 40 * 1000){
+                return;
+            }
+            long lastCheck = pref.getLong("swipe_last_check_time", 0);
+            if(System.currentTimeMillis() - lastCheck < getAdRefreshMinute() * 60 * 1000){
+                return;
+            }
+            pref.edit().putLong("swipe_last_check_time", System.currentTimeMillis()).apply();
             boolean isEnableByUser = false;
             boolean isDisableByUser = false;
             int isEnableByServer = 0;
@@ -194,16 +210,17 @@ public class SwipeManager {
                 isEnableByServer = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_swipe_toogle_by_server", 0); //1 enable, 2 force stop
             }
             if (!isDisableByUser && (isEnableByUser || isEnableByServer == 1)) {
-                LogUtil.d("checkSwipeService", " checkSwipeService start swipservice: ");
-                SwipeManager.getInstance().enableEasySwipe();
+                enableEasySwipe();
+                LogUtil.d("checkSwipeService", "easy-swipe checkSwipeService restartEasySwipe: ");
             }
 
             if (isEnableByServer == 2) {
-                SwipeManager.getInstance().disableEasySwipe();
+                disableEasySwipe();
+                LogUtil.d("checkSwipeService", "easy-swipe checkSwipeService disableEasySwipe: ");
             }
-            LogUtil.d("checkSwipeService", " checkSwipeService end. ");
+            LogUtil.d("checkSwipeService", "easy-swipe checkSwipeService end. ");
         } catch (Exception e) {
-            LogUtil.e("checkSwipeService", " checkSwipeService exception: " + e.getMessage());
+            LogUtil.e("checkSwipeService", "easy-swipe checkSwipeService exception: " + e.getMessage());
         }
     }
 
