@@ -196,6 +196,7 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
                     if (wall != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(this, WALL, 1);
                     } else {
+                        LogUtil.e("daozheli11",type+"");
                         setWall();
                     }
                 }
