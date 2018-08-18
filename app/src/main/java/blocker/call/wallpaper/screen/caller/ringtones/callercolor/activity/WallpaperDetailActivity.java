@@ -26,6 +26,7 @@ import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.download.ThemeResourceHelper;
 import com.md.wallpaper.FileUtil;
 import com.md.wallpaper.WallpaperPreferenceHelper;
+import com.md.wallpaper.bean.WallpaperFormat;
 import com.md.wallpaper.bean.WallpaperInfo;
 import com.md.wallpaper.manager.WallpaperManager;
 
@@ -46,6 +47,7 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
     private BatteryProgressBar mPbDownloading;
     private int type;
     private WallpaperInfo setWallpaper;
+    private WallpaperView mWallpaperView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +63,8 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
             gvBg.showImageWithBlur(wallpaper.img_vUrl);
         }
 
-        WallpaperView wallpaperView = findViewById(R.id.wall_paper_view);
-        wallpaperView.showWallpaper(wallpaper);
+        mWallpaperView = findViewById(R.id.wall_paper_view);
+        mWallpaperView.showWallpaper(wallpaper);
 
         tvDownload = findViewById(R.id.tv_download);
         tvDownload.setOnClickListener(this);
@@ -127,7 +129,9 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
                 wallpaper.path = file.getAbsolutePath();
 
                 tvDownload.setBackgroundResource(R.color.progress_default_color);
+                mWallpaperView.showWallpaper(wallpaper);
                 WallpaperManager.saveDownloadedWallPaper(wallpaper);
+
                 tvDownload.setText(R.string.set_pic);
                 tvDownload.setVisibility(View.VISIBLE);
                 mPbDownloading.setVisibility(View.INVISIBLE);
