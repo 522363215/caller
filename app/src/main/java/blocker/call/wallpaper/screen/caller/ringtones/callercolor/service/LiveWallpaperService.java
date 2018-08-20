@@ -57,11 +57,14 @@ public class LiveWallpaperService extends WallpaperService {
 
         private BroadcastReceiver mVideoParamsControlReceiver;
 
+        private String fileName;
+
         @Override
         public void onCreate(SurfaceHolder surfaceHolder) {
             super.onCreate(surfaceHolder);
 
             IntentFilter intentFilter = new IntentFilter(VIDEO_PARAMS_CONTROL_ACTION);
+
             registerReceiver(mVideoParamsControlReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
