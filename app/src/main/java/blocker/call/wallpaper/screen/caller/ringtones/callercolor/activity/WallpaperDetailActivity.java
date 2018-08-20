@@ -2,7 +2,6 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import com.md.serverflash.ThemeSyncManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LiveWallpaperService;
-import com.md.wallpaper.WallpaperManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -115,7 +114,7 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
 
             @Override
             public void onProgress(String wallpaper, int progress) {
-                tvDownload.setText(progress + "%");
+                tvDownload.setText(getString(R.string.call_flash_gif_show_load, progress));
                 tvDownload.setVisibility(View.VISIBLE);
                 mPbDownloading.setVisibility(View.VISIBLE);
                 Log.e("onProgress: ", progress + "");
