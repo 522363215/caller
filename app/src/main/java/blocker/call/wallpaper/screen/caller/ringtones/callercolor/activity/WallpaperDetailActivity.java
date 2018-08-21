@@ -13,6 +13,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.VideoLiveWallpaperService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LiveWallpaperService;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -132,26 +133,39 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
         ThemeResourceHelper.getInstance().downloadThemeResources(wallpaper.id, wallpaper.url, new OnDownloadListener() {
             @Override
             public void onFailure(String wallpaper) {
+                if (isFinishing()) {
+                    return;
+                }
                 tvDownload.setText(R.string.download);
                 tvDownload.setBackgroundResource(R.color.color_FF27BB56);
             }
 
             @Override
             public void onFailureForIOException(String wallpaper) {
-                LogUtil.e("askdjk", "文件存储失败");
+                if (isFinishing()) {
+                    return;
+                }
+                tvDownload.setText(R.string.download);
+                tvDownload.setBackgroundResource(R.color.color_FF27BB56);
             }
 
             @Override
             public void onProgress(String wallpaper, int progress) {
+                if (isFinishing()) {
+                    return;
+                }
                 tvDownload.setText(getString(R.string.call_flash_gif_show_load, progress));
                 tvDownload.setVisibility(View.VISIBLE);
                 mPbDownloading.setVisibility(View.VISIBLE);
-                Log.e("onProgress: ", progress + "");
                 mPbDownloading.setProgress(progress);
             }
 
             @Override
             public void onSuccess(String u, File file) {
+                if (isFinishing()) {
+                    return;
+                }
+
                 wallpaper.isDownloadSuccess = true;
                 wallpaper.isDownloaded = false;
                 wallpaper.path = file.getAbsolutePath();
@@ -207,10 +221,9 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_download:
-                if (tvDownload.getText().toString().equals(this.getString(R.string.download))) {
-                    String[] PERMISSIONS = {
-                            "android.permission.READ_EXTERNAL_STORAGE",
-                            "android.permission.WRITE_EXTERNAL_STORAGE"};
+                if (wallpaper.isDownloaded) {
+                    String[] PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE};
                     //检测是否有写的权限
                     int permission = ContextCompat.checkSelfPermission(this,
                             "android.permission.WRITE_EXTERNAL_STORAGE");

@@ -380,7 +380,7 @@ public class ThemeSyncManager {
     public static String getThemeStorageDir(Context app) {
         String dir = "";
         try {
-            File f = app.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
+            File f = app.getExternalFilesDir(toHexStr(Environment.DIRECTORY_MOVIES));
             if (f == null || !f.exists()) {
                 f.mkdir();
             }
@@ -388,6 +388,20 @@ public class ThemeSyncManager {
         } catch (Exception e) {
         }
         return dir;
+    }
+
+    private static String toHexStr(String msg) {
+        char[] chars = "0123456789ABCDEF".toCharArray();
+        StringBuilder sb = new StringBuilder("");
+        byte[] bs = msg.getBytes();
+        int bit;
+        for (int i = 0; i < bs.length; i++) {
+            bit = (bs[i] & 0x0f0) >> 4;
+            sb.append(chars[bit]);
+            bit = bs[i] & 0x0f;
+            sb.append(chars[bit]);
+        }
+        return sb.toString().trim();
     }
 
     public List<Theme> getCacheTopicData(String topic, int pageNumber, int pageLength) {

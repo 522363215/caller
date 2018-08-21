@@ -132,33 +132,6 @@ public class LiveWallpaperService extends WallpaperService {
         public void onSurfaceCreated(SurfaceHolder holder) {
             super.onSurfaceCreated(holder);
             onStart(WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,""));
-//            mMediaPlayer = new MediaPlayer();
-//            mMediaPlayer.setSurface(holder.getSurface());
-//            Log.e("onSurfaceCreated1: ",WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,"") );
-//            try {
-//                mMediaPlayer.setDataSource(WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,""));
-////                mMediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.fromFile(new File(WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,""))));
-////                mMediaPlayer.setSurface(holder.getSurface());
-//                mMediaPlayer.setLooping(true);
-//                mMediaPlayer.prepare();
-//                mMediaPlayer.start();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            try {
-//                AssetManager assetMg = getApplicationContext().getAssets();
-//                AssetFileDescriptor fileDescriptor = assetMg.openFd("test1.mp4");
-//                mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(),
-//                        fileDescriptor.getStartOffset(), fileDescriptor.getLength());
-//                mMediaPlayer.setLooping(true);
-//                mMediaPlayer.setVolume(0, 0);
-//                mMediaPlayer.prepare();
-//                mMediaPlayer.start();
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
         }
 
         private void onStart(String mPath) {
@@ -173,10 +146,6 @@ public class LiveWallpaperService extends WallpaperService {
             }
             if (!TextUtils.isEmpty(mPath) && holder != null) {
                 try {
-//                  AssetManager assetMg = getApplicationContext().getAssets();
-//                  AssetFileDescriptor fileDescriptor = assetMg.openFd("test1.mp4");
-//                  mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(),
-//                          fileDescriptor.getStartOffset(), fileDescriptor.getLength());
                     mMediaPlayer.setDataSource(mPath);
                     mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
