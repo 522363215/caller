@@ -25,6 +25,19 @@
         android:layout_marginStart="@dimen/dp32"
         android:layout_marginTop="@dimen/dp40" />
 
+    <ImageView
+        android:id="@+id/iv_wall_sound"
+        android:layout_width="@dimen/dp48"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/dp8"
+        android:padding="@dimen/dp8"
+        android:layout_alignLeft="@+id/wall_paper_view"
+        android:layout_above="@+id/tv_download"
+        android:layout_marginLeft="@dimen/dp40"
+        android:layout_marginBottom="@dimen/dp10"
+        android:src="@drawable/icon_mute" />
+
     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar
         android:id="@+id/pb_downloading"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"

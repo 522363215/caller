@@ -249,6 +249,7 @@
                     android:id="@+id/menu_ring"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:background="@drawable/selector_click"
                     android:gravity="center_vertical"
                     android:padding="@dimen/dp16">

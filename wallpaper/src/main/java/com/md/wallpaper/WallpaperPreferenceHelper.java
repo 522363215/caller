@@ -33,6 +33,16 @@ public class WallpaperPreferenceHelper {
      */
     public static final String SETED_WALLPAPERS = "SETED_wallpaper";
 
+    /**
+     * 保存设置动态壁纸的路径
+     */
+    public static final String FILE_NAME = "file_name";
+
+    /**
+     * 保存视频壁纸声音
+     */
+    public static final String PREF_WALL_IS_MUTE_WHEN_PREVIEW = "pref_wall_is_mute_when_preview";
+
     private static Context mContext;
 
     private WallpaperPreferenceHelper() {

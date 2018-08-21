@@ -9,10 +9,19 @@ import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.app.WallpaperManager;
+import android.net.Uri;
 import android.service.wallpaper.WallpaperService;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
+import com.md.wallpaper.WallpaperPreferenceHelper;
+
+import java.io.File;
 import java.io.IOException;
+
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.WallpaperDetailActivity;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 
 /**
@@ -22,14 +31,27 @@ import java.io.IOException;
  */
 public class LiveWallpaperService extends WallpaperService {
 
+    private static VideoEngine engine;
     public Engine onCreateEngine() {
-        return new VideoEngine();
+        engine = new VideoEngine();
+        return engine;
     }
 
     public static final String VIDEO_PARAMS_CONTROL_ACTION = "com.example.admin.livewallpaper";
+    public static final String CESHI = "CESHI";
+    public static final String CESHI1 = "CESHI1";
     public static final String KEY_ACTION = "action";
     public static final int ACTION_VOICE_SILENCE = 110;
     public static final int ACTION_VOICE_NORMAL = 111;
+
+
+    class VideoBroadcast extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            engine.onStart(intent.getStringExtra(CESHI1));
+        }
+    }
 
     public static void voiceSilence(Context context) {
         Intent intent = new Intent(LiveWallpaperService.VIDEO_PARAMS_CONTROL_ACTION);
@@ -57,12 +79,14 @@ public class LiveWallpaperService extends WallpaperService {
 
         private BroadcastReceiver mVideoParamsControlReceiver;
 
-        private String fileName;
+
+        private SurfaceHolder holder;
 
         @Override
         public void onCreate(SurfaceHolder surfaceHolder) {
             super.onCreate(surfaceHolder);
 
+            holder = surfaceHolder;
             IntentFilter intentFilter = new IntentFilter(VIDEO_PARAMS_CONTROL_ACTION);
 
             registerReceiver(mVideoParamsControlReceiver = new BroadcastReceiver() {
@@ -85,6 +109,8 @@ public class LiveWallpaperService extends WallpaperService {
 
         }
 
+
+
         @Override
         public void onDestroy() {
             unregisterReceiver(mVideoParamsControlReceiver);
@@ -105,22 +131,69 @@ public class LiveWallpaperService extends WallpaperService {
         @Override
         public void onSurfaceCreated(SurfaceHolder holder) {
             super.onSurfaceCreated(holder);
-            mMediaPlayer = new MediaPlayer();
-            mMediaPlayer.setSurface(holder.getSurface());
-            try {
-                AssetManager assetMg = getApplicationContext().getAssets();
-                AssetFileDescriptor fileDescriptor = assetMg.openFd("test1.mp4");
-                mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(),
-                        fileDescriptor.getStartOffset(), fileDescriptor.getLength());
-                mMediaPlayer.setLooping(true);
-                mMediaPlayer.setVolume(0, 0);
-                mMediaPlayer.prepare();
-                mMediaPlayer.start();
+            onStart(WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,""));
+//            mMediaPlayer = new MediaPlayer();
+//            mMediaPlayer.setSurface(holder.getSurface());
+//            Log.e("onSurfaceCreated1: ",WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,"") );
+//            try {
+//                mMediaPlayer.setDataSource(WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,""));
+////                mMediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.fromFile(new File(WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,""))));
+////                mMediaPlayer.setSurface(holder.getSurface());
+//                mMediaPlayer.setLooping(true);
+//                mMediaPlayer.prepare();
+//                mMediaPlayer.start();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            try {
+//                AssetManager assetMg = getApplicationContext().getAssets();
+//                AssetFileDescriptor fileDescriptor = assetMg.openFd("test1.mp4");
+//                mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(),
+//                        fileDescriptor.getStartOffset(), fileDescriptor.getLength());
+//                mMediaPlayer.setLooping(true);
+//                mMediaPlayer.setVolume(0, 0);
+//                mMediaPlayer.prepare();
+//                mMediaPlayer.start();
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
-            } catch (IOException e) {
-                e.printStackTrace();
+        }
+
+        private void onStart(String mPath) {
+            if (mMediaPlayer != null) {
+                mMediaPlayer.reset();
+                mMediaPlayer.release();
+                mMediaPlayer = null;
             }
+            mMediaPlayer = new MediaPlayer();
+            if (getApplicationContext() != null) {
+                mPath = WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,"");
+            }
+            if (!TextUtils.isEmpty(mPath) && holder != null) {
+                try {
+//                  AssetManager assetMg = getApplicationContext().getAssets();
+//                  AssetFileDescriptor fileDescriptor = assetMg.openFd("test1.mp4");
+//                  mMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(),
+//                          fileDescriptor.getStartOffset(), fileDescriptor.getLength());
+                    mMediaPlayer.setDataSource(mPath);
+                    mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            mp.seekTo(0);
+                        }
+                    });
+                    mMediaPlayer.setLooping(true);
+                    mMediaPlayer.setSurface(holder.getSurface());
+                    mMediaPlayer.setVolume(0, 0);
+                    mMediaPlayer.prepare();
+                    mMediaPlayer.start();
 
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         @Override
@@ -136,4 +209,6 @@ public class LiveWallpaperService extends WallpaperService {
 
         }
     }
+
+
 }

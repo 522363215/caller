@@ -1,13 +1,28 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
+import com.flurry.android.FlurryAgent;
+import com.md.flashset.helper.CallFlashPreferenceHelper;
+import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
+
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventPostIsExist;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventPostIsExit;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.MajorityOfResult;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.MiPhoneResult;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.VideoLiveWallpaperService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LiveWallpaperService;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -15,14 +30,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.md.callring.Constant;
-import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.download.ThemeResourceHelper;
-import com.md.wallpaper.FileUtil;
 import com.md.wallpaper.WallpaperPreferenceHelper;
 import com.md.wallpaper.bean.WallpaperFormat;
 import com.md.wallpaper.bean.WallpaperInfo;
@@ -37,6 +51,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryPr
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.WallpaperView;
+import event.EventBus;
 
 public class WallpaperDetailActivity extends BaseActivity implements View.OnClickListener {
     private TextView tvDownload;
@@ -45,6 +60,27 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
     private BatteryProgressBar mPbDownloading;
     private WallpaperInfo setWallpaper;
     private WallpaperView mWallpaperView;
+    private File file;
+    private boolean mIsMute;
+    private ImageView mIvWallSound;
+    private boolean isExist;
+    private boolean isDead = true;
+    private Handler mMajorityOfHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    openActivity(CallFlashSetResultActivity.class,0,0,false);
+                    break;
+                case 2:
+                    if (!isDead){
+                        openActivity(CallFlashSetResultActivity.class,0,0,false);
+                    }
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,18 +102,8 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
         tvDownload = findViewById(R.id.tv_download);
         tvDownload.setOnClickListener(this);
 
-        File file = ThemeSyncManager.getInstance().getFileByUrl(WallpaperDetailActivity.this, wallpaper.url);
-        if (file != null && file.exists() || (!TextUtils.isEmpty(wallpaper.path) && new File(wallpaper.path).exists())) {
-            if (wallpaper != null && !wallpaper.equals(setWallpaper)) {
-                tvDownload.setText(R.string.set_pic);
-            } else {
-                tvDownload.setText(R.string.set_pic);
-                tvDownload.setClickable(false);
-                tvDownload.setBackgroundResource(R.color.color_66FFFFFF);
-            }
-        } else {
-            tvDownload.setText(R.string.download);
-        }
+        mIvWallSound = findViewById(R.id.iv_wall_sound);
+        mIvWallSound.setOnClickListener(this);
 
         mPbDownloading = findViewById(R.id.pb_downloading);
         mPbDownloading.setMaxProgress(100);
@@ -85,6 +111,10 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
         FontIconView fiv_back = findViewById(R.id.fiv_back);
         fiv_back.setOnClickListener(this);
 
+
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
+        EventBus.getDefault().post(new EventPostIsExit());
     }
 
     @Override
@@ -103,6 +133,7 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
             @Override
             public void onFailure(String wallpaper) {
                 tvDownload.setText(R.string.download);
+                tvDownload.setBackgroundResource(R.color.color_FF27BB56);
             }
 
             @Override
@@ -132,6 +163,8 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
                 tvDownload.setText(R.string.set_pic);
                 tvDownload.setVisibility(View.VISIBLE);
                 mPbDownloading.setVisibility(View.INVISIBLE);
+
+                setSound();
             }
         });
     }
@@ -142,13 +175,32 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
         switch (requestCode) {
             case 100:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (tvDownload.getText().toString().equals(this.getString(R.string.download))){
+//                        LogUtil.e("asdgauysd333333333","asduyasuyduaysg");
+//                        tvDownload.setText(R.string.resume);
+//                        tvDownload.setBackgroundResource(R.color.color_half_transparent);
+//                        getPicture();
+//                    }
                     setWall();
                 } else {
                     // 没有获取到权限，做特殊处理
-                    Toast.makeText(this, "获取权限失败，请手动开启", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.get_power_result), Toast.LENGTH_SHORT).show();
                 }
+
                 break;
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mWallpaperView.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -172,7 +224,7 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
                     }
 
                 } else if (tvDownload.getText().toString().equals(this.getString(R.string.set_pic))) {
-                    WallpaperPreferenceHelper.putObject(WallpaperPreferenceHelper.SETED_WALLPAPERS, wallpaper);
+//                    WallpaperPreferenceHelper.putObject(WallpaperPreferenceHelper.SETED_WALLPAPERS, wallpaper);
                     String[] WALL = {
                             "android.permission.SET_WALLPAPER",};
                     int wall = ContextCompat.checkSelfPermission(this,
@@ -180,20 +232,83 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
                     if (wall != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(this, WALL, 1);
                     } else {
+                        Log.e("onSurfaceCreated: ",WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,""));
                         setWall();
+                    }
+                    if (isExist){
+                        tvDownload.setText(R.string.set_pic);
+                        tvDownload.setClickable(false);
+                        tvDownload.setBackgroundResource(R.color.color_66FFFFFF);
                     }
                 }
                 break;
             case R.id.fiv_back:
                 finish();
                 break;
+            case R.id.iv_wall_sound:
+                WallpaperPreferenceHelper.putBoolean(WallpaperPreferenceHelper.PREF_WALL_IS_MUTE_WHEN_PREVIEW, !mIsMute);
+                setSound();
+                break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mWallpaperView.continuePlay();
+        file = ThemeSyncManager.getInstance().getFileByUrl(WallpaperDetailActivity.this, wallpaper.url);
+        String path = WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,"");
+        if (file != null && file.exists() || (!TextUtils.isEmpty(wallpaper.path) && new File(wallpaper.path).exists())) {
+            LogUtil.e("ahsfdafsdghf",wallpaper.path+"\t"+path);
+            if (!wallpaper.path.equals(path)) {
+                tvDownload.setText(R.string.set_pic);
+            } else {
+                tvDownload.setText(R.string.set_pic);
+                tvDownload.setClickable(false);
+                tvDownload.setBackgroundResource(R.color.color_66FFFFFF);
+            }
+        } else {
+            tvDownload.setText(R.string.download);
+        }
+    }
+
+    private void setSound() {
+        if (wallpaper == null) return;
+        File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), wallpaper.url);
+        if ((file != null && file.exists()) || (!TextUtils.isEmpty(wallpaper.path) && new File(wallpaper.path).exists()) || CallFlashManager.CALL_FLASH_START_SKY_ID.equals(wallpaper.id)) {
+            mIvWallSound.setVisibility(View.VISIBLE);
+        } else {
+            mIvWallSound.setVisibility(View.GONE);
+        }
+        mIsMute = WallpaperPreferenceHelper.getBoolean(WallpaperPreferenceHelper.PREF_WALL_IS_MUTE_WHEN_PREVIEW, true);
+        if (mIsMute) {
+            mIvWallSound.setImageDrawable(getResources().getDrawable(R.drawable.icon_mute));
+            FlurryAgent.logEvent("CallFlashDetailActivity-click_mute");
+        } else {
+            mIvWallSound.setImageDrawable(getResources().getDrawable(R.drawable.icon_sound));
+            FlurryAgent.logEvent("CallFlashDetailActivity-click_sound");
+        }
+        mWallpaperView.setVideoMute(mIsMute);
     }
 
     private void setWall() {
         if (wallpaper.format == WallpaperFormat.FORMAT_VIDEO) {
             LogUtil.e("daozheli",wallpaper.format+"");
-            setVideoToWallPaper();
+            Intent intent = new Intent();
+            intent.setAction(VideoLiveWallpaperService.ACTION_UPDATE_PATH);
+            intent.putExtra(VideoLiveWallpaperService.VIDEO_LIVE_WALLPAPER_PATH,file.getAbsolutePath());
+            if (isExist){
+                intent.putExtra(VideoLiveWallpaperService.VIDEO_LIVE_WALLPAPER_START_OPEN,true);
+            }else {
+                Intent intent1 = new Intent(android.app.WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
+                intent1.putExtra(android.app.WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
+                        new ComponentName(WallpaperDetailActivity.this, VideoLiveWallpaperService.class));
+                startActivityForResult(intent1,-1);
+                intent.putExtra(VideoLiveWallpaperService.VIDEO_LIVE_WALLPAPER_START_OPEN,false);
+            }
+            sendBroadcast(intent);
+//            openActivity(CallFlashSetResultActivity.class,0,0,true);
+//            setVideoToWallPaper();
         } else if (wallpaper.format == WallpaperFormat.FORMAT_IMAGE) {
             Bitmap bitmap = BitmapFactory.decodeFile(wallpaper.path);//filePath
             try {
@@ -212,9 +327,32 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
         }
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LogUtil.e("onActivityResult: ", requestCode+"\t"+requestCode);
+        if (resultCode == RESULT_OK){
+            mMajorityOfHandler.sendEmptyMessageDelayed(1,1000);
+        }else {
+            EventBus.getDefault().post(new MiPhoneResult());
+            mMajorityOfHandler.sendEmptyMessageDelayed(2,1000);
+        }
+    }
+
+
     public void setVideoToWallPaper() {
         LiveWallpaperService.setToWallPaper(this);
         LiveWallpaperService.voiceNormal(this);
     }
 
+    public void onEventMainThread(EventPostIsExist eventPostIsExist){
+        LogUtil.e("asdgauysd222222","asduyasuyduaysg");
+        isExist = true;
+    }
+
+    public void onEventMainThread(MajorityOfResult majorityOfResult){
+        LogUtil.e("asdgauysd4444444","asduyasuyduaysg");
+        isDead = false;
+    }
 }
