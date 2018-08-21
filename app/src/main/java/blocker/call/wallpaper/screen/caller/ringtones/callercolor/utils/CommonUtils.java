@@ -224,12 +224,11 @@ public final class CommonUtils {
     // schedule the start of the service every 10 - 30 seconds
     public static void scheduleJob(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ComponentName serviceComponent = new ComponentName(context, JobLocalService.class);
             JobScheduler jobScheduler = (JobScheduler) context.getSystemService(context.JOB_SCHEDULER_SERVICE);
             JobInfo jobInfo = new JobInfo.Builder(1001, new ComponentName(context.getPackageName(), JobLocalService.class.getName()))
-//                    .setPeriodic(5000)//2mins-120000, test 5000
-                    .setMinimumLatency(1 * 1000) // wait at least
-                    .setOverrideDeadline(3 * 1000) // maximum delay
+                    .setPeriodic(60 * 1000 * 15)//2mins-120000, test 5000
+//                    .setMinimumLatency(1 * 1000) // wait at least
+//                    .setOverrideDeadline(3 * 1000) // maximum delay
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setPersisted(true)
                     .build();

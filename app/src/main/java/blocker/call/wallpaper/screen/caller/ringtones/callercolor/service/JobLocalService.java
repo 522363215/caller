@@ -38,7 +38,12 @@ public class JobLocalService extends JobService {
                 intent.setComponent(new ComponentName(getPackageName(),
                         "blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService"));
                 startService(intent);
+                LogUtil.d("JobLocalService", "color phone service start: ");
+            } catch (Exception e) {
+                LogUtil.e("JobLocalService", "color phone service onStartJob e:" + e.getMessage());
+            }
 
+            try{
                 //启动 swipe service
 
                 //没有安装call id 才启动
