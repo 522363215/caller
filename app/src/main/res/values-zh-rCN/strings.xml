@@ -224,4 +224,6 @@
     <string name="set_pic">"设为壁纸"</string>
     <string name="download">"下载"</string>
     <string name="resume">"连接中。。"</string>
+    <string name="get_power_result">"获取权限失败，请手动开启"</string>
+    <string name="get_audio_result">没有扫描到音频文件</string>
 </resources>

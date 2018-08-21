@@ -241,11 +241,11 @@
             android:authorities="com.analytics.data.75"/>
 
         <!-- 配置实时壁纸Service -->
+        <!--android:process=":wallpaper"放在不同进程-->
         <service
             android:name=".service.LiveWallpaperService"
             android:label="@string/app_name"
-            android:permission="android.permission.BIND_WALLPAPER"
-            android:process=":wallpaper">
+            android:permission="android.permission.BIND_WALLPAPER">
             <!-- 为实时壁纸配置intent-filter -->
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
@@ -256,6 +256,27 @@
                 android:resource="@xml/video_wallpaper" />
         </service>
 
+        <service
+            android:name=".service.VideoLiveWallpaperService"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <!-- 为实时壁纸配置intent-filter -->
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <!-- 为实时壁纸配置meta-data -->
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/video_wallpaper" />
+        </service>
+        <receiver
+            android:name=".service.VideoLiveWallpaperService$mBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="screen.lock.VideoLiveWallpaperService.path_action" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

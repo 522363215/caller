@@ -137,7 +137,7 @@ public class LocalMusicActivity extends BaseActivity {
     private void init(){
         data = AudioUtil.readAudio(this) ;
         if(null == data || data.size() == 0) {
-            Toast.makeText(this, "没有扫描到音频文件!", Toast.LENGTH_LONG).show() ;
+            Toast.makeText(this, getString(R.string.get_audio_result), Toast.LENGTH_LONG).show() ;
             return ;
         }
         Log.e( "init: ", "ghjkl;'"+"\t"+data.size());

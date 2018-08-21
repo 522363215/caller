@@ -235,4 +235,6 @@
     <string name="no_set_pic">No Set Wallpaper</string>
     <string name="resume">connected..</string>
     <string name="pause">pause</string>
+    <string name="get_power_result">"获取权限失败，请手动开启"</string>
+    <string name="get_audio_result">没有扫描到音频文件</string>
 </resources>

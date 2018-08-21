@@ -14,6 +14,7 @@ import com.common.sdk.analytics.AnalyticsManager;
 import com.flurry.android.FlurryAgent;
 import com.md.flashset.CallFlashSet;
 import com.md.serverflash.ThemeSyncManager;
+import com.md.wallpaper.WallpaperSet;
 
 import java.util.Locale;
 import java.util.Map;
@@ -110,6 +111,7 @@ public class ApplicationEx extends Application {
         startService();
         initCallFlashBase();
         CallFlashSet.init(this);
+        WallpaperSet.init(this);
         // TODO: 2018/7/5 广告暂时屏蔽
 //        intiAdManager();
         initPriorityAds();
