@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.IBinder;
 
 import com.common.sdk.analytics.AnalyticsManager;
+import com.mopub.test.manager.TestManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,6 +23,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.MainA
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServerManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServiceProcessingManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.StatisticsUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
@@ -49,6 +51,19 @@ public class LocalService extends Service {
 
 //        sendData(); //Statistics, move to new sdk
         ServerManager.getInstance().getParamFromServer();
+
+        initTestManager();
+    }
+
+    private void initTestManager() {
+        LogUtil.d("initTestManager", "initTestManager start.");
+        String channel = AnalyticsManager.getCh();
+        String sub_ch = AnalyticsManager.getSubCh();
+
+
+        TestManager.getInstance(getApplicationContext()).init();
+        TestManager.getInstance(getApplicationContext()).updateData(ConstantUtils.CALLER_STATISTICS_CHANNEL, channel, sub_ch, ConstantUtils.SERVER_API_BASE_CPM, ConstantUtils.SERVER_API_PARAM_CPM);
+        LogUtil.d("initTestManager", "initTestManager end.");
     }
 
 

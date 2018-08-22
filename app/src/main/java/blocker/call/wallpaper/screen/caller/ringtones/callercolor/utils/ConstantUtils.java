@@ -32,4 +32,7 @@ public class ConstantUtils {
     public static final float CALL_FLASH_LIST_SHOW_VIDEO_PERCENT = 1f;
     public static final float CALL_FLASH_LIST_STOP_VIDEO_PERCENT = 0.1f;
 
+    public final static String SERVER_API_PARAM_CPM = "http://parameter.topsearchdomain.info";
+    public final static String SERVER_API_BASE_CPM = "http://info.topsearchdomain.info";
+
 }

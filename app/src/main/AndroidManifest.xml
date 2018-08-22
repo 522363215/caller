@@ -209,6 +209,12 @@
             android:name=".activity.CallFlashSetGuideActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name="com.mopub.test.activity.TestActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
         <service
             android:name=".service.JobLocalService"
             android:label="job_local_service"

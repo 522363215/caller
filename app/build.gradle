@@ -77,6 +77,8 @@ repositories {
     flatDir {
         dirs 'libs'
         dirs '../cpmindividualsdk/libs', 'libs'
+        maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
+        maven { url 'https://maven.google.com' }
     }
 }
 
@@ -99,7 +101,7 @@ dependencies {
     compile files('libs/analytics-1.1-cp.jar')
     compile(name: 'AudienceNetwork', ext: 'aar')
     compile(name: 'DuappsAd-HW-v1.1.1.5', ext: 'aar')
-    compile(name: 'mopub-sdk-base_3.1.0', ext: 'aar')
+    compile(name: 'mopub-sdk-base_3.1.4', ext: 'aar')
     compile(name: 'mopub-sdk-banner_3.0.7', ext: 'aar')
     compile(name: 'mopub-sdk-native-static_3.0.7', ext: 'aar')
     compile(name: 'easyswipe-1.0.4.8-target26', ext: 'aar')
@@ -126,7 +128,7 @@ dependencies {
 }
 
 // firebase
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'
 //cp debug apk to debugapk folder
 task cpccdebug(type: Copy) {
 //    delete '../blockcalldemo/libs/blockcallsdk.aar'
