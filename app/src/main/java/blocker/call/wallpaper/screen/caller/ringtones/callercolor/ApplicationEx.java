@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
@@ -30,7 +31,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.HttpUtil
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 
 
 public class ApplicationEx extends Application {
@@ -101,7 +101,6 @@ public class ApplicationEx extends Application {
 
     private void initAppData() {
         LogUtil.d("app_ex", "init app data: ");
-        SwipeManager.getInstance().initEasySwipe(this);
         country = NumberUtil.getDefaultCountry();
         mInterstitialAdvertisementMap = new ConcurrentHashMap<>();
         // 加载语言
@@ -110,6 +109,7 @@ public class ApplicationEx extends Application {
         new FlurryAgent.Builder().withLogEnabled(BuildConfig.DEBUG).build(getInstance(), BuildConfig.FLURRY_KEY);
         saveVersioncode();
         AnalyticsManager.init(getInstance());
+        SwipeManager.getInstance().initEasySwipe(this);
         startService();
         initCallFlashBase();
         CallFlashSet.init(this);
