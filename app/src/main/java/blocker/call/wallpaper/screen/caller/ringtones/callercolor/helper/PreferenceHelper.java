@@ -146,7 +146,7 @@ final public class PreferenceHelper {
     /**
      * 视频加密对应的md5 map
      */
-    public static final String PREF_VIDEO_ENCRYPT_MD5_MAP= "caller_pref_key_video_encrypt_md5_map";
+    public static final String PREF_VIDEO_ENCRYPT_MD5_MAP = "caller_pref_key_off_set_bytes_map";
 
 
     private PreferenceHelper() {
