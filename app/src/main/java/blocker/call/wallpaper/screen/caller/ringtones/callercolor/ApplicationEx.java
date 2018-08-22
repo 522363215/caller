@@ -24,7 +24,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertiseme
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ExternalMagicHelper;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
@@ -102,6 +101,7 @@ public class ApplicationEx extends Application {
 
     private void initAppData() {
         LogUtil.d("app_ex", "init app data: ");
+        SwipeManager.getInstance().initEasySwipe(this);
         country = NumberUtil.getDefaultCountry();
         mInterstitialAdvertisementMap = new ConcurrentHashMap<>();
         // 加载语言
@@ -110,7 +110,6 @@ public class ApplicationEx extends Application {
         new FlurryAgent.Builder().withLogEnabled(BuildConfig.DEBUG).build(getInstance(), BuildConfig.FLURRY_KEY);
         saveVersioncode();
         AnalyticsManager.init(getInstance());
-        SwipeManager.getInstance().initEasySwipe(this);
         ExternalMagicHelper.getInstance().init();
         startService();
         initCallFlashBase();
