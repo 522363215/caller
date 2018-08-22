@@ -102,7 +102,6 @@ public class ApplicationEx extends Application {
 
     private void initAppData() {
         LogUtil.d("app_ex", "init app data: ");
-        SwipeManager.getInstance().initEasySwipe(this);
         country = NumberUtil.getDefaultCountry();
         mInterstitialAdvertisementMap = new ConcurrentHashMap<>();
         // 加载语言
@@ -111,6 +110,7 @@ public class ApplicationEx extends Application {
         new FlurryAgent.Builder().withLogEnabled(BuildConfig.DEBUG).build(getInstance(), BuildConfig.FLURRY_KEY);
         saveVersioncode();
         AnalyticsManager.init(getInstance());
+        SwipeManager.getInstance().initEasySwipe(this);
         ExternalMagicHelper.getInstance().init();
         startService();
         initCallFlashBase();
