@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/rl_song"
+    android:layout_width="match_parent"
     android:layout_height="300dp"
     android:layout_margin="5dp"
-    android:id="@+id/rl_song">
+    android:orientation="vertical">
 
     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
+        android:id="@+id/iv_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/iv_background"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY" />
+
     <TextView
+        android:id="@+id/tv_song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_song"
-        android:textColor="@android:color/holo_green_light"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:textColor="@android:color/holo_green_light" />
+
 </RelativeLayout>

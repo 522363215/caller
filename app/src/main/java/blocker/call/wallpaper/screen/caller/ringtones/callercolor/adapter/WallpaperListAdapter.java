@@ -38,13 +38,18 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(com.md.callring.R.layout.item_song, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(com.md.callring.R.layout.item_wallpaper_list, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.tvSong.setText(wallpaperInfos.get(position).title);
-        holder.ivBackground.showImage(wallpaperInfos.get(position).img_vUrl);
+        WallpaperInfo info = wallpaperInfos.get(position);
+
+        if (info != null) {
+//            holder.tvSong.setText(info.title);
+            holder.ivBackground.showImage(info.img_vUrl);
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

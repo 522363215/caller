@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WallpaperManager {
+    public static final String ONLINE_TOPIC_WALLPAPER_WALL_IMG = "Wall_img";
 
     public static void saveDownloadedWallPaper(WallpaperInfo wallpaper) {
         if (wallpaper == null) return;
