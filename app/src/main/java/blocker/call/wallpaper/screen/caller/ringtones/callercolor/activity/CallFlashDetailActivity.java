@@ -58,6 +58,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.FullScreenAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.EncryptionUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.GuideUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -157,9 +158,9 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         updateUI();
         loadInterstitialAd();
         isNeedRestartSwipe = false;
-        if(!SpecialPermissionsUtil.canDrawOverlays(this)){
-            boolean isDisableByUser = ApplicationEx.getInstance().getGlobalSettingPreference().getBoolean("swipe_disable_by_user",false);
-            if(!isDisableByUser){
+        if (!SpecialPermissionsUtil.canDrawOverlays(this)) {
+            boolean isDisableByUser = ApplicationEx.getInstance().getGlobalSettingPreference().getBoolean("swipe_disable_by_user", false);
+            if (!isDisableByUser) {
                 isNeedRestartSwipe = true;
             }
         }
@@ -711,49 +712,59 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             }
 
             @Override
-            public void onSuccess(String url, File file) {
-                try {
-                    if (isFinishing()) {
-                        return;
-                    }
-
-                    mInfo.isDownloadSuccess = true;
-                    mInfo.isDownloaded = false;
-                    mInfo.path = file.getAbsolutePath();
-
-                    Async.scheduleTaskOnUiThread(300, new Runnable() {
-                        @Override
-                        public void run() {
-                            showCallFlash();
+            public void onSuccess(final String url, final File file) {
+                if (mInfo != null && !TextUtils.isEmpty(url) && url.equals(mInfo.url)) {
+                    try {
+                        if (isFinishing()) {
+                            return;
                         }
-                    });
+                        mInfo.isDownloadSuccess = true;
+                        mInfo.isDownloaded = false;
+                        mInfo.path = file.getAbsolutePath();
 
-                    layout_progress_above_ad.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                if (mIsShowAboveAdBtn) {
-                                    tv_setting_action_above_ad.setVisibility(View.VISIBLE);
-                                    tv_download_action_above_ad.setVisibility(View.GONE);
-                                    layout_progress_above_ad.setVisibility(View.GONE);
-                                } else {
-                                    tv_setting_action_below_ad.setVisibility(View.VISIBLE);
-                                    tv_download_action_below_ad.setVisibility(View.GONE);
-                                    layout_progress_below_ad.setVisibility(View.GONE);
+                        Async.scheduleTaskOnUiThread(300, new Runnable() {
+                            @Override
+                            public void run() {
+                                //保存第一帧图片
+                                if (!EncryptionUtil.isEncrypted(file.getAbsolutePath())) {
+                                    CallFlashManager.getInstance().saveVideoFirstFrame(url);
                                 }
-                                EventBus.getDefault().post(new EventRefreshPreviewDowloadState());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
 
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
+                                //加密
+                                if (file != null && !TextUtils.isEmpty(file.getAbsolutePath())) {
+                                    EncryptionUtil.encrypt(file.getAbsolutePath());
+                                }
+
+                                showCallFlash();
+                            }
+                        });
+
+                        layout_progress_above_ad.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    if (mIsShowAboveAdBtn) {
+                                        tv_setting_action_above_ad.setVisibility(View.VISIBLE);
+                                        tv_download_action_above_ad.setVisibility(View.GONE);
+                                        layout_progress_above_ad.setVisibility(View.GONE);
+                                    } else {
+                                        tv_setting_action_below_ad.setVisibility(View.VISIBLE);
+                                        tv_download_action_below_ad.setVisibility(View.GONE);
+                                        layout_progress_below_ad.setVisibility(View.GONE);
+                                    }
+                                    EventBus.getDefault().post(new EventRefreshPreviewDowloadState());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
-
     }
 
     @Override
@@ -1171,7 +1182,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 break;
             case PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION:
                 requestPermissions();
-                if(isNeedRestartSwipe) {
+                if (isNeedRestartSwipe) {
                     SwipeManager.getInstance().restartEasySwipe();
                 }
                 break;

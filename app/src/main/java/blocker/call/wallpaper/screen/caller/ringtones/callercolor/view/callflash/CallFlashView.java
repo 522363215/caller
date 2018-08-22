@@ -10,12 +10,14 @@ import android.widget.RelativeLayout;
 import com.md.flashset.bean.CallFlashFormat;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.manager.CallFlashManager;
+import com.md.serverflash.ThemeSyncManager;
 
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.EncryptionUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.TextureVideoView;
@@ -167,7 +169,7 @@ public class CallFlashView extends RelativeLayout {
         }
     }
 
-    private void setVideo(CallFlashInfo info) {
+    private void setVideo(final CallFlashInfo info) {
         if (info == null) return;
         final String path = info.path;
         String flashID = info.id;
@@ -178,9 +180,20 @@ public class CallFlashView extends RelativeLayout {
                 if (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(flashID)) {
                     mGlideView.showImage(info.imgResId);
                 } else {
-                    mGlideView.showVideoFirstFrame(path);
+                    File firstFrameFile = ThemeSyncManager.getInstance().getVideoFirstFrameFileByUrl(mContext, info.url);
+                    LogUtil.d(TAG, "setVideo firstFrameFile:" + (firstFrameFile == null ? "" : firstFrameFile.exists()));
+                    if (firstFrameFile != null && firstFrameFile.exists()) {
+                        mGlideView.showImageInSdCard(firstFrameFile.getAbsolutePath());
+                    } else {
+                        mGlideView.showImage(info.img_vUrl);
+                        if (!EncryptionUtil.isEncrypted(path)) {
+                            CallFlashManager.getInstance().saveVideoFirstFrame(info.url);
+                        }
+                    }
                 }
             }
+            //加密
+            EncryptionUtil.encrypt(path);
             mVideoView.setVisibility(VISIBLE);
             mVideoView.setVideoPath(path);
             mVideoView.start();

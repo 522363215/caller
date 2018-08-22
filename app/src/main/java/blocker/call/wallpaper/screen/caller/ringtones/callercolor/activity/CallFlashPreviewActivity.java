@@ -40,6 +40,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshPreviewDowloadState;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.EncryptionUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
@@ -214,9 +215,16 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
             }
 
             @Override
-            public void onSuccess(String url, File file) {
+            public void onSuccess(final String url, final File file) {
                 if (mInfo != null && !TextUtils.isEmpty(url) && url.equals(mInfo.url)) {
                     mIsDownloading = false;
+                    if (!EncryptionUtil.isEncrypted(file.getAbsolutePath())) {
+                        CallFlashManager.getInstance().saveVideoFirstFrame(url);
+                    }
+                    //加密
+                    if (file != null && !TextUtils.isEmpty(file.getAbsolutePath())) {
+                        EncryptionUtil.encrypt(file.getAbsolutePath());
+                    }
 
                     CallFlashManager.getInstance().saveCallFlashDownloadCount(mInfo);
                     CallFlashManager.getInstance().saveDownloadedCallFlash(mInfo);

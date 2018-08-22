@@ -1,6 +1,8 @@
 package com.md.flashset.manager;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.text.TextUtils;
 
 import com.md.flashset.R;
@@ -13,6 +15,8 @@ import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -441,5 +445,41 @@ public class CallFlashManager {
         File file = new File(path);
         return file.exists();
     }
+
+    /**
+     * 是否是当前设置的call flash
+     */
+    public static boolean isCurrentSetCallFlash(CallFlashInfo info) {
+        CallFlashInfo currentSetCallFlash = CallFlashPreferenceHelper.getObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
+        if (info != null && info.equals(currentSetCallFlash)) {
+            return true;
+        }
+        return false;
+    }
+
+    public void saveVideoFirstFrame(String url) {
+        try {
+            if (TextUtils.isEmpty(url)) return;
+            File fileByUrl = ThemeSyncManager.getInstance().getFileByUrl(mContext, url);
+            if (fileByUrl == null || !fileByUrl.exists()) return;
+            MediaMetadataRetriever media = new MediaMetadataRetriever();
+            String path = fileByUrl.getAbsolutePath();
+            media.setDataSource(path);
+            Bitmap firstFrameBitmap = media.getFrameAtTime();
+            File file = ThemeSyncManager.getInstance().getVideoFirstFrameFileByUrl(mContext, url);
+            if (firstFrameBitmap != null && !file.exists()) {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+                FileOutputStream fos = new FileOutputStream(file);
+                firstFrameBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.flush();
+                fos.close();
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 
 }

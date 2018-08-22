@@ -8,6 +8,7 @@ import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -19,10 +20,14 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.MediaController;
 
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Map;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.EncryptionUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 public class TextureVideoView extends TextureView
@@ -65,20 +70,22 @@ public class TextureVideoView extends TextureView
     private boolean mCanPause;
     private boolean mCanSeekBack;
     private boolean mCanSeekForward;
+    private String mPath;
+    private Context mContext;
 
     public TextureVideoView(Context context) {
         super(context);
-        initVideoView();
+        initVideoView(context);
     }
 
     public TextureVideoView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        initVideoView();
+        initVideoView(context);
     }
 
     public TextureVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initVideoView();
+        initVideoView(context);
     }
 
     @Override
@@ -161,7 +168,8 @@ public class TextureVideoView extends TextureView
         return getDefaultSize(desiredSize, measureSpec);
     }
 
-    private void initVideoView() {
+    private void initVideoView(Context context) {
+        mContext = context;
         mVideoWidth = 0;
         mVideoHeight = 0;
         setSurfaceTextureListener(mSurfaceTextureListener);
@@ -178,6 +186,7 @@ public class TextureVideoView extends TextureView
      * @param path the path of the video.
      */
     public void setVideoPath(String path) {
+        mPath = path;
         setVideoURI(Uri.parse(path));
     }
 
@@ -252,7 +261,28 @@ public class TextureVideoView extends TextureView
             mMediaPlayer.setOnInfoListener(mInfoListener);
             mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
             mCurrentBufferPercentage = 0;
-            mMediaPlayer.setDataSource(getContext().getApplicationContext(), mUri, mHeaders);
+            if (!TextUtils.isEmpty(mPath) && EncryptionUtil.isEncrypted(mPath)) {
+                try {
+                    RandomAccessFile randomAccessFile = new RandomAccessFile(mPath, "rw");
+                    FileDescriptor fileDescriptor = randomAccessFile.getFD();
+                    FileInputStream inputStream = new FileInputStream(mPath);
+                    String md5 = EncryptionUtil.getEncryptionVideoMd5(mPath);
+                    if (!TextUtils.isEmpty(md5)) {
+                        mMediaPlayer.setDataSource(fileDescriptor, md5.getBytes().length, inputStream.available());
+                    } else {
+                        mCurrentState = STATE_ERROR;
+                        mTargetState = STATE_ERROR;
+                        mErrorListener.onError(mMediaPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mCurrentState = STATE_ERROR;
+                    mTargetState = STATE_ERROR;
+                    mErrorListener.onError(mMediaPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
+                }
+            } else {
+                mMediaPlayer.setDataSource(getContext().getApplicationContext(), mUri, mHeaders);
+            }
             mMediaPlayer.setSurface(mSurface);
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setScreenOnWhilePlaying(true);

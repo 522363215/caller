@@ -19,6 +19,7 @@ import com.md.flashset.bean.CallFlashFormat;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
+import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.download.ThemeResourceHelper;
 
@@ -35,6 +36,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.EncryptionUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleProgressBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
@@ -204,7 +206,17 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             if (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(info.id)) {
                 holder.gv_bg.showImage(R.drawable.img_star_sky_v);
             } else {
-                holder.gv_bg.showVideoFirstFrame(info.path);
+                File firstFrameFile = ThemeSyncManager.getInstance().getVideoFirstFrameFileByUrl(context, info.url);
+                if (firstFrameFile != null && firstFrameFile.exists()) {
+                    holder.gv_bg.showImageInSdCard(firstFrameFile.getAbsolutePath());
+                } else {
+                    if (!TextUtils.isEmpty(info.thumbnail_imgUrl)) {
+                        holder.gv_bg.showImage(info.thumbnail_imgUrl);
+                    } else {
+                        holder.gv_bg.showImage(info.img_vUrl);
+                    }
+
+                }
             }
         } else {
             if (info.isOnlionCallFlash) {
@@ -518,7 +530,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
 
         @Override
-        public void onSuccess(String url, File file) {
+        public void onSuccess(final String url, final File file) {
             if (info != null && info.url != null && info.url.equals(url)) {
                 holder.iv_download.setVisibility(View.GONE);
                 holder.iv_call_select.setVisibility(View.GONE);
@@ -527,6 +539,14 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 CallFlashManager.getInstance().saveCallFlashDownloadCount(info);
                 CallFlashManager.getInstance().saveDownloadedCallFlash(info);
                 EventBus.getDefault().post(new EventRefreshCallFlashDownloadCount());
+
+                if (!EncryptionUtil.isEncrypted(file.getAbsolutePath())) {
+                    CallFlashManager.getInstance().saveVideoFirstFrame(url);
+                }
+                //加密
+                if (file != null && !TextUtils.isEmpty(file.getAbsolutePath())) {
+                    EncryptionUtil.encrypt(file.getAbsolutePath());
+                }
             }
         }
 

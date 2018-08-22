@@ -143,6 +143,11 @@ final public class PreferenceHelper {
      */
     public static final String PREF_LAST_LOADED_SWIPE_AD_TIME = "caller_pref_key_last_loaded_swipe_ad_time";
 
+    /**
+     * 视频加密对应的md5 map
+     */
+    public static final String PREF_VIDEO_ENCRYPT_MD5_MAP= "caller_pref_key_video_encrypt_md5_map";
+
 
     private PreferenceHelper() {
     }

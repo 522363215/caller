@@ -5,16 +5,15 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.text.TextUtils;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
 import com.md.block.core.BlockManager;
-import com.md.flashset.CallFlashSet;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 
 import java.util.Calendar;
+import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
@@ -24,6 +23,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.Calle
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.MessageReceiver;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.NetworkConnectChangedReceiver;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.EncryptionUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 /**
@@ -63,6 +63,26 @@ public class ServiceProcessingManager {
 
         //缓存首页数据
         cacheHomeData();
+
+        //加密所有已经下载的视频
+        encryptAllVideo();
+    }
+
+    private void encryptAllVideo() {
+        Async.run(new Runnable() {
+            @Override
+            public void run() {
+                List<CallFlashInfo> downloadedCallFlashs = CallFlashManager.getInstance().getDownloadedCallFlash();
+                for (CallFlashInfo info : downloadedCallFlashs) {
+                    if (!TextUtils.isEmpty(info.path) && !EncryptionUtil.isEncrypted(info.path)) {
+                        //保存视频第一帧图片
+                        CallFlashManager.getInstance().saveVideoFirstFrame(info.url);
+                        //加密
+                        EncryptionUtil.encrypt(info.path);
+                    }
+                }
+            }
+        });
     }
 
     public void cacheHomeData() {

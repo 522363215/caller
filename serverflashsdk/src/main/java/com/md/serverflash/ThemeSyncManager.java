@@ -88,6 +88,19 @@ public class ThemeSyncManager {
         return file;
     }
 
+    public File getVideoFirstFrameFileByUrl(Context appContext, String url) {
+        String themeDir = getThemeFirstFrameStorageDir(appContext);
+        String fileName = getFileNameFromUrl(url);
+        File file = null;
+        try {
+            if (!TextUtils.isEmpty(themeDir)) {
+                file = new File(themeDir, fileName + ".png");
+            }
+        } catch (Exception e) {
+        }
+        return file;
+    }
+
     private String getFileNameFromUrl(String url) {
         if (TextUtils.isEmpty(url)) return "";
         return url.substring(url.lastIndexOf("/") + 1);
@@ -381,6 +394,19 @@ public class ThemeSyncManager {
         String dir = "";
         try {
             File f = app.getExternalFilesDir(toHexStr(Environment.DIRECTORY_MOVIES));
+            if (f == null || !f.exists()) {
+                f.mkdir();
+            }
+            dir = f.getAbsolutePath();
+        } catch (Exception e) {
+        }
+        return dir;
+    }
+
+    public static String getThemeFirstFrameStorageDir(Context app) {
+        String dir = "";
+        try {
+            File f = app.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             if (f == null || !f.exists()) {
                 f.mkdir();
             }

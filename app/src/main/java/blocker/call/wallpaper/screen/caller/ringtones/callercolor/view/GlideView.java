@@ -3,6 +3,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -109,6 +110,14 @@ public class GlideView extends RelativeLayout {
     public void showImage(String urlOrPath, RequestListener<String, Bitmap> requestListener) {
         if (mImageView != null) {
             GlideHelper.with(mContext).load(urlOrPath).listener(requestListener).into(mImageView);
+        }
+    }
+
+    public void showImageInSdCard(String path) {
+        if (TextUtils.isEmpty(path)) return;
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        if (bitmap != null) {
+            mImageView.setImageBitmap(bitmap);
         }
     }
 

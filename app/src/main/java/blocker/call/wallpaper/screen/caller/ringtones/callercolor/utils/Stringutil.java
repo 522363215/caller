@@ -688,9 +688,6 @@ public class Stringutil {
     }
 
 
-
-
-
     public static boolean isAppRunning(Context context, String packagename) {
         boolean result = false;
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -1157,5 +1154,18 @@ public class Stringutil {
         }
 
         return newArray2;
+    }
+
+    /**
+     * 从一段字符串中获取随机长度的字符串
+     */
+    public static String getRandomStr(String str) {
+        if (TextUtils.isEmpty(str) || str.length() < 5) return null;
+        int randomInt = 5 + new Random().nextInt(str.length());
+        if (randomInt >= str.length()) {
+            return str;
+        } else {
+            return str.substring(randomInt);
+        }
     }
 }
