@@ -30,6 +30,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.AddBlockContactAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
@@ -102,6 +103,7 @@ public class AddBlockContactDialog extends Dialog {
                 BlockInfo block = new BlockInfo();
                 block.setName(logInfo.callName);
                 block.setNumber(saveNumber);
+                block.setPhotoID(logInfo.callIconId);
                 block.setBlockTime(System.currentTimeMillis());
                 boolean isSuc = BlockManager.getInstance().setBlockContact(block);
 
@@ -178,7 +180,8 @@ public class AddBlockContactDialog extends Dialog {
                     CallLog.Calls.NUMBER,
                     CallLog.Calls.CACHED_NAME,
                     CallLog.Calls.CACHED_NORMALIZED_NUMBER,
-                    CallLog.Calls.DATE
+                    CallLog.Calls.DATE,
+                    CallLog.Calls.CACHED_PHOTO_ID
             };
 
             String selection = CallLog.Calls.DATE + ">?";
@@ -209,6 +212,7 @@ public class AddBlockContactDialog extends Dialog {
                     String cacheName = query.getString(query.getColumnIndex(project[2]));
                     String normalizedNumber = query.getString(query.getColumnIndex(project[3]));
                     long date = query.getLong(query.getColumnIndex(project[4]));
+                    String photoId = query.getString(query.getColumnIndex(project[5]));
 
                     String saveNumber = NumberUtil.getFormatNumberForDb(number);
                     if (blockedNumber != null && blockedNumber.contains(saveNumber)) {
@@ -220,9 +224,14 @@ public class AddBlockContactDialog extends Dialog {
                         CallLogInfo info = new CallLogInfo();
                         info.id = id;
                         info.callNumber = number;
-                        info.callName = cacheName;
+                        if (TextUtils.isEmpty(cacheName)) {
+                            info.callName = ContactManager.getInstance().getContactNameForNumber(number);
+                        } else {
+                            info.callName = cacheName;
+                        }
                         info.formatNum = normalizedNumber;
                         info.date = date;
+                        info.callIconId = photoId;
 
                         addedNumberCache.add(number);
                         tempCallLog.add(info);

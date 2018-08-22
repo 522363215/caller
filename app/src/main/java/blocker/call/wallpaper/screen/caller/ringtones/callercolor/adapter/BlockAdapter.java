@@ -107,7 +107,8 @@ public class BlockAdapter extends BaseAdapter {
 
             if (TextUtils.isEmpty(item.getName())) {
                 String number = NumberUtil.getLocalizationNumber(item.getNumber());
-                holder.tvName.setText(number);
+                String name = ContactManager.getInstance().getContactNameForNumber(item.getNumber());
+                holder.tvName.setText(TextUtils.isEmpty(name) ? number : name);
             } else {
                 holder.tvName.setText(item.getName());
             }

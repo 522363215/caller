@@ -1,16 +1,19 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 
 /**
@@ -58,20 +61,25 @@ public class AddBlockContactAdapter extends BaseAdapter {
         if (item != null) {
             String name = item.callName;
             String number = item.callNumber;
-            boolean isSelected = item.isSelected;
+            String photoId = item.callIconId;
 
             holder.tvName.setText(TextUtils.isEmpty(name) ? number : name);
             holder.tvNumber.setText(number);
+            Bitmap bitmap = ContactManager.getInstance().getContactPhoto(photoId);
+            if (bitmap != null)
+                holder.ivPhoto.setImageBitmap(bitmap);
         }
 
         return convertView;
     }
 
     private class ViewHolder {
+        private ImageView ivPhoto;
         private TextView tvName;
         private TextView tvNumber;
 
         public ViewHolder(View itemRoot) {
+            ivPhoto = itemRoot.findViewById(R.id.iv_photo);
             tvName = itemRoot.findViewById(R.id.tv_name);
             tvNumber = itemRoot.findViewById(R.id.tv_number);
         }

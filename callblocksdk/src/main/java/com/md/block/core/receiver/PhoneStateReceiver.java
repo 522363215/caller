@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
@@ -148,9 +149,6 @@ public class PhoneStateReceiver extends BroadcastReceiver {
     private void executeBlock(String number) {
         if (BlockLocal.getBlockSwitchState() && BlockManager.getInstance().blockCall(number)) {
             BlockLocal.setPreferencesData("number_is_block_status", true);
-
-            LogUtil.d("chenr", "block success.");
-
             BlockInfo history = new BlockInfo();
             history.setNumber(number);
             history.setName(getContactNameForNumber(number));
@@ -158,6 +156,39 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 
             BlockLocal.setBlockHistory(history);
         }
+    }
+
+    public String getContactPhotoId(String number) {
+        String photoId = null;
+        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        Cursor cursor = null;
+        try {
+            cursor = mContext.getContentResolver().query(
+                    uri,
+                    new String[]{ContactsContract.CommonDataKinds.Phone.PHOTO_ID,
+                            ContactsContract.CommonDataKinds.Phone.NUMBER},
+                    "REPLACE(REPLACE(REPLACE(REPLACE(" + ContactsContract.CommonDataKinds.Phone.NUMBER + ",')','')" + ",' ','')" + ",'(','')" + ",'-','') Like ?",
+                    new String[]{"%" + number},
+                    null);
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        String cursorNumber = NumberUtil.getNumberByPattern(cursor.getString(1));
+                        if (Math.abs(cursorNumber.length() - number.length()) <= 5) {
+                            photoId = cursor.getString(0);
+                            break;
+                        }
+                    } while (cursor.moveToNext());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return photoId;
     }
 
     public String getContactNameForNumber(String number) {

@@ -8,11 +8,10 @@
     android:padding="@dimen/dp8"
     tools:background="@color/white">
 
-    <ImageView
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleImageView
         android:id="@+id/iv_photo"
         android:layout_width="@dimen/dp48"
         android:layout_height="@dimen/dp48"
-        android:scaleType="fitXY"
         android:src="@drawable/icon_fake_photo_default" />
 
     <LinearLayout
