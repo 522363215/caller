@@ -133,8 +133,8 @@ public class WallpaperListFragment extends Fragment {
         flashSwipeReFresh = view.findViewById(R.id.flash_swipe_refresh);
         layoutNoWallpaper = view.findViewById(R.id.layout_no_wallpaper);
 
-        rvWallpaper.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        wallpaperListAdapter = new WallpaperListAdapter(getContext(), wallpaperInfos);
+        rvWallpaper.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        wallpaperListAdapter = new WallpaperListAdapter(getActivity(), wallpaperInfos);
         rvWallpaper.setAdapter(wallpaperListAdapter);
         wallpaperListAdapter.setmRecyclerClick(recyclerClick);
     }

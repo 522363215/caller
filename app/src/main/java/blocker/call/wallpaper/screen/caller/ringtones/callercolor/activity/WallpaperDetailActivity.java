@@ -221,7 +221,8 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_download:
-                if (wallpaper.isDownloaded) {
+                LogUtil.d("chenr", "download click.");
+                if (tvDownload.getText().toString().equals(this.getString(R.string.download))) {
                     String[] PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE};
                     //检测是否有写的权限
