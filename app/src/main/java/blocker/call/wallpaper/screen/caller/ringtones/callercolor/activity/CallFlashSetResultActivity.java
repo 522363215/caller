@@ -17,6 +17,8 @@ import com.flurry.android.FlurryAgent;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +38,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUt
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.DrawHookView;
-import event.EventBus;
 
 /**
  * Created by ChenR on 2017/9/20.

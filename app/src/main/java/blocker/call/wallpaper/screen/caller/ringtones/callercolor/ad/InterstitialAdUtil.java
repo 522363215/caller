@@ -2,12 +2,13 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad;
 
 import android.content.Context;
 
+import org.greenrobot.eventbus.EventBus;
+
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventInterstitialAdLoadSuccess;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.FullScreenAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
-import event.EventBus;
 
 public class InterstitialAdUtil {
     private static final String TAG = "InterstitialAdvertisement";

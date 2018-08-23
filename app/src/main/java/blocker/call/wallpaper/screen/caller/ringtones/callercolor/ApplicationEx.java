@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ExternalMagicHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.AppUtils;
@@ -110,6 +111,7 @@ public class ApplicationEx extends Application {
         saveVersioncode();
         AnalyticsManager.init(getInstance());
         SwipeManager.getInstance().initEasySwipe(this);
+        ExternalMagicHelper.getInstance().init();
         startService();
         initCallFlashBase();
         CallFlashSet.init(this);

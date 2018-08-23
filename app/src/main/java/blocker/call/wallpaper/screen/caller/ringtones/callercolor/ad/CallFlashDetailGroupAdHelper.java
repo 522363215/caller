@@ -3,6 +3,8 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad;
 import android.text.TextUtils;
 import android.view.View;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +14,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventCallFlashDetailGroupAdShow;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
-import event.EventBus;
 
 public class CallFlashDetailGroupAdHelper {
     public static final long SHOW_AD_PERIOD = 30 * 1000;

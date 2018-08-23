@@ -20,6 +20,10 @@ import com.bumptech.glide.Glide;
 import com.flurry.android.FlurryAgent;
 import com.md.flashset.bean.CallFlashDataType;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -42,7 +46,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.GuideUti
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager;
-import event.EventBus;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, SideslipContraller.SideslipContrallerCallBack, PermissionUtils.PermissionGrant {
     private static final String TAG = "MainActivity";
@@ -76,7 +79,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().registerSticky(this);
+            EventBus.getDefault().register(this);
         }
         //新手引导
         GuideUtil.toFirstBootGuide(this);
@@ -415,7 +418,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-    public void onEventMainThread(EventLanguageChange event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EventLanguageChange event) {
         finish();
     }
 
@@ -425,7 +429,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         Glide.get(this).clearMemory();
     }
 
-//    public void onEventMainThread(EventRefreshCallFlashEnable event) {
+  //  @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void event(EventRefreshCallFlashEnable event) {
 //        if(isFinishing()){
 //           return;
 //        }

@@ -24,7 +24,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUt
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
-import event.EventBus;
 
 public class SmsComeActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "SmsComeActivity";

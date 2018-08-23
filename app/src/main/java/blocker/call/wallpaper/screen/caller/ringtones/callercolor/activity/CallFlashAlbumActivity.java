@@ -20,13 +20,14 @@ import android.widget.TextView;
 import com.flurry.android.FlurryAgent;
 import com.md.flashset.manager.CallFlashManager;
 
+import org.greenrobot.eventbus.EventBus;
+
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.FileUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
-import event.EventBus;
 import okhttp3.Call;
 
 /**

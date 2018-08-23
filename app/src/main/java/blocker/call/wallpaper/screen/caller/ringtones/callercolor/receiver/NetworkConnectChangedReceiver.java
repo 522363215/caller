@@ -8,9 +8,10 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Parcelable;
 
+import org.greenrobot.eventbus.EventBus;
+
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
-import event.EventBus;
 
 public class NetworkConnectChangedReceiver extends BroadcastReceiver {
     private static final String TAG = "cpservice";

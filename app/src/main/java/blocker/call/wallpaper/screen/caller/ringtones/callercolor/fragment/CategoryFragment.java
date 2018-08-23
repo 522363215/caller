@@ -16,6 +16,10 @@ import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Category;
 import com.md.serverflash.callback.CategoryCallback;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +28,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.CallFl
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshWhenNetConnected;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
-import event.EventBus;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -119,7 +122,8 @@ public class CategoryFragment extends Fragment {
         mRvCategory.setAdapter(mCategoryAdapter);
     }
 
-    public void onEventMainThread(EventRefreshWhenNetConnected event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EventRefreshWhenNetConnected event) {
         if (mData == null || mData.size() <= 1) {
             initData();
         }

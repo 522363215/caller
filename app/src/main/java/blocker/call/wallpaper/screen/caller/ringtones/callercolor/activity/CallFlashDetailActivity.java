@@ -32,6 +32,10 @@ import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.callback.ThemeNormalCallback;
 import com.md.serverflash.download.ThemeResourceHelper;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +76,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconV
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.OKCancelDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflash.CallFlashView;
-import event.EventBus;
 
 public class CallFlashDetailActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "CallFlashDetailActivity";
@@ -1121,16 +1124,18 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         }
     }
 
-    public void onEventMainThread(EventInterstitialAdLoadSuccess event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EventInterstitialAdLoadSuccess event) {
         if (!mIsShowInterstitialAd && mIsShow && !isFinishing()) {
             LogUtil.d(TAG, "InterstitialAdvertisement EventInterstitialAdLoadSuccess showInterstitialAd");
             showInterstitialAd(mIsBack);
         }
     }
 
-    public void onEventMainThread(EventCallFlashDetailGroupAdShow event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EventCallFlashDetailGroupAdShow event) {
         if (!isFinishing()) {
-            LogUtil.d(TAG, "onEventMainThread EventCallFlashDetailGroupAdShow");
+            LogUtil.d(TAG, "event EventCallFlashDetailGroupAdShow");
             showGroupAd(true);
             mIsShowGroupAd = true;
         }

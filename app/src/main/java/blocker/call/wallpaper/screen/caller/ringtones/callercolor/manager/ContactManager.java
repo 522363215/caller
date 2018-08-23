@@ -19,6 +19,8 @@ import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,7 +48,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Utils;
-import event.EventBus;
 
 /**
  * Created by zhq on 2017/1/10.

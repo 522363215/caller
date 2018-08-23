@@ -28,6 +28,10 @@ import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.callback.ThemeNormalCallback;
 import com.md.serverflash.download.ThemeResourceHelper;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.File;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
@@ -45,7 +49,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
-import event.EventBus;
 
 public class CallFlashPreviewActivity extends BaseActivity implements View.OnClickListener {
 
@@ -499,7 +502,8 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         valueAnimator.start();
     }
 
-    public void onEventMainThread(EventRefreshPreviewDowloadState event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EventRefreshPreviewDowloadState event) {
         if (mIsShowFirstAdMob) {
             mTvDownloadBtnBelowAd.setText(R.string.call_flash_preview_now);
         } else {
@@ -507,7 +511,8 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
         }
     }
 
-    public void onEventMainThread(EventRefreshCallFlashDownloadCount event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EventRefreshCallFlashDownloadCount event) {
         setLikeAndDownload();
     }
 }

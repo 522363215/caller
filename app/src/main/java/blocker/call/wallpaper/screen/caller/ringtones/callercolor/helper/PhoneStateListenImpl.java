@@ -8,6 +8,8 @@ import com.md.block.callback.PhoneStateChangeCallback;
 import com.md.block.core.BlockManager;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Locale;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallAfterActivity;
@@ -20,9 +22,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.Notify
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DateUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
-import event.EventBus;
 
 /**
  * Created by ChenR on 2018/7/5.

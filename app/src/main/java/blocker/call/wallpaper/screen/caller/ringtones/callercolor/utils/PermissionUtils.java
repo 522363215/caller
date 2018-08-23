@@ -15,6 +15,8 @@ import android.support.v4.app.ActivityCompat;
 
 import com.md.block.core.service.CallerNotificationListenerService;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.Permissio
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.PermissionDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventNoPermission;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
-import event.EventBus;
 
 import static blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ResourceUtil.getString;
 

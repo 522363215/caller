@@ -3,9 +3,11 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
+import com.individual.sdk.BaseAdContainer;
 import com.md.block.core.BlockManager;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.quick.easyswipe.EasySwipe;
@@ -13,10 +15,13 @@ import com.quick.easyswipe.EasySwipe;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdContainer;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
@@ -43,11 +48,15 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
     private View layoutSwipe;
 
     private SharedPreferences pref;
+    private BedsideAdManager mAdManager;
+    private boolean mIsShowAd;
+    private FrameLayout mLayoutAdMopub;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pref = ApplicationEx.getInstance().getGlobalSettingPreference();
+        initAd();
         initView();
         listener();
     }
@@ -66,6 +75,13 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
     protected void onResume() {
         super.onResume();
         FlurryAgent.logEvent("SettingActivity-----show_main");
+        showAd();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        destroyAd();
     }
 
     private void listener() {
@@ -101,6 +117,8 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
         tvSwitchMessage = findViewById(R.id.tv_switch_message);
         tvSwitchCallerShow = findViewById(R.id.tv_switch_caller_show);
         tvSwitchSwipe = findViewById(R.id.tv_switch_swipe);
+
+        mLayoutAdMopub = (FrameLayout) findViewById(R.id.layout_ad_view_mopub);
 
         //安装了call id 则不显示swipe
         layoutSwipe = findViewById(R.id.layout_swipe);
@@ -261,4 +279,42 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
                 break;
         }
     }
+
+    //***********************************************AD*******************************************//
+    private void initAd() {
+        //LogUtil.e(TAG, "initAd, AD_SHOW_DELAY:" + AD_SHOW_DELAY);
+        mAdManager = new BedsideAdManager(this, false, new BedsideAdContainer.Callback() {
+            @Override
+            public void onAdClick(BaseAdContainer ad) {
+
+            }
+
+            @Override
+            public void onAdLoaded(BedsideAdContainer ad) {
+                if (ad != null && !mIsShowAd) {
+                    mLayoutAdMopub.setVisibility(View.VISIBLE);
+                    mIsShowAd = true;
+                    ad.show(mLayoutAdMopub);
+                }
+            }
+        });
+    }
+
+    public void showAd() {
+        // 正常展示在前端才进行展示&请求
+        if (mAdManager != null && !mIsShowAd) {
+            LogUtil.d(TAG, "showAN");
+            mIsShowAd = mAdManager.show(this, mLayoutAdMopub);
+        } else {
+            LogUtil.d(TAG, "showAN failed! cause manager is " + (mAdManager == null ? "Null" : "NotNull"));
+        }
+    }
+
+    private void destroyAd() {
+        if (mAdManager != null) {
+            mAdManager.destroy();
+            mAdManager = null;
+        }
+    }
+    //***********************************************AD*******************************************//
 }

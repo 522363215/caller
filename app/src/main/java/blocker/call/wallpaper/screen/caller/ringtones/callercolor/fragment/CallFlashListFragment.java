@@ -26,6 +26,10 @@ import com.md.serverflash.beans.Theme;
 import com.md.serverflash.callback.ThemeSyncCallback;
 import com.md.serverflash.callback.TopicThemeCallback;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +49,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Constant
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Utils;
-import event.EventBus;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -498,7 +501,8 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    public void onEventMainThread(EventCallFlashOnlineAdLoaded event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EventCallFlashOnlineAdLoaded event) {
         if (mCallFlashMarginDecoration != null) {
             mCallFlashMarginDecoration.setAdLoaded(true);
         }
@@ -508,13 +512,15 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    public void onEventMainThread(EventRefreshCallFlashList event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EventRefreshCallFlashList event) {
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }
     }
 
-    public void onEventMainThread(EventRefreshWhenNetConnected event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EventRefreshWhenNetConnected event) {
         if (model == null || model.size() <= 0) {
             if (mSwipeRefreshLayout != null) {
                 mSwipeRefreshLayout.setRefreshing(true);

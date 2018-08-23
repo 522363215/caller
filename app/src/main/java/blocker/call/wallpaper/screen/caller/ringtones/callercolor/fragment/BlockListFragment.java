@@ -12,13 +12,16 @@ import com.flurry.android.FlurryAgent;
 import com.md.block.beans.BlockInfo;
 import com.md.block.core.BlockManager;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.BlockAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshBlockHistory;
-import event.EventBus;
 
 public class BlockListFragment extends Fragment {
     public static final int BLOCK_LIST_SHOW_CONTACT = 0;
@@ -109,7 +112,8 @@ public class BlockListFragment extends Fragment {
         }
     }
 
-    public void onEventMainThread(EventRefreshBlockHistory event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EventRefreshBlockHistory event) {
         updateData();
     }
 }
