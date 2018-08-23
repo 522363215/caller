@@ -3,7 +3,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,7 +40,7 @@ public class WallpaperListFragment extends Fragment {
         @Override
         public void normalClick(View view, int position) {
             Intent intent = new Intent();
-            intent.setClass(getContext(), WallpaperDetailActivity.class);
+            intent.setClass(getActivity(), WallpaperDetailActivity.class);
             intent.putExtra(Constant.WALLPAPER_BUNDLE, wallpaperInfos.get(position));
             startActivity(intent);
         }
@@ -76,6 +76,13 @@ public class WallpaperListFragment extends Fragment {
 
     private void requestData() {
         setRefreshState(true);
+
+        flashSwipeReFresh.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setRefreshState(false);
+            }
+        }, 3000);
 
         final String[] topic = new String[1];
         topic[0] = WallpaperManager.ONLINE_TOPIC_WALLPAPER_WALL_IMG;

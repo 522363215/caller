@@ -91,7 +91,7 @@ public class WallpaperListActivity extends BaseActivity implements ViewPager.OnP
         WallpaperListFragment wallpaperListFragment = new WallpaperListFragment();
         UsedPictureFragment usedPictureFragment = new UsedPictureFragment();
         fragments = new ArrayList<>();
-        fragments.add(wallpaperListFragment);
+//        fragments.add(wallpaperListFragment);
         fragments.add(usedPictureFragment);
     }
 

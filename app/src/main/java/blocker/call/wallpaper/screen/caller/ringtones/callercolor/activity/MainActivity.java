@@ -33,6 +33,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CategoryFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.MineFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.WallpaperListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
@@ -59,6 +60,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private MainPagerAdapter mMainPagerAdapter;
     private CallFlashListFragment mCallFlashListFragment;
     private CategoryFragment mCategoryFragment;
+    private WallpaperListFragment mWallpaperListFragment;
     private RelativeLayout mSideslipMenu;
     private ViewPager.OnPageChangeListener mOnPageChangeListener;
     private boolean mIsOnPageSelected;
@@ -343,11 +345,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mCallFlashListFragment = CallFlashListFragment.newInstance(CallFlashDataType.CALL_FLASH_DATA_HOME);
 //        mCategoryFragment = new CategoryFragment();
         mMineFragment = new MineFragment();
+        mWallpaperListFragment = new WallpaperListFragment();
 
         mFragmentList = new ArrayList<>();
         mFragmentList.add(mCallFlashListFragment);
 //        mFragmentList.add(mCategoryFragment);
         mFragmentList.add(mMineFragment);
+        mFragmentList.add(mWallpaperListFragment);
 
         mMainPagerAdapter = new MainPagerAdapter(getFragmentManager(), mFragmentList, this);
         mViewPager.setAdapter(mMainPagerAdapter);
@@ -369,6 +373,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 currentPage = arg0;
                 ((ImageView) findViewById(R.id.iv_home)).setImageDrawable(getResources().getDrawable(currentPage == ActivityBuilder.FRAGMENT_HOME ? R.drawable.icon_call_flash_selected : R.drawable.icon_call_flash));
                 ((ImageView) findViewById(R.id.iv_mine)).setImageDrawable(getResources().getDrawable(currentPage == ActivityBuilder.FRAGMENT_MINE ? R.drawable.icon_mine_selected : R.drawable.icon_mine));
+                ((ImageView) findViewById(R.id.iv_wallpaper)).setImageDrawable(getResources().getDrawable(currentPage == ActivityBuilder.FRAGMENT_WALLPAPER ? R.drawable.icon_mine_selected : R.drawable.icon_mine));
 
                 if (mCallFlashListFragment != null) {
                     if (arg0 == ActivityBuilder.FRAGMENT_HOME)
@@ -393,6 +398,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case ActivityBuilder.FRAGMENT_MINE:
                 mTvPageTitle.setText(R.string.page_title_mine);
+                break;
+            case ActivityBuilder.FRAGMENT_WALLPAPER:
+                mTvPageTitle.setText(R.string.page_title_wallpaper);
                 break;
         }
     }
