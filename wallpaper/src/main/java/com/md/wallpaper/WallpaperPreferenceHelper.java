@@ -43,6 +43,19 @@ public class WallpaperPreferenceHelper {
      */
     public static final String PREF_WALL_IS_MUTE_WHEN_PREVIEW = "pref_wall_is_mute_when_preview";
 
+    /**
+     * 点赞壁纸集合
+     */
+    public static final String PREF_JUST_LIKE_WALLPAPER_LIST = "caller_id_pref_just_like_wallpaper_list";
+
+    /**
+     * 保存所有的下载的对象
+     */
+    public static final String COOKIE = "cookie";
+
+    public static final String CALL_FLASH_ON = "call_flash_on";//call flash 是否开启
+
+
     private static Context mContext;
 
     private WallpaperPreferenceHelper() {
@@ -51,6 +64,7 @@ public class WallpaperPreferenceHelper {
     public static void init(Context context) {
         mContext = context;
     }
+
 
     public static SharedPreferences getPreferences(Context context) {
         return context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);

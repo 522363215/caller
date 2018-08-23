@@ -9,12 +9,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.md.callring.RecyclerClick;
+import com.md.flashset.bean.CallFlashInfo;
 import com.md.wallpaper.bean.WallpaperInfo;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
 
 public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdapter.ViewHolder> {
@@ -22,6 +26,9 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
     private Context context;
     private List<WallpaperInfo> wallpaperInfos;
     private RecyclerClick mRecyclerClick;
+    private int mScrollState;
+    private RecyclerView mRecyclerView;
+    private int childViewWidth, childViewHeight;
 
     public RecyclerClick getmRecyclerClick() {
         return mRecyclerClick;
@@ -34,28 +41,54 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
     public WallpaperListAdapter(Context context, List<WallpaperInfo> wallpaperInfos) {
         this.context = context;
         this.wallpaperInfos = wallpaperInfos;
+        if (context != null) {
+            int dp4 = context.getResources().getDimensionPixelOffset(R.dimen.dp4);
+            childViewWidth = (DeviceUtil.getScreenWidth() - dp4 * 3) / 2;
+            childViewHeight = 4 * childViewWidth / 3;
+        }
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(com.md.callring.R.layout.item_wallpaper_list, parent, false));
+
+        View item = LayoutInflater.from(context).inflate(com.md.callring.R.layout.item_song, parent, false);
+        ViewGroup.LayoutParams layoutParams = item.getLayoutParams();
+        if (layoutParams == null) {
+            layoutParams = new ViewGroup.LayoutParams(childViewWidth, childViewHeight);
+        } else {
+            layoutParams.width = childViewWidth;
+            layoutParams.height = childViewHeight;
+        }
+        item.setLayoutParams(layoutParams);
+
+        return new ViewHolder(item);
     }
+
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        WallpaperInfo info = wallpaperInfos.get(position);
-
-        if (info != null) {
-//            holder.tvSong.setText(info.title);
-            holder.ivBackground.showImage(info.img_vUrl);
-        }
-
+        holder.tvSong.setText(wallpaperInfos.get(position).title);
+        holder.ivBackground.showImage(wallpaperInfos.get(position).img_vUrl);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mRecyclerClick.normalClick(v, position);
             }
         });
+    }
+
+    public void setScrollState(int scrollState) {
+        mScrollState = scrollState;
+    }
+
+    private int mDataType = 0;
+    public void setDataType(int dataType) {
+        this.mDataType = dataType;
+    }
+
+    public void setRecycleView(RecyclerView recyclerView) {
+        mRecyclerView = recyclerView;
     }
 
     @Override

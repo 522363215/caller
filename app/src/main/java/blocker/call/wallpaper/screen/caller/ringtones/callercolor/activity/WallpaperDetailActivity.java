@@ -1,41 +1,49 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
-import android.Manifest;
+import com.flurry.android.FlurryAgent;
+import com.md.flashset.manager.CallFlashManager;
+import com.md.serverflash.ThemeSyncManager;
+
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventPostIsExist;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventPostIsExit;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.MajorityOfResult;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.MiPhoneResult;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.VideoLiveWallpaperService;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LiveWallpaperService;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.flurry.android.FlurryAgent;
 import com.md.callring.Constant;
-import com.md.flashset.manager.CallFlashManager;
-import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.download.ThemeResourceHelper;
 import com.md.wallpaper.WallpaperPreferenceHelper;
 import com.md.wallpaper.bean.WallpaperFormat;
 import com.md.wallpaper.bean.WallpaperInfo;
-import com.md.wallpaper.manager.WallpaperManager;
+import com.md.wallpaper.manager.WallpaperUtil;
 
 import java.io.File;
 import java.io.IOException;
 
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventPostIsExist;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventPostIsExit;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.MajorityOfResult;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.MiPhoneResult;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LiveWallpaperService;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.VideoLiveWallpaperService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
@@ -44,9 +52,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.Wallpaper
 import event.EventBus;
 
 public class WallpaperDetailActivity extends BaseActivity implements View.OnClickListener {
-    private static final int REQUEST_CODE_WRITE_EXTERNAL_STORAGE = 1527;
-    private static final int REQUEST_CODE_SET_WALLPAPER = 1526;
-
     private TextView tvDownload;
     private WallpaperInfo wallpaper;
     private GlideView gvBg;
@@ -58,6 +63,22 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
     private ImageView mIvWallSound;
     private boolean isExist;
     private boolean isDead = true;
+    private Handler mMajorityOfHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    openActivity(CallFlashSetResultActivity.class,0,0,false);
+                    break;
+                case 2:
+                    if (!isDead){
+                        openActivity(CallFlashSetResultActivity.class,0,0,false);
+                    }
+                    break;
+            }
+            return false;
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,53 +126,37 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
     }
 
 
-    private void startDownloadFile() {
-        tvDownload.setText(R.string.resume);
-        tvDownload.setBackgroundResource(R.color.color_half_transparent);
-
+    private void getPicture() {
         ThemeResourceHelper.getInstance().downloadThemeResources(wallpaper.id, wallpaper.url, new OnDownloadListener() {
             @Override
             public void onFailure(String wallpaper) {
-                if (isFinishing()) {
-                    return;
-                }
                 tvDownload.setText(R.string.download);
                 tvDownload.setBackgroundResource(R.color.color_FF27BB56);
             }
 
             @Override
             public void onFailureForIOException(String wallpaper) {
-                if (isFinishing()) {
-                    return;
-                }
-                tvDownload.setText(R.string.download);
-                tvDownload.setBackgroundResource(R.color.color_FF27BB56);
+                LogUtil.e("askdjk", "文件存储失败");
             }
 
             @Override
             public void onProgress(String wallpaper, int progress) {
-                if (isFinishing()) {
-                    return;
-                }
-                tvDownload.setText(getString(R.string.call_flash_gif_show_load, progress));
+                tvDownload.setText(progress + "%");
                 tvDownload.setVisibility(View.VISIBLE);
                 mPbDownloading.setVisibility(View.VISIBLE);
+                Log.e("onProgress: ", progress + "");
                 mPbDownloading.setProgress(progress);
             }
 
             @Override
             public void onSuccess(String u, File file) {
-                if (isFinishing()) {
-                    return;
-                }
-
                 wallpaper.isDownloadSuccess = true;
                 wallpaper.isDownloaded = false;
                 wallpaper.path = file.getAbsolutePath();
 
                 tvDownload.setBackgroundResource(R.color.progress_default_color);
                 mWallpaperView.showWallpaper(wallpaper);
-                WallpaperManager.saveDownloadedWallPaper(wallpaper);
+                WallpaperUtil.saveDownloadedWallPaper(wallpaper);
 
                 tvDownload.setText(R.string.set_pic);
                 tvDownload.setVisibility(View.VISIBLE);
@@ -160,6 +165,28 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
                 setSound();
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 100:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (tvDownload.getText().toString().equals(this.getString(R.string.download))){
+//                        LogUtil.e("asdgauysd333333333","asduyasuyduaysg");
+//                        tvDownload.setText(R.string.resume);
+//                        tvDownload.setBackgroundResource(R.color.color_half_transparent);
+//                        getPicture();
+//                    }
+                    setWall();
+                } else {
+                    // 没有获取到权限，做特殊处理
+                    Toast.makeText(this, getString(R.string.get_power_result), Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+        }
     }
 
     @Override
@@ -179,16 +206,35 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
         switch (v.getId()) {
             case R.id.tv_download:
                 if (tvDownload.getText().toString().equals(this.getString(R.string.download))) {
-                    String[] PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                    requestPermission(PERMISSIONS, REQUEST_CODE_WRITE_EXTERNAL_STORAGE);
+                    String[] PERMISSIONS = {
+                            "android.permission.READ_EXTERNAL_STORAGE",
+                            "android.permission.WRITE_EXTERNAL_STORAGE"};
+                    //检测是否有写的权限
+                    int permission = ContextCompat.checkSelfPermission(this,
+                            "android.permission.WRITE_EXTERNAL_STORAGE");
+                    if (permission != PackageManager.PERMISSION_GRANTED) {
+                        // 没有写的权限，去申请写的权限，会弹出对话框
+                        ActivityCompat.requestPermissions(this, PERMISSIONS, 1);
+                    } else {
+                        tvDownload.setText(R.string.resume);
+                        tvDownload.setBackgroundResource(R.color.color_half_transparent);
+                        getPicture();
+                    }
+
                 } else if (tvDownload.getText().toString().equals(this.getString(R.string.set_pic))) {
-//                    WallpaperPreferenceHelper.putObject(WallpaperPreferenceHelper.SETED_WALLPAPERS, wallpaper);
+                    WallpaperPreferenceHelper.putObject(WallpaperPreferenceHelper.SETED_WALLPAPERS, wallpaper);
                     String[] WALL = {
                             "android.permission.SET_WALLPAPER",};
-                    requestPermission(WALL, REQUEST_CODE_SET_WALLPAPER);
-
-                    if (isExist) {
+                    int wall = ContextCompat.checkSelfPermission(this,
+                            "android.permission.SET_WALLPAPER");
+                    if (wall != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(this, WALL, 1);
+                    } else {
+                        Log.e("onSurfaceCreated: ",WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,""));
+                        setWall();
+                        WallpaperUtil.saveSettedWallPaper(wallpaper);
+                    }
+                    if (isExist){
                         tvDownload.setText(R.string.set_pic);
                         tvDownload.setClickable(false);
                         tvDownload.setBackgroundResource(R.color.color_66FFFFFF);
@@ -210,9 +256,9 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
         super.onResume();
         mWallpaperView.continuePlay();
         file = ThemeSyncManager.getInstance().getFileByUrl(WallpaperDetailActivity.this, wallpaper.url);
-        String path = WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME, "");
+        String path = WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,"");
         if (file != null && file.exists() || (!TextUtils.isEmpty(wallpaper.path) && new File(wallpaper.path).exists())) {
-            LogUtil.e("ahsfdafsdghf", wallpaper.path + "\t" + path);
+            LogUtil.e("ahsfdafsdghf",wallpaper.path+"\t"+path);
             if (!wallpaper.path.equals(path)) {
                 tvDownload.setText(R.string.set_pic);
             } else {
@@ -246,18 +292,18 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
 
     private void setWall() {
         if (wallpaper.format == WallpaperFormat.FORMAT_VIDEO) {
-            LogUtil.e("daozheli", wallpaper.format + "");
+            LogUtil.e("daozheli",wallpaper.format+"");
             Intent intent = new Intent();
             intent.setAction(VideoLiveWallpaperService.ACTION_UPDATE_PATH);
-            intent.putExtra(VideoLiveWallpaperService.VIDEO_LIVE_WALLPAPER_PATH, file.getAbsolutePath());
-            if (isExist) {
-                intent.putExtra(VideoLiveWallpaperService.VIDEO_LIVE_WALLPAPER_START_OPEN, true);
-            } else {
+            intent.putExtra(VideoLiveWallpaperService.VIDEO_LIVE_WALLPAPER_PATH,file.getAbsolutePath());
+            if (isExist){
+                intent.putExtra(VideoLiveWallpaperService.VIDEO_LIVE_WALLPAPER_START_OPEN,true);
+            }else {
                 Intent intent1 = new Intent(android.app.WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
                 intent1.putExtra(android.app.WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
                         new ComponentName(WallpaperDetailActivity.this, VideoLiveWallpaperService.class));
-                startActivityForResult(intent1, -1);
-                intent.putExtra(VideoLiveWallpaperService.VIDEO_LIVE_WALLPAPER_START_OPEN, false);
+                startActivity(intent1);
+                intent.putExtra(VideoLiveWallpaperService.VIDEO_LIVE_WALLPAPER_START_OPEN,false);
             }
             sendBroadcast(intent);
 //            openActivity(CallFlashSetResultActivity.class,0,0,true);
@@ -274,50 +320,24 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
             } catch (IOException e) {
                 Log.e("tgyhuj", "Failed to set wallpaper: " + e);
             }
-            toResult();
-        } else {
-            LogUtil.e("暂不支持格式", "暂不支持格式");
+            openActivity(CallFlashSetResultActivity.class, 0, 0, true);
+        }else {
+            LogUtil.e("暂不支持格式","暂不支持格式");
         }
+
     }
 
-    private void toResult() {
-        Intent intent = new Intent();
-        intent.setClass(this, CallFlashSetResultActivity.class);
-        startActivity(intent);
-    }
 
     @Override
-    public void onPermissionGranted(int requestCode) {
-        if (requestCode == REQUEST_CODE_WRITE_EXTERNAL_STORAGE) {
-            startDownloadFile();
-        } else if (requestCode == REQUEST_CODE_SET_WALLPAPER) {
-            setWall();
-        }
-    }
-
-    @Override
-    public void onPermissionNotGranted(int requestCode) {
-        super.onPermissionNotGranted(requestCode);
-    }
-
-    @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        LogUtil.d("chenr", "onActivityResult");
-
-        if (resultCode != RESULT_OK) {
+        LogUtil.e("onActivityResult: ", requestCode+"\t"+requestCode);
+        if (resultCode == RESULT_OK){
+            mMajorityOfHandler.sendEmptyMessageDelayed(1,1000);
+        }else {
             EventBus.getDefault().post(new MiPhoneResult());
+            mMajorityOfHandler.sendEmptyMessageDelayed(2,1000);
         }
-        tvDownload.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (resultCode == RESULT_OK) {
-                    toResult();
-                } else if (!isDead) {
-                    toResult();
-                }
-            }
-        }, 1000);
     }
 
 
@@ -326,12 +346,13 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
         LiveWallpaperService.voiceNormal(this);
     }
 
-    public void onEventMainThread(EventPostIsExist eventPostIsExist) {
+    public void onEventMainThread(EventPostIsExist eventPostIsExist){
+        LogUtil.e("asdgauysd222222","asduyasuyduaysg");
         isExist = true;
     }
 
-    public void onEventMainThread(MajorityOfResult majorityOfResult) {
+    public void onEventMainThread(MajorityOfResult majorityOfResult){
+        LogUtil.e("asdgauysd4444444","asduyasuyduaysg");
         isDead = false;
     }
-
 }

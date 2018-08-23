@@ -35,10 +35,9 @@ public class LocalMusicActivity extends BaseActivity {
     private LinearLayout root;
     private Thread run;
     private ProgressDialog progressDialog;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message msg) {
             progressDialog.cancel();
             if (data !=null){
                 adapter = new AudioAdapter(LocalMusicActivity.this, data) ;
@@ -60,8 +59,9 @@ public class LocalMusicActivity extends BaseActivity {
                     }
                 }) ;
             }
+            return false;
         }
-    };
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

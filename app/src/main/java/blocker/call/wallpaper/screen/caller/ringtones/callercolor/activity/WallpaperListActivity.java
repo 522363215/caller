@@ -8,6 +8,9 @@ import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.md.wallpaper.SetPic;
+import com.md.wallpaper.bean.WallpaperDataType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,14 +85,22 @@ public class WallpaperListActivity extends BaseActivity implements ViewPager.OnP
 
     }
 
+    SetPic setPic = new SetPic() {
+        @Override
+        public void setPic() {
+            mVpMessage.setCurrentItem(0);
+        }
+    };
+
     @Override
     protected int getLayoutRootId() {
         return R.layout.activity_message;
     }
 
     private void getFragmentArray() {
-        WallpaperListFragment wallpaperListFragment = new WallpaperListFragment();
+        WallpaperListFragment wallpaperListFragment = WallpaperListFragment.newInstance(WallpaperDataType.WALLPAPER_HOME);
         UsedPictureFragment usedPictureFragment = new UsedPictureFragment();
+        usedPictureFragment.setSetPic(setPic);
         fragments = new ArrayList<>();
 //        fragments.add(wallpaperListFragment);
         fragments.add(usedPictureFragment);

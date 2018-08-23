@@ -17,4 +17,5 @@ public class WallpaperFormat {
      * 图片
      */
     public static final int FORMAT_IMAGE = 2;
+
 }

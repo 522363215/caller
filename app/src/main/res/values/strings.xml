@@ -237,6 +237,10 @@
     <string name="pause">pause</string>
     <string name="get_power_result">"获取权限失败，请手动开启"</string>
     <string name="get_audio_result">没有扫描到音频文件</string>
-    <string name="wallpaper_list_data_load_failed">Online wallpaper load failed!</string>
-    <string name="page_title_wallpaper">Wallpaper</string>
+    <string name="no_set">没有设置壁纸</string>
+    <string name="set">设置</string>
+    <string name="get">当前设置壁纸</string>
+    <string name="downloaded">已下载的</string>
+    <string name="all">全部</string>
+    <string name="cookie">痕迹</string>
 </resources>
