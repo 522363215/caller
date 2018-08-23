@@ -3,7 +3,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -68,7 +68,7 @@ public class UsedPictureFragment extends Fragment {
                     break;
                 case R.id.iv_get:
                     Intent intent = new Intent();
-                    intent.setClass(getContext(), WallpaperDetailActivity.class);
+                    intent.setClass(getActivity(), WallpaperDetailActivity.class);
                     intent.putExtra(Constant.WALLPAPER_BUNDLE, setWallpaper);
                     startActivity(intent);
                     break;
@@ -104,13 +104,13 @@ public class UsedPictureFragment extends Fragment {
             mRlDownloaded.setVisibility(View.VISIBLE);
             mRvAllCookie.setLayoutManager(new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false));
             mRvAllCookie.addItemDecoration(new HorizontalCallFlashMarginDecoration());
-            HorAdapter horAdapter = new HorAdapter(download,getContext());
+            HorAdapter horAdapter = new HorAdapter(download,getActivity());
             mRvAllCookie.setAdapter(horAdapter);
             horAdapter.setmRecyclerClick(new RecyclerClick() {
                 @Override
                 public void normalClick(View view, int position) {
                     Intent intent = new Intent();
-                    intent.setClass(getContext(), WallpaperDetailActivity.class);
+                    intent.setClass(getActivity(), WallpaperDetailActivity.class);
                     intent.putExtra(Constant.WALLPAPER_BUNDLE, cookie.get(position));
                     startActivity(intent);
                 }
@@ -128,14 +128,14 @@ public class UsedPictureFragment extends Fragment {
             mRlCookie.setVisibility(View.VISIBLE);
             mRvAll.setLayoutManager(new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false));
             mRvAll.addItemDecoration(new HorizontalCallFlashMarginDecoration());
-            HorAdapter horAdapter = new HorAdapter(cookie,getContext());
+            HorAdapter horAdapter = new HorAdapter(cookie,getActivity());
             mRvAll.setAdapter(horAdapter);
 
             horAdapter.setmRecyclerClick(new RecyclerClick() {
                 @Override
                 public void normalClick(View view, int position) {
                     Intent intent = new Intent();
-                    intent.setClass(getContext(), WallpaperDetailActivity.class);
+                    intent.setClass(getActivity(), WallpaperDetailActivity.class);
                     intent.putExtra(Constant.WALLPAPER_BUNDLE, cookie.get(position));
                     startActivity(intent);
                 }

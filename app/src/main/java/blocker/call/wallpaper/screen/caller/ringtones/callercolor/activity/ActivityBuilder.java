@@ -119,4 +119,9 @@ public class ActivityBuilder {
         Intent intent = new Intent(context, CallFlashSetGuideActivity.class);
         context.startActivity(intent);
     }
+
+    public static void toAppointActivity(Context context,Class cls) {
+        Intent intent = new Intent(context, cls);
+        context.startActivity(intent);
+    }
 }

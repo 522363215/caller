@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,13 +25,9 @@ import com.md.flashset.bean.CallFlashDataType;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
 import com.md.serverflash.callback.SingleTopicThemeCallback;
-import com.md.serverflash.callback.ThemeSyncCallback;
-import com.md.serverflash.callback.TopicThemeCallback;
-import com.md.wallpaper.WallpaperPreferenceHelper;
 import com.md.wallpaper.bean.WallpaperDataType;
-import com.md.wallpaper.bean.WallpaperFormat;
 import com.md.wallpaper.bean.WallpaperInfo;
-import com.md.wallpaper.manager.WallpaperUtil;
+import com.md.wallpaper.WallpaperUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +103,7 @@ public class WallpaperListFragment extends Fragment implements View.OnClickListe
         @Override
         public void normalClick(View view, int position) {
             Intent intent = new Intent();
-            intent.setClass(getContext(),WallpaperDetailActivity.class);
+            intent.setClass(getActivity(),WallpaperDetailActivity.class);
             intent.putExtra(Constant.WALLPAPER_BUNDLE,wallpaperInfos.get(position));
             startActivity(intent);
         }

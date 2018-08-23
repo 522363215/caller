@@ -243,4 +243,5 @@
     <string name="downloaded">已下载的</string>
     <string name="all">全部</string>
     <string name="cookie">痕迹</string>
+    <string name="page_title_wallpaper">壁纸</string>
 </resources>

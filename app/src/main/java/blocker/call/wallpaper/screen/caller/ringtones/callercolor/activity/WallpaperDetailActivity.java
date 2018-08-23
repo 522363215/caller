@@ -38,13 +38,14 @@ import com.md.serverflash.download.ThemeResourceHelper;
 import com.md.wallpaper.WallpaperPreferenceHelper;
 import com.md.wallpaper.bean.WallpaperFormat;
 import com.md.wallpaper.bean.WallpaperInfo;
-import com.md.wallpaper.manager.WallpaperUtil;
+import com.md.wallpaper.WallpaperUtil;
 
 import java.io.File;
 import java.io.IOException;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.BatteryProgressBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
@@ -68,11 +69,11 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
         public boolean handleMessage(Message msg) {
             switch (msg.what){
                 case 1:
-                    openActivity(CallFlashSetResultActivity.class,0,0,false);
+                    ActivityBuilder.toAppointActivity(WallpaperDetailActivity.this,CallFlashSetResultActivity.class);
                     break;
                 case 2:
                     if (!isDead){
-                        openActivity(CallFlashSetResultActivity.class,0,0,false);
+                        ActivityBuilder.toAppointActivity(WallpaperDetailActivity.this,CallFlashSetResultActivity.class);
                     }
                     break;
             }
@@ -320,7 +321,7 @@ public class WallpaperDetailActivity extends BaseActivity implements View.OnClic
             } catch (IOException e) {
                 Log.e("tgyhuj", "Failed to set wallpaper: " + e);
             }
-            openActivity(CallFlashSetResultActivity.class, 0, 0, true);
+            ActivityBuilder.toAppointActivity(WallpaperDetailActivity.this,CallFlashSetResultActivity.class);
         }else {
             LogUtil.e("暂不支持格式","暂不支持格式");
         }

@@ -3,8 +3,9 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -18,6 +19,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.FragmentAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.WallpaperListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.UsedPictureFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 
 public class WallpaperListActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
@@ -67,7 +69,8 @@ public class WallpaperListActivity extends BaseActivity implements ViewPager.OnP
 
         mAbMessage.setTitle(R.string.message_action_one);
 
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
+        LogUtil.e( "onCreate: ",fragments.size()+"" );
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getFragmentManager(),fragments);
         mVpMessage.setAdapter(fragmentAdapter);
         mVpMessage.setOnPageChangeListener(this);
 
@@ -102,7 +105,7 @@ public class WallpaperListActivity extends BaseActivity implements ViewPager.OnP
         UsedPictureFragment usedPictureFragment = new UsedPictureFragment();
         usedPictureFragment.setSetPic(setPic);
         fragments = new ArrayList<>();
-//        fragments.add(wallpaperListFragment);
+        fragments.add(wallpaperListFragment);
         fragments.add(usedPictureFragment);
     }
 

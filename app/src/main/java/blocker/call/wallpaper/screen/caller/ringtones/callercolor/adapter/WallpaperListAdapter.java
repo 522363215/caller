@@ -52,7 +52,7 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View item = LayoutInflater.from(context).inflate(com.md.callring.R.layout.item_song, parent, false);
+        View item = LayoutInflater.from(context).inflate(com.md.callring.R.layout.item_wallpaper_list, parent, false);
         ViewGroup.LayoutParams layoutParams = item.getLayoutParams();
         if (layoutParams == null) {
             layoutParams = new ViewGroup.LayoutParams(childViewWidth, childViewHeight);
