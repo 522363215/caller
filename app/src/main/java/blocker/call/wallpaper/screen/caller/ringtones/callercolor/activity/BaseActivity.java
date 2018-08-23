@@ -328,23 +328,4 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
         });
     }
     //**************************************请求权限 end**************************//
-
-    protected void openActivity(Class c,int startAnim,int endAnim,boolean cancelOrNo){
-        Intent intent = new Intent(this,c);
-        startActivity(intent);
-        overridePendingTransition(startAnim,endAnim);
-        if (cancelOrNo){
-            finish();
-        }
-    }
-
-    protected void openActivity(Class c,Bundle bundle,int startAnim,int endAnim,boolean cancelOrNo){
-        Intent intent = new Intent(this,c);
-        intent.putExtras(bundle);
-        startActivity(intent);
-        overridePendingTransition(startAnim,endAnim);
-        if (cancelOrNo){
-            finish();
-        }
-    }
 }

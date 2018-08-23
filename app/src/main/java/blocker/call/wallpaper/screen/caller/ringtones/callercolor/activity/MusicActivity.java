@@ -1,5 +1,6 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.os.Bundle;
@@ -65,7 +66,10 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                 mediaPlayer.pause();
                 String uri = "android.resource://" + getPackageName() + "/" + localSong.getMusic();
                 Setting.setRing(this, RingtoneManager.TYPE_RINGTONE,uri,false);
-                openActivity(CallFlashSetResultActivity.class,0,0,true);
+                Intent intent = new Intent();
+                intent.setClass(this, CallFlashSetResultActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

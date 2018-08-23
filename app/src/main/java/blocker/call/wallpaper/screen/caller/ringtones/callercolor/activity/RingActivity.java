@@ -1,5 +1,6 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,14 +42,17 @@ public class RingActivity extends BaseActivity {
         localAdapter.setmRecyclerClick(new RecyclerClick() {
             @Override
             public void normalClick(View view,int p) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constant.MUSIC_BUNDLE,localSongs.get(p));
-                openActivity(MusicActivity.class,bundle,0,0,false);
+                Intent intent = new Intent();
+                intent.setClass(RingActivity.this, MusicActivity.class);
+                intent.putExtra(Constant.MUSIC_BUNDLE, localSongs.get(p));
+                startActivity(intent);
             }
 
             @Override
             public void footClick(View view,int p) {
-                openActivity(LocalMusicActivity.class,0,0,false);
+                Intent intent = new Intent();
+                intent.setClass(RingActivity.this, LocalMusicActivity.class);
+                startActivity(intent);
             }
 
         });
