@@ -40,6 +40,8 @@ public class AdvertisementSwitcher {
     public static final String SERVER_KEY_SET_RESULT = "SET_RESULT";           //来电秀设置结果结果
     public static final String SERVER_KEY_IN_RESULT = "IN_RESULT";           //结果页插页广告
     public static final String SERVER_KEY_FIRST_SHOW_ADMOB = "FIRST_SHOW_ADMOB";
+    public static final String SERVER_KEY_SET_MAIN = "SET_MAIN";  //设置setting, cpm 大图, 300*250
+    public static final String SERVER_KEY_BLOCK_MAIN = "BLOCK_MAIN";  //block main 底部 小图, cpm banner
     //old
     public static final String SERVER_KEY_CALL_FLASH_SETTING = "CALL_FLASH_SETTING";  //来电秀设置, fakecall首页, calllog adapter, block2
     public static final String SERVER_KEY_COMMON_RESULT = "COMMON_RESULT";           //扫描结果，号码升级结果, 短信详情， 短信编辑
