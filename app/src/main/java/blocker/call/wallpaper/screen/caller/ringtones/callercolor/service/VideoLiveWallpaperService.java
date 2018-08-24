@@ -68,11 +68,12 @@ public class VideoLiveWallpaperService extends WallpaperService {
                 if(mMediaPlayer != null) {
                     if(!mMediaPlayer.isPlaying()){
                         mMediaPlayer.start();
-                        if(!voiceStat){
-                            mMediaPlayer.setVolume(1f, 1f);
-                        } else {
-                            mMediaPlayer.setVolume(0, 0);
-                        }
+                        mMediaPlayer.setVolume(0, 0);
+//                        if(!voiceStat){
+//                            mMediaPlayer.setVolume(1f, 1f);
+//                        } else {
+//                            mMediaPlayer.setVolume(0, 0);
+//                        }
                     }
                 }
             }
@@ -104,11 +105,12 @@ public class VideoLiveWallpaperService extends WallpaperService {
 //                    boolean loop = LiveWallpaperUtil.getMainScreenLoopState(VideoLiveWallpaperService.this);
                     mMediaPlayer.setLooping(true);
                     mMediaPlayer.setSurface(holder.getSurface());
-                    if(!voiceStat){
-                        mMediaPlayer.setVolume(1f, 1f);
-                    } else {
-                        mMediaPlayer.setVolume(0, 0);
-                    }
+                    mMediaPlayer.setVolume(0, 0);
+//                    if(!voiceStat){
+//                        mMediaPlayer.setVolume(1f, 1f);
+//                    } else {
+//                        mMediaPlayer.setVolume(0, 0);
+//                    }
                     mMediaPlayer.prepare();
                     mMediaPlayer.start();
 

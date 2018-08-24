@@ -101,7 +101,7 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.mOnDownloadListener.setDownloadParams(holder, wallpaperInfos.get(position));
         File file = ThemeSyncManager.getInstance().getFileByUrl(context, wallpaperInfos.get(position).url);
-        String path = WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,"");
+        WallpaperInfo path = WallpaperPreferenceHelper.getObject(WallpaperPreferenceHelper.SETED_WALLPAPERS,WallpaperInfo.class);
         holder.ivBackground.showImage(wallpaperInfos.get(position).img_vUrl);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +111,7 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
         });
         if (file != null && file.exists() || (!TextUtils.isEmpty(wallpaperInfos.get(position).path) && new File(wallpaperInfos.get(position).path).exists())) {
             holder.ivDownload.setVisibility(View.INVISIBLE);
-            if (path.equals(wallpaperInfos.get(position).path))
+            if (path.path.equals(wallpaperInfos.get(position).path))
                 holder.ivSelect.setVisibility(View.VISIBLE);
             else
                 holder.ivSelect.setVisibility(View.INVISIBLE);

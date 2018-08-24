@@ -67,13 +67,13 @@
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="@string/cookie"
+               android:text="@string/mine_set_before"
                android:layout_marginBottom="10dp"
                android:textColor="@color/white" />
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="@string/all"
+               android:text="@string/mine_all"
                android:id="@+id/tv_all_cookie"
                android:textColor="@color/white"
                android:layout_toLeftOf="@+id/iv_all_cookie"
@@ -100,13 +100,13 @@
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="@string/downloaded"
+               android:text="@string/mine_downloaded"
                android:layout_marginBottom="10dp"
                android:textColor="@color/white" />
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="@string/all"
+               android:text="@string/mine_all"
                android:id="@+id/tv_all"
                android:textColor="@color/white"
                android:layout_toLeftOf="@+id/iv_all"

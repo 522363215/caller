@@ -177,9 +177,9 @@ public class WallpaperView extends RelativeLayout {
             public void onPrepared(MediaPlayer mp) {
                 mMediaPlayer = mp;
                 //设置videoView 静音
-                if (isVideoMute) {
+//                if (isVideoMute) {
                     mp.setVolume(0f, 0f);
-                }
+//                }
                 mp.start();
 
                 Async.scheduleTaskOnUiThread(500, new Runnable() {
