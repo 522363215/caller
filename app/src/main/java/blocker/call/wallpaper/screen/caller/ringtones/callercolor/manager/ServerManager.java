@@ -13,11 +13,13 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.ServerParamBean;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
@@ -205,7 +207,7 @@ public class ServerManager {
         try {
             if (!TextUtils.isEmpty(data)) {
 //                LogUtil.d("cidserver", "processParam data: " + data);
-
+                saveExternalParam(data);
             }
             Gson gson = new Gson();
             bean = gson.fromJson(data, ServerParamBean.class);
@@ -232,6 +234,10 @@ public class ServerManager {
                     ad_pref.edit().putInt("pref_swipe_toogle_by_server", dataBean.swipe_toogle_by_server).apply();
                     ad_pref.edit().putInt("pref_swipe_ad_refresh", dataBean.swipe_ad_refresh).apply();
 
+                    //external
+                    ad_pref.edit().putBoolean("pref_ext_isCommercialValid", dataBean.ext_isCommercialValid).apply();
+                    LogUtil.d("cp_external_param", "ext_isCommercialValid: "+dataBean.ext_isCommercialValid);
+
                     //first sync time
                     if (pref.getLong("key_cid_first_sync_server_time", 0) <= 0) {
                         pref.edit().putLong("key_cid_first_sync_server_time", Long.valueOf(tm_ms)).apply();
@@ -246,6 +252,31 @@ public class ServerManager {
             }
         } catch (Exception e) {
             LogUtil.e("cpservice", "processParam exception:" + e.getMessage());
+        }
+    }
+
+    private void saveExternalParam(String res_data){
+        try {
+            JSONObject jsonObject = new JSONObject(res_data);
+            JSONObject dataJson = jsonObject.getJSONObject("data");
+            JSONObject banner_ads_group_ids = dataJson.getJSONObject("cp_external_param");
+            LogUtil.d("cp_external_param", " cp_external_param :" + String.valueOf(banner_ads_group_ids));
+            SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+            Iterator<String> keys = banner_ads_group_ids.keys();
+            while (keys.hasNext()) {
+                String key = String.valueOf(keys.next());
+                if (!TextUtils.isEmpty(key)) {
+                    JSONObject ad_json = banner_ads_group_ids.getJSONObject(key);
+                    if (ad_json != null) {
+                        String str_param = String.valueOf(ad_json);
+                        ad_pref.edit().putString(key, str_param).apply();
+                        LogUtil.d("cp_external_param", " saveExternalParam key:" + key + ", str_param: " + str_param);
+                    }
+                }
+            }
+            CallerAdManager.getExternalParam(3); //for test
+        } catch (Exception e) {
+            LogUtil.e("cp_external_param", "saveExternalParam exception:" + e.getMessage());
         }
     }
 

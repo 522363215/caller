@@ -3,11 +3,14 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import org.json.JSONObject;
+
 import java.util.HashSet;
 import java.util.Random;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.ExternalParam;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
@@ -219,5 +222,74 @@ public class CallerAdManager {
     public static String getSwipeFbId() {
         String fb_id = ApplicationEx.getInstance().getGlobalADPreference().getString("pref_swipe_fb_id", "");
         return fb_id;
+    }
+
+    public static boolean isExternalOn(){
+        boolean isOn = false;
+        isOn = ApplicationEx.getInstance().getGlobalADPreference().getBoolean("pref_ext_isCommercialValid", false);
+        return isOn;
+    }
+
+    public static ExternalParam getExternalParam(int ext_type){
+        ExternalParam externalParam = new ExternalParam();
+        externalParam.mType = ext_type;
+        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+        String str_param = null;
+        switch (ext_type) {
+            case 1:
+                str_param = ad_pref.getString("M_AB", "");
+                break;
+            case 2:
+                str_param = ad_pref.getString("M_AC", "");
+                break;
+            case 3:
+                str_param = ad_pref.getString("M_BR", "");
+                break;
+            case 4:
+                str_param = ad_pref.getString("M_BS", "");
+                break;
+            case 5:
+                str_param = ad_pref.getString("M_CS", "");
+                break;
+            case 6:
+                str_param = ad_pref.getString("M_DW", "");
+                break;
+            case 7:
+                str_param = ad_pref.getString("M_EC", "");
+                break;
+            case 8:
+                str_param = ad_pref.getString("M_NM", "");
+                break;
+            case 9:
+                str_param = ad_pref.getString("M_WS", "");
+                break;
+            case 10:
+                str_param = ad_pref.getString("M_IT", "");
+                break;
+        }
+        LogUtil.d("cp_external_param", "getExternalParam ext_type: "+str_param);
+        if(!TextUtils.isEmpty(str_param)){
+            try {
+                JSONObject jsonObject = new JSONObject(str_param);
+                externalParam.mEnable = jsonObject.optBoolean("mEnable");
+                externalParam.mDelayedDisplayRate = jsonObject.optInt("mDelayedDisplayRate");
+                externalParam.mDelayTime = jsonObject.optInt("mDelayTime");
+                externalParam.mSelfInterval = jsonObject.optInt("mSelfInterval");
+                externalParam.mPopupNumber = jsonObject.optInt("mPopupNumber");
+                externalParam.mDelayedDisplayTime = jsonObject.optInt("mDelayedDisplayTime");
+                externalParam.mRestartDay = jsonObject.optInt("mRestartDay");
+                externalParam.fb_id = jsonObject.optString("fb_id");
+                externalParam.admob_id = jsonObject.optString("admob_id");
+                LogUtil.d("cp_external_param", "getExternalParam mRestartDay: "+externalParam.mRestartDay);
+                LogUtil.d("cp_external_param", "getExternalParam mEnable: "+externalParam.mEnable);
+                LogUtil.d("cp_external_param", "getExternalParam fb_id: "+externalParam.fb_id);
+                LogUtil.d("cp_external_param", "getExternalParam admob_id: "+externalParam.admob_id);
+            }catch (Exception e){
+                LogUtil.e("cp_external_param", "getExternalParam ext_type exception: "+e.getMessage());
+            }
+
+        }
+        return externalParam;
+
     }
 }

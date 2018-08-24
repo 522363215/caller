@@ -385,5 +385,8 @@ public class ServerParamBean implements Serializable {
         //
         public int is_auto_go_main = 0; //0 自动跳过splash，1 不自动
         public int  is_show_ad_end_call = 0;//1-渠道量才显示，默认不显示, 电话结束显示广告
+
+        //external
+        public boolean ext_isCommercialValid = false; //external 总开关
     }
 }
