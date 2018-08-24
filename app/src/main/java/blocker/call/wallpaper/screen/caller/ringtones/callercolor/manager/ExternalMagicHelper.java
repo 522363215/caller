@@ -184,7 +184,7 @@ public class ExternalMagicHelper {
 
             @Override
             public boolean OnCallEndEvent() {
-                return true;
+                return false;
             }
         });
 
