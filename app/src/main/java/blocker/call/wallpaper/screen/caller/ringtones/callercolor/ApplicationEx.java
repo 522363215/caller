@@ -148,6 +148,11 @@ public class ApplicationEx extends Application {
         return adPreference;
     }
 
+    public SharedPreferences getExtPreference() {
+        SharedPreferences extPreference = getSharedPreferences(ConstantUtils.EXT_PREF_FILE, Context.MODE_PRIVATE);
+        return extPreference;
+    }
+
     private void saveVersioncode() {
         long currentTimeMillis = System.currentTimeMillis();
         int versionCode = HttpUtil.pkgVersion(this);

@@ -261,7 +261,7 @@ public class ServerManager {
             JSONObject dataJson = jsonObject.getJSONObject("data");
             JSONObject banner_ads_group_ids = dataJson.getJSONObject("cp_external_param");
             LogUtil.d("cp_external_param", " cp_external_param :" + String.valueOf(banner_ads_group_ids));
-            SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+            SharedPreferences ext_pref = ApplicationEx.getInstance().getExtPreference();
             Iterator<String> keys = banner_ads_group_ids.keys();
             while (keys.hasNext()) {
                 String key = String.valueOf(keys.next());
@@ -269,7 +269,7 @@ public class ServerManager {
                     JSONObject ad_json = banner_ads_group_ids.getJSONObject(key);
                     if (ad_json != null) {
                         String str_param = String.valueOf(ad_json);
-                        ad_pref.edit().putString(key, str_param).apply();
+                        ext_pref.edit().putString(key, str_param).apply();
                         LogUtil.d("cp_external_param", " saveExternalParam key:" + key + ", str_param: " + str_param);
                     }
                 }

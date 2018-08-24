@@ -236,41 +236,70 @@ public class CallerAdManager {
         return mins;
     }
 
+    public static ExternalParam getExternalParam(String key){
+        ExternalParam externalParam = new ExternalParam();
+        SharedPreferences ext_pref = ApplicationEx.getInstance().getExtPreference();
+        String str_param = ext_pref.getString(key, "");;
+        LogUtil.d("cp_external_param", "getExternalParam ext_type: "+str_param);
+        if(!TextUtils.isEmpty(str_param)){
+            try {
+                JSONObject jsonObject = new JSONObject(str_param);
+                externalParam.mEnable = jsonObject.optBoolean("mEnable");
+                externalParam.mDelayedDisplayRate = jsonObject.optInt("mDelayedDisplayRate");
+                externalParam.mDelayTime = jsonObject.optInt("mDelayTime");
+                externalParam.mSelfInterval = jsonObject.optInt("mSelfInterval");
+                externalParam.mPopupNumber = jsonObject.optInt("mPopupNumber");
+                externalParam.mDelayedDisplayTime = jsonObject.optInt("mDelayedDisplayTime");
+                externalParam.mRestartDay = jsonObject.optInt("mRestartDay");
+                externalParam.fb_id = jsonObject.optString("fb_id");
+                externalParam.admob_id = jsonObject.optString("admob_id");
+                LogUtil.d("cp_external_param", "getExternalParam mRestartDay: "+externalParam.mRestartDay);
+                LogUtil.d("cp_external_param", "getExternalParam mEnable: "+externalParam.mEnable);
+                LogUtil.d("cp_external_param", "getExternalParam fb_id: "+externalParam.fb_id);
+                LogUtil.d("cp_external_param", "getExternalParam admob_id: "+externalParam.admob_id);
+            }catch (Exception e){
+                LogUtil.e("cp_external_param", "getExternalParam ext_type exception: "+e.getMessage());
+            }
+
+        }
+        return externalParam;
+    }
+
     public static ExternalParam getExternalParam(int ext_type){
         ExternalParam externalParam = new ExternalParam();
         externalParam.mType = ext_type;
-        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+        SharedPreferences ext_pref = ApplicationEx.getInstance().getExtPreference();
         String str_param = null;
         switch (ext_type) {
             case 1:
-                str_param = ad_pref.getString("M_AB", "");
+                str_param = ext_pref.getString("M_AB", "");
                 break;
             case 2:
-                str_param = ad_pref.getString("M_AC", "");
+                str_param = ext_pref.getString("M_AC", "");
                 break;
             case 3:
-                str_param = ad_pref.getString("M_BR", "");
+                str_param = ext_pref.getString("M_BR", "");
                 break;
             case 4:
-                str_param = ad_pref.getString("M_BS", "");
+                str_param = ext_pref.getString("M_BS", "");
                 break;
             case 5:
-                str_param = ad_pref.getString("M_CS", "");
+                str_param = ext_pref.getString("M_CS", "");
                 break;
             case 6:
-                str_param = ad_pref.getString("M_DW", "");
+                str_param = ext_pref.getString("M_DW", "");
                 break;
             case 7:
-                str_param = ad_pref.getString("M_EC", "");
+                str_param = ext_pref.getString("M_EC", "");
                 break;
             case 8:
-                str_param = ad_pref.getString("M_NM", "");
+                str_param = ext_pref.getString("M_NM", "");
                 break;
             case 9:
-                str_param = ad_pref.getString("M_WS", "");
+                str_param = ext_pref.getString("M_WS", "");
                 break;
             case 10:
-                str_param = ad_pref.getString("M_IT", "");
+                str_param = ext_pref.getString("M_IT", "");
                 break;
         }
         LogUtil.d("cp_external_param", "getExternalParam ext_type: "+str_param);
