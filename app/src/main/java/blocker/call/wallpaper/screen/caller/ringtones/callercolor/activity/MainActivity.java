@@ -56,6 +56,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private DrawerLayout mMain_drawer_layout;
     private SideslipContraller sideslipContraller;
     private RelativeLayout mTabHome;
+    private RelativeLayout mTabWallpaper;
     private RelativeLayout mTabCategory;
     private MainPagerAdapter mMainPagerAdapter;
     private CallFlashListFragment mCallFlashListFragment;
@@ -182,6 +183,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.id.layout_wallpaper:
+                onWallpaper();
+                break;
             case R.id.layout_home:
                 onHome();
                 break;
@@ -296,6 +300,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mTabHome = (RelativeLayout) findViewById(R.id.layout_home);
         mTabCategory = (RelativeLayout) findViewById(R.id.layout_category);
         mTabMine = (RelativeLayout) findViewById(R.id.layout_mine);
+        mTabWallpaper = (RelativeLayout) findViewById(R.id.layout_wallpaper);
 
 
     }
@@ -303,6 +308,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void listener() {
         mTabHome.setOnClickListener(this);
         mTabCategory.setOnClickListener(this);
+        mTabWallpaper.setOnClickListener(this);
         mTabMine.setOnClickListener(this);
         mSideslipMenu.setOnClickListener(this);
         findViewById(R.id.iv_upload).setOnClickListener(this);
@@ -318,6 +324,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void onHome() {
         mViewPager.setCurrentItem(ActivityBuilder.FRAGMENT_HOME);
+    }
+
+    private void onWallpaper() {
+        mViewPager.setCurrentItem(ActivityBuilder.FRAGMENT_WALLPAPER);
     }
 
     //打开侧滑
