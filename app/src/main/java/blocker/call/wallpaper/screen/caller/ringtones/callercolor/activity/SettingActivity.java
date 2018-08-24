@@ -297,11 +297,11 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
     private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
 
         public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String eventKey, boolean isBanner) {
-            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, AdvertisementSwitcher.SERVER_KEY_CALL_FLASH_SETTING);
+            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, AdvertisementSwitcher.SERVER_KEY_SET_MAIN);
         }
 
         public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, boolean isBanner) {
-            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, AdvertisementSwitcher.SERVER_KEY_CALL_FLASH_SETTING, isBanner);
+            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, AdvertisementSwitcher.SERVER_KEY_SET_MAIN, isBanner);
         }
 
         @Override
