@@ -19,7 +19,6 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.ServerParamBean;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
@@ -206,7 +205,7 @@ public class ServerManager {
         ServerParamBean bean = null;
         try {
             if (!TextUtils.isEmpty(data)) {
-//                LogUtil.d("cidserver", "processParam data: " + data);
+//                LogUtil.d("cpserver", "processParam data: " + data);
                 saveExternalParam(data);
             }
             Gson gson = new Gson();
@@ -274,7 +273,6 @@ public class ServerManager {
                     }
                 }
             }
-            CallerAdManager.getExternalParam(3); //for test
         } catch (Exception e) {
             LogUtil.e("cp_external_param", "saveExternalParam exception:" + e.getMessage());
         }
