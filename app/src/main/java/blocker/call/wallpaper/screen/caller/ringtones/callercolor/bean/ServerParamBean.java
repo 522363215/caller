@@ -388,5 +388,6 @@ public class ServerParamBean implements Serializable {
 
         //external
         public boolean ext_isCommercialValid = false; //external 总开关
+        public int ext_show_interval = 5; //外部弹窗 间隔时间, 分钟
     }
 }

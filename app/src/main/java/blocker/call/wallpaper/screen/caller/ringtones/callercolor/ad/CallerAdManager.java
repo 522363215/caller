@@ -230,6 +230,12 @@ public class CallerAdManager {
         return isOn;
     }
 
+    public static int getExternalInterval(){
+        int mins = 5;
+        mins = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_ext_show_interval", 5);
+        return mins;
+    }
+
     public static ExternalParam getExternalParam(int ext_type){
         ExternalParam externalParam = new ExternalParam();
         externalParam.mType = ext_type;

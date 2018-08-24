@@ -235,6 +235,7 @@ public class ServerManager {
 
                     //external
                     ad_pref.edit().putBoolean("pref_ext_isCommercialValid", dataBean.ext_isCommercialValid).apply();
+                    ad_pref.edit().putInt("pref_ext_show_interval", dataBean.ext_show_interval).apply();
                     LogUtil.d("cp_external_param", "ext_isCommercialValid: "+dataBean.ext_isCommercialValid);
 
                     //first sync time

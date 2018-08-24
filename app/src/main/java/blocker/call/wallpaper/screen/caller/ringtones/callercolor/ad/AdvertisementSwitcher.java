@@ -42,6 +42,7 @@ public class AdvertisementSwitcher {
     public static final String SERVER_KEY_FIRST_SHOW_ADMOB = "FIRST_SHOW_ADMOB";
     public static final String SERVER_KEY_SET_MAIN = "SET_MAIN";  //设置setting, cpm 大图, 300*250
     public static final String SERVER_KEY_BLOCK_MAIN = "BLOCK_MAIN";  //block main 底部 小图, cpm banner
+    public static final String SERVER_KEY_EXTERNAL = "CP_EXTERNAL";  //外部弹窗广告key
     //old
     public static final String SERVER_KEY_CALL_FLASH_SETTING = "CALL_FLASH_SETTING";  //来电秀设置, fakecall首页, calllog adapter, block2
     public static final String SERVER_KEY_COMMON_RESULT = "COMMON_RESULT";           //扫描结果，号码升级结果, 短信详情， 短信编辑
@@ -128,6 +129,10 @@ public class AdvertisementSwitcher {
             put(SERVER_KEY_FIRST_SHOW_ADMOB, (ArrayList<String>) mFirstShowAdMobPriority.clone());
             put(SERVER_KEY_FLASH_MINE, (ArrayList<String>) mFirstShowAdMobPriority.clone());
             put(SERVER_KEY_QUICK_SWIPE, (ArrayList<String>) mAdPriority.clone());
+
+            put(SERVER_KEY_SET_MAIN, (ArrayList<String>) mAdPriority.clone());
+            put(SERVER_KEY_BLOCK_MAIN, (ArrayList<String>) mAdPriority.clone());
+            put(SERVER_KEY_EXTERNAL, (ArrayList<String>) mAdPriority.clone());
         }
     };
 
