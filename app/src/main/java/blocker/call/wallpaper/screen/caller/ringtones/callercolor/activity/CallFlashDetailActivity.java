@@ -648,6 +648,13 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     private void downloadFlashResourceFile() {
         FlurryAgent.logEvent("CallFlashDetailActivity-----download");
+        if (mIsShowAboveAdBtn) {
+            pb_downloading_above_ad.setProgress(0);
+            tv_downloading_above_ad.setText(R.string.call_flash_gif_show_connecte);
+        } else {
+            pb_downloading_below_ad.setProgress(0);
+            tv_downloading_below_ad.setText(R.string.call_flash_gif_show_connecte);
+        }
         ThemeResourceHelper.getInstance().isCanWriteInStorage(PermissionUtils.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE));
         ThemeResourceHelper.getInstance().downloadThemeResources(mInfo.id, mInfo.url, new OnDownloadListener() {
             @Override

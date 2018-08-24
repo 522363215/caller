@@ -105,7 +105,7 @@ public class ThemeResourceHelper {
 
         // download from server
         final File file = ThemeSyncManager.getInstance().getFileByUrl(ThemeSyncManager.getInstance().getContext(), url);
-        if(file == null){
+        if (file == null) {
             if (listener != null)
                 listener.onFailure(url);
             return;
@@ -163,7 +163,7 @@ public class ThemeResourceHelper {
                 try {
                     is = response.body().byteStream();
                     long total = response.body().contentLength();
-                    if (!tempFile.createNewFile()) {
+                    if (!tempFile.exists() && !tempFile.createNewFile()) {
                         throw new IOException("create " + url + " failed !");
                     }
                     fos = new FileOutputStream(tempFile);
@@ -341,21 +341,21 @@ public class ThemeResourceHelper {
         JSONObject jsonObject = new JSONObject(params);
         try {
             jsonObject.put("cid", CP_STATISTICS_CHANNEL);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         String jsonData = jsonObject.toString();
 
         String sig = HttpUtil.MD5EncodeFromStr(KEY_HTTP + jsonData);
-        LogUtil.d("cp_uploadfile", "upload jsonData: "+jsonData);
+        LogUtil.d("cp_uploadfile", "upload jsonData: " + jsonData);
 
         MediaType mediaType = MediaType.parse("application/octet-stream");
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM)
-        .addFormDataPart("data", jsonData)
-        .addFormDataPart("sig", sig)
-        .addFormDataPart("file", file.getName(), RequestBody.create(mediaType, file));
+                .addFormDataPart("data", jsonData)
+                .addFormDataPart("sig", sig)
+                .addFormDataPart("file", file.getName(), RequestBody.create(mediaType, file));
 
         final Request.Builder requestBuilder = new Request.Builder();
         Request request = requestBuilder.url(UPLOAD_URL).post(builder.build()).build();
