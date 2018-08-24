@@ -3,20 +3,19 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
-import com.individual.sdk.BaseAdContainer;
 import com.md.block.core.BlockManager;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
+import com.mopub.test.manager.TestManager;
 import com.quick.easyswipe.EasySwipe;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdContainer;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bednotdisturb.BedsideAdManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
@@ -48,9 +47,7 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
     private View layoutSwipe;
 
     private SharedPreferences pref;
-    private BedsideAdManager mAdManager;
-    private boolean mIsShowAd;
-    private FrameLayout mLayoutAdMopub;
+    private Advertisement mAdvertisement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +72,11 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
     protected void onResume() {
         super.onResume();
         FlurryAgent.logEvent("SettingActivity-----show_main");
-        showAd();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        destroyAd();
     }
 
     private void listener() {
@@ -117,8 +112,6 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
         tvSwitchMessage = findViewById(R.id.tv_switch_message);
         tvSwitchCallerShow = findViewById(R.id.tv_switch_caller_show);
         tvSwitchSwipe = findViewById(R.id.tv_switch_swipe);
-
-        mLayoutAdMopub = (FrameLayout) findViewById(R.id.layout_ad_view_mopub);
 
         //安装了call id 则不显示swipe
         layoutSwipe = findViewById(R.id.layout_swipe);
@@ -282,38 +275,57 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
 
     //***********************************************AD*******************************************//
     private void initAd() {
-        //LogUtil.e(TAG, "initAd, AD_SHOW_DELAY:" + AD_SHOW_DELAY);
-        mAdManager = new BedsideAdManager(this, false, new BedsideAdContainer.Callback() {
-            @Override
-            public void onAdClick(BaseAdContainer ad) {
+        MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
+                "",//ConstantUtils.FB_AFTER_CALL_ID
+                "",//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
+                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
+                "",
+                Advertisement.MOPUB_TYPE_NATIVE,
+                -1,
+                "",
+                false);
 
-            }
+        String mopub_banner_id = TestManager.getInstance(this.getApplicationContext()).getMopubId(AdvertisementSwitcher.SERVER_KEY_CALL_FLASH_SETTING);
+        LogUtil.d("mopub_self", "mopub_banner_id flash preview: " + mopub_banner_id);
+        adapter.setMopubBannerKey(mopub_banner_id); //mopub banner id
+        mAdvertisement = new Advertisement(adapter);
 
-            @Override
-            public void onAdLoaded(BedsideAdContainer ad) {
-                if (ad != null && !mIsShowAd) {
-                    mLayoutAdMopub.setVisibility(View.VISIBLE);
-                    mIsShowAd = true;
-                    ad.show(mLayoutAdMopub);
-                }
-            }
-        });
+        mAdvertisement.setRefreshWhenClicked(false);
+        mAdvertisement.refreshAD(true);
     }
 
-    public void showAd() {
-        // 正常展示在前端才进行展示&请求
-        if (mAdManager != null && !mIsShowAd) {
-            LogUtil.d(TAG, "showAN");
-            mIsShowAd = mAdManager.show(this, mLayoutAdMopub);
-        } else {
-            LogUtil.d(TAG, "showAN failed! cause manager is " + (mAdManager == null ? "Null" : "NotNull"));
+    private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String eventKey, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, AdvertisementSwitcher.SERVER_KEY_CALL_FLASH_SETTING);
         }
-    }
 
-    private void destroyAd() {
-        if (mAdManager != null) {
-            mAdManager.destroy();
-            mAdManager = null;
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, AdvertisementSwitcher.SERVER_KEY_CALL_FLASH_SETTING, isBanner);
+        }
+
+        @Override
+        public void onAdLoaded() {
+        }
+
+        @Override
+        public int getFbViewRes() {
+            return mIsBanner ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_no_icon_native_ads_call_after_big;
+        }
+
+        @Override
+        public int getAdmobViewRes(int type, boolean isAppInstall) {
+            return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_callafter : R.layout.layout_admob_advanced_content_ad_callafter;
+        }
+
+        @Override
+        public int getMoPubViewRes() {
+            return mIsBanner ? R.layout.layout_mopub_ad_banner : R.layout.layout_mopub_native_big_call_after;
+        }
+
+        @Override
+        public int getBaiDuViewRes() {
+            return mIsBanner ? R.layout.layout_du_ad_banner : R.layout.layout_du_ad_call_after_big;
         }
     }
     //***********************************************AD*******************************************//
