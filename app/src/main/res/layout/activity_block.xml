@@ -47,6 +47,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/layout_ad_view"
             android:layout_below="@id/tab_block_category_title">
 
             <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager
@@ -72,6 +73,15 @@
 
         </FrameLayout>
 
-    </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/layout_ad_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:visibility="visible">
 
+            <include layout="@layout/layout_advertisement" />
+        </LinearLayout>
+
+    </RelativeLayout>
 </LinearLayout>

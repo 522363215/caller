@@ -14,17 +14,24 @@ import android.view.View;
 
 import com.flurry.android.FlurryAgent;
 import com.md.block.core.BlockManager;
+import com.mopub.test.manager.TestManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.FacebookConstant;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.BlockPagerAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.AddBlockContactDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.BlockListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.popup.BlockOptionWindow;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.OKCancelDialog;
@@ -45,6 +52,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
 
     private List<Fragment> fragmentList = new ArrayList<>();
     private boolean mIsComeBlockNotify;
+    private Advertisement mAdvertisement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
                         != PackageManager.PERMISSION_GRANTED) {
             showRequestPermission();
         } else {
+            initAds();
             initView();
             listener();
             onNewIntent(getIntent());
@@ -104,6 +113,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onPermissionGranted(int requestCode) {
         if (requestCode == REQUEST_PERMISSION_CODE) {
+            initAds();
             initView();
             listener();
             onNewIntent(getIntent());
@@ -233,4 +243,78 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
             break;
         }
     }
+
+
+    //************************************************AD******************************************//
+    private void initAds() {
+        MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
+                "",
+                "",
+                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,
+                "",
+                Advertisement.MOPUB_TYPE_NATIVE,
+                -1,
+                "",
+                AdvertisementSwitcher.SERVER_KEY_BLOCK_MAIN,
+                true);
+
+        mAdvertisement = new Advertisement(adapter);
+        mAdvertisement.setRefreshWhenClicked(true);
+        mAdvertisement.refreshAD(true);
+
+        String mopub_banner_id = TestManager.getInstance(this.getApplicationContext()).getMopubId(AdvertisementSwitcher.SERVER_KEY_BLOCK_MAIN);
+        LogUtil.d("mopub_self", "mopub_banner_id sms show set: " + mopub_banner_id);
+        adapter.setMopubBannerKey(mopub_banner_id); //mopub banner id
+
+        if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_ADS_SMS_FLASH_SHOW_SET)) {
+            mAdvertisement.enableOnlyBtnClickable();
+        }
+    }
+
+    private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String eventKey, String placementId, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, placementId);//SERVER_KEY_CALL_FLASH_SETTING
+        }
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, String placementId, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, placementId, isBanner);
+        }
+
+        @Override
+        public void onAdLoaded() {
+            super.onAdLoaded();
+        }
+
+        @Override
+        public void onAdClicked(boolean isAdmob) {
+            super.onAdClicked(isAdmob);
+        }
+
+        @Override
+        public void onAdShow() {
+            super.onAdShow();
+        }
+
+        @Override
+        public int getFbViewRes() {
+            return mIsBanner ? R.layout.facebook_native_ads_banner_50 : FacebookConstant.FB_AD_BIG_VIEW_RES_ID;
+        }
+
+        @Override
+        public int getAdmobViewRes(int type, boolean isAppInstall) {
+            return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_flash : R.layout.layout_admob_advanced_content_ad_flash;
+        }
+
+        @Override
+        public int getMoPubViewRes() {
+            return mIsBanner ? R.layout.layout_mopub_ad_banner_flash_show : R.layout.layout_mopub_no_icon_native_ads;
+        }
+
+        @Override
+        public int getBaiDuViewRes() {
+            return mIsBanner ? R.layout.layout_du_ad_banner_falsh_show : R.layout.layout_du_ad_big;
+        }
+    }
+    //************************************************AD******************************************//
 }
