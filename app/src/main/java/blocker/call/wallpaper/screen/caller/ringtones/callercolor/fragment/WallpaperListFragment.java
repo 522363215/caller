@@ -38,10 +38,12 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.Activ
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.WallpaperDetailActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.WallpaperListAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventBusIsSet;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Utils;
+import event.EventBus;
 
 public class WallpaperListFragment extends Fragment implements View.OnClickListener{
     private static final long MAX_LOAD_THEME_FROM_NET_TIME = DateUtils.SECOND_IN_MILLIS * 5;
@@ -168,9 +170,9 @@ public class WallpaperListFragment extends Fragment implements View.OnClickListe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.logEvent("WallpaperListFragment------show_main");
-//        if (!EventBus.getDefault().isRegistered(this)) {
-//            EventBus.getDefault().register(this);
-//        }
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         Bundle bundle = getArguments();
         if (bundle != null) {
             mDataType = bundle.get(DATA_TYPE) == null ? 0 : (int) bundle.get(DATA_TYPE);
@@ -233,6 +235,10 @@ public class WallpaperListFragment extends Fragment implements View.OnClickListe
                 ActivityBuilder.toMain(getActivity(), ActivityBuilder.FRAGMENT_HOME);
                 break;
         }
+    }
+
+    public void onEventMainThread(EventBusIsSet eventPostIsExit){
+        wallpaperListAdapter.notifyDataSetChanged();
     }
 
     public void initData(boolean isGetCacheData) {
@@ -320,6 +326,12 @@ public class WallpaperListFragment extends Fragment implements View.OnClickListe
                 }
             });
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        wallpaperListAdapter.clearMap();
     }
 
     private void stopRefresh() {

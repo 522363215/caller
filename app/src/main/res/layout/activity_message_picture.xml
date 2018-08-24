@@ -32,6 +32,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/dp8"
         android:padding="@dimen/dp8"
+        android:visibility="invisible"
         android:layout_alignLeft="@+id/wall_paper_view"
         android:layout_above="@+id/tv_download"
         android:layout_marginLeft="@dimen/dp40"

@@ -46,7 +46,7 @@ public class VideoLiveWallpaperService extends WallpaperService {
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(ACTION_UPDATE_PATH)){
                 mPath = intent.getStringExtra(VIDEO_LIVE_WALLPAPER_PATH);
-                WallpaperPreferenceHelper.putString(WallpaperPreferenceHelper.FILE_NAME,mPath);
+
                 isStartService = intent.getBooleanExtra(VIDEO_LIVE_WALLPAPER_START_OPEN, true);
                 if (!isStartService) {
                     if (engine != null) {

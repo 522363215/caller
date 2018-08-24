@@ -49,6 +49,11 @@ public class WallpaperPreferenceHelper {
     public static final String PREF_JUST_LIKE_WALLPAPER_LIST = "caller_id_pref_just_like_wallpaper_list";
 
     /**
+     * 已经保存过下载数的wallpaper url
+     */
+    public static final String WALLPAPER_SAVE_DOWNLOAD_COUNT_URLS = "wallpaper_save_download_count_urls";
+
+    /**
      * 保存所有的下载的对象
      */
     public static final String COOKIE = "cookie";

@@ -36,13 +36,11 @@ public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(com.md.callring.R.layout.item_wallpaper_list,parent,false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_wallpaper_list,parent,false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.tvSong.setText(localSongs.get(position).getName());
-
         holder.ivBackground.showImage(localSongs.get(position).getDrawableRes());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,14 +60,10 @@ public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvSong;
-        RelativeLayout rlSong;
         GlideView ivBackground;
         public ViewHolder(View itemView) {
             super(itemView);
 
-            tvSong = itemView.findViewById(com.md.callring.R.id.tv_song);
-            rlSong = itemView.findViewById(com.md.callring.R.id.rl_song);
             ivBackground = itemView.findViewById(R.id.iv_background);
         }
     }

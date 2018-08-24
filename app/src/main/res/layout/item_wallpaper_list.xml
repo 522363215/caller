@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:card_view="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/layout_root"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+app:cardBackgroundColor="@color/color_transparent"
+card_view:cardCornerRadius="2dp">
+
+<RelativeLayout
+    android:id="@+id/layout_call_flash"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:visibility="visible">
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
+        android:id="@+id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
+
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:visibility="gone"
+        app:CircleInsideBgColor="@color/color_transparent"
+        app:CirclePaintColor="@color/white"
+        app:CircleProgressBgColor="@color/color_half_transparent"
+        app:drawCircleInsideBG="true"
+        app:progressStrokeWidth="2dp"
+        app:sweepAngle="360" />
+
+    <ImageView
+        android:id="@+id/iv_select"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/icon_selected"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_download"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_download"
+        android:visibility="gone" />
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:id="@+id/iv_video"
+        android:src="@drawable/media_youtube"/>
+</RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

@@ -1,12 +1,10 @@
 package com.md.wallpaper;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
-import com.md.wallpaper.R;
-import com.md.wallpaper.WallpaperLed;
-import com.md.wallpaper.WallpaperPreferenceHelper;
 import com.md.wallpaper.bean.DownloadState;
 import com.md.wallpaper.bean.WallpaperFormat;
 import com.md.wallpaper.bean.WallpaperInfo;
@@ -36,6 +34,36 @@ public class WallpaperUtil {
             instance = new WallpaperUtil();
         }
         return instance;
+    }
+
+    public void saveWallpaperDownloadCount(WallpaperInfo info) {
+        if (info == null || TextUtils.isEmpty(info.id)) {
+            return;
+        }
+
+        List<String> saveDownloadCountCallFlashUrl = WallpaperPreferenceHelper.getDataList(WallpaperPreferenceHelper.WALLPAPER_SAVE_DOWNLOAD_COUNT_URLS, String[].class);
+        if (saveDownloadCountCallFlashUrl != null && saveDownloadCountCallFlashUrl.contains(info.url)) {
+            //已经保存过
+            return;
+        }
+        if (saveDownloadCountCallFlashUrl == null) {
+            saveDownloadCountCallFlashUrl = new ArrayList<>();
+        }
+        saveDownloadCountCallFlashUrl.add(info.url);
+        WallpaperPreferenceHelper.putDataList(WallpaperPreferenceHelper.WALLPAPER_SAVE_DOWNLOAD_COUNT_URLS, saveDownloadCountCallFlashUrl);
+
+        List<WallpaperInfo> list = WallpaperPreferenceHelper.getDataList(WallpaperPreferenceHelper.PREF_JUST_LIKE_WALLPAPER_LIST, WallpaperInfo[].class);
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        if (list.contains(info)) {
+            WallpaperInfo item = list.get(list.indexOf(info));
+            item.downloadCount = info.downloadCount + 1;
+        } else {
+            info.downloadCount = info.downloadCount + 1;
+            list.add(info);
+        }
+        WallpaperPreferenceHelper.putDataList(WallpaperPreferenceHelper.PREF_JUST_LIKE_WALLPAPER_LIST, list);
     }
 
     public List<WallpaperInfo> getDownloadedWallpaper() {
@@ -268,7 +296,7 @@ public class WallpaperUtil {
 
         return dot;
     }
-    public static void saveDownloadedWallPaper(WallpaperInfo wallpaper) {
+    public void saveDownloadedWallPaper(WallpaperInfo wallpaper) {
         if (wallpaper == null) return;
         List<WallpaperInfo> downloadedWallpapers = WallpaperPreferenceHelper.getDataList(WallpaperPreferenceHelper.DOWNLOADED_WALLPAPERS, WallpaperInfo[].class);
         if (downloadedWallpapers == null) {
