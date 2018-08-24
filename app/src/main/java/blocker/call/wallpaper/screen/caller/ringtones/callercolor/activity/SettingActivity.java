@@ -285,7 +285,7 @@ public class SettingActivity extends BaseActivity implements SwitchButton.OnChec
                 "",
                 false);
 
-        String mopub_banner_id = TestManager.getInstance(this.getApplicationContext()).getMopubId(AdvertisementSwitcher.SERVER_KEY_CALL_FLASH_SETTING);
+        String mopub_banner_id = TestManager.getInstance(this.getApplicationContext()).getMopubId(AdvertisementSwitcher.SERVER_KEY_SET_MAIN);
         LogUtil.d("mopub_self", "mopub_banner_id flash preview: " + mopub_banner_id);
         adapter.setMopubBannerKey(mopub_banner_id); //mopub banner id
         mAdvertisement = new Advertisement(adapter);
