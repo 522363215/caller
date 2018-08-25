@@ -58,7 +58,9 @@ public class EncryptionUtil {
             hashMapData = new HashMap<>();
         }
         if (hashMapData.get(strFile) == null) {
-            hashMapData.put(strFile, md5);
+            String encryptedStr = EncodeUtils.encrypt(md5);
+//            LogUtil.d(TAG, "saveEncryptionVideoMd5 md5:" + md5 + ",encrypt before length:" + md5.getBytes().length + ",encryptedStr:" + encryptedStr + ",encrypt after length:" + encryptedStr.getBytes().length);
+            hashMapData.put(strFile, encryptedStr);
         }
         PreferenceHelper.putHashMapData(PreferenceHelper.PREF_VIDEO_ENCRYPT_MD5_MAP, hashMapData);
     }
@@ -68,7 +70,10 @@ public class EncryptionUtil {
         if (hashMapData == null || hashMapData.get(strFile) == null) {
             return null;
         }
-        return hashMapData.get(strFile);
+        String encryptedStr = hashMapData.get(strFile);
+        String decryptedStr = EncodeUtils.decrypt(encryptedStr);
+//        LogUtil.d(TAG, "getEncryptionVideoMd5 encryptedStr:" + encryptedStr + ",decrypted before length:" + encryptedStr.getBytes().length + ",decryptedStr:" + decryptedStr + ",decrypted after length:" + decryptedStr.getBytes().length);
+        return decryptedStr;
     }
 
     public static boolean isEncrypted(String strFile) {
