@@ -59,6 +59,13 @@
 #-keep public class * extends android.app.Fragment
 #-keep public class * extends android.support.v4.Fragment
 
+#eventbus
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+#eventbus end
 
 #keep all public and protected methods that could be used by java reflection
 -keepclassmembernames class * {
