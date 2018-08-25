@@ -208,7 +208,7 @@ public class CallerAdManager {
         return autoGoMain;
     }
 
-    public static boolean isShowAdOnEndCall(){
+    public static boolean isShowAdOnEndCall() {
         boolean show = false;
         SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         int is = ad_pref.getInt("pref_is_show_ad_end_call", 0);//1-渠道量才显示，默认不显示
@@ -224,24 +224,24 @@ public class CallerAdManager {
         return fb_id;
     }
 
-    public static boolean isExternalOn(){
+    public static boolean isExternalOn() {
         boolean isOn = false;
         isOn = ApplicationEx.getInstance().getGlobalADPreference().getBoolean("pref_ext_isCommercialValid", false);
         return isOn;
     }
 
-    public static int getExternalInterval(){
+    public static int getExternalInterval() {
         int mins = 5;
         mins = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_ext_show_interval", 5);
         return mins;
     }
 
-    public static ExternalParam getExternalParam(String key){
+    public static ExternalParam getExternalParam(String key) {
         ExternalParam externalParam = new ExternalParam();
         SharedPreferences ext_pref = ApplicationEx.getInstance().getExtPreference();
-        String str_param = ext_pref.getString(key, "");;
-        LogUtil.d("cp_external_param", "getExternalParam ext_type: "+str_param);
-        if(!TextUtils.isEmpty(str_param)){
+        String str_param = ext_pref.getString(key, "");
+        LogUtil.d("cp_external_param", "getExternalParam ext_type: " + str_param);
+        if (!TextUtils.isEmpty(str_param)) {
             try {
                 JSONObject jsonObject = new JSONObject(str_param);
                 externalParam.mEnable = jsonObject.optBoolean("mEnable");
@@ -253,78 +253,14 @@ public class CallerAdManager {
                 externalParam.mRestartDay = jsonObject.optInt("mRestartDay");
                 externalParam.fb_id = jsonObject.optString("fb_id");
                 externalParam.admob_id = jsonObject.optString("admob_id");
-                LogUtil.d("cp_external_param", "getExternalParam mRestartDay: "+externalParam.mRestartDay);
-                LogUtil.d("cp_external_param", "getExternalParam mEnable: "+externalParam.mEnable);
-                LogUtil.d("cp_external_param", "getExternalParam fb_id: "+externalParam.fb_id);
-                LogUtil.d("cp_external_param", "getExternalParam admob_id: "+externalParam.admob_id);
-            }catch (Exception e){
-                LogUtil.e("cp_external_param", "getExternalParam ext_type exception: "+e.getMessage());
+                LogUtil.d("cp_external_param", "getExternalParam mRestartDay: " + externalParam.mRestartDay);
+                LogUtil.d("cp_external_param", "getExternalParam mEnable: " + externalParam.mEnable);
+                LogUtil.d("cp_external_param", "getExternalParam fb_id: " + externalParam.fb_id);
+                LogUtil.d("cp_external_param", "getExternalParam admob_id: " + externalParam.admob_id);
+            } catch (Exception e) {
+                LogUtil.e("cp_external_param", "getExternalParam ext_type exception: " + e.getMessage());
             }
-
         }
         return externalParam;
-    }
-
-    public static ExternalParam getExternalParam(int ext_type){
-        ExternalParam externalParam = new ExternalParam();
-        externalParam.mType = ext_type;
-        SharedPreferences ext_pref = ApplicationEx.getInstance().getExtPreference();
-        String str_param = null;
-        switch (ext_type) {
-            case 1:
-                str_param = ext_pref.getString("M_AB", "");
-                break;
-            case 2:
-                str_param = ext_pref.getString("M_AC", "");
-                break;
-            case 3:
-                str_param = ext_pref.getString("M_BR", "");
-                break;
-            case 4:
-                str_param = ext_pref.getString("M_BS", "");
-                break;
-            case 5:
-                str_param = ext_pref.getString("M_CS", "");
-                break;
-            case 6:
-                str_param = ext_pref.getString("M_DW", "");
-                break;
-            case 7:
-                str_param = ext_pref.getString("M_EC", "");
-                break;
-            case 8:
-                str_param = ext_pref.getString("M_NM", "");
-                break;
-            case 9:
-                str_param = ext_pref.getString("M_WS", "");
-                break;
-            case 10:
-                str_param = ext_pref.getString("M_IT", "");
-                break;
-        }
-        LogUtil.d("cp_external_param", "getExternalParam ext_type: "+str_param);
-        if(!TextUtils.isEmpty(str_param)){
-            try {
-                JSONObject jsonObject = new JSONObject(str_param);
-                externalParam.mEnable = jsonObject.optBoolean("mEnable");
-                externalParam.mDelayedDisplayRate = jsonObject.optInt("mDelayedDisplayRate");
-                externalParam.mDelayTime = jsonObject.optInt("mDelayTime");
-                externalParam.mSelfInterval = jsonObject.optInt("mSelfInterval");
-                externalParam.mPopupNumber = jsonObject.optInt("mPopupNumber");
-                externalParam.mDelayedDisplayTime = jsonObject.optInt("mDelayedDisplayTime");
-                externalParam.mRestartDay = jsonObject.optInt("mRestartDay");
-                externalParam.fb_id = jsonObject.optString("fb_id");
-                externalParam.admob_id = jsonObject.optString("admob_id");
-                LogUtil.d("cp_external_param", "getExternalParam mRestartDay: "+externalParam.mRestartDay);
-                LogUtil.d("cp_external_param", "getExternalParam mEnable: "+externalParam.mEnable);
-                LogUtil.d("cp_external_param", "getExternalParam fb_id: "+externalParam.fb_id);
-                LogUtil.d("cp_external_param", "getExternalParam admob_id: "+externalParam.admob_id);
-            }catch (Exception e){
-                LogUtil.e("cp_external_param", "getExternalParam ext_type exception: "+e.getMessage());
-            }
-
-        }
-        return externalParam;
-
     }
 }

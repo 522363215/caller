@@ -111,7 +111,7 @@ public class ApplicationEx extends Application {
         saveVersioncode();
         AnalyticsManager.init(getInstance());
         SwipeManager.getInstance().initEasySwipe(this);
-        ExternalMagicHelper.getInstance().init();
+        ExternalMagicHelper.getInstance().delayInit();
         startService();
         initCallFlashBase();
         CallFlashSet.init(this);

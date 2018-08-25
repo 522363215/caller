@@ -148,6 +148,11 @@ final public class PreferenceHelper {
      */
     public static final String PREF_VIDEO_ENCRYPT_MD5_MAP = "caller_pref_key_off_set_bytes_map";
 
+    /**
+     * 上一次初始化外部变现的时间
+     */
+    public static final String PREF_LAST_INIT_EXTERNAL_MAGIC_TIME = "caller_pref_key_last_init_external_magic_time";
+
 
     private PreferenceHelper() {
     }

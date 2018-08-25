@@ -22,6 +22,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertiseme
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.NotifyInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ExternalMagicHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.NotifyManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServerManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServiceProcessingManager;
@@ -60,10 +61,13 @@ public class CallerCommonReceiver extends BroadcastReceiver {
                             //判断如果安装了call id  则关闭 swipe
                             if (AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID)) {
                                 SwipeManager.getInstance().disableEasySwipe();
-                            }else{
+                            } else {
                                 SwipeManager.getInstance().checkSwipeService();
                                 LogUtil.d(TAG, "checkSwipeService: ");
                             }
+
+                            //初始化外部变现
+                            ExternalMagicHelper.getInstance().delayInit();
                         } catch (Exception e) {
                             LogUtil.e(TAG, "backgroundDownloadOnlionCallFlash COMMON_CHECK_24 exception: " + e.getMessage());
                         }
