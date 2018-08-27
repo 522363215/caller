@@ -14,6 +14,7 @@ import java.util.Locale;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.CallAfterActivity;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.CallFlashDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshBlockHistory;
@@ -37,7 +38,14 @@ public class PhoneStateListenImpl implements PhoneStateChangeCallback {
 
     @Override
     public void onPhoneIdle(String number) {
-        CallFlashDialog.getInstance().hideFloatView();
+        Async.scheduleTaskOnUiThread(500, new Runnable() {
+            @Override
+            public void run() {
+                //延迟隐藏防止显示系统的界面
+                CallFlashDialog.getInstance().hideFloatView();
+            }
+        });
+
         if (isShowCallAfter(number)) {
             CallLogInfo info = new CallLogInfo();
             info.callNumber = number;

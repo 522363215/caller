@@ -327,6 +327,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private void playOrPause(NormalViewHolder holder, CallFlashInfo info, boolean isPlay, long delayGoneBGTime) {
         if (isPlay) {
+            holder.callFlashView.setVideoMute(true);
             if (holder.callFlashView.isStopVideo()) {
                 holder.callFlashView.showCallFlashView(info);
             } else {

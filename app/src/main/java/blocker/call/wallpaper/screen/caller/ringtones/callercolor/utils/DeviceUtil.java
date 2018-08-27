@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -127,6 +128,22 @@ public class DeviceUtil {
         DisplayMetrics metrics = new DisplayMetrics();
         display.getMetrics(metrics);
         return Math.min(metrics.widthPixels, metrics.heightPixels);
+    }
+
+    public static int getScreenHeightIncludeNavigateBar() {
+        WindowManager windowManager =
+                (WindowManager) ApplicationEx.getInstance().getSystemService(Context.
+                        WINDOW_SERVICE);
+        final Display display = windowManager.getDefaultDisplay();
+        Point outPoint = new Point();
+        if (Build.VERSION.SDK_INT >= 19) {
+            // 可能有虚拟按键的情况
+            display.getRealSize(outPoint);
+        } else {
+            // 不可能有虚拟按键
+            display.getSize(outPoint);
+        }
+        return outPoint.y;
     }
 
     public static int getStatusBarHeight() {

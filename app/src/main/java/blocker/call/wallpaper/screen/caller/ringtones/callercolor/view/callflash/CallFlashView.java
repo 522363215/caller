@@ -293,12 +293,16 @@ public class CallFlashView extends RelativeLayout {
 
     public void setVideoMute(boolean mVideoMute) {
         this.isVideoMute = mVideoMute;
-        if (mMediaPlayer != null) {
-            if (isVideoMute) {
-                mMediaPlayer.setVolume(0f, 0f);
-            } else {
-                mMediaPlayer.setVolume(1.0f, 1.0f);
+        try {
+            if (mMediaPlayer != null) {
+                if (isVideoMute) {
+                    mMediaPlayer.setVolume(0f, 0f);
+                } else {
+                    mMediaPlayer.setVolume(1.0f, 1.0f);
+                }
             }
+        } catch (Exception e) {
+            LogUtil.e(TAG, "setVideoMute e:" + e.getMessage());
         }
     }
 }

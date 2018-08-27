@@ -33,6 +33,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.NumberInf
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ContactManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.RingManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SystemInfoUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CallFlashAvatarInfoView;
@@ -227,7 +228,7 @@ public class CallFlashDialog implements View.OnClickListener {
         }
 
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = DeviceUtil.getScreenHeightIncludeNavigateBar();
 
         mFloatViewLayoutParams = layoutParams;
     }
@@ -244,6 +245,7 @@ public class CallFlashDialog implements View.OnClickListener {
             mEndCallButton.setImageResource(R.drawable.ic_call_hang);
             mAnswerButton.setImageResource(R.drawable.ic_call_answer);
         }
+        mCallFlashView.setVideoMute(false);
         mCallFlashView.showCallFlashView(mCallFlashInfo);
         startAnswerAnim();
         setRingMode(true);
@@ -301,6 +303,10 @@ public class CallFlashDialog implements View.OnClickListener {
             LogUtil.e("callflashDialog", "hideFloatView e:" + e.getMessage());
         }
 
+        if (mCallFlashView != null) {
+            mCallFlashView.stop();
+        }
+
         //还原为系统铃声
         setRingMode(false);
 
@@ -339,6 +345,8 @@ public class CallFlashDialog implements View.OnClickListener {
                         // TODO: 2017/7/19  部分手机设置静音失效，异常： Not allowed to change Do Not Disturb state，需要打开应用程序的免打扰访问设置
                     }
                 }
+                //静音时媒体声音不静音
+                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, FLAG_ALLOW_RINGER_MODES);
             } else {
                 audioManager.setStreamMute(AudioManager.STREAM_RING, true);
             }
