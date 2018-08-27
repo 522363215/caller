@@ -53,6 +53,7 @@ public class LocalService extends Service {
         ServerManager.getInstance().getParamFromServer();
 
         initTestManager();
+        AnalyticsManager.onUserActive();
     }
 
     private void initTestManager() {
