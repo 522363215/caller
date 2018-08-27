@@ -49,12 +49,12 @@ public class InterstitialAdUtil {
                 InterstitialAdvertisement.FbAdId fbAdId = new InterstitialAdvertisement.FbAdId();
                 fbAdId.highId = "";// getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.HIGH, InterstitialAdvertisement.AdType.FACEBOOK);
                 fbAdId.mediumId = "";//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.MEDIUM, InterstitialAdvertisement.AdType.FACEBOOK);
-                fbAdId.normalId = "";//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.FACEBOOK);
+                fbAdId.normalId = CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_IN_DETAIL_NORMAL);//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.FACEBOOK);
 
                 InterstitialAdvertisement.AdmobAdId admobAdId = new InterstitialAdvertisement.AdmobAdId();
                 admobAdId.highId = "";// getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.HIGH, InterstitialAdvertisement.AdType.ADMOB);
                 admobAdId.mediumId = "";// getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.MEDIUM, InterstitialAdvertisement.AdType.ADMOB);
-                admobAdId.normalId = CallerAdManager.INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL;//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.ADMOB);
+                admobAdId.normalId = CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_IN_DETAIL_NORMAL);//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.ADMOB);
 
                 InterstitialAdvertisement.AdmobAdxId admobAdxId = new InterstitialAdvertisement.AdmobAdxId();
                 admobAdxId.highId = "";//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.HIGH, InterstitialAdvertisement.AdType.ADMOB_ADX);

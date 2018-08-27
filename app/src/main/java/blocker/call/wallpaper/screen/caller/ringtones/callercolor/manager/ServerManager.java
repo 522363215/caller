@@ -207,6 +207,7 @@ public class ServerManager {
             if (!TextUtils.isEmpty(data)) {
 //                LogUtil.d("cpserver", "processParam data: " + data);
                 saveExternalParam(data);
+                saveAdids(data);
             }
             Gson gson = new Gson();
             bean = gson.fromJson(data, ServerParamBean.class);
@@ -276,6 +277,29 @@ public class ServerManager {
             }
         } catch (Exception e) {
             LogUtil.e("cp_external_param", "saveExternalParam exception:" + e.getMessage());
+        }
+    }
+
+    private void saveAdids(String res_data){
+        try {
+            JSONObject jsonObject = new JSONObject(res_data);
+            JSONObject dataJson = jsonObject.getJSONObject("data");
+            SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+            //save admob id
+            JSONObject banner_ads_group_ids = dataJson.getJSONObject("normal_admob_id");
+            if(banner_ads_group_ids != null){
+                ad_pref.edit().putString("normal_admob_id", String.valueOf(banner_ads_group_ids)).apply();
+                LogUtil.d("saveAdids", " normal_admob_id :" + String.valueOf(banner_ads_group_ids));
+            }
+
+            //save facebook id
+            JSONObject fb_ads_group_ids = dataJson.getJSONObject("normal_facebook_id");
+            if(fb_ads_group_ids != null){
+                ad_pref.edit().putString("normal_facebook_id", String.valueOf(fb_ads_group_ids)).apply();
+                LogUtil.d("saveAdids", " normal_facebook_id :" + String.valueOf(fb_ads_group_ids));
+            }
+        } catch (Exception e) {
+            LogUtil.e("saveAdids", "saveAdids exception:" + e.getMessage());
         }
     }
 

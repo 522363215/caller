@@ -44,7 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
     protected LanguageSettingUtil languageSetting;
     protected ApplicationEx app;
     //protected AppEventsLogger logger;
-    private final static String APP_ADMOB_ID = "ca-app-pub-5980661201422605~1016951821";
+    private final static String APP_ADMOB_ID = "ca-app-pub-4922304484386262~6359729062";
 
     protected ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override

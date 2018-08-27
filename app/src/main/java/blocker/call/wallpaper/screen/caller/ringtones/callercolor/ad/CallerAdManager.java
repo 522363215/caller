@@ -35,20 +35,172 @@ public class CallerAdManager {
     public static final int POSITION_FB_ADS_ENDCALL_BIG = 9;
 
     //admob id
-    public static final String ADMOB_ID_ADV_SPLASH_FIRST = "ca-app-pub-5980661201422605/3475594207";//启动页首次colorphone-1
-    public static final String ADMOB_ID_ADV_SPLASH_NORMAL = "ca-app-pub-5980661201422605/5797261947";//启动页普通colorphone-2
-    public static final String ADMOB_ID_ADV_RESULT_FIRST = "ca-app-pub-5980661201422605/6144638504";//结果页首次colorphone-3
-    public static final String ADMOB_ID_ADV_RESULT_NORMAL = "ca-app-pub-5980661201422605/2125610249";//结果页普通colorphone-4
-    public static final String ADMOB_ID_ADV_MINE_NORMAL = "ca-app-pub-5980661201422605/6560922541";//mine页普通colorphone-7
-    public static final String ADMOB_ID_ADV_END_CALL_NORMAL = "ca-app-pub-5980661201422605/1776419593";//通话结束页colorphone-8
-    public static final String ADMOB_ID_ADV_SWIPE = "ca-app-pub-5980661201422605/3295713920"; //swipe,colorphone-9
+
+    public static final int POSITION_ADMOB_SPLASH_FIRST = 1;
+    public static final int POSITION_ADMOB_SPLASH_NORMAL = 2;
+    public static final int POSITION_ADMOB_RESULT_FIRST = 3;
+    public static final int POSITION_ADMOB_RESULT_NORMAL = 4;
+    public static final int POSITION_ADMOB_IN_DETAIL_FIRST = 5;
+    public static final int POSITION_ADMOB_IN_DETAIL_NORMAL = 6;
+    public static final int POSITION_ADMOB_MINE_NORMAL = 7;
+    public static final int POSITION_ADMOB_END_CALL_NORMAL = 8;
+    public static final int POSITION_ADMOB_ADV_SWIPE = 9;
+
+
+    private static final String ADMOB_ID_ADV_SPLASH_FIRST = "ca-app-pub-4922304484386262/2775707274";//启动页首次colorphone-1
+    private static final String ADMOB_ID_ADV_SPLASH_NORMAL = "ca-app-pub-4922304484386262/1118068726";//启动页普通colorphone-2
+    private static final String ADMOB_ID_ADV_RESULT_FIRST = "ca-app-pub-4922304484386262/7412014335";//结果页首次colorphone-3
+    private static final String ADMOB_ID_ADV_RESULT_NORMAL = "ca-app-pub-4922304484386262/3085756519";//结果页普通colorphone-4
+    private static final String ADMOB_ID_ADV_MINE_NORMAL = "ca-app-pub-4922304484386262/1430836018";//mine页普通colorphone-7
+    private static final String ADMOB_ID_ADV_END_CALL_NORMAL = "ca-app-pub-4922304484386262/1752493548";//通话结束页colorphone-8
+    private static final String ADMOB_ID_ADV_SWIPE = "ca-app-pub-4922304484386262/4735231174"; //swipe,colorphone-9
 
 
     //插屏
-    public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_FIRST = "ca-app-pub-5980661201422605/4911447885"; //自定义插屏, 来电秀设置首次colorphone-5
-    public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL = "ca-app-pub-5980661201422605/5685581308";//来电秀设置插屏colorphone-6
+    private static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_FIRST = "ca-app-pub-4922304484386262/5328776475"; //自定义插屏, 来电秀设置首次colorphone-5
+    private static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL = "ca-app-pub-4922304484386262/6230794603";//来电秀设置插屏colorphone-6
+
+    //多建了一个colorphone-6 ca-app-pub-4922304484386262/6762628719
 
     //admob id end
+
+    //facebook id
+
+    public static final int POSITION_FB_SPLASH_NORMAL = 11; //启动页
+    public static final int POSITION_FB_RESULT_NORMAL = 22; //结果页
+    public static final int POSITION_FB_MINE_NORMAL = 33;  //mine
+    public static final int POSITION_FB_END_CALL_NORMAL = 44; //end call
+    public static final int POSITION_FB_IN_DETAIL_NORMAL = 66; //插屏
+
+
+    private static final String FB_ID_SPLASH_NORMAL = ""; //启动页
+    private static final String FB_ID_RESULT_NORMAL = ""; //结果页
+    private static final String FB_ID_MINE_NORMAL = "";  //mine
+    private static final String FB_ID_END_CALL_NORMAL = ""; //end call
+    private static final String FB_IN_DETAIL_NORMAL = ""; //插屏
+
+
+    //facebook id end
+
+    public static String getAdmob_id(int position){
+        String ad_id = "";
+        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+        try {
+            JSONObject jsonObject = new JSONObject(ad_pref.getString("normal_admob_id", ""));
+            if(jsonObject!=null){
+                switch (position) {
+                    case POSITION_ADMOB_SPLASH_FIRST:
+                        ad_id = jsonObject.optString("ad_id_1");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = ADMOB_ID_ADV_SPLASH_FIRST;
+                        }
+                        break;
+                    case POSITION_ADMOB_SPLASH_NORMAL:
+                        ad_id = jsonObject.optString("ad_id_2");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = ADMOB_ID_ADV_SPLASH_NORMAL;
+                        }
+                        break;
+                    case POSITION_ADMOB_RESULT_FIRST:
+                        ad_id = jsonObject.optString("ad_id_3");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = ADMOB_ID_ADV_RESULT_FIRST;
+                        }
+                        break;
+                    case POSITION_ADMOB_RESULT_NORMAL:
+                        ad_id = jsonObject.optString("ad_id_4");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = ADMOB_ID_ADV_RESULT_NORMAL;
+                        }
+                        break;
+                    case POSITION_ADMOB_MINE_NORMAL:
+                        ad_id = jsonObject.optString("ad_id_7");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = ADMOB_ID_ADV_MINE_NORMAL;
+                        }
+                        break;
+                    case POSITION_ADMOB_END_CALL_NORMAL:
+                        ad_id = jsonObject.optString("ad_id_8");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = ADMOB_ID_ADV_END_CALL_NORMAL;
+                        }
+                        break;
+                    case POSITION_ADMOB_ADV_SWIPE:
+                        ad_id = jsonObject.optString("ad_id_9");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = ADMOB_ID_ADV_SWIPE;
+                        }
+                        break;
+                    case POSITION_ADMOB_IN_DETAIL_FIRST:
+                        ad_id = jsonObject.optString("ad_id_5");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_FIRST;
+                        }
+                        break;
+                    case POSITION_ADMOB_IN_DETAIL_NORMAL:
+                        ad_id = jsonObject.optString("ad_id_6");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL;
+                        }
+                        break;
+                }
+
+                LogUtil.d("getAdmob_id", "getAdmob_id ad_id: " + ad_id);
+            }
+        }catch (Exception e){
+            LogUtil.e("getAdmob_id", " getAdmob_id exception: " + e.getMessage());
+        }
+        return ad_id;
+    }
+
+    public static String getFacebook_id(int position){
+        String ad_id = "";
+        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+        try {
+            JSONObject jsonObject = new JSONObject(ad_pref.getString("normal_facebook_id", ""));
+            if(jsonObject!=null){
+                switch (position) {
+                    case POSITION_FB_SPLASH_NORMAL:
+                        ad_id = jsonObject.optString("ad_id_1");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = FB_ID_SPLASH_NORMAL;
+                        }
+                        break;
+                    case POSITION_FB_RESULT_NORMAL:
+                        ad_id = jsonObject.optString("ad_id_2");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = FB_ID_RESULT_NORMAL;
+                        }
+                        break;
+                    case POSITION_FB_MINE_NORMAL:
+                        ad_id = jsonObject.optString("ad_id_3");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = FB_ID_MINE_NORMAL;
+                        }
+                        break;
+                    case POSITION_FB_END_CALL_NORMAL:
+                        ad_id = jsonObject.optString("ad_id_4");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = FB_ID_END_CALL_NORMAL;
+                        }
+                        break;
+                    case POSITION_FB_IN_DETAIL_NORMAL:
+                        ad_id = jsonObject.optString("ad_id_5");
+                        if(TextUtils.isEmpty(ad_id)){
+                            ad_id = FB_IN_DETAIL_NORMAL;
+                        }
+                        break;
+                }
+
+                LogUtil.d("getFacebook_id", "getFacebook_id: " + ad_id);
+            }
+        }catch (Exception e){
+            LogUtil.e("getFacebook_id", " getFacebook_id: " + e.getMessage());
+        }
+        return ad_id;
+    }
+
+
 
     public static boolean isMopubAll() {
         boolean is = false; //false not show, 默认关, test is true

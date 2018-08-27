@@ -384,14 +384,14 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
 
     //****************************************AD********************************************//
     private void initAds() {
-        String admob_id = CallerAdManager.ADMOB_ID_ADV_SPLASH_NORMAL;
+        String admob_id = CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_SPLASH_NORMAL);
         String placementId = AdvertisementSwitcher.SERVER_KEY_START_UP;
         if (mIsShowFristAdMob) {
             admob_id = FirstShowAdmobUtil.getAdmobIdForFirst(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_SPLASH);
             placementId = AdvertisementSwitcher.SERVER_KEY_FIRST_SHOW_ADMOB;
         }
         MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
-                "", //FB_SPLASH_ID,
+                CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_SPLASH_NORMAL), //FB_SPLASH_ID,
                 admob_id,
                 Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,
                 "",

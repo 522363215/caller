@@ -488,13 +488,13 @@ public class CallFlashSetResultActivity extends BaseActivity implements View.OnC
 
     private void initAds() {
         String placementId = AdvertisementSwitcher.SERVER_KEY_SET_RESULT;
-        String admobId = CallerAdManager.ADMOB_ID_ADV_RESULT_NORMAL;
+        String admobId = CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_RESULT_NORMAL);
         if (mIsFirstShowAdmob) {
             placementId = AdvertisementSwitcher.SERVER_KEY_FIRST_SHOW_ADMOB;
             admobId = FirstShowAdmobUtil.getAdmobIdForFirst(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_RESULT_FLASH_SET);
         }
         mMyAdvertisementAdapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
-                "",
+                CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_RESULT_NORMAL),
                 admobId,
                 Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,
                 "",
