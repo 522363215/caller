@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.common.sdk.analytics.AnalyticsManager;
 import com.flurry.android.FlurryAgent;
 import com.md.block.core.BlockManager;
 import com.md.flashset.View.FlashLed;
@@ -272,6 +273,7 @@ public class CallFlashDialog implements View.OnClickListener {
             if (mWindowMgr != null) {
                 mWindowMgr.addView(mRootView, mFloatViewLayoutParams);
                 isFloatViewShow.set(true);
+                AnalyticsManager.onUserActive();
             }
         } catch (Exception e) {
         }

@@ -17,8 +17,10 @@ import javax.crypto.spec.SecretKeySpec;
  */
 
 public class EncodeUtils {
-    private static String ENCRYPTION_KEY = "eeccphonekey$)!1";
-    private static String ENCRYPTION_IV = "4e5Wa71fYoT7MTEk"; //expected IV length of 16
+    private static final String ENCRYPTION_KEY = "eeccphonekey$)!1";
+    private static final String ENCRYPTION_IV = "4e5Wa71fYoT7MTEk"; //expected IV length of 16
+
+    private static final String m_call = "AES/CBC/PKCS5Padding";
 
     static Key makeKey() {
         try {
@@ -45,7 +47,7 @@ public class EncodeUtils {
 
     public static String encrypt(String src) {
         try {
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            Cipher cipher = Cipher.getInstance(m_call);
             cipher.init(Cipher.ENCRYPT_MODE, makeKey(), makeIv());
             return Base64.encodeBytes(cipher.doFinal(src.getBytes()));
         } catch (Exception e) {
@@ -56,7 +58,7 @@ public class EncodeUtils {
     public static String decrypt(String src) {
         try {
             byte[] decryptedStr = Base64.decode(src);
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            Cipher cipher = Cipher.getInstance(m_call);
             cipher.init(Cipher.DECRYPT_MODE, makeKey(), makeIv());
             byte[] originalByte = cipher.doFinal(decryptedStr);
             String originalStr = new String(originalByte);

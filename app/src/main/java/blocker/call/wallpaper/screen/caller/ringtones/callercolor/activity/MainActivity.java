@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.common.sdk.analytics.AnalyticsManager;
 import com.flurry.android.FlurryAgent;
 import com.md.flashset.bean.CallFlashDataType;
 
@@ -93,6 +94,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         initSideSlip();
         listener();
         initIndex(getIntent());
+        AnalyticsManager.onUserActive();
 
         //发送统计 move to new sdk
 //        SharedPreferences setting = ApplicationEx.getInstance().getGlobalSettingPreference();

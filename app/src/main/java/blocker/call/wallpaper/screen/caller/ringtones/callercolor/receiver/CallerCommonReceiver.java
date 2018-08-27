@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.BatteryManager;
 
 import com.bumptech.glide.Glide;
-import com.common.sdk.analytics.AnalyticsManager;
 import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
@@ -56,7 +55,6 @@ public class CallerCommonReceiver extends BroadcastReceiver {
                             }
 
                             updateNewFlash(context);
-                            AnalyticsManager.onServiceRestart();
 
                             //判断如果安装了call id  则关闭 swipe
                             if (AdvertisementSwitcher.isAppInstalled(ConstantUtils.PACKAGE_CID)) {
