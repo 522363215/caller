@@ -404,7 +404,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
             MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
                     CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_END_CALL_NORMAL),//ConstantUtils.FB_AFTER_CALL_ID
                     CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_END_CALL_NORMAL),//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
-                    Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
+                    Advertisement.ADMOB_TYPE_NATIVE,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
                     "",
                     Advertisement.MOPUB_TYPE_NATIVE,
                     -1,

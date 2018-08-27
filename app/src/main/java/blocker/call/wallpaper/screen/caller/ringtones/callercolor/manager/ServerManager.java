@@ -289,17 +289,17 @@ public class ServerManager {
             JSONObject banner_ads_group_ids = dataJson.getJSONObject("normal_admob_id");
             if(banner_ads_group_ids != null){
                 ad_pref.edit().putString("normal_admob_id", String.valueOf(banner_ads_group_ids)).apply();
-                LogUtil.d("saveAdids", " normal_admob_id :" + String.valueOf(banner_ads_group_ids));
+                LogUtil.d("adv_id", "saveAdids normal_admob_id :" + String.valueOf(banner_ads_group_ids));
             }
 
             //save facebook id
             JSONObject fb_ads_group_ids = dataJson.getJSONObject("normal_facebook_id");
             if(fb_ads_group_ids != null){
                 ad_pref.edit().putString("normal_facebook_id", String.valueOf(fb_ads_group_ids)).apply();
-                LogUtil.d("saveAdids", " normal_facebook_id :" + String.valueOf(fb_ads_group_ids));
+                LogUtil.d("adv_id", "saveAdids normal_facebook_id :" + String.valueOf(fb_ads_group_ids));
             }
         } catch (Exception e) {
-            LogUtil.e("saveAdids", "saveAdids exception:" + e.getMessage());
+            LogUtil.e("adv_id", "saveAdids exception:" + e.getMessage());
         }
     }
 

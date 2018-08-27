@@ -18,10 +18,13 @@ public class FirstShowAdmobUtil {
         String admob_id = "";
         switch (position_first) {
             case POSITION_FIRST_ADMOB_SPLASH:
-                admob_id = CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_SPLASH_FIRST);
+                admob_id = CallerAdManager.ADMOB_ID_ADV_SPLASH_FIRST;
                 break;
             case POSITION_FIRST_ADMOB_RESULT_FLASH_SET:
                 admob_id = CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_RESULT_FIRST);
+                if(TextUtils.isEmpty(admob_id)){
+                    admob_id = CallerAdManager.ADMOB_ID_ADV_RESULT_FIRST;
+                }
                 break;
             case POSITION_FIRST_ADMOB_CALL_FLASH_PREVIEW:
                 break;
@@ -29,6 +32,9 @@ public class FirstShowAdmobUtil {
                 break;
             case POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL:
                 admob_id = CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_IN_DETAIL_FIRST);//call flash detail 界面全屏广告. 自定义插屏
+                if(TextUtils.isEmpty(admob_id)){
+                    admob_id = CallerAdManager.INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_FIRST;
+                }
                 break;
         }
         return admob_id;

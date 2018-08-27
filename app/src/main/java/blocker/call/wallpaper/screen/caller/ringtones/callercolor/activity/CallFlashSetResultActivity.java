@@ -496,7 +496,7 @@ public class CallFlashSetResultActivity extends BaseActivity implements View.OnC
         mMyAdvertisementAdapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
                 CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_RESULT_NORMAL),
                 admobId,
-                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,
+                Advertisement.ADMOB_TYPE_NATIVE,
                 "",
                 Advertisement.MOPUB_TYPE_NATIVE,
                 -1,

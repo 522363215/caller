@@ -55,7 +55,7 @@ public class FullScreenAdManager {
                 if (mPreloadAdvertisement == null || (!mPreloadAdvertisement.isValid(true) && !mPreloadAdvertisement.isLoading())) {
                     PreloadAdvertisement.AdTypeInfo adTypeInfo = new PreloadAdvertisement.AdTypeInfo();
                     adTypeInfo.adType = AdvertisementSwitcher.AD_ADMOB;
-                    adTypeInfo.admobType = Advertisement.ADMOB_TYPE_NATIVE_ADVANCED;
+                    adTypeInfo.admobType = Advertisement.ADMOB_TYPE_NATIVE;
 
                     mPreloadAdvertisement = new PreloadAdvertisement(TAG,
                             new MyPreloadAdvertisementAdapter(

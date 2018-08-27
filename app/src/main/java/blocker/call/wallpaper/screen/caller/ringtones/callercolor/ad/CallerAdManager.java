@@ -47,18 +47,18 @@ public class CallerAdManager {
     public static final int POSITION_ADMOB_ADV_SWIPE = 9;
 
 
-    private static final String ADMOB_ID_ADV_SPLASH_FIRST = "ca-app-pub-4922304484386262/2775707274";//启动页首次colorphone-1
-    private static final String ADMOB_ID_ADV_SPLASH_NORMAL = "ca-app-pub-4922304484386262/1118068726";//启动页普通colorphone-2
-    private static final String ADMOB_ID_ADV_RESULT_FIRST = "ca-app-pub-4922304484386262/7412014335";//结果页首次colorphone-3
-    private static final String ADMOB_ID_ADV_RESULT_NORMAL = "ca-app-pub-4922304484386262/3085756519";//结果页普通colorphone-4
-    private static final String ADMOB_ID_ADV_MINE_NORMAL = "ca-app-pub-4922304484386262/1430836018";//mine页普通colorphone-7
-    private static final String ADMOB_ID_ADV_END_CALL_NORMAL = "ca-app-pub-4922304484386262/1752493548";//通话结束页colorphone-8
-    private static final String ADMOB_ID_ADV_SWIPE = "ca-app-pub-4922304484386262/4735231174"; //swipe,colorphone-9
+    public static final String ADMOB_ID_ADV_SPLASH_FIRST = "ca-app-pub-4922304484386262/2775707274";//启动页首次colorphone-1
+    public static final String ADMOB_ID_ADV_SPLASH_NORMAL = "ca-app-pub-4922304484386262/1118068726";//启动页普通colorphone-2
+    public static final String ADMOB_ID_ADV_RESULT_FIRST = "ca-app-pub-4922304484386262/7412014335";//结果页首次colorphone-3
+    public static final String ADMOB_ID_ADV_RESULT_NORMAL = "ca-app-pub-4922304484386262/3085756519";//结果页普通colorphone-4
+    public static final String ADMOB_ID_ADV_MINE_NORMAL = "ca-app-pub-4922304484386262/1430836018";//mine页普通colorphone-7
+    public static final String ADMOB_ID_ADV_END_CALL_NORMAL = "ca-app-pub-4922304484386262/1752493548";//通话结束页colorphone-8
+    public static final String ADMOB_ID_ADV_SWIPE = "ca-app-pub-4922304484386262/4735231174"; //swipe,colorphone-9
 
 
     //插屏
-    private static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_FIRST = "ca-app-pub-4922304484386262/5328776475"; //自定义插屏, 来电秀设置首次colorphone-5
-    private static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL = "ca-app-pub-4922304484386262/6230794603";//来电秀设置插屏colorphone-6
+    public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_FIRST = "ca-app-pub-4922304484386262/5328776475"; //自定义插屏, 来电秀设置首次colorphone-5
+    public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL = "ca-app-pub-4922304484386262/6230794603";//来电秀设置插屏colorphone-6
 
     //多建了一个colorphone-6 ca-app-pub-4922304484386262/6762628719
 
@@ -86,15 +86,13 @@ public class CallerAdManager {
         String ad_id = "";
         SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         try {
-            JSONObject jsonObject = new JSONObject(ad_pref.getString("normal_admob_id", ""));
+            String str_id = ad_pref.getString("normal_admob_id", null);
+            if(TextUtils.isEmpty(str_id)){
+                return ad_id;
+            }
+            JSONObject jsonObject = new JSONObject(str_id);
             if(jsonObject!=null){
                 switch (position) {
-                    case POSITION_ADMOB_SPLASH_FIRST:
-                        ad_id = jsonObject.optString("ad_id_1");
-                        if(TextUtils.isEmpty(ad_id)){
-                            ad_id = ADMOB_ID_ADV_SPLASH_FIRST;
-                        }
-                        break;
                     case POSITION_ADMOB_SPLASH_NORMAL:
                         ad_id = jsonObject.optString("ad_id_2");
                         if(TextUtils.isEmpty(ad_id)){
@@ -145,10 +143,10 @@ public class CallerAdManager {
                         break;
                 }
 
-                LogUtil.d("getAdmob_id", "getAdmob_id ad_id: " + ad_id);
+                LogUtil.d("adv_id", "getAdmob_id ad_id: " + ad_id);
             }
         }catch (Exception e){
-            LogUtil.e("getAdmob_id", " getAdmob_id exception: " + e.getMessage());
+            LogUtil.e("adv_id", " getAdmob_id exception: " + e.getMessage());
         }
         return ad_id;
     }
@@ -157,7 +155,11 @@ public class CallerAdManager {
         String ad_id = "";
         SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         try {
-            JSONObject jsonObject = new JSONObject(ad_pref.getString("normal_facebook_id", ""));
+            String str_id = ad_pref.getString("normal_facebook_id", null);
+            if(TextUtils.isEmpty(str_id)){
+                return ad_id;
+            }
+            JSONObject jsonObject = new JSONObject(str_id);
             if(jsonObject!=null){
                 switch (position) {
                     case POSITION_FB_SPLASH_NORMAL:
@@ -192,10 +194,10 @@ public class CallerAdManager {
                         break;
                 }
 
-                LogUtil.d("getFacebook_id", "getFacebook_id: " + ad_id);
+                LogUtil.d("adv_id", "getFacebook_id: " + ad_id);
             }
         }catch (Exception e){
-            LogUtil.e("getFacebook_id", " getFacebook_id: " + e.getMessage());
+            LogUtil.e("adv_id", " getFacebook_id: " + e.getMessage());
         }
         return ad_id;
     }

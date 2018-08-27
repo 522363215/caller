@@ -393,7 +393,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
                 CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_SPLASH_NORMAL), //FB_SPLASH_ID,
                 admob_id,
-                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,
+                Advertisement.ADMOB_TYPE_NATIVE,
                 "",
                 Advertisement.ADMOB_TYPE_NATIVE,
                 -1,

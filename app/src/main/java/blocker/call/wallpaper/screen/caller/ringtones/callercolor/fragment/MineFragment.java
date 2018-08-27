@@ -294,7 +294,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getActivity().getWindow().getDecorView(),
                 CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_MINE_NORMAL),//ConstantUtils.FB_AFTER_CALL_ID
                 CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_MINE_NORMAL),//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
-                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
+                Advertisement.ADMOB_TYPE_NATIVE,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
                 "",
                 Advertisement.MOPUB_TYPE_NATIVE,
                 -1,
