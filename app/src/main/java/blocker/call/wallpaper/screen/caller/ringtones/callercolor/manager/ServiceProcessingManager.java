@@ -100,7 +100,7 @@ public class ServiceProcessingManager {
 
                 List<CallFlashInfo> downloadedCallFlashs = CallFlashManager.getInstance().getDownloadedCallFlash();
                 for (CallFlashInfo info : downloadedCallFlashs) {
-
+                    String url = info.url;
                     boolean isMoveSuc = false;
 
                     File oldMediaFile = ThemeSyncManager.getInstance().getOldThemeFileByUrl(mContext, info.url);
@@ -117,10 +117,10 @@ public class ServiceProcessingManager {
                         }
                     }
 
-                    if (oldPictureDir != null && oldPictureDir.exists()) {
-                        String firstFrameName = info.url.substring(info.url.lastIndexOf("/") + 1) + ".png";
+                    if (oldPictureDir != null && oldPictureDir.exists() && !TextUtils.isEmpty(url)) {
+                        String firstFrameName = info.url.substring(url.lastIndexOf("/") + 1) + ".png";
                         File oldPic = new File(oldPictureDir, firstFrameName);
-                        File nowPic = ThemeSyncManager.getInstance().getVideoFirstFrameFileByUrl(mContext, info.url);
+                        File nowPic = ThemeSyncManager.getInstance().getVideoFirstFrameFileByUrl(mContext, url);
                         if (oldPic.exists() && nowPic != null && !nowPic.exists()) {
                             try {
                                 if (nowPic.createNewFile()) {

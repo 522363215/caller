@@ -80,7 +80,7 @@ public class ThemeSyncManager {
         String fileName = getFileNameFromUrl(url);
         File file = null;
         try {
-            if (!TextUtils.isEmpty(themeDir)) {
+            if (!TextUtils.isEmpty(themeDir) && !TextUtils.isEmpty(fileName)) {
                 file = new File(themeDir, fileName);
             }
 
@@ -99,10 +99,10 @@ public class ThemeSyncManager {
             File dir = app.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
             if (dir != null && !dir.exists()) {
                 dir.mkdir();
-            }
-            String fileName = url.substring(url.lastIndexOf("/") + 1);
-            if (dir != null) {
-                file = new File(dir, fileName);
+                String fileName = url.substring(url.lastIndexOf("/") + 1);
+                if (dir != null) {
+                    file = new File(dir, fileName);
+                }
             }
         } catch (Exception e) {
         }
