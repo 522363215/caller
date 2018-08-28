@@ -37,7 +37,7 @@ public class ExternalMagicHelper {
     }
 
     public void delayInit() {
-        Async.scheduleTaskOnUiThread(40 * 1000, new Runnable() {
+        Async.schedule(40 * 1000, new Runnable() {
             @Override
             public void run() {
                 init();
@@ -75,7 +75,7 @@ public class ExternalMagicHelper {
                     bean = new ExternalMagicManager.ServerConfigBean(
                             externalParam.mEnable, //是否开启变现
                             externalParam.mDelayTime, //安装后延迟显示时间（小时）
-                            externalParam.mSelfInterval, //自身显示间隔（小时）
+                            externalParam.mSelfInterval, //自身显示间隔（分钟）
                             externalParam.mPopupNumber,//每天弹出的最大次数
                             externalParam.mDelayedDisplayTime, //变现界面关闭按钮的延迟显示时间（豪秒）
                             externalParam.mDelayedDisplayRate, //变现界面按钮延迟显示的几率（0-100）
@@ -151,9 +151,6 @@ public class ExternalMagicHelper {
     private ExternalParam getExternalParam(ExternalMagicManager.MagicType config) {
         ExternalParam externalParam = null;
         switch (config) {
-            case M_HL://MAGIC_HOROSCOPE_LUCK://运势变现
-                externalParam = CallerAdManager.getExternalParam("M_HL");
-                break;
             case M_BR://MAGIC_BATTERY_REMAIN://移除电源变现
                 externalParam = CallerAdManager.getExternalParam("M_BR");
                 break;
@@ -181,9 +178,6 @@ public class ExternalMagicHelper {
             case M_CS://MAGIC_CHARGING_STATUS://充电统计变现
                 externalParam = CallerAdManager.getExternalParam("M_CS");
                 break;
-            case M_IT://MAGIC_INSTALL://安装插屏
-                externalParam = CallerAdManager.getExternalParam("M_IT");
-                break;
         }
         return externalParam;
     }
@@ -193,7 +187,7 @@ public class ExternalMagicHelper {
         MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(adRootView,
                 "",//ConstantUtils.FB_AFTER_CALL_ID
                 getAdmobId(magicType),//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
-                Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
+                Advertisement.ADMOB_TYPE_NATIVE,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
                 "",
                 Advertisement.MOPUB_TYPE_NATIVE,
                 -1,
@@ -244,7 +238,6 @@ public class ExternalMagicHelper {
             case M_EC://MAGIC_END_CALL:
             case M_WS://MAGIC_WIFI_SECURITY:
             case M_BR://MAGIC_BATTERY_REMAIN:
-            case M_HL://MAGIC_HOROSCOPE_LUCK:
             case M_CS://MAGIC_CHARGING_STATUS:
                 return AdvertisementSwitcher.SERVER_KEY_EXTERNAL;
         }
@@ -266,7 +259,6 @@ public class ExternalMagicHelper {
             case M_AC://MAGIC_AUTO_CLEAN:
             case M_DW://MAGIC_DRINK_WATER:
             case M_NM://MAGIC_NECK_MOVEMENT:
-            case M_HL://MAGIC_HOROSCOPE_LUCK:
             case M_CS://MAGIC_CHARGING_STATUS:
                 //整体布局左、右间隔 16dp
                 return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_external_magic_magin_left_right_16dp : R.layout.layout_admob_advanced_content_ad_external_magic_magin_left_right_16dp;

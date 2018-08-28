@@ -385,8 +385,8 @@ public class CallerAdManager {
     }
 
     public static int getExternalInterval() {
-        int mins = 5;
-        mins = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_ext_show_interval", 5);
+        int mins = 30;
+        mins = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_ext_show_interval", 30);
         return mins;
     }
 
