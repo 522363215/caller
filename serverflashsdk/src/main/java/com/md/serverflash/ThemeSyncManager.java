@@ -83,6 +83,27 @@ public class ThemeSyncManager {
             if (!TextUtils.isEmpty(themeDir)) {
                 file = new File(themeDir, fileName);
             }
+
+        } catch (Exception e) {
+        }
+        return file;
+    }
+
+    public File getOldThemeFileByUrl (Context app, String url) {
+        if (app == null || TextUtils.isEmpty(url)) {
+            return null;
+        }
+
+        File file = null;
+        try {
+            File dir = app.getExternalFilesDir(toHexStr(Environment.DIRECTORY_MOVIES));
+            if (dir != null && !dir.exists()) {
+                dir.mkdir();
+            }
+            String fileName = url.substring(url.lastIndexOf("/") + 1);
+            if (dir != null) {
+                file = new File(dir, fileName);
+            }
         } catch (Exception e) {
         }
         return file;
@@ -94,7 +115,7 @@ public class ThemeSyncManager {
         File file = null;
         try {
             if (!TextUtils.isEmpty(themeDir)) {
-                file = new File(themeDir, fileName + ".png");
+                file = new File(themeDir, fileName);
             }
         } catch (Exception e) {
         }
@@ -103,7 +124,7 @@ public class ThemeSyncManager {
 
     private String getFileNameFromUrl(String url) {
         if (TextUtils.isEmpty(url)) return "";
-        return url.substring(url.lastIndexOf("/") + 1);
+        return toHexStr(url.substring(url.lastIndexOf("/") + 1));
     }
 
     private String getThemeStorageDir() {
@@ -394,10 +415,10 @@ public class ThemeSyncManager {
         String dir = "";
         try {
             File f = app.getExternalFilesDir(toHexStr(Environment.DIRECTORY_MOVIES));
-            if (f == null || !f.exists()) {
+            if (f != null && !f.exists()) {
                 f.mkdir();
+                dir = f.getAbsolutePath();
             }
-            dir = f.getAbsolutePath();
         } catch (Exception e) {
         }
         return dir;
@@ -406,17 +427,31 @@ public class ThemeSyncManager {
     public static String getThemeFirstFrameStorageDir(Context app) {
         String dir = "";
         try {
-            File f = app.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            if (f == null || !f.exists()) {
+            File f = app.getExternalFilesDir(toHexStr(Environment.DIRECTORY_PICTURES));
+            if (f != null && !f.exists()) {
                 f.mkdir();
             }
-            dir = f.getAbsolutePath();
+            dir = f != null ? f.getAbsolutePath() : dir;
         } catch (Exception e) {
         }
         return dir;
     }
 
     private static String toHexStr(String msg) {
+        char[] chars = "0123456789ABCDEF".toCharArray();
+        StringBuilder sb = new StringBuilder("");
+        byte[] bs = msg.getBytes();
+        int bit;
+        for (int i = 0; i < bs.length; i++) {
+            bit = (bs[i] & 0x0f0) >> 4;
+            sb.append(chars[bit]);
+            bit = bs[i] & 0x0f;
+            sb.append(chars[bit]);
+        }
+        return sb.toString().trim();
+    }
+
+    public static String toHexStr(String msg) {
         char[] chars = "0123456789ABCDEF".toCharArray();
         StringBuilder sb = new StringBuilder("");
         byte[] bs = msg.getBytes();

@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Environment;
 import android.text.TextUtils;
 
 import com.md.block.core.BlockManager;
@@ -12,6 +13,8 @@ import com.md.flashset.bean.CallFlashInfo;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,8 +25,10 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.CallerCommonReceiver;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.MessageReceiver;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.receiver.NetworkConnectChangedReceiver;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.EncryptionUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.FileUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 /**
@@ -72,14 +77,58 @@ public class ServiceProcessingManager {
         Async.run(new Runnable() {
             @Override
             public void run() {
+                File oldMediaDir = null;
+                File newMediaDir = null;
+                if (CommonUtils.isOldForFlash()) {
+                    try {
+                        oldMediaDir = mContext.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
+                        newMediaDir = mContext.getExternalFilesDir(ThemeSyncManager.toHexStr(Environment.DIRECTORY_MOVIES));
+                        if (oldMediaDir == null || !oldMediaDir.exists()) {
+                            newMediaDir.mkdir();
+                        }
+                        File pictureDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                        if (pictureDir != null && pictureDir.exists()) {
+                            boolean delete = pictureDir.delete();
+                            LogUtil.d("chenr", "Color Phone: delete old pictures directory is success, " + delete);
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+
                 List<CallFlashInfo> downloadedCallFlashs = CallFlashManager.getInstance().getDownloadedCallFlash();
                 for (CallFlashInfo info : downloadedCallFlashs) {
-                    if (!TextUtils.isEmpty(info.path) && !EncryptionUtil.isEncrypted(info.path)) {
+
+                    boolean isMoveSuc = false;
+
+                    File oldFile = ThemeSyncManager.getInstance().getOldThemeFileByUrl(mContext, info.url);
+                    File nowFile = ThemeSyncManager.getInstance().getFileByUrl(mContext, info.url);
+                    if (oldFile != null && oldFile.exists() && nowFile != null && !nowFile.exists()) {
+                        try {
+                            if (nowFile.createNewFile()) {
+                                FileUtil.copyFile(oldFile, nowFile);
+                                isMoveSuc = true;
+                            }
+                        } catch (Exception e) {
+                        }
+                    }
+
+                    LogUtil.d("chenr", "Color Phone: move old media file is success, " + isMoveSuc);
+
+                    if (isMoveSuc && !TextUtils.isEmpty(info.path) && !EncryptionUtil.isEncrypted(info.path)) {
                         //保存视频第一帧图片
                         CallFlashManager.getInstance().saveVideoFirstFrame(info.url);
                         //加密
                         EncryptionUtil.encrypt(info.path);
                     }
+
+                    if (nowFile != null && oldFile != null && !nowFile.getAbsolutePath().equals(oldFile.getAbsolutePath())) {
+                        CallFlashManager.getInstance().saveCallFlashDownloadCount(info);
+                    }
+                }
+
+                if (oldMediaDir != null && oldMediaDir.exists()) {
+                    boolean delete = oldMediaDir.delete();
+                    LogUtil.d("chenr", "Color Phone: delete old media file is success, " + delete);
                 }
             }
         });
