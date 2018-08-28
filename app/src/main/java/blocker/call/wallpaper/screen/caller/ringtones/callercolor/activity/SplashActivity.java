@@ -25,6 +25,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
@@ -445,10 +446,10 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
             toMain();
         }
 
-//        @Override
-//        public int getAdmobHeight() {
-//            return DeviceUtil.getScreenHeight() - Stringutil.dpToPx(90);
-//        }
+        @Override
+        public int getAdmobHeight() {
+            return DeviceUtil.getScreenHeight() - Stringutil.dpToPx(200);
+        }
 
         @Override
         public int getFbViewRes() {
@@ -488,9 +489,9 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                 mLayoutLoadCompleted.setVisibility(View.VISIBLE);
 
                 // TODO: 2018/8/4  广告自动跳转倒计时 此处控制是否自动跳转
-                if (CallerAdManager.isAutoGoMain() && !mIsShowFristAdMob) {
-                    showAdCountDown();
-                }
+//                if (CallerAdManager.isAutoGoMain() && !mIsShowFristAdMob) {
+//                    showAdCountDown();
+//                }
             }
         });
     }
