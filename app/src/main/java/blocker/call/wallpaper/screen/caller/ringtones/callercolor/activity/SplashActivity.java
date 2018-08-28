@@ -489,9 +489,9 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                 mLayoutLoadCompleted.setVisibility(View.VISIBLE);
 
                 // TODO: 2018/8/4  广告自动跳转倒计时 此处控制是否自动跳转
-//                if (CallerAdManager.isAutoGoMain() && !mIsShowFristAdMob) {
-//                    showAdCountDown();
-//                }
+                if (CallerAdManager.isAutoGoMain() && !mIsShowFristAdMob) {
+                    showAdCountDown();
+                }
             }
         });
     }

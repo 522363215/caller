@@ -273,8 +273,13 @@ public class Stringutil {
         return dp == 0 ? 0 : (int) (dp * scale + 0.5f);
     }
 
-    public static int dpToPx(Context context, int dp) {
+    public static int pxToDp(float px) {
         final float scale = ApplicationEx.getInstance().getResources().getDisplayMetrics().density;
+        return px == 0 ? 0 : (int) (px / scale + 0.5f);
+    }
+
+    public static int dpToPx(Context context, int dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
         return dp == 0 ? 0 : (int) (dp * scale + 0.5f);
     }
 

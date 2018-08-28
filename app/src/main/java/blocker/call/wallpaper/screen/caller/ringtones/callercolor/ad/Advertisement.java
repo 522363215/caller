@@ -855,8 +855,8 @@ public class Advertisement {
         int width = 0;
         int height = 0;
 
-        width = Stringutil.pxToDp(mContextForFb, mAdapter.getAdmobWidth());
-        height = Stringutil.pxToDp(mContextForFb, mAdapter.getAdmobHeight());
+        width = Stringutil.pxToDp(mAdapter.getAdmobWidth());
+        height = Stringutil.pxToDp(mAdapter.getAdmobHeight());
         LogUtil.d(LOG_TAG, "initAdmobForNativeType width: "+width+", height: "+height+", key: "+mAdapter.getAdmobKey());
 
         AdSize nativeAdSize = new AdSize(width, height);
