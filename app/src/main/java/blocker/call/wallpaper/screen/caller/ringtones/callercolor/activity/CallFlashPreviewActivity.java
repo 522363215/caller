@@ -226,7 +226,7 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
                     }
                     //加密
                     if (file != null && !TextUtils.isEmpty(file.getAbsolutePath())) {
-                        EncryptionUtil.encrypt(file.getAbsolutePath());
+                        EncryptionUtil.encrypt(mInfo);
                     }
 
                     CallFlashManager.getInstance().saveCallFlashDownloadCount(mInfo);

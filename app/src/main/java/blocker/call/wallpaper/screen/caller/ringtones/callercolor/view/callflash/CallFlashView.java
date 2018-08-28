@@ -193,7 +193,7 @@ public class CallFlashView extends RelativeLayout {
                 }
             }
             //加密
-            EncryptionUtil.encrypt(path);
+            EncryptionUtil.encrypt(info);
             mVideoView.setVisibility(VISIBLE);
             mVideoView.setVideoPath(path);
             mVideoView.start();

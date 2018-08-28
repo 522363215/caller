@@ -2,6 +2,8 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils;
 
 import android.text.TextUtils;
 
+import com.md.flashset.bean.CallFlashInfo;
+
 import java.io.RandomAccessFile;
 import java.util.HashMap;
 
@@ -14,22 +16,43 @@ public class EncryptionUtil {
     /**
      * 加密,修改视频文件，在视频文件头部加入一个字符串，从而是视频无法识别
      *
-     * @param strFile 源文件绝对路径
+     * @param info 需要加密的资源对象
      */
-    public static void encrypt(String strFile) {
-        if (TextUtils.isEmpty(strFile)) return;
+    public static void encrypt(CallFlashInfo info) {
+        if (info == null) return;
+        String path = info.path;
+        String url = info.url;
+        if (TextUtils.isEmpty(path) || TextUtils.isEmpty(url)) {
+            return;
+        }
         try {
-            if (!isEncrypted(strFile) && (strFile.endsWith("mp4") || strFile.endsWith("MP4"))) {
-                String randomStr = Stringutil.getRandomStr(strFile);
+            if (!isEncrypted(path) && (url.endsWith("mp4") || url.endsWith("MP4"))) {
+                String randomStr = Stringutil.getRandomStr(path);
                 if (TextUtils.isEmpty(randomStr)) {
                     randomStr = DEFAULT_VIDEO_ENCRYPT_MD5;
                 }
-                appendFileHeader(randomStr, strFile);
-                saveEncryptionVideoMd5(strFile, randomStr);
+                appendFileHeader(randomStr, path);
+                saveEncryptionVideoMd5(path, randomStr);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void resetEncryptMap (String old, String now) {
+        if (TextUtils.isEmpty(old) || TextUtils.isEmpty(now)) {
+            return;
+        }
+
+        HashMap<String, String> hashMapData = PreferenceHelper.getHashMapData(PreferenceHelper.PREF_VIDEO_ENCRYPT_MD5_MAP, String.class);
+        if (hashMapData == null || hashMapData.isEmpty()) {
+            return;
+        }
+
+        String value = hashMapData.get(old);
+        hashMapData.put(now, value);
+        PreferenceHelper.putHashMapData(PreferenceHelper.PREF_VIDEO_ENCRYPT_MD5_MAP, hashMapData);
+
     }
 
     /**

@@ -79,6 +79,9 @@ public class ServiceProcessingManager {
             public void run() {
                 File oldMediaDir = null;
                 File newMediaDir = null;
+
+                File oldPictureDir = null;
+                File nowPictureDir = null;
                 if (CommonUtils.isOldForFlash()) {
                     try {
                         oldMediaDir = mContext.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
@@ -86,10 +89,11 @@ public class ServiceProcessingManager {
                         if (oldMediaDir == null || !oldMediaDir.exists()) {
                             newMediaDir.mkdir();
                         }
-                        File pictureDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-                        if (pictureDir != null && pictureDir.exists()) {
-                            boolean delete = pictureDir.delete();
-                            LogUtil.d("chenr", "Color Phone: delete old pictures directory is success, " + delete);
+
+                        oldPictureDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                        nowPictureDir = mContext.getExternalFilesDir(ThemeSyncManager.toHexStr(Environment.DIRECTORY_PICTURES));
+                        if (nowPictureDir != null && !nowPictureDir.exists()) {
+                            nowPictureDir.mkdir();
                         }
                     } catch (Exception e) {
                     }
@@ -100,35 +104,56 @@ public class ServiceProcessingManager {
 
                     boolean isMoveSuc = false;
 
-                    File oldFile = ThemeSyncManager.getInstance().getOldThemeFileByUrl(mContext, info.url);
-                    File nowFile = ThemeSyncManager.getInstance().getFileByUrl(mContext, info.url);
-                    if (oldFile != null && oldFile.exists() && nowFile != null && !nowFile.exists()) {
+                    File oldMediaFile = ThemeSyncManager.getInstance().getOldThemeFileByUrl(mContext, info.url);
+                    File nowMediaFile = ThemeSyncManager.getInstance().getFileByUrl(mContext, info.url);
+                    if (oldMediaFile != null && oldMediaFile.exists() && nowMediaFile != null && !nowMediaFile.exists()) {
                         try {
-                            if (nowFile.createNewFile()) {
-                                FileUtil.copyFile(oldFile, nowFile);
+                            if (nowMediaFile.createNewFile()) {
+                                FileUtil.copyFile(oldMediaFile, nowMediaFile);
+                                EncryptionUtil.resetEncryptMap(oldMediaFile.getAbsolutePath(), nowMediaFile.getAbsolutePath());
+                                oldMediaFile.delete();
                                 isMoveSuc = true;
                             }
                         } catch (Exception e) {
                         }
                     }
 
-                    LogUtil.d("chenr", "Color Phone: move old media file is success, " + isMoveSuc);
+                    if (oldPictureDir != null && oldPictureDir.exists()) {
+                        String firstFrameName = info.url.substring(info.url.lastIndexOf("/") + 1) + ".png";
+                        File oldPic = new File(oldPictureDir, firstFrameName);
+                        File nowPic = ThemeSyncManager.getInstance().getVideoFirstFrameFileByUrl(mContext, info.url);
+                        if (oldPic.exists() && nowPic != null && !nowPic.exists()) {
+                            try {
+                                if (nowPic.createNewFile()) {
+                                    FileUtil.copyFile(oldPic, nowPic);
+                                    oldPic.delete();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    if (nowMediaFile != null && oldMediaFile != null && !nowMediaFile.getAbsolutePath().equals(oldMediaFile.getAbsolutePath())) {
+                        CallFlashManager.getInstance().saveCallFlashDownloadCount(info);
+                        info.path = nowMediaFile.getAbsolutePath();
+                    }
 
                     if (isMoveSuc && !TextUtils.isEmpty(info.path) && !EncryptionUtil.isEncrypted(info.path)) {
                         //保存视频第一帧图片
+                        LogUtil.d("chenr", "execute encrypt.");
                         CallFlashManager.getInstance().saveVideoFirstFrame(info.url);
                         //加密
-                        EncryptionUtil.encrypt(info.path);
-                    }
-
-                    if (nowFile != null && oldFile != null && !nowFile.getAbsolutePath().equals(oldFile.getAbsolutePath())) {
-                        CallFlashManager.getInstance().saveCallFlashDownloadCount(info);
+                        EncryptionUtil.encrypt(info);
                     }
                 }
 
                 if (oldMediaDir != null && oldMediaDir.exists()) {
-                    boolean delete = oldMediaDir.delete();
-                    LogUtil.d("chenr", "Color Phone: delete old media file is success, " + delete);
+                    oldMediaDir.delete();
+                }
+
+                if (oldPictureDir != null && oldPictureDir.exists()) {
+                    oldPictureDir.delete();
                 }
             }
         });

@@ -547,7 +547,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
                 //加密
                 if (file != null && !TextUtils.isEmpty(file.getAbsolutePath())) {
-                    EncryptionUtil.encrypt(file.getAbsolutePath());
+                    EncryptionUtil.encrypt(info);
                 }
             }
         }

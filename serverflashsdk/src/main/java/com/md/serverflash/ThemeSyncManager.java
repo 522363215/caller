@@ -89,14 +89,14 @@ public class ThemeSyncManager {
         return file;
     }
 
-    public File getOldThemeFileByUrl (Context app, String url) {
+    public File getOldThemeFileByUrl(Context app, String url) {
         if (app == null || TextUtils.isEmpty(url)) {
             return null;
         }
 
         File file = null;
         try {
-            File dir = app.getExternalFilesDir(toHexStr(Environment.DIRECTORY_MOVIES));
+            File dir = app.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
             if (dir != null && !dir.exists()) {
                 dir.mkdir();
             }
@@ -415,8 +415,9 @@ public class ThemeSyncManager {
         String dir = "";
         try {
             File f = app.getExternalFilesDir(toHexStr(Environment.DIRECTORY_MOVIES));
-            if (f != null && !f.exists()) {
-                f.mkdir();
+            if (f != null) {
+                if (!f.exists())
+                    f.mkdir();
                 dir = f.getAbsolutePath();
             }
         } catch (Exception e) {
