@@ -34,6 +34,7 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 
@@ -267,8 +268,13 @@ public class Stringutil {
         return false;
     }
 
+    public static int dpToPx(int dp) {
+        final float scale = ApplicationEx.getInstance().getResources().getDisplayMetrics().density;
+        return dp == 0 ? 0 : (int) (dp * scale + 0.5f);
+    }
+
     public static int dpToPx(Context context, int dp) {
-        final float scale = context.getResources().getDisplayMetrics().density;
+        final float scale = ApplicationEx.getInstance().getResources().getDisplayMetrics().density;
         return dp == 0 ? 0 : (int) (dp * scale + 0.5f);
     }
 
