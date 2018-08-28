@@ -10,6 +10,7 @@ import android.text.TextUtils;
 
 import com.md.block.core.BlockManager;
 import com.md.flashset.bean.CallFlashInfo;
+import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 
@@ -82,21 +83,19 @@ public class ServiceProcessingManager {
 
                 File oldPictureDir = null;
                 File nowPictureDir = null;
-                if (CommonUtils.isOldForFlash()) {
-                    try {
-                        oldMediaDir = mContext.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
-                        newMediaDir = mContext.getExternalFilesDir(ThemeSyncManager.toHexStr(Environment.DIRECTORY_MOVIES));
-                        if (oldMediaDir == null || !oldMediaDir.exists()) {
-                            newMediaDir.mkdir();
-                        }
-
-                        oldPictureDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-                        nowPictureDir = mContext.getExternalFilesDir(ThemeSyncManager.toHexStr(Environment.DIRECTORY_PICTURES));
-                        if (nowPictureDir != null && !nowPictureDir.exists()) {
-                            nowPictureDir.mkdir();
-                        }
-                    } catch (Exception e) {
+                try {
+                    oldMediaDir = mContext.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
+                    newMediaDir = mContext.getExternalFilesDir(ThemeSyncManager.toHexStr(Environment.DIRECTORY_MOVIES));
+                    if (oldMediaDir == null || !oldMediaDir.exists()) {
+                        newMediaDir.mkdir();
                     }
+
+                    oldPictureDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    nowPictureDir = mContext.getExternalFilesDir(ThemeSyncManager.toHexStr(Environment.DIRECTORY_PICTURES));
+                    if (nowPictureDir != null && !nowPictureDir.exists()) {
+                        nowPictureDir.mkdir();
+                    }
+                } catch (Exception e) {
                 }
 
                 List<CallFlashInfo> downloadedCallFlashs = CallFlashManager.getInstance().getDownloadedCallFlash();
@@ -141,7 +140,6 @@ public class ServiceProcessingManager {
 
                     if (isMoveSuc && !TextUtils.isEmpty(info.path) && !EncryptionUtil.isEncrypted(info.path)) {
                         //保存视频第一帧图片
-                        LogUtil.d("chenr", "execute encrypt.");
                         CallFlashManager.getInstance().saveVideoFirstFrame(info.url);
                         //加密
                         EncryptionUtil.encrypt(info);
@@ -154,6 +152,15 @@ public class ServiceProcessingManager {
 
                 if (oldPictureDir != null && oldPictureDir.exists()) {
                     oldPictureDir.delete();
+                }
+
+                CallFlashInfo info = CallFlashPreferenceHelper.getObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
+                if (info != null) {
+                    File file = ThemeSyncManager.getInstance().getFileByUrl(mContext, info.url);
+                    if (file != null && file.exists() && !info.path.equals(file.getAbsolutePath())) {
+                        info.path = file.getAbsolutePath();
+                        CallFlashPreferenceHelper.setObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, info);
+                    }
                 }
             }
         });
