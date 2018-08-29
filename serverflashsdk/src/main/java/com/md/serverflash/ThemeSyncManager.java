@@ -99,10 +99,10 @@ public class ThemeSyncManager {
             File dir = app.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
             if (dir != null && !dir.exists()) {
                 dir.mkdir();
-                String fileName = url.substring(url.lastIndexOf("/") + 1);
-                if (dir != null) {
-                    file = new File(dir, fileName);
-                }
+            }
+            String fileName = url.substring(url.lastIndexOf("/") + 1);
+            if (dir != null && dir.exists()) {
+                file = new File(dir, fileName);
             }
         } catch (Exception e) {
         }
