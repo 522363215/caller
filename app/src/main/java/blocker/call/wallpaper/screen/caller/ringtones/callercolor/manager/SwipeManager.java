@@ -231,7 +231,7 @@ public class SwipeManager {
             MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(view,
                     CallerAdManager.getSwipeFbId(),//
                     CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_ADV_SWIPE),
-                    Advertisement.ADMOB_TYPE_NATIVE_ADVANCED,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
+                    Advertisement.ADMOB_TYPE_NATIVE,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
                     "",
                     Advertisement.MOPUB_TYPE_NATIVE,
                     -1,
