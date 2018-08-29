@@ -267,7 +267,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
             sb.append("\n");
             sb.append("Android Version: " + Build.VERSION.RELEASE);
             sb.append("\n");
-            sb.append("CID Version: " + versionCode);
+            sb.append("App Version: " + versionCode);
 
         } catch (Exception e) {
             LogUtil.e("nmlogs", "send Email getDeviceInfo exception: " + e.getMessage());
