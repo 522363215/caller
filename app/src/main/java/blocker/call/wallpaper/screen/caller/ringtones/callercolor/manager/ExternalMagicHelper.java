@@ -233,6 +233,12 @@ public class ExternalMagicHelper {
         public int getAdmobWidth() {
             return ExternalMagicHelper.this.getAdmobWidth(magicType);
         }
+
+        @Override
+        public void onAdClicked(boolean isAdmob) {
+            super.onAdClicked(isAdmob);
+            ExternalMagicManager.getInstance().hideCurrentPopup();
+        }
     }
 
     private String getPlacementId(ExternalMagicManager.MagicType magicType) {

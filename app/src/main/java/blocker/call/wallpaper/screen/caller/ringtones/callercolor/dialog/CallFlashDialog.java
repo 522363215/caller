@@ -345,8 +345,6 @@ public class CallFlashDialog implements View.OnClickListener {
                         // TODO: 2017/7/19  部分手机设置静音失效，异常： Not allowed to change Do Not Disturb state，需要打开应用程序的免打扰访问设置
                     }
                 }
-                //静音时媒体声音不静音
-                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, FLAG_ALLOW_RINGER_MODES);
             } else {
                 audioManager.setStreamMute(AudioManager.STREAM_RING, true);
             }
