@@ -15,7 +15,9 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdMan
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.ExternalParam;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 
 public class ExternalMagicHelper {
     private static final String TAG = "ExternalMagicHelper";
@@ -226,6 +228,11 @@ public class ExternalMagicHelper {
         public int getAdmobViewRes(int type, boolean isAppInstall) {
             return ExternalMagicHelper.this.getAdmobViewRes(magicType, isAppInstall);
         }
+
+        @Override
+        public int getAdmobWidth() {
+            return ExternalMagicHelper.this.getAdmobWidth(magicType);
+        }
     }
 
     private String getPlacementId(ExternalMagicManager.MagicType magicType) {
@@ -270,6 +277,27 @@ public class ExternalMagicHelper {
             case M_BR://MAGIC_BATTERY_REMAIN:
                 //整体布局左、右间隔 23dp
                 return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_external_magic_magin_left_right_23dp : R.layout.layout_admob_advanced_content_ad_external_magic_magin_left_right_23dp;
+        }
+        return -1;
+    }
+
+    private int getAdmobWidth(ExternalMagicManager.MagicType type) {
+        switch (type) {
+            case M_AB://MAGIC_AUTO_BOOST:
+            case M_AC://MAGIC_AUTO_CLEAN:
+            case M_DW://MAGIC_DRINK_WATER:
+            case M_NM://MAGIC_NECK_MOVEMENT:
+            case M_CS://MAGIC_CHARGING_STATUS:
+                //整体布局左、右间隔 16dp
+                return DeviceUtil.getScreenWidth() - Stringutil.dpToPx(32);
+            case M_BS://MAGIC_BATTERY_SAVE:
+            case M_EC://MAGIC_END_CALL:
+            case M_WS://MAGIC_WIFI_SECURITY:
+                //整体布局左、右间隔 0dp
+                return DeviceUtil.getScreenWidth();
+            case M_BR://MAGIC_BATTERY_REMAIN:
+                //整体布局左、右间隔 23dp
+                return DeviceUtil.getScreenWidth() - Stringutil.dpToPx(46);
         }
         return -1;
     }
