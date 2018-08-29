@@ -51,7 +51,6 @@ public class WallpaperListFragment extends Fragment implements View.OnClickListe
     private RecyclerView rvWallpaper;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private static final int PAGE_NUMBER_MAX_COUNT = 150;
-    private int mCategoryId = -1;
     private TextView mTvRefreshFailed;
     private GridLayoutManager mLayoutManager;
     private AtomicBoolean isRefreshData = new AtomicBoolean(false);
@@ -60,7 +59,6 @@ public class WallpaperListFragment extends Fragment implements View.OnClickListe
     private CallFlashMarginDecoration mWallpaperMarginDecoration;
     private TextView mTvView;
     private Runnable mLoadMaxRunable;
-    private static final String CATEGORY_ID = "category_id";
     private static final String DATA_TYPE = "data_type";
     private int mDataType = 0;
     private String topic = "";
@@ -176,7 +174,6 @@ public class WallpaperListFragment extends Fragment implements View.OnClickListe
         Bundle bundle = getArguments();
         if (bundle != null) {
             mDataType = bundle.get(DATA_TYPE) == null ? 0 : (int) bundle.get(DATA_TYPE);
-            mCategoryId = bundle.get(CATEGORY_ID) == null ? -1 : (int) bundle.get(CATEGORY_ID);
         }
     }
 

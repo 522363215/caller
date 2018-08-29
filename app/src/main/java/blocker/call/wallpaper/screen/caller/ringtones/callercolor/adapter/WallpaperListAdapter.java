@@ -111,7 +111,7 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
         });
         if (file != null && file.exists() || (!TextUtils.isEmpty(wallpaperInfos.get(position).path) && new File(wallpaperInfos.get(position).path).exists())) {
             holder.ivDownload.setVisibility(View.INVISIBLE);
-            if (path.path.equals(wallpaperInfos.get(position).path))
+            if (path != null && path.path.equals(wallpaperInfos.get(position).path))
                 holder.ivSelect.setVisibility(View.VISIBLE);
             else
                 holder.ivSelect.setVisibility(View.INVISIBLE);
