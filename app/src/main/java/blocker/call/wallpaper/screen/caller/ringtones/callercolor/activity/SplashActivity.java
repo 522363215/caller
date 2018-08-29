@@ -39,7 +39,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     protected static long AD_MAX_LOAD_TIME = 4500;
     protected static long AD_SHOW_TIME = 4000;
     protected static long FIRST_AD_SHOW_TIME = 4000;
-    private static final long SPLASH_AD_SHOW_INTERVAL_TIME = 0 * 60 * 1000;
+    private static final long SPLASH_AD_SHOW_INTERVAL_TIME = 10 * 60 * 1000;
     private LanguageSettingUtil languageSetting;
     Advertisement mAdvertisement;
     private boolean mIsShowFristAdMob;
