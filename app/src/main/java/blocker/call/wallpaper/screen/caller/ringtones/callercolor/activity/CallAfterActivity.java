@@ -36,6 +36,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DateUtil
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.NumberUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.AvatarView;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView;
@@ -400,7 +401,7 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
 
     //******************************************AD******************************************//
     private void initAds() {
-        if(CallerAdManager.isShowAdOnEndCall() && isShouldReq()) {
+        if (CallerAdManager.isShowAdOnEndCall() && isShouldReq()) {
             MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
                     CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_END_CALL_NORMAL),//ConstantUtils.FB_AFTER_CALL_ID
                     CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_END_CALL_NORMAL),//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
@@ -443,16 +444,16 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
 
         @Override
         public int getAdmobHeight() {
-            return 180;
+            return DeviceUtil.getScreenHeightIncludeNavigateBar() - DeviceUtil.getNavigationBarHeight(CallAfterActivity.this) - DeviceUtil.getStatusBarHeight() - Stringutil.dpToPx(44 + 72 + 32 + 54);
         }
     }
     //******************************************AD******************************************//
 
-    private boolean isShouldReq(){
+    private boolean isShouldReq() {
         boolean is = false;
         SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
         long last_req = ad_pref.getLong("fb_ad_last_req_end_call", 0);
-        if(System.currentTimeMillis() - last_req >= 60 * 1000){
+        if (System.currentTimeMillis() - last_req >= 60 * 1000) {
             is = true;
             ad_pref.edit().putLong("fb_ad_last_req_end_call", System.currentTimeMillis()).apply();
         }

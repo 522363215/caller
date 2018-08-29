@@ -4,7 +4,6 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -80,8 +79,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FlurryAgent.logEvent("MineFragment-----show_main");
-        initAds();
         initView(view);
+        initAds();
         listener();
     }
 
@@ -121,7 +120,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mLayoutSetRecordAllBtn = view.findViewById(R.id.layout_set_record_all_btn);
 
         mSetRecordAdapter = new HorizontalCallFlashAdapter(getActivity(), mSetRecordData);
-        mRvSetRecord.setLayoutManager(new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false));
+        mRvSetRecord.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         mRvSetRecord.addItemDecoration(new HorizontalCallFlashMarginDecoration());
         mRvSetRecord.setHasFixedSize(true);
         mRvSetRecord.setNestedScrollingEnabled(false);
@@ -133,7 +132,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mLayoutCollectAllBtn = view.findViewById(R.id.layout_collect_all_btn);
 
         mCollectAdapter = new HorizontalCallFlashAdapter(getActivity(), mCollectData);
-        mRvCollect.setLayoutManager(new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false));
+        mRvCollect.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         mRvCollect.addItemDecoration(new HorizontalCallFlashMarginDecoration());
         mRvCollect.setHasFixedSize(true);
         mRvCollect.setNestedScrollingEnabled(false);
@@ -145,7 +144,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mLayoutDownloadedAllBtn = view.findViewById(R.id.layout_downloaded_all_btn);
 
         mDownloadAdapter = new HorizontalCallFlashAdapter(getActivity(), mDownloadData);
-        mRvDownload.setLayoutManager(new LinearLayoutManager(getActivity(), GridLayoutManager.HORIZONTAL, false));
+        mRvDownload.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         mRvDownload.addItemDecoration(new HorizontalCallFlashMarginDecoration());
         mRvDownload.setHasFixedSize(true);
         mRvDownload.setNestedScrollingEnabled(false);
@@ -324,6 +323,16 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         @Override
         public int getFbViewRes() {
             return mIsBanner ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_no_icon_native_ads_call_after_big;
+        }
+
+        @Override
+        public int getAdmobHeight() {
+            return Stringutil.dpToPx(250);
+        }
+
+        @Override
+        public int getAdmobWidth() {
+            return DeviceUtil.getScreenWidth() - Stringutil.dpToPx(16);
         }
 
         @Override

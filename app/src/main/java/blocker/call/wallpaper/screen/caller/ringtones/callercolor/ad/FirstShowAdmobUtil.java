@@ -22,7 +22,7 @@ public class FirstShowAdmobUtil {
                 break;
             case POSITION_FIRST_ADMOB_RESULT_FLASH_SET:
                 admob_id = CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_RESULT_FIRST);
-                if(TextUtils.isEmpty(admob_id)){
+                if (TextUtils.isEmpty(admob_id)) {
                     admob_id = CallerAdManager.ADMOB_ID_ADV_RESULT_FIRST;
                 }
                 break;
@@ -32,7 +32,7 @@ public class FirstShowAdmobUtil {
                 break;
             case POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL:
                 admob_id = CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_IN_DETAIL_FIRST);//call flash detail 界面全屏广告. 自定义插屏
-                if(TextUtils.isEmpty(admob_id)){
+                if (TextUtils.isEmpty(admob_id)) {
                     admob_id = CallerAdManager.INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_FIRST;
                 }
                 break;
@@ -60,7 +60,9 @@ public class FirstShowAdmobUtil {
         if (lastShowTime > 0) {
             return false;
         }
-        return true;
+
+        // TODO: 2018/8/29 暂时取消首次加载模式
+        return false;
 
     }
 

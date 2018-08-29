@@ -619,7 +619,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private void showDownloadProgress() {
         if (mInfo == null) return;
         File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
-        if ((file != null && file.exists()) || (!TextUtils.isEmpty(mInfo.path) && new File(mInfo.path).exists())) {
+        if ((file != null && file.exists()) || (!TextUtils.isEmpty(mInfo.path) && new File(mInfo.path).exists()) || CallFlashManager.CALL_FLASH_START_SKY_ID.equals(mInfo.id)) {
             if (mIsShowAboveAdBtn) {
                 tv_setting_action_above_ad.setVisibility(View.VISIBLE);
                 tv_download_action_above_ad.setVisibility(View.GONE);

@@ -36,6 +36,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.FullSc
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.DrawHookView;
 
@@ -526,7 +527,7 @@ public class CallFlashSetResultActivity extends BaseActivity implements View.OnC
 
         @Override
         public int getFbAdsHight() {
-            return DeviceUtil.getScreenHeight() - getResources().getDimensionPixelOffset(R.dimen.dp56) - mLayoutTop.getHeight();
+            return DeviceUtil.getScreenHeight() - DeviceUtil.getStatusBarHeight() - Stringutil.dpToPx(56 + 16 + 16 + 48);
         }
 
         @Override
@@ -561,7 +562,7 @@ public class CallFlashSetResultActivity extends BaseActivity implements View.OnC
 
         @Override
         public int getAdmobHeight() {
-            return DeviceUtil.getScreenHeight() - getResources().getDimensionPixelOffset(R.dimen.dp56) - mLayoutTop.getHeight();
+            return DeviceUtil.getScreenHeightIncludeNavigateBar() - DeviceUtil.getNavigationBarHeight(CallFlashSetResultActivity.this) - DeviceUtil.getStatusBarHeight() - Stringutil.dpToPx(56 + 16 + 16 + 48);
 
         }
 

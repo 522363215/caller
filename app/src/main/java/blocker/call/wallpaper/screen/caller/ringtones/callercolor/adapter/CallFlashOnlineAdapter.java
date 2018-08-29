@@ -3,10 +3,13 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.LruCache;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -72,6 +75,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private RecyclerView.ViewHolder holder;
     private List<Boolean> payloads;
     private RecyclerView mRecyclerView;
+    private LruCache<String, Bitmap> mFirstFrameMemoryCache;
 
     public void setFragmentTag(int fragmentTag) {
         this.fragmentTag = fragmentTag;
@@ -101,6 +105,8 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public CallFlashOnlineAdapter(Context context, List<CallFlashInfo> model) {
         this.context = context;
         this.model = model;
+        //设置第一帧图片缓存大小
+        setFirstFrameCacheSize();
 
         videoMap = new ConcurrentHashMap<>();
         mDownloadListenerList = new ArrayList<>();
@@ -110,6 +116,30 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             childViewHeight = 4 * childViewWidth / 3;
         }
     }
+
+    private void setFirstFrameCacheSize() {
+        // 获取应用程序最大可用内存
+        int maxMemory = (int) Runtime.getRuntime().maxMemory();
+        int cacheSize = maxMemory / 8;
+        // 设置图片缓存大小为程序最大可用内存的1/8
+        mFirstFrameMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
+            @Override
+            protected int sizeOf(String key, Bitmap bitmap) {
+                return bitmap.getByteCount();
+            }
+        };
+    }
+
+    private void addFirstFrameBitmapToMemoryCache(String callFlashId, Bitmap bitmap) {
+        if (getFirstFrameBitmapFromMemoryCache(callFlashId) == null) {
+            mFirstFrameMemoryCache.put(callFlashId, bitmap);
+        }
+    }
+
+    private Bitmap getFirstFrameBitmapFromMemoryCache(String callFlashId) {
+        return mFirstFrameMemoryCache.get(callFlashId);
+    }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -209,7 +239,12 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 File firstFrameFile = ThemeSyncManager.getInstance().getVideoFirstFrameFileByUrl(context, info.url);
                 if (firstFrameFile != null && firstFrameFile.exists()) {
-                    holder.gv_bg.showImageInSdCard(firstFrameFile.getAbsolutePath());
+                    Bitmap firstFrameBitmapFromMemoryCache = getFirstFrameBitmapFromMemoryCache(info.id);
+                    if (firstFrameBitmapFromMemoryCache == null) {
+                        firstFrameBitmapFromMemoryCache = BitmapFactory.decodeFile(firstFrameFile.getAbsolutePath());
+                        addFirstFrameBitmapToMemoryCache(info.id, firstFrameBitmapFromMemoryCache);
+                    }
+                    holder.gv_bg.showImage(firstFrameBitmapFromMemoryCache);
                 } else {
                     if (!TextUtils.isEmpty(info.thumbnail_imgUrl)) {
                         holder.gv_bg.showImage(info.thumbnail_imgUrl);

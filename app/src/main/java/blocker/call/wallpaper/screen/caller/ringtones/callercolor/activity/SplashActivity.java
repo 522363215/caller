@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -49,6 +50,8 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     private View mLayoutLoadCompleted;
     private View mLayoutSkipRoot;
     private CircleProgressBar mPbSkip;
+    private View mLayoutSkipRootTop;
+    private CircleProgressBar mPbSkipTop;
     private ValueAnimator mInitAnimator;
     private boolean mIsAdLoaded;
     private boolean mIsShowAd;
@@ -79,6 +82,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     private ObjectAnimator mAlphAnimator1;
     private AnimatorSet mTranslationAnimatorSet;
     private ObjectAnimator mAlphAnimator2;
+    private MyAdvertisementAdapter mMyAdvertisementAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +156,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         int id = v.getId();
         switch (id) {
             case R.id.layout_skip_root:
+            case R.id.layout_skip_root_top:
                 if (mAdCountDownAnim != null) {
                     mAdCountDownAnim.end();
                     mAdCountDownAnim.cancel();
@@ -183,6 +188,11 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         mLayoutSkipRoot = findViewById(R.id.layout_skip_root);
         mPbSkip = findViewById(R.id.pb_skip);
         mLayoutSkipRoot.setOnClickListener(this);
+
+        //顶部跳过按钮
+        mLayoutSkipRootTop = findViewById(R.id.layout_skip_root_top);
+        mPbSkipTop = findViewById(R.id.pb_skip_top);
+        mLayoutSkipRootTop.setOnClickListener(this);
 
         mLayoutLoading.setVisibility(View.VISIBLE);
         mLayoutLoadCompleted.setVisibility(View.GONE);
@@ -391,7 +401,11 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
             admob_id = FirstShowAdmobUtil.getAdmobIdForFirst(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_SPLASH);
             placementId = AdvertisementSwitcher.SERVER_KEY_FIRST_SHOW_ADMOB;
         }
-        MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
+
+        if (TextUtils.isEmpty(admob_id)) {
+            admob_id = CallerAdManager.ADMOB_ID_ADV_SPLASH_FIRST;
+        }
+        mMyAdvertisementAdapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
                 CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_SPLASH_NORMAL), //FB_SPLASH_ID,
                 admob_id,
                 Advertisement.ADMOB_TYPE_NATIVE,
@@ -402,7 +416,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                 placementId,
                 false);
 
-        mAdvertisement = new Advertisement(adapter);
+        mAdvertisement = new Advertisement(mMyAdvertisementAdapter);
         mAdvertisement.setRefreshWhenClicked(false);
         mAdvertisement.refreshAD(true);
 
@@ -448,7 +462,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         public int getAdmobHeight() {
-            return DeviceUtil.getScreenHeight() - Stringutil.dpToPx(200);
+            return DeviceUtil.getScreenHeightIncludeNavigateBar() - DeviceUtil.getNavigationBarHeight(SplashActivity.this) - DeviceUtil.getStatusBarHeight() - Stringutil.dpToPx(90);
         }
 
         @Override
@@ -488,22 +502,33 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                 mLayoutLoading.setVisibility(View.GONE);
                 mLayoutLoadCompleted.setVisibility(View.VISIBLE);
 
+                CircleProgressBar pbSkip;
+                int admobType = mMyAdvertisementAdapter.getAdmobType();
+                if (admobType == Advertisement.ADMOB_TYPE_NATIVE) {
+                    mLayoutSkipRoot.setVisibility(View.GONE);
+                    mLayoutSkipRootTop.setVisibility(View.VISIBLE);
+                    pbSkip = mPbSkipTop;
+                } else {
+                    mLayoutSkipRoot.setVisibility(View.VISIBLE);
+                    mLayoutSkipRootTop.setVisibility(View.GONE);
+                    pbSkip = mPbSkip;
+                }
                 // TODO: 2018/8/4  广告自动跳转倒计时 此处控制是否自动跳转
                 if (CallerAdManager.isAutoGoMain() && !mIsShowFristAdMob) {
-                    showAdCountDown();
+                    showAdCountDown(pbSkip);
                 }
             }
         });
     }
 
-    private void showAdCountDown() {
+    private void showAdCountDown(final CircleProgressBar pbSkip) {
         mAdCountDownAnim = ValueAnimator.ofInt(0, 100);
         mAdCountDownAnim.setDuration(AD_SHOW_TIME);
         mAdCountDownAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 int animatedValue = (int) animation.getAnimatedValue();
-                mPbSkip.setProgress(animatedValue);
+                pbSkip.setProgress(animatedValue);
             }
         });
         mAdCountDownAnim.addListener(new AnimatorListenerAdapter() {

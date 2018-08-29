@@ -113,12 +113,20 @@ public class GlideView extends RelativeLayout {
         }
     }
 
+    /**
+     * 不能再列表中使用，否则出现OOM
+     */
     public void showImageInSdCard(String path) {
         if (TextUtils.isEmpty(path)) return;
         Bitmap bitmap = BitmapFactory.decodeFile(path);
         if (bitmap != null) {
             mImageView.setImageBitmap(bitmap);
         }
+    }
+
+    public void showImage(Bitmap bitmap) {
+        if (bitmap == null) return;
+        mImageView.setImageBitmap(bitmap);
     }
 
     /**

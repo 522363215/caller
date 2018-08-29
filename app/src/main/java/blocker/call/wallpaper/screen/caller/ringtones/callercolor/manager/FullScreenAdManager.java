@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import java.util.HashMap;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
@@ -14,6 +15,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Interstitia
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.PreloadAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.FullScreenAdDialog;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 public class FullScreenAdManager {
@@ -167,6 +169,17 @@ public class FullScreenAdManager {
         @Override
         public int getAdmobViewRes(int type, boolean isAppInstall) {
             return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_full_screen : R.layout.layout_admob_advanced_content_ad_full_screen;
+        }
+
+        @Override
+        public int getAdHeight(String adType) {
+            PreloadAdvertisement.AdTypeInfo adTypeInfo = getAdTypeInfo();
+            if (adTypeInfo != null) {
+                if (AdvertisementSwitcher.AD_ADMOB.equals(adType) && Advertisement.ADMOB_TYPE_NATIVE == adTypeInfo.admobType) {
+                    return DeviceUtil.getScreenHeightIncludeNavigateBar() - DeviceUtil.getNavigationBarHeight(ApplicationEx.getInstance());
+                }
+            }
+            return super.getAdHeight(adType);
         }
     }
 

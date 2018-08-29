@@ -347,6 +347,57 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/layout_skip_root_top"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp30"
+                android:visibility="gone"
+                tools:visibility="gone">
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleProgressBar
+                    android:id="@+id/pb_skip_top"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerInParent="true"
+                    android:clickable="false"
+                    android:visibility="visible"
+                    app:CircleInsideBgColor="@color/color_half_transparent"
+                    app:CirclePaintColor="@color/color_02D577"
+                    app:CircleProgressBgColor="@color/color_transparent"
+                    app:drawCircleInsideBG="true"
+                    app:progressStrokeWidth="2dp"
+                    app:sweepAngle="360" />
+
+                <TextView
+                    android:id="@+id/tv_skip_text2_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@color/color_transparent"
+                    android:text="@string/permission_skip"
+                    android:textColor="@color/white"
+                    android:textSize="8sp"
+                    android:visibility="gone" />
+
+                <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+                    android:id="@+id/fiv_skip_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:alpha="0.5"
+                    android:background="@color/color_transparent"
+                    android:text="@string/icon_close"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp20"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/layout_app_name"
@@ -370,8 +421,8 @@
                     android:layout_marginEnd="@dimen/dp16"
                     android:layout_marginRight="@dimen/dp16"
                     android:layout_marginTop="@dimen/dp20"
-                    android:visibility="visible"
-                    tools:visibility="visible">
+                    android:visibility="gone"
+                    tools:visibility="gone">
 
                     <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleProgressBar
                         android:id="@+id/pb_skip"

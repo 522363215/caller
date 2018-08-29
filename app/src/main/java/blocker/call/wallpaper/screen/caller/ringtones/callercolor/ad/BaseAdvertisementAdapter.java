@@ -8,7 +8,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
@@ -114,8 +113,7 @@ public class BaseAdvertisementAdapter implements Advertisement.AdvertisementAdap
     public int getAdmobViewRes(int type, boolean isAppInstall) {
         if (mIsBanner) {
             return isAppInstall ? R.layout.layout_admob_banner_app_install : R.layout.layout_admob_banner_content;
-        }
-        else {
+        } else {
             return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad : R.layout.layout_admob_advanced_content_ad;
         }
     }
@@ -140,7 +138,7 @@ public class BaseAdvertisementAdapter implements Advertisement.AdvertisementAdap
         return mAdMobBannerKey;
     }
 
-    public void setAdMobBannerKey (String admobBannerKey) {
+    public void setAdMobBannerKey(String admobBannerKey) {
         this.mAdMobBannerKey = admobBannerKey;
     }
 
@@ -154,8 +152,8 @@ public class BaseAdvertisementAdapter implements Advertisement.AdvertisementAdap
         return mopubType.equals(AdvertisementSwitcher.AD_MOPUB) ? mMopubKey : mMopubBannerKey;
     }
 
-    public void setMopubBannerKey (String bannerKey) {
-        LogUtil.d("random_adid", "setMopubBannerKey: "+bannerKey);
+    public void setMopubBannerKey(String bannerKey) {
+        LogUtil.d("random_adid", "setMopubBannerKey: " + bannerKey);
         this.mMopubBannerKey = bannerKey;
     }
 
@@ -171,7 +169,7 @@ public class BaseAdvertisementAdapter implements Advertisement.AdvertisementAdap
 
     @Override
     public int getAdmobHeight() {
-        return mIsBanner ? Stringutil.dpToPx(appEx, 80) : Stringutil.dpToPx(appEx,250);
+        return mIsBanner ? Stringutil.dpToPx(80) : Stringutil.dpToPx(250);
     }
 
     @Override
@@ -181,6 +179,7 @@ public class BaseAdvertisementAdapter implements Advertisement.AdvertisementAdap
 
     @Override
     public void onAdClicked(boolean isAdmob) {
+
     }
 
     @Override
@@ -191,7 +190,7 @@ public class BaseAdvertisementAdapter implements Advertisement.AdvertisementAdap
     }
 
     private void updateAdView(final String adType) {
-        ViewGroup fbContainerView= getFbContainerView();
+        ViewGroup fbContainerView = getFbContainerView();
         ViewGroup admobContainerView = getAdmobContainerView();
         ViewGroup mopubView = getMoPubNativeContainerView();
         ViewGroup baiduView = getBaiDuContaionerView();
@@ -220,7 +219,7 @@ public class BaseAdvertisementAdapter implements Advertisement.AdvertisementAdap
         }
     }
 
-    private void setVisible (View view) {
+    private void setVisible(View view) {
         if (view != null) {
             view.setVisibility(View.VISIBLE);
         }
@@ -253,6 +252,10 @@ public class BaseAdvertisementAdapter implements Advertisement.AdvertisementAdap
 
     public void onAdLoaded() {
 
+    }
+
+    public String getLoadedAdType() {
+        return mLoadedAdType;
     }
 
     @Override

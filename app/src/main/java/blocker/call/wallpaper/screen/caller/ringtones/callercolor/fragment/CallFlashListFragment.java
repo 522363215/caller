@@ -342,7 +342,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                     if (CommonUtils.isOldForFlash()) {
                         List<Theme> newFlash = data.get(CallFlashManager.ONLINE_THEME_TOPIC_NAME_NEW_FLASH);
 
-                        if(newFlash != null) {
+                        if (newFlash != null) {
                             if (newFlash.size() > 6) {
                                 list.addAll(0, newFlash.subList(0, 6));
                             } else
@@ -350,7 +350,7 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                         }
                     }
                     List<Theme> feature = data.get(topic);
-                    if(feature != null) {
+                    if (feature != null) {
                         list.addAll(feature);
                     }
 
