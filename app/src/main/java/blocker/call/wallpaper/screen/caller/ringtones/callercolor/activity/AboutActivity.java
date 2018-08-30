@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
@@ -55,7 +57,18 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void translucentStatusBar() {
-        CommonUtils.translucentStatusBar(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            View statusBarView = new View(this);
+            int statusBarHeight = DeviceUtil.getStatusBarHeight();
+            statusBarView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight));
+            statusBarView.setBackgroundColor(getResources().getColor(R.color.transparent));
+
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            ViewGroup group = findViewById(R.id.layout_root);
+            group.addView(statusBarView, 0);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CommonUtils.translucentStatusBar(this, false);
+        }
     }
 
     @Override

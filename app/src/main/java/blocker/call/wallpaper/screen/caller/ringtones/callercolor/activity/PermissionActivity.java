@@ -1,12 +1,15 @@
 package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
@@ -19,6 +22,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.Permis
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.PermissionInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.SwipeManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.SpecialPermissionsUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
@@ -45,7 +49,19 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void translucentStatusBar() {
-        CommonUtils.translucentStatusBar(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            View statusBarView = new View(this);
+            int statusBarHeight = DeviceUtil.getStatusBarHeight();
+            statusBarView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight));
+            statusBarView.setBackgroundColor(getResources().getColor(R.color.transparent));
+
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            ViewGroup group = findViewById(R.id.layout_root);
+            group.addView(statusBarView, 0);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CommonUtils.translucentStatusBar(this, false);
+        }
+//        CommonUtils.translucentStatusBar(this);
     }
 
     @Override

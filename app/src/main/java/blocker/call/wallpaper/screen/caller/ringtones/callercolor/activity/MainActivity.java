@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -114,16 +115,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void translucentStatusBar() {
-        CommonUtils.translucentStatusBar(this, true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // 全屏时增加StatusBar站位的留白
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            View statusBarView = new View(this);
+            int statusBarHeight = DeviceUtil.getStatusBarHeight();
+            statusBarView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight));
+            statusBarView.setBackgroundColor(getResources().getColor(R.color.color_bg_black_top));
 
-            ViewGroup group = findViewById(R.id.layout_root);
-            View view = new View(this);
-            view.setBackgroundColor(getResources().getColor(R.color.color_bg_black_top));
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtil.getStatusBarHeight());
-            view.setLayoutParams(params);
-            group.addView(view, 0);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            ViewGroup group = findViewById(R.id.ll_top_action);
+            group.addView(statusBarView, 0);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CommonUtils.translucentStatusBar(this, true);
         }
     }
 

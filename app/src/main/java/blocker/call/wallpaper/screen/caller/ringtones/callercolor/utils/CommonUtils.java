@@ -69,7 +69,7 @@ public final class CommonUtils {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             View statusView = createStatusView(activity);
             ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-            decorView.addView(statusView);
+            decorView.addView(statusView, 0);
         }
     }
 

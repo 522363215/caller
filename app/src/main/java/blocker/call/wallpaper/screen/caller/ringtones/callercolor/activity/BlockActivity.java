@@ -5,12 +5,15 @@ import android.animation.ValueAnimator;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.flurry.android.FlurryAgent;
 import com.md.block.core.BlockManager;
@@ -81,7 +84,18 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void translucentStatusBar() {
-        CommonUtils.translucentStatusBar(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            View statusBarView = new View(this);
+            int statusBarHeight = DeviceUtil.getStatusBarHeight();
+            statusBarView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight));
+            statusBarView.setBackgroundColor(getResources().getColor(R.color.transparent));
+
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            ViewGroup group = findViewById(R.id.layout_root);
+            group.addView(statusBarView, 0);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CommonUtils.translucentStatusBar(this, false);
+        }
     }
 
     @Override
