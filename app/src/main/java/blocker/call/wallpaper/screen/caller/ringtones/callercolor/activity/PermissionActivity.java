@@ -17,6 +17,7 @@ import com.flurry.android.FlurryAgent;
 import java.util.ArrayList;
 import java.util.List;
 
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.PermissionShowAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.PermissionInfo;
@@ -205,7 +206,10 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
         super.onPermissionGranted(requestCode);
         switch (requestCode) {
             case PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION:
-                SwipeManager.getInstance().restartEasySwipe();
+                boolean isDisableByUser = ApplicationEx.getInstance().getGlobalSettingPreference().getBoolean("swipe_disable_by_user", false);
+                if (!isDisableByUser) {
+                    SwipeManager.getInstance().restartEasySwipe();
+                }
                 break;
             case PermissionUtils.REQUEST_CODE_NOTIFICATION_LISTENER_SETTINGS:
                 break;
