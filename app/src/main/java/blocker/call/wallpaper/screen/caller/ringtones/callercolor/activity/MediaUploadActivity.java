@@ -12,6 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import java.util.Map;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.FileUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
@@ -59,7 +62,18 @@ public class MediaUploadActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void translucentStatusBar() {
-        CommonUtils.translucentStatusBar(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            View statusBarView = new View(this);
+            int statusBarHeight = DeviceUtil.getStatusBarHeight();
+            statusBarView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight));
+            statusBarView.setBackgroundColor(getResources().getColor(R.color.transparent));
+
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            ViewGroup group = findViewById(R.id.layout_root);
+            group.addView(statusBarView, 0);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CommonUtils.translucentStatusBar(this, false);
+        }
     }
 
     @Override
