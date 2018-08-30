@@ -108,26 +108,28 @@ public class SwipeManager {
             public boolean enableBluetooth() {
                 return false;
             }
+
+            @Override
+            public boolean enableScaleAnimation4Touch() {
+                return false;
+            }
+
+            @Override
+            public boolean enableSwipeSetting() {
+                return true;
+            }
         });
         // 4. 设置快划菜单中"快捷工具"按钮行为
         EasySwipe.setQuickSwitchCallback(new QuickSwitchCallback() {
             @Override
-            public void openSettingActivity(QuickSwitchResultCallback quickSwitchResultCallback) {
+            public void openSettingActivity() {
+                EasySwipe.hideSwipeView();
                 ActivityBuilder.toSettingActivity(application.getApplicationContext());
-                if (quickSwitchResultCallback != null) {
-                    //true-使用了外部打开设置页面的方式
-                    quickSwitchResultCallback.isUseExternal(true);
-                }
             }
 
             @Override
-            public void openFlashlight(QuickSwitchResultCallback quickSwitchResultCallback) {
-                //点击手电筒按钮
-                if (quickSwitchResultCallback != null) {
-                    //如果使用其他方式打开手电筒 isUseExternal返回true
-                    //使用easeyswipe默认方式打开手电筒 isUseExternal返回false
-                    quickSwitchResultCallback.isUseExternal(false);
-                }
+            public boolean useCustomFlashlight() {
+                return false;
             }
         });
         // 注：如果想自定义菜单替换”最近应用”菜单栏，则使用下面方法
@@ -143,7 +145,7 @@ public class SwipeManager {
         List<EasySwipeItem> list = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             EasySwipeItem item;
-            item = new EasySwipeItem(i, R.drawable.ic_launcher, R.string.app_name);
+            item = new EasySwipeItem(i, R.drawable.ic_launcher, R.string.app_name,0);
             // 参数1：自定义功能item的id，用于点击click事件标记你点击的是哪个自定义功能item
             // 参数2：自定义功能item的图标资源id
             // 参数3：自定义功能item的名称资源id
@@ -152,7 +154,7 @@ public class SwipeManager {
         }
         //swipe菜单模块：常用应用，快捷工具，自定义菜单(替换 最近应用)
         //参数2：自定菜单的图标；参数3：true快划布局中只显示单个自定义菜单;false则显示三个菜单
-        EasySwipe.customSwipeMenu(list, R.drawable.ic_launcher); //扩展菜单中item的点击事件
+        EasySwipe.customSwipeMenu(list, R.drawable.ic_launcher,false); //扩展菜单中item的点击事件
         EasySwipe.setEasySwipeFunctionCallback(new EasySwipeFunctionCallback() {
             @Override
             public void swipeFunctionClick(int i) {
@@ -171,12 +173,12 @@ public class SwipeManager {
 
     public void enableEasySwipe() {
         EasySwipe.toggleEasySwipe(true);
-        EasySwipe.tryStartService();
+        EasySwipe.tryStartService(false);
     }
 
     public void restartEasySwipe() {
         EasySwipe.toggleEasySwipe(true);
-        EasySwipe.tryRestartService();
+        EasySwipe.restartService(false);
     }
 
     public void disableEasySwipe() {
