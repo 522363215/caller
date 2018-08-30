@@ -14,8 +14,8 @@ public class ConstantUtils {
 
     public final static int CALLER_STATISTICS_CHANNEL = 75; //
 
-    public final static String SERVER_API_PARAM = "http://parameter.topsearchdomain.info/api.php";
-    public final static String AD_PRIORITY_SERVER = "ad.topsearchdomain.info";
+    public final static String SERVER_API_PARAM = "http://parameter.jedimobi.com/api.php";
+    public final static String AD_PRIORITY_SERVER = "ad.jedimobi.com";
     public final static String KEY_HTTP = "*2od2S!#";
     public final static String EAMAIL_ADDR = "chmcqueen3@gmail.com";
 
@@ -33,7 +33,7 @@ public class ConstantUtils {
     public static final float CALL_FLASH_LIST_SHOW_VIDEO_PERCENT = 1f;
     public static final float CALL_FLASH_LIST_STOP_VIDEO_PERCENT = 0.1f;
 
-    public final static String SERVER_API_PARAM_CPM = "http://parameter.topsearchdomain.info";
-    public final static String SERVER_API_BASE_CPM = "http://info.topsearchdomain.info";
+    public final static String SERVER_API_PARAM_CPM = "http://parameter.jedimobi.com";
+    public final static String SERVER_API_BASE_CPM = "http://info.jedimobi.com";
 
 }

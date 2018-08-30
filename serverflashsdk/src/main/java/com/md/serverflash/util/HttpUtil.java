@@ -50,7 +50,7 @@ import okhttp3.Response;
  */
 
 public class HttpUtil {
-    private static final String THEME_REQUEST_URL = "https://material.topsearchdomain.info/api.php";
+    private static final String THEME_REQUEST_URL = "https://material.jedimobi.com/api.php";
     private static final String KEY_HTTP = "*2od2S!#%s";
 
     private static final String ACTION_CATEGORY_LIST = "get_category_list"; // 获取分类素材列表

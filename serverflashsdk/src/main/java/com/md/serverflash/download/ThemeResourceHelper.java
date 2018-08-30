@@ -33,7 +33,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ThemeResourceHelper {
-    private static final String UPLOAD_URL = "http://locker.topsearchdomain.info/api.php";
+    private static final String UPLOAD_URL = "http://locker.jedimobi.com/api.php";
     private static final String KEY_HTTP = "*2od2S!#";
     private static final int CP_STATISTICS_CHANNEL = 75;
 

@@ -30,7 +30,7 @@ public class StatisticsUtil {
     // post base data
     private static boolean isPostingBaseData = false;
     private static boolean isPostingMainData = false;
-    public final static String SERVER_API_ANALYSIS_INTERFACE = "http://analysis.topsearchdomain.info/api.php";
+    public final static String SERVER_API_ANALYSIS_INTERFACE = "http://analysis.jedimobi.com/api.php";
 
     public static void sendBaseData(final Context context) {
         sendData(context, false);

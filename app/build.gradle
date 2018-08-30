@@ -27,8 +27,8 @@ android {
         applicationId "blocker.call.wallpaper.screen.caller.ringtones.callercolor"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 5
-        versionName "1.0.5"
+        versionCode 6
+        versionName "1.0.6"
         multiDexEnabled true
     }
     buildTypes {
@@ -100,7 +100,7 @@ dependencies {
     compile files('libs/analytics-1.3.1-ColorPhone.jar')
     compile(name: 'AudienceNetwork', ext: 'aar')
     compile(name: 'DuappsAd-HW-v1.1.1.5', ext: 'aar')
-    compile(name: 'mopub-sdk-base_3.1.4', ext: 'aar')
+    compile(name: 'mopub-sdk-base_3.1.5', ext: 'aar')
     compile(name: 'mopub-sdk-banner_3.0.7', ext: 'aar')
     compile(name: 'mopub-sdk-native-static_3.0.7', ext: 'aar')
     compile(name: 'easyswipe-1.0.4.8-release2', ext: 'aar')
