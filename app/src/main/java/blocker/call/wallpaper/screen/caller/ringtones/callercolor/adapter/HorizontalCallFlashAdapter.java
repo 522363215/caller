@@ -6,8 +6,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.md.flashset.View.FlashLed;
 import com.md.flashset.bean.CallFlashInfo;
+import com.md.flashset.manager.CallFlashManager;
 
 import java.util.List;
 
@@ -63,8 +63,8 @@ public class HorizontalCallFlashAdapter extends RecyclerView.Adapter<HorizontalC
         } else {
             if (info.imgResId > 0) {
                 int imgId = info.imgResId;
-                if (info.flashType == FlashLed.FLASH_TYPE_FESTIVAL) {
-                    imgId = R.drawable.icon_flash_festival_small;
+                if (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(info.id)) {
+                    imgId = R.drawable.img_star_sky_v;
                 }
                 holder.mGvBg.showImage(imgId);
             } else {

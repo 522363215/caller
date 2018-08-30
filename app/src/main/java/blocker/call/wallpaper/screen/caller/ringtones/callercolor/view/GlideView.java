@@ -220,8 +220,7 @@ public class GlideView extends RelativeLayout {
 
     public void showImage(int resId) {
         if (mImageView != null) {
-            mImageView.setImageBitmap(null);
-            mImageView.setBackgroundResource(resId);
+            GlideHelper.with(mContext).load(resId).into(mImageView);
         }
     }
 
