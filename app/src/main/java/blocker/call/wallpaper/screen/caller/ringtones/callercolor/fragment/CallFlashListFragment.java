@@ -46,6 +46,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Utils;
@@ -145,12 +146,6 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
     public void onResume() {
         super.onResume();
         showPermissionTip();
-        CallFlashInfo info = CallFlashPreferenceHelper.getObject(
-                CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
-        if (info != null) {
-            mCurrentFlashIndex = model.indexOf(info);
-        }
-        pauseOrContinuePlayVideo(true);
     }
 
     @Override
@@ -400,6 +395,17 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
         Async.removeScheduledTaskOnUiThread(mLoadMaxRunable);
     }
 
+    public void continuePlayVideo(boolean isComeOtherActivity) {
+        CallFlashInfo info = CallFlashPreferenceHelper.getObject(
+                CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
+        if (info != null) {
+            mCurrentFlashIndex = model.indexOf(info);
+        }
+        if (mAdapter != null) {
+            mAdapter.setComeOtherActivity(isComeOtherActivity);
+        }
+        pauseOrContinuePlayVideo(true);
+    }
 
     /**
      * @param isContinuePlay true:继续播放，false：暂停播放

@@ -80,7 +80,6 @@ public class CallFlashManager {
         return info;
     }
 
-
     public List<CallFlashInfo> themeToCallFlashInfo(List<Theme> res) {
         List<CallFlashInfo> dot = null;
         CallFlashInfo localFlash = getLocalFlash();

@@ -153,7 +153,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (currentPage == ActivityBuilder.FRAGMENT_MINE && mMineFragment != null) {
             mMineFragment.onResume();
         } else if (currentPage == ActivityBuilder.FRAGMENT_HOME && mCallFlashListFragment != null) {
-            mCallFlashListFragment.onResume();
+            mCallFlashListFragment.continuePlayVideo(true);
         }
     }
 
@@ -395,7 +395,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
                 if (mCallFlashListFragment != null) {
                     if (arg0 == ActivityBuilder.FRAGMENT_HOME)
-                        mCallFlashListFragment.pauseOrContinuePlayVideo(true);
+                        mCallFlashListFragment.continuePlayVideo(false);
                     else
                         mCallFlashListFragment.pauseOrContinuePlayVideo(false);
                 }
@@ -434,7 +434,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         Glide.get(this).clearMemory();
     }
 
-  //  @Subscribe(threadMode = ThreadMode.MAIN)
+    //  @Subscribe(threadMode = ThreadMode.MAIN)
 //    public void event(EventRefreshCallFlashEnable event) {
 //        if(isFinishing()){
 //           return;

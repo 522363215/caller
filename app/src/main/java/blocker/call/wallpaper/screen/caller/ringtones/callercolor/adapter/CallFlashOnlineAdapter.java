@@ -76,6 +76,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private List<Boolean> payloads;
     private RecyclerView mRecyclerView;
     private LruCache<String, Bitmap> mFirstFrameMemoryCache;
+    private boolean mIsComeOtherActivity;
 
     public void setFragmentTag(int fragmentTag) {
         this.fragmentTag = fragmentTag;
@@ -139,7 +140,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private Bitmap getFirstFrameBitmapFromMemoryCache(String callFlashId) {
         return mFirstFrameMemoryCache.get(callFlashId);
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -319,6 +319,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
         float viewShowPercent = DeviceUtil.getItemShowPercentInRecycleView(mRecyclerView, holder.itemView);
         boolean canPlay = viewShowPercent >= ConstantUtils.CALL_FLASH_LIST_SHOW_VIDEO_PERCENT && (mScrollState == RecyclerView.SCROLL_STATE_IDLE || mScrollState == RecyclerView.SCROLL_STATE_DRAGGING) && !holder.callFlashView.isPlaying();
+//        LogUtil.d(TAG, "canPlay viewShowPercent:" + viewShowPercent + ",mScrollState:" + mScrollState + ",isPlaying:" + holder.callFlashView.isPlaying());
         if (payloads.isEmpty()) {//payloads为空 即为正常情况下的执行或者调用notifyItemChanged(position,payloads)方法时payloads==null执行的,
             LogUtil.d(TAG, "setCallFlashShow 正常刷新 canPlay:" + canPlay);
             if (canPlay) {
@@ -332,7 +333,12 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 case ITEM_REFRESH_TYPE_PLAY:
                     LogUtil.d(TAG, "setCallFlashShow 局部刷新 继续播放 viewShowPercent:" + viewShowPercent + ",position:" + pos + ",canPlay:" + canPlay);
                     if (canPlay) {
-                        playOrPause(holder, info, true, 50);
+                        long delayGoneBgTime = 50;
+                        if (mIsComeOtherActivity) {
+                            //从其他activity 返回来时防止闪烁
+                            delayGoneBgTime = 300;
+                        }
+                        playOrPause(holder, info, true, delayGoneBgTime);
                     } else {
                         if (!holder.callFlashView.isPlaying()) {
                             //防止黑屏
@@ -380,7 +386,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     }
 
-
     private void callFlashVisibile(final NormalViewHolder holder, boolean isShow, long delayGoneBGTime) {
         if (isShow) {
             if (holder.gv_bg.getVisibility() == View.VISIBLE) {
@@ -397,7 +402,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             holder.callFlashView.setVisibility(View.GONE);
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -438,6 +442,10 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public void setRecycleView(RecyclerView recyclerView) {
         mRecyclerView = recyclerView;
+    }
+
+    public void setComeOtherActivity(boolean isComeOtherActivity) {
+        mIsComeOtherActivity = isComeOtherActivity;
     }
 
     class NormalViewHolder extends RecyclerView.ViewHolder {
