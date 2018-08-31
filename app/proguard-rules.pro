@@ -124,6 +124,10 @@
 }
 #Google广告结束
 
+# Firebase
+-dontwarn com.google.firebase.iid.FirebaseInstanceIdReceiver**
+
+
 #-keep public class com.hiblock.systools.** {
 #	protected *;
 #}
