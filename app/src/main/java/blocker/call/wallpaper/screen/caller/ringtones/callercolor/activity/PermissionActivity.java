@@ -207,7 +207,9 @@ public class PermissionActivity extends BaseActivity implements View.OnClickList
         switch (requestCode) {
             case PermissionUtils.REQUEST_CODE_OVERLAY_PERMISSION:
                 boolean isDisableByUser = ApplicationEx.getInstance().getGlobalSettingPreference().getBoolean("swipe_disable_by_user", false);
-                if (!isDisableByUser) {
+                boolean isEnableByUser =  ApplicationEx.getInstance().getGlobalSettingPreference().getBoolean("swipe_enable_by_user",false);
+                int isEnableByServer = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_swipe_toogle_by_server", 0);
+                if (!isDisableByUser && (isEnableByUser || isEnableByServer == 1)) {
                     SwipeManager.getInstance().restartEasySwipe();
                 }
                 break;

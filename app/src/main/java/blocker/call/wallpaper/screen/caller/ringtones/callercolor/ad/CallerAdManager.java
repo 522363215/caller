@@ -58,7 +58,8 @@ public class CallerAdManager {
 
     //插屏
     public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_FIRST = "ca-app-pub-4922304484386262/5328776475"; //自定义插屏, 来电秀设置首次colorphone-5
-    public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL = "ca-app-pub-4922304484386262/6230794603";//来电秀设置插屏colorphone-6
+    public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL = "ca-app-pub-4922304484386262/6230794603";//来电秀设置插屏colorphone-in-6
+    public static final String INTERSTITIAL_ADMOB_ID_IN_EXT_NORMAL = "ca-app-pub-4922304484386262/7141186057";//外部弹窗插屏colorphone-in-10
 
     //多建了一个colorphone-6 ca-app-pub-4922304484386262/6762628719
 

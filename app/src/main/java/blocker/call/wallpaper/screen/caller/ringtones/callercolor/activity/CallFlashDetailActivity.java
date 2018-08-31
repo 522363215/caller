@@ -163,7 +163,9 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         isNeedRestartSwipe = false;
         if (!SpecialPermissionsUtil.canDrawOverlays(this)) {
             boolean isDisableByUser = ApplicationEx.getInstance().getGlobalSettingPreference().getBoolean("swipe_disable_by_user", false);
-            if (!isDisableByUser) {
+            boolean isEnableByUser =  ApplicationEx.getInstance().getGlobalSettingPreference().getBoolean("swipe_enable_by_user",false);
+            int isEnableByServer = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_swipe_toogle_by_server", 0);
+            if (!isDisableByUser && (isEnableByUser || isEnableByServer == 1)) {
                 isNeedRestartSwipe = true;
             }
         }
