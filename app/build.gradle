@@ -91,7 +91,6 @@ dependencies {
     compile project(':cpmindividualsdk')
     compile files('libs/accessoryfiletransfer-v1.0.19.jar')
     compile files('libs/advertisement.jar')
-    compile files('libs/GoogleConversionTrackingSdk-2.2.4.jar')
     compile files('libs/locSDK_6.23.jar')
     compile files('libs/sdk-v1.0.0.jar')
     compile files('libs/update.jar')
