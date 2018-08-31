@@ -12,6 +12,8 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertiseme
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.ExternalParam;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
@@ -100,11 +102,15 @@ public class ExternalMagicHelper {
             public void onViewPopup(ExternalMagicManager.MagicType type, LinearLayout adRootView) {
                 //显示时加载广告： type 为变现类型，adRootView 为广告布局 layout
                 initAds(type, adRootView);
+
+                //加载插屏ad
+                loadInterstitialAd();
             }
 
             @Override
             public void onViewHide(ExternalMagicManager.MagicType type) {
                 //变现关闭回调
+                showInterstitialAd();
             }
 
             @Override
@@ -306,6 +312,39 @@ public class ExternalMagicHelper {
                 return DeviceUtil.getScreenWidth() - Stringutil.dpToPx(46);
         }
         return -1;
+    }
+
+    private void loadInterstitialAd() {
+        if (!CallerAdManager.isShowInAdsExternal()) return;
+        InterstitialAdUtil.loadInterstitialAd(mContext, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
+    }
+
+    private void showInterstitialAd() {
+        try {
+            if (!CallerAdManager.isShowInAdsExternal()) return;
+            InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
+            if (interstitialAdvertisement == null) return;
+            interstitialAdvertisement.show(new InterstitialAdvertisement.InterstitialAdShowListener() {
+                @Override
+                public void onAdClosed() {
+                    LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdClosed");
+                    ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
+                }
+
+                @Override
+                public void onAdShow() {
+                    LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdShow");
+                }
+
+                @Override
+                public void onAdError() {
+                    LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdError");
+                    ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
+                }
+            });
+        } catch (Exception e) {
+            LogUtil.e(TAG, "showInterstitialAd e:" + e.getMessage());
+        }
     }
 
     //******************************************AD******************************************//

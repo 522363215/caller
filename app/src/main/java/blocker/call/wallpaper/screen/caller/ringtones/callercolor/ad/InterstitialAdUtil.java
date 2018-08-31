@@ -14,6 +14,7 @@ public class InterstitialAdUtil {
     private static final String TAG = "InterstitialAdvertisement";
 
     public final static int POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL = 0;
+    public final static int POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC = 1;
 
     //来电秀相关插屏
     public static final String KEY_FLASH_IN_GROUP_FACEBOOK_HIGH = "pref_flash_in_ads_group_facebook_high";
@@ -49,12 +50,12 @@ public class InterstitialAdUtil {
                 InterstitialAdvertisement.FbAdId fbAdId = new InterstitialAdvertisement.FbAdId();
                 fbAdId.highId = "";// getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.HIGH, InterstitialAdvertisement.AdType.FACEBOOK);
                 fbAdId.mediumId = "";//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.MEDIUM, InterstitialAdvertisement.AdType.FACEBOOK);
-                fbAdId.normalId = CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_IN_DETAIL_NORMAL);//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.FACEBOOK);
+                fbAdId.normalId = getNormalInterstitialFbAdId(position);//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.FACEBOOK);
 
                 InterstitialAdvertisement.AdmobAdId admobAdId = new InterstitialAdvertisement.AdmobAdId();
                 admobAdId.highId = "";// getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.HIGH, InterstitialAdvertisement.AdType.ADMOB);
                 admobAdId.mediumId = "";// getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.MEDIUM, InterstitialAdvertisement.AdType.ADMOB);
-                admobAdId.normalId = CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_IN_DETAIL_NORMAL);//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.ADMOB);
+                admobAdId.normalId = getNormalInterstitialAdmobAdId(position);//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.NORMAL, InterstitialAdvertisement.AdType.ADMOB);
 
                 InterstitialAdvertisement.AdmobAdxId admobAdxId = new InterstitialAdvertisement.AdmobAdxId();
                 admobAdxId.highId = "";//getInGroupIdByKey(position, InterstitialAdvertisement.InterstitialAdPriority.HIGH, InterstitialAdvertisement.AdType.ADMOB_ADX);
@@ -80,6 +81,35 @@ public class InterstitialAdUtil {
         }
     }
 
+    private static String getNormalInterstitialFbAdId(int position) {
+        String fbId = "";
+        switch (position) {
+            case POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL:
+                fbId = CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_IN_DETAIL_NORMAL);
+                break;
+            case POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC:
+                break;
+            default:
+                break;
+        }
+        return fbId;
+    }
+
+    private static String getNormalInterstitialAdmobAdId(int position) {
+        String admobId = "";
+        switch (position) {
+            case POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL:
+                admobId = CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_IN_DETAIL_NORMAL);
+                break;
+            case POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC:
+                admobId = CallerAdManager.INTERSTITIAL_ADMOB_ID_IN_EXT_NORMAL;
+                break;
+            default:
+                break;
+        }
+        return admobId;
+    }
+
     /**
      * @param position, CallerAdManager.IN_ADS_RESULT
      * @return
@@ -91,6 +121,11 @@ public class InterstitialAdUtil {
                 int show_call_flash = AdPreferenceHelper.getInt("pref_show_interstitial_call_flash", 1); //0 not show, 1 show
                 if (show_call_flash == 1) {
                     LogUtil.d("isShowInterstitial", "loadInterstitial IN_ADS_CALL_FLASH true: ");
+                    show = true;
+                }
+                break;
+            case POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC:
+                if (CallerAdManager.isShowInAdsExternal()) {
                     show = true;
                 }
                 break;
