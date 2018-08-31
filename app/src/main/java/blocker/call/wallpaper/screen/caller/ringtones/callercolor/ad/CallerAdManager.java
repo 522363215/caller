@@ -418,4 +418,13 @@ public class CallerAdManager {
         }
         return externalParam;
     }
+
+    public boolean isShowInAdsExternal(){
+        boolean show = false;
+        int i = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_ext_show_in_ads_on_close", 0);
+        if(i == 1){
+            show = true;
+        }
+        return show;
+    }
 }
