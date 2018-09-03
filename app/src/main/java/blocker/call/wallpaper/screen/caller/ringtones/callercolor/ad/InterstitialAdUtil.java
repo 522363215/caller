@@ -144,7 +144,7 @@ public class InterstitialAdUtil {
                 }
                 break;
             case POSITION_INTERSTITIAL_AD_IN_SPLASH:
-                i_show= ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_show_in_ads_on_splash", 0);
+                i_show= ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_show_in_ads_on_splash", 1);
                 if (i_show == 1) {
                     show = true;
                 }

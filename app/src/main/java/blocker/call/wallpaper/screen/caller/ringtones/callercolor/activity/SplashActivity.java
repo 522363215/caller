@@ -422,6 +422,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     //****************************************AD********************************************//
     private void initAds() {
         mIsShowInterstitial = InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
+        LogUtil.d(TAG, "advertisement initAds mIsShowInterstitial:" + mIsShowInterstitial);
         if (mIsShowInterstitial) {
             InterstitialAdUtil.loadInterstitialAd(this, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
         } else {

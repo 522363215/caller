@@ -392,6 +392,6 @@ public class ServerParamBean implements Serializable {
 
         public int ext_show_in_ads_on_close = 0;
         public int show_in_ads_on_end_call = 0;
-        public int show_in_ads_on_splash = 0;
+        public int show_in_ads_on_splash = 1;
     }
 }
