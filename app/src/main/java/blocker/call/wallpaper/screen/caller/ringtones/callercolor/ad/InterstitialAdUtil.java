@@ -15,6 +15,8 @@ public class InterstitialAdUtil {
 
     public final static int POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL = 0;
     public final static int POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC = 1;
+    public static final int POSITION_INTERSTITIAL_AD_IN_SPLASH = 2; //启动页插屏
+    public static final int POSITION_INTERSTITIAL_AD_IN_CALL_AFTER = 3; //电话结束页插屏
 
     //来电秀相关插屏
     public static final String KEY_FLASH_IN_GROUP_FACEBOOK_HIGH = "pref_flash_in_ads_group_facebook_high";
@@ -73,7 +75,7 @@ public class InterstitialAdUtil {
                         public void onAdLoaded(InterstitialAdvertisement interstitialAdvertisement1) {
 //                        LogUtil.d(TAG, "InterstitialAdvertisement loadInterstitialAd Success");
                             ApplicationEx.getInstance().setInterstitialAdvertisement(interstitialAdvertisement1, position);
-                            EventBus.getDefault().post(new EventInterstitialAdLoadSuccess());
+                            EventBus.getDefault().post(new EventInterstitialAdLoadSuccess(position));
                         }
                     });
                 }
@@ -89,6 +91,10 @@ public class InterstitialAdUtil {
                 break;
             case POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC:
                 break;
+            case POSITION_INTERSTITIAL_AD_IN_SPLASH:
+                break;
+            case POSITION_INTERSTITIAL_AD_IN_CALL_AFTER:
+                break;
             default:
                 break;
         }
@@ -103,6 +109,12 @@ public class InterstitialAdUtil {
                 break;
             case POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC:
                 admobId = CallerAdManager.INTERSTITIAL_ADMOB_ID_IN_EXT_NORMAL;
+                break;
+            case POSITION_INTERSTITIAL_AD_IN_SPLASH:
+                admobId = CallerAdManager.INTERSTITIAL_ADMOB_ID_IN_SPLASH;
+                break;
+            case POSITION_INTERSTITIAL_AD_IN_CALL_AFTER:
+                admobId = CallerAdManager.INTERSTITIAL_ADMOB_ID_IN_END_CALL;
                 break;
             default:
                 break;
@@ -125,9 +137,16 @@ public class InterstitialAdUtil {
                 }
                 break;
             case POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC:
-                if (CallerAdManager.isShowInAdsExternal()) {
+                int i = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_ext_show_in_ads_on_close", 0);
+                if (i == 1) {
                     show = true;
                 }
+                break;
+            case POSITION_INTERSTITIAL_AD_IN_SPLASH:
+                show = true;
+                break;
+            case POSITION_INTERSTITIAL_AD_IN_CALL_AFTER:
+                show = true;
                 break;
             default:
                 break;

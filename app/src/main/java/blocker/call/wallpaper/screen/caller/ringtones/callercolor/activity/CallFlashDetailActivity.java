@@ -45,7 +45,9 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ApplicationEx;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallFlashDetailGroupAdHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.PreloadAdvertisement;
@@ -122,7 +124,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private CallFlashView mCallFlashView;
     private GlideView mGvCallFlashBg;
     private View mLayoutCallFlashOthers;
-    private LinearLayout mLayourAd;
+    private LinearLayout mLayoutAd;
     private boolean mIsResume;
     private VolumeChangeObserver mVolumeChangeObserver;
     private VolumeChangeListenAdapter mVolumeChangeListenAdapter;
@@ -153,17 +155,17 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         mIsComeGuide = getIntent().getBooleanExtra(ActivityBuilder.IS_COME_GUIDE, false);
         mInfo = (CallFlashInfo) getIntent().getSerializableExtra(ActivityBuilder.CALL_FLASH_INFO);
         initView();
+        initAds();
         initVolumeChangeObserver(true);
         listener();
         downloadListener();
-//        initAd();
         initSaveFlash();
         updateUI();
         loadInterstitialAd();
         isNeedRestartSwipe = false;
         if (!SpecialPermissionsUtil.canDrawOverlays(this)) {
             boolean isDisableByUser = ApplicationEx.getInstance().getGlobalSettingPreference().getBoolean("swipe_disable_by_user", false);
-            boolean isEnableByUser =  ApplicationEx.getInstance().getGlobalSettingPreference().getBoolean("swipe_enable_by_user",false);
+            boolean isEnableByUser = ApplicationEx.getInstance().getGlobalSettingPreference().getBoolean("swipe_enable_by_user", false);
             int isEnableByServer = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_swipe_toogle_by_server", 0);
             if (!isDisableByUser && (isEnableByUser || isEnableByServer == 1)) {
                 isNeedRestartSwipe = true;
@@ -216,7 +218,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         mGvCallFlashBg = findViewById(R.id.gv_call_flash_bg);
         mLayoutCallFlashOthers = findViewById(R.id.layout_call_flash_others);
 
-        mLayourAd = findViewById(R.id.layout_ad_view);
+        mLayoutAd = findViewById(R.id.layout_ad_view);
 
         //声音按钮
         mIvSound = (ImageView) findViewById(R.id.iv_sound);
@@ -1135,7 +1137,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void event(EventInterstitialAdLoadSuccess event) {
-        if (!mIsShowInterstitialAd && mIsShow && !isFinishing()) {
+        int position = event.getPosition();
+        if (position == InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL && !mIsShowInterstitialAd && mIsShow && !isFinishing()) {
             LogUtil.d(TAG, "InterstitialAdvertisement EventInterstitialAdLoadSuccess showInterstitialAd");
             showInterstitialAd(mIsBack);
         }
@@ -1154,7 +1157,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         LogUtil.d(TAG, "showBannerGroupAd showGroupAd 1");
         CallFlashDetailGroupAdHelper.getInstance().showGroupAd(
                 isResetShowAd,
-                mLayourAd,
+                mLayoutAd,
                 AdvertisementSwitcher.SERVER_KEY_CALL_FLASH_DOWN_GROUP,
                 false,
                 PreloadAdvertisement.ADMOB_TYPE_NATIVE_ADVANCED,
@@ -1313,8 +1316,62 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             am.setStreamVolume(AudioManager.STREAM_MUSIC, lastMusicVolume, 0);
         }
     }
-
     //*********************************音量设置*********************************************
 
+
+    //******************************************AD******************************************//
+    private void initAds() {
+        MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
+                CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_MINE_NORMAL),//ConstantUtils.FB_AFTER_CALL_ID
+                CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_MINE_NORMAL),//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
+                Advertisement.ADMOB_TYPE_NATIVE,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
+                "",
+                Advertisement.MOPUB_TYPE_NATIVE,
+                -1,
+                "",
+                false);
+        mAdvertisement = new Advertisement(adapter);
+        mAdvertisement.setRefreshWhenClicked(false);
+        mAdvertisement.refreshAD(true);
+        mAdvertisement.enableFullClickable();
+    }
+
+    private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String eventKey, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, AdvertisementSwitcher.SERVER_KEY_FLASH_MINE);
+        }
+
+        public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, boolean isBanner) {
+            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, AdvertisementSwitcher.SERVER_KEY_FLASH_MINE, isBanner);
+        }
+
+        @Override
+        public void onAdLoaded() {
+            mLayoutAd.setVisibility(View.VISIBLE);
+            setCallFlashLayout(150);
+        }
+
+        @Override
+        public int getFbViewRes() {
+            return mIsBanner ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_no_icon_native_ads_call_after_big;
+        }
+
+        @Override
+        public int getAdmobHeight() {
+            return Stringutil.dpToPx(100);
+        }
+
+        @Override
+        public int getAdmobWidth() {
+            return DeviceUtil.getScreenWidth();
+        }
+
+        @Override
+        public int getAdmobViewRes(int type, boolean isAppInstall) {
+            return isAppInstall ? R.layout.layout_admob_advanced_app_install_ad_mine : R.layout.layout_admob_advanced_content_ad_mine;
+        }
+    }
+    //******************************************AD******************************************//
 
 }

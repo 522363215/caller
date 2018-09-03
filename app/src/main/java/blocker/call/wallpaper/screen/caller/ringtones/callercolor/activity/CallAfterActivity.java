@@ -26,6 +26,8 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertiseme
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.InterstitialAdvertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.bean.CallLogInfo;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
@@ -61,10 +63,12 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
     private RelativeLayout layout_number_infos;
     private boolean isAddedInBlockContacts;
     private Advertisement mAdvertisement;
+    private boolean mIsShowInterstitial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadInterstitialAd();
         initView();
         onNewIntent(getIntent());
         initData();
@@ -353,11 +357,15 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
         if (rl_menu_root.getVisibility() == View.VISIBLE) {
             rl_menu_root.setVisibility(View.GONE);
         } else {
-            if (isToMain()) {
-                ActivityBuilder.toMain(this, ActivityBuilder.FRAGMENT_HOME);
-            }
-            if (!isFinishing()) {
-                finish();
+            if (mIsShowInterstitial) {
+                showInterstitialAd();
+            } else {
+                if (isToMain()) {
+                    ActivityBuilder.toMain(this, ActivityBuilder.FRAGMENT_HOME);
+                }
+                if (!isFinishing()) {
+                    finish();
+                }
             }
         }
     }
@@ -400,6 +408,13 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
     }
 
     //******************************************AD******************************************//
+    private void loadInterstitialAd() {
+        mIsShowInterstitial = InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_AFTER);
+        if (mIsShowInterstitial) {
+            InterstitialAdUtil.loadInterstitialAd(this, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_AFTER);
+        }
+    }
+
     private void initAds() {
         if (CallerAdManager.isShowAdOnEndCall() && isShouldReq()) {
             MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
@@ -415,6 +430,39 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
             mAdvertisement.setRefreshWhenClicked(false);
             mAdvertisement.refreshAD(true);
             mAdvertisement.enableFullClickable();
+        }
+    }
+
+    private void showInterstitialAd() {
+        try {
+            InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_AFTER);
+            if (interstitialAdvertisement == null) {
+                finish();
+            } else {
+                interstitialAdvertisement.show(new InterstitialAdvertisement.InterstitialAdShowListener() {
+                    @Override
+                    public void onAdClosed() {
+                        LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdClosed");
+                        ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_AFTER);
+                        finish();
+                    }
+
+                    @Override
+                    public void onAdShow() {
+                        LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdShow");
+                    }
+
+                    @Override
+                    public void onAdError() {
+                        LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdError");
+                        ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_AFTER);
+                        finish();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            LogUtil.e(TAG, "showInterstitialAd e:" + e.getMessage());
+            finish();
         }
     }
 

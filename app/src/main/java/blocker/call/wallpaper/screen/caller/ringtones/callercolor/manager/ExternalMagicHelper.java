@@ -315,13 +315,17 @@ public class ExternalMagicHelper {
     }
 
     private void loadInterstitialAd() {
-        if (!CallerAdManager.isShowInAdsExternal()) return;
+        if (!InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC)) {
+            return;
+        }
         InterstitialAdUtil.loadInterstitialAd(mContext, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
     }
 
     private void showInterstitialAd() {
         try {
-            if (!CallerAdManager.isShowInAdsExternal()) return;
+            if (!InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC)) {
+                return;
+            }
             InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
             if (interstitialAdvertisement == null) return;
             interstitialAdvertisement.show(new InterstitialAdvertisement.InterstitialAdShowListener() {
