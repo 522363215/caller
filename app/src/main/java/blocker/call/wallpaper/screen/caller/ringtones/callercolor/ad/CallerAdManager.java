@@ -61,7 +61,7 @@ public class CallerAdManager {
     public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL = "ca-app-pub-4922304484386262/6230794603";//来电秀设置插屏colorphone-in-6
     public static final String INTERSTITIAL_ADMOB_ID_IN_EXT_NORMAL = "ca-app-pub-4922304484386262/7141186057";//外部弹窗插屏colorphone-in-10
     public static final String INTERSTITIAL_ADMOB_ID_IN_SPLASH = "ca-app-pub-4922304484386262/6779886100"; //启动页插屏colorphone-in-11
-    public static final String INTERSTITIAL_ADMOB_ID_IN_END_CALL = "ca-app-pub-4922304484386262/1287886277"; //通话结束页插屏
+    public static final String INTERSTITIAL_ADMOB_ID_IN_END_CALL = "ca-app-pub-4922304484386262/1287886277"; //通话结束页插屏colorphone-in-12
 
     //多建了一个colorphone-6 ca-app-pub-4922304484386262/6762628719
 
