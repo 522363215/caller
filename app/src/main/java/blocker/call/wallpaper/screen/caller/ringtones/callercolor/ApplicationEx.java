@@ -4,9 +4,11 @@ import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 
 import com.common.sdk.adpriority.AdPriorityListener;
 import com.common.sdk.adpriority.AdPriorityManager;
@@ -75,6 +77,11 @@ public class ApplicationEx extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
+
+        if (!TextUtils.isEmpty(processName) && processName.equals(getPackageName())) {
+            unregisterReceiver(mReceiver);
+            mInterstitialAdvertisementMap = null;
+        }
     }
 
     @Override
@@ -119,6 +126,14 @@ public class ApplicationEx extends Application {
         // TODO: 2018/7/5 广告暂时屏蔽
 //        intiAdManager();
         initPriorityAds();
+
+        registerLanguageReceiver();
+    }
+
+    private void registerLanguageReceiver() {
+        IntentFilter mLanguageChangeFilter = new IntentFilter();
+        mLanguageChangeFilter.addAction(Intent.ACTION_LOCALE_CHANGED);
+        registerReceiver(mReceiver, mLanguageChangeFilter);
     }
 
     private void initCallFlashBase() {
@@ -240,4 +255,14 @@ public class ApplicationEx extends Application {
             LogUtil.e("advertise", "initPriorityAds exception: " + e.getMessage());
         }
     }
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_LOCALE_CHANGED)) {
+                LanguageSettingUtil languageSetting = LanguageSettingUtil.getInstance(getApplicationContext());
+                languageSetting.reloadDefaultLocale();
+            }
+        }
+    };
 }
