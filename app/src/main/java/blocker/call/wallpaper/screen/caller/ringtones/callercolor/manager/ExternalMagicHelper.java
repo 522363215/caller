@@ -318,7 +318,7 @@ public class ExternalMagicHelper {
         if (!InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC)) {
             return;
         }
-        InterstitialAdUtil.loadInterstitialAd(mContext, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
+        InterstitialAdUtil.loadInterstitialAd(mContext, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC);
     }
 
     private void showInterstitialAd() {
@@ -326,13 +326,13 @@ public class ExternalMagicHelper {
             if (!InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC)) {
                 return;
             }
-            InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
+            InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC);
             if (interstitialAdvertisement == null) return;
             interstitialAdvertisement.show(new InterstitialAdvertisement.InterstitialAdShowListener() {
                 @Override
                 public void onAdClosed() {
                     LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdClosed");
-                    ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
+                    ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC);
                 }
 
                 @Override
@@ -343,7 +343,7 @@ public class ExternalMagicHelper {
                 @Override
                 public void onAdError() {
                     LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdError");
-                    ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
+                    ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC);
                 }
             });
         } catch (Exception e) {
