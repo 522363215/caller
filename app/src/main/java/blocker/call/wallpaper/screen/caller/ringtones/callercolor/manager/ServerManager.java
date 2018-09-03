@@ -240,6 +240,10 @@ public class ServerManager {
                     ad_pref.edit().putInt("pref_ext_show_in_ads_on_close", dataBean.ext_show_in_ads_on_close).apply();
                     LogUtil.d("cp_external_param", "ext_isCommercialValid: "+dataBean.ext_isCommercialValid);
 
+                    //in ads
+                    ad_pref.edit().putInt("pref_show_in_ads_on_end_call", dataBean.show_in_ads_on_end_call).apply();
+                    ad_pref.edit().putInt("pref_show_in_ads_on_splash", dataBean.show_in_ads_on_splash).apply();
+
                     //first sync time
                     if (pref.getLong("key_cid_first_sync_server_time", 0) <= 0) {
                         pref.edit().putLong("key_cid_first_sync_server_time", Long.valueOf(tm_ms)).apply();

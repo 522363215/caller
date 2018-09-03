@@ -128,6 +128,7 @@ public class InterstitialAdUtil {
      */
     public static boolean isShowInterstitial(int position) {
         boolean show = false;
+        int i_show = 0;
         switch (position) {
             case POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL:
                 int show_call_flash = AdPreferenceHelper.getInt("pref_show_interstitial_call_flash", 1); //0 not show, 1 show
@@ -137,16 +138,22 @@ public class InterstitialAdUtil {
                 }
                 break;
             case POSITION_INTERSTITIAL_AD_IN_EXTERNAL_MAGIC:
-                int i = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_ext_show_in_ads_on_close", 0);
-                if (i == 1) {
+                i_show = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_ext_show_in_ads_on_close", 0);
+                if (i_show == 1) {
                     show = true;
                 }
                 break;
             case POSITION_INTERSTITIAL_AD_IN_SPLASH:
-                show = true;
+                i_show= ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_show_in_ads_on_splash", 0);
+                if (i_show == 1) {
+                    show = true;
+                }
                 break;
             case POSITION_INTERSTITIAL_AD_IN_CALL_AFTER:
-                show = true;
+                i_show= ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_show_in_ads_on_end_call", 0);
+                if (i_show == 1) {
+                    show = true;
+                }
                 break;
             default:
                 break;
