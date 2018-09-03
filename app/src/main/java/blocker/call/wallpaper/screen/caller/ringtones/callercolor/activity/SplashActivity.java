@@ -93,6 +93,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     private MyAdvertisementAdapter mMyAdvertisementAdapter;
     private boolean mIsShowInterstitial;
     private boolean mIsShowingInterstitialAd;
+    private LinearLayout mLayoutSplash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,6 +192,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
 
     private void initView() {
         //正在加载
+        mLayoutSplash = (LinearLayout) findViewById(R.id.layout_splash);
         mLayoutLoading = findViewById(R.id.rl_loading);
         mLayoutInit = (LinearLayout) findViewById(R.id.layout_initialization);
         mPbInit = findViewById(R.id.pb_init);
@@ -584,7 +586,6 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         try {
             InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
             if (interstitialAdvertisement != null) {
-                endAnim();
                 interstitialAdvertisement.show(new InterstitialAdvertisement.InterstitialAdShowListener() {
                     @Override
                     public void onAdClosed() {
@@ -598,6 +599,12 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                     public void onAdShow() {
                         LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdShow");
                         mIsShowingInterstitialAd = true;
+                        Async.scheduleTaskOnUiThread(200, new Runnable() {
+                            @Override
+                            public void run() {
+                                mLayoutSplash.setVisibility(View.GONE);
+                            }
+                        });
                         PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_SHOW_SPLASH_AD_TIME, System.currentTimeMillis());
                     }
 
@@ -607,6 +614,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                         ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
                     }
                 });
+                endAnim();
             }
         } catch (Exception e) {
             LogUtil.e(TAG, "showInterstitialAd e:" + e.getMessage());
