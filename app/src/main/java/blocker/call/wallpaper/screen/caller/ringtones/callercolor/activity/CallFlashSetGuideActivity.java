@@ -2,6 +2,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.flurry.android.FlurryAgent;
@@ -60,6 +61,14 @@ public class CallFlashSetGuideActivity extends BaseActivity implements View.OnCl
     protected void onResume() {
         super.onResume();
         FlurryAgent.logEvent("CallFlashSetGuideActivity-----show_main");
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

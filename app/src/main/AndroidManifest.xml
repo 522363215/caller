@@ -130,13 +130,19 @@
             android:authorities="${applicationId}.state_provider"
             android:exported="true"
             android:multiprocess="true"
-            android:writePermission="blocker.call.wallpaper.screen.caller.ringtones.callercolor.SwipeStateProvider.WRITE_PERMISSION"/>
+            android:writePermission="blocker.call.wallpaper.screen.caller.ringtones.callercolor.SwipeStateProvider.WRITE_PERMISSION" />
 
         <activity
             android:name=".activity.SplashActivity"
             android:excludeFromRecents="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.MainActivity"
             android:icon="@drawable/ic_launcher"
-            android:screenOrientation="portrait">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -208,11 +214,12 @@
             android:name=".activity.CallFlashSetGuideActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name="com.mopub.test.activity.TestActivity"
+        <activity
+            android:name="com.mopub.test.activity.TestActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service
             android:name=".service.JobLocalService"

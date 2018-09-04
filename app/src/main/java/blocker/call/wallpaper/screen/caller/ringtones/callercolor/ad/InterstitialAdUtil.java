@@ -78,6 +78,8 @@ public class InterstitialAdUtil {
                             EventBus.getDefault().post(new EventInterstitialAdLoadSuccess(position));
                         }
                     });
+                } else {
+                    EventBus.getDefault().post(new EventInterstitialAdLoadSuccess(position));
                 }
             }
         }
@@ -144,13 +146,13 @@ public class InterstitialAdUtil {
                 }
                 break;
             case POSITION_INTERSTITIAL_AD_IN_SPLASH:
-                i_show= ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_show_in_ads_on_splash", 1);
+                i_show = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_show_in_ads_on_splash", 1);
                 if (i_show == 1) {
                     show = true;
                 }
                 break;
             case POSITION_INTERSTITIAL_AD_IN_CALL_AFTER:
-                i_show= ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_show_in_ads_on_end_call", 0);
+                i_show = ApplicationEx.getInstance().getGlobalADPreference().getInt("pref_show_in_ads_on_end_call", 0);
                 if (i_show == 1) {
                     show = true;
                 }
@@ -177,8 +179,9 @@ public class InterstitialAdUtil {
      */
     public static boolean isInterstitialAdReload(InterstitialAdvertisement interstitialAdvertisement) {
         if (interstitialAdvertisement == null) return true;
-        boolean isValid = interstitialAdvertisement.isValid(true);
+        boolean isValid = interstitialAdvertisement.isValid(true, false);
         boolean isLoading = interstitialAdvertisement.isLoading();
+        LogUtil.d(TAG, "isInterstitialAdReload isValid:" + isValid + ",isLoading:" + isLoading);
         return !isValid && !isLoading;
     }
 

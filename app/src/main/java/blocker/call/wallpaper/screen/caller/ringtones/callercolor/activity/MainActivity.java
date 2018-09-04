@@ -44,7 +44,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.SideslipContraller;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.GuideUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScrollViewPager;
@@ -52,6 +51,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.NotScroll
 public class MainActivity extends BaseActivity implements View.OnClickListener, SideslipContraller.SideslipContrallerCallBack, PermissionUtils.PermissionGrant {
     private static final String TAG = "MainActivity";
     private final long TIME_DIFF = 2 * 1000;
+    private static final long SPLASH_AD_SHOW_INTERVAL_TIME = 10 * 60 * 1000;
     public static boolean sIsAlive = false;
     public int currentPage;
     private long mLastBackTime = 0;
@@ -83,8 +83,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-        //新手引导
-        GuideUtil.toFirstBootGuide(this);
+        //跳转到启动页
+        toSplash();
 
         PreferenceHelper.putLong(PreferenceHelper.PREF_KEY_LAST_ENTER_APP_TIME, System.currentTimeMillis());
 
@@ -111,6 +111,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 //                });
 //            }
 //        }
+    }
+
+    private void toSplash() {
+        //离上次显示Splash ad 的时间小于15分钟则自己跳过splash 进入MainActivity
+        long lastShowAdTime = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_SHOW_SPLASH_AD_TIME, 0);
+        if (System.currentTimeMillis() - lastShowAdTime > SPLASH_AD_SHOW_INTERVAL_TIME) {
+            startActivity(new Intent(this, SplashActivity.class));
+        }
     }
 
     @Override
@@ -229,6 +237,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         //测试加一下，用于修复后台报的SkSweepGradient::shadeSpan崩溃
     }
 

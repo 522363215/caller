@@ -35,6 +35,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.AdPrefe
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.GuideUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Stringutil;
@@ -47,7 +48,6 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     protected static long AD_MAX_LOAD_TIME = 4500;
     protected static long AD_SHOW_TIME = 4000;
     protected static long FIRST_AD_SHOW_TIME = 4000;
-    private static final long SPLASH_AD_SHOW_INTERVAL_TIME = 10 * 60 * 1000;
     private LanguageSettingUtil languageSetting;
     Advertisement mAdvertisement;
     private boolean mIsShowFristAdMob;
@@ -92,20 +92,12 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     private ObjectAnimator mAlphAnimator2;
     private MyAdvertisementAdapter mMyAdvertisementAdapter;
     private boolean mIsShowInterstitial;
-    private boolean mIsShowingInterstitialAd;
-    private LinearLayout mLayoutSplash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
-        }
-        //离上次显示Splash ad 的时间小于15分钟则自己跳过splash 进入MainActivity
-        long lastShowAdTime = PreferenceHelper.getLong(PreferenceHelper.PREF_LAST_SHOW_SPLASH_AD_TIME, 0);
-        if (System.currentTimeMillis() - lastShowAdTime <= SPLASH_AD_SHOW_INTERVAL_TIME) {
-            toMain();
-            return;
         }
         SwitchLang();
         initData();
@@ -149,6 +141,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        endAnim();
         if (mAdvertisement != null) {
             mAdvertisement.close();
         }
@@ -178,7 +171,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                     mAdCountDownAnim.end();
                     mAdCountDownAnim.cancel();
                 }
-                toMain();
+                onFinish();
                 break;
         }
     }
@@ -192,7 +185,6 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
 
     private void initView() {
         //正在加载
-        mLayoutSplash = (LinearLayout) findViewById(R.id.layout_splash);
         mLayoutLoading = findViewById(R.id.rl_loading);
         mLayoutInit = (LinearLayout) findViewById(R.id.layout_initialization);
         mPbInit = findViewById(R.id.pb_init);
@@ -308,7 +300,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                     @Override
                     public void run() {
                         if (!mIsAdLoaded) {
-                            toMain();
+                            onFinish();
                         }
                     }
                 });
@@ -375,18 +367,17 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         showInitializationAnim();
     }
 
-    private void toMain() {
-        if (mIsShowingInterstitialAd) return;
+    private void onFinish() {
         //在跳转的时候防止广告显示
         try {
             if (mAdvertisement != null && !mIsShowAd) {
                 mAdvertisement.close();
             }
         } catch (Exception e) {
-            LogUtil.e(TAG, "toMain close ad exception: " + e.getMessage());
+            LogUtil.e(TAG, "onFinish close ad exception: " + e.getMessage());
         }
         if (!isFinishing()) {
-            ActivityBuilder.toMain(this, ActivityBuilder.FRAGMENT_HOME);
+            GuideUtil.toFirstBootGuide(this);
             finish();
         }
     }
@@ -405,7 +396,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onAnimationEnd(Animator animation) {
                 if (!mIsAdLoaded) {
-                    toMain();
+                    onFinish();
                 }
             }
         });
@@ -417,7 +408,10 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         int position = event.getPosition();
         if (position == InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH && mIsShowInterstitial && !isFinishing()) {
             LogUtil.d(TAG, "InterstitialAdvertisement EventInterstitialAdLoadSuccess showInterstitialAd");
-            showInterstitialAd();
+            mIsAdLoaded = true;
+            endAnim();
+            onFinish();
+            showSplashInterstitialAd();
         }
     }
 
@@ -426,7 +420,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         mIsShowInterstitial = InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
         LogUtil.d(TAG, "advertisement initAds mIsShowInterstitial:" + mIsShowInterstitial);
         if (mIsShowInterstitial) {
-            InterstitialAdUtil.loadInterstitialAd(this, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
+            InterstitialAdUtil.loadInterstitialAd(ApplicationEx.getInstance(), InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
         } else {
             initAd();
         }
@@ -495,7 +489,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         @Override
         public void onAdClicked(boolean isAdmob) {
             super.onAdClicked(isAdmob);
-            toMain();
+            onFinish();
         }
 
         @Override
@@ -515,6 +509,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void showAd() {
+        if (mIsShowInterstitial) return;
         endAnim();
         Async.scheduleTaskOnUiThread(200, new Runnable() {
             @Override
@@ -576,49 +571,48 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         mAdCountDownAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                toMain();
+                onFinish();
             }
         });
         mAdCountDownAnim.start();
     }
 
-    private void showInterstitialAd() {
-        try {
-            InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
-            if (interstitialAdvertisement != null) {
-                interstitialAdvertisement.show(new InterstitialAdvertisement.InterstitialAdShowListener() {
-                    @Override
-                    public void onAdClosed() {
-                        mIsShowingInterstitialAd = false;
-                        LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdClosed");
-                        ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
-                        toMain();
-                    }
-
-                    @Override
-                    public void onAdShow() {
-                        LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdShow");
-                        mIsShowingInterstitialAd = true;
-                        Async.scheduleTaskOnUiThread(200, new Runnable() {
+    public void showSplashInterstitialAd() {
+        long delay = 0;
+        if (mIsShowInitialization) {
+            delay = 200;
+        }
+        Async.scheduleTaskOnUiThread(delay, new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
+                    if (interstitialAdvertisement != null) {
+                        interstitialAdvertisement.show(new InterstitialAdvertisement.InterstitialAdShowListener() {
                             @Override
-                            public void run() {
-                                mLayoutSplash.setVisibility(View.GONE);
+                            public void onAdClosed() {
+                                LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdClosed");
+                                ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
+                            }
+
+                            @Override
+                            public void onAdShow() {
+                                LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdShow");
+                                PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_SHOW_SPLASH_AD_TIME, System.currentTimeMillis());
+                            }
+
+                            @Override
+                            public void onAdError() {
+                                LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdError");
+                                ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
                             }
                         });
-                        PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_SHOW_SPLASH_AD_TIME, System.currentTimeMillis());
                     }
-
-                    @Override
-                    public void onAdError() {
-                        LogUtil.d(TAG, "InterstitialAdvertisement showInterstitialAd onAdError");
-                        ApplicationEx.getInstance().setInterstitialAdvertisement(null, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
-                    }
-                });
-                endAnim();
+                } catch (Exception e) {
+                    LogUtil.e(TAG, "showInterstitialAd e:" + e.getMessage());
+                }
             }
-        } catch (Exception e) {
-            LogUtil.e(TAG, "showInterstitialAd e:" + e.getMessage());
-        }
+        });
     }
     //****************************************AD********************************************//
 }

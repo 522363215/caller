@@ -113,14 +113,17 @@ public class InterstitialAdvertisement {
     }
 
     /**
-     * 只要high 的没有加载出来或者超时就算是无效
+     * @param isOnlyHigh true:只要high 的没有加载出来或者超时就算是无效，fasle:只要有一个加载成功了且在有效时间则有效
      */
-    public boolean isValid(boolean resetRequestIndex) {
+    public boolean isValid(boolean resetRequestIndex, boolean isOnlyHigh) {
         if (resetRequestIndex) {
             mCurrentAdValidIndex = -1;
         }
-//        mCurrentValidAdPriority = getAndUpdateValidAdPriority();
-        mCurrentValidAdPriority = InterstitialAdPriority.HIGH;
+        if (isOnlyHigh) {
+            mCurrentValidAdPriority = InterstitialAdPriority.HIGH;
+        } else {
+            mCurrentValidAdPriority = getAndUpdateValidAdPriority();
+        }
         for (String ad : mAdKeyPriority) {
             if (AdvertisementSwitcher.AD_FACEBOOK.equals(ad)) {
                 InterstitialAd interstitialFbAd = null;
@@ -170,10 +173,11 @@ public class InterstitialAdvertisement {
             }
         }
 
-//        if (mCurrentAdValidIndex < mAdShowPriority.size()) {
-//            isValid(false);
-//        }
-        return false;
+        if (!isOnlyHigh && mCurrentAdValidIndex < mAdShowPriority.size()) {
+            return isValid(false, false);
+        } else {
+            return false;
+        }
     }
 
     private boolean show(boolean resetRequestIndex) {
