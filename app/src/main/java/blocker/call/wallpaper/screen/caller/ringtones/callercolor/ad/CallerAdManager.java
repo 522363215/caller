@@ -63,6 +63,11 @@ public class CallerAdManager {
     public static final String INTERSTITIAL_ADMOB_ID_IN_SPLASH = "ca-app-pub-4922304484386262/6779886100"; //启动页插屏colorphone-in-11
     public static final String INTERSTITIAL_ADMOB_ID_IN_END_CALL = "ca-app-pub-4922304484386262/1287886277"; //通话结束页插屏colorphone-in-12
 
+    public static final String INTERSTITIAL_ADMOB_ID_IN_NEW = "ca-app-pub-4922304484386262/1905536203";
+
+    //激励视频
+    public static final String INTERSTITIAL_ADMOB_ID_JL_NEW_FLASH = "ca-app-pub-4922304484386262/9908149307"; //colorphone-jl-1
+
     //多建了一个colorphone-6 ca-app-pub-4922304484386262/6762628719
 
     //admob id end
