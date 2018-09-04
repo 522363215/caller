@@ -108,7 +108,7 @@ public class ExternalMagicHelper {
             }
 
             @Override
-            public void onViewHide(ExternalMagicManager.MagicType type) {
+            public void onViewHide(ExternalMagicManager.MagicType magicType, ExternalMagicManager.MagicClose magicClose) {
                 //变现关闭回调
                 showInterstitialAd();
             }
