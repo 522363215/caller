@@ -1468,6 +1468,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     //******************************************AD******************************************//
     private void initAds() {
+        if (mIsComeGuide) return;
         mRewardVideoAd = MobileAds.getRewardedVideoAdInstance(CallFlashDetailActivity.this);
         mRewardVideoAd.setRewardedVideoAdListener(mRewardVideoAdListener);
 
