@@ -152,6 +152,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     private RewardedVideoAd mRewardVideoAd = null;
     private boolean isShowRewardedVideo;
+    private boolean isLoadingRewardVideo;
 
     private RewardedVideoAdListener mRewardVideoAdListener = new RewardedVideoAdListener() {
         @Override
@@ -647,6 +648,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
+        if (isLoadingRewardVideo) {
+            return;
+        }
+
         final boolean isShowInterstitialAd = InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
         File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
         boolean fileExist = file != null && file.exists();
@@ -940,6 +945,14 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                         .getDataList(CallFlashPreferenceHelper.PREF_CALL_FLASH_WATCH_REWARD_VIDEO_ID, String[].class);
                 if (mInfo != null && !mInfo.isDownloaded && mInfo.isLock &&
                         (watchRewardedVideo == null || !watchRewardedVideo.contains(mInfo.id))) {
+                    isLoadingRewardVideo = true;
+                    tv_download_action_below_ad.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            isLoadingRewardVideo = false;
+                        }
+                    }, 2500);
+
                     mLayoutRewardVideoLoading.setVisibility(View.VISIBLE);
                     AdRequest.Builder builder = new AdRequest.Builder();
                     mRewardVideoAd.loadAd(CallerAdManager.INTERSTITIAL_ADMOB_ID_JL_NEW_FLASH, builder.build());

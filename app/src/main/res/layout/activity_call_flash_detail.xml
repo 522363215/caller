@@ -303,7 +303,8 @@
             android:background="@drawable/app_dialog_litter_corners_bg"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:padding="@dimen/dp20">
 
             <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.LoadingProgressBar
                 android:id="@+id/pb_loading"
