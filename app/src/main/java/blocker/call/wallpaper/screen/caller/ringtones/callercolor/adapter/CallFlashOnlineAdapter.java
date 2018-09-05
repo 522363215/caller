@@ -378,15 +378,15 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     holder.callFlashView.showCallFlashView(info);
                 }
             }
-            callFlashVisibile(holder, true, delayGoneBGTime);
+            callFlashVisiblile(holder, true, delayGoneBGTime);
         } else {
             holder.callFlashView.pause();
-            callFlashVisibile(holder, false, delayGoneBGTime);
+            callFlashVisiblile(holder, false, delayGoneBGTime);
         }
 
     }
 
-    private void callFlashVisibile(final NormalViewHolder holder, boolean isShow, long delayGoneBGTime) {
+    private void callFlashVisiblile(final NormalViewHolder holder, boolean isShow, long delayGoneBGTime) {
         if (isShow) {
             if (holder.gv_bg.getVisibility() == View.VISIBLE) {
                 Async.scheduleTaskOnUiThread(delayGoneBGTime, new Runnable() {

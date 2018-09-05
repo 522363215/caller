@@ -225,11 +225,14 @@
     <string name="push_tools_content">Check details</string>
     <string name="push_tools_block_call">"Blocked call(s)"</string>
 
-
     <string name="setting_swipe">Swipe</string>
     <string name="setting_swipe_des">Shortcut to access recent apps</string>
     <string name="setting_close_swipe_tip">Are you sure to disable easy swipe?</string>
     <string name="setting_enable_swipe_success_tip">"Enable swipe success!"</string>
+
+    <string name="call_flash_detail_theme_unlock">Unlock</string>
+    <string name="call_flash_detail_unlock_desc">Watch Rewarded video to unlock the cool theme</string>
+    <string name="resource_loading">Loading...</string>
 
     <string name="title_activity_message">message</string>
     <string name="title_home">message wallpaper</string>

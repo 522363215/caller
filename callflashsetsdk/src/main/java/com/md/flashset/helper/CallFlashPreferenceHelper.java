@@ -73,6 +73,11 @@ public class CallFlashPreferenceHelper {
      */
     public static final String PREF_CALL_FLASH_IS_MUTE_WHEN_PREVIEW = "android_call_flash_is_mute_when_preview";
 
+    /**
+     * 已经显示过激励广告的来电秀ID;
+     */
+    public static final String PREF_CALL_FLASH_WATCH_REWARD_VIDEO_ID = "android_call_flash_watch_reward_video_id";
+
     private static Context mContext;
 
     private CallFlashPreferenceHelper() {

@@ -114,6 +114,8 @@ public class CallFlashManager {
                 info.intro = item.getIntro();
                 info.isOnlionCallFlash = true;
 
+                info.isLock = "1".equals(item.getIs_lock());
+
                 CallFlashInfo cacheCallFlashInfo = getCacheJustLikeFlashList(info.id);
                 if (cacheCallFlashInfo != null) {
                     info.likeCount = item.getNum_of_likes() >= cacheCallFlashInfo.likeCount ? item.getNum_of_likes() : cacheCallFlashInfo.likeCount;

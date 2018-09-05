@@ -66,6 +66,7 @@ public class CallFlashInfo implements Serializable {
     public long downloadSuccessTime;
     public long setToCallFlashTime;//设置为来电秀的时间
     public long collectTime;//收藏的时间
+    public boolean isLock;
 
     @Override
     public boolean equals(Object obj) {

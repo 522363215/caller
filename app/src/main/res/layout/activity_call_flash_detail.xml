@@ -263,7 +263,68 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layout_flash_lock_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.FontIconView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/icon_locked"
+            android:textColor="@color/white"
+            android:textSize="96dp" />
+
+        <TextView
+            android:layout_width="@dimen/dp220"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp4"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="@string/call_flash_detail_unlock_desc"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
     <RelativeLayout
+        android:id="@+id/layout_reward_video_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/app_dialog_litter_corners_bg"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.LoadingProgressBar
+                android:id="@+id/pb_loading"
+                android:layout_width="@dimen/dp160"
+                android:layout_height="@dimen/dp84"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/resource_loading"
+                android:layout_marginBottom="@dimen/dp8"
+                android:textSize="14sp"
+                android:textColor="@color/color_FF00284D"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/action_back"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp48"
         android:visibility="visible">
