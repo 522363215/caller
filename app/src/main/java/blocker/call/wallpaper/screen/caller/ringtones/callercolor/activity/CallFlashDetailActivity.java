@@ -383,7 +383,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private void initIsWatchRewardedVideo() {
         List<String> list = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_CALL_FLASH_WATCH_REWARD_VIDEO_ID, String[].class);
         boolean isWatchRewardedVideo = list != null && mInfo != null && list.contains(mInfo.id);
-        if (mInfo != null && mInfo.isLock && !isWatchRewardedVideo) {
+        if (mInfo != null && !mInfo.isDownloaded && mInfo.isLock && !isWatchRewardedVideo) {
             isShowRewardedVideo = true;
         }
     }
@@ -847,6 +847,11 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                             if (isFinishing()) {
                                 return;
                             }
+                            if (mInfo != null) {
+                                mInfo.isDownloaded = true;
+                                mInfo.isDownloadSuccess = true;
+                            }
+
                             if (mIsShowAboveAdBtn) {
                                 tv_setting_action_above_ad.setVisibility(View.GONE);
                                 tv_download_action_above_ad.setVisibility(View.GONE);
