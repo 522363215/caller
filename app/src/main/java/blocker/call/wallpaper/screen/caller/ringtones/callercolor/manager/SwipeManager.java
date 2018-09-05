@@ -10,7 +10,6 @@ import com.quick.easyswipe.EasySwipe;
 import com.quick.easyswipe.callback.EasySwipeFunctionCallback;
 import com.quick.easyswipe.callback.EasySwipeViewCallback;
 import com.quick.easyswipe.callback.QuickSwitchCallback;
-import com.quick.easyswipe.callback.QuickSwitchResultCallback;
 import com.quick.easyswipe.callback.ServerConfigCallback;
 import com.quick.easyswipe.type.EasySwipeItem;
 
@@ -173,12 +172,12 @@ public class SwipeManager {
 
     public void enableEasySwipe() {
         EasySwipe.toggleEasySwipe(true);
-        EasySwipe.tryStartService(false);
+        EasySwipe.tryStartService26(false);
     }
 
     public void restartEasySwipe() {
         EasySwipe.toggleEasySwipe(true);
-        EasySwipe.restartService(false);
+        EasySwipe.restartService26(false);
     }
 
     public void disableEasySwipe() {
