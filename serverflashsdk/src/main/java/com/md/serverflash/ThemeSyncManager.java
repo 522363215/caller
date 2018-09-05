@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class ThemeSyncManager {
 
-    public static long EXPIRE_TIME = 2 * DateUtils.HOUR_IN_MILLIS;
+    public static long EXPIRE_TIME = 4 * DateUtils.HOUR_IN_MILLIS;
     private static final String THEME_RESOURCES_DIR = Environment.DIRECTORY_MOVIES;
 
     private ThemeSyncManager() {
