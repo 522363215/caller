@@ -174,13 +174,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
         @Override
         public void onRewardedVideoAdClosed() {
-            if (isFinishing() || mRewardVideoAd == null || mInfo == null) {
-                return;
-            }
-            List<String> list = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_CALL_FLASH_WATCH_REWARD_VIDEO_ID, String[].class);
-            if (list != null && list.contains(mInfo.id) && !TextUtils.isEmpty(mInfo.url)) {
-                downloadFlashResourceFile();
-            }
         }
 
         @Override
@@ -197,7 +190,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
         @Override
         public void onRewardedVideoCompleted() {
-            if (isFinishing()) {
+            if (isFinishing() || mInfo == null) {
                 return;
             }
             isShowRewardedVideo = false;
@@ -222,7 +215,23 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             if (mLayoutFlashLockTip != null) {
                 mLayoutFlashLockTip.setVisibility(View.GONE);
             }
-            showDownloadProgress();
+
+            if (mInfo != null && !TextUtils.isEmpty(mInfo.url)) {
+                try {
+                    if (mIsShowAboveAdBtn) {
+                        layout_progress_above_ad.setVisibility(View.VISIBLE);
+                        tv_setting_action_above_ad.setVisibility(View.GONE);
+                        tv_download_action_above_ad.setVisibility(View.GONE);
+                    } else {
+                        layout_progress_below_ad.setVisibility(View.VISIBLE);
+                        tv_setting_action_below_ad.setVisibility(View.GONE);
+                        tv_download_action_below_ad.setVisibility(View.GONE);
+                    }
+                    downloadFlashResourceFile();
+                } catch (Exception e) {
+                    LogUtil.e(TAG, "onRewardedVideoAdClosed e:" + e.getMessage());
+                }
+            }
         }
     };
 
@@ -302,7 +311,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
         mRewardVideoAd = MobileAds.getRewardedVideoAdInstance(CallFlashDetailActivity.this);
         mRewardVideoAd.setRewardedVideoAdListener(mRewardVideoAdListener);
-        
+
         mCallFlashView = findViewById(R.id.call_flash_view);
         mCallFlashAvatarInfoView = (CallFlashAvatarInfoView) findViewById(R.id.callFlashAvatarInfoView);
         mGvCallFlashBg = findViewById(R.id.gv_call_flash_bg);
