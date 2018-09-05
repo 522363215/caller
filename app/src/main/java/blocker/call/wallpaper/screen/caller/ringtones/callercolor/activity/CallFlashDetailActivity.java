@@ -530,7 +530,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void loadInterstitialAd() {
-        if (mIsComeGuide) return;
+        if (mIsComeGuide || isShowRewardedVideo) return;
         InterstitialAdUtil.loadInterstitialAd(this, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
 //        LogUtil.d(TAG, "call_flash_detail loadInterstitialAd:" + CallerAdManager.getResultInFbId());
     }
