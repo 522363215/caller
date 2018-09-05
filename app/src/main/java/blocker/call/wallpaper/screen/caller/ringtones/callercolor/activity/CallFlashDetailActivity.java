@@ -299,6 +299,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void initView() {
+
+        mRewardVideoAd = MobileAds.getRewardedVideoAdInstance(CallFlashDetailActivity.this);
+        mRewardVideoAd.setRewardedVideoAdListener(mRewardVideoAdListener);
+        
         mCallFlashView = findViewById(R.id.call_flash_view);
         mCallFlashAvatarInfoView = (CallFlashAvatarInfoView) findViewById(R.id.callFlashAvatarInfoView);
         mGvCallFlashBg = findViewById(R.id.gv_call_flash_bg);
@@ -1469,8 +1473,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     //******************************************AD******************************************//
     private void initAds() {
         if (mIsComeGuide) return;
-        mRewardVideoAd = MobileAds.getRewardedVideoAdInstance(CallFlashDetailActivity.this);
-        mRewardVideoAd.setRewardedVideoAdListener(mRewardVideoAdListener);
 
         if (!isShowRewardedVideo) {
             MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
