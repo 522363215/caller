@@ -231,7 +231,7 @@
     <string name="setting_enable_swipe_success_tip">"Enable swipe success!"</string>
 
     <string name="call_flash_detail_theme_unlock">Unlock</string>
-    <string name="call_flash_detail_unlock_desc">Watch Reward Video to Unlock the Cool Theme</string>
+    <string name="call_flash_detail_unlock_desc">Watch Rewarded Video to Unlock the Cool Theme</string>
     <string name="resource_loading">Loading...</string>
 
     <string name="title_activity_message">message</string>

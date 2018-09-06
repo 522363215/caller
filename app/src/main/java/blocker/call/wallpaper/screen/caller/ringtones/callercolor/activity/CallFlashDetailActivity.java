@@ -232,6 +232,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                     LogUtil.e(TAG, "onRewardedVideoAdClosed e:" + e.getMessage());
                 }
             }
+
+            sendRewardedAdmobFlurry();
         }
     };
 
@@ -1542,5 +1544,22 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         }
     }
     //******************************************AD******************************************//
+
+    private void sendRewardedAdmobFlurry() {
+        try {
+            if(mInfo != null) {
+                String flash_id = mInfo.id;
+                String flash_title = mInfo.title;
+                Map<String, String> eventParams = new HashMap<>();
+                eventParams.put(flash_id, flash_title);
+                FlurryAgent.logEvent("rewarded_ads_click", eventParams);
+                LogUtil.d(TAG, "sendRewardedAdmobFlurry flash id: "+mInfo.id+", title: "+mInfo.title);
+            }
+
+        } catch (Exception e) {
+            LogUtil.e(TAG, "sendRewardedAdmobFlurry exception:" + e.getMessage());
+        }
+
+    }
 
 }
