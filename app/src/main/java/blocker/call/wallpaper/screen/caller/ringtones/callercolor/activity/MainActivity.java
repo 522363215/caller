@@ -403,10 +403,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ((ImageView) findViewById(R.id.iv_wallpaper)).setImageDrawable(getResources().getDrawable(currentPage == ActivityBuilder.FRAGMENT_WALLPAPER ? R.drawable.icon_mine_selected : R.drawable.icon_mine));
 
                 if (mCallFlashListFragment != null) {
-                    if (arg0 == ActivityBuilder.FRAGMENT_HOME)
+                    if (arg0 == ActivityBuilder.FRAGMENT_HOME) {
                         mCallFlashListFragment.continuePlayVideo(false);
-                    else
+                    } else {
                         mCallFlashListFragment.pauseOrContinuePlayVideo(false);
+                    }
                 }
 
                 setTvTitle(arg0);

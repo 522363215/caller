@@ -79,6 +79,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private RecyclerView mRecyclerView;
     private LruCache<String, Bitmap> mFirstFrameMemoryCache;
     private boolean mIsComeOtherActivity;
+    private boolean mIsOnPause;
 
     public void setFragmentTag(int fragmentTag) {
         this.fragmentTag = fragmentTag;
@@ -392,7 +393,16 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     LogUtil.d(TAG, "setCallFlashShow 局部刷新 暂停" + ",position:" + pos);
                     if (holder.callFlashView.isPlaying()) {
                         holder.callFlashView.pause();
-                        //此处不隐藏，否则会闪
+                        //延迟显示背景，防止从其他actiivty返回时黑屏
+                        if (mIsOnPause) {
+                            Async.scheduleTaskOnUiThread(500, new Runnable() {
+                                @Override
+                                public void run() {
+                                    holder.gv_bg.setVisibility(View.VISIBLE);
+                                    holder.callFlashView.setVisibility(View.GONE);
+                                }
+                            });
+                        }
                     }
                     break;
                 case ITEM_REFRESH_TYPE_SCROLL:
@@ -488,6 +498,11 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void setComeOtherActivity(boolean isComeOtherActivity) {
         mIsComeOtherActivity = isComeOtherActivity;
     }
+
+    public void setOnPause(boolean isOnPause) {
+        mIsOnPause = isOnPause;
+    }
+
 
     class NormalViewHolder extends RecyclerView.ViewHolder {
         private CardView root;

@@ -46,7 +46,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.Prefere
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ConstantUtils;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.PermissionUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.ToastUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.Utils;
@@ -145,12 +144,14 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
+        isOnPause(false);
         showPermissionTip();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        isOnPause(true);
         pauseOrContinuePlayVideo(false);
     }
 
@@ -431,6 +432,12 @@ public class CallFlashListFragment extends Fragment implements View.OnClickListe
                 mAdapter.notifyItemChanged(mCurrentFlashIndex, CallFlashOnlineAdapter.ITEM_REFRESH_TYPE_PAUSE);
             }
             mLastCurrentFlashIndex = mCurrentFlashIndex;
+        }
+    }
+
+    public void isOnPause(boolean isOnPause) {
+        if (mAdapter != null) {
+            mAdapter.setOnPause(isOnPause);
         }
     }
 
