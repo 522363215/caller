@@ -146,7 +146,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private boolean mIsMute;
     private View mLayoutLike;
     private View mLayoutRewardVideoLoading;
-    private View mActionBack;
     private View mLayoutFlashLockTip;
 
     private boolean isNeedRestartSwipe;
@@ -154,6 +153,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private RewardedVideoAd mRewardVideoAd = null;
     private boolean isShowRewardedVideo;
     private boolean isLoadingRewardVideo;
+    private View mLayoutLikeForLock;
+    private TextView mTvLikeCountForLock;
 
     private RewardedVideoAdListener mRewardVideoAdListener = new RewardedVideoAdListener() {
         @Override
@@ -204,9 +205,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 CallFlashPreferenceHelper.setDataList(CallFlashPreferenceHelper.PREF_CALL_FLASH_WATCH_REWARD_VIDEO_ID, dataList);
             }
 
-            if (mActionBack != null) {
-                mActionBack.setVisibility(View.VISIBLE);
-            }
             if (mCallFlashView != null) {
                 mCallFlashView.setVisibility(View.VISIBLE);
             }
@@ -215,6 +213,10 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             }
             if (mLayoutFlashLockTip != null) {
                 mLayoutFlashLockTip.setVisibility(View.GONE);
+            }
+
+            if (mLayoutLikeForLock != null) {
+                mLayoutLikeForLock.setVisibility(View.GONE);
             }
 
             if (mInfo != null && !TextUtils.isEmpty(mInfo.url)) {
@@ -310,7 +312,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         mGvCallFlashBg = findViewById(R.id.gv_call_flash_bg);
         mLayoutCallFlashOthers = findViewById(R.id.layout_call_flash_others);
         mLayoutRewardVideoLoading = findViewById(R.id.layout_reward_video_loading);
-        mActionBack = findViewById(R.id.action_back);
         mLayoutFlashLockTip = findViewById(R.id.layout_flash_lock_tip);
 
         mLayoutAd = findViewById(R.id.layout_ad_view);
@@ -325,6 +326,9 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         mTvLikeCount = (TextView) findViewById(R.id.tv_like_count);
         mFivDownload = (FontIconView) findViewById(R.id.fiv_download);
         mTvDownloadCount = (TextView) findViewById(R.id.tv_download_count);
+
+        mLayoutLikeForLock = findViewById(R.id.layout_like_for_lock);
+        mTvLikeCountForLock = (TextView) findViewById(R.id.tv_like_count_for_lock);
 
         //above ad
         layout_above_ad = findViewById(R.id.layout_above_ad);
@@ -357,7 +361,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         }
 
         if (isShowRewardedVideo) {
-            mActionBack.setVisibility(View.INVISIBLE);
             mLayoutCallFlashOthers.setVisibility(View.INVISIBLE);
             mCallFlashView.setVisibility(View.INVISIBLE);
             mLayoutFlashLockTip.setVisibility(View.VISIBLE);
@@ -725,6 +728,13 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             mFivLike.setTextColor(getResources().getColor(R.color.color_FFE05A52));
         } else {
             mFivLike.setTextColor(getResources().getColor(R.color.whiteSmoke));
+        }
+
+        if (isShowRewardedVideo && mInfo.likeCount > 1000) {
+            mLayoutLikeForLock.setVisibility(View.VISIBLE);
+            mTvLikeCountForLock.setText("" + mInfo.likeCount);
+        } else {
+            mLayoutLikeForLock.setVisibility(View.GONE);
         }
     }
 
@@ -1575,13 +1585,13 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     private void sendRewardedAdmobFlurry() {
         try {
-            if(mInfo != null) {
+            if (mInfo != null) {
                 String flash_id = mInfo.id;
                 String flash_title = mInfo.title;
                 Map<String, String> eventParams = new HashMap<>();
                 eventParams.put(flash_id, flash_title);
                 FlurryAgent.logEvent("rewarded_ads_click", eventParams);
-                LogUtil.d(TAG, "sendRewardedAdmobFlurry flash id: "+mInfo.id+", title: "+mInfo.title);
+                LogUtil.d(TAG, "sendRewardedAdmobFlurry flash id: " + mInfo.id + ", title: " + mInfo.title);
             }
 
         } catch (Exception e) {
