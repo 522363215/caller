@@ -307,6 +307,8 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         mRewardVideoAd = MobileAds.getRewardedVideoAdInstance(CallFlashDetailActivity.this);
         mRewardVideoAd.setRewardedVideoAdListener(mRewardVideoAdListener);
 
+        mLayoutAd = findViewById(R.id.layout_ad_view);
+
         mCallFlashView = findViewById(R.id.call_flash_view);
         mCallFlashAvatarInfoView = (CallFlashAvatarInfoView) findViewById(R.id.callFlashAvatarInfoView);
         mGvCallFlashBg = findViewById(R.id.gv_call_flash_bg);
@@ -314,18 +316,16 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         mLayoutRewardVideoLoading = findViewById(R.id.layout_reward_video_loading);
         mLayoutFlashLockTip = findViewById(R.id.layout_flash_lock_tip);
 
-        mLayoutAd = findViewById(R.id.layout_ad_view);
-
-        //声音按钮
-        mIvSound = (ImageView) findViewById(R.id.iv_sound);
-
         //点赞数和下载数
-        mLavoutLikeAndDownload = (LinearLayout) findViewById(R.id.layout_like_and_download);
-        mLayoutLike = findViewById(R.id.layout_like);
-        mFivLike = (FontIconView) findViewById(R.id.fiv_like);
-        mTvLikeCount = (TextView) findViewById(R.id.tv_like_count);
-        mFivDownload = (FontIconView) findViewById(R.id.fiv_download);
-        mTvDownloadCount = (TextView) findViewById(R.id.tv_download_count);
+        mLavoutLikeAndDownload = (LinearLayout) mCallFlashView.findViewById(R.id.layout_like_and_download);
+        mLayoutLike = mCallFlashView.findViewById(R.id.layout_like);
+        mFivLike = (FontIconView) mCallFlashView.findViewById(R.id.fiv_like);
+        mTvLikeCount = (TextView) mCallFlashView.findViewById(R.id.tv_like_count);
+        mFivDownload = (FontIconView) mCallFlashView.findViewById(R.id.fiv_download);
+        mTvDownloadCount = (TextView) mCallFlashView.findViewById(R.id.tv_download_count);
+        //声音按钮
+        mIvSound = (ImageView) mCallFlashView.findViewById(R.id.iv_sound);
+        mLavoutLikeAndDownload.setVisibility(View.VISIBLE);
 
         mLayoutLikeForLock = findViewById(R.id.layout_like_for_lock);
         mTvLikeCountForLock = (TextView) findViewById(R.id.tv_like_count_for_lock);
@@ -1036,7 +1036,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             case R.id.fiv_like:
                 if (mInfo != null) {
                     File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
-                    if ((file != null && file.exists()) || (!TextUtils.isEmpty(mInfo.path) && new File(mInfo.path).exists())) {
+                    if ((file != null && file.exists()) || (!TextUtils.isEmpty(mInfo.path) && new File(mInfo.path).exists()) || CallFlashManager.CALL_FLASH_START_SKY_ID.equals(mInfo.id)) {
                         if (mInfo.isLike) {
                             mInfo.isLike = false;
                             mInfo.likeCount = mInfo.likeCount - 1;
