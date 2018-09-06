@@ -1245,7 +1245,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         try {
             mIsBack = isBack;
             InterstitialAdvertisement interstitialAdvertisement = ApplicationEx.getInstance().getInterstitialAdvertisement(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL);
-            if (interstitialAdvertisement == null) {
+            if (interstitialAdvertisement == null || isShowRewardedVideo) {
                 if (isBack) {
                     onFinish();
                 }
@@ -1306,7 +1306,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     private void showFullScreenAd(final boolean isBack) {
         mIsBack = isBack;
-        if (FullScreenAdManager.getInstance().isAdLoaded()) {
+        if (FullScreenAdManager.getInstance().isAdLoaded() && !isShowRewardedVideo) {
             FullScreenAdManager.getInstance().showAd(this, InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_CALL_FLASH_DETAIL, new FullScreenAdManager.AdListener() {
                 @Override
                 public void onAdShow() {
