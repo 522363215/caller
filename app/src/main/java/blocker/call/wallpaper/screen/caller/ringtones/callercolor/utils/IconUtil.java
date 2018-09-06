@@ -12,7 +12,9 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,38 +77,36 @@ public class IconUtil {
         imageCache.evictAll();
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public static Bitmap rsBlur(Context context, Bitmap source, float radius) {
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public static Bitmap rsBlur(Context context, Bitmap source, int radius, float scale) {
         if (radius > 25) {
             radius = 25;
         }
-        Bitmap inputBmp = source;
-        //(1)
+        Log.i("rsBlur", "origin size:" + source.getWidth() + "*" + source.getHeight());
+        int width = Math.round(source.getWidth() * scale);
+        int height = Math.round(source.getHeight() * scale);
+        Log.i("rsBlur", "scale origin size:" + width + "*" + height);
+        Bitmap inputBmp = Bitmap.createScaledBitmap(source, width, height, false);
         RenderScript renderScript = RenderScript.create(context);
-
-        LogUtil.d("rsBlur", "scale size:" + inputBmp.getWidth() + "*" + inputBmp.getHeight());
-
+        Log.i("rsBlur", "scale size:" + inputBmp.getWidth() + "*" + inputBmp.getHeight());
         // Allocate memory for Renderscript to work with
-        //(2)
         final Allocation input = Allocation.createFromBitmap(renderScript, inputBmp);
         final Allocation output = Allocation.createTyped(renderScript, input.getType());
-        //(3)
+
         // Load up an instance of the specific script that we want to use.
         ScriptIntrinsicBlur scriptIntrinsicBlur = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
-        //(4)
         scriptIntrinsicBlur.setInput(input);
-        //(5)
+
         // Set the blur radius
         scriptIntrinsicBlur.setRadius(radius);
-        //(6)
+
         // Start the ScriptIntrinisicBlur
         scriptIntrinsicBlur.forEach(output);
-        //(7)
+
         // Copy the output to the blurred bitmap
         output.copyTo(inputBmp);
-        //(8)
-        renderScript.destroy();
 
+        renderScript.destroy();
         return inputBmp;
     }
 

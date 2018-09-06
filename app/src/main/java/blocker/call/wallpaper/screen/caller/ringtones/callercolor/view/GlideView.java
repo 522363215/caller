@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -19,12 +20,12 @@ import com.bumptech.glide.request.target.Target;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.glide.GlideHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.IconUtil;
 
 public class GlideView extends RelativeLayout {
     private Context mContext;
     private ImageView mImageView;
     private ImageView mIvShape;
-    private ImageView mIvShape2;
 
     public GlideView(Context context) {
         super(context);
@@ -61,7 +62,6 @@ public class GlideView extends RelativeLayout {
             LayoutInflater.from(context).inflate(R.layout.layout_glide_view, this);
             mImageView = findViewById(R.id.imageView);
             mIvShape = findViewById(R.id.iv_shape);
-            mIvShape2 = findViewById(R.id.iv_shape2);
             setScaleType(scaleType);
         } finally {
             attributes.recycle();
@@ -169,51 +169,98 @@ public class GlideView extends RelativeLayout {
      * @param urlOrPath 实际资源的url 或者路径
      */
     public void showImageWithBlur(String urlOrPath) {
-        if (mIvShape2 != null) {
-            mIvShape2.setVisibility(VISIBLE);
-        }
         if (mIvShape != null) {
             mIvShape.setVisibility(VISIBLE);
-            GlideHelper.with(mContext).load(urlOrPath).into(mIvShape);
         }
         if (mImageView != null) {
-            GlideHelper.with(mContext).loadForBlur(urlOrPath).listener(new RequestListener<String, GlideDrawable>() {
-                @Override
-                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                    return false;
-                }
-
-                @Override
-                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    if (mIvShape != null) {
-                        mIvShape.setVisibility(GONE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                GlideHelper.with(mContext).load(urlOrPath).listener(new RequestListener<String, Bitmap>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
+                        return false;
                     }
-                    return false;
+
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                            Bitmap bitmap = IconUtil.rsBlur(mContext, resource, 25, 0.125f);
+                            if (bitmap != null) {
+                                mImageView.setImageBitmap(bitmap);
+                            }
+                            if (mIvShape != null) {
+                                mIvShape.setVisibility(GONE);
+                            }
+                        }
+                        return false;
+                    }
+                }).into(mIvShape);
+            } else {
+                if (mIvShape != null) {
+                    GlideHelper.with(mContext).load(urlOrPath).into(mIvShape);
                 }
-            }).into(mImageView);
+                GlideHelper.with(mContext).loadForBlur(urlOrPath).listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        if (mIvShape != null) {
+                            mIvShape.setVisibility(GONE);
+                        }
+                        return false;
+                    }
+                }).into(mImageView);
+            }
         }
     }
 
     public void showImageWithBlur(int resId) {
         if (mIvShape != null) {
             mIvShape.setVisibility(VISIBLE);
-            GlideHelper.with(mContext).load(resId).into(mIvShape);
         }
         if (mImageView != null) {
-            GlideHelper.with(mContext).loadForBlur(resId).listener(new RequestListener<Integer, GlideDrawable>() {
-                @Override
-                public boolean onException(Exception e, Integer model, Target<GlideDrawable> target, boolean isFirstResource) {
-                    return false;
-                }
-
-                @Override
-                public boolean onResourceReady(GlideDrawable resource, Integer model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    if (mIvShape != null) {
-                        mIvShape.setVisibility(GONE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                GlideHelper.with(mContext).load(resId).listener(new RequestListener<Integer, Bitmap>() {
+                    @Override
+                    public boolean onException(Exception e, Integer model, Target<Bitmap> target, boolean isFirstResource) {
+                        return false;
                     }
-                    return false;
+
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, Integer model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                            Bitmap bitmap = IconUtil.rsBlur(mContext, resource, 25, 0.125f);
+                            if (bitmap != null) {
+                                mImageView.setImageBitmap(bitmap);
+                            }
+                            if (mIvShape != null) {
+                                mIvShape.setVisibility(GONE);
+                            }
+                        }
+                        return false;
+                    }
+                }).into(mIvShape);
+            } else {
+                if (mIvShape != null) {
+                    GlideHelper.with(mContext).load(resId).into(mIvShape);
                 }
-            }).into(mImageView);
+                GlideHelper.with(mContext).loadForBlur(resId).listener(new RequestListener<Integer, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, Integer model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, Integer model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        if (mIvShape != null) {
+                            mIvShape.setVisibility(GONE);
+                        }
+                        return false;
+                    }
+                }).into(mImageView);
+            }
         }
     }
 
