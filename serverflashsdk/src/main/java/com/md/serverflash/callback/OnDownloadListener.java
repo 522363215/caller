@@ -7,6 +7,7 @@ import java.io.File;
  */
 
 public interface OnDownloadListener {
+    void onConnecting(String url);
     void onFailure(String url);
     void onFailureForIOException(String url);
     void onProgress(String url, int progress);

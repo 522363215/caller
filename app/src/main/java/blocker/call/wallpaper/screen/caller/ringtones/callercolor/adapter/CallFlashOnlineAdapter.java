@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.md.flashset.bean.CallFlashFormat;
 import com.md.flashset.bean.CallFlashInfo;
+import com.md.flashset.download.DownloadState;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
@@ -221,12 +222,55 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             holder.layoutCallFlash.setTag(pos);
             holder.iv_download.setTag(pos);
             holder.mOnDownloadListener.setDownloadParams(holder, info);
-            setSelectOrDownloadState(holder, info);
+            setDownloadState(holder, info);
+            setSelectState(holder, info);
             setBg(holder, info);
             setCallFlashShow(holder, pos, payloads);
         } else {//payloads不为空 即调用notifyItemChanged(position,payloads)方法payloads!=null执行的
-            setSelectOrDownloadState(holder, info);
+            setSelectState(holder, info);
             setCallFlashShow(holder, pos, payloads);
+        }
+    }
+
+    private void setDownloadState(NormalViewHolder holder, CallFlashInfo info) {
+        if (holder != null && info != null) {
+            File videoFile = videoMap.get(info.url);
+            if (videoFile == null) {
+                videoFile = CallFlashManager.getInstance().getOnlineThemeSourcePath(info.url);
+                if (videoMap != null && videoFile != null) {
+                    videoMap.put(info.url, videoFile);
+                }
+            }
+            if (videoFile != null && videoFile.exists() || CallFlashManager.CALL_FLASH_START_SKY_ID.equals(info.id)) {
+                holder.iv_download.setVisibility(View.GONE);
+                holder.pb_loading.setVisibility(View.GONE);
+            } else {
+                LogUtil.d(TAG, "setDownloadState downloadState:" + info.downloadState + ",url:" + info.url);
+                switch (info.downloadState) {
+                    case DownloadState.STATE_DOWNLOADING:
+                        holder.iv_download.setVisibility(View.GONE);
+                        holder.pb_loading.setVisibility(View.VISIBLE);
+                        holder.pb_loading.setProgress(info.progress);
+                        break;
+                    case DownloadState.STATE_DOWNLOAD_SUCCESS:
+                        holder.iv_download.setVisibility(View.GONE);
+                        holder.pb_loading.setVisibility(View.GONE);
+                        break;
+                    case DownloadState.STATE_DOWNLOAD_FAIL:
+                        holder.iv_download.setVisibility(View.VISIBLE);
+                        holder.pb_loading.setVisibility(View.GONE);
+                        break;
+                    case DownloadState.STATE_DOWNLOAD_CONNECTING:
+                        holder.iv_download.setVisibility(View.GONE);
+                        holder.pb_loading.setVisibility(View.VISIBLE);
+                        holder.pb_loading.setProgress(0);
+                        break;
+                    case DownloadState.STATE_NOT_DOWNLOAD:
+                        holder.iv_download.setVisibility(View.VISIBLE);
+                        holder.pb_loading.setVisibility(View.GONE);
+                        break;
+                }
+            }
         }
     }
 
@@ -276,7 +320,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    private void setSelectOrDownloadState(NormalViewHolder holder, CallFlashInfo info) {
+    private void setSelectState(NormalViewHolder holder, CallFlashInfo info) {
         if (info.isOnlionCallFlash) {
             File videoFile = videoMap.get(info.url);
             if (videoFile == null) {
@@ -288,22 +332,18 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             if (videoFile != null) {
                 if (videoFile.exists()) {
                     boolean enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
-                    holder.iv_download.setVisibility(View.GONE);
                     holder.iv_call_select.setVisibility((mCurrentFlash != null && mCurrentFlash.equals(info) && enableCallFlash)
                             ? View.VISIBLE : View.GONE);
                 } else {
-                    holder.iv_download.setVisibility(View.VISIBLE);
                     holder.iv_call_select.setVisibility(View.GONE);
                 }
             }
         } else {
             if (!TextUtils.isEmpty(info.path)) {
                 boolean enableCallFlash = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, PreferenceHelper.DEFAULT_VALUE_FOR_CALL_FLASH);
-                holder.iv_download.setVisibility(View.GONE);
                 holder.iv_call_select.setVisibility((mCurrentFlash != null && mCurrentFlash.equals(info) && enableCallFlash)
                         ? View.VISIBLE : View.GONE);
             } else {
-                holder.iv_download.setVisibility(View.VISIBLE);
                 holder.iv_call_select.setVisibility(View.GONE);
             }
         }
@@ -529,6 +569,11 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
                 ThemeResourceHelper.getInstance().downloadThemeResources(info.id, info.url, new OnDownloadListener() {
                     @Override
+                    public void onConnecting(String url) {
+                        pb_loading.setProgress(0);
+                    }
+
+                    @Override
                     public void onFailure(String url) {
                         iv_download.setVisibility(View.VISIBLE);
                         pb_loading.setVisibility(View.GONE);
@@ -563,10 +608,6 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public void setDownloadParams(NormalViewHolder holder, CallFlashInfo info) {
             this.holder = holder;
             this.info = info;
-
-            if (holder != null && info != null) {
-                holder.pb_loading.setProgress(info.progress);
-            }
         }
 
         @Override
@@ -580,7 +621,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 holder.iv_download.setVisibility(View.GONE);
                 holder.iv_call_select.setVisibility(View.GONE);
                 holder.pb_loading.setVisibility(View.GONE);
-
+                info.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
                 CallFlashManager.getInstance().saveCallFlashDownloadCount(info);
                 CallFlashManager.getInstance().saveDownloadedCallFlash(info);
                 EventBus.getDefault().post(new EventRefreshCallFlashDownloadCount());
@@ -601,10 +642,21 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 holder.iv_download.setVisibility(View.GONE);
                 holder.iv_call_select.setVisibility(View.GONE);
                 holder.pb_loading.setVisibility(View.VISIBLE);
-
+                info.downloadState = DownloadState.STATE_DOWNLOADING;
                 info.progress = progress;
 
                 holder.pb_loading.setProgress(progress);
+            }
+        }
+
+        @Override
+        public void onConnecting(String url) {
+            if (info != null && info.url != null && info.url.equals(url)) {
+                holder.iv_download.setVisibility(View.GONE);
+                holder.iv_call_select.setVisibility(View.GONE);
+                holder.pb_loading.setVisibility(View.VISIBLE);
+                info.downloadState = DownloadState.STATE_DOWNLOAD_CONNECTING;
+                holder.pb_loading.setProgress(0);
             }
         }
 
@@ -614,7 +666,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 holder.iv_download.setVisibility(View.VISIBLE);
                 holder.iv_call_select.setVisibility(View.GONE);
                 holder.pb_loading.setVisibility(View.GONE);
-
+                info.downloadState = DownloadState.STATE_DOWNLOAD_FAIL;
 //                ToastUtils.showToast(context, context.getString(R.string.call_flash_gif_show_load_failed));
             }
         }

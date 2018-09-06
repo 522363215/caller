@@ -125,20 +125,14 @@ public class CallFlashManager {
                     info.isLike = false;
                 }
 
-                if (item.getDownload() == Theme.DOWNLOADED) {
-                    info.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
-                } else if (item.getDownload() == Theme.UNDOWNLOADED) {
-                    info.downloadState = DownloadState.STATE_NOT_DOWNLOAD;
-                } else {
-                    info.downloadState = DownloadState.STATE_DOWNLOAD_FAIL;
-                }
-
                 File resFile = ThemeSyncManager.getInstance().getFileByUrl(mContext, info.url);
                 if (resFile != null) {
                     if (resFile.exists()) {
+                        info.downloadState = DownloadState.STATE_DOWNLOAD_SUCCESS;
                         info.isDownloaded = true;
                         info.isDownloadSuccess = true;
                     } else {
+                        info.downloadState = DownloadState.STATE_NOT_DOWNLOAD;
                         info.isDownloaded = false;
                         info.isDownloadSuccess = false;
                     }

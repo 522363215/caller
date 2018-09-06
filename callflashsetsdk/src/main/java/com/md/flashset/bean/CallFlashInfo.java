@@ -2,6 +2,8 @@ package com.md.flashset.bean;
 
 import android.text.TextUtils;
 
+import com.md.flashset.download.DownloadState;
+
 import java.io.Serializable;
 
 /**
@@ -46,7 +48,7 @@ public class CallFlashInfo implements Serializable {
     public int imgResId;
     public int img_hResId;
     public int progress;
-    public int downloadState = 4;//默认为等待中
+    public int downloadState;
     public boolean isAutoDownload = true;//是否为自动下载,默认为自动下载
     public int downloadFailedCount;//下载失败的次数
     public boolean isDownloadSuccess;

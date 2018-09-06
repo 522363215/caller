@@ -22,6 +22,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.flurry.android.FlurryAgent;
 import com.md.flashset.bean.CallFlashInfo;
+import com.md.flashset.download.DownloadState;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.callback.OnDownloadListener;
@@ -179,6 +180,21 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     private void downloadListener() {
         ThemeResourceHelper.getInstance().addGeneralListener(mOnDownloadListener = new OnDownloadListener() {
             @Override
+            public void onConnecting(String url) {
+                if (mIsShowFirstAdMob) {
+                    mLayoutDownloadingBelowAd.setVisibility(View.VISIBLE);
+                    mTvDownloadBtnBelowAd.setVisibility(View.GONE);
+                    mPbDownloadingBelowAd.setProgress(0);
+                    mTvDownloadingBelowAd.setText(R.string.call_flash_gif_show_connecte);
+                } else {
+                    mLayoutDownloadingAboveAd.setVisibility(View.VISIBLE);
+                    mTvDownloadBtnAboveAd.setVisibility(View.GONE);
+                    mPbDownloadingAboveAd.setProgress(0);
+                    mTvDownloadingAboveAd.setText(R.string.call_flash_gif_show_connecte);
+                }
+            }
+
+            @Override
             public void onFailure(String url) {
                 if (mInfo != null && !TextUtils.isEmpty(url) && url.equals(mInfo.url)) {
                     mIsDownloading = false;
@@ -333,6 +349,10 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
     private void setView() {
         if (mInfo == null) return;
         setBackground();
+        setDownloadState();
+    }
+
+    private void setDownloadState() {
         File file = ThemeSyncManager.getInstance().getFileByUrl(ApplicationEx.getInstance().getApplicationContext(), mInfo.url);
         if ((file != null && file.exists()) || (!TextUtils.isEmpty(mInfo.path) && new File(mInfo.path).exists())) {
             if (mIsShowFirstAdMob) {
@@ -345,20 +365,51 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
                 mTvDownloadBtnAboveAd.setText(R.string.call_flash_preview_now);
             }
         } else {
-            if (mIsDownloading) {
-                if (mIsShowFirstAdMob) {
-                    mTvDownloadBtnBelowAd.setVisibility(View.GONE);
-                } else {
-                    mTvDownloadBtnAboveAd.setVisibility(View.GONE);
-                }
-            } else {
-                if (mIsShowFirstAdMob) {
-                    mTvDownloadBtnBelowAd.setVisibility(View.VISIBLE);
-                    mTvDownloadBtnBelowAd.setText(R.string.lion_family_active_download);
-                } else {
-                    mTvDownloadBtnAboveAd.setVisibility(View.VISIBLE);
-                    mTvDownloadBtnAboveAd.setText(R.string.lion_family_active_download);
-                }
+            int downloadState = mInfo.downloadState;
+            switch (downloadState) {
+                case DownloadState.STATE_DOWNLOAD_CONNECTING:
+                    if (mIsShowFirstAdMob) {
+                        mLayoutDownloadingBelowAd.setVisibility(View.VISIBLE);
+                        mTvDownloadBtnBelowAd.setVisibility(View.GONE);
+                        mPbDownloadingBelowAd.setProgress(0);
+                        mTvDownloadingBelowAd.setText(R.string.call_flash_gif_show_connecte);
+                    } else {
+                        mLayoutDownloadingAboveAd.setVisibility(View.VISIBLE);
+                        mTvDownloadBtnAboveAd.setVisibility(View.GONE);
+                        mPbDownloadingAboveAd.setProgress(0);
+                        mTvDownloadingAboveAd.setText(R.string.call_flash_gif_show_connecte);
+                    }
+                    break;
+                case DownloadState.STATE_DOWNLOADING:
+                    mIsDownloading = true;
+                    if (mIsShowFirstAdMob) {
+                        mLayoutDownloadingBelowAd.setVisibility(View.VISIBLE);
+                        mTvDownloadBtnBelowAd.setVisibility(View.GONE);
+                        mPbDownloadingBelowAd.setProgress(mInfo.progress);
+                        mTvDownloadingBelowAd.setText(Html.fromHtml(getString(R.string.call_flash_gif_show_load, mInfo.progress)));
+                    } else {
+                        mLayoutDownloadingAboveAd.setVisibility(View.VISIBLE);
+                        mTvDownloadBtnAboveAd.setVisibility(View.GONE);
+                        mPbDownloadingAboveAd.setProgress(mInfo.progress);
+                        mTvDownloadingAboveAd.setText(Html.fromHtml(getString(R.string.call_flash_gif_show_load, mInfo.progress)));
+                    }
+                    break;
+                default:
+                    if (mIsDownloading) {
+                        if (mIsShowFirstAdMob) {
+                            mTvDownloadBtnBelowAd.setVisibility(View.GONE);
+                        } else {
+                            mTvDownloadBtnAboveAd.setVisibility(View.GONE);
+                        }
+                    } else {
+                        if (mIsShowFirstAdMob) {
+                            mTvDownloadBtnBelowAd.setVisibility(View.VISIBLE);
+                            mTvDownloadBtnBelowAd.setText(R.string.lion_family_active_download);
+                        } else {
+                            mTvDownloadBtnAboveAd.setVisibility(View.VISIBLE);
+                            mTvDownloadBtnAboveAd.setText(R.string.lion_family_active_download);
+                        }
+                    }
             }
         }
     }

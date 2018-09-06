@@ -84,6 +84,15 @@ public class ThemeResourceHelper {
     }
 
     public void downloadThemeResources(final String objId, final String url, final OnDownloadListener listener) {
+        listener.onConnecting(url);
+
+        for (int i = mGeneralListenerCache.size() - 1; i >= 0; i--) {
+            WeakReference<OnDownloadListener> reference = mGeneralListenerCache.get(i);
+            if (reference != null && reference.get() != null) {
+                reference.get().onConnecting(url);
+            }
+        }
+
         if (!HttpUtil.isNetworkAvailable(ThemeSyncManager.getInstance().getContext())) {
             listener.onFailure(url);
             return;

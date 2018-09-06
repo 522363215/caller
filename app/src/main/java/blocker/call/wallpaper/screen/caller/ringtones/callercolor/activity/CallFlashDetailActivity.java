@@ -28,6 +28,7 @@ import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.md.flashset.View.FlashLed;
 import com.md.flashset.bean.CallFlashInfo;
+import com.md.flashset.download.DownloadState;
 import com.md.flashset.helper.CallFlashPreferenceHelper;
 import com.md.flashset.manager.CallFlashManager;
 import com.md.flashset.volume.VolumeChangeListenAdapter;
@@ -218,15 +219,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
             if (mInfo != null && !TextUtils.isEmpty(mInfo.url)) {
                 try {
-                    if (mIsShowAboveAdBtn) {
-                        layout_progress_above_ad.setVisibility(View.VISIBLE);
-                        tv_setting_action_above_ad.setVisibility(View.GONE);
-                        tv_download_action_above_ad.setVisibility(View.GONE);
-                    } else {
-                        layout_progress_below_ad.setVisibility(View.VISIBLE);
-                        tv_setting_action_below_ad.setVisibility(View.GONE);
-                        tv_download_action_below_ad.setVisibility(View.GONE);
-                    }
                     downloadFlashResourceFile();
                 } catch (Exception e) {
                     LogUtil.e(TAG, "onRewardedVideoAdClosed e:" + e.getMessage());
@@ -310,7 +302,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void initView() {
-
         mRewardVideoAd = MobileAds.getRewardedVideoAdInstance(CallFlashDetailActivity.this);
         mRewardVideoAd.setRewardedVideoAdListener(mRewardVideoAdListener);
 
@@ -392,6 +383,17 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     private void downloadListener() {
         ThemeResourceHelper.getInstance().addGeneralListener(mOnDownloadListener = new OnDownloadListener() {
+            @Override
+            public void onConnecting(String url) {
+                if (mIsShowAboveAdBtn) {
+                    pb_downloading_above_ad.setProgress(0);
+                    tv_downloading_above_ad.setText(R.string.call_flash_gif_show_connecte);
+                } else {
+                    pb_downloading_below_ad.setProgress(0);
+                    tv_downloading_below_ad.setText(R.string.call_flash_gif_show_connecte);
+                }
+            }
+
             @Override
             public void onFailure(String url) {
                 if (isFinishing()) {
@@ -776,36 +778,77 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 setActionButtonText(tv_setting_action_below_ad);
             }
         } else {
-            if (mIsShowAboveAdBtn) {
-                tv_setting_action_above_ad.setVisibility(View.GONE);
-                layout_progress_above_ad.setVisibility(View.GONE);
-                tv_download_action_above_ad.setVisibility(View.VISIBLE);
-                tv_download_action_above_ad.setText(isShowRewardedVideo
-                        ? R.string.call_flash_detail_theme_unlock : R.string.lion_family_active_download);
-            } else {
-                tv_setting_action_below_ad.setVisibility(View.GONE);
-                layout_progress_below_ad.setVisibility(View.GONE);
-                tv_download_action_below_ad.setVisibility(View.VISIBLE);
-                tv_download_action_below_ad.setText(isShowRewardedVideo
-                        ? R.string.call_flash_detail_theme_unlock : R.string.lion_family_active_download);
+            int downloadState = mInfo.downloadState;
+            switch (downloadState) {
+                case DownloadState.STATE_DOWNLOAD_CONNECTING:
+                    if (mIsShowAboveAdBtn) {
+                        pb_downloading_above_ad.setProgress(0);
+                        tv_downloading_above_ad.setText(R.string.call_flash_gif_show_connecte);
+                    } else {
+                        pb_downloading_below_ad.setProgress(0);
+                        tv_downloading_below_ad.setText(R.string.call_flash_gif_show_connecte);
+                    }
+                    break;
+                case DownloadState.STATE_DOWNLOADING:
+                    if (mIsShowAboveAdBtn) {
+                        tv_setting_action_above_ad.setVisibility(View.GONE);
+                        tv_download_action_above_ad.setVisibility(View.GONE);
+                        layout_progress_above_ad.setVisibility(View.VISIBLE);
+
+                        pb_downloading_above_ad.setProgress(mInfo.progress);
+                        tv_downloading_above_ad.setText(Html.fromHtml(getString(R.string.call_flash_gif_show_load, mInfo.progress)));
+                    } else {
+                        tv_setting_action_below_ad.setVisibility(View.GONE);
+                        tv_download_action_below_ad.setVisibility(View.GONE);
+                        layout_progress_below_ad.setVisibility(View.VISIBLE);
+
+                        pb_downloading_below_ad.setProgress(mInfo.progress);
+                        tv_downloading_below_ad.setText(Html.fromHtml(getString(R.string.call_flash_gif_show_load, mInfo.progress)));
+                    }
+                    break;
+                default:
+                    if (mIsShowAboveAdBtn) {
+                        tv_setting_action_above_ad.setVisibility(View.GONE);
+                        layout_progress_above_ad.setVisibility(View.GONE);
+                        tv_download_action_above_ad.setVisibility(View.VISIBLE);
+                        tv_download_action_above_ad.setText(isShowRewardedVideo
+                                ? R.string.call_flash_detail_theme_unlock : R.string.lion_family_active_download);
+                    } else {
+                        tv_setting_action_below_ad.setVisibility(View.GONE);
+                        layout_progress_below_ad.setVisibility(View.GONE);
+                        tv_download_action_below_ad.setVisibility(View.VISIBLE);
+                        tv_download_action_below_ad.setText(isShowRewardedVideo
+                                ? R.string.call_flash_detail_theme_unlock : R.string.lion_family_active_download);
+                    }
             }
         }
     }
 
     private void downloadFlashResourceFile() {
         FlurryAgent.logEvent("CallFlashDetailActivity-----download");
-
         LogUtil.d("chenr", "start download flash file.");
-
-        if (mIsShowAboveAdBtn) {
-            pb_downloading_above_ad.setProgress(0);
-            tv_downloading_above_ad.setText(R.string.call_flash_gif_show_connecte);
-        } else {
-            pb_downloading_below_ad.setProgress(0);
-            tv_downloading_below_ad.setText(R.string.call_flash_gif_show_connecte);
-        }
         ThemeResourceHelper.getInstance().isCanWriteInStorage(PermissionUtils.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE));
         ThemeResourceHelper.getInstance().downloadThemeResources(mInfo.id, mInfo.url, new OnDownloadListener() {
+            @Override
+            public void onConnecting(String url) {
+                if (mIsShowAboveAdBtn) {
+                    layout_progress_above_ad.setVisibility(View.VISIBLE);
+                    tv_setting_action_above_ad.setVisibility(View.GONE);
+                    tv_download_action_above_ad.setVisibility(View.GONE);
+                } else {
+                    layout_progress_below_ad.setVisibility(View.VISIBLE);
+                    tv_setting_action_below_ad.setVisibility(View.GONE);
+                    tv_download_action_below_ad.setVisibility(View.GONE);
+                }
+                if (mIsShowAboveAdBtn) {
+                    pb_downloading_above_ad.setProgress(0);
+                    tv_downloading_above_ad.setText(R.string.call_flash_gif_show_connecte);
+                } else {
+                    pb_downloading_below_ad.setProgress(0);
+                    tv_downloading_below_ad.setText(R.string.call_flash_gif_show_connecte);
+                }
+            }
+
             @Override
             public void onFailure(String url) {
                 if (isFinishing()) {
@@ -953,9 +996,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                 }
                 break;
             case R.id.tv_download_action_above_ad:
-                layout_progress_above_ad.setVisibility(View.VISIBLE);
-                tv_setting_action_above_ad.setVisibility(View.GONE);
-                tv_download_action_above_ad.setVisibility(View.GONE);
                 if (!TextUtils.isEmpty(mInfo.url)) {
                     downloadFlashResourceFile();
                 }
@@ -977,9 +1017,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                     AdRequest.Builder builder = new AdRequest.Builder();
                     mRewardVideoAd.loadAd(CallerAdManager.INTERSTITIAL_ADMOB_ID_JL_NEW_FLASH, builder.build());
                 } else {
-                    layout_progress_below_ad.setVisibility(View.VISIBLE);
-                    tv_setting_action_below_ad.setVisibility(View.GONE);
-                    tv_download_action_below_ad.setVisibility(View.GONE);
                     if (!TextUtils.isEmpty(mInfo.url)) {
                         downloadFlashResourceFile();
                     }
@@ -1351,15 +1388,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
         LogUtil.d(TAG, "MyPermissionGrant onPermissionGranted requestCode：" + requestCode);
         switch (requestCode) {
             case PermissionUtils.REQUEST_CODE_STORAGE_PERMISSION:
-                if (mIsShowAboveAdBtn) {
-                    layout_progress_above_ad.setVisibility(View.VISIBLE);
-                    tv_setting_action_above_ad.setVisibility(View.GONE);
-                    tv_download_action_above_ad.setVisibility(View.GONE);
-                } else {
-                    layout_progress_below_ad.setVisibility(View.VISIBLE);
-                    tv_setting_action_below_ad.setVisibility(View.GONE);
-                    tv_download_action_below_ad.setVisibility(View.GONE);
-                }
                 if (!TextUtils.isEmpty(mInfo.url)) {
                     downloadFlashResourceFile();
                 }
