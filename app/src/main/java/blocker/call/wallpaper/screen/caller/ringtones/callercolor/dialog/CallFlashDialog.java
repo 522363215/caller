@@ -182,11 +182,6 @@ public class CallFlashDialog implements View.OnClickListener {
                 mAnswerButton = (ImageView) mRootView.findViewById(R.id.iv_call_answer);
                 mEndCallButton = (ImageView) mRootView.findViewById(R.id.iv_call_hang);
 
-                CardView cardView = mCallFlashView.findViewById(R.id.layout_card_view);
-                cardView.setCardElevation(0);
-                cardView.setPreventCornerOverlap(false);
-                cardView.setUseCompatPadding(false);
-
                 //menu
                 mFivMenu = (FontIconView) mRootView.findViewById(R.id.fiv_menu);
                 mLayoutMenuRoot = (RelativeLayout) mRootView.findViewById(R.id.layout_menu_root);

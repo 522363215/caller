@@ -751,6 +751,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     private void showCallFlash() {
         if (mInfo == null) return;
+        mCallFlashView.setElevation();
         mCallFlashView.showCallFlashView(mInfo);
     }
 

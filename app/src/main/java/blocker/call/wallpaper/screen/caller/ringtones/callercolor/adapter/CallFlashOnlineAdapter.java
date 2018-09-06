@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -489,7 +490,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     class NormalViewHolder extends RecyclerView.ViewHolder {
-        private View root;
+        private CardView root;
         private RelativeLayout layoutCallFlash;
         private LinearLayout layout_ad_view;
         private GlideView gv_bg;
@@ -523,10 +524,11 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             callFlashView = itemView.findViewById(R.id.layout_call_flash_view);
             callFlashView.setVideoMute(true);
 
-            CardView cardView = callFlashView.findViewById(R.id.layout_card_view);
-            cardView.setCardElevation(0);
-            cardView.setPreventCornerOverlap(false);
-            cardView.setUseCompatPadding(false);
+            //修复5.0以下CardView间距过宽的问题
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                root.setContentPadding(-10, -10, -10, -10);
+            }
+
 //            iv_download.setOnClickListener(mOnDownloadClickListener);
 
             mOnDownloadListener = new OnOnlineDownloadListener();

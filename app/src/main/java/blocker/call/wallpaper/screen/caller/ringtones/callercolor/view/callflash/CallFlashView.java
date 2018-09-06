@@ -2,6 +2,8 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.callflas
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Build;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -37,6 +39,7 @@ public class CallFlashView extends RelativeLayout {
     private AtomicBoolean isStop = new AtomicBoolean(false);
     private AtomicBoolean isPause = new AtomicBoolean(false);
     private MediaPlayer mMediaPlayer;
+    private CardView mCardView;
 
     public CallFlashView(Context context) {
         super(context);
@@ -57,16 +60,30 @@ public class CallFlashView extends RelativeLayout {
         mContext = context;
         LayoutInflater.from(context).inflate(R.layout.layout_call_flash_view, this);
 
+        mCardView = findViewById(R.id.layout_card_view);//用于显示GIF或者图片
         mGlideView = findViewById(R.id.glide_view);//用于显示GIF或者图片
         mVideoView = findViewById(R.id.video_view);//用于显示视频
         mCustomAnimView = findViewById(R.id.custom_anim_view);//用于显示自定义动画callflash
 
         mGlideViewPreview = findViewById(R.id.glide_view_preview);//在没下载的时候用于显示预览图
+
+        //修复5.0以下CardView间距过宽的问题
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            mCardView.setContentPadding(-10, -10, -10, -10);
+        }
         setVideoListener();
     }
 
     public CallFlashInfo getCallFlashInfo() {
         return mCallFlashInfo;
+    }
+
+    public void setElevation() {
+        if (mCardView == null) return;
+        mCardView.setCardElevation(mContext.getResources().getDimension(R.dimen.dp5));
+        mCardView.setMaxCardElevation(mContext.getResources().getDimension(R.dimen.dp5));
+        mCardView.setPreventCornerOverlap(true);
+        mCardView.setUseCompatPadding(true);
     }
 
     public boolean isStopVideo() {

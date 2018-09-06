@@ -48,10 +48,6 @@ public class CallFlashSetGuideActivity extends BaseActivity implements View.OnCl
         mFivClose = findViewById(R.id.fiv_close);
         mTvButton = findViewById(R.id.tv_button);
 
-        CardView cardView = mCallFlashView.findViewById(R.id.layout_card_view);
-        cardView.setCardElevation(0);
-        cardView.setPreventCornerOverlap(false);
-        cardView.setUseCompatPadding(false);
         mCallFlashView.setVideoMute(true);
         mFivClose.setOnClickListener(this);
         mTvButton.setOnClickListener(this);
