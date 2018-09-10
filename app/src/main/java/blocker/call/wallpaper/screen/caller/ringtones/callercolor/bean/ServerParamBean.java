@@ -15,83 +15,6 @@ public class ServerParamBean implements Serializable {
      * data : {"switch_spam_server":"0","switch_use_spam_third":"0","refresh_tag_interval":"24 * 60 * 60 * 1000","refresh_tag_no_tag_interval":"2 * 60 * 60 * 1000","refresh_update_spam_local_interval":"24 * 60 * 60 * 1000","bench_spam_tag_count":"40","bench_show_spam_tag_count":"20", "url_spam_third":"https://www.show-caller.com/"}
      */
 
-    private StatusBean status;
-
-    public DataBean getDataBean() {
-        return data;
-    }
-
-    public void setDataBean(DataBean data) {
-        this.data = data;
-    }
-
-    public DataBean data;
-
-    public StatusBean getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusBean status) {
-        this.status = status;
-    }
-
-
-
-    public class StatusBean implements Serializable{
-        /**
-         * code : 0
-         * time : 6.4361095428467ms
-         * msg :
-         */
-
-        private int code = -3;
-        private String time;
-        private String msg;
-        private String timestamp;
-        private String millisecond;
-
-        public int getCode() {
-            return code;
-        }
-
-        public void setCode(int code) {
-            this.code = code;
-        }
-
-        public String getTime() {
-            return time;
-        }
-
-        public void setTime(String time) {
-            this.time = time;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-
-        public void setMsg(String msg) {
-            this.msg = msg;
-        }
-
-        public String getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(String timestamp) {
-            this.timestamp = timestamp;
-        }
-
-        public String getMillisecond() {
-            return millisecond;
-        }
-
-        public void setMillisecond(String millisecond) {
-            this.millisecond = millisecond;
-        }
-    }
-
-    public class DataBean implements Serializable{
         public int switch_spam_server = 0; //是否从服务端获取spam tag总开关， 默认0打开
         public int switch_use_spam_third = 0; //是否从第三方获取tag开关， 默认0打开
         public long refresh_tag_interval = 24 * 60 * 60 * 1000; //有tag时刷新tag的间隔时间, 毫秒， 1 day default
@@ -393,5 +316,4 @@ public class ServerParamBean implements Serializable {
         public int ext_show_in_ads_on_close = 0;
         public int show_in_ads_on_end_call = 0;
         public int show_in_ads_on_splash = 1;
-    }
 }

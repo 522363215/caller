@@ -7,7 +7,8 @@ import android.content.pm.PackageManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 
-import com.common.sdk.analytics.AnalyticsManager;
+import com.common.sdk.base.manager.AnalyticsManager;
+import com.common.sdk.base.manager.ServerParamManager;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -120,12 +121,18 @@ public class ServerManager {
             long last_req = ApplicationEx.getInstance().getGlobalSettingPreference().getLong(ConstantUtils.PREF_KEY_UPDATE_PARAM_TIME, 0);
             long interval = 60 * 1000 * 60 * 1; //2 hours, >1
             if (last_req == 0 || Math.abs(now - last_req) > interval) {
-                requestControlParam(ApplicationEx.getInstance(), ConstantUtils.SERVER_API_PARAM);
-                LogUtil.d("cpservice", "getParamFromServer server: " + ConstantUtils.SERVER_API_PARAM);
+//                requestControlParam(ApplicationEx.getInstance(), ConstantUtils.SERVER_API_PARAM);
+//                LogUtil.d("cpservice", "getParamFromServer server: " + ConstantUtils.SERVER_API_PARAM);
+                getParamFromSDK();
             }
         } catch (Exception e) {
             LogUtil.e("cpservice", "getParamFromServer exception: " + e.getMessage());
         }
+    }
+
+    private void getParamFromSDK(){
+        String jsonFromServer = ServerParamManager.getInstance().getParamString();
+        processParam(jsonFromServer);
     }
 
     public void requestControlParam(Context context, String uri) {
@@ -202,27 +209,25 @@ public class ServerManager {
     }
 
     private void processParam(String data) {
-        ServerParamBean bean = null;
+        ServerParamBean dataBean = null;
         try {
             if (!TextUtils.isEmpty(data)) {
-//                LogUtil.d("cpserver", "processParam data: " + data);
+                LogUtil.d("getParamFromSDK", "processParam data: " + data);
                 saveExternalParam(data);
                 saveAdids(data);
             }
             Gson gson = new Gson();
-            bean = gson.fromJson(data, ServerParamBean.class);
-            if (bean != null && bean.getStatus().getCode() == 0) {
-                if (bean.getDataBean() != null) {
+            dataBean = gson.fromJson(data, ServerParamBean.class);
+            if (dataBean != null) {
 
-                    ServerParamBean.DataBean dataBean = bean.getDataBean();
                     SharedPreferences pref = ApplicationEx.getInstance().getGlobalSettingPreference();
                     SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
 
 
                     //server true time
-                    String tm = bean.getStatus().getTimestamp();
-                    String tm_ms = bean.getStatus().getMillisecond();
-                    ad_pref.edit().putLong("true_time_from_server", Long.valueOf(tm_ms)).apply();
+//                    String tm = bean.getStatus().getTimestamp();
+//                    String tm_ms = bean.getStatus().getMillisecond();
+                    ad_pref.edit().putLong("true_time_from_server", Long.valueOf(AnalyticsManager.getLastServerTime())).apply();
 
                     LogUtil.d("cpservice", "splash_fb_id:"+dataBean.splash_fb_id);
 
@@ -246,15 +251,8 @@ public class ServerManager {
 
                     //first sync time
                     if (pref.getLong("key_cid_first_sync_server_time", 0) <= 0) {
-                        pref.edit().putLong("key_cid_first_sync_server_time", Long.valueOf(tm_ms)).apply();
+                        pref.edit().putLong("key_cid_first_sync_server_time", Long.valueOf(AnalyticsManager.getFirstServerTime())).apply();
                     }
-
-
-                } else {
-                    LogUtil.d("cpservice", "processParam getDataBean is null.");
-                }
-            } else {
-                LogUtil.d("cpservice", "processParam bean is null.");
             }
         } catch (Exception e) {
             LogUtil.e("cpservice", "processParam exception:" + e.getMessage());
@@ -263,8 +261,7 @@ public class ServerManager {
 
     private void saveExternalParam(String res_data){
         try {
-            JSONObject jsonObject = new JSONObject(res_data);
-            JSONObject dataJson = jsonObject.getJSONObject("data");
+            JSONObject dataJson = new JSONObject(res_data);
             JSONObject banner_ads_group_ids = dataJson.getJSONObject("cp_external_param");
             LogUtil.d("cp_external_param", " cp_external_param :" + String.valueOf(banner_ads_group_ids));
             SharedPreferences ext_pref = ApplicationEx.getInstance().getExtPreference();
@@ -288,17 +285,16 @@ public class ServerManager {
     private void saveAdids(String res_data){
         try {
             JSONObject jsonObject = new JSONObject(res_data);
-            JSONObject dataJson = jsonObject.getJSONObject("data");
             SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
             //save admob id
-            JSONObject banner_ads_group_ids = dataJson.getJSONObject("normal_admob_id");
+            JSONObject banner_ads_group_ids = jsonObject.getJSONObject("normal_admob_id");
             if(banner_ads_group_ids != null){
                 ad_pref.edit().putString("normal_admob_id", String.valueOf(banner_ads_group_ids)).apply();
                 LogUtil.d("adv_id", "saveAdids normal_admob_id :" + String.valueOf(banner_ads_group_ids));
             }
 
             //save facebook id
-            JSONObject fb_ads_group_ids = dataJson.getJSONObject("normal_facebook_id");
+            JSONObject fb_ads_group_ids = jsonObject.getJSONObject("normal_facebook_id");
             if(fb_ads_group_ids != null){
                 ad_pref.edit().putString("normal_facebook_id", String.valueOf(fb_ads_group_ids)).apply();
                 LogUtil.d("adv_id", "saveAdids normal_facebook_id :" + String.valueOf(fb_ads_group_ids));

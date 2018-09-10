@@ -4,7 +4,7 @@ package blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.common.sdk.adpriority.AdPriorityManager;
+import com.common.sdk.base.manager.AdPriorityManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -149,6 +149,7 @@ public class AdvertisementSwitcher {
     }
 
     public void initFromConfigCache(AdPriorityManager mgr) {
+        LogUtil.d(LOG_TAG,  "initFromConfigCache start: " );
         if (mgr.getPriorityList(SERVER_KEY_QUICK_DEFAULT) != null) {
             //has cache, do init
             updateConfig(mgr);
@@ -156,6 +157,7 @@ public class AdvertisementSwitcher {
     }
 
     public void updateConfig(AdPriorityManager mgr) {
+        LogUtil.d(LOG_TAG,  "updateConfig start: " );
         Iterator<String> iterator = mPriorityInfo.keySet().iterator();
         String key;
         List<String> priorityList;

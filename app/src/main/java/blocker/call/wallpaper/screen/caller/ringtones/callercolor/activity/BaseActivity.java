@@ -17,7 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
-import com.common.sdk.analytics.AnalyticsManager;
+import com.common.sdk.base.manager.AnalyticsManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.flurry.android.FlurryAgent;

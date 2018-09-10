@@ -253,7 +253,7 @@
         </receiver>
 
         <provider
-            android:name="com.common.sdk.analytics.data.MyContentProvider"
+            android:name="com.common.sdk.base.data.MyContentProvider"
             android:authorities="com.analytics.data.75" />
 
         <!-- 配置实时壁纸Service -->

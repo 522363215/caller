@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.IBinder;
 
-import com.common.sdk.analytics.AnalyticsManager;
+import com.common.sdk.base.manager.AnalyticsManager;
 import com.mopub.test.manager.TestManager;
 
 import java.lang.reflect.InvocationTargetException;

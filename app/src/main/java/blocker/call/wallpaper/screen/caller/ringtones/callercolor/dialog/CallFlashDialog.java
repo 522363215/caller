@@ -6,7 +6,6 @@ import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.v7.widget.CardView;
 import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.common.sdk.analytics.AnalyticsManager;
+import com.common.sdk.base.manager.AnalyticsManager;
 import com.flurry.android.FlurryAgent;
 import com.md.block.core.BlockManager;
 import com.md.flashset.View.FlashLed;

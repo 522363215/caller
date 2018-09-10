@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.common.sdk.analytics.AnalyticsManager;
+import com.common.sdk.base.manager.AnalyticsManager;
 import com.flurry.android.FlurryAgent;
 import com.md.flashset.bean.CallFlashDataType;
 
