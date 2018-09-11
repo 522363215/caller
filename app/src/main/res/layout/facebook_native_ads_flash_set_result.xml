@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.makeramen.roundedimageview.RoundedImageView
+                <com.facebook.ads.AdIconView
                     android:id="@+id/nativeAdIcon"
                     android:layout_width="@dimen/dp48"
                     android:layout_height="@dimen/dp48"

@@ -3,16 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_ad_view_root"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp64"
-    android:background="@android:color/transparent"
-    android:orientation="horizontal">
-
+    android:layout_height="wrap_content"
+    android:background="@color/color_half_transparent"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/dp8"
+    android:paddingTop="@dimen/dp8">
 
     <FrameLayout
-        android:layout_gravity="center_vertical"
         android:id="@+id/layout_fb_image"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
 
         <ImageView
             android:layout_width="14dp"
@@ -29,13 +30,11 @@
 
             <com.facebook.ads.AdIconView
                 android:id="@+id/nativeAdIcon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/dp64"
+                android:layout_height="@dimen/dp64"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="@dimen/dp4"/>
+                android:layout_marginStart="20dp" />
 
         </FrameLayout>
     </FrameLayout>
@@ -58,6 +57,7 @@
                 android:id="@+id/nativeAdTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp4"
                 android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-light"

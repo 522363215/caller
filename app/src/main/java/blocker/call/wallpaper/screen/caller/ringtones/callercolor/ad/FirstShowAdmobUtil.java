@@ -61,9 +61,12 @@ public class FirstShowAdmobUtil {
             return false;
         }
 
-        // TODO: 2018/8/29 暂时取消首次加载模式
-        return false;
-
+        if (FirstShowAdmobUtil.POSITION_FIRST_ADMOB_SPLASH == position_first) {
+            return true;
+        } else {
+            // TODO: 2018/9/11 只有启动页才才采用首次启动模式，其他位置的暂时取消首次启动模式，故返回false 
+            return false;
+        }
     }
 
     public static void saveFirstShowAdmobTime(int position_first) {

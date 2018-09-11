@@ -511,7 +511,7 @@ public class CallFlashSetResultActivity extends BaseActivity implements View.OnC
         mAdvertisement.setIsResultPage(true);
         mAdvertisement.refreshAD(true);
         mAdvertisement.enableFullClickable();
-        if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_ADS_SCAN_RESULT_BIG)) {
+        if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_RESULT_NORMAL)) {
             mAdvertisement.enableOnlyBtnClickable();
         }
     }

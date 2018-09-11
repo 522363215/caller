@@ -42,7 +42,7 @@
             android:orientation="horizontal"
             android:paddingTop="2dp">
 
-            <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.RoundImageView
+            <com.facebook.ads.AdIconView
                 android:id="@+id/nativeAdIcon"
                 android:layout_width="@dimen/dp56"
                 android:layout_height="@dimen/dp56"

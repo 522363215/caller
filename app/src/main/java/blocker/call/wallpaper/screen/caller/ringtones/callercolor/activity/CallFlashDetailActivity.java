@@ -871,10 +871,14 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                     tv_setting_action_above_ad.setVisibility(View.GONE);
                     tv_download_action_above_ad.setVisibility(View.VISIBLE);
                     layout_progress_above_ad.setVisibility(View.GONE);
+                    tv_download_action_above_ad.setText(isShowRewardedVideo
+                            ? R.string.call_flash_detail_theme_unlock : R.string.lion_family_active_download);
                 } else {
                     tv_setting_action_below_ad.setVisibility(View.GONE);
                     tv_download_action_below_ad.setVisibility(View.VISIBLE);
                     layout_progress_below_ad.setVisibility(View.GONE);
+                    tv_download_action_below_ad.setText(isShowRewardedVideo
+                            ? R.string.call_flash_detail_theme_unlock : R.string.lion_family_active_download);
                 }
                 layout_progress_above_ad.post(new Runnable() {
                     @Override
@@ -1531,14 +1535,14 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
         if (!isShowRewardedVideo) {
             MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
-                    CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_MINE_NORMAL),//ConstantUtils.FB_AFTER_CALL_ID
+                    CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_CALL_FLASH_DETAIL_NORMAL),//ConstantUtils.FB_AFTER_CALL_ID
                     CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_MINE_NORMAL),//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
                     Advertisement.ADMOB_TYPE_NATIVE,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
                     "",
                     Advertisement.MOPUB_TYPE_NATIVE,
                     -1,
                     "",
-                    false);
+                    true);
             mAdvertisement = new Advertisement(adapter);
             mAdvertisement.setRefreshWhenClicked(false);
             mAdvertisement.refreshAD(true);
@@ -1549,27 +1553,32 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
     private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
 
         public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String eventKey, boolean isBanner) {
-            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, AdvertisementSwitcher.SERVER_KEY_FLASH_MINE);
+            super(context, facebookKey, admobKey, admobType, eventKey, isBanner, AdvertisementSwitcher.SERVER_KEY_FLASH_DETAIL);
         }
 
         public MyAdvertisementAdapter(View context, String facebookKey, String admobKey, int admobType, String mopubKey, int moPubType, int baiduKey, String eventKey, boolean isBanner) {
-            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, AdvertisementSwitcher.SERVER_KEY_FLASH_MINE, isBanner);
+            super(context, facebookKey, admobKey, admobType, mopubKey, moPubType, baiduKey, eventKey, AdvertisementSwitcher.SERVER_KEY_FLASH_DETAIL, isBanner);
         }
 
         @Override
         public void onAdLoaded() {
             mLayoutAd.setVisibility(View.VISIBLE);
-            setCallFlashLayout(150);
+            setCallFlashLayout(128);
         }
 
         @Override
         public int getFbViewRes() {
-            return mIsBanner ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_no_icon_native_ads_call_after_big;
+            return mIsBanner ? R.layout.facebook_native_ads_banner_call_flash_detail : R.layout.facebook_no_icon_native_ads_call_after_big;
         }
 
         @Override
         public int getAdmobHeight() {
-            return Stringutil.dpToPx(100);
+            return Stringutil.dpToPx(80);
+        }
+
+        @Override
+        public int getFbAdsHight() {
+            return 80;
         }
 
         @Override

@@ -23,9 +23,11 @@ import com.duapps.ad.DuNativeAd;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdChoicesView;
 import com.facebook.ads.AdError;
-import com.facebook.ads.AdListener;
+import com.facebook.ads.AdIconView;
 import com.facebook.ads.MediaView;
 import com.facebook.ads.NativeAd;
+import com.facebook.ads.NativeAdListener;
+import com.facebook.ads.NativeBannerAd;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
@@ -166,6 +168,7 @@ public class Advertisement {
     private boolean mIsResultPage;
     private boolean mIsFbClosed;
     private boolean mIsAdaptiveSize;
+    private NativeBannerAd mFacebookNativeBannerAd;
 
     public Advertisement(AdvertisementAdapter adapter) {
 //        if (BuildConfig.DEBUG)
@@ -700,6 +703,7 @@ public class Advertisement {
         mAdPriority = AdvertisementSwitcher.getInstance().getAdPriority(mAdapter.getPlacementId());
         mForceLoadAdFromCache = mAdapter.didForceLoadAdFromCache();
         LOG_TAG = LOG_TAG + "-" + mAdapter.getPlacementId();
+        LogUtil.d(LOG_TAG, "mAdPriority:" + mAdPriority.toString());
     }
 
     //初始化Facebook广告视图
@@ -735,7 +739,11 @@ public class Advertisement {
         }
 
 //        if (!loadFBFromCache()) {
-        return loadFBFromNetwork();
+        if (mIsBanner) {
+            return loadBannerFBFromNetwork();
+        } else {
+            return loadFBFromNetwork();
+        }
 //        }
 
 //        return true;
@@ -799,6 +807,35 @@ public class Advertisement {
         }
     }
 
+    private boolean loadBannerFBFromNetwork() {
+        LogUtil.d("ad_check", "fb common loadNativeBannerAd start.");
+        if (TextUtils.isEmpty(mAdapter.getFbKey())) {
+            return false;
+        }
+
+        boolean suc = false;
+        try {
+            mFacebookNativeBannerAd = new NativeBannerAd(mContextForFb, mAdapter.getFbKey());
+            // Set a listener to get notified when the ad was loaded.
+            mFacebookNativeBannerAd.setAdListener(new NativeFBListener());
+//            mFacebookNativeBannerAd.setImpressionListener(new FBImpressionListener());
+            mFacebookNativeBannerAd.loadAd(NativeBannerAd.MediaCacheFlag.ALL);
+            mLastRefreshFB = System.currentTimeMillis();
+            mIsLoading = true;
+            suc = true;
+            if (BuildConfig.DEBUG)
+                LogUtil.d(LOG_TAG, Advertisement.this.hashCode() + "-load Facebook Ad");
+        } catch (Exception e) {
+            if (BuildConfig.DEBUG) {
+                LogUtil.e(TAG, "loadBannerFBFromNetwork error: " + e.getMessage());
+                LogUtil.error(e);
+            }
+        } finally {
+            LogUtil.d("ad_check", "fb common loadNativeBannerAd end.");
+            return suc;
+        }
+    }
+
 //    private void simulateFBCacheAdLoadEvent(final NativeAd ad, final NativeFBListener listener, final FBImpressionListener impListener, final boolean loadSuc) {
 //        if (mForceLoadAdFromCache) {
 //            mMainHandler.postDelayed(new Runnable() {
@@ -857,7 +894,7 @@ public class Advertisement {
 
         width = Stringutil.pxToDp(mAdapter.getAdmobWidth());
         height = Stringutil.pxToDp(mAdapter.getAdmobHeight());
-        LogUtil.d(LOG_TAG, "initAdmobForNativeType width: "+width+", height: "+height+", key: "+mAdapter.getAdmobKey());
+        LogUtil.d(LOG_TAG, "initAdmobForNativeType width: " + width + ", height: " + height + ", key: " + mAdapter.getAdmobKey());
 
         AdSize nativeAdSize = new AdSize(width, height);
         mAdmobView.setAdSize(nativeAdSize);
@@ -1291,7 +1328,7 @@ public class Advertisement {
     /*
     创建Facebook的banner广告
      */
-    private void inflateBannerAd(NativeAd nativeAd, final View adView) {
+    private void inflateBannerAd(NativeBannerAd nativeAd, final View adView) {
         if (mIsClosed) {
             return;
         }
@@ -1303,7 +1340,7 @@ public class Advertisement {
         mLayoutFacebook.setVisibility(View.VISIBLE);
 
         // Create native UI using the ad metadata.
-        ImageView nativeAdIcon = (ImageView) adView.findViewById(R.id.nativeAdIcon);
+        AdIconView nativeAdIcon = (AdIconView) adView.findViewById(R.id.nativeAdIcon);
         TextView nativeAdTitle = (TextView) adView.findViewById(R.id.nativeAdTitle);
         TextView nativeAdBody = (TextView) adView.findViewById(R.id.nativeAdBody);
         TextView nativeAdCallToAction = (TextView) adView.findViewById(R.id.nativeAdCallToAction);
@@ -1317,8 +1354,8 @@ public class Advertisement {
         } else {
             nativeAdCallToAction.setVisibility(View.GONE);
         }
-        nativeAdTitle.setText(nativeAd.getAdTitle());
-        nativeAdBody.setText(nativeAd.getAdBody());
+        nativeAdTitle.setText(nativeAd.getAdHeadline());
+        nativeAdBody.setText(nativeAd.getAdBodyText());
         mMainHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -1328,11 +1365,6 @@ public class Advertisement {
                 }
             }
         }, DEFAULT_SET_TEXTVIEW_SCROLL);
-
-        ImageView smallIconView = mAdapter.getSmallIconView();
-        // Downloading and setting the ad icon.
-        NativeAd.Image adIcon = nativeAd.getAdIcon();
-        NativeAd.downloadAndDisplayImage(adIcon, smallIconView != null ? smallIconView : nativeAdIcon);
 
         // Wire up the View with the native ad, the whole nativeAdContainer will be clickable
 //        ArrayList<View> viewList = new ArrayList<>();
@@ -1358,10 +1390,9 @@ public class Advertisement {
         ArrayList<View> viewList = new ArrayList<>();
         if (isOnlyBtnClickable) {
             if (nativeAdCallToAction != null) {
-                nativeAd.registerViewForInteraction(nativeAdCallToAction);
-            } else {
-                nativeAd.registerViewForInteraction(adView);
+                viewList.add(nativeAdCallToAction);
             }
+            nativeAd.registerViewForInteraction(adView, nativeAdIcon, viewList);
         } else if (mIsOnlyBtnAndTextClickable) {
             if (nativeAdIcon != null) {
                 viewList.add(nativeAdIcon);
@@ -1378,9 +1409,9 @@ public class Advertisement {
 //            if (nativeAdImage != null) {
 //                viewList.add(nativeAdImage);
 //            }
-            nativeAd.registerViewForInteraction(adView, viewList); //只有按钮和图片文字可点
+            nativeAd.registerViewForInteraction(adView, nativeAdIcon, viewList); //只有按钮和图片文字可点
         } else {
-            nativeAd.registerViewForInteraction(adView);
+            nativeAd.registerViewForInteraction(adView, nativeAdIcon);
         }
 
         if (mAdChoicesView == null) {
@@ -1413,7 +1444,7 @@ public class Advertisement {
         mLayoutFacebook.setVisibility(View.VISIBLE);
 
         // Create native UI using the ad metadata.
-        ImageView nativeAdIcon = (ImageView) adView.findViewById(R.id.nativeAdIcon);
+        AdIconView nativeAdIcon = (AdIconView) adView.findViewById(R.id.nativeAdIcon);
         TextView nativeAdTitle = (TextView) adView.findViewById(R.id.nativeAdTitle);
         TextView nativeAdBody = (TextView) adView.findViewById(R.id.nativeAdBody);
         MediaView nativeAdMedia = (MediaView) adView.findViewById(R.id.nativeAdMedia);
@@ -1474,8 +1505,8 @@ public class Advertisement {
         } else if (nativeAdCallToAction instanceof TextView) {
             ((TextView) nativeAdCallToAction).setText(nativeAd.getAdCallToAction());
         }
-        nativeAdTitle.setText(nativeAd.getAdTitle());
-        nativeAdBody.setText(nativeAd.getAdBody());
+        nativeAdTitle.setText(nativeAd.getAdHeadline());
+        nativeAdBody.setText(nativeAd.getAdBodyText());
         mMainHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -1485,11 +1516,6 @@ public class Advertisement {
                 }
             }
         }, DEFAULT_SET_TEXTVIEW_SCROLL);
-
-        ImageView smallIconView = mAdapter.getSmallIconView();
-        // Downloading and setting the ad icon.
-        NativeAd.Image adIcon = nativeAd.getAdIcon();
-        NativeAd.downloadAndDisplayImage(adIcon, smallIconView != null ? smallIconView : nativeAdIcon);
 
         // Downloading and setting the cover image.
         NativeAd.Image adCoverImage = nativeAd.getAdCoverImage();
@@ -1516,7 +1542,6 @@ public class Advertisement {
             int height = Math.min((int) ((mediaViewWidth * 1.0 / bannerWidth) * bannerHeight), screenHeight / 3);
             nativeAdMedia.setLayoutParams(new FrameLayout.LayoutParams(mediaViewWidth, height));
         }
-        nativeAdMedia.setNativeAd(nativeAd);
 
 //        int mediaViewHeight = mDefaultMediaViewHeight;
 //        FrameLayout.LayoutParams mediaViewParam = new FrameLayout.LayoutParams(
@@ -1535,9 +1560,9 @@ public class Advertisement {
 
         // Wire up the View with the native ad, the whole nativeAdContainer will be clickable
         if (isFullClickable) {
-            nativeAd.registerViewForInteraction(adView); //空白区域可点
+            nativeAd.registerViewForInteraction(adView, nativeAdMedia, nativeAdIcon); //空白区域可点
         } else {
-            nativeAd.registerViewForInteraction(adView, viewList); //只有按钮和图片文字可点
+            nativeAd.registerViewForInteraction(adView, nativeAdMedia, nativeAdIcon, viewList); //只有按钮和图片文字可点
         }
 
         if (mAdChoicesView == null) {
@@ -1914,7 +1939,7 @@ public class Advertisement {
     /*
     Facebook请求广告的网络回调
      */
-    private class NativeFBListener implements AdListener {
+    private class NativeFBListener implements NativeAdListener {
         @Override
         public void onAdClicked(Ad arg0) {
             if (mShouldCacheFbAd) {
@@ -1950,10 +1975,18 @@ public class Advertisement {
         @Override
         public void onAdLoaded(Ad ad) {
             try {
-                if (mFacebookNativeAd == null || mFacebookNativeAd != ad) {
-                    // Race condition, load() called again before last ad was displayed
-                    return;
+                if (mIsBanner) {
+                    if (mFacebookNativeBannerAd == null || mFacebookNativeBannerAd != ad) {
+                        // Race condition, load() called again before last ad was displayed
+                        return;
+                    }
+                } else {
+                    if (mFacebookNativeAd == null || mFacebookNativeAd != ad) {
+                        // Race condition, load() called again before last ad was displayed
+                        return;
+                    }
                 }
+
 
                 if (mIsClosed) {
                     return;
@@ -1977,12 +2010,14 @@ public class Advertisement {
 
                 if (mFacebookeNativeAdContainer != null /*&& !mContext.isFinishing()*/) {
                     mFacebookeNativeAdContainer.setVisibility(View.VISIBLE);
-                    // Unregister last ad
-                    mFacebookNativeAd.unregisterView();
 
                     if (mIsBanner) {
-                        inflateBannerAd(mFacebookNativeAd, mLayoutFacebook);
+                        // Unregister last ad
+                        mFacebookNativeBannerAd.unregisterView();
+                        inflateBannerAd(mFacebookNativeBannerAd, mLayoutFacebook);
                     } else {
+                        // Unregister last ad
+                        mFacebookNativeAd.unregisterView();
                         inflateAd(mFacebookNativeAd, mLayoutFacebook);
                     }
                     mAdapter.adjustFbContainerView(mLayoutFacebook);
@@ -2037,6 +2072,11 @@ public class Advertisement {
                 mAdapter.onAdShow();
                 //StatisticsUtil.logAdEvent(mAdapter.getPlacementId(), "facebook", "展示");
             }
+        }
+
+        @Override
+        public void onMediaDownloaded(Ad ad) {
+
         }
     }
 
@@ -2249,7 +2289,7 @@ public class Advertisement {
 //                mFacebookNativeAd.unregisterView();
 
                 if (mIsBanner) {
-                    adView = inflateBannerAD(mFacebookNativeAd, mLayoutFacebook);
+                    adView = inflateBannerAD(mFacebookNativeBannerAd, mLayoutFacebook);
                 } else {
                     adView = inflateBigAD(mFacebookNativeAd, mLayoutFacebook);
                 }
@@ -2267,7 +2307,7 @@ public class Advertisement {
         return adView;
     }
 
-    private LinearLayout inflateBannerAD(NativeAd nativeAd, final LinearLayout adView) {
+    private LinearLayout inflateBannerAD(NativeBannerAd nativeAd, final LinearLayout adView) {
         if (mLayoutAdmob != null) {
             mLayoutAdmob.setVisibility(View.GONE);
         }
@@ -2279,7 +2319,7 @@ public class Advertisement {
         this.mLayoutFacebook.setVisibility(View.VISIBLE);
 
         // Create native UI using the ad metadata.
-        ImageView nativeAdIcon = (ImageView) adView.findViewById(R.id.nativeAdIcon);
+        AdIconView nativeAdIcon = (AdIconView) adView.findViewById(R.id.nativeAdIcon);
         TextView nativeAdTitle = (TextView) adView.findViewById(R.id.nativeAdTitle);
         TextView nativeAdBody = (TextView) adView.findViewById(R.id.nativeAdBody);
         TextView nativeAdCallToAction = (TextView) adView.findViewById(R.id.nativeAdCallToAction);
@@ -2293,8 +2333,8 @@ public class Advertisement {
         } else {
             nativeAdCallToAction.setVisibility(View.GONE);
         }
-        nativeAdTitle.setText(nativeAd.getAdTitle());
-        nativeAdBody.setText(nativeAd.getAdBody());
+        nativeAdTitle.setText(nativeAd.getAdHeadline());
+        nativeAdBody.setText(nativeAd.getAdBodyText());
         mMainHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -2305,13 +2345,34 @@ public class Advertisement {
             }
         }, DEFAULT_SET_TEXTVIEW_SCROLL);
 
-        ImageView smallIconView = mAdapter.getSmallIconView();
-        // Downloading and setting the ad icon.
-        NativeAd.Image adIcon = nativeAd.getAdIcon();
-        NativeAd.downloadAndDisplayImage(adIcon, smallIconView != null ? smallIconView : nativeAdIcon);
-
         // Wire up the View with the native ad, the whole nativeAdContainer will be clickable
 //        nativeAd.registerViewForInteraction(adView);
+        ArrayList<View> viewList = new ArrayList<>();
+        if (isOnlyBtnClickable) {
+            if (nativeAdCallToAction != null) {
+                viewList.add(nativeAdCallToAction);
+            }
+            nativeAd.registerViewForInteraction(adView, nativeAdIcon, viewList);
+        } else if (mIsOnlyBtnAndTextClickable) {
+            if (nativeAdIcon != null) {
+                viewList.add(nativeAdIcon);
+            }
+            if (nativeAdTitle != null) {
+                viewList.add(nativeAdTitle);
+            }
+            if (nativeAdBody != null) {
+                viewList.add(nativeAdBody);
+            }
+            if (nativeAdCallToAction != null) {
+                viewList.add(nativeAdCallToAction);
+            }
+//            if (nativeAdImage != null) {
+//                viewList.add(nativeAdImage);
+//            }
+            nativeAd.registerViewForInteraction(adView, nativeAdIcon, viewList); //只有按钮和图片文字可点
+        } else {
+            nativeAd.registerViewForInteraction(adView, nativeAdIcon);
+        }
 
         if (mAdChoicesView == null) {
             mAdChoicesView = new AdChoicesView(mContextForFb, nativeAd, true);
@@ -2346,7 +2407,7 @@ public class Advertisement {
         mLayoutFacebook.setVisibility(View.VISIBLE);
 
         // Create native UI using the ad metadata.
-        ImageView nativeAdIcon = (ImageView) adView.findViewById(R.id.nativeAdIcon);
+        AdIconView nativeAdIcon = (AdIconView) adView.findViewById(R.id.nativeAdIcon);
         TextView nativeAdTitle = (TextView) adView.findViewById(R.id.nativeAdTitle);
         TextView nativeAdBody = (TextView) adView.findViewById(R.id.nativeAdBody);
         MediaView nativeAdMedia = (MediaView) adView.findViewById(R.id.nativeAdMedia);
@@ -2364,6 +2425,42 @@ public class Advertisement {
 //        viewList.add(adView.findViewById(R.id.ll_adview));
 
         // Setting the Text
+        ArrayList<View> viewList = new ArrayList<>();
+        if (isOnlyBtnClickable) {
+            if (nativeAdCallToAction != null) {
+                viewList.add(nativeAdCallToAction);
+            }
+        } else if (mIsOnlyBtnAndTextClickable) {
+            if (nativeAdTitle != null) {
+                viewList.add(nativeAdTitle);
+            }
+            if (nativeAdBody != null) {
+                viewList.add(nativeAdBody);
+            }
+
+            if (nativeAdCallToAction != null) {
+                viewList.add(nativeAdCallToAction);
+            }
+        } else {
+            if (nativeAdIcon != null) {
+                viewList.add(nativeAdIcon);
+            }
+            if (nativeAdTitle != null) {
+                viewList.add(nativeAdTitle);
+            }
+            if (nativeAdBody != null) {
+                viewList.add(nativeAdBody);
+            }
+            if (nativeAdMedia != null) {
+                viewList.add(nativeAdMedia);
+            }
+            if (nativeAdCallToAction != null) {
+                viewList.add(nativeAdCallToAction);
+            }
+            if (nativeAdImage != null) {
+                viewList.add(nativeAdImage);
+            }
+        }
         if (mAdapter.shouldShowActionButton()) {
             nativeAdCallToAction.setVisibility(View.VISIBLE);
         } else {
@@ -2375,9 +2472,9 @@ public class Advertisement {
         } else if (nativeAdCallToAction instanceof RelativeLayout) {
             ((TextView) adView.findViewById(R.id.tvNativeAdCallToAction)).setText(nativeAd.getAdCallToAction());
         }
-        nativeAdTitle.setText(nativeAd.getAdTitle());
-        nativeAdBody.setText(nativeAd.getAdBody());
-        LogUtil.d("advertisemrnt", " loading ad listview ad title:" + nativeAd.getAdTitle() + ",body:" + nativeAd.getAdBody());
+        nativeAdTitle.setText(nativeAd.getAdHeadline());
+        nativeAdBody.setText(nativeAd.getAdBodyText());
+        LogUtil.d("advertisemrnt", " loading ad listview ad title:" + nativeAd.getAdHeadline() + ",body:" + nativeAd.getAdBodyText());
         mMainHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -2387,11 +2484,6 @@ public class Advertisement {
                 }
             }
         }, DEFAULT_SET_TEXTVIEW_SCROLL);
-
-        ImageView smallIconView = mAdapter.getSmallIconView();
-        // Downloading and setting the ad icon.
-        NativeAd.Image adIcon = nativeAd.getAdIcon();
-        NativeAd.downloadAndDisplayImage(adIcon, smallIconView != null ? smallIconView : nativeAdIcon);
 
         // Downloading and setting the cover image.
         NativeAd.Image adCoverImage = nativeAd.getAdCoverImage();
@@ -2416,7 +2508,6 @@ public class Advertisement {
 
         int height = Math.min((int) ((mediaViewWidth * 1.0 / bannerWidth) * bannerHeight), screenHeight / 3);
         nativeAdMedia.setLayoutParams(new FrameLayout.LayoutParams(mediaViewWidth, height));
-        nativeAdMedia.setNativeAd(nativeAd);
         LogUtil.d(LOG_TAG, "listview ad inflateAd height: " + height);
 
 //        int mediaViewHeight = mDefaultMediaViewHeight;
@@ -2433,8 +2524,12 @@ public class Advertisement {
         if (nativeAdMedia != null) {
             LogUtil.d(LOG_TAG, "listview ad inflateAd adCoverImage width: " + adCoverImage.getWidth());
         }
-        nativeAdMedia.setNativeAd(nativeAd);
-
+        // Wire up the View with the native ad, the whole nativeAdContainer will be clickable
+        if (isFullClickable) {
+            nativeAd.registerViewForInteraction(adView, nativeAdMedia, nativeAdIcon); //空白区域可点
+        } else {
+            nativeAd.registerViewForInteraction(adView, nativeAdMedia, nativeAdIcon, viewList); //只有按钮和图片文字可点
+        }
         // Wire up the View with the native ad, the whole nativeAdContainer will be clickable
         //nativeAd.registerViewForInteraction(adView.findViewById(R.id.ll_adview));
 //        nativeAd.registerViewForInteraction(adView, viewList);

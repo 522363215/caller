@@ -80,7 +80,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         FlurryAgent.logEvent("MineFragment-----show_main");
         initView(view);
-//        initAds();
+        initAds();
         listener();
     }
 

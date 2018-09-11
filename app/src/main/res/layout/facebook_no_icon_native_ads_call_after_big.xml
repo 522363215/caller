@@ -35,7 +35,7 @@
         android:padding="8dp"
         android:visibility="visible">
 
-        <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.RoundImageView
+        <com.facebook.ads.AdIconView
             android:id="@+id/nativeAdIcon"
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"

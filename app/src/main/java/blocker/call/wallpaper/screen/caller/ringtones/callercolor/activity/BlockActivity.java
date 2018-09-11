@@ -280,7 +280,7 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         LogUtil.d("mopub_self", "mopub_banner_id sms show set: " + mopub_banner_id);
         adapter.setMopubBannerKey(mopub_banner_id); //mopub banner id
 
-        if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_ADS_SMS_FLASH_SHOW_SET)) {
+        if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_BLOCK_NORMAL)) {
             mAdvertisement.enableOnlyBtnClickable();
         }
     }

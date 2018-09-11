@@ -88,7 +88,7 @@ public class CallFlashShowGroupAdHelper {
                     LogUtil.d(TAG, "---------------------------------------------show " + adIdInfo.adType + " " + adIdInfo.adShowPriority + "------------------------------------------");
                     mIsShowGroupAd = true;
                     PreferenceHelper.putLong(PreferenceHelper.PREF_LAST_CALL_FLASH_SHOW_GROUP_BANNER_AD_TIME, System.currentTimeMillis());
-                    if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_ADS_CALLFLASH)) {
+                    if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_CALL_FLASH_DETAIL_NORMAL)) {
                         preloadAdvertisement.enableOnlyBtnAndTextClickable();
                     }
                     preloadAdvertisement.showAd(adView);

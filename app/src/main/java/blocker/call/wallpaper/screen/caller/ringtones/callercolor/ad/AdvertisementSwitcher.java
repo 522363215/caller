@@ -34,36 +34,19 @@ public class AdvertisementSwitcher {
     private static final int AD_TYPE_OUNT = 2;//change this when update ad type
     public static final String AD_DISABLE_FLAG = "none";
     public static final String SERVER_KEY_QUICK_DEFAULT = "DEFAULT";
-    public static final String SERVER_KEY_END_CALL = "END_CALL";  //电话结束页
     public static final String SERVER_KEY_START_UP = "START_UP";  //启动页
     public static final String SERVER_KEY_FLASH_MINE = "FLASH_MINE";  //来电秀MINE
+    public static final String SERVER_KEY_END_CALL = SERVER_KEY_FLASH_MINE;//"END_CALL";  //电话结束页
+    public static final String SERVER_KEY_FLASH_DETAIL = "FLASH_DETAIL";  //来电秀 detail
     public static final String SERVER_KEY_SET_RESULT = "SET_RESULT";           //来电秀设置结果结果
     public static final String SERVER_KEY_IN_RESULT = "IN_RESULT";           //结果页插页广告
     public static final String SERVER_KEY_FIRST_SHOW_ADMOB = "FIRST_SHOW_ADMOB";
     public static final String SERVER_KEY_SET_MAIN = "SET_MAIN";  //设置setting, cpm 大图, 300*250
     public static final String SERVER_KEY_BLOCK_MAIN = "BLOCK_MAIN";  //block main 底部 小图, cpm banner
     public static final String SERVER_KEY_EXTERNAL = "CP_EXTERNAL";  //外部弹窗广告key
-    //old
-    public static final String SERVER_KEY_CALL_FLASH_SETTING = "CALL_FLASH_SETTING";  //来电秀设置, fakecall首页, calllog adapter, block2
-    public static final String SERVER_KEY_COMMON_RESULT = "COMMON_RESULT";           //扫描结果，号码升级结果, 短信详情， 短信编辑
-    public static final String SERVER_KEY_CLEAN_RESULT = "CLEAN_RESULT";           //短信清理结果
-
-    public static final String SERVER_KEY_CHARGING_ASSISTANT = "CHARGING_ASSISTANT";
-    public static final String SERVER_KEY_CONTACT_BIG = "CONTACT_BIG";           //联系人大头像
-    public static final String SERVER_KEY_CONTACT_BIG_NEW = "CONTACT_NEW_BIG";           //联系人大头像 新大图
-    public static final String SERVER_KEY_SMS_FLASH_SET = "SMS_FLASH_SET";           //短信秀设置
-    public static final String SERVER_KEY_SMS_FLASH_SET_RESULT = "SMS_FLASH_SET_RESULT";           //短信秀设置结果页
-    public static final String SERVER_KEY_SMS_FLASH_SHOW = "SMS_FLASH_SHOW";           //短信秀收到
-    public static final String SERVER_KEY_CALL_FLASH_GROUP = "CALL_FLASH_GROUP";
-
-
-    public static final String SERVER_KEY_MISSED_CALL = "MISSED_CALL";  //电话结束页 - missed call
-
-    public static final String SERVER_KEY_SCREEN_ON_TIPS = "SCREEN_ON_TIPS"; //解锁弹新的来电秀提示
+    public static final String SERVER_KEY_QUICK_SWIPE = "QUICK_SWIPE";  //左右下角快划
 
     public static final String SERVER_KEY_CALL_FLASH_DOWN_GROUP = "CALL_FLASH_DOWN_GROUP";
-
-    public static final String SERVER_KEY_QUICK_SWIPE = "QUICK_SWIPE";  //左右下角快划
 
     private static AdvertisementSwitcher sInstance = null;
     public static boolean forceAdmobMode = false; // default is false, test is true
@@ -99,37 +82,17 @@ public class AdvertisementSwitcher {
         }
     };
 
-    private ArrayList<String> mAdCharge = new ArrayList<String>() {
-        {
-//            add(AD_ADMOB);
-            add(AD_MOPUB);
-        }
-    };
-
     private Map<String, List<String>> mPriorityInfo = new HashMap<String, List<String>>() {
         {
             put(SERVER_KEY_QUICK_DEFAULT, (ArrayList<String>) mAdPriority.clone());
             put(SERVER_KEY_END_CALL, (ArrayList<String>) mAdPriority.clone());
             put(SERVER_KEY_START_UP, (ArrayList<String>) mAdPriority.clone());
-            put(SERVER_KEY_CALL_FLASH_SETTING, (ArrayList<String>) mAdPriority.clone());
-            put(SERVER_KEY_COMMON_RESULT, (ArrayList<String>) mAdPriority.clone());
-            put(SERVER_KEY_CLEAN_RESULT, (ArrayList<String>) mAdPriority.clone());
             put(SERVER_KEY_SET_RESULT, (ArrayList<String>) mAdPriority.clone());
             put(SERVER_KEY_IN_RESULT, (ArrayList<String>) mAdGroupPriority.clone());
-            put(SERVER_KEY_CONTACT_BIG, (ArrayList<String>) mAdPriority.clone());
-            put(SERVER_KEY_SMS_FLASH_SET, (ArrayList<String>) mAdPriority.clone());
-            put(SERVER_KEY_SMS_FLASH_SET_RESULT, (ArrayList<String>) mAdPriority.clone());
-            put(SERVER_KEY_SMS_FLASH_SHOW, (ArrayList<String>) mAdPriority.clone());
-            put(SERVER_KEY_CHARGING_ASSISTANT, (ArrayList<String>) mAdCharge.clone());
-            put(SERVER_KEY_CONTACT_BIG_NEW, (ArrayList<String>) mAdPriority.clone());
-            put(SERVER_KEY_CALL_FLASH_GROUP, (ArrayList<String>) mAdGroupPriority.clone());
-            put(SERVER_KEY_SCREEN_ON_TIPS, (ArrayList<String>) mAdPriority.clone());
             put(SERVER_KEY_CALL_FLASH_DOWN_GROUP, (ArrayList<String>) mAdGroupPriority.clone());
-            put(SERVER_KEY_MISSED_CALL, (ArrayList<String>) mAdPriority.clone());
             put(SERVER_KEY_FIRST_SHOW_ADMOB, (ArrayList<String>) mFirstShowAdMobPriority.clone());
             put(SERVER_KEY_FLASH_MINE, (ArrayList<String>) mFirstShowAdMobPriority.clone());
             put(SERVER_KEY_QUICK_SWIPE, (ArrayList<String>) mAdPriority.clone());
-
             put(SERVER_KEY_SET_MAIN, (ArrayList<String>) mAdPriority.clone());
             put(SERVER_KEY_BLOCK_MAIN, (ArrayList<String>) mAdPriority.clone());
             put(SERVER_KEY_EXTERNAL, (ArrayList<String>) mAdPriority.clone());
@@ -149,7 +112,7 @@ public class AdvertisementSwitcher {
     }
 
     public void initFromConfigCache(AdPriorityManager mgr) {
-        LogUtil.d(LOG_TAG,  "initFromConfigCache start: " );
+        LogUtil.d(LOG_TAG, "initFromConfigCache start: ");
         if (mgr.getPriorityList(SERVER_KEY_QUICK_DEFAULT) != null) {
             //has cache, do init
             updateConfig(mgr);
@@ -157,7 +120,7 @@ public class AdvertisementSwitcher {
     }
 
     public void updateConfig(AdPriorityManager mgr) {
-        LogUtil.d(LOG_TAG,  "updateConfig start: " );
+        LogUtil.d(LOG_TAG, "updateConfig start: ");
         Iterator<String> iterator = mPriorityInfo.keySet().iterator();
         String key;
         List<String> priorityList;
@@ -181,7 +144,7 @@ public class AdvertisementSwitcher {
                 value.clear();
                 if (priorityList.contains(AD_DISABLE_FLAG)) {
                     value.add(AD_DISABLE_FLAG);
-                    LogUtil.d(LOG_TAG,  "contains none : " );
+                    LogUtil.d(LOG_TAG, "contains none : ");
                 } else {
                     if (isDebugTest) {
                         value.addAll(DebugPriority);
@@ -226,13 +189,16 @@ public class AdvertisementSwitcher {
     }
 
     public List<String> getAdPriority(String placementId) {
-        synchronized (mPriorityInfo) {
-            if (!forceAdmobMode && mPriorityInfo.containsKey(placementId)) {
-                return mPriorityInfo.get(placementId);
-            }
+        List<String> priorityList = null;
+        try {
+            priorityList = AdPriorityManager.getInstance().getPriorityList(placementId);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        return (List<String>) mAdPriority.clone();
+        if (priorityList == null) {
+            priorityList = (List<String>) mAdPriority.clone();
+        }
+        return priorityList;
     }
 
     public List<String> getInterstitialAdPriority(String placementId) {

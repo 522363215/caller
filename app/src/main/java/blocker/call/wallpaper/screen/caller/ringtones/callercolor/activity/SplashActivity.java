@@ -6,7 +6,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -417,9 +416,10 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
 
     //****************************************AD********************************************//
     private void initAds() {
-        mIsShowInterstitial = InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
-        LogUtil.d(TAG, "advertisement initAds mIsShowInterstitial:" + mIsShowInterstitial);
-        if (mIsShowInterstitial) {
+//        mIsShowInterstitial = InterstitialAdUtil.isShowInterstitial(InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
+//        LogUtil.d(TAG, "advertisement initAds mIsShowInterstitial:" + mIsShowInterstitial);
+        if (mIsShowFristAdMob) {
+            mIsShowInterstitial = true;
             InterstitialAdUtil.loadInterstitialAd(ApplicationEx.getInstance(), InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
         } else {
             initAd();
@@ -429,14 +429,14 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     private void initAd() {
         String admob_id = CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_SPLASH_NORMAL);
         String placementId = AdvertisementSwitcher.SERVER_KEY_START_UP;
-        if (mIsShowFristAdMob) {
-            admob_id = FirstShowAdmobUtil.getAdmobIdForFirst(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_SPLASH);
-            placementId = AdvertisementSwitcher.SERVER_KEY_FIRST_SHOW_ADMOB;
-        }
-
-        if (TextUtils.isEmpty(admob_id)) {
-            admob_id = CallerAdManager.ADMOB_ID_ADV_SPLASH_FIRST;
-        }
+//        if (mIsShowFristAdMob) {
+//            admob_id = FirstShowAdmobUtil.getAdmobIdForFirst(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_SPLASH);
+//            placementId = AdvertisementSwitcher.SERVER_KEY_FIRST_SHOW_ADMOB;
+//        }
+//
+//        if (TextUtils.isEmpty(admob_id)) {
+//            admob_id = CallerAdManager.ADMOB_ID_ADV_SPLASH_FIRST;
+//        }
         mMyAdvertisementAdapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
                 CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_SPLASH_NORMAL), //FB_SPLASH_ID,
                 admob_id,
@@ -453,7 +453,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         mAdvertisement.refreshAD(true);
 
         mAdvertisement.enableFullClickable();
-        if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_ADS_SPLASH_BIG)) {
+        if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_SPLASH_NORMAL)) {
             mAdvertisement.enableOnlyBtnClickable();
         }
     }

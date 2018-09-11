@@ -16,26 +16,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 
 public class CallerAdManager {
     public final static String PARAM_ALL_COUNTRIES = "all_countries";
-
-    public static final int POSITION_FB_ADS_CALLLOG = 1;
-    public static final int POSITION_FB_ADS_SMSLIST = 2;
-    public static final int POSITION_FB_ADS_BLOCKHOME = 3;
-    public static final int POSITION_FB_ADS_CONTACTLIST = 4;
-    public static final int POSITION_FB_ADS_CONTACTLIST_BIG = 14;
-    public static final int POSITION_FB_ADS_CALLGIFCUSTOM = 5;
-    public static final int POSITION_FB_ADS_SMS_EDIT = 6;
-    public static final int POSITION_FB_ADS_SMS_FLASH_SHOW = 11;
-    public static final int POSITION_FB_ADS_SMS_FLASH_SHOW_SET = 13;
-    public static final int POSITION_FB_ADS_CALLFLASH = 10;
-    public static final int POSITION_FB_ADS_CALLFLASH_HOT = 15;
-    public static final int POSITION_FB_ADS_FAKECALL_HOME = 12;
-    //big, 控制是否只有按钮可点
-    public static final int POSITION_FB_ADS_SPLASH_BIG = 7;
-    public static final int POSITION_FB_ADS_SCAN_RESULT_BIG = 8;
-    public static final int POSITION_FB_ADS_ENDCALL_BIG = 9;
-
-    //admob id
-
+    //*******************************************admob id******************************************//
     public static final int POSITION_ADMOB_SPLASH_FIRST = 1;
     public static final int POSITION_ADMOB_SPLASH_NORMAL = 2;
     public static final int POSITION_ADMOB_RESULT_FIRST = 3;
@@ -46,7 +27,6 @@ public class CallerAdManager {
     public static final int POSITION_ADMOB_END_CALL_NORMAL = 8;
     public static final int POSITION_ADMOB_ADV_SWIPE = 9;
 
-
     public static final String ADMOB_ID_ADV_SPLASH_FIRST = "ca-app-pub-4922304484386262/2775707274";//启动页首次colorphone-1
     public static final String ADMOB_ID_ADV_SPLASH_NORMAL = "ca-app-pub-4922304484386262/1118068726";//启动页普通colorphone-2
     public static final String ADMOB_ID_ADV_RESULT_FIRST = "ca-app-pub-4922304484386262/7412014335";//结果页首次colorphone-3
@@ -55,40 +35,39 @@ public class CallerAdManager {
     public static final String ADMOB_ID_ADV_END_CALL_NORMAL = "ca-app-pub-4922304484386262/1752493548";//通话结束页colorphone-8
     public static final String ADMOB_ID_ADV_SWIPE = "ca-app-pub-4922304484386262/4735231174"; //swipe,colorphone-9
 
-
     //插屏
     public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_FIRST = "ca-app-pub-4922304484386262/5328776475"; //自定义插屏, 来电秀设置首次colorphone-5
     public static final String INTERSTITIAL_ADMOB_ID_IN_CALL_FALSH_DETAIL_NORMAL = "ca-app-pub-4922304484386262/6230794603";//来电秀设置插屏colorphone-in-6
     public static final String INTERSTITIAL_ADMOB_ID_IN_EXT_NORMAL = "ca-app-pub-4922304484386262/7141186057";//外部弹窗插屏colorphone-in-10
     public static final String INTERSTITIAL_ADMOB_ID_IN_SPLASH = "ca-app-pub-4922304484386262/6779886100"; //启动页插屏colorphone-in-11
     public static final String INTERSTITIAL_ADMOB_ID_IN_END_CALL = "ca-app-pub-4922304484386262/1287886277"; //通话结束页插屏colorphone-in-12
-
+    //插屏测试ID
     public static final String INTERSTITIAL_ADMOB_ID_IN_NEW = "ca-app-pub-4922304484386262/1905536203";
-
     //激励视频
     public static final String INTERSTITIAL_ADMOB_ID_JL_NEW_FLASH = "ca-app-pub-4922304484386262/9908149307"; //colorphone-jl-1
-
     //多建了一个colorphone-6 ca-app-pub-4922304484386262/6762628719
-
-    //admob id end
-
-    //facebook id
-
-    public static final int POSITION_FB_SPLASH_NORMAL = 11; //启动页
-    public static final int POSITION_FB_RESULT_NORMAL = 22; //结果页
-    public static final int POSITION_FB_MINE_NORMAL = 33;  //mine
-    public static final int POSITION_FB_END_CALL_NORMAL = 44; //end call
-    public static final int POSITION_FB_IN_DETAIL_NORMAL = 66; //插屏
+    //*******************************************admob id end******************************************//
 
 
-    private static final String FB_ID_SPLASH_NORMAL = ""; //启动页
-    private static final String FB_ID_RESULT_NORMAL = ""; //结果页
-    private static final String FB_ID_MINE_NORMAL = "";  //mine
-    private static final String FB_ID_END_CALL_NORMAL = ""; //end call
+    //*******************************************facebook id******************************************//
+    public static final int POSITION_FB_SPLASH_NORMAL = 100; //启动页
+    public static final int POSITION_FB_RESULT_NORMAL = 101; //结果页
+    public static final int POSITION_FB_MINE_NORMAL = 102;  //mine
+    public static final int POSITION_FB_END_CALL_NORMAL = 103; //end call
+    public static final int POSITION_FB_IN_DETAIL_NORMAL = 104; //插屏
+    public static final int POSITION_FB_BLOCK_NORMAL = 105; //block 界面
+    public static final int POSITION_FB_CALL_FLASH_DETAIL_NORMAL = 106;//call flash detail
+
+    private static final String FB_ID_SPLASH_NORMAL = "2000024896908718_2009660139278527"; //启动页
+    private static final String FB_ID_RESULT_NORMAL = "2000024896908718_2009624219282119"; //结果页
+    private static final String FB_ID_MINE_NORMAL = "2000024896908718_2009623979282143";  //mine
+    private static final String FB_ID_END_CALL_NORMAL = FB_ID_MINE_NORMAL; //end call
+    private static final String FB_ID_BLOCK_NORMAL = ""; //block 界面
+    private static final String FB_ID_CALL_FLASH_DETAIL_NORMAL = "2000024896908718_2009624492615425"; //call flash detail native-banner
+
+    //插屏
     private static final String FB_IN_DETAIL_NORMAL = ""; //插屏
-
-
-    //facebook id end
+    //*******************************************facebook id end******************************************//
 
     public static String getAdmob_id(int position) {
         String ad_id = "";
@@ -171,34 +150,40 @@ public class CallerAdManager {
             if (jsonObject != null) {
                 switch (position) {
                     case POSITION_FB_SPLASH_NORMAL:
-                        ad_id = jsonObject.optString("ad_id_1");
-                        if (TextUtils.isEmpty(ad_id)) {
-                            ad_id = FB_ID_SPLASH_NORMAL;
-                        }
+//                        ad_id = jsonObject.optString("ad_id_1");
+//                        if (TextUtils.isEmpty(ad_id)) {
+                        ad_id = FB_ID_SPLASH_NORMAL;
+//                        }
                         break;
                     case POSITION_FB_RESULT_NORMAL:
-                        ad_id = jsonObject.optString("ad_id_2");
-                        if (TextUtils.isEmpty(ad_id)) {
-                            ad_id = FB_ID_RESULT_NORMAL;
-                        }
+//                        ad_id = jsonObject.optString("ad_id_2");
+//                        if (TextUtils.isEmpty(ad_id)) {
+                        ad_id = FB_ID_RESULT_NORMAL;
+//                        }
                         break;
                     case POSITION_FB_MINE_NORMAL:
-                        ad_id = jsonObject.optString("ad_id_3");
-                        if (TextUtils.isEmpty(ad_id)) {
-                            ad_id = FB_ID_MINE_NORMAL;
-                        }
+//                        ad_id = jsonObject.optString("ad_id_3");
+//                        if (TextUtils.isEmpty(ad_id)) {
+                        ad_id = FB_ID_MINE_NORMAL;
+//                        }
                         break;
                     case POSITION_FB_END_CALL_NORMAL:
-                        ad_id = jsonObject.optString("ad_id_4");
-                        if (TextUtils.isEmpty(ad_id)) {
-                            ad_id = FB_ID_END_CALL_NORMAL;
-                        }
+//                        ad_id = jsonObject.optString("ad_id_4");
+//                        if (TextUtils.isEmpty(ad_id)) {
+                        ad_id = FB_ID_END_CALL_NORMAL;
+//                        }
                         break;
                     case POSITION_FB_IN_DETAIL_NORMAL:
                         ad_id = jsonObject.optString("ad_id_5");
                         if (TextUtils.isEmpty(ad_id)) {
                             ad_id = FB_IN_DETAIL_NORMAL;
                         }
+                        break;
+                    case POSITION_FB_BLOCK_NORMAL:
+                        ad_id = FB_ID_BLOCK_NORMAL;
+                        break;
+                    case POSITION_FB_CALL_FLASH_DETAIL_NORMAL:
+                        ad_id = FB_ID_CALL_FLASH_DETAIL_NORMAL;
                         break;
                 }
 
@@ -209,7 +194,6 @@ public class CallerAdManager {
         }
         return ad_id;
     }
-
 
     public static boolean isMopubAll() {
         boolean is = false; //false not show, 默认关, test is true
@@ -259,31 +243,31 @@ public class CallerAdManager {
         boolean is = false;
         int click = 0;
         switch (position) {
-            case POSITION_FB_ADS_ENDCALL_BIG:
+            case POSITION_FB_END_CALL_NORMAL:
                 click = AdPreferenceHelper.getInt("pref_is_endcall_only_btn_clickable", 0);
                 if (click != 0) {
                     is = true;
                 }
                 break;
-            case POSITION_FB_ADS_SCAN_RESULT_BIG:
+            case POSITION_FB_RESULT_NORMAL:
                 click = AdPreferenceHelper.getInt("pref_is_scan_result_only_btn_clickable", 0);
                 if (click != 0) {
                     is = true;
                 }
                 break;
-            case POSITION_FB_ADS_SPLASH_BIG:
+            case POSITION_FB_SPLASH_NORMAL:
                 click = AdPreferenceHelper.getInt("pref_is_splash_only_btn_clickable", 0);
                 if (click != 0) {
                     is = true;
                 }
                 break;
-            case POSITION_FB_ADS_CALLFLASH:
+            case POSITION_FB_CALL_FLASH_DETAIL_NORMAL:
                 click = AdPreferenceHelper.getInt("pref_is_call_flash_set_only_btn_clickable", 1);
                 if (click != 0) {
                     is = true;
                 }
                 break;
-            case POSITION_FB_ADS_SMS_FLASH_SHOW_SET:
+            case POSITION_FB_BLOCK_NORMAL:
                 click = AdPreferenceHelper.getInt("pref_is_sms_flash_set_only_btn_clickable", 0);
                 if (click != 0) {
                     is = true;
@@ -336,23 +320,23 @@ public class CallerAdManager {
     private static int getOnlyBtnPercent(int position) {
         int click = 100; //100 means all is only btn Clickable
         switch (position) {
-            case POSITION_FB_ADS_ENDCALL_BIG:
+            case POSITION_FB_END_CALL_NORMAL:
                 click = AdPreferenceHelper.getInt("pref_is_endcall_only_btn_percent", 100);
 
                 break;
-            case POSITION_FB_ADS_SCAN_RESULT_BIG:
+            case POSITION_FB_RESULT_NORMAL:
                 click = AdPreferenceHelper.getInt("pref_is_scan_result_only_btn_percent", 100);
 
                 break;
-            case POSITION_FB_ADS_SPLASH_BIG:
+            case POSITION_FB_SPLASH_NORMAL:
                 click = AdPreferenceHelper.getInt("pref_is_splash_only_btn_percent", 100);
 
                 break;
-            case POSITION_FB_ADS_CALLFLASH:
+            case POSITION_FB_CALL_FLASH_DETAIL_NORMAL:
                 click = AdPreferenceHelper.getInt("pref_is_call_flash_set_only_btn_percent", 100);
 
                 break;
-            case POSITION_FB_ADS_SMS_FLASH_SHOW_SET:
+            case POSITION_FB_BLOCK_NORMAL:
                 click = AdPreferenceHelper.getInt("pref_is_sms_flash_set_only_btn_percent", 100);
                 break;
         }
