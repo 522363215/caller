@@ -378,7 +378,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
     private void initIsWatchRewardedVideo() {
         List<String> list = CallFlashPreferenceHelper.getDataList(CallFlashPreferenceHelper.PREF_CALL_FLASH_WATCH_REWARD_VIDEO_ID, String[].class);
-        boolean isWatchRewardedVideo = list != null && mInfo != null && list.contains(mInfo.id);
+        boolean isWatchRewardedVideo = list != null && mInfo != null && mInfo.isDownloadSuccess && list.contains(mInfo.id);
         if (mInfo != null && !mInfo.isDownloaded && mInfo.isLock && !isWatchRewardedVideo) {
             isShowRewardedVideo = true;
         }
@@ -471,7 +471,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                     }
                     if (mInfo != null && !TextUtils.isEmpty(url) && url.equals(mInfo.url)) {
                         mInfo.isDownloadSuccess = true;
-                        mInfo.isDownloaded = false;
+                        mInfo.isDownloaded = true;
                         mInfo.path = file.getAbsolutePath();
 
                         mIvSound.setVisibility(View.VISIBLE);
@@ -911,10 +911,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                             if (isFinishing()) {
                                 return;
                             }
-                            if (mInfo != null) {
-                                mInfo.isDownloaded = true;
-                                mInfo.isDownloadSuccess = true;
-                            }
 
                             if (mIsShowAboveAdBtn) {
                                 tv_setting_action_above_ad.setVisibility(View.GONE);
@@ -945,7 +941,7 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
                             return;
                         }
                         mInfo.isDownloadSuccess = true;
-                        mInfo.isDownloaded = false;
+                        mInfo.isDownloaded = true;
                         mInfo.path = file.getAbsolutePath();
 
                         Async.scheduleTaskOnUiThread(300, new Runnable() {
