@@ -29,6 +29,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertiseme
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.HorizontalCallFlashAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.HorizontalCallFlashMarginDecoration;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -290,19 +291,31 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     //******************************************AD******************************************//
     private void initAds() {
-        MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(getActivity().getWindow().getDecorView(),
-                CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_MINE_NORMAL),//ConstantUtils.FB_AFTER_CALL_ID
-                CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_MINE_NORMAL),//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
-                Advertisement.ADMOB_TYPE_NATIVE,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
-                "",
-                Advertisement.MOPUB_TYPE_NATIVE,
-                -1,
-                "",
-                false);
-        mAdvertisement = new Advertisement(adapter);
-        mAdvertisement.setRefreshWhenClicked(false);
-        mAdvertisement.refreshAD(true);
-        mAdvertisement.enableFullClickable();
+        final String fb_id = CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_MINE_NORMAL);
+        long delay = 0;
+        //如果fb 和admob 的id都为空着说明此时服务器数据还没请求下来，所以延迟5s 加载广告
+        if (TextUtils.isEmpty(fb_id)) {
+            delay = 5000;
+        }
+        Async.scheduleTaskOnUiThread(delay, new Runnable() {
+            @Override
+            public void run() {
+                MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(mLayoutAd,
+                        fb_id,//ConstantUtils.FB_AFTER_CALL_ID
+                        "",//CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_MINE_NORMAL),//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
+                        Advertisement.ADMOB_TYPE_NATIVE,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
+                        "",
+                        Advertisement.MOPUB_TYPE_NATIVE,
+                        -1,
+                        "",
+                        false);
+                mAdvertisement = new Advertisement(adapter);
+                mAdvertisement.setRefreshWhenClicked(false);
+                mAdvertisement.refreshAD(true);
+                mAdvertisement.isAdaptiveSize(true);
+                mAdvertisement.enableFullClickable();
+            }
+        });
     }
 
     private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
@@ -322,7 +335,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public int getFbViewRes() {
-            return mIsBanner ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_no_icon_native_ads_call_after_big;
+            return mIsBanner ? R.layout.facebook_native_ads_banner_50 : R.layout.facebook_natives_ads_mine;
         }
 
         @Override
