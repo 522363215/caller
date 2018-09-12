@@ -295,7 +295,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         long delay = 0;
         //如果fb 和admob 的id都为空着说明此时服务器数据还没请求下来，所以延迟5s 加载广告
         if (TextUtils.isEmpty(fb_id)) {
-            delay = 5000;
+            delay = 2000;
         }
         Async.scheduleTaskOnUiThread(delay, new Runnable() {
             @Override

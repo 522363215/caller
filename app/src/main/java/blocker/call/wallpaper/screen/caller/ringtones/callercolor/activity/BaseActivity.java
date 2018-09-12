@@ -94,6 +94,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
 
         //
         ServerManager.getInstance().getParamFromServer();
+
+
+//        if (BuildConfig.DEBUG) {
+//            if (!AdSettings.isTestMode(this)) {
+//                SharedPreferences localSharedPreferences = this.getSharedPreferences("FBAdPrefs", 0);
+//                AdSettings.addTestDevice(localSharedPreferences.getString("deviceIdHash", null));
+//            }
+//        }
     }
 
     // 设置沉浸式状态栏, 并且设置状态栏占位留白;
