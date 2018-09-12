@@ -93,6 +93,10 @@ public class CallFlashSetResultActivity extends BaseActivity implements View.OnC
         mIsShowInterstitialAd = getIntent().getBooleanExtra("is_show_interstitial_ad", false);
         mCallFlashInfo = (CallFlashInfo) getIntent().getSerializableExtra(ActivityBuilder.CALL_FLASH_INFO);
         mIsFirstShowAdmob = FirstShowAdmobUtil.isShowFirstAdMob(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_RESULT_FLASH_SET);
+        if (mIsFirstShowAdmob) {
+            //不管首次广告是否加载出来下次都不显示首次admob
+            FirstShowAdmobUtil.saveFirstShowAdmobTime(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_RESULT_FLASH_SET);
+        }
         init();
         listener();
         EventBus.getDefault().post(new EventShowPemisssionTip());
@@ -510,10 +514,6 @@ public class CallFlashSetResultActivity extends BaseActivity implements View.OnC
         mAdvertisement.setRefreshWhenClicked(false);
         mAdvertisement.setIsResultPage(true);
         mAdvertisement.refreshAD(true);
-        mAdvertisement.enableFullClickable();
-        if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_RESULT_NORMAL)) {
-            mAdvertisement.enableOnlyBtnClickable();
-        }
     }
 
     private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
@@ -555,9 +555,6 @@ public class CallFlashSetResultActivity extends BaseActivity implements View.OnC
         @Override
         public void onAdShow() {
             super.onAdShow();
-            if (mIsFirstShowAdmob) {
-                FirstShowAdmobUtil.saveFirstShowAdmobTime(FirstShowAdmobUtil.POSITION_FIRST_ADMOB_RESULT_FLASH_SET);
-            }
         }
 
         @Override

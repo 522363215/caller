@@ -429,7 +429,6 @@ public class CallAfterActivity extends BaseActivity implements View.OnClickListe
             mAdvertisement = new Advertisement(adapter);
             mAdvertisement.setRefreshWhenClicked(false);
             mAdvertisement.refreshAD(true);
-            mAdvertisement.enableFullClickable();
         }
     }
 

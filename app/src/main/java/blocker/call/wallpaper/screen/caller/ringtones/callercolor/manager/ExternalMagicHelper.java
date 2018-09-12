@@ -205,7 +205,6 @@ public class ExternalMagicHelper {
         Advertisement advertisement = new Advertisement(adapter);
         advertisement.setRefreshWhenClicked(false);
         advertisement.refreshAD(true);
-        advertisement.enableFullClickable();
     }
 
     private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {

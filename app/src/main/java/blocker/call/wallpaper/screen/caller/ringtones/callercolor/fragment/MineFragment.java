@@ -313,7 +313,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 mAdvertisement.setRefreshWhenClicked(false);
                 mAdvertisement.refreshAD(true);
                 mAdvertisement.isAdaptiveSize(true);
-                mAdvertisement.enableFullClickable();
             }
         });
     }

@@ -279,10 +279,6 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
         String mopub_banner_id = TestManager.getInstance(this.getApplicationContext()).getMopubId(AdvertisementSwitcher.SERVER_KEY_BLOCK_MAIN);
         LogUtil.d("mopub_self", "mopub_banner_id sms show set: " + mopub_banner_id);
         adapter.setMopubBannerKey(mopub_banner_id); //mopub banner id
-
-        if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_BLOCK_NORMAL)) {
-            mAdvertisement.enableOnlyBtnClickable();
-        }
     }
 
     private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {

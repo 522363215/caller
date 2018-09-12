@@ -1546,7 +1546,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             mAdvertisement = new Advertisement(adapter);
             mAdvertisement.setRefreshWhenClicked(false);
             mAdvertisement.refreshAD(true);
-            mAdvertisement.enableFullClickable();
         }
     }
 

@@ -451,11 +451,6 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         mAdvertisement = new Advertisement(mMyAdvertisementAdapter);
         mAdvertisement.setRefreshWhenClicked(false);
         mAdvertisement.refreshAD(true);
-
-        mAdvertisement.enableFullClickable();
-        if (CallerAdManager.isOnlyBtnClickable(CallerAdManager.POSITION_FB_SPLASH_NORMAL)) {
-            mAdvertisement.enableOnlyBtnClickable();
-        }
     }
 
     private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
