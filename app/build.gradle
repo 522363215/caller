@@ -103,7 +103,7 @@ dependencies {
     compile(name: 'mopub-sdk-banner_3.0.7', ext: 'aar')
     compile(name: 'mopub-sdk-native-static_3.0.7', ext: 'aar')
     compile(name: 'easyswipe-1.0.6.1-release', ext: 'aar')
-    compile(name: 'external_release_1.0.2', ext: 'aar')
+    compile(name: 'external_release_1.0.4', ext: 'aar')
     compile 'com.mopub.volley:mopub-volley:2.0.0'
     compile 'com.android.volley:volley:1.1.0'
     compile 'com.flurry.android:analytics:11.1.1@aar'

@@ -131,12 +131,12 @@ public class ExternalMagicHelper {
             }
 
             @Override
-            public boolean OnAppUnInstalled() {
+            public boolean OnAppUnInstalled(boolean b, String s) {
                 return true;
             }
 
             @Override
-            public boolean OnAppInstalled() {
+            public boolean OnAppInstalled(boolean b, String s) {
                 return true;
             }
 
@@ -146,7 +146,7 @@ public class ExternalMagicHelper {
             }
 
             @Override
-            public boolean OnCallEndEvent() {
+            public boolean OnCallEndEvent(String s, long l) {
                 return false;
             }
         });
@@ -193,7 +193,7 @@ public class ExternalMagicHelper {
     //******************************************AD******************************************//
     private void initAds(ExternalMagicManager.MagicType magicType, LinearLayout adRootView) {
         MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(adRootView,
-                "",//ConstantUtils.FB_AFTER_CALL_ID
+                getFBId(magicType),//ConstantUtils.FB_AFTER_CALL_ID
                 getAdmobId(magicType),//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
                 Advertisement.ADMOB_TYPE_NATIVE,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
                 "",
@@ -241,10 +241,36 @@ public class ExternalMagicHelper {
         }
 
         @Override
+        public int getAdContainerSpaceX() {
+            return ExternalMagicHelper.this.getAdContainerSpaceX(magicType);
+        }
+
+        @Override
         public void onAdClicked(boolean isAdmob) {
             super.onAdClicked(isAdmob);
             ExternalMagicManager.getInstance().hideCurrentPopup();
         }
+    }
+
+    private int getAdContainerSpaceX(ExternalMagicManager.MagicType magicType) {
+        switch (magicType) {
+            case M_AB://MAGIC_AUTO_BOOST:
+            case M_AC://MAGIC_AUTO_CLEAN:
+            case M_DW://MAGIC_DRINK_WATER:
+            case M_NM://MAGIC_NECK_MOVEMENT:
+            case M_CS://MAGIC_CHARGING_STATUS:
+            case M_BS://MAGIC_BATTERY_SAVE:
+                //整体布局左、右间隔 16dp
+                return Stringutil.dpToPx(32);
+            case M_EC://MAGIC_END_CALL:
+            case M_WS://MAGIC_WIFI_SECURITY:
+                //整体布局左、右间隔 0dp
+                return 0;
+            case M_BR://MAGIC_BATTERY_REMAIN:
+                //整体布局左、右间隔 23dp
+                return Stringutil.dpToPx(46);
+        }
+        return 0;
     }
 
     private String getPlacementId(ExternalMagicManager.MagicType magicType) {
@@ -270,6 +296,15 @@ public class ExternalMagicHelper {
             admobId = externalParam.admob_id;
         }
         return admobId;
+    }
+
+    private String getFBId(ExternalMagicManager.MagicType type) {
+        String fbId = "";
+        ExternalParam externalParam = getExternalParam(type);
+        if (externalParam != null) {
+            fbId = externalParam.fb_id;
+        }
+        return fbId;
     }
 
     private int getAdmobViewRes(ExternalMagicManager.MagicType type, boolean isAppInstall) {
@@ -300,9 +335,9 @@ public class ExternalMagicHelper {
             case M_DW://MAGIC_DRINK_WATER:
             case M_NM://MAGIC_NECK_MOVEMENT:
             case M_CS://MAGIC_CHARGING_STATUS:
+            case M_BS://MAGIC_BATTERY_SAVE:
                 //整体布局左、右间隔 16dp
                 return DeviceUtil.getScreenWidth() - Stringutil.dpToPx(32);
-            case M_BS://MAGIC_BATTERY_SAVE:
             case M_EC://MAGIC_END_CALL:
             case M_WS://MAGIC_WIFI_SECURITY:
                 //整体布局左、右间隔 0dp
