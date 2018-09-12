@@ -30,6 +30,7 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.BuildConfig;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.async.Async;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.helper.PreferenceHelper;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.manager.ServerManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.service.LocalService;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LanguageSettingUtil;
@@ -90,6 +91,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Permissi
 
         //init admob
         MobileAds.initialize(this, APP_ADMOB_ID);
+
+        //
+        ServerManager.getInstance().getParamFromServer();
     }
 
     // 设置沉浸式状态栏, 并且设置状态栏占位留白;

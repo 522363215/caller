@@ -150,41 +150,26 @@ public class CallerAdManager {
             if (jsonObject != null) {
                 switch (position) {
                     case POSITION_FB_SPLASH_NORMAL:
-//                        ad_id = jsonObject.optString("ad_id_1");
-//                        if (TextUtils.isEmpty(ad_id)) {
-                        ad_id = FB_ID_SPLASH_NORMAL;
-//                        }
-                        break;
+                        ad_id = jsonObject.optString("fb_id_splash");
                     case POSITION_FB_RESULT_NORMAL:
-//                        ad_id = jsonObject.optString("ad_id_2");
-//                        if (TextUtils.isEmpty(ad_id)) {
-                        ad_id = FB_ID_RESULT_NORMAL;
-//                        }
+                        ad_id = jsonObject.optString("fb_id_result");
                         break;
                     case POSITION_FB_MINE_NORMAL:
-//                        ad_id = jsonObject.optString("ad_id_3");
-//                        if (TextUtils.isEmpty(ad_id)) {
-                        ad_id = FB_ID_MINE_NORMAL;
-//                        }
+                       ad_id = jsonObject.optString("fb_id_mine");
                         break;
                     case POSITION_FB_END_CALL_NORMAL:
-//                        ad_id = jsonObject.optString("ad_id_4");
-//                        if (TextUtils.isEmpty(ad_id)) {
-                        ad_id = FB_ID_END_CALL_NORMAL;
-//                        }
-                        break;
-                    case POSITION_FB_IN_DETAIL_NORMAL:
-                        ad_id = jsonObject.optString("ad_id_5");
-                        if (TextUtils.isEmpty(ad_id)) {
-                            ad_id = FB_IN_DETAIL_NORMAL;
-                        }
-                        break;
-                    case POSITION_FB_BLOCK_NORMAL:
-                        ad_id = FB_ID_BLOCK_NORMAL;
+                        ad_id = jsonObject.optString("fb_id_endcall");
                         break;
                     case POSITION_FB_CALL_FLASH_DETAIL_NORMAL:
-                        ad_id = FB_ID_CALL_FLASH_DETAIL_NORMAL;
+                        ad_id = jsonObject.optString("fb_id_flash_detail");
                         break;
+                    case POSITION_FB_IN_DETAIL_NORMAL:
+//                        ad_id = jsonObject.optString("ad_id_5");
+                        break;
+                    case POSITION_FB_BLOCK_NORMAL:
+//                        ad_id = FB_ID_BLOCK_NORMAL;
+                        break;
+
                 }
 
                 LogUtil.d("adv_id", "getFacebook_id: " + ad_id);

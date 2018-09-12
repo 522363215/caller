@@ -131,8 +131,19 @@ public class ServerManager {
     }
 
     private void getParamFromSDK(){
-        String jsonFromServer = ServerParamManager.getInstance().getParamString();
-        processParam(jsonFromServer);
+        LogUtil.d("getParamFromSDK", "start: ");
+//        ServerParamManager.getInstance().addOnDataChangeListener(new ServerParamManager.OnDataChangeListener() {
+//            @Override
+//            public void onDataChange() {
+//                LogUtil.d("getParamFromSDK", "onDataChange: ");
+//                String config = ServerParamManager.getInstance().getParamString();
+//                LogUtil.d("cpservice", "getParamFromSDK config: "+String.valueOf(config));
+//                processParam(ServerParamManager.getInstance().getParamString());
+//            }
+//        });
+        String config = ServerParamManager.getInstance().getParamString();
+//        LogUtil.d("cpservice", "getParamFromSDK config: "+String.valueOf(config));
+        processParam(config);
     }
 
     public void requestControlParam(Context context, String uri) {
@@ -208,7 +219,7 @@ public class ServerManager {
         });
     }
 
-    private void processParam(String data) {
+    private synchronized void processParam(String data) {
         ServerParamBean dataBean = null;
         try {
             if (!TextUtils.isEmpty(data)) {
@@ -253,6 +264,9 @@ public class ServerManager {
                     if (pref.getLong("key_cid_first_sync_server_time", 0) <= 0) {
                         pref.edit().putLong("key_cid_first_sync_server_time", Long.valueOf(AnalyticsManager.getFirstServerTime())).apply();
                     }
+
+                  //update time
+                  pref.edit().putLong(ConstantUtils.PREF_KEY_UPDATE_PARAM_TIME, System.currentTimeMillis()).apply();
             }
         } catch (Exception e) {
             LogUtil.e("cpservice", "processParam exception:" + e.getMessage());
