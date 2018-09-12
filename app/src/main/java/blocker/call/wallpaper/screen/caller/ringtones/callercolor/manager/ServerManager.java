@@ -254,11 +254,16 @@ public class ServerManager {
                     ad_pref.edit().putBoolean("pref_ext_isCommercialValid", dataBean.ext_isCommercialValid).apply();
                     ad_pref.edit().putInt("pref_ext_show_interval", dataBean.ext_show_interval).apply();
                     ad_pref.edit().putInt("pref_ext_show_in_ads_on_close", dataBean.ext_show_in_ads_on_close).apply();
-                    LogUtil.d("cp_external_param", "ext_isCommercialValid: "+dataBean.ext_isCommercialValid);
+                    LogUtil.d("cpservice", "ext_isCommercialValid: "+dataBean.ext_isCommercialValid);
 
                     //in ads
                     ad_pref.edit().putInt("pref_show_in_ads_on_end_call", dataBean.show_in_ads_on_end_call).apply();
                     ad_pref.edit().putInt("pref_show_in_ads_on_splash", dataBean.show_in_ads_on_splash).apply();
+
+                    //first mode
+                    ad_pref.edit().putInt("pref_first_mode_splash", dataBean.first_mode_splash).apply();
+                    ad_pref.edit().putInt("pref_first_mode_result", dataBean.first_mode_result).apply();
+                    LogUtil.d("cpservice", "first_mode_result: "+dataBean.first_mode_result);
 
                     //first sync time
                     if (pref.getLong("key_cid_first_sync_server_time", 0) <= 0) {

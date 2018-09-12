@@ -393,4 +393,26 @@ public class CallerAdManager {
         }
         return externalParam;
     }
+
+    public static boolean isFirstMode(int position){
+        boolean first = true;
+        SharedPreferences ad_pref = ApplicationEx.getInstance().getGlobalADPreference();
+        int i_first = 0;
+        switch (position) {
+            case FirstShowAdmobUtil.POSITION_FIRST_ADMOB_SPLASH:
+                i_first = ad_pref.getInt("pref_first_mode_splash", 0);
+                if(i_first == 1){
+                    first = false;
+                }
+                break;
+            case FirstShowAdmobUtil.POSITION_FIRST_ADMOB_RESULT_FLASH_SET:
+                i_first = ad_pref.getInt("pref_first_mode_result", 0);
+                if(i_first == 1){
+                    first = false;
+                }
+                break;
+        }
+
+        return first;
+    }
 }

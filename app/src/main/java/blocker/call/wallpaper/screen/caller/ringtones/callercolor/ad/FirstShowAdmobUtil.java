@@ -72,9 +72,10 @@ public class FirstShowAdmobUtil {
         boolean isShowFirstAdMobInServer = false;
         switch (position_first) {
             case POSITION_FIRST_ADMOB_SPLASH:
-                isShowFirstAdMobInServer = true;
+                isShowFirstAdMobInServer = CallerAdManager.isFirstMode(POSITION_FIRST_ADMOB_SPLASH);
                 break;
             case POSITION_FIRST_ADMOB_RESULT_FLASH_SET:
+                isShowFirstAdMobInServer = CallerAdManager.isFirstMode(POSITION_FIRST_ADMOB_RESULT_FLASH_SET);
                 break;
             case POSITION_FIRST_ADMOB_CALL_FLASH_PREVIEW:
                 break;
