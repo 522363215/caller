@@ -439,7 +439,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
 //        }
         mMyAdvertisementAdapter = new MyAdvertisementAdapter(getWindow().getDecorView(),
                 CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_SPLASH_NORMAL), //FB_SPLASH_ID,
-                admob_id,
+                "",
                 Advertisement.ADMOB_TYPE_NATIVE,
                 "",
                 Advertisement.ADMOB_TYPE_NATIVE,
@@ -477,6 +477,8 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         @Override
         public void onAdError(boolean isLastRequestIndex) {
             super.onAdError(isLastRequestIndex);
+            mIsShowInterstitial = true;
+            InterstitialAdUtil.loadInterstitialAd(ApplicationEx.getInstance(), InterstitialAdUtil.POSITION_INTERSTITIAL_AD_IN_SPLASH);
         }
 
         @Override

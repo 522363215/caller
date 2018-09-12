@@ -49,6 +49,10 @@ public class FirstShowAdmobUtil {
 //            return false;
 //        }
 
+        if (!isShowFirstAdMobInServer(position_first)) {
+            return false;
+        }
+
         String admobId = getAdmobIdForFirst(position_first);
         if (TextUtils.isEmpty(admobId)) {
             return false;
@@ -61,12 +65,25 @@ public class FirstShowAdmobUtil {
             return false;
         }
 
-        if (FirstShowAdmobUtil.POSITION_FIRST_ADMOB_SPLASH == position_first) {
-            return true;
-        } else {
-            // TODO: 2018/9/11 只有启动页才才采用首次启动模式，其他位置的暂时取消首次启动模式，故返回false 
-            return false;
+        return true;
+    }
+
+    private static boolean isShowFirstAdMobInServer(int position_first) {
+        boolean isShowFirstAdMobInServer = false;
+        switch (position_first) {
+            case POSITION_FIRST_ADMOB_SPLASH:
+                isShowFirstAdMobInServer = true;
+                break;
+            case POSITION_FIRST_ADMOB_RESULT_FLASH_SET:
+                break;
+            case POSITION_FIRST_ADMOB_CALL_FLASH_PREVIEW:
+                break;
+            case POSITION_FIRST_ADMOB_CALL_FLASH_DETAIL:
+                break;
+            case POSITION_FIRST_ADMOB_FULL_SCREEN_CALL_FLASH_DETAIL:
+                break;
         }
+        return isShowFirstAdMobInServer;
     }
 
     public static void saveFirstShowAdmobTime(int position_first) {
