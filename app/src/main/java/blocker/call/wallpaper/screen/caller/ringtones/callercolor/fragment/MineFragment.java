@@ -171,7 +171,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     private void setCurrentCallFlashBg() {
         mCurrentCallFlashInfo = CallFlashPreferenceHelper.getObject(CallFlashPreferenceHelper.CALL_FLASH_SHOW_TYPE_INSTANCE, CallFlashInfo.class);
-        if (mCurrentCallFlashInfo != null) {
+        if (mCurrentCallFlashInfo != null && mGvBgCurrent != null && mLayoutNoCallFlash != null) {
             mGvBgCurrent.setVisibility(View.VISIBLE);
             mLayoutNoCallFlash.setVisibility(View.GONE);
             if (mCurrentCallFlashInfo.isOnlionCallFlash) {

@@ -96,7 +96,7 @@ dependencies {
     compile files('libs/update.jar')
     compile files('libs/android-query.jar')
 //    compile files('libs/adpriority_1.23_cp.jar')
-    compile files('libs/common-sdk-v1.5.3_ColorPhone.jar')
+    compile files('libs/common-sdk-v1.5.4_ColorPhone.jar')
     compile(name: 'AudienceNetwork', ext: 'aar')
     compile(name: 'DuappsAd-HW-v1.1.1.5', ext: 'aar')
     compile(name: 'mopub-sdk-base_3.1.5', ext: 'aar')
