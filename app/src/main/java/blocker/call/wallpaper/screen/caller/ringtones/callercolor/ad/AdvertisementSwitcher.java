@@ -36,7 +36,7 @@ public class AdvertisementSwitcher {
     public static final String SERVER_KEY_QUICK_DEFAULT = "DEFAULT";
     public static final String SERVER_KEY_START_UP = "START_UP";  //启动页
     public static final String SERVER_KEY_FLASH_MINE = "FLASH_MINE";  //来电秀MINE
-    public static final String SERVER_KEY_END_CALL = SERVER_KEY_FLASH_MINE;//"END_CALL";  //电话结束页
+    public static final String SERVER_KEY_END_CALL = "END_CALL";//"END_CALL";  //电话结束页
     public static final String SERVER_KEY_FLASH_DETAIL = "FLASH_DETAIL";  //来电秀 detail
     public static final String SERVER_KEY_SET_RESULT = "SET_RESULT";           //来电秀设置结果结果
     public static final String SERVER_KEY_IN_RESULT = "IN_RESULT";           //结果页插页广告
