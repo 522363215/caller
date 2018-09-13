@@ -24,6 +24,7 @@ public class SavingDialog extends BaseDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_saving_dialog);
+        setCanceledOnTouchOutside(false);
     }
 
     @Override

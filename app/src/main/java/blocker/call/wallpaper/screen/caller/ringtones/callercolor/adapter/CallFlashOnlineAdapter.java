@@ -226,10 +226,11 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             holder.mOnDownloadListener.setDownloadParams(holder, info);
             setDownloadState(holder, info);
             setSelectState(holder, info);
-            setBg(holder, info);
+            setBg(holder, info, true);
             setCallFlashShow(holder, pos, payloads);
         } else {//payloads不为空 即调用notifyItemChanged(position,payloads)方法payloads!=null执行的
             setSelectState(holder, info);
+            setBg(holder, info, false);
             setCallFlashShow(holder, pos, payloads);
         }
     }
@@ -276,9 +277,11 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    private void setBg(NormalViewHolder holder, CallFlashInfo info) {
-        holder.gv_bg.setVisibility(View.VISIBLE);
-        holder.callFlashView.setVisibility(View.GONE);
+    private void setBg(NormalViewHolder holder, CallFlashInfo info, boolean isShowBg) {
+        if (isShowBg) {
+            holder.gv_bg.setVisibility(View.VISIBLE);
+            holder.callFlashView.setVisibility(View.GONE);
+        }
         if (holder.iv_call_select.getVisibility() == View.VISIBLE && info.format == CallFlashFormat.FORMAT_VIDEO && CallFlashManager.getInstance().isCallFlashDownloaded(info)) {
             if (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(info.id)) {
                 holder.gv_bg.showImage(R.drawable.img_star_sky_v);
@@ -418,12 +421,14 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void playOrPause(NormalViewHolder holder, CallFlashInfo info, boolean isPlay, long delayGoneBGTime) {
+        if (info == null) return;
         if (isPlay) {
             holder.callFlashView.setVideoMute(true);
             if (holder.callFlashView.isStopVideo()) {
                 holder.callFlashView.showCallFlashView(info);
             } else {
-                if (holder.callFlashView.isPause()) {
+                CallFlashInfo playCallFlashInfo = holder.callFlashView.getCallFlashInfo();
+                if (playCallFlashInfo != null && playCallFlashInfo.equals(mCurrentFlash) && holder.callFlashView.isPause()) {
                     holder.callFlashView.continuePlay();
                 } else {
                     holder.callFlashView.showCallFlashView(info);

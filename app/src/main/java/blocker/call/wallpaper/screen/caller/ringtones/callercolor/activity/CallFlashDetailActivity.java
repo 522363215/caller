@@ -769,7 +769,11 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             }
             mGvCallFlashBg.showImageWithBlur(url);
         } else {
-            mGvCallFlashBg.showImageWithBlur(mInfo.imgResId);
+            if (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(mInfo.id)) {
+                mGvCallFlashBg.showImageWithBlur(R.drawable.img_star_sky_v);
+            } else {
+                mGvCallFlashBg.showImageWithBlur(mInfo.imgResId);
+            }
         }
     }
 

@@ -195,7 +195,7 @@ public class CallFlashView extends RelativeLayout {
                 //显示视频第一帧防止黑屏
                 mGlideView.setVisibility(VISIBLE);
                 if (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(flashID)) {
-                    mGlideView.showImage(info.imgResId);
+                    mGlideView.showImage(R.drawable.img_star_sky_v);
                 } else {
                     File firstFrameFile = ThemeSyncManager.getInstance().getVideoFirstFrameFileByUrl(mContext, info.url);
                     LogUtil.d(TAG, "setVideo firstFrameFile:" + (firstFrameFile == null ? "" : firstFrameFile.exists()));

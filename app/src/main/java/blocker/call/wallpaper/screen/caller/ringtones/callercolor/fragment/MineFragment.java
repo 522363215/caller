@@ -181,10 +181,14 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     mGvBgCurrent.showImageWithThumbnail(mCurrentCallFlashInfo.img_vUrl, mCurrentCallFlashInfo.thumbnail_imgUrl);
                 }
             } else {
-                if (mCurrentCallFlashInfo.img_hResId > 0) {
-                    mGvBgCurrent.showImage(mCurrentCallFlashInfo.img_hResId);
+                if (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(mCurrentCallFlashInfo.id)) {
+                    mGvBgCurrent.showImage(R.drawable.img_star_sky_h);
                 } else {
-                    mGvBgCurrent.showImage(mCurrentCallFlashInfo.imgResId);
+                    if (mCurrentCallFlashInfo.img_hResId > 0) {
+                        mGvBgCurrent.showImage(mCurrentCallFlashInfo.img_hResId);
+                    } else {
+                        mGvBgCurrent.showImage(mCurrentCallFlashInfo.imgResId);
+                    }
                 }
             }
             boolean isCallFlashOn = CallFlashPreferenceHelper.getBoolean(CallFlashPreferenceHelper.CALL_FLASH_ON, false);

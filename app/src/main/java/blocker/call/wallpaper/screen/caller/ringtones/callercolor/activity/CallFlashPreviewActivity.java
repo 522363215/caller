@@ -431,7 +431,11 @@ public class CallFlashPreviewActivity extends BaseActivity implements View.OnCli
                 }
             });
         } else {
-            mGvPreview.showImage(mInfo.imgResId);
+            if (CallFlashManager.CALL_FLASH_START_SKY_ID.equals(mInfo.id)) {
+                mGvPreview.showImage(R.drawable.img_star_sky_v);
+            } else {
+                mGvPreview.showImage(mInfo.imgResId);
+            }
             startEnterAnim();
         }
 
