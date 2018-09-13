@@ -235,7 +235,7 @@ public class CallFlashOnlineAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void setDownloadState(NormalViewHolder holder, CallFlashInfo info) {
-        if (holder != null && info != null) {
+        if (holder != null && info != null && videoMap != null) {
             File videoFile = videoMap.get(info.url);
             if (videoFile == null) {
                 videoFile = CallFlashManager.getInstance().getOnlineThemeSourcePath(info.url);
