@@ -295,7 +295,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     //******************************************AD******************************************//
     private void initAds() {
-        final String fb_id = CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_MINE_NORMAL);
+        String fb_id = CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_MINE_NORMAL);
         long delay = 0;
         //如果fb 和admob 的id都为空着说明此时服务器数据还没请求下来，所以延迟5s 加载广告
         if (TextUtils.isEmpty(fb_id)) {
@@ -305,7 +305,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             @Override
             public void run() {
                 MyAdvertisementAdapter adapter = new MyAdvertisementAdapter(mLayoutAd,
-                        fb_id,//ConstantUtils.FB_AFTER_CALL_ID
+                        CallerAdManager.getFacebook_id(CallerAdManager.POSITION_FB_MINE_NORMAL),//ConstantUtils.FB_AFTER_CALL_ID
                         "",//CallerAdManager.getAdmob_id(CallerAdManager.POSITION_ADMOB_MINE_NORMAL),//ConstantUtils.ADMOB_AFTER_CALL_NATIVE_ID
                         Advertisement.ADMOB_TYPE_NATIVE,//Advertisement.ADMOB_TYPE_NATIVE, Advertisement.ADMOB_TYPE_NONE
                         "",
