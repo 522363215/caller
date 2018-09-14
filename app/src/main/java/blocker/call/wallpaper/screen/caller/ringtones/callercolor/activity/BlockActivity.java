@@ -26,7 +26,6 @@ import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.Advertisement;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.AdvertisementSwitcher;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.BaseAdvertisementAdapter;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.CallerAdManager;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.ad.FacebookConstant;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.BlockPagerAdapter;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.dialog.AddBlockContactDialog;
@@ -272,13 +271,15 @@ public class BlockActivity extends BaseActivity implements View.OnClickListener 
                 AdvertisementSwitcher.SERVER_KEY_BLOCK_MAIN,
                 true);
 
+        String mopub_banner_id = TestManager.getInstance(this.getApplicationContext()).getMopubId(AdvertisementSwitcher.SERVER_KEY_BLOCK_MAIN);
+        LogUtil.d("mopub_self", "mopub_banner_id sms show set: " + mopub_banner_id);
+        adapter.setMopubBannerKey(mopub_banner_id); //mopub banner id
+
         mAdvertisement = new Advertisement(adapter);
         mAdvertisement.setRefreshWhenClicked(true);
         mAdvertisement.refreshAD(true);
 
-        String mopub_banner_id = TestManager.getInstance(this.getApplicationContext()).getMopubId(AdvertisementSwitcher.SERVER_KEY_BLOCK_MAIN);
-        LogUtil.d("mopub_self", "mopub_banner_id sms show set: " + mopub_banner_id);
-        adapter.setMopubBannerKey(mopub_banner_id); //mopub banner id
+
     }
 
     private class MyAdvertisementAdapter extends BaseAdvertisementAdapter {
