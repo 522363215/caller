@@ -180,18 +180,6 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
 
         @Override
         public void onRewarded(RewardItem rewardItem) {
-        }
-
-        @Override
-        public void onRewardedVideoAdLeftApplication() {
-        }
-
-        @Override
-        public void onRewardedVideoAdFailedToLoad(int i) {
-        }
-
-        @Override
-        public void onRewardedVideoCompleted() {
             if (isFinishing() || mInfo == null) {
                 return;
             }
@@ -228,6 +216,24 @@ public class CallFlashDetailActivity extends BaseActivity implements View.OnClic
             }
 
             sendRewardedAdmobFlurry();
+        }
+
+        @Override
+        public void onRewardedVideoAdLeftApplication() {
+        }
+
+        @Override
+        public void onRewardedVideoAdFailedToLoad(int i) {
+            if (isFinishing() || mLayoutRewardVideoLoading == null) {
+                return;
+            }
+            ToastUtils.showToast(CallFlashDetailActivity.this, getString(R.string.call_flash_detail_load_rewarded_failed));
+            mLayoutRewardVideoLoading.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onRewardedVideoCompleted() {
+
         }
     };
 

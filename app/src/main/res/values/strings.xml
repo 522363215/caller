@@ -233,6 +233,7 @@
     <string name="call_flash_detail_theme_unlock">Unlock</string>
     <string name="call_flash_detail_unlock_desc">Watch Rewarded Video to Unlock the Cool Theme</string>
     <string name="resource_loading">Loading...</string>
+    <string name="call_flash_detail_load_rewarded_failed">Load rewarded video failed! Please try again later.</string>
 
     <string name="title_activity_message">message</string>
     <string name="title_home">message wallpaper</string>
