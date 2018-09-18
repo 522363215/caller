@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.mopub.test.util.AdvertisingIdClient;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -252,5 +254,26 @@ public final class CommonUtils {
             }
         }
         return old;
+    }
+
+    public static void getGaid(final Context context){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String gaid = "";
+                try {
+                    AdvertisingIdClient.AdInfo adInfo = AdvertisingIdClient.getAdvertisingIdInfo(context);
+                    boolean isLimitTrackEnabled = adInfo.isLimitAdTrackingEnabled();
+                    if (!isLimitTrackEnabled) {
+                        gaid = adInfo.getId();
+                    }
+                    LogUtil.d("getGaid", "getGaid gaid: "+gaid);
+                }catch (Exception e){
+                    LogUtil.e("getGaid", "getGaid exception: "+e.getMessage());
+                }
+            }
+        }).start();
+
+
     }
 }
