@@ -8,6 +8,7 @@ import com.md.wallpaper.bean.WallpaperDataType;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.WallpaperListFragment;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
 
 public class AssortmentActivity extends BaseActivity {
 
@@ -20,6 +21,9 @@ public class AssortmentActivity extends BaseActivity {
 
     private void intiView() {
         int assort = getIntent().getIntExtra(Constant.ISASSORTMENT,0);
+        String name = getIntent().getStringExtra(Constant.NAME);
+        ActionBar abAssort = findViewById(R.id.ab_assort);
+        abAssort.setTitle(name);
         WallpaperListFragment wallpaperListFragment = WallpaperListFragment.newInstance(WallpaperDataType.WALLPAPER_DATA_ASSORTMENT);
         getFragmentManager()
                 .beginTransaction()

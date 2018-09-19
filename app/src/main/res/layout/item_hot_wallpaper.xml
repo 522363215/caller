@@ -14,5 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_hot_assort"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:layout_centerInParent="true"/>
 </RelativeLayout>

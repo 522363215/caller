@@ -22,4 +22,9 @@ public class Constant {
      * 是否为
      */
     public final static String ISASSORTMENT = "is_assortment";
+
+    /**
+     * 名字
+     */
+    public final static String NAME = "name";
 }

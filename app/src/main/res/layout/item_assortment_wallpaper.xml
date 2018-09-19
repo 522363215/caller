@@ -14,5 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:id="@+id/tv_assort"/>
 </RelativeLayout>

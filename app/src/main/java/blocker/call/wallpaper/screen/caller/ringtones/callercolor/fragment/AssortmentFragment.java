@@ -82,6 +82,7 @@ public class AssortmentFragment extends Fragment {
                 public void normalClick(View view, int position) {
                     Intent intent = new Intent(getActivity(),AssortmentActivity.class);
                     intent.putExtra(Constant.ISASSORTMENT,data.get(position).getPx_id());
+                    intent.putExtra(Constant.NAME,data.get(position).getTitle());
                     startActivity(intent);
                 }
 
@@ -97,6 +98,7 @@ public class AssortmentFragment extends Fragment {
                 public void normalClick(View view, int position) {
                     Intent intent = new Intent(getActivity(),AssortmentActivity.class);
                     intent.putExtra(Constant.ISASSORTMENT,data.get(position).getPx_id());
+                    intent.putExtra(Constant.NAME,data.get(position).getTitle());
                     startActivity(intent);
                 }
 
@@ -112,6 +114,7 @@ public class AssortmentFragment extends Fragment {
                 public void normalClick(View view, int position) {
                     Intent intent = new Intent(getActivity(),AssortmentActivity.class);
                     intent.putExtra(Constant.ISASSORTMENT,data.get(position).getPx_id());
+                    intent.putExtra(Constant.NAME,data.get(position).getTitle());
                     startActivity(intent);
                 }
 
