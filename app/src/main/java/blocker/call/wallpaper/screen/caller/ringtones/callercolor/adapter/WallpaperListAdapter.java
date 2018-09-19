@@ -101,7 +101,6 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.mOnDownloadListener.setDownloadParams(holder, wallpaperInfos.get(position));
         File file = ThemeSyncManager.getInstance().getFileByUrl(context, wallpaperInfos.get(position).url);
-        WallpaperInfo path = WallpaperPreferenceHelper.getObject(WallpaperPreferenceHelper.SETED_WALLPAPERS,WallpaperInfo.class);
         holder.ivBackground.showImage(wallpaperInfos.get(position).img_vUrl);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,10 +110,6 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
         });
         if (file != null && file.exists() || (!TextUtils.isEmpty(wallpaperInfos.get(position).path) && new File(wallpaperInfos.get(position).path).exists())) {
             holder.ivDownload.setVisibility(View.INVISIBLE);
-            if (path != null && path.path.equals(wallpaperInfos.get(position).path))
-                holder.ivSelect.setVisibility(View.VISIBLE);
-            else
-                holder.ivSelect.setVisibility(View.INVISIBLE);
         } else {
             holder.ivDownload.setVisibility(View.VISIBLE);
         }
@@ -147,7 +142,7 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
         public void onSuccess(String url, File file) {
             if (info != null && info.url != null && info.url.equals(url)) {
                 holder.ivDownload.setVisibility(View.GONE);
-                holder.ivSelect.setVisibility(View.GONE);
+//                holder.ivSelect.setVisibility(View.GONE);
                 holder.pbLoading.setVisibility(View.GONE);
 
                 WallpaperUtil.getInstance().saveWallpaperDownloadCount(info);
@@ -160,7 +155,7 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
         public void onProgress(String url, int progress) {
             if (info != null && info.url != null && info.url.equals(url)) {
                 holder.ivDownload.setVisibility(View.GONE);
-                holder.ivSelect.setVisibility(View.GONE);
+//                holder.ivSelect.setVisibility(View.GONE);
                 holder.pbLoading.setVisibility(View.VISIBLE);
 
                 info.progress = progress;
@@ -173,7 +168,7 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
         public void onFailure(String url) {
             if (info != null && info.url != null && info.url.equals(url)) {
                 holder.ivDownload.setVisibility(View.VISIBLE);
-                holder.ivSelect.setVisibility(View.GONE);
+//                holder.ivSelect.setVisibility(View.GONE);
                 holder.pbLoading.setVisibility(View.GONE);
 
 //                ToastUtils.showToast(context, context.getString(R.string.call_flash_gif_show_load_failed));
@@ -201,7 +196,7 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
 
     class ViewHolder extends RecyclerView.ViewHolder {
         GlideView ivBackground;
-        ImageView ivSelect;
+//        ImageView ivSelect;
         ImageView ivDownload;
         CircleProgressBar pbLoading;
         ImageView ivVedio;
@@ -211,7 +206,7 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
             super(itemView);
 
             ivBackground = itemView.findViewById(R.id.iv_background);
-            ivSelect = itemView.findViewById(R.id.iv_select);
+//            ivSelect = itemView.findViewById(R.id.iv_select);
             ivDownload = itemView.findViewById(R.id.iv_download);
             pbLoading = itemView.findViewById(R.id.pb_loading);
             ivVedio = itemView.findViewById(R.id.iv_video);

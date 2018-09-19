@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="blocker.call.wallpaper.screen.caller.ringtones.callercolor">
+
     <!-- ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -131,17 +132,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.CallFlashDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.CallFlashPreviewActivity"
             android:launchMode="singleTask"
@@ -160,33 +158,29 @@
             android:name=".activity.PermissionTipActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" />
-        <activity android:name=".activity.BlockActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".activity.BlockActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/CallFlashAppCompatTheme" />
         <activity
             android:name=".activity.AboutActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.BrowserActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.CallFlashListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.CallAfterActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:taskAffinity="cc.permission.phonecall" />
-
         <activity
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.PermissionActivity"
             android:screenOrientation="portrait" />
@@ -207,7 +201,6 @@
             android:name=".service.JobLocalService"
             android:label="job_local_service"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
         <service
             android:name=".service.JobSchedulerService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
@@ -216,12 +209,11 @@
             android:exported="true"
             android:priority="900" />
 
-        <activity android:name=".activity.RingActivity"/>
-        <activity android:name=".activity.LocalMusicActivity"/>
-        <activity android:name=".activity.MusicActivity"/>
+        <activity android:name=".activity.RingActivity" />
+        <activity android:name=".activity.LocalMusicActivity" />
+        <activity android:name=".activity.MusicActivity" />
         <activity android:name=".activity.WallpaperListActivity" />
-        <activity android:name=".activity.WallpaperDetailActivity"></activity>
-
+        <activity android:name=".activity.WallpaperDetailActivity" />
 
         <receiver
             android:name=".receiver.InstallRefererReceiver"
@@ -230,7 +222,7 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.BootStartServiceReceiver" >
+        <receiver android:name=".receiver.BootStartServiceReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -238,14 +230,29 @@
 
         <provider
             android:name="com.common.sdk.analytics.data.MyContentProvider"
-            android:authorities="com.analytics.data.75"/>
+            android:authorities="com.analytics.data.75" />
 
         <!-- 配置实时壁纸Service -->
-        <!--android:process=":wallpaper"放在不同进程-->
+        <!-- android:process=":wallpaper"放在不同进程 -->
         <service
             android:name=".service.LiveWallpaperService"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_WALLPAPER">
+
+            <!-- 为实时壁纸配置intent-filter -->
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <!-- 为实时壁纸配置meta-data -->
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/video_wallpaper" />
+        </service>
+        <service
+            android:name=".service.VideoLiveWallpaperService"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_WALLPAPER">
+
             <!-- 为实时壁纸配置intent-filter -->
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
@@ -256,19 +263,6 @@
                 android:resource="@xml/video_wallpaper" />
         </service>
 
-        <service
-            android:name=".service.VideoLiveWallpaperService"
-            android:label="@string/app_name"
-            android:permission="android.permission.BIND_WALLPAPER">
-            <!-- 为实时壁纸配置intent-filter -->
-            <intent-filter>
-                <action android:name="android.service.wallpaper.WallpaperService" />
-            </intent-filter>
-            <!-- 为实时壁纸配置meta-data -->
-            <meta-data
-                android:name="android.service.wallpaper"
-                android:resource="@xml/video_wallpaper" />
-        </service>
         <receiver
             android:name=".service.VideoLiveWallpaperService$mBroadcastReceiver"
             android:enabled="true"
@@ -278,6 +272,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".activity.AssortmentActivity"></activity>
     </application>
 
 </manifest>

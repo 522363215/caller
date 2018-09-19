@@ -17,6 +17,7 @@ import java.util.List;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.adapter.FragmentAdapter;
+import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.AssortmentFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.WallpaperListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.UsedPictureFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
@@ -47,6 +48,13 @@ public class WallpaperListActivity extends BaseActivity implements ViewPager.OnP
                     if (lastShowIndexFragment != 1) {
                         mVpMessage.setCurrentItem(1);
                         lastShowIndexFragment = 1;
+                    }
+                    mAbMessage.setTitle(R.string.message_action_two);
+                    return true;
+                case R.id.navigation_assort:
+                    if (lastShowIndexFragment != 2) {
+                        mVpMessage.setCurrentItem(2);
+                        lastShowIndexFragment = 2;
                     }
                     mAbMessage.setTitle(R.string.message_action_two);
                     return true;
@@ -103,10 +111,12 @@ public class WallpaperListActivity extends BaseActivity implements ViewPager.OnP
     private void getFragmentArray() {
         WallpaperListFragment wallpaperListFragment = WallpaperListFragment.newInstance(WallpaperDataType.WALLPAPER_HOME);
         UsedPictureFragment usedPictureFragment = new UsedPictureFragment();
+        AssortmentFragment assortmentFragment = new AssortmentFragment();
         usedPictureFragment.setSetPic(setPic);
         fragments = new ArrayList<>();
         fragments.add(wallpaperListFragment);
         fragments.add(usedPictureFragment);
+        fragments.add(assortmentFragment);
     }
 
     @Override
@@ -124,6 +134,10 @@ public class WallpaperListActivity extends BaseActivity implements ViewPager.OnP
             case 1:
                 mAbMessage.setTitle(R.string.message_action_two);
                 navigation.setSelectedItemId(R.id.navigation_dashboard);
+                break;
+            case 2:
+                mAbMessage.setTitle(R.string.message_action_three);
+                navigation.setSelectedItemId(R.id.navigation_assort);
                 break;
         }
     }

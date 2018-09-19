@@ -5,4 +5,5 @@ public class WallpaperDataType {
     public static final int WALLPAPER__DATA_COLLECTION = 1;
     public static final int WALLPAPER_DATA_DOWNLOADED = 2;
     public static final int WALLPAPER_DATA_SET_RECORD = 3;
+    public static final int WALLPAPER_DATA_ASSORTMENT = 4;
 }

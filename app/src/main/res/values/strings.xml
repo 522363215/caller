@@ -227,8 +227,10 @@
     <string name="title_activity_message">message</string>
     <string name="title_home">message wallpaper</string>
     <string name="title_dashboard">history</string>
+    <string name="title_assort">assort</string>
     <string name="message_action_one">message</string>
     <string name="message_action_two">history</string>
+    <string name="message_action_three">assort</string>
     <string name="title_notifications">Notifications</string>
     <string name="no_set_pic">No Set Wallpaper</string>
     <string name="get_power_result">"获取权限失败，请手动开启"</string>
@@ -236,4 +238,7 @@
     <string name="no_set">没有设置壁纸</string>
     <string name="get">当前设置壁纸</string>
     <string name="page_title_wallpaper">壁纸</string>
+    <string name="hot">热门搜索</string>
+    <string name="history">颜色</string>
+    <string name="assortment">分类</string>
 </resources>

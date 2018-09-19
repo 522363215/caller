@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-def appName (){
+def appName() {
     return "color_phone"
 }
 

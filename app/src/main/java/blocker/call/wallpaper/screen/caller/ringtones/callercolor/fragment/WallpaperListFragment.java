@@ -25,6 +25,7 @@ import com.md.flashset.bean.CallFlashDataType;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.beans.Theme;
 import com.md.serverflash.callback.SingleTopicThemeCallback;
+import com.md.serverflash.callback.ThemeSyncCallback;
 import com.md.wallpaper.bean.WallpaperDataType;
 import com.md.wallpaper.bean.WallpaperInfo;
 import com.md.wallpaper.WallpaperUtil;
@@ -63,12 +64,16 @@ public class WallpaperListFragment extends Fragment implements View.OnClickListe
     private int mDataType = 0;
     private String topic = "";
     private WallpaperListAdapter wallpaperListAdapter;
+    private int isAssortment;
 
     public static WallpaperListFragment newInstance(int dataType) {
         WallpaperListFragment fragment = new WallpaperListFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(DATA_TYPE, dataType);
         fragment.setArguments(bundle);
+//        if (dataType == ){
+//            isAssortment = getArguments().getInt(Constant.ISASSORTMENT,0);
+//        }
         return fragment;
     }
 
@@ -181,6 +186,7 @@ public class WallpaperListFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wall_paper, container, false);
+
         init(view);
         initRecycleView(view);
         listener();
@@ -257,6 +263,10 @@ public class WallpaperListFragment extends Fragment implements View.OnClickListe
                 case WallpaperDataType.WALLPAPER_DATA_SET_RECORD:
                     updateUI(WallpaperUtil.getInstance().getSetRecordWallpaper(), true);
                     break;
+                case WallpaperDataType.WALLPAPER_DATA_ASSORTMENT:
+                    int isAssortment = getArguments().getInt(Constant.ISASSORTMENT,0);
+                    initHomeData(isGetCacheData,isAssortment);
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -294,35 +304,95 @@ public class WallpaperListFragment extends Fragment implements View.OnClickListe
     }
 
     private void initHomeData(boolean isGetCacheData) {
-//        if (mOnlineFlashType == -1) {
+        if (isAssortment == 0){
+            //        if (mOnlineFlashType == -1) {
 //            topic = WallpaperUtil.ONLINE_THEME_TOPIC_NAME_NON_FEATURED;
 //        } else {
-        topic = ConstantUtils.WALLPAPER_DATA_TYPE;
+            topic = ConstantUtils.WALLPAPER_DATA_TYPE;
 //        }
-        List<Theme> cacheTopicDataList = ThemeSyncManager.getInstance().getCacheTopicDataList(topic);
-        if (isGetCacheData && cacheTopicDataList != null && cacheTopicDataList.size() > 0) {
-            //缓存数据存在的时候相当于每次进来优先显示缓存然后再下拉刷新
-            updateUI(WallpaperUtil.getInstance().themeToWallpaperInfo(cacheTopicDataList), true);
-            mSwipeRefreshLayout.setRefreshing(true);
-            initData(false);
-        } else {
-            ThemeSyncManager.getInstance().syncTopicData(topic, PAGE_NUMBER_MAX_COUNT, new SingleTopicThemeCallback() {
-                @Override
-                public void onSuccess(int code, List<Theme> data) {
-                    if (data == null || data.isEmpty()) {
-                        return;
+            List<Theme> cacheTopicDataList = ThemeSyncManager.getInstance().getCacheTopicDataList(topic);
+            if (isGetCacheData && cacheTopicDataList != null && cacheTopicDataList.size() > 0) {
+                //缓存数据存在的时候相当于每次进来优先显示缓存然后再下拉刷新
+                updateUI(WallpaperUtil.getInstance().themeToWallpaperInfo(cacheTopicDataList), true);
+                mSwipeRefreshLayout.setRefreshing(true);
+                initData(false);
+            } else {
+                ThemeSyncManager.getInstance().syncTopicData(topic, PAGE_NUMBER_MAX_COUNT, new SingleTopicThemeCallback() {
+                    @Override
+                    public void onSuccess(int code, List<Theme> data) {
+                        if (data == null || data.isEmpty()) {
+                            return;
+                        }
+
+                        List<WallpaperInfo> infos = WallpaperUtil.getInstance().themeToWallpaperInfo(data);
+                        updateUI(infos, true);
                     }
 
-                    List<WallpaperInfo> infos = WallpaperUtil.getInstance().themeToWallpaperInfo(data);
-                    updateUI(infos, true);
-                }
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        updateUI(null, false);
+                    }
+                });
+            }
+        }else {
+            //        if (mOnlineFlashType == -1) {
+//            topic = WallpaperUtil.ONLINE_THEME_TOPIC_NAME_NON_FEATURED;
+//        } else {
+            topic = ConstantUtils.WALLPAPER_DATA_TYPE;
+//        }
+            List<Theme> cacheTopicDataList = ThemeSyncManager.getInstance().getCacheTopicDataList(topic);
+            if (isGetCacheData && cacheTopicDataList != null && cacheTopicDataList.size() > 0) {
+                //缓存数据存在的时候相当于每次进来优先显示缓存然后再下拉刷新
+                updateUI(WallpaperUtil.getInstance().themeToWallpaperInfo(cacheTopicDataList), true);
+                mSwipeRefreshLayout.setRefreshing(true);
+                initData(false);
+            } else {
+                ThemeSyncManager.getInstance().syncPageData(isAssortment, new ThemeSyncCallback() {
+                    @Override
+                    public void onSuccess(List<Theme> data) {
+                        if (data == null || data.isEmpty()) {
+                            return;
+                        }
 
-                @Override
-                public void onFailure(int code, String msg) {
-                    updateUI(null, false);
-                }
-            });
+                        List<WallpaperInfo> infos = WallpaperUtil.getInstance().themeToWallpaperInfo(data);
+                        updateUI(infos, true);
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        updateUI(null, false);
+                    }
+                });
+            }
         }
+    }
+
+    private void initHomeData(boolean isGetCacheData,int assort) {
+            topic = ConstantUtils.WALLPAPER_DATA_TYPE;
+            List<Theme> cacheTopicDataList = ThemeSyncManager.getInstance().getCacheTopicDataList(topic);
+            if (isGetCacheData && cacheTopicDataList != null && cacheTopicDataList.size() > 0) {
+                //缓存数据存在的时候相当于每次进来优先显示缓存然后再下拉刷新
+                updateUI(WallpaperUtil.getInstance().themeToWallpaperInfo(cacheTopicDataList), true);
+                mSwipeRefreshLayout.setRefreshing(true);
+                initData(false);
+            } else {
+                ThemeSyncManager.getInstance().syncPageData(isAssortment, new ThemeSyncCallback() {
+                    @Override
+                    public void onSuccess(List<Theme> data) {
+                        if (data == null || data.isEmpty()) {
+                            return;
+                        }
+                        List<WallpaperInfo> infos = WallpaperUtil.getInstance().themeToWallpaperInfo(data);
+                        updateUI(infos, true);
+                    }
+
+                    @Override
+                    public void onFailure(int code, String msg) {
+                        updateUI(null, false);
+                    }
+                });
+            }
+
     }
 
     @Override
