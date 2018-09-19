@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/dp10"
+    android:layout_marginBottom="@dimen/dp10">
+
+    <blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView
+        android:layout_width="@dimen/dp100"
+        android:layout_height="@dimen/dp100"
+        android:id="@+id/iv_hot_assort"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_hot_assort"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>
