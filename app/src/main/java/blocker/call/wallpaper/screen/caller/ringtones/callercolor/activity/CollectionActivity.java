@@ -6,12 +6,15 @@ import android.view.View;
 
 import com.md.flashset.bean.CallFlashDataType;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCollection;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.fragment.CallFlashListFragment;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.CommonUtils;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.ActionBar;
-import event.EventBus;
 
 public class CollectionActivity extends BaseActivity {
     private CallFlashListFragment mCallFlashListFragment;
@@ -59,7 +62,8 @@ public class CollectionActivity extends BaseActivity {
         });
     }
 
-    public void onEventMainThread(EventRefreshCollection event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EventRefreshCollection event) {
         if (mCallFlashListFragment != null) {
             mCallFlashListFragment.initData(true);
         }

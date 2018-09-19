@@ -6,18 +6,20 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.service.wallpaper.WallpaperService;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
 import com.md.wallpaper.WallpaperPreferenceHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventPostIsExist;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventPostIsExit;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.MajorityOfResult;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.MiPhoneResult;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
-import event.EventBus;
 
 
 public class VideoLiveWallpaperService extends WallpaperService {
@@ -33,9 +35,9 @@ public class VideoLiveWallpaperService extends WallpaperService {
     private boolean voiceStat = false;
 
     public Engine onCreateEngine() {
-        voiceStat = WallpaperPreferenceHelper.getBoolean(WallpaperPreferenceHelper.PREF_WALL_IS_MUTE_WHEN_PREVIEW,true);
+        voiceStat = WallpaperPreferenceHelper.getBoolean(WallpaperPreferenceHelper.PREF_WALL_IS_MUTE_WHEN_PREVIEW, true);
         engine = new VideoEngine();
-        if(!EventBus.getDefault().isRegistered(this)){
+        if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
         return engine;
@@ -44,7 +46,7 @@ public class VideoLiveWallpaperService extends WallpaperService {
     public static class mBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(ACTION_UPDATE_PATH)){
+            if (intent.getAction().equals(ACTION_UPDATE_PATH)) {
                 mPath = intent.getStringExtra(VIDEO_LIVE_WALLPAPER_PATH);
 
                 isStartService = intent.getBooleanExtra(VIDEO_LIVE_WALLPAPER_START_OPEN, true);
@@ -64,9 +66,9 @@ public class VideoLiveWallpaperService extends WallpaperService {
 
         @Override
         public void onTouchEvent(MotionEvent event) {
-            if(event.getAction() == MotionEvent.ACTION_DOWN){
-                if(mMediaPlayer != null) {
-                    if(!mMediaPlayer.isPlaying()){
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (mMediaPlayer != null) {
+                    if (!mMediaPlayer.isPlaying()) {
                         mMediaPlayer.start();
                         mMediaPlayer.setVolume(0, 0);
 //                        if(!voiceStat){
@@ -87,7 +89,7 @@ public class VideoLiveWallpaperService extends WallpaperService {
             }
             mMediaPlayer = new MediaPlayer();
             if (getApplicationContext() != null) {
-                mPath = WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME,"");
+                mPath = WallpaperPreferenceHelper.getString(WallpaperPreferenceHelper.FILE_NAME, "");
             }
             if (!TextUtils.isEmpty(mPath) && holder != null) {
                 try {
@@ -167,19 +169,21 @@ public class VideoLiveWallpaperService extends WallpaperService {
 
     @Override
     public void onDestroy() {
-        if(EventBus.getDefault().isRegistered(this)){
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
         super.onDestroy();
     }
 
-    public void onEventMainThread(EventPostIsExit eventPostIsExit){
-        LogUtil.e("asdgauysd1111111","asduyasuyduaysg");
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EventPostIsExit eventPostIsExit) {
+        LogUtil.e("asdgauysd1111111", "asduyasuyduaysg");
         EventBus.getDefault().post(new EventPostIsExist());
     }
 
-    public void onEventMainThread(MiPhoneResult miPhoneResult){
-        LogUtil.e("asdgauysd3333333","asduyasuyduaysg");
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(MiPhoneResult miPhoneResult) {
+        LogUtil.e("asdgauysd3333333", "asduyasuyduaysg");
         EventBus.getDefault().post(new MajorityOfResult());
     }
 }

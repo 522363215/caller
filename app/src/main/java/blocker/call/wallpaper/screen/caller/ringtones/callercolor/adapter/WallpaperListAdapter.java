@@ -7,36 +7,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.md.callring.RecyclerClick;
-import com.md.flashset.bean.CallFlashInfo;
-import com.md.flashset.manager.CallFlashManager;
 import com.md.serverflash.ThemeSyncManager;
 import com.md.serverflash.callback.OnDownloadListener;
 import com.md.serverflash.download.ThemeResourceHelper;
-import com.md.wallpaper.WallpaperPreferenceHelper;
 import com.md.wallpaper.WallpaperUtil;
 import com.md.wallpaper.bean.WallpaperFormat;
 import com.md.wallpaper.bean.WallpaperInfo;
 
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.R;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.activity.WallpaperDetailActivity;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventBusIsSet;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventPostIsExist;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.event.message.EventRefreshCallFlashDownloadCount;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.DeviceUtil;
-import blocker.call.wallpaper.screen.caller.ringtones.callercolor.utils.LogUtil;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.CircleProgressBar;
 import blocker.call.wallpaper.screen.caller.ringtones.callercolor.view.GlideView;
-import event.EventBus;
 
 public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdapter.ViewHolder> {
 
@@ -165,6 +155,11 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
         }
 
         @Override
+        public void onConnecting(String url) {
+
+        }
+
+        @Override
         public void onFailure(String url) {
             if (info != null && info.url != null && info.url.equals(url)) {
                 holder.ivDownload.setVisibility(View.VISIBLE);
@@ -181,6 +176,7 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
     }
 
     private int mDataType = 0;
+
     public void setDataType(int dataType) {
         this.mDataType = dataType;
     }
@@ -196,7 +192,7 @@ public class WallpaperListAdapter extends RecyclerView.Adapter<WallpaperListAdap
 
     class ViewHolder extends RecyclerView.ViewHolder {
         GlideView ivBackground;
-//        ImageView ivSelect;
+        //        ImageView ivSelect;
         ImageView ivDownload;
         CircleProgressBar pbLoading;
         ImageView ivVedio;
